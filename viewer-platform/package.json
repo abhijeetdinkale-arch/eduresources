@@ -4,41 +4,11 @@
   "description": "Secure Book & Study Material Viewer with Google Auth, Dynamic Watermarking & Anti-Screenshot DRM",
   "main": "server/index.js",
   "scripts": {
-    "prepare:assets": "node prepare-local-assets.js",
     "server": "node server/index.js",
     "client": "npm --prefix client run dev",
-    "build": "node prepare-local-assets.js && npm --prefix client run build",
-    "install:all": "npm install && npm --prefix client install",
-    "start": "node server/index.js",
-    "desktop": "node prepare-local-assets.js && electron desktop/main.js",
-    "desktop:build:mac": "npm run build && electron-builder --mac",
-    "desktop:build:win": "npm run build && electron-builder --win",
-    "desktop:build:all": "npm run build && electron-builder -mw",
-    "mobile:add:android": "npx cap add android",
-    "mobile:add:ios": "npx cap add ios",
-    "mobile:sync": "npm run build && npx cap sync",
-    "mobile:open:android": "npx cap open android",
-    "mobile:open:ios": "npx cap open ios"
-  },
-  "build": {
-    "appId": "com.securesstudy.hub",
-    "productName": "SecureStudyHub",
-    "files": [
-      "desktop/**/*",
-      "server/**/*",
-      "client/dist/**/*",
-      "package.json"
-    ],
-    "mac": {
-      "category": "public.app-category.education",
-      "target": ["dmg", "zip"]
-    },
-    "win": {
-      "target": ["nsis", "portable"]
-    },
-    "directories": {
-      "output": "release"
-    }
+    "build": "npm --prefix client run build",
+    "install:all": "npm install --omit=dev && npm --prefix client install",
+    "start": "node server/index.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -47,15 +17,5 @@
     "express": "^4.19.2",
     "google-auth-library": "^9.11.0",
     "jsonwebtoken": "^9.0.2"
-  },
-  "devDependencies": {
-    "@capacitor-community/privacy-screen": "^6.0.0",
-    "@capacitor/android": "^6.1.2",
-    "@capacitor/cli": "^6.1.2",
-    "@capacitor/core": "^6.1.2",
-    "@capacitor/ios": "^6.1.2",
-    "concurrently": "^8.2.2",
-    "electron": "^31.3.1",
-    "electron-builder": "^24.13.3"
   }
 }

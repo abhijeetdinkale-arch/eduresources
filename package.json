@@ -4,8 +4,8 @@
   "description": "Edu network Academic Material & Book Platform",
   "main": "viewer-platform/server/index.js",
   "scripts": {
-    "postinstall": "cd viewer-platform && npm install && cd client && npm install",
-    "build": "cd viewer-platform/client && npm install && npm run build && cd ../server && npm install",
+    "postinstall": "cd viewer-platform && npm install --omit=dev --legacy-peer-deps && cd client && npm install --legacy-peer-deps",
+    "build": "cd viewer-platform/client && npm install --legacy-peer-deps && npm run build && cd .. && npm install --omit=dev --legacy-peer-deps",
     "start": "node viewer-platform/server/index.js"
   },
   "dependencies": {},
