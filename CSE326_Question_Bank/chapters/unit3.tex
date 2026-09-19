@@ -1,0 +1,141 @@
+\chapter{Unit 3: Cascading Style Sheets (CSS3) \& Box Model}
+
+\section{Section 1: 50 Chapter-Wise Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25 --- 50\% Easy)}
+\mcqitem{1}{[Easy] What does CSS stand for?}{Computer Style Sheets}{Cascading Style Sheets}{Creative Style System}{Colorful Style Sheets}
+\mcqitem{2}{[Easy] Which tag is used to embed Internal CSS inside an HTML document?}{$<$script$>$}{$<$css$>$}{$<$style$>$}{$<$link$>$}
+\mcqitem{3}{[Easy] Which tag is used to link an External CSS stylesheet?}{$<$link rel="stylesheet" href="..."$>$}{$<$style src="..."$>$}{$<$css href="..."$>$}{$<$import url="..."$>$}
+\mcqitem{4}{[Easy] Which CSS inclusion method applies styles directly on an individual tag using the 'style' attribute?}{External CSS}{Internal CSS}{Inline CSS}{Imported CSS}
+\mcqitem{5}{[Easy] Which CSS selector matches elements with a specific class attribute?}{\#name}{.name}{*name}{@name}
+\mcqitem{6}{[Easy] Which CSS selector matches an element with a unique ID attribute?}{\#name}{.name}{*name}{\$name}
+\mcqitem{7}{[Easy] Which symbol represents the Universal Selector in CSS?}{@}{*}{\#}{\&}
+\mcqitem{8}{[Easy] Which property is used to change the text color in CSS?}{text-color}{color}{font-color}{text-style}
+\mcqitem{9}{[Easy] Which property controls the background color of an element?}{background-color}{color-background}{bg-color}{surface-color}
+\mcqitem{10}{[Easy] Which property changes the font family of text?}{text-font}{font-family}{font-name}{typeface}
+\mcqitem{11}{[Easy] Which property controls the font size in CSS?}{text-size}{font-size}{size}{font-scale}
+\mcqitem{12}{[Easy] Which property aligns text horizontally (left, center, right, justify)?}{text-align}{horizontal-align}{text-position}{align}
+\mcqitem{13}{[Easy] Which property is used to remove underlines from hyperlinks?}{text-style: none;}{text-decoration: none;}{link-style: none;}{text-line: none;}
+\mcqitem{14}{[Easy] Which property transforms text into uppercase, lowercase, or capitalized?}{text-casing}{text-transform}{font-variant}{text-style}
+\mcqitem{15}{[Easy] In the Box Model, what is the transparent space surrounding the outside of an element's border?}{Padding}{Margin}{Outline}{Content}
+\mcqitem{16}{[Easy] In the Box Model, what is the space between the content and the border?}{Padding}{Margin}{Gutter}{Frame}
+\mcqitem{17}{[Easy] Which property sets the thickness, style, and color of an element's boundary?}{outline}{border}{stroke}{frame}
+\mcqitem{18}{[Easy] Which property creates rounded corners on an element's border?}{border-round}{border-radius}{corner-radius}{border-curve}
+\mcqitem{19}{[Easy] Which property controls the vertical line spacing between lines of text?}{letter-spacing}{word-spacing}{line-height}{text-indent}
+\mcqitem{20}{[Easy] Which property adjusts the horizontal spacing between individual letters?}{letter-spacing}{word-spacing}{char-spacing}{tracking}
+\mcqitem{21}{[Easy] Which CSS property sets a background image?}{background-img}{background-image: url(...)}{image-background}{bg-src}
+\mcqitem{22}{[Easy] Which value of 'background-repeat' stops a background image from repeating?}{repeat: no;}{background-repeat: no-repeat;}{repeat: false;}{background-tile: none;}
+\mcqitem{23}{[Easy] Which property defines how white-spaces and line breaks are handled in text?}{word-wrap}{white-space}{text-break}{line-break}
+\mcqitem{24}{[Easy] Which unit represents a size relative to the root '$<$html$>$' font size?}{em}{rem}{\%}{px}
+\mcqitem{25}{[Easy] Which unit represents an absolute measurement in CSS?}{px}{rem}{em}{vw}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 26 to 40 --- 30\% Medium)}
+\mcqitem{26}{[Medium] What is the specificity triple (a, b, c) of the selector 'div.card p\#desc'?}{(1, 1, 2)}{(1, 0, 2)}{(0, 1, 2)}{(1, 2, 1)}
+\mcqitem{27}{[Medium] Given 'width: 200px; padding: 20px; border: 5px solid red;' under 'content-box', what is the total rendered width?}{200px}{225px}{250px}{240px}
+\mcqitem{28}{[Medium] When 'box-sizing: border-box' is applied, what does declared 'width: 200px' represent?}{The content width only}{The total width including content, padding, and border}{The margin width}{The viewport width}
+\mcqitem{29}{[Medium] What is the collapsed margin between two vertical sibling divs with 'margin-bottom: 30px' and 'margin-top: 20px'?}{50px}{30px}{20px}{10px}
+\mcqitem{30}{[Medium] Which selector matches all '$<$a$>$' elements inside an '$<$li$>$' directly under '$<$ul class="menu"$>$'?}{ul.menu li a}{ul.menu $>$ li $>$ a}{ul.menu + li a}{ul.menu \textasciitilde\{\} a}
+\mcqitem{31}{[Medium] Which pseudo-class targets the first child element of its parent?}{:first-of-type}{:first-child}{:nth-child(0)}{:root}
+\mcqitem{32}{[Medium] Which link pseudo-class ordering prevents state masking?}{:hover, :link, :visited, :active}{:link, :visited, :hover, :active (LVHA)}{:active, :hover, :visited, :link}{:visited, :active, :link, :hover}
+\mcqitem{33}{[Medium] What does 'background-attachment: fixed;' accomplish?}{Scrolls background with content}{Fixes the background relative to the viewport, creating a parallax effect}{Centers the background}{Resizes image to 100\%}
+\mcqitem{34}{[Medium] What does 'background-size: cover;' do?}{Fits whole image inside without cropping}{Scales image to fill container completely, cropping edges if aspect ratio differs}{Repeats image infinitely}{Stretches image without maintaining aspect ratio}
+\mcqitem{35}{[Medium] What does the adjacent sibling combinator 'h2 + p' select?}{All $<$p$>$ siblings after $<$h2$>$}{The very first $<$p$>$ immediately following $<$h2$>$}{All $<$p$>$ elements inside $<$h2$>$}{Parent $<$p$>$ of $<$h2$>$}
+\mcqitem{36}{[Medium] What does the general sibling combinator 'h2 \textasciitilde\{\} p' select?}{Child $<$p$>$ elements}{All $<$p$>$ siblings that occur anywhere after $<$h2$>$}{Only the first $<$p$>$}{Parent of $<$h2$>$}
+\mcqitem{37}{[Medium] Which attribute selector targets links ending with '.pdf'?}{a[href\^\{\}=".pdf"]}{a[href\$=".pdf"]}{a[href*=".pdf"]}{a[href\textasciitilde\{\}=".pdf"]}
+\mcqitem{38}{[Medium] Which pseudo-element inserts generated decorative content before an element's text?}{::first-line}{::before}{::after}{::placeholder}
+\mcqitem{39}{[Medium] What does 'opacity: 0.5;' do?}{Makes element half transparent along with all its children}{Hides element from DOM}{Changes font color}{Disables clicks}
+\mcqitem{40}{[Medium] Which CSS function creates fluid responsive typography bounded by minimum and maximum values?}{calc()}{clamp(min, val, max)}{min()}{max()}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 50 --- 20\% Hard)}
+\mcqitem{41}{[Hard] How does the CSS Cascade resolve conflicts between two rules with identical specificity in the same origin?}{The first rule declared wins}{The last rule declared in source order wins}{Both rules are discarded}{Browser throws syntax error}
+\mcqitem{42}{[Hard] What happens to horizontal margins on inline elements like '$<$span$>$'?}{They collapse vertically}{They apply normally without collapsing}{They are completely ignored}{They convert the span to block}
+\mcqitem{43}{[Hard] What happens to 'margin-top' and 'margin-bottom' on non-replaced inline elements like '$<$span$>$'?}{They expand line height}{They have no effect on vertical flow}{They push sibling blocks down}{They cause overlap}
+\mcqitem{44}{[Hard] What is the specificity of the universal selector '*' and combinators ('$>$', '+', '\textasciitilde\{\}', space)?}{(0, 0, 1)}{(0, 0, 0)}{(1, 0, 0)}{(0, 1, 0)}
+\mcqitem{45}{[Hard] How does '!important' affect CSS specificity?}{Multiplies specificity by 10}{Overrides normal specificity hierarchy within the same cascade origin}{Disables all user stylesheets}{Valid only in inline styles}
+\mcqitem{46}{[Hard] Why does 'margin: 0 auto;' fail to center an inline element?}{Inline elements have zero width}{Inline elements take only content width and do not calculate auto margins from container width}{Auto margins are only for flexbox}{Inline elements cannot have margins}
+\mcqitem{47}{[Hard] What is the effect of 'text-shadow: 2px 2px 5px rgba(0,0,0,0.5);'?}{Creates a 3D border}{Renders a shadow offset by 2px X, 2px Y with 5px blur radius and 50\% opacity}{Blurs the font glyphs}{Underlines text}
+\mcqitem{48}{[Hard] What does 'direction: rtl;' accomplish in CSS?}{Rotates text 180 degrees}{Sets text reading direction from Right-to-Left (e.g. for Arabic/Hebrew)}{Reverses animation}{Flips background image}
+\mcqitem{49}{[Hard] Which selector matches an '$<$input$>$' only when it contains invalid data and has been interacted with?}{:invalid}{:user-invalid}{:required}{:disabled}
+\mcqitem{50}{[Hard] What is the root container selector in CSS used for defining global custom properties?}{html}{:root}{body}{*}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Explanations}
+
+\begin{answerkeytable}{Unit 3: 50 Questions Answer Key}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{B} & CSS stands for Cascading Style Sheets. & 26 & \textbf{A} & 1 ID (\#desc) + 1 Class (.card) + 2 Elements (div, p) = (1, 1, 2). \\
+2 & \textbf{C} & $<$style$>$ in $<$head$>$ embeds internal CSS. & 27 & \textbf{C} & Total width = 200 + (2x20) + (2x5) = 250px. \\
+3 & \textbf{A} & $<$link rel="stylesheet" href="..."$>$ links external CSS. & 28 & \textbf{B} & border-box includes padding and border within the declared width. \\
+4 & \textbf{C} & Inline CSS uses style="..."$>$ directly on elements. & 29 & \textbf{B} & Adjoining vertical margins collapse to the larger single value (30px). \\
+5 & \textbf{B} & The dot . prefix denotes class selectors. & 30 & \textbf{B} & Child combinators ($>$) select direct descendants at each tier. \\
+6 & \textbf{A} & The hash \# prefix denotes ID selectors. & 31 & \textbf{B} & :first-child selects the first child node. \\
+7 & \textbf{B} & * matches all elements in the document. & 32 & \textbf{B} & LVHA ordering avoids specificity conflicts. \\
+8 & \textbf{B} & color sets the foreground text color. & 33 & \textbf{B} & fixed attaches background to the viewport. \\
+9 & \textbf{A} & background-color defines background fill color. & 34 & \textbf{B} & cover fills the container with cropping. \\
+10 & \textbf{B} & font-family specifies the typeface stack. & 35 & \textbf{B} & + selects the immediately adjacent sibling. \\
+11 & \textbf{B} & font-size defines the text size. & 36 & \textbf{B} & \textasciitilde\{\} selects all subsequent matching siblings. \\
+12 & \textbf{A} & text-align sets horizontal text alignment. & 37 & \textbf{B} & \$= matches 'ends with'. \\
+13 & \textbf{B} & text-decoration: none removes link underlines. & 38 & \textbf{B} & ::before with content:"" inserts pseudo content before. \\
+14 & \textbf{B} & text-transform controls capitalization. & 39 & \textbf{A} & opacity sets transparency across the element and descendants. \\
+15 & \textbf{B} & Margin provides clearance outside the border. & 40 & \textbf{B} & clamp(min, preferred, max) provides fluid responsive scaling. \\
+16 & \textbf{A} & Padding provides inner clearance around content. & 41 & \textbf{B} & Source order is the final tiebreaker: later rules override earlier rules. \\
+17 & \textbf{B} & border sets width, style, and color. & 42 & \textbf{B} & Horizontal margins on inline elements take effect and do not collapse. \\
+18 & \textbf{B} & border-radius curves the corners. & 43 & \textbf{B} & Vertical margins have no layout effect on inline elements. \\
+19 & \textbf{C} & line-height controls vertical text leading. & 44 & \textbf{B} & Universal selector and combinators contribute zero specificity. \\
+20 & \textbf{A} & letter-spacing controls spacing between characters. & 45 & \textbf{B} & !important elevates rule priority above all standard declarations. \\
+21 & \textbf{B} & background-image: url(...) sets background images. & 46 & \textbf{B} & Auto horizontal margins require block-level elements with declared widths. \\
+22 & \textbf{B} & no-repeat prevents tiling. & 47 & \textbf{B} & text-shadow: x-offset y-offset blur color. \\
+23 & \textbf{B} & white-space controls whitespace collapsing. & 48 & \textbf{B} & rtl sets right-to-left writing mode. \\
+24 & \textbf{B} & rem (root em) is relative to root font size. & 49 & \textbf{B} & :user-invalid triggers only after user interaction, avoiding pre-emptive red borders. \\
+25 & \textbf{A} & px is an absolute reference unit. & 50 & \textbf{B} & :root matches the document root element with higher specificity than html. \\
+\bottomrule
+\end{tabularx}
+\end{answerkeytable}
+
+\section{Section 3: Conceptual Theory \& Coding Questions}
+\noindent\textbf{Q.51 [Theory --- 5 Marks]} Explain the CSS Specificity calculation model $(a, b, c)$ and demonstrate with three selector examples.
+
+\begin{qbsolutionbox}[Answer to Q.51]
+CSS Specificity is calculated as a weight triple $(a, b, c)$:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{a (IDs)}: Number of ID selectors (\texttt{\#header}) $\to$ Weight = $100$.
+  \item \textbf{b (Classes, Attributes, Pseudo-classes)}: Number of classes (\texttt{.btn}), attributes (\texttt{[type="text"]}), and pseudo-classes (\texttt{:hover}) $\to$ Weight = $10$.
+  \item \textbf{c (Elements, Pseudo-elements)}: Number of type selectors (\texttt{p}, \texttt{div}) and pseudo-elements (\texttt{::before}) $\to$ Weight = $1$.
+\end{itemize}
+\textbf{Examples}:
+\begin{enumerate}
+  \item \texttt{div\#main p} $\to 1\text{ ID} + 0\text{ Classes} + 2\text{ Elements} = \mathbf{(1, 0, 2)}$.
+  \item \texttt{header nav.menu ul li.active a:hover} $\to 0\text{ IDs} + 3\text{ Classes/Pseudos} + 4\text{ Elements} = \mathbf{(0, 3, 4)}$.
+  \item \texttt{\#main} beats \texttt{header nav.menu ul li.active a:hover} because $a=1 > a=0$.
+\end{enumerate}
+\end{qbsolutionbox}
+
+\noindent\textbf{Q.52 [Coding --- 5 Marks]} Write CSS rules implementing a responsive CSS Box Model container with background image cover, border-radius, and auto margin centering.
+
+\begin{qbsolutionbox}[Answer to Q.52]
+\begin{lstlisting}[language=HTML]
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  .profile-card {
+    width: 320px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff url("pattern.png") no-repeat center / cover;
+    border: 2px solid #0066cc;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+</style>
+<div class="profile-card">
+  <h2>John Doe</h2>
+  <p>Software Engineer</p>
+</div>
+\end{lstlisting}
+\end{qbsolutionbox}
+

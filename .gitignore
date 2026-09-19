@@ -1,0 +1,44 @@
+# LaTeX build files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+
+# Output builds
+Physics/build/
+Physics/main.synctex(busy)
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node & Platform
+node_modules/
+**/node_modules/
+.env
+.env.local
+**/dist/
+**/release/
+release/
+*.dmg
+*.zip

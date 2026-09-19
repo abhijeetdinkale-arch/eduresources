@@ -1,0 +1,144 @@
+\chapter{Multivariable Integration and Applications}
+\label{chap:multivariable-integration}
+
+% ==============================================================================
+% SECTION 5.1: OVERVIEW & LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Multiple integrals extend the concepts of single-variable integration to calculate multi-dimensional geometric quantities and physical properties. In mechanical, civil, and electrical engineering, double and triple integrals provide the exact analytical tools to evaluate planar areas, spatial volumes, centers of mass, moments of inertia, and total charge / flux distributions over complex domains.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Evaluate Double Integrals}: Compute iterated double integrals over Cartesian rectangular and general non-rectangular Type I / Type II domains.
+    \item \textbf{Execute Change of Order of Integration}: Sketch integration regions, reverse the order of integration ($dx\,dy \leftrightarrow dy\,dx$), and evaluate otherwise intractable integrals.
+    \item \textbf{Apply Jacobians and Coordinate Transformations}: Transform Cartesian double and triple integrals into Polar, Cylindrical, and Spherical coordinate systems using Jacobian scaling factors.
+    \item \textbf{Evaluate Triple Integrals}: Compute volume integrals over bounding surfaces such as planes, paraboloids, cylinders, cones, and spheres.
+    \item \textbf{Calculate Geometric Area and Volume}: Determine planar areas $A = \iint_R 1\,dA$ and 3D solid volumes $V = \iiint_V 1\,dV$.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 5.2: DOUBLE INTEGRALS & CHANGE OF ORDER
+% ==============================================================================
+\section{Double Integrals \& Change of Order}
+
+\begin{definition}[Double Integral over Planar Region]
+For a continuous function $f(x,y)$ over a bounded region $R \subset \mathbb{R}^2$, the double integral is defined via Fubini's Theorem:
+\begin{equation}
+\iint_R f(x,y)\,dA = \int_{a}^b \int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\,dx = \int_{c}^d \int_{h_1(y)}^{h_2(y)} f(x,y)\,dx\,dy
+\end{equation}
+\end{definition}
+
+\begin{methodbox}[Algorithm for Changing the Order of Integration]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Extract Domain Inequalities}: Read the given outer and inner limits: e.g., $x \in [a,b]$ and $y \in [g_1(x), g_2(x)]$.
+    \item \textbf{Sketch the Exact Region $R$}: Plot the boundary curves $y = g_1(x)$, $y = g_2(x)$, $x = a$, and $x = b$.
+    \item \textbf{Re-slice the Domain Horizontally}:
+    \begin{itemize}
+        \item Find the global $y$-range: $y \in [c, d]$.
+        \item Determine the left boundary $x = h_1(y)$ and right boundary $x = h_2(y)$.
+    \end{itemize}
+    \item \textbf{Formulate and Evaluate the New Integral}:
+    \begin{equation}
+    \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\,dx \longrightarrow \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y)\,dx\,dy
+    \end{equation}
+\end{enumerate}
+\end{methodbox}
+
+\begin{example}[Change of Order of Integration]
+Evaluate by changing the order of integration:
+\begin{equation}
+I = \int_0^1 \int_y^1 e^{x^2}\,dx\,dy
+\end{equation}
+\end{example}
+
+\begin{solutionbox}
+1. \textbf{Identify Original Region $R$}:
+The limits of integration are $y \le x \le 1$ with $0 \le y \le 1$.
+The bounding lines are $x = y$, $x = 1$, and $y = 0$.
+
+2. \textbf{Change Order of Integration (Vertical Slices)}:
+In the new order, $x$ varies globally from $0$ to $1$: $x \in [0, 1]$.
+For a fixed $x$, $y$ varies from the $x$-axis ($y = 0$) up to the line $y = x$: $y \in [0, x]$.
+
+3. \textbf{Transformed Integral}:
+\begin{align}
+I &= \int_0^1 \left( \int_0^x e^{x^2}\,dy \right) dx = \int_0^1 e^{x^2} \Big[ y \Big]_0^x \, dx = \int_0^1 x e^{x^2}\,dx
+\end{align}
+Substitute $u = x^2 \implies du = 2x\,dx$:
+\begin{equation}
+I = \frac{1}{2} \int_0^1 e^u\,du = \frac{1}{2} \Big[ e^u \Big]_0^1 = \frac{e - 1}{2}
+\end{equation}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.3: COORDINATE TRANSFORMATIONS & JACOBIANS
+% ==============================================================================
+\section{Jacobian Transformations \& Polar / Cylindrical / Spherical Systems}
+
+\begin{definition}[Jacobian Transformation Matrix]
+For a 2D transformation $x = x(u,v), y = y(u,v)$:
+\begin{equation}
+J = \frac{\partial(x,y)}{\partial(u,v)} = \begin{vmatrix}
+\frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+\frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+\end{vmatrix}, \quad dA = dx\,dy = |J|\,du\,dv
+\end{equation}
+For a 3D transformation $x = x(u,v,w), y = y(u,v,w), z = z(u,v,w)$:
+\begin{equation}
+J = \frac{\partial(x,y,z)}{\partial(u,v,w)} = \begin{vmatrix}
+\frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} & \frac{\partial x}{\partial w} \\
+\frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} & \frac{\partial y}{\partial w} \\
+\frac{\partial z}{\partial u} & \frac{\partial z}{\partial v} & \frac{\partial z}{\partial w}
+\end{vmatrix}, \quad dV = dx\,dy\,dz = |J|\,du\,dv\,dw
+\end{equation}
+\end{definition}
+
+\subsection{Standard Engineering Coordinate Systems}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Polar Coordinates (2D)}:
+    \begin{equation}
+    x = r\cos\theta, \quad y = r\sin\theta \implies J = r \implies dA = r\,dr\,d\theta
+    \end{equation}
+    \item \textbf{Cylindrical Coordinates (3D)}:
+    \begin{equation}
+    x = r\cos\theta, \quad y = r\sin\theta, \quad z = z \implies J = r \implies dV = r\,dr\,d\theta\,dz
+    \end{equation}
+    \item \textbf{Spherical Polar Coordinates (3D)}:
+    \begin{equation}
+    x = \rho\sin\phi\cos\theta, \quad y = \rho\sin\phi\sin\theta, \quad z = \rho\cos\phi
+    \end{equation}
+    \begin{equation}
+    J = \rho^2 \sin\phi \implies dV = \rho^2 \sin\phi\,d\rho\,d\phi\,d\theta
+    \end{equation}
+    where $\rho \in [0, \infty)$, $\phi \in [0, \pi]$ (polar angle from $+z$), $\theta \in [0, 2\pi]$ (azimuthal angle).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.4: TRIPLE INTEGRALS & SOLID VOLUMES
+% ==============================================================================
+\section{Triple Integrals \& Solid Volumes}
+
+\begin{definition}[Volume via Triple Integration]
+The solid volume $V$ of a closed 3D bounded domain $\Omega$ is:
+\begin{equation}
+V = \iiint_\Omega 1\,dV
+\end{equation}
+\end{definition}
+
+\begin{example}[Volume of Sphere via Spherical Coordinates]
+Calculate the volume of a sphere of radius $R$ defined by $x^2 + y^2 + z^2 \le R^2$.
+\end{example}
+
+\begin{solutionbox}
+Transform to spherical coordinates:
+$\rho \in [0, R]$, $\phi \in [0, \pi]$, $\theta \in [0, 2\pi]$.
+\begin{align}
+V &= \int_0^{2\pi} \int_0^\pi \int_0^R \rho^2 \sin\phi \, d\rho \, d\phi \, d\theta \\
+&= \left( \int_0^{2\pi} d\theta \right) \left( \int_0^\pi \sin\phi \, d\phi \right) \left( \int_0^R \rho^2 \, d\rho \right) \\
+&= (2\pi) \Big[ -\cos\phi \Big]_0^\pi \left[ \frac{\rho^3}{3} \right]_0^R = (2\pi)(1 - (-1))\left( \frac{R^3}{3} \right) = \frac{4}{3}\pi R^3
+\end{align}
+\end{solutionbox}
+

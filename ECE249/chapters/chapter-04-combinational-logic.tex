@@ -1,0 +1,394 @@
+\chapter{Introduction to Combinational Logic Circuits}
+\label{chap:combinational-logic}
+
+\section{Introduction \& Design Principles}
+Combinational logic circuits are the fundamental building blocks of digital processing architectures. In a combinational circuit, the outputs at any instant of time depend **strictly on the present combination of input variables**, with no influence from past inputs or stored states.
+
+\begin{definition}[Combinational Logic Circuit]
+A network of interconnected digital logic gates whose outputs at any given time are determined solely by the instantaneous values of its inputs, without feedback paths or internal memory elements.
+\end{definition}
+
+\noindent **The Standard Combinational Design Flow:**
+\begin{center}
+\begin{tikzpicture}[node distance=1.0cm, auto, >=Stealth, transform shape, scale=0.75]
+    \node (p1) [draw=brandnavy, fill=boxnavybg, rounded corners, inner sep=5pt, font=\small\bfseries] {1. Specification};
+    \node (p2) [draw=brandblue, fill=boxskybg, rounded corners, inner sep=5pt, right=0.6cm of p1, font=\small\bfseries] {2. Truth Table};
+    \node (p3) [draw=brandamber, fill=boxgoldbg, rounded corners, inner sep=5pt, right=0.6cm of p2, font=\small\bfseries] {3. K-Map Minimization};
+    \node (p4) [draw=brandteal, fill=boxtealbg, rounded corners, inner sep=5pt, right=0.6cm of p3, font=\small\bfseries] {4. Circuit Synthesis};
+    
+    \draw[->, line width=1.3pt, brandnavy] (p1) -- (p2);
+    \draw[->, line width=1.3pt, brandblue] (p2) -- (p3);
+    \draw[->, line width=1.3pt, brandamber] (p3) -- (p4);
+\end{tikzpicture}
+\end{center}
+
+---
+
+\section{Arithmetic Adders}
+
+\subsection{Half Adder}
+A Half Adder is an arithmetic circuit that adds two single-bit binary inputs ($A$ and $B$) and generates two output bits: **Sum ($S$)** and **Carry ($C$)**.
+
+\begin{center}
+\begin{circuitikz}[scale=0.85, transform shape]
+    % XOR Gate for Sum
+    \node (xor1) at (2, 2.2) [xor gate US, draw, logic gate inputs=nn] {};
+    \draw (xor1.input 1) -- ++(-1.5,0) node[left] {$A$};
+    \draw (xor1.input 2) -- ++(-1.5,0) node[left] {$B$};
+    \draw (xor1.output) -- ++(1.0,0) node[right, font=\bfseries] {$S = A \oplus B$};
+
+    % AND Gate for Carry
+    \node (and1) at (2, 0.4) [and gate US, draw, logic gate inputs=nn] {};
+    \draw (xor1.input 1) ++(-0.8,0) node[circ] {} |- (and1.input 1);
+    \draw (xor1.input 2) ++(-0.5,0) node[circ] {} |- (and1.input 2);
+    \draw (and1.output) -- ++(1.0,0) node[right, font=\bfseries] {$C = A \cdot B$};
+\end{circuitikz}
+\end{center}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{cc|cc|l}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{Carry ($C$)} & \textbf{Sum ($S$)} & \textbf{Arithmetic Addition} \\
+\midrule
+0 & 0 & 0 & 0 & $0 + 0 = 00_2$ \\
+0 & 1 & 0 & 1 & $0 + 1 = 01_2$ \\
+1 & 0 & 0 & 1 & $1 + 0 = 01_2$ \\
+1 & 1 & 1 & 0 & $1 + 1 = 10_2$ \\
+\bottomrule
+\end{tabular}
+\caption{Truth table for a Binary Half Adder.}
+\label{tab:half-adder}
+\end{table}
+
+\begin{keyequation}[Half Adder Boolean Expressions]
+\begin{equation}
+    S = A \oplus B = \overline{A}B + A\overline{B}, \qquad C = A \cdot B
+\end{equation}
+\end{keyequation}
+
+\subsection{Full Adder}
+A Half Adder cannot accept a carry generated from a lower significant column. A **Full Adder** adds three 1-bit inputs: $A$, $B$, and an incoming carry $C_{in}$, producing Sum ($S$) and Carry-Out ($C_{out}$).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{ccc|cc|l}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{Input $C_{in}$} & \textbf{Carry Out ($C_{out}$)} & \textbf{Sum ($S$)} & \textbf{Decimal Value} \\
+\midrule
+0 & 0 & 0 & 0 & 0 & $0+0+0 = 0$ \\
+0 & 0 & 1 & 0 & 1 & $0+0+1 = 1$ \\
+0 & 1 & 0 & 0 & 1 & $0+1+0 = 1$ \\
+0 & 1 & 1 & 1 & 0 & $0+1+1 = 2$ \\
+1 & 0 & 0 & 0 & 1 & $1+0+0 = 1$ \\
+1 & 0 & 1 & 1 & 0 & $1+0+1 = 2$ \\
+1 & 1 & 0 & 1 & 0 & $1+1+0 = 2$ \\
+1 & 1 & 1 & 1 & 1 & $1+1+1 = 3$ \\
+\bottomrule
+\end{tabular}
+\caption{Truth table for a Binary Full Adder.}
+\label{tab:full-adder}
+\end{table}
+
+\begin{keyequation}[Full Adder Boolean Equations]
+\begin{align}
+    S &= A \oplus B \oplus C_{in} \\
+    C_{out} &= AB + BC_{in} + AC_{in} = AB + C_{in}(A \oplus B)
+\end{align}
+\end{keyequation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Half Adder 1
+    \draw[fill=boxskybg, draw=boxskyborder, line width=1.2pt, rounded corners=4pt] (0,1) rectangle (3.2, 3.5);
+    \node at (1.6, 3.1) [font=\small\bfseries\color{brandblue}] {Half Adder 1};
+    \draw (0, 2.5) -- ++(-0.8,0) node[left] {$A$};
+    \draw (0, 1.7) -- ++(-0.8,0) node[left] {$B$};
+    
+    % Half Adder 2
+    \draw[fill=boxskybg, draw=boxskyborder, line width=1.2pt, rounded corners=4pt] (4.5, 0.5) rectangle (7.7, 3.0);
+    \node at (6.1, 2.6) [font=\small\bfseries\color{brandblue}] {Half Adder 2};
+    \draw (4.5, 1.2) -- ++(-5.3,0) node[left] {$C_{in}$};
+    
+    % Connections
+    \draw (3.2, 2.2) -- (4.5, 2.2) node[midway, above, font=\scriptsize] {$A \oplus B$};
+    \draw (7.7, 2.0) -- ++(1.5,0) node[right, font=\bfseries] {$S = A \oplus B \oplus C_{in}$};
+    
+    % OR gate for Carry
+    \node (or1) at (9.5, 0.5) [or gate US, draw, logic gate inputs=nn] {};
+    \draw (3.2, 1.3) -- ++(0.5,0) |- (or1.input 1) node[pos=0.2, above, font=\tiny] {$C_1{=}AB$};
+    \draw (7.7, 0.8) -- ++(0.5,0) |- (or1.input 2) node[pos=0.2, below, font=\tiny] {$C_2{=}C_{in}(A\oplus B)$};
+    \draw (or1.output) -- ++(0.8,0) node[right, font=\bfseries] {$C_{out}$};
+\end{tikzpicture}
+\caption{Full Adder synthesized using Two Half Adders and One OR Gate.}
+\label{fig:full-adder-two-ha}
+\end{figure}
+
+---
+
+\section{Arithmetic Subtractors}
+
+\subsection{Half Subtractor}
+Subtracts a 1-bit subtrahend ($B$) from a 1-bit minuend ($A$), generating **Difference ($D$)** and **Borrow-Out ($B_{out}$)**.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{cc|cc|X}
+\toprule
+\textbf{Minuend ($A$)} & \textbf{Subtrahend ($B$)} & \textbf{Borrow ($B_{out}$)} & \textbf{Difference ($D$)} & \textbf{Arithmetic Operation ($A - B$)} \\
+\midrule
+0 & 0 & 0 & 0 & $0 - 0 = 0$ \\
+0 & 1 & 1 & 1 & $0 - 1 = -1 \implies \text{Borrow } 1 \rightarrow \text{Diff } 1$ \\
+1 & 0 & 0 & 1 & $1 - 0 = 1$ \\
+1 & 1 & 0 & 0 & $1 - 1 = 0$ \\
+\bottomrule
+\end{tabularx}
+\caption{Truth table for a Binary Half Subtractor.}
+\label{tab:half-subtractor}
+\end{table}
+
+\begin{keyequation}[Half Subtractor Boolean Equations]
+\begin{equation}
+    D = A \oplus B, \qquad B_{out} = \overline{A} \cdot B
+\end{equation}
+\end{keyequation}
+
+\subsection{Full Subtractor}
+Performs binary subtraction involving three bits: minuend ($A$), subtrahend ($B$), and borrow-in ($B_{in}$).
+
+\begin{keyequation}[Full Subtractor Boolean Equations]
+\begin{align}
+    D &= A \oplus B \oplus B_{in} \\
+    B_{out} &= \overline{A}B + \overline{A}B_{in} + BB_{in} = \overline{A}B + B_{in}\overline{(A \oplus B)}
+\end{align}
+\end{keyequation}
+
+\noindent A Full Subtractor can be realized by cascading **two Half Subtractors and one OR gate**.
+
+---
+
+\section{Multiplexers (MUX / Data Selectors)}
+
+\subsection{Theory of Operation}
+A Multiplexer (MUX) is a combinational circuit that selects binary information from one of $2^n$ input lines and directs it to a single output line based on the binary state of $n$ selection lines.
+
+\begin{keyequation}[Multiplexer Fundamental Dimensioning]
+\begin{equation}
+    N_{\text{inputs}} = 2^n \iff n = \log_2(N_{\text{inputs}})
+\end{equation}
+Where $N_{\text{inputs}}$ is the number of data input lines and $n$ is the number of select lines.
+\end{keyequation}
+
+\subsection{4:1 Multiplexer}
+\begin{itemize}
+    \item \textbf{Data Inputs:} $I_0, I_1, I_2, I_3$ ($2^2 = 4 \implies n=2$)
+    \item \textbf{Select Lines:} $S_1, S_0$ ($S_1$ is MSB, $S_0$ is LSB)
+    \item \textbf{Output:} $Y$
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{cc|c|l}
+\toprule
+\textbf{Select $S_1$} & \textbf{Select $S_0$} & \textbf{Output $Y$} & \textbf{Selected Channel} \\
+\midrule
+0 & 0 & $I_0$ & Channel 0 Selected \\
+0 & 1 & $I_1$ & Channel 1 Selected \\
+1 & 0 & $I_2$ & Channel 2 Selected \\
+1 & 1 & $I_3$ & Channel 3 Selected \\
+\bottomrule
+\end{tabular}
+\caption{Function Table for a 4:1 Multiplexer.}
+\label{tab:4-to-1-mux}
+\end{table}
+
+\begin{keyequation}[4:1 Multiplexer Output Equation]
+\begin{equation}
+    Y = \overline{S_1}\,\overline{S_0}I_0 + \overline{S_1}S_0I_1 + S_1\overline{S_0}I_2 + S_1S_0I_3
+\end{equation}
+\end{keyequation}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % 4 AND Gates
+    \node (and0) at (2,3.5) [and gate US, draw, logic gate inputs=nnn, scale=0.8] {};
+    \node (and1) at (2,2.3) [and gate US, draw, logic gate inputs=nnn, scale=0.8] {};
+    \node (and2) at (2,1.1) [and gate US, draw, logic gate inputs=nnn, scale=0.8] {};
+    \node (and3) at (2,-0.1) [and gate US, draw, logic gate inputs=nnn, scale=0.8] {};
+    
+    % OR Gate
+    \node (or1) at (5,1.7) [or gate US, draw, logic gate inputs=nnnn, scale=1.1] {};
+    
+    \draw (and0.output) -- ++(0.8,0) |- (or1.input 1);
+    \draw (and1.output) -- ++(0.4,0) |- (or1.input 2);
+    \draw (and2.output) -- ++(0.4,0) |- (or1.input 3);
+    \draw (and3.output) -- ++(0.8,0) |- (or1.input 4);
+    
+    \draw (or1.output) -- ++(1.0,0) node[right, font=\bfseries] {$Y$};
+    
+    \draw (and0.input 1) -- ++(-2.5,0) node[left] {$I_0$};
+    \draw (and1.input 1) -- ++(-2.5,0) node[left] {$I_1$};
+    \draw (and2.input 1) -- ++(-2.5,0) node[left] {$I_2$};
+    \draw (and3.input 1) -- ++(-2.5,0) node[left] {$I_3$};
+\end{circuitikz}
+\caption{Gate-level logic implementation of a 4-to-1 Multiplexer.}
+\label{fig:4-to-1-mux-circuit}
+\end{figure}
+
+\begin{example}[Boolean Function Synthesis using an 8:1 Multiplexer]
+Implement the 3-variable logic function $F(A,B,C) = \sum m(1, 3, 4, 6, 7)$ using an 8:1 Multiplexer.
+\tcblower
+\textbf{Step 1: Determine Dimensions}
+Number of variables $n = 3 \implies 2^3 = 8$ data inputs ($I_0$ to $I_7$) and $3$ select lines ($S_2 = A, S_1 = B, S_0 = C$).
+
+\textbf{Step 2: Map Minterms to Multiplexer Data Inputs}
+\begin{itemize}
+    \item Connect minterm indices present in $F$ ($1, 3, 4, 6, 7$) to logic HIGH ($\mathbf{1} / V_{CC}$).
+    \item Connect remaining minterm indices ($0, 2, 5$) to logic LOW ($\mathbf{0} / \text{GND}$).
+\end{itemize}
+
+\textbf{Step 3: Multiplexer Connections}
+$$\mathbf{I_1 = I_3 = I_4 = I_6 = I_7 = 1 \text{ (5V)}, \qquad I_0 = I_2 = I_5 = 0 \text{ (GND)}}$$
+$$\mathbf{S_2 = A, \quad S_1 = B, \quad S_0 = C}$$
+\end{example}
+
+---
+
+\section{De-Multiplexers (DEMUX / Data Distributors)}
+
+\subsection{Theory of Operation}
+A De-multiplexer receives data on a single input line and steers it to one of $2^n$ output lines depending on the values of $n$ selection lines.
+
+\begin{keyequation}[1:4 De-multiplexer Equations]
+\begin{align}
+    Y_0 &= \overline{S_1}\,\overline{S_0} \cdot D_{in} \\
+    Y_1 &= \overline{S_1}S_0 \cdot D_{in} \\
+    Y_2 &= S_1\overline{S_0} \cdot D_{in} \\
+    Y_3 &= S_1S_0 \cdot D_{in}
+\end{align}
+\end{keyequation}
+
+---
+
+\section{Decoders and Encoders}
+
+\subsection{Binary Decoders (2-to-4 and 3-to-8 Lines)}
+A Decoder is a combinational circuit that converts an $n$-bit binary code into up to $2^n$ unique output lines. 
+
+\begin{itemize}
+    \item **Active-High Outputs:** The selected line outputs logic $\mathbf{1}$; all non-selected lines output logic $\mathbf{0}$.
+    \item **Active-Low Outputs (e.g., 74138 Decoder):** The selected line outputs logic $\mathbf{0}$; all non-selected lines output logic $\mathbf{1}$.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c|cc|cccc}
+\toprule
+\textbf{Enable ($E$)} & \textbf{Input $A$} & \textbf{Input $B$} & \textbf{$Y_3$} & \textbf{$Y_2$} & \textbf{$Y_1$} & \textbf{$Y_0$} \\
+\midrule
+0 & X & X & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+1 & 0 & 1 & 0 & 0 & 1 & 0 \\
+1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Truth table for a 2-to-4 Line Decoder with Active-High outputs.}
+\label{tab:2-to-4-decoder}
+\end{table}
+
+\subsection{Binary Encoders \& Priority Encoders}
+An Encoder performs the inverse operation of a decoder: it accepts $2^n$ (or fewer) input lines and generates an $n$-bit binary code.
+
+\subsubsection{8-to-3 Octal-to-Binary Encoder}
+\begin{itemize}
+    \item \textbf{Inputs:} $D_0, D_1, D_2, D_3, D_4, D_5, D_6, D_7$ (only one input is active at any time).
+    \item \textbf{Outputs:} $X, Y, Z$ ($X$ is MSB, $Z$ is LSB).
+\end{itemize}
+
+\begin{keyequation}[8-to-3 Encoder Output Equations]
+\begin{align}
+    Z &= D_1 + D_3 + D_5 + D_7 \\
+    Y &= D_2 + D_3 + D_6 + D_7 \\
+    X &= D_4 + D_5 + D_6 + D_7
+\end{align}
+\end{keyequation}
+
+\begin{commonmistake}[Priority Encoder Requirement]
+Standard encoders produce invalid outputs when more than one input is active simultaneously. A **Priority Encoder** establishes an explicit input priority (e.g., $D_7 > D_6 > \dots > D_0$). If both $D_2$ and $D_6$ are active, the priority encoder exclusively outputs code $110_2$ (corresponding to $D_6$). It also provides a **Valid Output ($V$)** flag to differentiate input $D_0 = 1$ from an all-zero inactive condition.
+\end{commonmistake}
+
+---
+
+\section{Digital Magnitude Comparators}
+
+\subsection{1-Bit Magnitude Comparator}
+Compares two 1-bit inputs $A$ and $B$, generating three mutually exclusive outputs:
+\begin{keyequation}[1-Bit Magnitude Comparator Equations]
+\begin{align}
+    (A > B) &= A \cdot \overline{B} \\
+    (A = B) &= A \odot B = \overline{A \oplus B} = AB + \overline{A}\,\overline{B} \\
+    (A < B) &= \overline{A} \cdot B
+\end{align}
+\end{keyequation}
+
+\subsection{2-Bit Magnitude Comparator}
+Compares two 2-bit words: $A = (A_1 A_0)_2$ and $B = (B_1 B_0)_2$.
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % Comparator Box
+    \draw[fill=boxnavybg, draw=brandnavy, line width=1.5pt, rounded corners=6pt] (0,0) rectangle (5,4);
+    \node at (2.5, 3.5) [font=\bfseries\sffamily\color{brandnavy}] {2-Bit Comparator};
+    
+    % Inputs
+    \draw (-1.5, 2.8) node[left] {$A_1 A_0$} -- (0, 2.8);
+    \draw (-1.5, 1.2) node[left] {$B_1 B_0$} -- (0, 1.2);
+    
+    % Outputs
+    \draw (5, 3.0) -- ++(1.5,0) node[right, font=\bfseries] {$A > B$};
+    \draw (5, 2.0) -- ++(1.5,0) node[right, font=\bfseries] {$A = B$};
+    \draw (5, 1.0) -- ++(1.5,0) node[right, font=\bfseries] {$A < B$};
+\end{circuitikz}
+\caption{Block representation of a 2-bit digital magnitude comparator.}
+\label{fig:2-bit-comparator}
+\end{figure}
+
+\begin{keyequation}[2-Bit Magnitude Comparator Equations]
+Let equality flags for individual bit positions be:
+\begin{equation}
+    x_1 = \overline{A_1 \oplus B_1} = A_1B_1 + \overline{A_1}\,\overline{B_1}, \qquad x_0 = \overline{A_0 \oplus B_0} = A_0B_0 + \overline{A_0}\,\overline{B_0}
+\end{equation}
+Then the comparator outputs are synthesized as:
+\begin{align}
+    (A = B) &= x_1 \cdot x_0 \\
+    (A > B) &= A_1\overline{B_1} + x_1 (A_0\overline{B_0}) \\
+    (A < B) &= \overline{A_1}B_1 + x_1 (\overline{A_0}B_0)
+\end{align}
+\end{keyequation}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 4 Essential Review Sheet]
+\begin{itemize}
+    \item \textbf{Combinational Circuit:} Memoryless; output depends strictly on instantaneous inputs.
+    \item \textbf{Half Adder:} $S = A \oplus B$, $C = AB$.
+    \item \textbf{Full Adder:} $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$. Constructed with 2 Half Adders and 1 OR gate.
+    \item \textbf{Half Subtractor:} $D = A \oplus B$, $B_{out} = \bar{A}B$.
+    \item \textbf{Full Subtractor:} $D = A \oplus B \oplus B_{in}$, $B_{out} = \bar{A}B + B_{in}\overline{(A \oplus B)}$. Constructed with 2 Half Subtractors and 1 OR gate.
+    \item \textbf{Multiplexer (MUX):} $2^n$ data inputs, $n$ select lines, 1 output. Acts as a universal logic synthesizer.
+    \item \textbf{De-multiplexer (DEMUX):} 1 data input, $n$ select lines, $2^n$ outputs.
+    \item \textbf{Decoder:} $n$ inputs $\rightarrow 2^n$ outputs. Active-High vs Active-Low (74138).
+    \item \textbf{Encoder:} $2^n$ inputs $\rightarrow n$ outputs. Priority encoders resolve multi-input conflicts.
+    \item \textbf{2-Bit Comparator:} Evaluates $A>B$, $A=B$, $A<B$ using bitwise equality terms $x_1, x_0$.
+\end{itemize}
+\end{quickrevision}

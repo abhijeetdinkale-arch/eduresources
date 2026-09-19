@@ -1,0 +1,20 @@
+\chapter{Arduino and Sensor Interfacing Formulas}
+
+\begin{formulabox}[Signals, ADC \& PWM]
+\begin{align}
+\text{Nyquist Sampling Criterion:} \quad f_s &\ge 2 f_{max} \\
+\text{10-Bit ADC Output:} \quad \text{Count} &= \left\lfloor \frac{V_{in}}{V_{ref}} \times 1023 \right\rceil \\
+\text{10-Bit ADC Voltage Step (LSB):} \quad \Delta V &= \frac{V_{ref}}{1024} = \frac{5.0\,\text{V}}{1024} \approx 4.88\,\text{mV} \\
+\text{PWM Average Voltage (8-bit):} \quad V_{avg} &= \frac{\text{val}}{255} \times V_{CC}
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[Sensor Interfacing Transfer Functions]
+\begin{align}
+\text{LDR Voltage Divider Output:} \quad V_{out} &= V_{CC} \frac{R_{fixed}}{R_{LDR} + R_{fixed}} \\
+\text{Ultrasonic Sensor Distance (HC-SR04):} \quad d &= \frac{v_{sound} \cdot t_{echo}}{2} = \frac{(340\,\text{m/s}) \cdot t_{echo}}{2} \\
+\text{Distance in cm ($t$ in }\mu\text{s):} \quad d_{\text{cm}} &= \frac{t\,\mu\text{s}}{58.8} \\
+\text{DHT11 Sampling Minimum Interval:} \quad \Delta t &\ge 1.0\,\text{s} \quad (\text{Bandwidth } 1\,\text{Hz}) \\
+\text{DHT22 Sampling Minimum Interval:} \quad \Delta t &\ge 2.0\,\text{s} \quad (\text{Bandwidth } 0.5\,\text{Hz})
+\end{align}
+\end{formulabox}

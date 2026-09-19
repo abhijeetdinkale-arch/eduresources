@@ -1,0 +1,115 @@
+\section{Mid-Term Examination --- Set D}
+\label{sec:midterm_set_d}
+
+\LPUCSHeader{Mid-Term Examination (Comprehensive MCQ)}{D}{90 Minutes}{30 Marks}{CO1, CO2 \& CO3 (Unit 1: System, Unit 2: OS, Unit 3: Linux)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{In CPU control unit design, a Hardwired Control Unit differs from a Microprogrammed Control Unit because the hardwired design:}{Employs fixed combinational logic gates and state flip-flops to achieve maximum operating speed}{Stores micro-instructions inside a microcode ROM memory}{Can be easily reconfigured via software updates}{Does not require a clock signal}{1}
+
+\mcqitem{2}{In high-performance memory subsystems, Low-Order Memory Interleaving improves memory bandwidth during sequential reads by:}{Placing consecutive physical memory addresses in separate memory modules so access cycles overlap}{Storing all data in the first module until it fills up}{Requiring only 1 wire for all addresses}{Slowing down the memory bus to prevent overheating}{1}
+
+\mcqitem{3}{When a CPU write operation causes a cache miss under a 'Write-Allocate' policy, the cache controller:}{Fetches the target memory block from main memory into the cache line and then performs the write update}{Writes directly to main memory without updating the cache}{Discards the write data immediately}{Halts the CPU until an interrupt arrives}{1}
+
+\mcqitem{4}{DDR5 Synchronous DRAM introduces architectural enhancements over DDR4 by featuring:}{Two independent 32-bit subchannels per DIMM and built-in on-die Error-Correcting Code (ECC)}{A single 128-bit wide parallel bus}{Higher operating voltage ($1.5\text{V}$)}{Analog signal modulation}{1}
+
+\mcqitem{5}{The Write Amplification Factor (WAF) in Solid-State Drives is defined as the ratio of:}{The total amount of data written to flash NAND memory to the amount of data sent by the host OS}{Read requests to write requests}{Bad blocks to good blocks}{Total drive capacity to used capacity}{1}
+
+\mcqitem{6}{In enterprise storage arrays, a 'Hot Spare' is:}{An idle, powered-on backup drive configured to automatically rebuild array data when an active drive fails}{A drive running at high temperature}{A drive used strictly for storing operating system source code}{A tape backup drive stored off-site}{1}
+
+\mcqitem{7}{High Bandwidth Memory (HBM) achieves massive memory bandwidth for graphics accelerators by:}{Stacking DRAM silicon dies vertically using Through-Silicon Vias (TSVs) on a silicon interposer}{Using mechanical read heads spinning at high speed}{Increasing bus wire length to several meters}{Eliminating the need for a memory bus}{1}
+
+\mcqitem{8}{Under the IEEE 754 standard for 64-bit double-precision floating-point numbers, how many bits are allocated for the Exponent?}{11 bits (with bias 1023)}{8 bits}{15 bits}{23 bits}{1}
+
+\mcqitem{9}{In centralized bus arbitration using Daisy Chaining, which device on the bus is granted the highest priority to access the bus?}{The device electrically positioned closest to the central bus arbiter}{The device furthest from the arbiter}{The device with the highest numerical address}{All devices share identical round-robin priority}{1}
+
+\mcqitem{10}{A single Thunderbolt 3 or Thunderbolt 4 port supports daisy-chaining of up to how many compatible peripheral devices in series?}{6 devices}{2 devices}{16 devices}{32 devices}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q11 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{A primary performance drawback of pure microkernel operating systems compared to monolithic kernels is:}{High inter-process communication (IPC) overhead caused by repeated user-kernel context switching and message passing}{Inability to run on multi-core processors}{Lack of security isolation}{Total absence of virtual memory}{1}
+
+\mcqitem{12}{A context switch between two threads belonging to the same process is substantially faster than a context switch between two different processes because:}{The virtual memory address space (page tables) and memory mappings remain unchanged}{Threads do not possess execution stacks}{Thread switching bypasses the CPU hardware entirely}{Threads execute without CPU registers}{1}
+
+\mcqitem{13}{In CPU scheduling, the starvation (indefinite blocking) of low-priority processes in priority scheduling systems is effectively resolved by:}{Aging (gradually increasing the priority of processes that wait in the ready queue for long durations)}{Terminating low-priority processes immediately}{Assigning random priorities on every clock tick}{Replacing RAM with magnetic tape}{1}
+
+\mcqitem{14}{The modern hardware atomic instruction used to implement synchronization primitives (such as spinlocks and mutexes) without race conditions is:}{\texttt{Compare-And-Swap (CAS)} / \texttt{Test-And-Set}}{Unconditional Jump}{Standard Variable Assignment}{Bitwise XOR}{1}
+
+\mcqitem{15}{Memory Segmentation differs conceptually from Paging because Segmentation:}{Presents a programmer's logical view of memory using variable-sized modules (code, data, stack, heap)}{Divides physical memory into rigid fixed-size blocks}{Does not use base or limit registers}{Eliminates the need for an MMU}{1}
+
+\mcqitem{16}{The operating system dynamically monitors each process's Page-Fault Frequency (PFF). If a process's page-fault rate exceeds an upper threshold, the OS:}{Allocates additional physical page frames to that process to prevent thrashing}{Terminates the process immediately}{Halts all other running processes}{Swaps out the entire operating system kernel}{1}
+
+\mcqitem{17}{The 1997 Mars Pathfinder spacecraft software anomaly was caused by Priority Inversion between an information bus thread and a weather thread. It was permanently resolved by enabling:}{Priority Inheritance on the real-time mutexes in VxWorks}{Disabling all interrupts on the spacecraft}{Deleting the communications thread}{Replacing the CPU via radio signal}{1}
+
+\mcqitem{18}{The compiler optimization technique that replaces a loop of $N$ iterations with multiple replicated copies of the loop body to reduce branch overhead is:}{Loop Unrolling}{Dead Code Elimination}{Function Inlining}{Register Spilling}{1}
+
+\mcqitem{19}{In an operating system process table, the process state indicated by character 'Z' in utilities like \texttt{ps} or \texttt{top} represents a:}{Zombie Process (defunct process awaiting parent reap)}{Zero-priority background job}{Zipped compressed process}{ZenITH hypervisor process}{1}
+
+\mcqitem{20}{In software memory management, 'Dynamic Memory Allocation' errors where allocated heap memory is never freed via \texttt{free()} or garbage collection leads to:}{Memory Leaks (gradually consuming available RAM until system exhaustion)}{Segmentation Faults on compilation}{Stack Overflow on function entry}{Immediate CPU halt}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q21 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{The official command-line package manager used by Arch Linux to install, upgrade, and remove packages from binary repositories is:}{\texttt{pacman}}{\texttt{apt}}{\texttt{dnf}}{\texttt{zypper}}{1}
+
+\mcqitem{22}{Under the Linux Filesystem Hierarchy Standard (FHS), dynamically changing spool directories, system databases, and system logs reside in:}{\texttt{/var}}{\texttt{/bin}}{\texttt{/boot}}{\texttt{/usr}}{1}
+
+\mcqitem{23}{Which Linux command recursively searches the directory tree under \texttt{/home} for all files with a \texttt{.c} extension that are larger than $1\text{ MB}$?}{\texttt{find /home -name "*.c" -size +1M}}{\texttt{search /home "*.c" > 1MB}}{\texttt{grep -r "*.c" /home --size=1M}}{\texttt{locate /home/*.c -gt 1MB}}{1}
+
+\mcqitem{24}{Executing the command \texttt{grep -i "database" server.log} performs:}{A case-insensitive search for the word 'database' within \texttt{server.log}}{A case-sensitive replacement of 'database' with spaces}{An alphabetical sort of the file}{A byte-count calculation}{1}
+
+\mcqitem{25}{In Linux, why is assigning file permissions \texttt{chmod 777 sensitive.txt} considered a severe security vulnerability?}{It grants every user on the system unrestricted read, write, and execution rights to the file}{It deletes the file permanently from disk}{It prevents the root superuser from modifying the file}{It converts the file into an unreadable binary format}{1}
+
+\mcqitem{26}{In the output of the Linux command \texttt{ps aux}, a process whose state column is marked with the letter 'D' is currently in:}{Uninterruptible Sleep (typically waiting for disk I/O to complete)}{Deadlock}{Direct Memory Access}{Debug Mode}{1}
+
+\mcqitem{27}{In Linux command shells, which syntax redirects both Standard Output (\texttt{stdout}) and Standard Error (\texttt{stderr}) into the file \texttt{output.log}?}{\texttt{command > output.log 2>\&1}}{\texttt{command > output.log < 2}}{\texttt{command 2> output.log | 1}}{\texttt{command >> 2 output.log}}{1}
+
+\mcqitem{28}{In the Linux filesystem architecture, a 'Hard Link' cannot be created for a directory primarily because:}{Allowing hard links on directories could create infinite recursive loops (cycles) in the filesystem graph}{Directories have no Inodes}{Hard links consume too much disk storage}{Directories are stored only in RAM}{1}
+
+\mcqitem{29}{Containerization technologies (such as Docker) differ fundamentally from traditional Virtual Machines (VMs) because containers:}{Share the host operating system kernel and isolate processes using Linux namespaces and cgroups}{Run independent guest operating system kernels inside each container}{Require Type 1 hypervisor hardware extensions}{Emulate entire hardware CPUs and motherboards}{1}
+
+\mcqitem{30}{Which Linux terminal keyboard shortcut immediately sends the interrupt signal (\texttt{SIGINT}) to cancel and terminate the currently running foreground command?}{\texttt{Ctrl + C}}{\texttt{Ctrl + Z}}{\texttt{Ctrl + D}}{\texttt{Ctrl + L}}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (Mid-Term Set D)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Architectural, Systems \& Linux Explanations]
+\textbf{Q.5 (Ans: A)} Flash NAND blocks must be erased before they can be rewritten. When modifying small data chunks, the SSD controller must read entire blocks, modify them in RAM, and write them to new blocks (garbage collection). WAF $= \frac{\text{Bytes Written to NAND}}{\text{Bytes Written by Host}}$. An ideal WAF is 1; values $>1$ reduce flash lifespan.\\[2mm]
+\textbf{Q.12 (Ans: A)} Switching between processes requires invalidating or switching the page table base register (CR3 on x86), flushing the Translation Lookaside Buffer (TLB), and swapping memory contexts. Threads in the same process share identical virtual memory mappings; hence, only CPU registers and the stack pointer are swapped, minimizing cache/TLB churn.\\[2mm]
+\textbf{Q.27 (Ans: A)} In Bash, \texttt{>} redirects file descriptor 1 (\texttt{stdout}) to \texttt{output.log}. The token \texttt{2>\&1} redirects file descriptor 2 (\texttt{stderr}) to wherever file descriptor 1 currently points, capturing both normal output and errors into the same file.\\[2mm]
+\textbf{Q.28 (Ans: A)} Allowing hard links to directories would enable arbitrary cyclical sub-graphs within the directory tree, causing filesystem traversals (like \texttt{find} or \texttt{du}) to loop infinitely and breaking reference counting for directory garbage collection.\\[2mm]
+\textbf{Q.29 (Ans: A)} Unlike hypervisor VMs that virtualize entire physical hardware stacks and run distinct guest kernels, Linux containers leverage kernel namespaces (pid, net, mnt, ipc, uts, user) for isolation and control groups (cgroups) for resource constraints, sharing a single host kernel with negligible virtualization overhead.
+\end{solutionbox}
+
+\newpage

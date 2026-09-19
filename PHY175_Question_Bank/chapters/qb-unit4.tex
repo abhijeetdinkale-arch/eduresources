@@ -1,0 +1,155 @@
+\chapter{Unit 4: Introduction to Combinational Logic Circuits}
+
+\section{Section 1: Chapter-Wise Multiple-Choice Questions (60 MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 20)}
+\mcqitem{1}{What are the two outputs of a half adder?}{Input and output}{Select and enable}{Difference and borrow}{Sum and carry}
+\mcqitem{2}{Which logic operation produces the sum output of a half adder?}{OR operation}{NOT operation}{AND operation}{XOR operation}
+\mcqitem{3}{How many input bits does a full adder accept?}{Three input bits}{One input bit}{Two input bits}{Four input bits}
+\mcqitem{4}{What are the two outputs of a half subtractor?}{Difference and borrow}{Sum and carry}{Quotient and remainder}{Product and carry}
+\mcqitem{5}{Which logic operation produces the difference output of a half subtractor?}{XOR operation}{AND operation}{NOT operation}{NOR operation}
+\mcqitem{6}{What additional input distinguishes a full subtractor from a half subtractor?}{Borrow-in input}{Carry-in input}{Select input}{Enable input}
+\mcqitem{7}{What is the main function of a multiplexer?}{Select one input}{Store one input}{Activate every input}{Invert every input}
+\mcqitem{8}{How many select lines are required by a 4-to-1 multiplexer?}{Four select lines}{Two select lines}{One select line}{Three select lines}
+\mcqitem{9}{How many outputs does a basic multiplexer have?}{One output}{Two outputs}{Eight outputs}{Four outputs}
+\mcqitem{10}{What is the main function of a de-multiplexer?}{Combine many inputs}{Store many inputs}{Compare two inputs}{Route one input to many outputs}
+\mcqitem{11}{How many data inputs does a basic de-multiplexer have?}{Two data inputs}{One data input}{Four data inputs}{Eight data inputs}
+\mcqitem{12}{How many output lines are present in a 1-to-4 de-multiplexer?}{Two output lines}{Four output lines}{Three output lines}{Eight output lines}
+\mcqitem{13}{How many outputs does a 2-to-4 decoder have?}{Three outputs}{Four outputs}{Two outputs}{Eight outputs}
+\mcqitem{14}{For each valid input combination, how many outputs of a standard binary decoder are active?}{One output}{No outputs}{Two outputs}{All outputs}
+\mcqitem{15}{What is the purpose of an enable input on a decoder?}{Control decoder operation}{Increase input count}{Store decoded data}{Invert output values}
+\mcqitem{16}{What does a binary encoder produce from an active input line?}{A stored bit}{A clock pulse}{An analog signal}{A binary code}
+\mcqitem{17}{How many output bits does an 8-to-3 encoder produce?}{Three output bits}{Two output bits}{Eight output bits}{Four output bits}
+\mcqitem{18}{What is the purpose of a digital comparator?}{Store binary numbers}{Add binary numbers}{Compare binary numbers}{Encode binary numbers}
+\mcqitem{19}{Which output is active when two comparator inputs have the same value?}{$A > B$}{$A \neq B$}{$A < B$}{$A = B$}
+\mcqitem{20}{For 2-bit numbers $A = 10_2$ and $B = 01_2$, which comparison is correct?}{$A = 0$}{$A > B$}{$A < B$}{$A = B$}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 21 to 40)}
+\mcqitem{21}{Half adder with $A=1, B=1$. Outputs $S, C$ are:}{$S=0, C=1$}{$S=1, C=1$}{$S=1, C=0$}{$S=0, C=0$}
+\mcqitem{22}{Full adder with $A=1, B=0, C_{in}=1$. Outputs are:}{$S=0, C_{out}=1$}{$S=1, C_{out}=1$}{$S=0, C_{out}=0$}{$S=1, C_{out}=0$}
+\mcqitem{23}{4-bit ripple carry adder adds $0111_2$ and $1001_2$ with $C_{in}=1$. Result:}{$C_{out}=0, S=0001$}{$C_{out}=1, S=0000$}{$C_{out}=0, S=1111$}{$C_{out}=1, S=0001$}
+\mcqitem{24}{Full subtractor receives $A=0, B=1, B_{in}=1$. Difference and borrow-out:}{$D=1, B_{out}=0$}{$D=0, B_{out}=1$}{$D=1, B_{out}=1$}{$D=0, B_{out}=0$}
+\mcqitem{25}{2-bit subtractor calculates $10_2 - 01_2$. Difference and final borrow-out:}{$D=01, B_{out}=0$}{$D=11, B_{out}=0$}{$D=01, B_{out}=1$}{$D=00, B_{out}=1$}
+\mcqitem{26}{Which pair of Boolean expressions correctly represents difference and borrow of half subtractor?}{$D = A \oplus B, B_{out} = \bar{A}B$}{$D = A \oplus B, B_{out} = A\bar{B}$}{$D = \bar{A} \oplus B, B_{out} = AB$}{$D = AB, B_{out} = \bar{A}B$}
+\mcqitem{27}{4-to-1 MUX has $I_0=0, I_1=1, I_2=1, I_3=0$. Output when $S_1S_0 = 10$:}{$1$, determined by $I_1$}{$0$, determined by $I_3$}{$0$, determined by $I_0$}{$1$, determined by $I_2$}
+\mcqitem{28}{2-to-1 MUX uses $B$ as select input. Which input assignments make output $A \oplus B$?}{$I_0=A, I_1=A$}{$I_0=\bar{A}, I_1=\bar{A}$}{$I_0=A, I_1=\bar{A}$}{$I_0=\bar{A}, I_1=A$}
+\mcqitem{29}{Function $F(A,B,C) = \sum m(1,2,5,6)$ with MUX selects $A,B$. Inputs $(I_0,I_1,I_2,I_3)$:}{$C, C, \bar{C}, \bar{C}$}{$C, \bar{C}, C, \bar{C}$}{$\bar{C}, \bar{C}, C, C$}{$\bar{C}, C, \bar{C}, C$}
+\mcqitem{30}{1-to-4 DEMUX with data $D=1$ and select $S_1S_0 = 11$. Active output:}{$Y_1=1$}{$Y_3=1$}{$Y_0=1$}{$Y_2=1$}
+\mcqitem{31}{How to use 1-to-8 DEMUX as 3-to-8 active-high decoder?}{Connect outputs together}{Fix data input at 1}{Use select as data}{Fix data input at 0}
+\mcqitem{32}{3-to-8 active-high decoder receives $110_2$. Which output is active?}{$Y_6$}{$Y_5$}{$Y_7$}{$Y_3$}
+\mcqitem{33}{2-to-4 decoder implements $F(A,B) = \sum m(1,3)$. Which outputs must be ORed?}{$Y_1$ and $Y_3$}{$Y_0$ and $Y_1$}{$Y_0$ and $Y_2$}{$Y_2$ and $Y_3$}
+\mcqitem{34}{How many 2-to-4 decoders with enables construct one 3-to-8 decoder?}{Four decoders}{One decoder}{Three decoders}{Two decoders}
+\mcqitem{35}{In 8-to-3 binary encoder, only input $D_6$ is active. Encoded output $Y_2Y_1Y_0$:}{$011$}{$111$}{$110$}{$101$}
+\mcqitem{36}{8-to-3 priority encoder ($D_7$ highest). If $D_5=1$ and $D_2=1$ with others 0, output is:}{$111$}{$000$}{$010$}{$101$}
+\mcqitem{37}{2-bit comparator with $A=10_2, B=01_2$. Active output:}{$A=B$}{None}{$A>B$}{$A<B$}
+\mcqitem{38}{2-bit comparator reports $A>B=0, A=B=0, A<B=1$. If $A=10_2$, value of $B$ could be:}{$00_2$}{$10_2$}{$11_2$}{$01_2$}
+\mcqitem{39}{For $A=A_1A_0$ and $B=B_1B_0$, correct expression for $A>B$:}{$A_1\bar{B}_1 + (A_1\odot B_1)A_0\bar{B}_0$}{$\bar{A}_1B_1 + (A_1\odot B_1)\bar{A}_0B_0$}{$A_1\bar{B}_1 + (A_1\oplus B_1)\bar{A}_0B_0$}{$A_1\bar{B}_1 + (A_1\oplus B_1)A_0 B_0$}
+\mcqitem{40}{Two 2-bit numbers have equal MSBs. If $A_0=0$ and $B_0=1$, comparator indicates:}{$A<B$}{$A>B$}{Undefined}{$A=B$}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 60)}
+\mcqitem{41}{4-bit ripple adder adds $0111$ and $0001$ with $C_0=0$. Each carry delay is $t_c$, sum delay $t_s$. Guaranteed valid time:}{$4t_c + t_s$}{$\max(2t_c+t_s, 3t_c)$}{$\max(3t_c+t_s, 4t_c)$}{$3t_c + 4t_s$}
+\mcqitem{42}{For 2-bit CLA, carry $C_2$ without intermediate $C_1$:}{$C_2 = G_1P_1 + G_0P_0 + P_1C_0$}{$C_2 = G_1 + P_0G_0 + P_1P_0C_0$}{$C_2 = G_0 + P_0G_1 + P_1P_0C_0$}{$C_2 = G_1 + P_1G_0 + P_1P_0C_0$}
+\mcqitem{43}{4-bit two's complement adder computes $0110 + 0101$ ($+6 + +5$). Sum, unsigned carry-out, signed overflow flag:}{$S=1011, C_{out}=0, V=1$}{$S=1011, C_{out}=1, V=0$}{$S=1011, C_{out}=0, V=0$}{$S=0011, C_{out}=1, V=1$}
+\mcqitem{44}{Full subtractor borrow-out using $A \oplus B$ propagation term:}{$B_{out} = \bar{A}B + (A\oplus B)B_{in}$}{$B_{out} = A\bar{B} + \overline{A\oplus B}B_{in}$}{$B_{out} = \bar{A}B + \overline{A\oplus B}B_{in}$}{$B_{out} = A\bar{B} + (A\oplus B)B_{in}$}
+\mcqitem{45}{4-bit adder performs $A-B$ as $A+\bar{B}+1$ with $A=0011, B=0101$. Result $D, C_{out}, B_{out}, V$:}{$D=1110, C_{out}=0, B_{out}=1, V=0$}{$D=1110, C_{out}=1, B_{out}=0, V=0$}{$D=0010, C_{out}=1, B_{out}=0, V=1$}{$D=1110, C_{out}=0, B_{out}=1, V=1$}
+\mcqitem{46}{4-bit two's complement subtractor computes $A-B$ for $A=1000 (-8)$ and $B=0001 (+1)$:}{$D=1001, B_{out}=1, V=0$}{$D=1111, B_{out}=0, V=1$}{$D=0111, B_{out}=1, V=0$}{$D=0111, B_{out}=0, V=1$}
+\mcqitem{47}{Function $F(A,B,C) = \sum m(1,2,5,7)$ with MUX selects $B,C$ ($00,01,10,11$). Inputs $(I_0,I_1,I_2,I_3)$:}{$(0, 1, \bar{A}, A)$}{$(\bar{A}, A, 0, 1)$}{$(0, 1, A, \bar{A})$}{$(A, \bar{A}, 1, 0)$}
+\mcqitem{48}{4-to-1 MUX selects $A,B$ to implement majority $M = AB + AC + BC$. For $AB=00,01,10,11$, data inputs:}{$(C, C, 0, 1)$}{$(0, C, C, 1)$}{$(0, \bar{C}, C, 1)$}{$(C, 0, 1, C)$}
+\mcqitem{49}{16-to-1 MUX using 4-to-1 MUXes without external gates. Minimum multiplexers and levels:}{4 in 2 levels}{5 in 2 levels}{6 in 2 levels}{5 in 3 levels}
+\mcqitem{50}{Active-high 1-to-8 DEMUX built from one 1-to-2 and two 1-to-4 DEMUXes. Preserving select ordering $S_2S_1S_0$:}{Use $S_1$ on 1:2 and $S_2S_0$ on 1:4}{Use $S_0$ on 1:2 and $S_2S_1$ on 1:4}{Use $S_2$ on 1:2 and $S_1S_0$ on 1:4}{Use $S_2S_1$ on 1:4 and connect $S_0$}
+\mcqitem{51}{1-to-8 DEMUX with inputs $ABC$, outputs $Y_1, Y_2, Y_7$ ORed. Simplified function:}{$D[A(B\oplus C) + \bar{A}BC]$}{$D[\bar{A}(B\odot C) + ABC]$}{$D[A(B\odot C) + \bar{A}BC]$}{$D[\bar{A}(B\oplus C) + ABC]$}
+\mcqitem{52}{3-to-8 decoder with active-high outputs implements $F(A,B,C) = \prod M(0,3,5,6)$. Gate connection:}{$F = Y_1 + Y_2 + Y_4 + Y_7$}{$F = Y_0 Y_3 Y_5 Y_6$}{$F = \overline{Y_0 + Y_3 + Y_5 + Y_6}$}{$F = Y_0 + Y_3 + Y_5 + Y_6$}
+\mcqitem{53}{Two 2-to-4 decoders with active-low enable $\bar{E}$ to make 3-to-8 decoder with MSB $A$:}{Lower $\bar{E}=A$, upper $\bar{E}=\bar{A}$}{Both connected to $A$}{Both connected to $\bar{A}$}{Lower $\bar{E}=\bar{A}$, upper $\bar{E}=A$}
+\mcqitem{54}{3-to-8 decoder changes input directly from $011$ to $100$. What can occur due to unequal delays?}{Transient interval with no active output or multiple active outputs}{Must move directly with no transient}{Only $Y_3$ glitches}{Only $Y_4$ glitches}
+\mcqitem{55}{Non-priority 4-to-2 encoder: $Q_1=D_2+D_3, Q_0=D_1+D_3$. If $D_1=D_2=1$ with others 0, output is:}{$Q_1Q_0=11$, falsely resembling active $D_3$}{$Q_1Q_0=10$}{$Q_1Q_0=01$}{$Q_1Q_0=00$}
+\mcqitem{56}{4-to-2 priority encoder ($D_3 > D_2 > D_1 > D_0$). Correct equations for $Q_1Q_0$ and valid $V$:}{$Q_1 = D_3 + D_2, Q_0 = D_3 + \bar{D}_2 D_1, V = \sum D_i$}{$Q_1 = D_3 + \bar{D}_2, Q_0 = D_1 + D_0, V = \sum D_i$}{$Q_1 = D_3 + D_2, Q_0 = D_3 + D_1, V = \prod D_i$}{$Q_1 = D_2 + D_1, Q_0 = D_3 + \bar{D}_2 D_0, V = \sum D_i$}
+\mcqitem{57}{Two 8-to-3 priority encoders cascaded to 16-to-4 ($D_{15}$ highest). High-level combination:}{$Q_3 = V_H$, select high code when $V_H=1$, $V = V_H + V_L$}{$Q_3 = V_H V_L$, select low code when $V_L=0$}{$Q_3 = V_L$, select low code}{$Q_3 = V_H + V_L$, always high}
+\mcqitem{58}{For unsigned 2-bit numbers $A, B$, Boolean expression for $A=B$:}{$(A_1 \odot B_1)(A_0 \odot B_0)$}{$(A_1 \oplus B_1)(A_0 \oplus B_0)$}{$(A_1 \odot B_1) + (A_0 \odot B_0)$}{$(A_1 \oplus B_1) + (A_0 \oplus B_0)$}
+\mcqitem{59}{Unsigned condition $A > B$ for 2-bit numbers:}{$A_1\bar{B}_1 + (A_1 \oplus B_1)A_0\bar{B}_0$}{$A_1\bar{B}_1 + (A_1 \odot B_1)A_0\bar{B}_0$}{$A_0\bar{B}_0 + (A_0 \odot B_0)A_1\bar{B}_1$}{$A_1\bar{B}_1 + (A_1 \odot B_1)\bar{A}_0 B_0$}
+\mcqitem{60}{Inputs $A=10$ and $B=01$ applied to 2-bit comparator. Unsigned vs 2's complement results:}{Unsigned gives $A>B$; signed gives $A<B$}{Unsigned gives $A>B$; signed gives $A=B$}{Unsigned gives $A<B$; signed gives $A>B$}{Unsigned gives $A=B$; signed gives $A<B$}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Technical Rationales}
+
+\subsection*{Part A: Questions 1 to 30}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 1 to 30)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{D} & A half adder generates Sum ($S = A \oplus B$) and Carry ($C = AB$). & 16 & \textbf{D} & Encodes $2^n$ inputs into an $n$-bit binary address. \\
+2 & \textbf{D} & $S = A \oplus B$. & 17 & \textbf{A} & $8 = 2^3 \implies 3$ output bits. \\
+3 & \textbf{A} & Full adder takes inputs $A, B$, and $C_{in}$. & 18 & \textbf{C} & Determines whether $A > B, A = B$, or $A < B$. \\
+4 & \textbf{A} & Outputs are Difference ($D = A \oplus B$) and Borrow ($B_{out} = \bar{A}B$). & 19 & \textbf{D} & Equality line $A = B$ is asserted. \\
+5 & \textbf{A} & $D = A \oplus B$. & 20 & \textbf{B} & $A = 2, B = 1 \implies A > B$. \\
+6 & \textbf{A} & Full subtractor accepts Borrow-in ($B_{in}$). & 21 & \textbf{A} & $1+1 = 10_2 \implies S=0, C=1$. \\
+7 & \textbf{A} & A multiplexer routes one of many data inputs to a single output line. & 22 & \textbf{A} & $1+0+1 = 2_{10} = 10_2 \implies S=0, C_{out}=1$. \\
+8 & \textbf{B} & $2^n = 4 \implies n = 2$ select lines. & 23 & \textbf{D} & $7 + 9 + 1 = 17_{10} = 10001_2 \implies C_{out}=1, S=0001_2$. \\
+9 & \textbf{A} & A multiplexer has multiple inputs and exactly one output. & 24 & \textbf{B} & $0 - 1 - 1 = -2_{10} \implies D=0, B_{out}=1$. \\
+10 & \textbf{D} & Routes a single input data line to one of $2^n$ output lines. & 25 & \textbf{A} & $2 - 1 = 1 = 01_2$ with no borrow ($B_{out}=0$). \\
+11 & \textbf{B} & A demux has a single data input. & 26 & \textbf{A} & $D = A \oplus B, B_{out} = \bar{A}B$. \\
+12 & \textbf{B} & 1-to-4 demux has 4 output lines. & 27 & \textbf{D} & Select $10_2 = 2$ routes input $I_2 = 1$ to output. \\
+13 & \textbf{B} & $2^2 = 4$ outputs. & 28 & \textbf{C} & When $B=0$, $Y = A$; when $B=1$, $Y = \bar{A} \implies Y = \bar{B}A + B\bar{A} = A \oplus B$. \\
+14 & \textbf{A} & Decoders are one-hot: exactly one output line is active per valid input. & 29 & \textbf{B} & For $AB=00, Y=C$; for $AB=01, Y=\bar{C}$; for $AB=10, Y=C$; for $AB=11, Y=\bar{C}$. \\
+15 & \textbf{A} & Enable line activates or disables the entire chip. & 30 & \textbf{B} & $11_2 = 3 \implies Y_3 = D = 1$. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Part B: Questions 31 to 60}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 31 to 60)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+31 & \textbf{B} & With $D=1$, select lines decode directly to active-high outputs $Y_k = m_k$. & 46 & \textbf{D} & $-8 - (+1) = -9 < -8$ (underflow). Result stored $= 0111_2 (+7)$ with $V=1$. \\
+32 & \textbf{A} & $110_2 = 6 \implies Y_6 = 1$. & 47 & \textbf{A} & $BC=00\to 0; BC=01\to 1; BC=10\to \bar{A}; BC=11\to A$. \\
+33 & \textbf{A} & $F = Y_1 + Y_3 = m_1 + m_3$. & 48 & \textbf{B} & $AB=00\to 0; AB=01\to C; AB=10\to C; AB=11\to 1$. \\
+34 & \textbf{D} & Two 2-to-4 decoders enabled by $A$ and $\bar{A}$. & 49 & \textbf{B} & 4 first-level 4:1 MUXes fed into 1 second-level 4:1 MUX $= 5$ total in 2 levels. \\
+35 & \textbf{C} & $6_{10} = 110_2$. & 50 & \textbf{C} & MSB $S_2$ selects which 1-to-4 bank is active; $S_1S_0$ select the individual output line. \\
+36 & \textbf{D} & Highest active index is 5 $\implies 101_2$. & 51 & \textbf{D} & $Y_1+Y_2+Y_7 = D(\bar{A}\bar{B}C + \bar{A}B\bar{C} + ABC) = D[\bar{A}(B\oplus C) + ABC]$. \\
+37 & \textbf{C} & $2 > 1 \implies A>B$ active. & 52 & \textbf{A} & Complement of maxterms $0,3,5,6$ are minterms $1,2,4,7 \implies F = Y_1+Y_2+Y_4+Y_7$. \\
+38 & \textbf{C} & $A < B \implies B > 2 \implies B = 3 = 11_2$. & 53 & \textbf{D} & For lower half ($A=0$), enable must be 0 $\implies \bar{E}_{lower} = A$. For upper half ($A=1$), $\bar{E}_{upper} = \bar{A}$. \\
+39 & \textbf{A} & MSB check $A_1\bar{B}_1$ or if MSBs match $(A_1 \odot B_1)$, LSB check $A_0\bar{B}_0$. & 54 & \textbf{A} & Because multiple bits change simultaneously ($011 \to 100$), intermediate transient addresses produce spurious glitches. \\
+40 & \textbf{A} & With MSBs equal, $A_0 < B_0 \implies A < B$. & 55 & \textbf{A} & $Q_1 = 1+0=1, Q_0 = 1+0=1 \implies 11_2$, which falsely reports input 3. \\
+41 & \textbf{C} & Carry ripples to stage 3 at $3t_c$, generating $S_3$ at $3t_c+t_s$, while $C_4$ completes at $4t_c$. & 56 & \textbf{A} & Standard priority encoder synthesis equations. \\
+42 & \textbf{D} & Standard CLA formula: $C_2 = G_1 + P_1(G_0 + P_0 C_0) = G_1 + P_1G_0 + P_1P_0C_0$. & 57 & \textbf{A} & If high group has valid active input ($V_H=1$), $Q_3=1$ and upper encoder outputs are selected; overall valid $V = V_H + V_L$. \\
+43 & \textbf{A} & $6+5=+11$. In 4-bit signed range $[-8,+7]$, $+11$ overflows into negative sign bit ($1011_2 = -5$), setting $V=1$ with $C_{out}=0$. & 58 & \textbf{A} & Equality requires both bit pairs to match simultaneously via XNOR. \\
+44 & \textbf{C} & $B_{out} = \bar{A}B + \overline{(A\oplus B)}B_{in}$. & 59 & \textbf{B} & $A_1\bar{B}_1$ checks MSB; $(A_1 \odot B_1)A_0\bar{B}_0$ checks LSB when MSBs are equal. \\
+45 & \textbf{A} & $3 - 5 = -2 = 1110_2$. Adder carry $C_{out}=0 \implies$ borrow $B_{out}=1$; signed $V=0$. & 60 & \textbf{A} & Unsigned: $A=2, B=1 \implies A>B$. Signed 2's comp: $A=-2, B=+1 \implies A<B$. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{Section 3: Comprehensive Theory Questions \& Worked Solutions}
+\begin{theoryq}{4.1}
+Design a 4-bit Carry Lookahead Adder (CLA). Derive the generate ($G_i$) and propagate ($P_i$) expressions and explain why CLA is faster than a ripple carry adder.
+\end{theoryq}
+
+\begin{theorysol}
+1. \textbf{Definitions:} $G_i = A_i B_i$ (Carry Generate), $P_i = A_i \oplus B_i$ (Carry Propagate).\\
+2. \textbf{Carry Equations:} $C_1 = G_0 + P_0 C_0$; $C_2 = G_1 + P_1 G_0 + P_1 P_0 C_0$; $C_3 = G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 C_0$; $C_4 = G_3 + P_3 G_2 + P_3 P_2 G_1 + P_3 P_2 P_1 G_0 + P_3 P_2 P_1 P_0 C_0$.\\
+3. \textbf{Speed Advantage:} In ripple adders, each carry depends on the previous stage, creating total delay $O(N \cdot t_{pd})$. In CLA, all carry outputs are generated simultaneously in 2 gate delay levels, making speed independent of adder bit width.
+\end{theorysol}
+
+\vspace{3mm}
+
+\begin{theoryq}{4.2}
+Explain how an 8-to-1 Multiplexer can be used to implement any arbitrary 4-variable Boolean logic function.
+\end{theoryq}
+
+\begin{theorysol}
+To implement $F(A,B,C,D)$, connect 3 variables (e.g. $A,B,C$) to the select lines $S_2, S_1, S_0$. For each of the 8 select minterms $m_0$ to $m_7$, evaluate $F$ as a function of the 4th variable $D$. The resulting value for each data input $I_0$ to $I_7$ will be one of four constant values: $0, 1, D$, or $\bar{D}$.
+\end{theorysol}
+
+\vspace{3mm}
+

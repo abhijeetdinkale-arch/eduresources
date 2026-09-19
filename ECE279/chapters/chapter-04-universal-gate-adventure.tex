@@ -1,0 +1,214 @@
+\chapter{Practical 4: Universal Gate Adventure}
+
+\section{Aim / Objective}
+To design, implement, and verify the functionality of basic logic gates (NOT, AND, OR) using only Universal Gates (NAND and NOR).
+
+\section{Apparatus / Components Required}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X c}
+\toprule
+\textbf{Component / Equipment} & \textbf{Specification / Details} & \textbf{Quantity} \\
+\midrule
+IC 7400 & Quad 2-input NAND Gate (TTL) & 1 \\
+IC 7402 & Quad 2-input NOR Gate (TTL) & 1 \\
+DC Power Supply & $+5\text{V}$ Regulated & 1 \\
+Digital Trainer Kit & Optional (or use Breadboard) & 1 \\
+Breadboard & Solderless & 1 \\
+LEDs & $5\text{mm}$ (Red/Green) for Output & 2--3 \\
+Resistors & $330\,\Omega$ or $470\,\Omega$ (Current Limiting) & 2--3 \\
+Connecting Wires & Single strand hook-up wires & As req. \\
+\bottomrule
+\end{tabularx}
+\caption{Apparatus and Components for Universal Gate Syntheses.}
+\label{tab:universal-apparatus}
+\end{table}
+
+\section{Theory}
+
+\begin{definition}[Universal Gate]
+A Universal Gate is a logic gate that can be used to construct any other logic gate (AND, OR, NOT, XOR, XNOR). The two universal gates are \textbf{NAND} and \textbf{NOR}.
+\end{definition}
+
+\subsection{NAND Gate (IC 7400)}
+The NAND operation represents an AND operation followed by a NOT operation.
+\begin{itemize}
+    \item \textbf{Symbol:} AND gate with a bubble at the output.
+    \item \textbf{Expression:} $Y = \overline{A \cdot B}$
+    \item \textbf{Logic:} Output is LOW (0) only when all inputs are HIGH (1).
+\end{itemize}
+
+\subsection{NOR Gate (IC 7402)}
+The NOR operation represents an OR operation followed by a NOT operation.
+\begin{itemize}
+    \item \textbf{Symbol:} OR gate with a bubble at the output.
+    \item \textbf{Expression:} $Y = \overline{A + B}$
+    \item \textbf{Logic:} Output is HIGH (1) only when all inputs are LOW (0).
+\end{itemize}
+
+\subsection{Designing Basic Gates using Universal Gates}
+By using De Morgan's Laws and Boolean algebra, we can configure these gates:
+\begin{itemize}
+    \item \textbf{NOT Gate:} Connect both inputs of a NAND/NOR gate together ($A \cdot A = A \implies Y = \bar{A}$).
+    \item \textbf{AND Gate:} Connect a NAND gate followed by a NOT gate (made of NAND): $Y = \overline{\overline{A \cdot B}} = A \cdot B$.
+    \item \textbf{OR Gate:} Invert inputs $A$ and $B$ individually using NANDs, then feed them into a third NAND gate: $Y = \overline{\bar{A} \cdot \bar{B}} = A + B$.
+\end{itemize}
+
+\section{Pin Diagrams and Circuit Setup}
+
+\begin{commonmistake}[IC 7402 Pinout Configuration Trap]
+Before making connections, observe IC pin configurations. Note that while IC 7400 follows standard \textbf{Input-Input-Output} mapping, IC 7402 is different (\textbf{Output-Input-Input})!
+\end{commonmistake}
+
+\subsection{IC Pin Configurations}
+\begin{itemize}
+    \item \textbf{IC 7400 (Quad 2-Input NAND):} Pins 1,2 Inputs $\to$ Pin 3 Output; Pins 4,5 Inputs $\to$ Pin 6 Output; Pin 7 GND, Pin 14 Vcc.
+    \item \textbf{IC 7402 (Quad 2-Input NOR):} Pin 1 Output $\leftarrow$ Pins 2,3 Inputs; Pin 4 Output $\leftarrow$ Pins 5,6 Inputs; Pin 7 GND, Pin 14 Vcc.
+\end{itemize}
+
+\subsection{Implementation Schematics}
+
+\subsubsection{Part A: Using NAND (IC 7400)}
+\begin{enumerate}
+    \item \textbf{NOT Logic:} Input to Pins 1 \& 2 (shorted); Output at Pin 3.
+    \item \textbf{AND Logic:} Gate 1 (Pins 1,2 Input) $\to$ Output Pin 3 $\to$ Input to Gate 2 (Pins 4,5 shorted) $\to$ Final Output Pin 6.
+    \item \textbf{OR Logic:} Gate 1 (Invert A), Gate 2 (Invert B) $\to$ Gate 3 (NAND the inverted inputs).
+\end{enumerate}
+
+\subsubsection{Part B: Using NOR (IC 7402)}
+\begin{enumerate}
+    \item \textbf{NOT Logic:} Input to Pins 2 \& 3 (shorted); Output at Pin 1.
+    \item \textbf{OR Logic:} NOR followed by NOT (made of NOR).
+    \item \textbf{AND Logic:} Invert inputs A and B individually using NORs, then feed to a third NOR.
+\end{enumerate}
+
+\section{Step-by-Step Procedure}
+
+\begin{enumerate}
+    \item Preparation: Place IC 7400 on breadboard with notch facing left.
+    \item Connect Pin 14 to $+5\text{V Vcc}$ and Pin 7 to Ground ($\text{GND}$). Do not reverse polarity.
+    \item \textbf{Part A: NAND Implementation}
+    \begin{itemize}
+        \item \textbf{NOT Gate:} Short pins 1 and 2. Connect junction to Input A. Connect Pin 3 (Output) to LED via $330\,\Omega$ resistor.
+        \item \textbf{AND Gate:} Connect inputs A and B to pins 1 and 2. Connect pin 3 to pins 4 and 5 (shorted). Connect pin 6 to LED.
+        \item \textbf{OR Gate:} Construct circuit as shown in schematic using three gates inside IC.
+    \end{itemize}
+    \item \textbf{Part B: NOR Implementation}
+    \begin{itemize}
+        \item Remove IC 7400 and insert IC 7402. Connect Vcc (14) and GND (7).
+        \item Remember that for 7402, Pin 1 is Output, Pins 2 \& 3 are Inputs!
+        \item Repeat logic design steps using NOR logic.
+    \end{itemize}
+    \item \textbf{Validation:} For each setup, apply logic combinations (00, 01, 10, 11) and observe LED status (ON = Logic High 1, OFF = Logic Low 0).
+\end{enumerate}
+
+\section{Observations and Truth Tables}
+
+\subsection{Realization using NAND Gates (IC 7400)}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.7\textwidth}{c c c}
+\toprule
+\textbf{Input ($A$)} & \textbf{Expected Output ($\bar{A}$)} & \textbf{Observed Output (LED)} \\
+\midrule
+0 & 1 & ON \\
+1 & 0 & OFF \\
+\bottomrule
+\end{tabularx}
+\caption{NAND Realization of NOT Gate.}
+\label{tab:nand-not}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.8\textwidth}{c c c c}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{Expected Output ($A \cdot B$)} & \textbf{Observed Output (LED)} \\
+\midrule
+0 & 0 & 0 & OFF \\
+0 & 1 & 0 & OFF \\
+1 & 0 & 0 & OFF \\
+1 & 1 & 1 & ON \\
+\bottomrule
+\end{tabularx}
+\caption{NAND Realization of AND Gate.}
+\label{tab:nand-and}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.8\textwidth}{c c c c}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{Expected Output ($A + B$)} & \textbf{Observed Output (LED)} \\
+\midrule
+0 & 0 & 0 & OFF \\
+0 & 1 & 1 & ON \\
+1 & 0 & 1 & ON \\
+1 & 1 & 1 & ON \\
+\bottomrule
+\end{tabularx}
+\caption{NAND Realization of OR Gate.}
+\label{tab:nand-or}
+\end{table}
+
+\subsection{Realization using NOR Gates (IC 7402)}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.8\textwidth}{c c c c}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{Expected Output ($A \cdot B$)} & \textbf{Observed Output} \\
+\midrule
+0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+1 & 1 & 1 & 1 \\
+\bottomrule
+\end{tabularx}
+\caption{NOR Realization of AND Gate.}
+\label{tab:nor-and}
+\end{table}
+
+\section{Result}
+The basic logic gates (NOT, AND, OR) were successfully designed and implemented using Universal Gates (NAND and NOR). The observed truth tables matched theoretical predictions.
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[Universal Gate Definition]
+\textbf{Question:} Why are NAND and NOR called Universal Gates?\\[4pt]
+\textbf{Answer:} Because any boolean function or logic gate (including AND, OR, NOT, XOR) can be implemented using exclusively NAND gates or exclusively NOR gates.
+\end{vivaqa}
+
+\begin{vivaqa}[NAND Gates for AND]
+\textbf{Question:} What is the minimum number of NAND gates required to implement an AND gate?\\[4pt]
+\textbf{Answer:} \textbf{Two} (One NAND followed by a NAND configured as NOT).
+\end{vivaqa}
+
+\begin{vivaqa}[NAND Gates for OR]
+\textbf{Question:} What is the minimum number of NAND gates required to implement an OR gate?\\[4pt]
+\textbf{Answer:} \textbf{Three} (Invert A, Invert B, then NAND the results).
+\end{vivaqa}
+
+\begin{vivaqa}[De Morgan's Theorems]
+\textbf{Question:} State De Morgan's Theorems.\\[4pt]
+\textbf{Answer:}
+1. $\overline{A \cdot B} = \bar{A} + \bar{B}$\\
+2. $\overline{A + B} = \bar{A} \cdot \bar{B}$
+\end{vivaqa}
+
+\begin{vivaqa}[IC 7402 Output Pin]
+\textbf{Question:} In IC 7402 (NOR), which pin is the output for the first gate?\\[4pt]
+\textbf{Answer:} \textbf{Pin 1} is the output (Inputs are Pins 2 and 3), unlike the 7400 series where Pin 3 is usually output.
+\end{vivaqa}
+
+\begin{vivaqa}[TTL Floating Inputs]
+\textbf{Question:} What are floating inputs in TTL logic?\\[4pt]
+\textbf{Answer:} Unconnected inputs in TTL logic (like 74xx series) float to Logic High (1), but this is bad practice; unused inputs should always be tied to Vcc or Ground.
+\end{vivaqa}

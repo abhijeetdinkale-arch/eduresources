@@ -1,0 +1,661 @@
+\chapter{Introduction to Cascading Style Sheets (CSS)}
+\label{chap:cascading-style-sheets}
+
+% ==============================================================================
+% SECTION 3.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 3 Academic Scope \lpuBadge]
+Cascading Style Sheets (CSS) govern the visual presentation, typography, and layout of HTML documents. This unit introduces CSS core philosophies, insertion methods (Inline, Internal, External), the specificity cascade, fundamental selector types (Element, ID, Class), typography and text control properties, the CSS Box Model (Content, Padding, Border, Margin), background imagery, and professional styling techniques for HTML tables and interactive forms.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{CSS Architecture}: Master the separation of presentation from content, understanding the maintenance and caching benefits of external style sheets.
+    \item \textbf{Insertion Modalities}: Compare inline, internal, and external CSS insertion rules and cascading priority conflicts.
+    \item \textbf{Selector Mechanics}: Select elements precisely using type, ID (\texttt{\#}), and reusable class (\texttt{.}) selectors.
+    \item \textbf{Typography \& Text Control}: Style web text using font stacks (\texttt{font-family}), relative/absolute size units, weights, alignments, transformations, and decorations.
+    \item \textbf{The CSS Box Model}: Understand dimensional calculations, padding, margin collapsing, and border models.
+    \item \textbf{Component Styling}: Style responsive tables with hover states and format interactive form inputs with dynamic focus rings.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.2: INTRODUCTION TO CSS
+% ==============================================================================
+\section{Introduction to CSS \& Separation of Concerns}
+
+\subsection{What is CSS?}
+**Cascading Style Sheets (CSS)** is a stylesheet language used to describe the presentation, layout, and visual formatting of documents authored in HTML.
+
+\subsection{Why Use CSS?}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Separation of Concerns}: HTML defines semantic document structure; CSS governs visual presentation.
+    \item \textbf{Site-wide Maintenance Efficiency}: Modifying a single external CSS file instantly updates styles across hundreds of webpages.
+    \item \textbf{Bandwidth Optimization}: External stylesheets are cached by browsers upon first download, drastically reducing server bandwidth and accelerating subsequent page loads.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 3.3: CSS INSERTION METHODS
+% ==============================================================================
+\section{CSS Insertion Methods (Types of CSS)}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xll}
+\toprule
+\textbf{Insertion Type} & \textbf{Syntax \& Implementation Location} & \textbf{Scope} & \textbf{Priority} \\
+\midrule
+\textbf{Inline CSS} & \texttt{style="..."} attribute directly on the HTML tag & Single element & **Highest** (Overrides others) \\
+\textbf{Internal CSS} & \texttt{<style>} tag declared inside document \texttt{<head>} & Single HTML document & Medium \\
+\textbf{External CSS} & \texttt{<link rel="stylesheet" href="style.css">} in \texttt{<head>} & Multi-page website & **Lowest** (Base styles) \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of the Three CSS Insertion Methods.}
+\label{tab:css-insertion}
+\end{table}
+
+\subsection{1. Inline CSS}
+\begin{htmlcode}{Inline CSS Example}
+<p style="color: blue; font-size: 16px; font-weight: bold;">
+    This paragraph is styled via inline CSS.
+</p>
+\end{htmlcode}
+
+\subsection{2. Internal CSS}
+\begin{htmlcode}{Internal CSS in Document Head}
+<head>
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        h1 {
+            color: #0284c7;
+            text-align: center;
+        }
+    </style>
+</head>
+\end{htmlcode}
+
+\subsection{3. External CSS (Best Practice)}
+\begin{htmlcode}{Linking External Stylesheet}
+<head>
+    <title>University Portal</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+\end{htmlcode}
+
+\begin{csscode}{External File (styles.css)}
+/* Global site styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333333;
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.4: CSS SELECTORS
+% ==============================================================================
+\section{CSS Selectors (Type, ID \& Class)}
+
+A **CSS Selector** designates which HTML element(s) the style declarations will be applied to:
+
+\subsection{1. Type (Element) Selector}
+Matches all HTML elements sharing the specified tag name:
+\begin{csscode}{Type Selector}
+/* Matches all <p> elements on the page */
+p {
+    color: #1e293b;
+    font-size: 14px;
+}
+\end{csscode}
+
+\subsection{2. ID Selector (\texttt{\#})}
+Matches the unique HTML element bearing the corresponding \texttt{id} attribute:
+\begin{csscode}{ID Selector}
+/* Matches <div id="main-header"> */
+#main-header {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 20px;
+}
+\end{csscode}
+
+\subsection{3. Class Selector (\texttt{.})}
+Matches all HTML elements containing the specified \texttt{class} attribute name (reusable across multiple elements):
+\begin{csscode}{Class Selector}
+/* Matches any element with class="highlight" */
+.highlight {
+    background-color: #fef08a;
+    font-weight: bold;
+    border-left: 4px solid #ca8a04;
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.5: TYPOGRAPHY \& TEXT PROPERTIES
+% ==============================================================================
+\section{Typography \& Text Controlling Properties}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{CSS Property} & \textbf{Values} & \textbf{Visual Behavior} & \textbf{Example Code} \\
+\midrule
+\texttt{font-family} & Font stack list & Sets font typeface with fallbacks & \texttt{font-family: "Segoe UI", Arial, sans-serif;} \\
+\texttt{font-size} & px, em, rem, \% & Determines character height & \texttt{font-size: 18px;} \\
+\texttt{font-weight} & normal, bold, 100--900 & Sets stroke thickness & \texttt{font-weight: 700;} \\
+\texttt{text-align} & left, right, center, justify & Aligns text horizontally & \texttt{text-align: center;} \\
+\texttt{line-height} & Unitless number, px, \% & Controls vertical space between lines & \texttt{line-height: 1.6;} \\
+\texttt{text-decoration} & none, underline, line-through & Controls text underlines/strikes & \texttt{text-decoration: none;} \\
+\texttt{text-transform} & uppercase, lowercase, capitalize & Alters letter case dynamically & \texttt{text-transform: uppercase;} \\
+\bottomrule
+\end{tabularx}
+\caption{Core Typography and Text Formatting Properties.}
+\label{tab:typography-props}
+\end{table}
+
+\begin{csscode}{Typography and Text Styling Example}
+h1 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #0f172a;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.75;
+    text-align: justify;
+}
+
+a.nav-link {
+    text-decoration: none; /* Removes default browser link underline */
+    color: #0284c7;
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.6: THE CSS BOX MODEL
+% ==============================================================================
+\section{The CSS Box Model}
+
+Every rendered HTML element is modeled as a rectangular geometric box composed of four concentric layers:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, auto]
+    % Margin Layer
+    \draw[draw=webgold!90!black, fill=webgold!15, line width=1.2pt] (0,0) rectangle (12, 7);
+    \node[font=\footnotesize\bfseries\color{webgold!90!black}] at (1.2, 6.6) {MARGIN (Outer transparent space)};
+
+    % Border Layer
+    \draw[draw=webred, fill=webred!15, line width=1.2pt] (1.2, 0.8) rectangle (10.8, 6.2);
+    \node[font=\footnotesize\bfseries\color{webred}] at (2.2, 5.8) {BORDER (Visible boundary)};
+
+    % Padding Layer
+    \draw[draw=webgreen, fill=webgreen!15, line width=1.2pt] (2.2, 1.6) rectangle (9.8, 5.4);
+    \node[font=\footnotesize\bfseries\color{webgreen}] at (3.2, 5.0) {PADDING (Inner spacing)};
+
+    % Content Box
+    \draw[draw=webblue, fill=webblue!20, line width=1.2pt] (3.2, 2.4) rectangle (8.8, 4.6);
+    \node[font=\small\bfseries\color{webnavy}, align=center] at (6, 3.5) {CONTENT BOX\\Text, Images, Children\\\texttt{width} $\times$ \texttt{height}};
+\end{tikzpicture}
+\caption{The Concentric Layers of the CSS Box Model.}
+\label{fig:box-model}
+\end{figure}
+
+\subsection{Box Model Layers (Inside Out)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Content Box}: The area where actual text, images, and child nodes reside. Dimensions set via \texttt{width} and \texttt{height}.
+    \item \textbf{Padding}: Transparent space clearing the area between the content and the border.
+    \item \textbf{Border}: A visible line surrounding the padding and content.
+    \item \textbf{Margin}: Transparent space outside the border separating the element from adjacent elements.
+\end{enumerate}
+
+\subsection{Box Model Shorthand Notation}
+\begin{syntaxbox}[Padding and Margin Shorthand]
+/* 4 Values: Top Right Bottom Left (Clockwise) */
+margin: 10px 20px 10px 20px;
+
+/* 2 Values: Top/Bottom  Left/Right */
+padding: 15px 30px;
+
+/* 1 Value: All 4 Sides */
+margin: 20px;
+\end{syntaxbox}
+
+\begin{csscode}{Box Model in Practice}
+.card {
+    width: 320px;
+    padding: 20px;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    margin: 25px auto; /* Centered horizontally */
+    box-sizing: border-box; /* Includes padding & border in total 320px width */
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.7: BACKGROUND IMAGES
+% ==============================================================================
+\section{Working with Background Images}
+
+\begin{csscode}{Background Image Configuration}
+.hero-banner {
+    background-color: #0f172a; /* Fallback color */
+    background-image: url("campus_hero.jpg");
+    background-repeat: no-repeat; /* repeat, no-repeat, repeat-x, repeat-y */
+    background-position: center center; /* Horizontal Vertical */
+    background-size: cover; /* cover (scales to fill) or contain (scales to fit) */
+    height: 400px;
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.8: APPLYING CSS ON TABLES \& FORMS
+% ==============================================================================
+\section{Applying CSS on Tables and Forms}
+
+\subsection{Professional Table Styling}
+\begin{csscode}{Clean Styled Table with Hover States}
+table.styled-table {
+    width: 100%;
+    border-collapse: collapse; /* Merges adjacent cell borders into single border */
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+table.styled-table th {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Zebra Striping */
+table.styled-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Hover Highlight */
+table.styled-table tbody tr:hover {
+    background-color: #e0f2fe;
+    cursor: pointer;
+}
+\end{csscode}
+
+\subsection{Professional Form Styling}
+\begin{csscode}{Modern Form Input and Button Styling}
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box; /* Crucial for full-width inputs */
+    font-size: 14px;
+}
+
+/* Dynamic Focus Highlight */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #0284c7;
+    outline: 2px solid rgba(2, 132, 199, 0.2);
+}
+
+/* Submit Buttons */
+button.btn-primary,
+input[type="submit"] {
+    background-color: #16a34a;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button.btn-primary:hover,
+input[type="submit"]:hover {
+    background-color: #15803d;
+}
+\end{csscode}
+
+% ==============================================================================
+% SECTION 3.9: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 3 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{ID Specificity Trap}: ID selectors (\texttt{\#id}) have higher specificity than class selectors (\texttt{.class}), which in turn override element selectors (\texttt{p}).
+    \item \textbf{Missing \texttt{border-collapse}}: By default, HTML tables display a 2px gap between cell borders. To achieve a modern single border, you MUST set \texttt{border-collapse: collapse;}.
+    \item \textbf{Box Model Width Expansion}: Without \texttt{box-sizing: border-box}, adding \texttt{padding: 20px} to a \texttt{width: 300px} box expands its actual rendered width to $300 + 20(2) = 340\text{px}$.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 3.10: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[CSS Specificity and Cascading Order]
+\textbf{Question}: What color will the paragraph text be rendered in?
+\begin{lstlisting}[language=HTML5]
+<style>
+    p { color: blue; }
+    .text-green { color: green; }
+    #text-red { color: red; }
+</style>
+<p id="text-red" class="text-green" style="color: purple;">Hello CSS</p>
+\end{lstlisting}
+\textbf{Answer \& Specificity Tracing}:
+\begin{itemize}
+    \item Specificity hierarchy: Inline Style ($1000$) > ID Selector ($100$) > Class Selector ($10$) > Element Selector ($1$).
+    \item The inline style \texttt{style="color: purple;"} has the highest specificity ($1000$).
+    \item The text will render in \textbf{purple}.
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing Box Model Overflow and Collapsing Borders]
+\textbf{Buggy CSS}:
+\begin{lstlisting}[language=CSS3]
+table {
+    border: 1px solid black;
+    /* Table displays double borders! */
+}
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    /* Input overflows its parent container! */
+}
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item Add \texttt{border-collapse: collapse;} to \texttt{table} to merge double borders.
+    \item Add \texttt{box-sizing: border-box;} to \texttt{input} to prevent padding from expanding width beyond 100\%.
+\end{enumerate}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 3.11: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 3 Practice Exercises]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write external CSS rules to style a university webpage with a centered \texttt{<h1>}, justified paragraphs, and navy blue headings.
+    \item \textbf{Level 1 (Foundation)}: Style an unstyled list of links into a horizontal navigation bar.
+    \item \textbf{Level 2 (Standard)}: Design a responsive card component with padding, border radius, subtle box shadow, and hover elevation.
+    \item \textbf{Level 2 (Standard)}: Write CSS to create a zebra-striped table with dark headers and row hover highlights.
+    \item \textbf{Level 3 (Exam Tier)}: Create a login form layout with stylized inputs, focused outline rings, and animated green submit buttons.
+    \item \textbf{Level 3 (Exam Tier)}: Write CSS creating a full-width hero header with a centered background image using \texttt{background-size: cover}.
+    \item \textbf{Level 4 (Challenge)}: Build a complete responsive university faculty profile layout combining Box Model cards, typography hierarchy, and styled contact tables.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 3 Practice Problems]
+\noindent\textbf{Solution to Problem 3 (Elevated Card Component)}:
+\begin{lstlisting}[language=CSS3]
+.faculty-card {
+    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faculty-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 5 (Styled Login Form)}:
+\begin{lstlisting}[language=CSS3]
+.login-box {
+    max-width: 360px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 8px 0 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-box input:focus {
+    border-color: #0284c7;
+    outline: 2px solid rgba(2, 132, 199, 0.2);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #16a34a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.12: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which CSS insertion method has the HIGHEST cascade specificity priority?
+    \begin{enumerate}[label=(\alph*)]
+        \item External CSS \quad (b) Internal CSS \quad (c) Inline CSS \quad (d) Browser Default
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Inline CSS applied via \texttt{style="..."} has the highest priority.}
+
+    \item Which selector syntax targets all elements with \texttt{class="btn"}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{\#btn} \quad (b) \texttt{.btn} \quad (c) \texttt{*btn} \quad (d) \texttt{btn}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Class selectors are prefixed with a period (\texttt{.}).}
+
+    \item In the CSS Box Model, what is the layer immediately surrounding the content box?
+    \begin{enumerate}[label=(\alph*)]
+        \item Margin \quad (b) Border \quad (c) Padding \quad (d) Outline
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Padding is the inner space directly surrounding the content.}
+
+    \item Which CSS property removes default underlines from hyperlinks?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{font-style: none} \quad (b) \texttt{text-decoration: none} \quad (c) \texttt{text-underline: off} \quad (d) \texttt{link-style: none}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{text-decoration: none;} eliminates link underlines.}
+
+    \item What is the effect of \texttt{border-collapse: collapse;} on HTML tables?
+    \begin{enumerate}[label=(\alph*)]
+        \item Hides the table \quad (b) Merges double borders into a single border \quad (c) Adds padding \quad (d) Centers text
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{border-collapse: collapse;} eliminates gaps between adjacent cells.}
+
+    \item Which background property scales an image to cover the entire container?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{background-size: cover} \quad (b) \texttt{background-size: contain} \quad (c) \texttt{background-repeat: all} \quad (d) \texttt{background-fill: true}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{background-size: cover;} scales the image to completely fill the element.}
+
+    \item What does \texttt{margin: 10px 20px;} specify?
+    \begin{enumerate}[label=(\alph*)]
+        \item Top/Bottom 10px, Left/Right 20px \quad (b) Top 10px, Right 20px \quad (c) All sides 10px \quad (d) Left 10px, Right 20px
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{2-value shorthand sets Vertical (10px) and Horizontal (20px).}
+
+    \item Which property ensures padding is included within the specified \texttt{width}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{box-sizing: border-box} \quad (b) \texttt{box-sizing: content-box} \quad (c) \texttt{display: block} \quad (d) \texttt{padding-mode: inside}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{border-box} includes padding and border in total width/height.}
+
+    \item Which selector matches a single unique element with \texttt{id="footer"}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{.footer} \quad (b) \texttt{\#footer} \quad (c) \texttt{footer} \quad (d) \texttt{@footer}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{ID selectors are prefixed with a hash (\texttt{\#}).}
+
+    \item What is the pseudo-class used to style an element when clicked/focused?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{:hover} \quad (b) \texttt{:focus} \quad (c) \texttt{:active} \quad (d) \texttt{:visited}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{:focus} activates when an input element receives focus.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 3.13: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 3 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the advantages of External CSS over Inline CSS.
+    \item Describe the four concentric layers of the CSS Box Model.
+    \item Differentiate between the \texttt{id} and \texttt{class} selectors.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Analysis ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Given \texttt{width: 250px; padding: 15px; border: 5px solid black;}, compute the total rendered element width under (a) \texttt{box-sizing: content-box} and (b) \texttt{box-sizing: border-box}.
+    \item Predict the output color of the text:
+    \begin{lstlisting}[language=HTML5]
+<style>
+    p.intro { color: blue; }
+    p { color: red; }
+</style>
+<p class="intro">Welcome</p>
+    \end{lstlisting}
+    \item Explain how \texttt{tr:hover} creates hoverable interactive tables.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Design a complete CSS stylesheet for an Online Course Information Card:
+    \begin{enumerate}[label=(\alph*)]
+        \item Set card width, border radius, padding, and subtle box shadow with hover elevation. (4 Marks)
+        \item Style a course title heading, an image banner, and a price tag. (3 Marks)
+        \item Include a full-width call-to-action button with hover color transitions. (3 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 3 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{External CSS Advantages} [2 Marks]: Promotes clean separation of concerns, enables site-wide reusability, simplifies updates, and reduces network bandwidth via browser caching.
+    \item \textbf{Box Model Layers} [2 Marks]: (1) Content (inner text/images); (2) Padding (transparent inner spacing); (3) Border (visible perimeter line); (4) Margin (transparent external spacing).
+    \item \textbf{ID vs. Class} [2 Marks]: ID (\texttt{\#}) is unique and targets exactly one element per document. Class (\texttt{.}) is reusable and targets multiple elements across the page.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Box Model Calculations} [3 Marks]:
+    \begin{itemize}
+        \item (a) \texttt{content-box}: $\text{Total Width} = \text{width} + 2(\text{padding}) + 2(\text{border}) = 250 + 2(15) + 2(5) = \mathbf{290\text{px}}$.
+        \item (b) \texttt{border-box}: $\text{Total Width} = \mathbf{250\text{px}}$ (padding and border are absorbed inside the 250px boundary).
+    \end{itemize}
+    \item \textbf{Class Specificity Tracing} [3 Marks]: Class selector \texttt{p.intro} (specificity $(11)$) overrides type selector \texttt{p} (specificity $(1)$). Text color will be \textbf{blue}.
+    \item \textbf{Hoverable Table Logic} [3 Marks]: \texttt{tr:hover \{ background-color: \#... \}} listens for mouse enter events on each row, dynamically altering row background color to provide visual feedback.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Course Card CSS Implementation} [10 Marks]:
+\begin{lstlisting}[language=CSS3]
+.course-card {
+    width: 320px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 20px -2px rgba(0, 0, 0, 0.15);
+}
+
+.course-card .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.course-card .price {
+    font-size: 18px;
+    color: #16a34a;
+    font-weight: 600;
+    margin: 12px 0;
+}
+
+.course-card .btn-enroll {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #0284c7;
+    color: #ffffff;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.course-card .btn-enroll:hover {
+    background-color: #0369a1;
+}
+\end{lstlisting}
+\textbf{Marking Scheme}: Box model card styling \& hover: 4M; Typography and price hierarchy: 3M; Button styling with hover state: 3M.
+\end{enumerate}
+\end{solutionbox}

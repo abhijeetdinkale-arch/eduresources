@@ -1,0 +1,124 @@
+\section{End-Term Examination --- Set B}
+\label{sec:endterm_set_b}
+
+\LPUCSHeader{End-Term Examination (Comprehensive MCQ)}{B}{120 Minutes}{30 Marks}{CO1 to CO6 (Units 1 to 6 Comprehensive)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q5)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{The principle of 'Temporal Locality' in cache memory architecture implies that:}{A memory location that has been referenced recently is highly likely to be referenced again in the near future}{Contiguous memory locations will be accessed sequentially}{Cache lines must be flushed every clock second}{Memory addresses must be stored in reverse order}{1}
+
+\mcqitem{2}{Dynamic RAM (DRAM) cells are physically composed of:}{One transistor and one capacitor per bit (requiring periodic refresh cycles)}{Six cross-coupled flip-flop transistors}{Magnetic ferrite toroids}{Optical laser reflective pits}{1}
+
+\mcqitem{3}{In a RAID 1 storage setup with two $4\text{ TB}$ hard drives, the storage overhead allocated strictly to redundancy is:}{$50\%$ (usable capacity is $4\text{ TB}$ out of $8\text{ TB}$ total physical disk space)}{$0\%$}{$100\%$}{$25\%$}{1}
+
+\mcqitem{4}{A processor with a 64-bit word size is capable of:}{Manipulating and processing 64-bit integer values in a single native ALU operation}{Executing exactly 64 instructions per microsecond}{Addressing a maximum of only $64\text{ MB}$ of RAM}{Running exclusively on 64-volt electrical power}{1}
+
+\mcqitem{5}{Under the Write-Back cache policy, modified data in cache is written to main memory:}{Only when the modified (dirty) cache line is evicted to make room for a new block}{Immediately on every single processor write cycle}{Continuously on every clock cycle}{Never, as updates remain permanently in registers}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q6 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{6}{A primary architectural advantage of a Microkernel over a Monolithic Kernel is that:}{System services (file systems, networking, drivers) run in user space, so a driver crash does not crash the entire kernel}{It eliminates the need for virtual memory}{It runs all user applications in privileged supervisor mode}{It executes C code without compilation}{1}
+
+\mcqitem{7}{In CPU scheduling, if the time quantum $q$ allocated in a Round Robin (RR) algorithm is set extremely large ($q \to \infty$), the algorithm degenerates into:}{First-Come, First-Served (FCFS) Scheduling}{Shortest Job First (SJF) Scheduling}{Priority Scheduling}{Earliest Deadline First (EDF)}{1}
+
+\mcqitem{8}{The Translation Lookaside Buffer (TLB) is an associative hardware cache designed specifically to:}{Accelerate virtual-to-physical address translation by caching recent page table entries}{Hold uncompressed video streams}{Store operating system boot sectors}{Queue real-time hardware interrupts}{1}
+
+\mcqitem{9}{In operating system resource allocation, deadlock can be systematically prevented by disallowing which Coffman condition through linear resource ordering?}{Circular Wait}{Mutual Exclusion}{Hold and Wait}{No Preemption}{1}
+
+\mcqitem{10}{During software compilation, the C Preprocessor performs which of the following tasks?}{Expands macro definitions (\texttt{\#define}) and copies header file contents (\texttt{\#include})}{Translates assembly mnemonics into relocatable object code}{Binds shared libraries at runtime}{Allocates stack frames in RAM}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q11 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{Under the Linux Filesystem Hierarchy Standard (FHS), the directory \texttt{/proc} is:}{A virtual pseudo-filesystem that provides real-time process and kernel status information directly from memory}{The directory containing user personal documents}{The storage mount for optical CD-ROMs}{The directory where deleted files are held}{1}
+
+\mcqitem{12}{Executing the command \texttt{chmod 644 document.txt} in a Linux shell sets what permissions for Owner, Group, and Others?}{Owner: \texttt{rw-}, Group: \texttt{r--}, Others: \texttt{r--}}{Owner: \texttt{rwx}, Group: \texttt{r-x}, Others: \texttt{r-x}}{Owner: \texttt{rw-}, Group: \texttt{rw-}, Others: \texttt{rw-}}{Owner: \texttt{r--}, Group: \texttt{---}, Others: \texttt{---}}{1}
+
+\mcqitem{13}{In Linux filesystems, a Hard Link differs from a Symbolic Link because the Hard Link:}{Shares the exact same Inode number and points directly to the data blocks on the disk}{Has a separate Inode storing a file path string}{Can link files across different physical filesystems}{Can link directories without restrictions}{1}
+
+\mcqitem{14}{Which Linux command creates a compressed tar archive named \texttt{archive.tar.gz} from the folder \texttt{/project}?}{\texttt{tar -czvf archive.tar.gz /project}}{\texttt{zip -tar archive.tar.gz /project}}{\texttt{gzip -c archive.tar.gz /project}}{\texttt{cp -tar /project archive.tar.gz}}{1}
+
+\mcqitem{15}{In the Bash terminal, the pipe operator (\texttt{|}) allows users to:}{Send the standard output (\texttt{stdout}) of one command directly into the standard input (\texttt{stdin}) of the next command}{Terminate the currently running command}{Run a command with root privileges}{Redirect standard output to a hard disk sector}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 4: COHORTS AND TECHNICAL SKILL SETS (Q16 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{Modern frontend frameworks like React use a Virtual DOM primarily to:}{Compute minimal reconciliation diffs in memory before batch-updating the slower real browser DOM}{Bypass JavaScript syntax validation}{Execute SQL queries directly in the client browser}{Eliminate CSS styling}{1}
+
+\mcqitem{17}{Under Cloud Computing service models, Platform as a Service (PaaS, e.g., Heroku or AWS Elastic Beanstalk) enables developers to:}{Deploy and execute application code without managing underlying operating system patches, servers, or runtimes}{Purchase raw motherboard hardware directly}{Only use pre-built office software suites}{Run applications without an Internet connection}{1}
+
+\mcqitem{18}{In modern DevOps practices, a Continuous Integration and Continuous Deployment (CI/CD) pipeline:}{Automates the software build, automated testing, quality gating, and deployment upon code commits}{Requires manual file copying via FTP}{Eliminates all unit tests}{Prevents multiple developers from working together}{1}
+
+\mcqitem{19}{In algorithm analysis, what is the worst-case time complexity of Quick Sort when an unlucky pivot is repeatedly selected on an already sorted array?}{$O(N^2)$}{$O(N \log N)$}{$O(N)$}{$O(\log N)$}{1}
+
+\mcqitem{20}{In hackathons and rapid agile product development, a Minimum Viable Product (MVP) is:}{A functional prototype with sufficient core features to validate key assumptions and gather user feedback}{A 500-page enterprise software design document}{A software product with zero bugs and full documentation}{A hardware motherboard prototype}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 5: COMPUTER NETWORKS AND COMMUNICATION (Q21 TO Q25)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{A communication channel where data can flow in both directions, but only one party can transmit at any given instant (e.g., walkie-talkies), operates in:}{Half-Duplex Mode}{Simplex Mode}{Full-Duplex Mode}{Asynchronous Simplex Mode}{1}
+
+\mcqitem{22}{In a Star network topology, the failure of a single cable connecting a peripheral computer to the central switch:}{Affects only that single disconnected computer, leaving the rest of the network fully operational}{Causes the entire network to halt immediately}{Shuts down the central switch}{Disables the Internet router permanently}{1}
+
+\mcqitem{23}{The Transmission Control Protocol (TCP) guarantees reliable data delivery by employing:}{Sequence numbers, acknowledgments, retransmission timers, and sliding window flow control}{Zero handshakes and best-effort datagram delivery}{Unencrypted radio broadcasts}{Hardware token passing}{1}
+
+\mcqitem{24}{Which of the following IPv4 address blocks is designated as private Class C address space under RFC 1918?}{\texttt{192.168.0.0/16}}{\texttt{10.0.0.0/8}}{\texttt{172.16.0.0/12}}{\texttt{127.0.0.0/8}}{1}
+
+\mcqitem{25}{A malicious software attack that covertly encrypts victim storage volumes and demands a ransom payment in exchange for the decryption key is:}{Ransomware}{Adware}{Trojan Downloader}{Spyware}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 6: VERSION CONTROL & MODERN AI TOOLS (Q26 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{26}{In Git, a 'Commit' is fundamentally:}{An immutable snapshot of the staged project state, identified by a cryptographic SHA hash and linked to parent commits}{A temporary copy stored in the browser cache}{A command that deletes untracked files}{A message sent to GitHub support}{1}
+
+\mcqitem{27}{Which Git command inspects the working directory and staging area, reporting tracked, untracked, and modified files?}{\texttt{git status}}{\texttt{git log}}{\texttt{git diff}}{\texttt{git branch}}{1}
+
+\mcqitem{28}{In Git, a Merge Conflict occurs when:}{Two branches have modified the exact same lines of a file in differing ways, requiring manual developer resolution}{A developer commits a file without a message}{The local repository runs out of hard drive space}{A remote GitHub repository is made private}{1}
+
+\mcqitem{29}{In Prompt Engineering with Large Language Models (LLMs), 'Few-Shot Prompting' refers to:}{Providing the model with a few concrete demonstration examples of desired input-output formatting before the target question}{Asking only three questions per day}{Limiting the prompt to fewer than 5 words}{Running the model on low electrical power}{1}
+
+\mcqitem{30}{In modern AI software engineering, Retrieval-Augmented Generation (RAG) mitigates LLM hallucinations by:}{Retrieving relevant factual documents from an external knowledge base and feeding them into the model's context window}{Training the model entirely from scratch on every user prompt}{Decreasing the temperature to negative values}{Disabling the transformer attention mechanism}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (End-Term Set B)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Comprehensive Technical Explanations]
+\textbf{Q.1 (Ans: A)} Temporal Locality states that if at time $t$ a location is referenced, it is likely to be referenced again at $t + \Delta t$. Modern caching hardware keeps recently referenced blocks in high-speed L1/L2 caches to exploit this behavior in loop iterations and subroutines.\\[2mm]
+\textbf{Q.7 (Ans: A)} In Round Robin, if the time quantum $q \ge \max(\text{Burst Times})$, every process completes its CPU burst before its quantum expires. Consequently, processes are executed to completion in the strict order they entered the ready queue, identical to FCFS.\\[2mm]
+\textbf{Q.19 (Ans: A)} Quick Sort partitions an array around a chosen pivot. If the pivot consistently yields the most unbalanced partition possible (e.g. 0 elements on one side and $N-1$ on the other, occurring when picking the first or last element of an already sorted array), the recurrence becomes $T(N) = T(N-1) + \Theta(N)$, which sums to $\Theta(N^2)$.\\[2mm]
+\textbf{Q.28 (Ans: A)} When Git merges two branches and cannot perform a fast-forward merge, it analyzes the common ancestor (3-way merge). If both branches changed the same region of a file, Git halts the automatic merge, marks the conflicted section with conflict markers (\texttt{<<<<<<<}, \texttt{=======}, \texttt{>>>>>>>}), and requires the developer to resolve the conflict manually before committing.\\[2mm]
+\textbf{Q.30 (Ans: A)} Retrieval-Augmented Generation (RAG) combines dense vector search (semantic retrieval over an embedding database) with generative language modeling. The retriever injects authoritative, up-to-date document chunks into the prompt, grounding the LLM's response in verified facts and substantially reducing hallucinations.
+\end{solutionbox}
+
+\newpage

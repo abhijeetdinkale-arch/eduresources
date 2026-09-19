@@ -1,0 +1,193 @@
+\chapter{Semiconductor Physics \& Solid State Devices}
+
+\section{Classical Drude-Lorentz Free Electron Theory}
+In 1900, Paul Drude treated valence electrons in metals as a classical gas of non-interacting free particles moving among fixed positive ionic cores. Under an applied electric field $\vec{E}$, electrons accelerate according to $m\frac{d\vec{v}}{dt} = -e\vec{E} - \frac{m\vec{v}}{\tau}$.
+In steady state, electrons achieve a constant \textbf{Drift Velocity} $v_d$:
+\begin{equation}
+v_d = \mu E = \frac{e\tau}{m} E
+\end{equation}
+where $\tau$ is the mean relaxation time between collisions and $\mu = \frac{e\tau}{m}$ is electron mobility.
+The current density is $J = n e v_d = \sigma E$, giving \textbf{Electrical Conductivity}:
+\begin{equation}
+\sigma = \frac{n e^2 \tau}{m}
+\end{equation}
+Drude theory successfully derived the \textbf{Wiedemann-Franz Law}, stating that the ratio of thermal conductivity $K$ to electrical conductivity $\sigma$ is directly proportional to absolute temperature $T$:
+\begin{equation}
+\frac{K}{\sigma T} = L = \frac{\pi^2 k_B^2}{3 e^2} \approx 2.44 \times 10^{-8}\text{ W}\cdot\Omega/\text{K}^2
+\end{equation}
+where $L$ is the universal \textbf{Lorentz Number}.
+
+\subsection{Limitations of Classical Free Electron Theory}
+Despite these successes, classical Drude theory suffered severe failures:
+\begin{enumerate}[itemsep=2pt]
+    \item It predicted an electronic heat capacity $C_{v,\text{el}} = \frac{3}{2} R$, whereas experimental values at room temperature are $100\times$ smaller ($C_{v,\text{el}} \propto T$).
+    \item It could not explain why materials with similar electron densities act as conductors, semiconductors, or insulators.
+    \item It could not explain positive Hall coefficients observed in metals such as Zinc, Cadmium, and Beryllium.
+\end{enumerate}
+
+\section{Quantum Band Theory and the Kronig-Penney Model}
+Felix Bloch (1928) demonstrated that an electron moves inside a strictly periodic crystal lattice potential $V(x+a) = V(x)$. According to \textbf{Bloch's Theorem}, the stationary wavefunction is a modulated plane wave:
+\begin{equation}
+\psi_k(x) = e^{ikx} u_k(x), \quad \text{where } u_k(x+a) = u_k(x)
+\end{equation}
+
+\subsection{The Kronig-Penney Potential Model}
+Kronig and Penney (1931) modeled the 1D crystal as a periodic array of rectangular potential wells of width $a$, barrier width $b$, and barrier height $V_0$.
+Solving the Schrödinger equation in the well ($0 < x < a$) and barrier ($-b < x < 0$) and matching boundary conditions at the interfaces yields the transcendental dispersion equation:
+\begin{equation}
+P\frac{\sin(\alpha a)}{\alpha a} + \cos(\alpha a) = \cos(ka)
+\end{equation}
+where $P = \lim_{b \to 0, V_0 \to \infty} \left( \frac{m V_0 b a}{\hbar^2} \right)$ is the \textbf{barrier strength / potential binding parameter}, and $\alpha = \frac{\sqrt{2mE}}{\hbar}$.
+
+\begin{conceptbox}{Key Physical Insights from the Kronig-Penney Model}
+Because $|\cos(ka)| \le 1$, real wave vector solutions $k$ exist only when the function $f(\alpha a) = P\frac{\sin(\alpha a)}{\alpha a} + \cos(\alpha a)$ falls in the range $[-1, +1]$.
+\begin{enumerate}[itemsep=2pt]
+    \item The electronic energy spectrum splits into alternating \textbf{Allowed Energy Bands} (where $|f(\alpha a)| \le 1$) and \textbf{Forbidden Energy Gaps ($E_g$)} (where $|f(\alpha a)| > 1$).
+    \item As electron energy increases ($\alpha a$ increases), the allowed bands widen and the forbidden energy bandgaps shrink.
+    \item If $P \to 0$ (free electron limit), $\cos(\alpha a) = \cos(ka) \implies \alpha = k \implies E = \frac{\hbar^2 k^2}{2m}$ (continuous parabolic energy spectrum without bandgaps).
+    \item If $P \to \infty$ (isolated atom limit), $\sin(\alpha a) = 0 \implies \alpha a = n\pi \implies E_n = \frac{n^2 \pi^2 \hbar^2}{2ma^2}$ (discrete quantized atomic levels).
+\end{enumerate}
+\end{conceptbox}
+
+\section{Effective Mass and the Concept of Holes}
+Inside a crystal lattice, an electron experiences both external electric fields and intense internal periodic crystal forces. By applying wave packet dynamics ($v_g = \frac{1}{\hbar}\frac{dE}{dk}$), acceleration is $a = \frac{dv_g}{dt} = \frac{1}{\hbar}\frac{d^2E}{dk^2}\frac{dk}{dt}$.
+Using $\hbar \frac{dk}{dt} = F_{\text{ext}} = -eE$, we obtain $a = \frac{1}{\hbar^2}\frac{d^2E}{dk^2} F_{\text{ext}}$.
+Comparing this with Newton's second law ($F = m^* a$) defines the \textbf{Effective Mass} $m^*$:
+\begin{equation}
+m^* \equiv \frac{\hbar^2}{\frac{d^2 E}{dk^2}}
+\end{equation}
+\begin{itemize}[itemsep=2pt]
+    \item Near the bottom of a conduction band ($\frac{d^2E}{dk^2} > 0$): $m^* > 0$. The electron behaves as a positively massed particle accelerated in the field direction.
+    \item Near the top of a valence band ($\frac{d^2E}{dk^2} < 0$): $m^* < 0$. An electron with negative effective mass accelerates opposite to the normal electronic trajectory, behaving mathematically as a positively charged particle: a \textbf{Hole} ($q = +e, m_h^* > 0$).
+\end{itemize}
+
+\section{Fermi-Dirac Carrier Statistics}
+Electrons are indistinguishable fermions obeying the Pauli exclusion principle. The probability that an available quantum state at energy $E$ is occupied at temperature $T$ is given by the \textbf{Fermi-Dirac Distribution Function}:
+\begin{equation}
+f(E) = \frac{1}{1 + \exp\left(\frac{E - E_F}{k_B T}\right)}
+\end{equation}
+where $E_F$ is the \textbf{Fermi Energy Level}.
+\begin{itemize}[itemsep=2pt]
+    \item \textbf{At Absolute Zero ($T = 0\text{ K}$):}
+    \[
+    f(E) = \begin{cases} 1 & \text{for } E < E_F \quad \text{(all states fully occupied)} \\ 0 & \text{for } E > E_F \quad \text{(all states completely empty)} \end{cases}
+    \]
+    \item \textbf{At Finite Temperature ($T > 0\text{ K}$):} At $E = E_F$, $f(E_F) = \frac{1}{1 + e^0} = 0.5$ ($50\%$ occupation probability).
+\end{itemize}
+
+\subsection{Intrinsic and Extrinsic Carrier Densities}
+The density of electrons in the conduction band and holes in the valence band are:
+\begin{equation}
+n = N_c \exp\left(-\frac{E_c - E_F}{k_B T}\right), \quad p = N_v \exp\left(-\frac{E_F - E_v}{k_B T}\right)
+\end{equation}
+where $N_c = 2\left(\frac{2\pi m_e^* k_B T}{h^2}\right)^{3/2}$ and $N_v = 2\left(\frac{2\pi m_h^* k_B T}{h^2}\right)^{3/2}$ are the effective density of states.
+
+For an \textbf{intrinsic semiconductor} ($n = p = n_i$):
+\begin{equation}
+n_i = \sqrt{N_c N_v} e^{-E_g / (2k_B T)}
+\end{equation}
+\begin{equation}
+E_F^{\text{intrinsic}} = \frac{E_c + E_v}{2} + \frac{3}{4}k_B T \ln\left(\frac{m_h^*}{m_e^*}\right) \approx \frac{E_c + E_v}{2} \quad (\text{Exact middle of bandgap})
+\end{equation}
+\textbf{Mass Action Law:} For any semiconductor under thermal equilibrium:
+\begin{equation}
+n \cdot p = n_i^2 = N_c N_v e^{-E_g / k_B T}
+\end{equation}
+
+
+\section{Density of States in 3D Semiconductor Bands}
+To calculate carrier densities, we determine the number of quantum electron states per unit energy range per unit volume: the \textbf{Density of States} $g(E)$.
+Applying periodic boundary conditions in 3D $k$-space ($V = L^3$):
+\begin{equation}
+g(E)\,dE = 2 \times \frac{4\pi k^2 \, dk}{(2\pi/L)^3 \cdot L^3} = \frac{k^2}{\pi^2}\frac{dk}{dE} \, dE
+\end{equation}
+Using the parabolic conduction band dispersion $E - E_c = \frac{\hbar^2 k^2}{2m_e^*}$:
+\begin{equation}
+g_c(E) = \frac{1}{2\pi^2}\left(\frac{2m_e^*}{\hbar^2}\right)^{3/2}\sqrt{E - E_c} \quad (E \ge E_c)
+\end{equation}
+For the valence band:
+\begin{equation}
+g_v(E) = \frac{1}{2\pi^2}\left(\frac{2m_h^*}{\hbar^2}\right)^{3/2}\sqrt{E_v - E} \quad (E \le E_v)
+\end{equation}
+
+\section{Direct vs Indirect Bandgap Semiconductors}
+\begin{itemize}[leftmargin=*,itemsep=3pt]
+    \item \textbf{Direct Bandgap Semiconductors (e.g., GaAs, InP, GaN):} The conduction band minimum and valence band maximum occur at the identical crystal wave vector ($k = 0$). An electron can recombine with a hole via direct emission of a photon without lattice phonon assistance:
+    \begin{equation}
+    E_{\text{photon}} = h\nu \approx E_g, \quad \Delta k \approx 0
+    \end{equation}
+    Radiative recombination rate is extremely high ($\tau \sim 1\text{--}10\text{ ns}$), making them ideal for LEDs, laser diodes, and high-efficiency solar cells.
+    \item \textbf{Indirect Bandgap Semiconductors (e.g., Si, Ge, AlAs):} The conduction band minimum is offset in $k$-space from the valence band maximum ($k_c \ne 0$). Recombination requires both a photon (for energy conservation) and a lattice vibration / phonon (for momentum conservation):
+    \begin{equation}
+    E_e - E_h = h\nu \pm \hbar\Omega_{\text{phonon}}, \quad k_e - k_h = \vec{q}_{\text{phonon}}
+    \end{equation}
+    This three-particle interaction is vastly slower ($\tau \sim 1\text{--}100\text{ }\mu\text{s}$), and energy is lost as thermal heat. Silicon is therefore unsuitable for light-emitting lasers without nanostructuring.
+\end{itemize}
+
+\section{The Hall Effect and Semiconductor Characterization}
+Discovered by Edwin Hall in 1879. When a current $I$ flows along the $x$-axis of a semiconductor slab of width $w$ and thickness $t$ placed in a transverse magnetic field $\vec{B} = B\hat{k}$, the Lorentz force $\vec{F}_B = q(\vec{v}_d \times \vec{B})$ deflects charge carriers along the $y$-axis.
+Accumulated charges create a transverse \textbf{Hall Electric Field} $\vec{E}_H = E_H \hat{j}$ that opposes further deflection:
+\begin{equation}
+q E_H = q v_d B \implies E_H = v_d B
+\end{equation}
+Using current density $J = \frac{I}{w t} = n q v_d \implies v_d = \frac{I}{n q w t}$, the measured \textbf{Hall Voltage} $V_H$ is:
+\begin{equation}
+V_H = E_H w = v_d B w = \left(\frac{I}{n q w t}\right) B w = \frac{B I}{n q t} = \frac{R_H B I}{t}
+\end{equation}
+where the \textbf{Hall Coefficient} is defined as:
+\begin{equation}
+R_H \equiv \frac{1}{n q} = \begin{cases} -\frac{1}{n e} & \text{(N-type semiconductor, electron majority)} \\ +\frac{1}{p e} & \text{(P-type semiconductor, hole majority)} \end{cases}
+\end{equation}
+
+\begin{takeawaybox}
+\textbf{Crucial Engineering Applications of the Hall Effect:}
+\begin{enumerate}[itemsep=2pt]
+    \item \textbf{Carrier Type Determination:} The polarity of $V_H$ immediately identifies N-type vs P-type material.
+    \item \textbf{Carrier Concentration Measurement:} Carrier density is directly computed as $n = \frac{1}{e |R_H|}$.
+    \item \textbf{Carrier Mobility Calculation:} Hall mobility is calculated via $\mu_H = |R_H| \sigma$.
+    \item \textbf{Magnetic Field Sensing:} Used in contactless automotive wheel-speed sensors, brushless DC motor commutators, and digital compasses.
+\end{enumerate}
+\end{takeawaybox}
+
+\section{Photovoltaic Solar Cells}
+A solar cell is a large-area semiconductor p-n junction that converts solar radiation directly into electrical power through the photovoltaic effect:
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Electron-Hole Generation:} Incident photons with energy $h\nu \ge E_g$ excite electrons across the bandgap, creating electron-hole pairs.
+    \item \textbf{Carrier Collection:} The built-in electric field in the depletion zone sweeps electrons into the N-region and holes into the P-region before they can recombine.
+    \item \textbf{Electrical Characteristics:}
+    \begin{equation}
+    I = I_{\text{sc}} - I_0 \left( e^{qV / \eta k_B T} - 1 \right)
+    \end{equation}
+    \item \textbf{Fill Factor (FF) and Conversion Efficiency ($\eta$):}
+    \begin{equation}
+    \text{FF} \equiv \frac{V_{\text{mp}} I_{\text{mp}}}{V_{\text{oc}} I_{\text{sc}}}, \quad \eta = \frac{P_{\text{max}}}{P_{\text{in}}} = \frac{\text{FF} \cdot V_{\text{oc}} \cdot I_{\text{sc}}}{P_{\text{in}} \cdot A_{\text{cell}}}
+    \end{equation}
+\end{enumerate}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}{Worked Example 5.1: Hall Effect Carrier Concentration and Mobility}
+\textbf{Problem:} A rectangular Silicon strip of thickness $t = 0.5\text{ mm}$ and width $w = 2\text{ mm}$ carries a current $I = 10\text{ mA}$ in a magnetic field $B = 0.5\text{ Tesla}$. The measured Hall voltage is $V_H = -2.5\text{ mV}$. The electrical conductivity of the sample is $\sigma = 100\text{ S/m}$. Calculate: (a) The Hall coefficient $R_H$, (b) The carrier type and density $n$, and (c) The carrier mobility $\mu_H$.\\
+\textbf{Solution:}\\
+(a) Hall coefficient:
+\[
+R_H = \frac{V_H t}{B I} = \frac{(-2.5 \times 10^{-3}\text{ V}) \times (0.5 \times 10^{-3}\text{ m})}{(0.5\text{ T}) \times (10 \times 10^{-3}\text{ A})} = \frac{-1.25 \times 10^{-6}}{2.5 \times 10^{-3}} = -5.0 \times 10^{-4}\text{ m}^3/\text{C}
+\]
+(b) Since $R_H < 0$, the sample is an \textbf{N-type semiconductor} (electron conduction).\\
+Electron concentration:
+\[
+n = \frac{1}{e |R_H|} = \frac{1}{(1.602 \times 10^{-19}\text{ C}) \times (5.0 \times 10^{-4}\text{ m}^3/\text{C})} = \frac{1}{8.01 \times 10^{-23}} = 1.25 \times 10^{22}\text{ m}^{-3}
+\]
+(c) Hall mobility:
+\[
+\mu_H = |R_H| \sigma = (5.0 \times 10^{-4}\text{ m}^3/\text{C}) \times (100\text{ S/m}) = 0.05\text{ m}^2/(\text{V}\cdot\text{s}) = 500\text{ cm}^2/(\text{V}\cdot\text{s})
+\]
+\end{examplebox}
+
+\section{Review Questions}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item Explain the Kronig-Penney model and derive how periodic lattice potentials lead to allowed bands and forbidden bandgaps.
+    \item Define effective mass ($m^*$). Why is the effective mass negative near the top of a valence band?
+    \item State Fermi-Dirac distribution. Plot $f(E)$ vs $E$ at $T = 0\text{ K}$ and $T > 0\text{ K}$.
+    \item Derive the expression for Hall voltage $V_H$ and list four major engineering applications of the Hall effect.
+\end{enumerate}

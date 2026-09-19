@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SecureStudyHub</string>
+    <string name="title_activity_main">SecureStudyHub</string>
+    <string name="package_name">com.securesstudy.hub</string>
+    <string name="custom_url_scheme">com.securesstudy.hub</string>
+</resources>

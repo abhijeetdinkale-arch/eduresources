@@ -1,0 +1,653 @@
+\chapter{Semiconductor Physics}
+\label{chap:semiconductors}
+
+\section{Chapter Overview \& Learning Objectives}
+Semiconductors form the cornerstone of modern electronic, optoelectronic, and computer technologies. The ability to dynamically tune electrical conductivity by many orders of magnitude through minute chemical doping, applied electric fields, and optical illumination makes semiconductors uniquely versatile.
+
+In this chapter, we develop the quantum mechanical and statistical foundations of semiconductor physics. We study the formation of energy bands in crystalline solids, classify materials into conductors, semiconductors, and insulators, and analyze the distinction between direct and indirect bandgap semiconductors. We derive the equilibrium electron and hole concentrations from Fermi-Dirac statistics, formulate the Law of Mass Action, explore carrier drift and diffusion transport, and derive the Hall effect and its experimental applications. Finally, we examine the physics of the $p$-$n$ junction, deriving the built-in potential barrier and depletion layer width.
+
+\begin{important}[Core Learning Objectives]
+Upon mastering the material in this chapter, you should be able to:
+\begin{enumerate}
+    \item Explain the formation of energy bands in solids and classify materials based on bandgap energy $E_g$.
+    \item Distinguish between direct and indirect bandgap semiconductors using $E$-$k$ dispersion diagrams.
+    \item Explain Fermi-Dirac statistics and the physical significance of the Fermi energy level $E_F$.
+    \item Derive the expressions for thermal equilibrium electron ($n$) and hole ($p$) concentrations in intrinsic semiconductors and formulate the Law of Mass Action ($n p = n_i^2$).
+    \item Derive the expression for the intrinsic Fermi level $E_{Fi}$ and analyze the shift of $E_F$ with donor and acceptor doping and temperature.
+    \item Formulate carrier transport mechanisms: drift current ($J_{\text{drift}} = \sigma E$), diffusion current ($J_{\text{diff}}$), and verify the Einstein relation ($D/\mu = k_B T / q$).
+    \item Derive the Hall voltage $V_H$ and Hall coefficient $R_H$, explaining its experimental applications in semiconductor characterization.
+    \item Describe the equilibrium $p$-$n$ junction, deriving the built-in potential $V_{bi}$ and depletion layer width $W$.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 5.2: ENERGY BANDS & CLASSIFICATION
+% ==============================================================================
+\section{Energy Band Formation \& Classification of Solids}
+
+When isolated atoms are brought together to form a periodic crystal lattice, the discrete electronic energy levels of individual atoms split into closely spaced continuous bands of allowed energy states separated by forbidden energy gaps (\textbf{bandgaps}, $E_g$), as predicted by the Kronig-Penney quantum model.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % (a) Insulator
+    \begin{scope}[xshift=0cm]
+        \draw[thick, fill=boxnavybg] (0,2.8) rectangle (2.5,3.6);
+        \node[font=\footnotesize\bfseries\color{brandnavy}] at (1.25,3.2) {Conduction Band};
+        \draw[thick, fill=boxslatebg] (0,0) rectangle (2.5,1.2);
+        \node[font=\footnotesize\bfseries\color{brandslate}] at (1.25,0.6) {Valence Band};
+        \draw[<->, ultra thick, brandaccent] (1.25,1.3) -- (1.25,2.7);
+        \node[right, font=\footnotesize\bfseries\color{brandaccent}] at (1.3,2.0) {$E_g > 5\,\si{eV}$};
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (1.25,-0.3) {(a) Insulator (e.g., Diamond)};
+    \end{scope}
+    
+    % (b) Semiconductor
+    \begin{scope}[xshift=4.5cm]
+        \draw[thick, fill=boxnavybg] (0,2.0) rectangle (2.5,2.8);
+        \node[font=\footnotesize\bfseries\color{brandnavy}] at (1.25,2.4) {Conduction Band};
+        \draw[thick, fill=boxslatebg] (0,0) rectangle (2.5,1.0);
+        \node[font=\footnotesize\bfseries\color{brandslate}] at (1.25,0.5) {Valence Band};
+        \draw[<->, ultra thick, brandaccent] (1.25,1.1) -- (1.25,1.9);
+        \node[right, font=\footnotesize\bfseries\color{brandaccent}] at (1.3,1.5) {$E_g \sim 1\,\si{eV}$};
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (1.25,-0.3) {(b) Semiconductor (Si, Ge)};
+    \end{scope}
+    
+    % (c) Conductor
+    \begin{scope}[xshift=9.0cm]
+        \draw[thick, fill=boxnavybg!50] (0,1.2) rectangle (2.5,2.6);
+        \draw[thick, fill=boxslatebg!70] (0,0) rectangle (2.5,1.8);
+        \draw[thick, pattern=north east lines, pattern color=brandnavy] (0,1.2) rectangle (2.5,1.8);
+        \node[font=\footnotesize\bfseries\color{brandnavy}] at (1.25,2.2) {Conduction Band};
+        \node[font=\footnotesize\bfseries\color{brandslate}] at (1.25,0.4) {Valence Band};
+        \node[font=\tiny\bfseries\color{brandaccent}] at (1.25,1.5) {Overlapping};
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (1.25,-0.3) {(c) Conductor (Cu, Al)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Energy band classification of solid materials based on bandgap energy $E_g$.}
+\label{fig:band-classification}
+\end{figure}
+
+\subsection{Classification of Materials}
+\begin{enumerate}
+    \item \textbf{Insulators}: Feature a completely filled valence band, an empty conduction band, and an extremely wide forbidden bandgap ($E_g > 5\,\si{eV}$, e.g., Diamond $E_g \approx 5.5\,\si{eV}$, $\text{SiO}_2$ $E_g \approx 9\,\si{eV}$). Thermal energy at room temperature ($k_B T \approx 0.026\,\si{eV}$) cannot excite electrons across the gap ($\sigma \approx 10^{-18}\text{--}10^{-12}\,\si{S/m}$).
+    \item \textbf{Semiconductors}: Feature a moderate forbidden bandgap ($E_g \approx 0.5\text{--}2.0\,\si{eV}$, e.g., Silicon $E_g = 1.12\,\si{eV}$, Germanium $E_g = 0.66\,\si{eV}$, GaAs $E_g = 1.42\,\si{eV}$). At $T = 0\,\si{K}$, they behave as perfect insulators, but at room temperature ($T = 300\,\si{K}$), thermal excitation promotes electrons into the conduction band, generating moderate conductivity ($\sigma \approx 10^{-4}\text{--}10^{2}\,\si{S/m}$).
+    \item \textbf{Conductors (Metals)}: The conduction and valence bands overlap ($E_g = 0$), or the valence band is only partially filled (e.g., Copper, Silver, Aluminum). A vast sea of free electrons is available at all temperatures ($\sigma \approx 10^7\text{--}10^8\,\si{S/m}$).
+\end{enumerate}
+
+\subsection{Direct vs. Indirect Bandgap Semiconductors}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Panel (a): Direct Bandgap
+    \begin{scope}[xshift=0cm]
+        \draw[->, thick, branddark] (-2,0) -- (2,0) node[right, font=\small] {$k$};
+        \draw[->, thick, branddark] (0,-1.5) -- (0,3.2) node[above, font=\small] {$E$};
+        % Conduction band parabola
+        \draw[ultra thick, brandnavy, domain=-1.5:1.5] plot (\x, {1.8 + 0.6*\x*\x});
+        \node[right, font=\footnotesize\color{brandnavy}] at (1.2,2.8) {$E_c$};
+        % Valence band parabola
+        \draw[ultra thick, brandslate, domain=-1.5:1.5] plot (\x, {-0.2 - 0.6*\x*\x});
+        \node[right, font=\footnotesize\color{brandslate}] at (1.2,-1.2) {$E_v$};
+        % Direct transition
+        \draw[->, ultra thick, brandaccent] (0,1.8) -- (0,-0.2) node[midway, right, font=\footnotesize\bfseries] {Photon ($h\nu$)};
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (0,-1.8) {(a) Direct Bandgap (GaAs, InP)};
+    \end{scope}
+    
+    % Panel (b): Indirect Bandgap
+    \begin{scope}[xshift=7.0cm]
+        \draw[->, thick, branddark] (-2,0) -- (2,0) node[right, font=\small] {$k$};
+        \draw[->, thick, branddark] (0,-1.5) -- (0,3.2) node[above, font=\small] {$E$};
+        % Conduction band shifted parabola
+        \draw[ultra thick, brandnavy, domain=-0.5:2.0] plot (\x, {1.8 + 0.6*(\x-1.0)*(\x-1.0)});
+        \node[right, font=\footnotesize\color{brandnavy}] at (1.8,2.5) {$E_c$};
+        % Valence band parabola centered at k=0
+        \draw[ultra thick, brandslate, domain=-1.5:1.5] plot (\x, {-0.2 - 0.6*\x*\x});
+        \node[right, font=\footnotesize\color{brandslate}] at (1.2,-1.2) {$E_v$};
+        % Indirect transition path
+        \draw[->, thick, dashed, brandblue] (1.0,1.8) -- (0,1.8) node[midway, above, font=\tiny] {Phonon ($\Delta k$)};
+        \draw[->, ultra thick, brandaccent] (0,1.8) -- (0,-0.2) node[midway, left, font=\footnotesize] {$h\nu$};
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (0,-1.8) {(b) Indirect Bandgap (Si, Ge)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Electron energy $E$ versus crystal wavevector $k$ for direct and indirect bandgap semiconductors.}
+\label{fig:direct-vs-indirect}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Direct Bandgap Semiconductors} (e.g., GaAs, InP, GaN): The minimum of the conduction band and the maximum of the valence band align at the exact same crystal momentum ($k = 0$). An electron recombines directly with a hole, conserving crystal momentum ($\Delta k = 0$) and releasing its energy almost entirely as a \textbf{photon} ($h\nu = E_g$). Hence, direct bandgap materials are essential for optoelectronic emitters (LEDs, Lasers).
+    \item \textbf{Indirect Bandgap Semiconductors} (e.g., Si, Ge): The conduction band minimum is shifted to $k \neq 0$. Recombination requires a simultaneous change in momentum, requiring the absorption or emission of a lattice vibration quantum (\textbf{phonon}). Because three-body interactions ($e^- + h^+ + \text{phonon}$) have a very low quantum probability, recombining carriers dissipate energy as thermal heat. Silicon is therefore unsuitable for light emission, though ideal for transistors and photovoltaic solar cells.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.3: CARRIER STATISTICS & MASS ACTION
+% ==============================================================================
+\section{Carrier Statistics in Semiconductors}
+
+\subsection{Fermi-Dirac Distribution Function}
+The probability $f(E)$ that an electronic quantum state of energy $E$ is occupied by an electron in thermal equilibrium at temperature $T$ is governed by \textbf{Fermi-Dirac statistics}:
+
+\begin{keyequation}[Fermi-Dirac Distribution]
+\begin{equation}
+    f(E) = \frac{1}{1 + e^{(E - E_F)/k_B T}}
+\end{equation}
+where $E_F$ is the \textbf{Fermi energy level}, and $k_B = 1.381 \times 10^{-23}\,\si{J/K}$ is Boltzmann's constant.
+\end{keyequation}
+\begin{itemize}
+    \item At $T = 0\,\si{K}$: $f(E) = 1$ for $E < E_F$, and $f(E) = 0$ for $E > E_F$.
+    \item At $T > 0\,\si{K}$: At $E = E_F$, $f(E_F) = \frac{1}{1 + e^0} = \frac{1}{2} = 50\%$. Thus, the Fermi level is the energy level at which the probability of state occupancy is exactly $50\%$.
+\end{itemize}
+
+\subsection{Equilibrium Carrier Concentrations}
+The thermal equilibrium electron density in the conduction band $n$ and hole density in the valence band $p$ are obtained by integrating the product of the 3D density of states $g(E)$ and the occupancy probability:
+\begin{align}
+    n &= \int_{E_c}^{\infty} g_c(E) f(E)\,dE = N_c e^{-(E_c - E_F)/k_B T} \\
+    p &= \int_{-\infty}^{E_v} g_v(E) [1 - f(E)]\,dE = N_v e^{-(E_F - E_v)/k_B T}
+\end{align}
+where $N_c$ and $N_v$ are the \textbf{effective densities of states} in the conduction and valence bands:
+\begin{equation}
+    N_c = 2\left(\frac{2\pi m_e^* k_B T}{h^2}\right)^{3/2}, \quad N_v = 2\left(\frac{2\pi m_h^* k_B T}{h^2}\right)^{3/2}
+\end{equation}
+
+\subsection{Intrinsic Carrier Concentration (\texorpdfstring{$n_i$}{ni}) \& Law of Mass Action}
+In an ultra-pure (intrinsic) semiconductor, thermal excitation generates electrons and holes in identical pairs:
+\begin{equation}
+    n = p = n_i
+\end{equation}
+Multiplying the electron and hole concentrations (Equations 5.2 and 5.3):
+\begin{equation}
+    n \cdot p = \left( N_c e^{-(E_c - E_F)/k_B T} \right) \left( N_v e^{-(E_F - E_v)/k_B T} \right) = N_c N_v e^{-(E_c - E_v)/k_B T} = N_c N_v e^{-E_g / k_B T}
+\end{equation}
+
+\begin{keyequation}[Law of Mass Action]
+\begin{equation}
+    n \cdot p = n_i^2
+\end{equation}
+where the \textbf{intrinsic carrier concentration} $n_i$ is:
+\begin{equation}
+    n_i = \sqrt{N_c N_v} e^{-E_g / (2 k_B T)}
+\end{equation}
+\end{keyequation}
+The Law of Mass Action holds universally for both intrinsic and extrinsic doped semiconductors in thermal equilibrium!
+
+\subsection{Position of the Intrinsic Fermi Level (\texorpdfstring{$E_{Fi}$}{EFi})}
+In an intrinsic semiconductor, setting $n = p \implies N_c e^{-(E_c - E_{Fi})/k_B T} = N_v e^{-(E_{Fi} - E_v)/k_B T}$:
+\begin{equation}
+    e^{2E_{Fi}/k_B T} = \frac{N_v}{N_c} e^{(E_c + E_v)/k_B T} \implies 2E_{Fi} = (E_c + E_v) + k_B T \ln\left(\frac{N_v}{N_c}\right)
+\end{equation}
+Substituting $N_v / N_c = (m_h^* / m_e^*)^{3/2}$:
+
+\begin{keyequation}[Intrinsic Fermi Level Position]
+\begin{equation}
+    E_{Fi} = \frac{E_c + E_v}{2} + \frac{3}{4} k_B T \ln\left( \frac{m_h^*}{m_e^*} \right)
+\end{equation}
+\end{keyequation}
+If the effective masses are equal ($m_e^* = m_h^*$), or at $T = 0\,\si{K}$, the intrinsic Fermi level lies \textbf{precisely at the midpoint} of the forbidden bandgap ($E_{Fi} = \frac{E_c + E_v}{2}$).
+
+% ==============================================================================
+% SECTION 5.4: EXTRINSIC SEMICONDUCTORS
+% ==============================================================================
+\section{Extrinsic Semiconductors \& Fermi Level Dynamics}
+
+\begin{itemize}
+    \item \textbf{$n$-Type Semiconductors}: Doping Silicon (Group IV) with pentavalent donor impurities (P, As, Sb, Group V) introduces donor energy levels $E_d$ just below $E_c$ ($\Delta E_d \approx 0.05\,\si{eV}$). At room temperature, all donors are ionized ($n \approx N_D$). By the Law of Mass Action, minority hole concentration is $p = n_i^2 / N_D \ll n_i$. The Fermi level shifts upwards towards the conduction band:
+    \begin{equation}
+        E_F - E_{Fi} = k_B T \ln\left(\frac{N_D}{n_i}\right)
+    \end{equation}
+    \item \textbf{$p$-Type Semiconductors}: Doping with trivalent acceptor impurities (B, Al, Ga, Group III) introduces acceptor levels $E_a$ just above $E_v$. At room temperature, majority hole concentration is $p \approx N_A$, and minority electron concentration is $n = n_i^2 / N_A$. The Fermi level shifts downwards towards the valence band:
+    \begin{equation}
+        E_{Fi} - E_F = k_B T \ln\left(\frac{N_A}{n_i}\right)
+    \end{equation}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.5: CARRIER TRANSPORT MECHANISMS
+% ==============================================================================
+\section{Carrier Transport: Drift, Diffusion \& Conductivity}
+
+\subsection{Drift Current \& Electrical Conductivity}
+When an external electric field $\mathbf{E}$ is applied across a semiconductor, carriers experience electrostatic acceleration balanced by lattice collisions, acquiring a steady average \textbf{drift velocity} $v_d = \mu E$, where $\mu$ is the \textbf{carrier mobility} ($\si{m^2/(V\cdot s)}$). The total drift current density is:
+\begin{equation}
+    J_{\text{drift}} = J_n + J_p = q n v_{dn} + q p v_{dp} = q(n\mu_n + p\mu_p)E = \sigma E
+\end{equation}
+
+\begin{keyequation}[Semiconductor Electrical Conductivity]
+\begin{equation}
+    \sigma = q(n\mu_n + p\mu_p) \quad [\si{S/m} \text{ or } \si{\Omega^{-1}\cdot m^{-1}}]
+\end{equation}
+\end{keyequation}
+Electrical resistivity is $\rho = 1/\sigma$. For intrinsic material: $\sigma_i = q n_i(\mu_n + \mu_p)$.
+
+\subsection{Diffusion Current \& The Einstein Relation}
+When spatial carrier concentration gradients exist ($dn/dx \neq 0$ or $dp/dx \neq 0$), carriers diffuse from high to low concentration regions. The diffusion current densities are:
+\begin{equation}
+    J_{n,\text{diff}} = q D_n \frac{dn}{dx}, \quad J_{p,\text{diff}} = -q D_p \frac{dp}{dx}
+\end{equation}
+where $D_n$ and $D_p$ are the electron and hole \textbf{diffusion coefficients} ($\si{m^2/s}$).
+
+\begin{keyequation}[Einstein Relation]
+The ratio of diffusion coefficient to mobility is directly proportional to thermal energy:
+\begin{equation}
+    \frac{D_n}{\mu_n} = \frac{D_p}{\mu_p} = \frac{k_B T}{q} = V_T \approx 0.0259\,\si{V} \quad (\text{at } T = 300\,\si{K})
+\end{equation}
+\end{keyequation}
+
+% ==============================================================================
+% SECTION 5.6: THE HALL EFFECT
+% ==============================================================================
+\section{The Hall Effect}
+
+Discovered in 1879 by Edwin Hall, the Hall effect is a fundamental galvanomagnetic phenomenon used to determine the electrical nature of charge carriers in conducting and semiconducting media.
+
+\subsection{Experimental Setup and Physical Mechanism}
+Consider a rectangular semiconductor bar of thickness $w$ (along $z$) and width $d$ (along $y$) carrying a longitudinal electric current $I$ (current density $J_x$) along the $+x$-direction, placed in a perpendicular transverse magnetic field $\mathbf{B} = B \hat{\mathbf{z}}$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05]
+    % 3D Semiconductor block
+    \draw[thick, fill=boxskybg!40] (0,0) -- (4.0,0) -- (5.0,1.2) -- (1.0,1.2) -- cycle;
+    \draw[thick, fill=boxnavybg!30] (0,0) -- (0,1.8) -- (1.0,3.0) -- (1.0,1.2) -- cycle;
+    \draw[thick, fill=boxnavybg!15] (0,1.8) -- (4.0,1.8) -- (5.0,3.0) -- (1.0,3.0) -- cycle;
+    \draw[thick] (4.0,0) -- (4.0,1.8) -- (5.0,3.0);
+    
+    % Dimensions
+    \draw[<->, branddark] (0,-0.3) -- (4.0,-0.3) node[midway, below, font=\footnotesize] {Length $L$};
+    \draw[<->, branddark] (-0.3,0) -- (-0.3,1.8) node[midway, left, font=\footnotesize] {Width $d$};
+    \draw[<->, branddark] (4.2,-0.2) -- (5.2,1.0) node[midway, below right, font=\footnotesize] {Thickness $w$};
+    
+    % Current I_x
+    \draw[->, ultra thick, brandaccent] (-1.0,0.9) -- (0,0.9) node[midway, above, font=\footnotesize\bfseries] {$I$};
+    \draw[->, ultra thick, brandaccent] (4.0,0.9) -- (5.5,0.9);
+    
+    % Magnetic Field B_z
+    \draw[->, ultra thick, brandblue] (2.5,-0.8) -- (2.5,2.4) node[above, font=\footnotesize\bfseries] {$\mathbf{B} = B\hat{\mathbf{z}}$};
+    
+    % Hall Voltage probes
+    \draw[thick, fill=brandnavy] (2.0,1.8) circle (3pt);
+    \draw[thick, fill=brandnavy] (2.0,0) circle (3pt);
+    \draw[<->, ultra thick, brandnavy] (2.0,0.1) -- (2.0,1.7) node[midway, right, font=\small\bfseries] {$V_H$};
+\end{tikzpicture}
+\caption{Experimental configuration for Hall effect measurement in a semiconductor slab.}
+\label{fig:hall-effect-setup}
+\end{figure}
+
+Carriers moving with drift velocity $\mathbf{v}_d$ experience the transverse \textbf{Lorentz force}:
+\begin{equation}
+    \mathbf{F}_L = q(\mathbf{v}_d \times \mathbf{B})
+\end{equation}
+\begin{itemize}
+    \item For electrons ($q = -e, v_{dx} < 0$): $\mathbf{F}_L = (-e)(-v_{dx}\hat{\mathbf{x}} \times B\hat{\mathbf{z}}) = -e v_{dx} B \hat{\mathbf{y}}$, deflecting electrons toward the bottom face.
+    \item For holes ($q = +e, v_{dx} > 0$): $\mathbf{F}_L = (+e)(+v_{dx}\hat{\mathbf{x}} \times B\hat{\mathbf{z}}) = -e v_{dx} B \hat{\mathbf{y}}$, deflecting holes also toward the bottom face!
+\end{itemize}
+The accumulation of charge on opposite transverse faces builds up a transverse \textbf{Hall electric field} $\mathbf{E}_H = E_H \hat{\mathbf{y}}$. In steady state, the electrostatic force balances the Lorentz force:
+\begin{equation}
+    F_E = F_L \implies q E_H = q v_d B \implies E_H = v_d B
+\end{equation}
+
+\subsection{Derivation of the Hall Coefficient (\texorpdfstring{$R_H$}{RH}) \& Hall Voltage (\texorpdfstring{$V_H$}{VH})}
+Current density is $J_x = n q v_d \implies v_d = \frac{J_x}{n q}$. Substituting into Equation (5.17):
+\begin{equation}
+    E_H = \left(\frac{J_x}{n q}\right)B = \left(\frac{1}{n q}\right) J_x B = R_H J_x B
+\end{equation}
+
+\begin{definition}[Hall Coefficient ($R_H$)]
+The \textbf{Hall coefficient} $R_H$ is defined as the ratio of the induced Hall electric field to the product of current density and magnetic field:
+\begin{equation}
+    R_H = \frac{E_H}{J_x B} = \frac{1}{n q}
+\end{equation}
+\begin{itemize}
+    \item For an \textbf{$n$-type semiconductor}: $q = -e \implies R_H = -\frac{1}{n e} < 0$.
+    \item For a \textbf{$p$-type semiconductor}: $q = +e \implies R_H = +\frac{1}{p e} > 0$.
+\end{itemize}
+\end{definition}
+
+The measurable \textbf{Hall voltage} across width $d$ is $V_H = E_H \cdot d$. Since $J_x = \frac{I}{w \cdot d}$:
+\begin{equation}
+    V_H = E_H d = (R_H J_x B) d = R_H \left(\frac{I}{w d}\right) B d
+\end{equation}
+
+\begin{keyequation}[Hall Voltage Formula]
+\begin{equation}
+    V_H = \frac{R_H I B}{w}
+\end{equation}
+where $w$ is the thickness of the sample along the magnetic field direction.
+\end{keyequation}
+
+\subsection{Applications of the Hall Effect}
+\begin{enumerate}
+    \item \textbf{Determining Semiconductor Type}: The algebraic sign of $V_H$ or $R_H$ directly reveals whether majority carriers are electrons (negative) or holes (positive).
+    \item \textbf{Carrier Concentration Measurement}: $n = \frac{1}{|R_H| e}$ or $p = \frac{1}{R_H e}$.
+    \item \textbf{Hall Mobility Measurement}: $\mu_H = |R_H| \sigma$.
+    \item \textbf{Magnetic Flux Sensors (Hall Probes)}: Since $V_H \propto B$, calibrated Hall probes measure DC and AC magnetic fields.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.7: P-N JUNCTION PHYSICS
+% ==============================================================================
+\section{Fundamentals of the \texorpdfstring{$p$-$n$}{p-n} Junction}
+
+\subsection{Equilibrium Band Diagram \& Built-in Potential (\texorpdfstring{$V_{bi}$}{Vbi})}
+When a $p$-type and an $n$-type semiconductor form an abrupt metallurgical interface, majority electrons diffuse from $n$ to $p$, and holes diffuse from $p$ to $n$. This uncovers uncompensated donor ions ($\text{N}_D^+$) on the $n$-side and acceptor ions ($\text{N}_A^-$) on the $p$-side, creating a space charge \textbf{depletion region} (width $W$) and an internal electric field pointing from $n$ to $p$.
+
+In thermal equilibrium, the Fermi level aligns continuously throughout the device ($E_{Fn} = E_{Fp}$). The \textbf{built-in barrier potential} $V_{bi}$ is:
+
+\begin{keyequation}[Built-in Barrier Potential]
+\begin{equation}
+    V_{bi} = \frac{k_B T}{q}\ln\left(\frac{N_A N_D}{n_i^2}\right) = V_T \ln\left(\frac{N_A N_D}{n_i^2}\right)
+\end{equation}
+\end{keyequation}
+
+\subsection{Depletion Layer Width (\texorpdfstring{$W$}{W})}
+Solving Poisson's equation across the step junction gives the total depletion width:
+\begin{equation}
+    W = x_n + x_p = \sqrt{\frac{2\varepsilon_s (V_{bi} - V_a)}{q}\left(\frac{1}{N_A} + \frac{1}{N_D}\right)}
+\end{equation}
+where $V_a$ is the applied external voltage ($V_a > 0$ for forward bias, $V_a < 0$ for reverse bias), and $\varepsilon_s = \varepsilon_r \varepsilon_0$ is the semiconductor permittivity.
+
+% ==============================================================================
+% SECTION 5.8: QUICK REVISION
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Semiconductor Physics Formula Cheat Sheet]
+\begin{itemize}
+    \item \textbf{Fermi-Dirac Function}: $f(E) = \frac{1}{1 + e^{(E-E_F)/k_B T}}$
+    \item \textbf{Carrier Densities}: $n = N_c e^{-(E_c - E_F)/k_B T}, \quad p = N_v e^{-(E_F - E_v)/k_B T}$
+    \item \textbf{Mass Action Law}: $n \cdot p = n_i^2 = N_c N_v e^{-E_g / k_B T}$
+    \item \textbf{Intrinsic Fermi Level}: $E_{Fi} = \frac{E_c + E_v}{2} + \frac{3}{4}k_B T \ln\left(\frac{m_h^*}{m_e^*}\right)$
+    \item \textbf{Conductivity}: $\sigma = q(n\mu_n + p\mu_p), \quad \rho = 1/\sigma$
+    \item \textbf{Einstein Relation}: $\frac{D_n}{\mu_n} = \frac{D_p}{\mu_p} = \frac{k_B T}{q} = V_T \approx 0.0259\,\si{V}$
+    \item \textbf{Hall Coefficient}: $R_H = \frac{1}{n q} = \frac{E_H}{J_x B}$
+    \item \textbf{Hall Voltage}: $V_H = \frac{R_H I B}{w}$
+    \item \textbf{Built-in Potential}: $V_{bi} = \frac{k_B T}{q}\ln\left(\frac{N_A N_D}{n_i^2}\right)$
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 5.9: WORKED NUMERICAL EXAMPLES
+% ==============================================================================
+\section{Worked Numerical Examples}
+
+\begin{example}[Intrinsic Silicon Conductivity and Resistivity]
+Silicon at $T = 300\,\si{K}$ has an intrinsic carrier concentration $n_i = 1.5 \times 10^{16}\,\si{m^{-3}}$, electron mobility $\mu_n = 0.135\,\si{m^2/(V\cdot s)}$, and hole mobility $\mu_p = 0.048\,\si{m^2/(V\cdot s)}$.
+\begin{enumerate}
+    \item Calculate the intrinsic electrical conductivity $\sigma_i$ and resistivity $\rho_i$.
+    \item If the Silicon is doped with Phosphorus donors to $N_D = 10^{22}\,\si{m^{-3}}$, calculate the majority electron concentration $n$, minority hole concentration $p$, and the new conductivity $\sigma_n$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Intrinsic Conductivity and Resistivity}:
+    \begin{align*}
+        \sigma_i &= q n_i (\mu_n + \mu_p) \\
+        &= (1.602 \times 10^{-19}\,\si{C})(1.5 \times 10^{16}\,\si{m^{-3}})(0.135 + 0.048\,\si{m^2/(V\cdot s)}) \\
+        &= (2.403 \times 10^{-3})(0.183) \approx 4.397 \times 10^{-4}\,\si{S/m} \\
+        \rho_i &= \frac{1}{\sigma_i} = \frac{1}{4.397 \times 10^{-4}} \approx 2274\,\si{\Omega\cdot m}
+    \end{align*}
+    
+    \item \textbf{Doped $n$-Type Silicon}:
+    \begin{align*}
+        n &\approx N_D = 10^{22}\,\si{m^{-3}} \\
+        p &= \frac{n_i^2}{N_D} = \frac{(1.5 \times 10^{16})^2}{10^{22}} = \frac{2.25 \times 10^{32}}{10^{22}} = 2.25 \times 10^{10}\,\si{m^{-3}} \\
+        \sigma_n &\approx q N_D \mu_n = (1.602 \times 10^{-19})(10^{22})(0.135) = 216.27\,\si{S/m}
+    \end{align*}
+    Doping increases conductivity by a factor of $\frac{216.27}{4.397 \times 10^{-4}} \approx 4.9 \times 10^5$!
+\end{enumerate}
+\end{example}
+
+\begin{example}[Fermi Level Shift Calculation in Doped Silicon]
+A Silicon sample at $T = 300\,\si{K}$ ($n_i = 1.5 \times 10^{10}\,\si{cm^{-3}}$, $k_B T = 0.0259\,\si{eV}$) is doped with Boron acceptor atoms to a concentration $N_A = 3.0 \times 10^{16}\,\si{cm^{-3}}$.
+\begin{enumerate}
+    \item Determine the position of the Fermi level $E_F$ relative to the intrinsic Fermi level $E_{Fi}$.
+    \item If the bandgap of Silicon is $E_g = 1.12\,\si{eV}$, find the energy separation between $E_F$ and the valence band edge $E_v$ (assuming $E_{Fi}$ lies at mid-gap).
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Fermi Level Shift}:\\
+    For $p$-type material, $E_F$ shifts below $E_{Fi}$:
+    \begin{align*}
+        E_{Fi} - E_F &= k_B T \ln\left(\frac{N_A}{n_i}\right) = (0.0259\,\si{eV})\ln\left(\frac{3.0 \times 10^{16}}{1.5 \times 10^{10}}\right) \\
+        &= (0.0259)\ln(2.0 \times 10^6) = (0.0259)(14.5087) \approx 0.3758\,\si{eV}
+    \end{align*}
+    
+    \item \textbf{Position relative to $E_v$}:\\
+    Since $E_{Fi} - E_v \approx E_g / 2 = 1.12 / 2 = 0.560\,\si{eV}$:
+    \begin{equation*}
+        E_F - E_v = (E_{Fi} - E_v) - (E_{Fi} - E_F) = 0.560\,\si{eV} - 0.3758\,\si{eV} = 0.1842\,\si{eV}
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Complete Hall Effect Parameter Extraction]
+A rectangular strip of an unknown semiconductor has width $d = 1.0\,\si{cm} = 1.0 \times 10^{-2}\,\si{m}$ and thickness $w = 1.0\,\si{mm} = 1.0 \times 10^{-3}\,\si{m}$. It carries a current $I = 10\,\si{mA}$ along $+x$ in a magnetic field $B = 0.5\,\si{T}$ along $+z$. A Hall voltage $V_H = -2.5\,\si{mV}$ is measured across its width, and its electrical conductivity is $\sigma = 200\,\si{S/m}$.
+\begin{enumerate}
+    \item Identify the majority charge carrier type.
+    \item Calculate the Hall coefficient $R_H$.
+    \item Calculate the carrier concentration $n$.
+    \item Calculate the Hall mobility $\mu_H$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Carrier Type}: Since $V_H$ is negative, the majority carriers are \textbf{electrons ($n$-type semiconductor)}.
+    
+    \item \textbf{Hall Coefficient $R_H$}:
+    \begin{equation*}
+        V_H = \frac{R_H I B}{w} \implies R_H = \frac{V_H w}{I B} = \frac{(-2.5 \times 10^{-3}\,\si{V})(1.0 \times 10^{-3}\,\si{m})}{(10 \times 10^{-3}\,\si{A})(0.5\,\si{T})} = -5.0 \times 10^{-4}\,\si{m^3/C}
+    \end{equation*}
+    
+    \item \textbf{Carrier Concentration $n$}:
+    \begin{equation*}
+        n = \frac{1}{|R_H| q} = \frac{1}{(5.0 \times 10^{-4}\,\si{m^3/C})(1.602 \times 10^{-19}\,\si{C})} \approx 1.25 \times 10^{22}\,\si{m^{-3}} = 1.25 \times 10^{16}\,\si{cm^{-3}}
+    \end{equation*}
+    
+    \item \textbf{Hall Mobility $\mu_H$}:
+    \begin{equation*}
+        \mu_H = |R_H| \sigma = (5.0 \times 10^{-4}\,\si{m^3/C})(200\,\si{S/m}) = 0.10\,\si{m^2/(V\cdot s)} = 1000\,\si{cm^2/(V\cdot s)}
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Built-in Potential and Depletion Width of a Silicon $p$-$n$ Junction]
+A Silicon abrupt $p$-$n$ junction at $T = 300\,\si{K}$ has doping concentrations $N_A = 10^{18}\,\si{cm^{-3}} = 10^{24}\,\si{m^{-3}}$ and $N_D = 10^{16}\,\si{cm^{-3}} = 10^{22}\,\si{m^{-3}}$. Given $n_i = 1.5 \times 10^{10}\,\si{cm^{-3}}$, $V_T = 0.0259\,\si{V}$, and relative permittivity $\varepsilon_r = 11.7$ ($\varepsilon_0 = 8.854 \times 10^{-12}\,\si{F/m}$).
+\begin{enumerate}
+    \item Calculate the built-in barrier potential $V_{bi}$.
+    \item Calculate the total equilibrium depletion layer width $W_0$ at zero bias ($V_a = 0$).
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Built-in Potential $V_{bi}$}:
+    \begin{align*}
+        V_{bi} &= V_T \ln\left(\frac{N_A N_D}{n_i^2}\right) = (0.0259\,\si{V})\ln\left(\frac{(10^{18})(10^{16})}{(1.5 \times 10^{10})^2}\right) \\
+        &= (0.0259)\ln\left(\frac{10^{34}}{2.25 \times 10^{20}}\right) = (0.0259)\ln(4.444 \times 10^{13}) \\
+        &= (0.0259)(31.419) \approx 0.8138\,\si{V}
+    \end{align*}
+    
+    \item \textbf{Equilibrium Depletion Layer Width $W_0$}:\\
+    $\varepsilon_s = \varepsilon_r \varepsilon_0 = (11.7)(8.854 \times 10^{-12}) \approx 1.036 \times 10^{-10}\,\si{F/m}$.
+    \begin{align*}
+        W_0 &= \sqrt{\frac{2\varepsilon_s V_{bi}}{q}\left(\frac{1}{N_A} + \frac{1}{N_D}\right)} \\
+        &= \sqrt{\frac{2(1.036 \times 10^{-10})(0.8138)}{1.602 \times 10^{-19}}\left( \frac{1}{10^{24}} + \frac{1}{10^{22}} \right)} \\
+        &= \sqrt{(1.0524 \times 10^{-9})(1.01 \times 10^{-22})} = \sqrt{1.063 \times 10^{-31}} \approx 3.26 \times 10^{-7}\,\si{m} = 0.326\,\si{\mu m}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+% ==============================================================================
+% SECTION 5.10: EXAM TIPS & COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Temperature Dependence of $n_i$]
+In examinations, remember that $n_i(T)$ is extremely sensitive to temperature ($n_i \propto T^{3/2} e^{-E_g / (2k_B T)}$). Roughly, $n_i$ in Silicon doubles for every $11\,\si{^\circ C}$ rise in temperature!
+\end{examtip}
+
+\begin{commonmistake}[Sign of Hall Voltage]
+Students often confuse the sign of $V_H$. Electrons and holes deflect in the \textbf{same spatial direction} under $\mathbf{E}_x \times \mathbf{B}_z$, but because their electric charges are opposite, they create opposite polarities of $V_H$.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 5.11: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual \& Numerical Practice Problems]
+\textbf{A. Conceptual Review Questions}
+\begin{enumerate}
+    \item Explain the formation of energy bands in solids using the Kronig-Penney model. Distinguish between conductors, semiconductors, and insulators.
+    \item Why are direct bandgap semiconductors preferred over indirect bandgap semiconductors for fabricating optical emitters?
+    \item State the Law of Mass Action for semiconductors. Derive the expression for the intrinsic Fermi level $E_{Fi}$.
+    \item Explain the physical mechanism of the Hall effect and derive the expression for the Hall coefficient $R_H$.
+    \item Draw the energy band diagram of a $p$-$n$ junction under equilibrium, forward bias, and reverse bias.
+\end{enumerate}
+
+\textbf{B. Numerical Exercises}
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item Pure Germanium at $300\,\si{K}$ has $n_i = 2.5 \times 10^{19}\,\si{m^{-3}}$, $\mu_n = 0.38\,\si{m^2/(V\cdot s)}$, $\mu_p = 0.18\,\si{m^2/(V\cdot s)}$. Calculate its intrinsic resistivity. \hfill [\textbf{Ans:} $0.446\,\si{\Omega\cdot m}$]
+    \item In an $n$-type Silicon sample, the Fermi level is $0.25\,\si{eV}$ below the conduction band at $300\,\si{K}$. Find the donor concentration $N_D$ if $N_c = 2.8 \times 10^{19}\,\si{cm^{-3}}$. \hfill [\textbf{Ans:} $1.80 \times 10^{15}\,\si{cm^{-3}}$]
+    \item A sample of thickness $0.5\,\si{mm}$ carrying $5\,\si{mA}$ in a field of $0.4\,\si{T}$ produces a Hall voltage of $1.2\,\si{mV}$. Find the carrier concentration. \hfill [\textbf{Ans:} $2.08 \times 10^{22}\,\si{m^{-3}}$]
+    \item Calculate the built-in potential $V_{bi}$ for a GaAs $p$-$n$ junction at $300\,\si{K}$ with $N_A = 10^{17}\,\si{cm^{-3}}$, $N_D = 10^{16}\,\si{cm^{-3}}$, and $n_i = 1.8 \times 10^6\,\si{cm^{-3}}$. \hfill [\textbf{Ans:} $1.23\,\si{V}$]
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 5.12: MCQS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}
+    \item In an intrinsic semiconductor, the Fermi level lies:
+    \begin{enumerate}
+        \item In the conduction band
+        \item In the valence band
+        \item Exactly or near the middle of the bandgap
+        \item At the vacuum level
+    \end{enumerate}
+    
+    \item Direct bandgap semiconductors are used in LEDs and lasers because:
+    \begin{enumerate}
+        \item They have high electrical resistance
+        \item Electron-hole recombination occurs with direct photon emission without phonon participation
+        \item They have zero bandgap
+        \item They are indirect in nature
+    \end{enumerate}
+    
+    \item The Law of Mass Action for a semiconductor in thermal equilibrium states:
+    \begin{enumerate}
+        \item $n + p = n_i$
+        \item $n \cdot p = n_i^2$
+        \item $n / p = n_i$
+        \item $n \cdot p = N_D N_A$
+    \end{enumerate}
+    
+    \item The Hall coefficient $R_H$ of an $n$-type semiconductor is:
+    \begin{enumerate}
+        \item Positive
+        \item Negative
+        \item Zero
+        \item Infinite
+    \end{enumerate}
+    
+    \item The Einstein relation between diffusion coefficient $D$ and mobility $\mu$ is:
+    \begin{enumerate}
+        \item $\frac{D}{\mu} = \frac{k_B T}{q}$
+        \item $\frac{D}{\mu} = \frac{q}{k_B T}$
+        \item $D \cdot \mu = k_B T$
+        \item $\frac{D}{\mu} = q k_B T$
+    \end{enumerate}
+    
+    \item When an acceptor impurity is added to pure Silicon:
+    \begin{enumerate}
+        \item The Fermi level moves closer to the conduction band
+        \item The Fermi level moves closer to the valence band
+        \item The bandgap increases
+        \item The material becomes $n$-type
+    \end{enumerate}
+    
+    \item The built-in potential $V_{bi}$ of a $p$-$n$ junction:
+    \begin{enumerate}
+        \item Increases with higher doping concentrations
+        \item Decreases with higher doping concentrations
+        \item Is independent of doping
+        \item Is zero in equilibrium
+    \end{enumerate}
+    
+    \item In the Hall effect, the force that deflects charge carriers is:
+    \begin{enumerate}
+        \item Gravitational force
+        \item Magnetic Lorentz force
+        \item Centrifugal force
+        \item Strong nuclear force
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[Answer Key to Chapter 5 MCQs]
+\textbf{1.} (c) Near middle of bandgap \quad \textbar\quad
+\textbf{2.} (b) Direct photon emission without phonon \quad \textbar\quad
+\textbf{3.} (b) $n \cdot p = n_i^2$ \\
+\textbf{4.} (b) Negative ($R_H = -1/ne$) \quad \textbar\quad
+\textbf{5.} (a) $D/\mu = k_B T / q$ \quad \textbar\quad
+\textbf{6.} (b) Moves closer to valence band \quad \textbar\quad
+\textbf{7.} (a) Increases with doping \quad \textbar\quad
+\textbf{8.} (b) Magnetic Lorentz force
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.13: CHAPTER TEST
+% ==============================================================================
+\section{Self-Assessment Chapter Test}
+
+\begin{chaptertest}[Comprehensive Chapter 5 Test (Time: 45 Minutes \textbullet\ Max Marks: 25)]
+\begin{enumerate}
+    \item \textbf{[6 Marks] Derivations}:
+    \begin{enumerate}
+        \item Using carrier statistics, prove that the product of equilibrium carrier densities is $n p = n_i^2 = N_c N_v e^{-E_g / k_B T}$.
+        \item Derive the expression for the intrinsic Fermi level $E_{Fi}$ and show it lies at midgap when $m_e^* = m_h^*$.
+    \end{enumerate}
+    
+    \item \textbf{[7 Marks] The Hall Effect}:
+    \begin{enumerate}
+        \item Derive the expressions for Hall electric field $E_H$, Hall coefficient $R_H$, and Hall voltage $V_H$.
+        \item A semiconductor slab of thickness $w = 0.5\,\si{mm}$ carries $I = 15\,\si{mA}$ in a field $B = 0.6\,\si{T}$. If $V_H = -1.8\,\si{mV}$, determine carrier type, concentration $n$, and Hall mobility (given $\sigma = 350\,\si{S/m}$).
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Transport Physics}:
+    \begin{enumerate}
+        \item Differentiate between drift and diffusion currents. State the Einstein relation.
+        \item Calculate the diffusion coefficient $D_n$ for electrons in Silicon with mobility $\mu_n = 0.135\,\si{m^2/(V\cdot s)}$ at $T = 300\,\si{K}$.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] $p$-$n$ Junction}:
+    \begin{enumerate}
+        \item Derive the expression for built-in potential barrier $V_{bi} = \frac{k_B T}{q}\ln\left(\frac{N_A N_D}{n_i^2}\right)$.
+        \item Explain how applied forward and reverse bias affects the barrier height and depletion width.
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Detailed Solutions to Chapter Test]
+\textbf{Solution 1:}\\
+(a) $n = N_c e^{-(E_c - E_F)/k_B T}$ and $p = N_v e^{-(E_F - E_v)/k_B T}$. Multiplying: $np = N_c N_v e^{-(E_c - E_v)/k_B T} = N_c N_v e^{-E_g / k_B T} = n_i^2$.\\
+(b) In intrinsic semiconductor, $n=p \implies N_c e^{-(E_c - E_{Fi})/k_B T} = N_v e^{-(E_{Fi} - E_v)/k_B T} \implies 2E_{Fi} = (E_c + E_v) + k_B T \ln(N_v/N_c)$. Since $N_v/N_c = (m_h^*/m_e^*)^{3/2}$, $E_{Fi} = \frac{E_c+E_v}{2} + \frac{3}{4}k_B T \ln(m_h^*/m_e^*)$. If $m_e^* = m_h^*$, $\ln(1)=0 \implies E_{Fi} = \frac{E_c+E_v}{2}$.
+
+\vspace{0.3cm}
+\textbf{Solution 2:}\\
+(a) In steady state, $q E_H = q v_d B \implies E_H = v_d B$. Since $J_x = n q v_d \implies v_d = J_x / (nq)$, $E_H = \frac{1}{nq} J_x B = R_H J_x B \implies R_H = \frac{1}{nq}$. Measured voltage $V_H = E_H d = R_H (I/wd) B d = \frac{R_H I B}{w}$.\\
+(b) $V_H < 0 \implies n$-type. $R_H = \frac{V_H w}{I B} = \frac{(-1.8 \times 10^{-3})(0.5 \times 10^{-3})}{(15 \times 10^{-3})(0.6)} = -1.0 \times 10^{-4}\,\si{m^3/C}$.\\
+Carrier concentration: $n = \frac{1}{|R_H|e} = \frac{1}{(1.0 \times 10^{-4})(1.602 \times 10^{-19})} \approx 6.24 \times 10^{22}\,\si{m^{-3}}$.\\
+Hall mobility: $\mu_H = |R_H|\sigma = (1.0 \times 10^{-4})(350) = 0.035\,\si{m^2/(V\cdot s)}$.
+
+\vspace{0.3cm}
+\textbf{Solution 3:}\\
+(a) Drift current is driven by electric field force ($J_{\text{drift}} = \sigma E$); diffusion current is driven by spatial concentration gradient ($J_{\text{diff}} = q D dn/dx$). Einstein relation: $D/\mu = k_B T / q = V_T$.\\
+(b) $D_n = \mu_n \left(\frac{k_B T}{q}\right) = (0.135\,\si{m^2/(V\cdot s)})(0.02586\,\si{V}) \approx 3.49 \times 10^{-3}\,\si{m^2/s} = 34.9\,\si{cm^2/s}$.
+
+\vspace{0.3cm}
+\textbf{Solution 4:}\\
+(a) In equilibrium, $E_{Fn} = E_{Fp}$. In $n$-region, $n_n \approx N_D = n_i e^{(E_{Fn}-E_{Fi,n})/k_B T}$. In $p$-region, $p_p \approx N_A = n_i e^{(E_{Fi,p}-E_{Fp})/k_B T}$. The total band bending is $q V_{bi} = (E_{Fi,p} - E_{Fi,n}) = k_B T \ln(N_A/n_i) + k_B T \ln(N_D/n_i) = k_B T \ln\left(\frac{N_A N_D}{n_i^2}\right)$.\\
+(b) Under forward bias ($V_a > 0$), barrier decreases to $V_{bi} - V_a$ and depletion width shrinks, allowing massive diffusion current. Under reverse bias ($V_a < 0$), barrier increases to $V_{bi} + |V_a|$ and depletion width widens, blocking current except for tiny minority reverse saturation current $I_0$.
+\end{solutionbox}

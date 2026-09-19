@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Engineering Graphics \& Computer Aided Drafting}
+\author{LPU Engineering Open}
+\date{Study Guide \& AutoCAD Manual}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+\chapter*{How to Use This Book for Exam Success}
+\addcontentsline{toc}{chapter}{How to Use This Book for Exam Success}
+
+\noindent Welcome to \textbf{MEC136: Engineering Graphics \& Computer Aided Drafting}. This textbook has been authored from the ground up to serve as the definitive, university-level curriculum companion, laboratory drafting manual, and high-yield exam preparation guide.
+
+\section*{Strategic Exam Preparation Paradigms}
+
+\begin{tcolorbox}[enhanced, colback=boxtealbg, colframe=brandteal, title={\textbf{Scenario A: Full Semester Study Strategy (Maximum Marks + Mastery)}}, boxrule=1.2pt]
+\begin{enumerate}
+    \item \textbf{Understand Core Concepts:} Read the topic-by-topic theory, focusing on physical principles (e.g., Similar Triangles in Diagonal Scales, Rotating Line Method for Lines, Glass Box concept for Orthographic Projections).
+    \item \textbf{Master Manual Drafting Procedures:} Follow step-by-step geometric construction steps for line projections, sectional views, and surface developments.
+    \item \textbf{Learn AutoCAD Workflows:} Memorize command shortcuts, options, and key toggles (\texttt{UNITS}, \texttt{LIMITS}, \texttt{OSNAP F3}, \texttt{ORTHO F8}, \texttt{HATCH}, \texttt{EXTRUDE}).
+    \item \textbf{Solve Graded Exercises:} Work through Level 1 to Level 4 practice problems at the end of each unit.
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced, colback=boxamberbg, colframe=brandamber, title={\textbf{Scenario B: Limited Time / Mid-Term Strategy (High-Yield Focus)}}, boxrule=1.2pt]
+\begin{enumerate}
+    \item \textbf{Focus on [HIGH PRIORITY] Topics:} First Angle vs. Third Angle view placement, Line Projections inclined to both planes, Isometric Scale factor derivation ($0.816$), Sectional hatching exceptions (ribs/fasteners).
+    \item \textbf{Review Key Formulas \& Derivations:} Representative Fraction ($R.F.$), Isometric Scale derivation, Sector Angle ($\theta = \frac{r}{L} \times 360^\circ$).
+    \item \textbf{Solve Exam Problems:} Practice 5 solved numerical/construction problems per unit.
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced, colback=boxrosebg, colframe=boxroseborder, title={\textbf{Scenario C: Last-Day Night Before Exam Strategy (Rapid Revision)}}, boxrule=1.2pt]
+\begin{enumerate}
+    \item Read \textbf{Chapter 7: Master Revision Sheet} (Formula summary, Definition index, AutoCAD Cheat Sheet).
+    \item Review \textbf{Common Student Pitfalls} boxes in Chapters 1--6.
+    \item Attempt \textbf{Chapter 9: Mock Examination} under timed conditions.
+\end{enumerate}
+\end{tcolorbox}
+
+\section*{Syllabus \& Module Correlation Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lp{5.2cm}p{2.2cm}X}
+\toprule
+\textbf{Unit} & \textbf{Core Module Subject} & \textbf{Chapter} & \textbf{Key Highlights} \\
+\midrule
+\textbf{Unit 1} & Introduction to Engineering Drawing & Chapter 1 & Instruments, Line Types, Dimensioning, Lettering, Scales ($R.F.$), AutoCAD Setup. \\
+\addlinespace
+\textbf{Unit 2} & Projection of Points \& Lines & Chapter 2 & Quadrants, $1^{\text{st}}$ vs $3^{\text{rd}}$ Angle, Point Projections, Line Projections, Traces ($HT/VT$). \\
+\addlinespace
+\textbf{Unit 3} & Orthographic Projections of Objects & Chapter 3 & Multi-view Projections, Glass Box, Miter Line ($45^\circ$), Layer \& Modify Commands. \\
+\addlinespace
+\textbf{Unit 4} & Sectional Views \& Hatching & Chapter 4 & Full/Half/Offset Sections, Hatching Rules (\texttt{ANSI31}), Rib/Fastener Exceptions. \\
+\addlinespace
+\textbf{Unit 5} & Isometric Views \& 3D Modeling & Chapter 5 & Isometric Axes ($120^\circ/30^\circ$), Scale Factor ($0.816$), Box Method, 3D Primitives. \\
+\addlinespace
+\textbf{Unit 6} & Surface Development \& 3D Editing & Chapter 6 & Parallel Line \& Radial Line Methods, Truncated Solids, 3D Booleans, \texttt{VIEWBASE}. \\
+\addlinespace
+\textbf{Revision} & Master Formulas \& Commands & Chapter 7 & Unit-wise Formula Summary, Derivation Steps, AutoCAD Command Cheat Sheet. \\
+\addlinespace
+\textbf{Practice} & Cross-Unit Synthesis Problems & Chapter 8 & 15 Complex Integrated Construction \& Calculation Problems with Full Solutions. \\
+\addlinespace
+\textbf{Exams} & University Assessment Papers & Chapter 9 & Two Full 100-Mark Mock Exams (Sections A, B, C) with Marking Rubrics \& Solutions. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+
+% ==============================================================================
+% TABLE OF CONTENTS
+% ==============================================================================
+\tableofcontents
+\cleardoublepage
+
+% ==============================================================================
+% MAINMATTER
+% ==============================================================================
+\mainmatter
+
+\include{chapters/chapter-01-engineering-drawing-autocad}
+\include{chapters/chapter-02-projection-points-lines}
+\include{chapters/chapter-03-orthographic-projection-objects}
+\include{chapters/chapter-04-sectional-views-hatching}
+\include{chapters/chapter-05-isometric-views-3d-modeling}
+\include{chapters/chapter-06-surface-development-3d-editing}
+\include{chapters/chapter-07-master-revision-sheet}
+\include{chapters/chapter-08-practical-problems}
+\include{chapters/chapter-09-mock-examination}
+
+\end{document}

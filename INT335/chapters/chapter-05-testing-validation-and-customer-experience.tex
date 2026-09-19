@@ -1,0 +1,200 @@
+\chapter{Testing, Validation and Customer Experience}
+\label{chap:testing_validation_cx}
+
+\begin{tcolorbox}[enhanced, colback=boxnavybg, colframe=brandnavy, boxrule=1.2pt, arc=4pt, title={\Large\bfseries\sffamily Unit 5 Overview \& Learning Objectives}]
+\sffamily\normalsize
+This unit covers the scientific execution of user testing, metrics of usability, customer experience mapping, and digital accessibility standards. By the conclusion of this chapter, students will be able to:
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+    \item Differentiate between \textbf{Usability Testing} and \textbf{Design Validation}.
+    \item Conduct neutral, unbiased testing using the \textbf{``Show, Don't Tell''} approach and \textbf{Think-Aloud Protocol}.
+    \item Construct realistic, goal-oriented \textbf{Task Scenarios} without prescribing interface steps.
+    \item Capture and categorize testing data using the 4-quadrant \textbf{Feedback Capture Matrix}.
+    \item Compare \textbf{Usability (UI/UX)} with holistic \textbf{Customer Experience (CX)}.
+    \item Construct comprehensive \textbf{Customer Journey Maps} tracking actions, emotions, touchpoints, and pain points.
+    \item Classify human, digital, and physical \textbf{Touchpoints}.
+    \item Apply the WCAG \textbf{POUR} principles (Perceivable, Operable, Understandable, Robust) and contrast ratio standards.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Orientation: Testing as an Empirical Learning Loop}
+
+Testing is the fifth stage of Design Thinking. Rather than serving as a final rubber-stamp validation, testing is an iterative inquiry that puts prototypes in front of real users to uncover behavioral breakdowns and test underlying hypotheses.
+
+\begin{definition}[Usability Testing vs. Design Validation]
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Usability Testing:} Evaluates whether users can interact with the interface effectively, efficiently, and with satisfaction (*``Did we build the product correctly?''*).
+    \item \textbf{Design Validation:} Evaluates whether the product solves the real, validated core human need (*``Did we build the correct product?''*).
+\end{itemize}
+\end{definition}
+
+\section{Principles of Neutral User Testing}
+
+\begin{keyequation}[The ``Show, Don't Tell'' Doctrine]
+Never explain, defend, or pitch your prototype to a user during a testing session. Place the prototype in front of the participant, present a realistic task scenario, and observe their natural behavior and cognitive struggle.
+\end{keyequation}
+
+\subsection{Facilitation Rules \& Bias Control}
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Reassure the Participant:} State explicitly: *``We are testing the product, not you. There are no wrong answers; every error helps us fix the design.''*
+    \item \textbf{Non-Leading Probing:} If a user pauses or asks for help, respond neutrally: *``What would you expect to happen next?''* or *``What are you looking for right now?''*
+    \item \textbf{Think-Aloud Protocol:} Instruct participants to continuously verbalize their thoughts, doubts, expectations, and visual impressions as they navigate.
+    \item \textbf{Separate Observation from Interpretation:}
+    \begin{itemize}
+        \item *Observation (Fact):* User tapped the ``Support'' icon 4 times.
+        \item *Interpretation (Hypothesis):* User cannot find the refund policy under ``Settings''.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Constructing Task Scenarios}
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{p{3.2cm}X X}
+\toprule
+\textbf{Attribute} & \textbf{Poor Task Scenario (Leading)} & \textbf{Strong Task Scenario (Goal-Oriented)} \\
+\midrule
+\textbf{Wording} & ``Click the red filter button, select 'Price Low to High', and tap Apply.'' & ``You want to buy a pair of running shoes under Rs.~2,000 for Friday's race. Complete the purchase.'' \\
+\textbf{Focus} & Tests mechanical obedience to instructions. & Tests discoverability, mental models, and information architecture. \\
+\textbf{Prescription} & Gives away UI button names and sequence. & Provides realistic context, constraints, and end goal only. \\
+\bottomrule
+\end{tabularx}
+\caption{Formulating Effective Usability Testing Scenarios.}
+\end{table}
+
+\section{The Feedback Capture Matrix}
+
+During and immediately following testing sessions, raw observations are sorted into a 4-quadrant grid:
+\begin{center}
+\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{LIKES (+)} & \textbf{WISHES ($\Delta$)} \\
+\textit{Things users appreciated, found intuitive, or praised.} & \textit{Constructive critiques, friction points, unmet expectations.} \\
+\textit{e.g., Instant SMS order confirmation receipt.} & \textit{e.g., Wish there was an option to edit address at payment screen.} \\
+\hline
+\textbf{QUESTIONS (?)} & \textbf{IDEAS (!)} \\
+\textit{Confusions, uncertainties, and queries raised by users.} & \textit{New feature concepts or modifications sparked during testing.} \\
+\textit{e.g., Is weekend delivery included in standard shipping?} & \textit{e.g., Enable recurring monthly auto-reorder with one tap.} \\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{Customer Experience (CX) \& Journey Mapping}
+
+\subsection{Usability vs. Customer Experience (CX)}
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Usability:} Focuses on task performance on a specific product interface (e.g., speed of booking a doctor appointment on an app).
+    \item \textbf{Customer Experience (CX):} The holistic, cumulative perception across the entire lifecycle and every touchpoint (e.g., app booking $\rightarrow$ clinic parking $\rightarrow$ reception queue $\rightarrow$ doctor interaction $\rightarrow$ billing clarity $\rightarrow$ post-visit medication delivery).
+\end{itemize}
+
+\subsection{Customer Journey Map Architecture}
+A Customer Journey Map visualizes a user's experience over time across sequential stages:
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Journey Stages:} Awareness $\rightarrow$ Consideration $\rightarrow$ Purchase $\rightarrow$ Onboarding $\rightarrow$ Usage $\rightarrow$ Support $\rightarrow$ Offboarding.
+    \item \textbf{Horizontal Map Layers:}
+    \begin{itemize}
+        \item \textbf{User Actions:} What the customer physically does at each step.
+        \item \textbf{Thoughts \& Emotions:} Emotional highs and lows plotted as a sentiment curve ($+2$ delight to $-2$ frustration).
+        \item \textbf{Touchpoints \& Channels:} The interface medium used (Human, Digital, Physical).
+        \item \textbf{Pain Points:} Breakdowns, delays, hidden costs, or confusing transitions.
+        \item \textbf{Opportunities:} Actionable engineering and design interventions to eliminate pain points.
+    \end{itemize}
+\end{enumerate}
+
+\section{Digital Accessibility: WCAG \& POUR Principles}
+
+The Web Content Accessibility Guidelines (WCAG 2.1) require digital systems to satisfy four core principles:
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Perceivable (P):} Information and UI components must be presentable to users in ways they can perceive.
+    \begin{itemize}
+        \item Provide descriptive text alternatives (\texttt{alt} attributes) for non-text content.
+        \item Provide captions and transcripts for multimedia.
+        \item Maintain minimum color contrast ratio: **4.5:1** for standard body text, **3:1** for large text (Level AA).
+    \end{itemize}
+    \item \textbf{Operable (O):} UI components and navigation must be operable via keyboard-only access without requiring precise mouse gestures. No keyboard traps.
+    \item \textbf{Understandable (U):} Information and UI operation must be predictable, clear, and error-tolerant. Provide inline validation and clear error correction instructions.
+    \item \textbf{Robust (R):} Content must be interpretable reliably by a wide variety of user agents, including modern assistive screen readers (NVDA, VoiceOver, JAWS).
+\end{enumerate}
+
+\section{Unit 5 Self-Assessment Test}
+
+\begin{chaptertest}[Testing, Validation and Customer Experience]
+\textbf{Time Allowed: 30 Minutes \hfill Maximum Marks: 25}
+
+\vspace{0.4cm}
+\noindent\textbf{Part A: Conceptual Multiple Choice (5 $\times$ 1 = 5 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=2pt]
+    \item What is the core rule of the ``Show, Don't Tell'' testing approach?
+    \item Which quadrant of the Feedback Capture Matrix captures user confusion and queries?
+    \item According to WCAG AA standards, what is the minimum color contrast ratio for normal text?
+    \item What does the Think-Aloud Protocol require participants to do?
+    \item Give one example of a Human touchpoint in an e-commerce shopping journey.
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent\textbf{Part B: Short Analytical Questions (2 $\times$ 5 = 10 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=4pt]
+    \setcounter{enumi}{5}
+    \item Differentiate between \textbf{Usability} and \textbf{Customer Experience (CX)} across scope, timeframe, and measurement metrics.
+    \item Explain the 4 principles of WCAG \textbf{POUR} and describe one technical violation for each.
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent\textbf{Part C: Usability Scenario Analysis (1 $\times$ 10 = 10 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=4pt]
+    \setcounter{enumi}{7}
+    \item You are conducting a usability test for a new **Hospital Emergency Room Patient Intake Kiosk**.
+    \begin{enumerate}[label=(\alph*)]
+        \item Write one poor (leading) task scenario and rewrite it as an effective goal-oriented task scenario.
+        \item Populate a 4-quadrant Feedback Capture Matrix with 4 realistic findings from testing this kiosk with stressed patients.
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Step-by-Step Unit Test Solutions]
+\textbf{Part A Solutions:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=2pt]
+    \item Observe natural interaction without explaining, pitching, or defending the prototype.
+    \item Questions (?) quadrant.
+    \item 4.5:1.
+    \item Verbalize internal thoughts, feelings, doubts, and expectations aloud during task execution.
+    \item Customer support call agent or delivery delivery courier.
+\end{enumerate}
+
+\textbf{Part B Solutions:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \setcounter{enumi}{5}
+    \item \textbf{Usability vs. CX Comparison:}
+    \begin{itemize}
+        \item *Scope:* Usability measures interface performance on a specific tool; CX measures the cumulative end-to-end journey across all digital, physical, and human channels.
+        \item *Metrics:* Usability uses Task Success Rate, Time on Task, and Single Ease Question; CX uses Net Promoter Score (NPS), Customer Satisfaction (CSAT), and Retention Rate.
+    \end{itemize}
+    \item \textbf{POUR Violations:}
+    \begin{itemize}
+        \item *Perceivable Violation:* Light gray text on white background failing 4.5:1 contrast.
+        \item *Operable Violation:* A modal popup that traps keyboard focus, preventing tab navigation.
+        \item *Understandable Violation:* Cryptic error messages like ``Fatal exception 0x4B''.
+        \item *Robust Violation:* Non-standard HTML tags that screen readers fail to parse.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Part C Solution:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \setcounter{enumi}{7}
+    \item \textbf{Hospital Kiosk Usability Analysis:}
+    \begin{itemize}
+        \item *(a) Task Scenario Comparison:*
+        \begin{itemize}
+            \item *Poor Task:* ``Click the red 'Emergency Check-in' button, type your national ID, and press confirm.''
+            \item *Effective Task:* ``You are experiencing severe chest pain and arrived at the ER alone. Check yourself in so the triage nurse is notified immediately.''
+        \end{itemize}
+        \item *(b) Feedback Capture Matrix:*
+        \begin{itemize}
+            \item **Likes (+):** Large physical tactile emergency button instantly recognized.
+            \item **Wishes ($\Delta$):** Patients wished they could scan their insurance QR code rather than typing long 16-digit policy numbers while in pain.
+            \item **Questions (?):** Patients asked: ``Does this guarantee a doctor has seen my alert?''
+            \item **Ideas (!):** Integrate biometric fingerprint scanner for instant one-touch medical history lookup.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+\end{solutionbox}

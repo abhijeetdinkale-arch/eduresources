@@ -1,0 +1,115 @@
+\section{Mid-Term Examination --- Set C}
+\label{sec:midterm_set_c}
+
+\LPUCSHeader{Mid-Term Examination (Comprehensive MCQ)}{C}{90 Minutes}{30 Marks}{CO1, CO2 \& CO3 (Unit 1: System, Unit 2: OS, Unit 3: Linux)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{During the CPU instruction fetch cycle, immediately after the instruction word is fetched from memory, the Program Counter (PC) is:}{Automatically incremented to point to the address of the next consecutive instruction}{Reset to zero}{Loaded into the ALU accumulator}{Copied to the hard disk boot sector}{1}
+
+\mcqitem{2}{Comparing typical access latencies, Level 1 (L1) CPU cache access requires approximately $1\text{ to }2\text{ ns}$, whereas accessing dynamic main memory (DRAM) requires approximately:}{$50\text{ to }100\text{ ns}$}{$1\text{ to }2\text{ seconds}$}{$5\text{ to }10\text{ milliseconds}$}{$10\text{ picoseconds}$}{1}
+
+\mcqitem{3}{In a direct-mapped cache architecture, a 'Conflict Miss' occurs when:}{Multiple distinct main memory blocks map to the exact same cache line, repeatedly evicting each other}{The total working set exceeds the entire physical cache capacity}{Data is referenced for the very first time after system boot}{A hardware parity bit fails}{1}
+
+\mcqitem{4}{Dynamic RAM (DRAM) requires periodic electrical refresh cycles because:}{The charge stored in its tiny microscopic cell capacitors gradually leaks away over time}{Its transistors melt under high clock frequencies}{Its magnetic platters stop spinning}{Its firmware must be updated continuously}{1}
+
+\mcqitem{5}{Solid-State Drives (SSDs) exhibit significantly higher physical shock resistance than mechanical Hard Disk Drives (HDDs) because SSDs:}{Contain no moving mechanical components or motorized read/write actuator arms}{Are enclosed in liquid nitrogen containers}{Use magnetic tape instead of platters}{Operate at absolute zero temperature}{1}
+
+\mcqitem{6}{In a RAID 5 array, modifying a single data block incurs the classic 'RAID 5 Write Penalty', which requires how many total disk I/O operations?}{4 I/O operations (2 reads: old data and old parity; 2 writes: new data and new parity)}{1 I/O operation}{8 I/O operations}{2 I/O operations}{1}
+
+\mcqitem{7}{A Central Processing Unit (CPU) architecture focuses primarily on minimizing single-thread execution latency, whereas a GPU architecture focuses on maximizing:}{Aggregate data throughput through massive thread-level parallelism}{Cache size per thread}{Mechanical spin speed}{Single-thread branch prediction accuracy}{1}
+
+\mcqitem{8}{With each successive generation of the PCI Express (PCIe) standard (from PCIe 3.0 to 4.0 to 5.0), the raw data transfer rate per lane:}{Doubles approximately ($8\text{ GT/s} \to 16\text{ GT/s} \to 32\text{ GT/s}$)}{Increases by 10\% only}{Decreases to save electrical power}{Remains strictly fixed at $5\text{ Gbps}$}{1}
+
+\mcqitem{9}{Which system bus connects the processor directly to high-speed system memory and operates at the motherboard's highest clock frequencies?}{Memory Bus (Front Side Bus / Direct Interconnect)}{Slow Peripheral I/O Bus}{USB Serial Bus}{SATA Bus}{1}
+
+\mcqitem{10}{During computer bootup, the Power-On Self-Test (POST) executed by the system firmware performs which essential function?}{Diagnoses and verifies the functional integrity of critical hardware (RAM, CPU, video controller, keyboard)}{Defragments the secondary hard disk drive}{Compiles the Linux kernel from source code}{Downloads antivirus signatures from the internet}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q11 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{When an application invokes an operating system service (e.g., opening a file), the system call mechanism safely transfers CPU control to the kernel by:}{Placing the system call number in a designated CPU register and executing a software interrupt / \texttt{syscall} trap instruction}{Executing a standard unconditional jump directly to kernel RAM}{Overwriting the CPU control registers from user mode}{Calling the compiler preprocessor}{1}
+
+\mcqitem{12}{The Process Control Block (PCB) maintained by the operating system contains which set of data structures?}{Process ID, Process State, Program Counter, CPU Registers, Memory Limits, and Open File Descriptors}{Only the process source code text}{The BIOS firmware image}{The compiler AST parse tree}{1}
+
+\mcqitem{13}{A CPU scheduling algorithm where the operating system never forcibly removes the CPU from an executing process until the process voluntarily terminates or blocks for I/O is:}{Non-preemptive Scheduling}{Preemptive Scheduling}{Round Robin Scheduling}{Multi-Level Feedback Queue Scheduling}{1}
+
+\mcqitem{14}{In Dijkstra's Banker's Algorithm for deadlock avoidance, the 'Need' matrix representing remaining resource requests for process $P_i$ is computed as:}{$\text{Need}[i] = \text{Max}[i] - \text{Allocation}[i]$}{$\text{Need}[i] = \text{Allocation}[i] + \text{Available}$}{$\text{Need}[i] = \text{Max}[i] \times \text{Available}$}{$\text{Need}[i] = \text{Available} - \text{Max}[i]$}{1}
+
+\mcqitem{15}{The implementation of Paged Virtual Memory completely eliminates which form of memory fragmentation?}{External Fragmentation}{Internal Fragmentation}{Page Fault Overhead}{TLB Misses}{1}
+
+\mcqitem{16}{When a Page Fault occurs, the operating system kernel must:}{Locate the requested page on backing disk storage, read it into an available physical RAM frame, and update the page table}{Crash the entire system immediately}{Format the primary storage partition}{Allocate an entirely new process control block}{1}
+
+\mcqitem{17}{In hard real-time operating systems, which optimal dynamic-priority scheduling algorithm assigns the highest priority to the active task that has the closest deadline?}{Earliest Deadline First (EDF)}{First-Come, First-Served (FCFS)}{Round Robin with $10\text{ ms}$ quantum}{Shortest Job First}{1}
+
+\mcqitem{18}{The runtime software component in Linux that locates, maps, and binds shared libraries (\texttt{.so} files) into an application's address space when the program is launched is the:}{Dynamic Linker / Loader (\texttt{ld.so})}{Static Assembler}{C Preprocessor}{Hardware MMU}{1}
+
+\mcqitem{19}{Variables declared with the \texttt{static} keyword inside a C function are allocated in which memory segment and persist for how long?}{Data / BSS Segment; persist for the entire lifetime of the program execution}{Stack Segment; deallocated when the function returns}{Heap Segment; deallocated on the next clock cycle}{Register Segment; persist only during an interrupt}{1}
+
+\mcqitem{20}{In software compilation, the generation of machine code from an intermediate representation (IR) includes which optimization technique that replaces function calls with the actual function body code?}{Function Inlining}{Dead Code Elimination}{Loop Unrolling}{Constant Folding}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q21 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{Under the Linux Filesystem Hierarchy Standard (FHS), special device files representing physical and pseudo-devices (such as \texttt{/dev/sda}, \texttt{/dev/null}, and \texttt{/dev/urandom}) reside in:}{\texttt{/dev}}{\texttt{/etc}}{\texttt{/bin}}{\texttt{/mnt}}{1}
+
+\mcqitem{22}{The official package management tool used by modern Red Hat Enterprise Linux (RHEL), Fedora, and CentOS distributions to manage \texttt{.rpm} packages is:}{\texttt{dnf} (Dandified YUM)}{\texttt{apt}}{\texttt{dpkg}}{\texttt{pacman}}{1}
+
+\mcqitem{23}{In Linux, executing the command \texttt{chmod 700 confidential/} sets permissions such that:}{Only the owner has Read, Write, and Execute permissions; Group and Others have zero permissions (\texttt{rwx------})}{Everyone has full read, write, and execute permissions}{The directory is locked and cannot be opened by anyone including root}{The directory is converted into a hidden file}{1}
+
+\mcqitem{24}{When the Set Group ID (SGID, octal \texttt{2000}) bit is set on a shared directory, any new file created inside that directory will:}{Automatically inherit the group ownership of the parent directory rather than the primary group of the creating user}{Be executable only by the root superuser}{Be immediately deleted upon logout}{Have its contents encrypted with AES-256}{1}
+
+\mcqitem{25}{Which Linux command creates a gzip-compressed archive named \texttt{backup.tar.gz} from the folder \texttt{/var/log}?}{\texttt{tar -czvf backup.tar.gz /var/log}}{\texttt{zip -d backup.tar.gz /var/log}}{\texttt{gzip -r /var/log backup.tar.gz}}{\texttt{cp -tar /var/log backup.tar.gz}}{1}
+
+\mcqitem{26}{Which command-line command is used to follow and view incoming append updates to a system log file in real time?}{\texttt{tail -f /var/log/syslog}}{\texttt{head -n 20 /var/log/syslog}}{\texttt{cat /var/log/syslog}}{\texttt{grep -v /var/log/syslog}}{1}
+
+\mcqitem{27}{To forcefully terminate an unresponsive Linux process without allowing it to intercept, handle, or ignore the termination signal, the command is:}{\texttt{kill -9 <PID>} (sends \texttt{SIGKILL})}{\texttt{kill -15 <PID>} (sends \texttt{SIGTERM})}{\texttt{kill -1 <PID>} (sends \texttt{SIGHUP})}{\texttt{kill -STOP <PID>}}{1}
+
+\mcqitem{28}{In the Bash shell, which redirection operator appends command standard output to the end of a file without overwriting existing content?}{\texttt{>>}}{\texttt{>}}{\texttt{<}}{\texttt{2>}}{1}
+
+\mcqitem{29}{Windows Subsystem for Linux 2 (WSL2) achieves near-native Linux application performance on Windows 10/11 by:}{Running a real, custom Linux kernel inside a lightweight virtual machine managed by Hyper-V}{Translating Linux system calls into Windows NT calls in user space}{Emulating an x86 processor in JavaScript}{Requiring dual-boot partitioning on the SSD}{1}
+
+\mcqitem{30}{In Linux file listings (\texttt{ls -l}), a symbolic (soft) link is identifiable because its file type indicator character in the first column is:}{\texttt{l}}{\texttt{-}}{\texttt{d}}{\texttt{c}}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (Mid-Term Set C)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Architectural, Systems \& Linux Explanations]
+\textbf{Q.6 (Ans: A)} To update a single data block in RAID 5 without recalculating parity across the entire stripe, the controller computes: $P_{\text{new}} = P_{\text{old}} \oplus D_{\text{old}} \oplus D_{\text{new}}$. This requires 2 read operations ($D_{\text{old}}$ and $P_{\text{old}}$) followed by 2 write operations ($D_{\text{new}}$ and $P_{\text{new}}$), resulting in 4 physical I/Os per write.\\[2mm]
+\textbf{Q.14 (Ans: A)} In Banker's Algorithm, the safety state check relies on evaluating whether the remaining resource demand ($\text{Need} = \text{Max} - \text{Allocation}$) can be satisfied by the currently free resources ($\text{Available}$).\\[2mm]
+\textbf{Q.15 (Ans: A)} Paging divides virtual address space into fixed-sized pages and physical memory into identical frames. Because any page can be loaded into any free frame regardless of physical contiguity, external fragmentation is completely eliminated. However, internal fragmentation may occur on the final page of a process if the program size is not an exact multiple of the page size.\\[2mm]
+\textbf{Q.24 (Ans: A)} In collaborative team directories, the SGID bit on a directory (displayed as \texttt{drwxrwsr-x}) ensures that any file or subfolder created by any team member automatically inherits the group ownership of the parent directory, allowing group members continued read/write access without manual \texttt{chown} commands.\\[2mm]
+\textbf{Q.27 (Ans: A)} Signal 9 (\texttt{SIGKILL}) cannot be trapped, handled, or blocked by the destination process. When issued, the operating system kernel terminates the process immediately, cleans up allocated resources, and releases memory frames.
+\end{solutionbox}
+
+\newpage

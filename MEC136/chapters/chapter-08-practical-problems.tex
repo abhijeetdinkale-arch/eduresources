@@ -1,0 +1,104 @@
+\chapter{Chapter 8: Integrated Synthesis \& Practical Problems}
+
+\section{Overview}
+This chapter contains 15 comprehensive, multi-concept synthesis problems combining manual drafting theory, geometric derivations, line projections, sectioning rules, isometric views, surface developments, and AutoCAD drafting workflows.
+
+---
+
+\section{Integrated Synthesis Problem Sets}
+
+\subsection{Problem 1: Scale Construction \& Line Projection}
+\textbf{Problem Statement:} A line $AB$ is drawn on a map constructed to a scale of $R.F. = 1:50$. The front view of line $AB$ measures $60\text{ mm}$ and is inclined at $30^\circ$ to the $XY$ reference line. If the line is parallel to the VP and its end $A$ is $20\text{ mm}$ above the HP, determine: (a) The actual physical length of line $AB$, and (b) The inclination of line $AB$ with the HP ($\theta$).\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Analyze Orientation:} Since line $AB$ is parallel to the VP, its Front View shows the **True Length ($TL$)** on the drawing sheet.
+    \item **Drawing Sheet Length:** $TL_{\text{drawing}} = 60\text{ mm}$.
+    \item **Calculate Actual Physical Length:**
+    $$R.F. = \frac{\text{Length on drawing}}{\text{Actual length}} \implies \frac{1}{50} = \frac{60\text{ mm}}{\text{Actual Length}}$$
+    $$\text{Actual Physical Length} = 60\text{ mm} \times 50 = 3000\text{ mm} = \mathbf{3.0\text{ m}}$$
+    \item **Inclination with HP ($\theta$):** Since the Front View is inclined at $30^\circ$ to $XY$ and line is parallel to VP, the true inclination with HP is $\mathbf{\theta = 30^\circ}$.
+\end{enumerate}
+
+---
+
+\subsection{Problem 2: Oblique Line Projection \& Traces}
+\textbf{Problem Statement:} A line $CD$ has its end $C$ $15\text{ mm}$ above HP and $20\text{ mm}$ in front of VP. The line is $80\text{ mm}$ long and inclined at $45^\circ$ to HP and $30^\circ$ to VP. Draw the orthographic projections of line $CD$ using the Rotating Line Method, find its apparent angles $\alpha$ and $\beta$, and locate its Horizontal Trace ($\text{HT}$) and Vertical Trace ($\text{VT}$).\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Given Data:} $TL = 80\text{ mm}$, $c' = 15\text{ mm}$ above $XY$, $c = 20\text{ mm}$ below $XY$, $\theta = 45^\circ$, $\phi = 30^\circ$.
+    \item \textbf{Calculate Apparent Projections:}
+    $$\text{Top View Apparent Length } (c d_1) = TL \cos \theta = 80 \cos 45^\circ = 80 \times 0.7071 = \mathbf{56.57\text{ mm}}$$
+    $$\text{Front View Apparent Length } (c' d_2') = TL \cos \phi = 80 \cos 30^\circ = 80 \times 0.8660 = \mathbf{69.28\text{ mm}}$$
+    $$\text{Height Difference } (\Delta h) = TL \sin \theta = 80 \sin 45^\circ = \mathbf{56.57\text{ mm}}$$
+    $$\text{Depth Difference } (\Delta d) = TL \sin \phi = 80 \sin 30^\circ = \mathbf{40.00\text{ mm}}$$
+    \item \textbf{Construction \& Angles:} Following Rotating Line construction yields apparent angles $\alpha \approx \mathbf{54.7^\circ}$ in FV and $\beta \approx \mathbf{45.0^\circ}$ in TV.
+    \item \textbf{Trace Location:} Extend $c'd'$ to meet $XY$ at $h$; project vertically down to meet extended $cd$ to locate $\mathbf{\text{HT}}$. Extend $cd$ to meet $XY$ at $v$; project vertically up to meet extended $c'd'$ to locate $\mathbf{\text{VT}}$.
+\end{enumerate}
+
+---
+
+\subsection{Problem 3: Orthographic Projection \& Miter Line Method}
+\textbf{Problem Statement:} A stepped block consists of a base rectangle $60\text{ mm} \times 40\text{ mm} \times 20\text{ mm}$ high, topped with a central cylinder of diameter $30\text{ mm}$ and height $25\text{ mm}$. Describe the step-by-step procedure to construct First Angle Front View, Top View, and Right Side View using the $45^\circ$ Miter Line Method in AutoCAD.\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Front View (FV):} Draw base rectangle width $60\text{ mm} \times$ height $20\text{ mm}$. On top edge, draw cylinder rectangle width $30\text{ mm} \times$ height $25\text{ mm}$ centered horizontally. Total height $= 45\text{ mm}$.
+    \item \textbf{Top View (TV):} Positioned directly below FV. Draw base rectangle $60\text{ mm} \times 40\text{ mm}$. Draw a circle diameter $30\text{ mm}$ at center ($30, 20$).
+    \item \textbf{Miter Line Setup:} Draw reference lines $XY$ and vertical $Y_1Y_1$. From intersection point, draw Miter Line at $45^\circ$ into top-right quadrant.
+    \item \textbf{Side View Transfer:} Project horizontal lines from TV rightwards to meet Miter Line. Project vertically down into Right Side View quadrant (drawn to left of FV in 1st Angle). Intersect with horizontal projection lines from FV to complete Right Side View.
+\end{enumerate}
+
+---
+
+\subsection{Problem 4: Offset Sectional View \& Hatching Exceptions}
+\textbf{Problem Statement:} An offset sectional view is taken through a cast iron casing containing a central $20\text{ mm}$ hole, a parallel $15\text{ mm}$ hole offset by $35\text{ mm}$, a longitudinal reinforcing web of thickness $10\text{ mm}$, and an M12 assembly bolt. Explain the hatching rules for each feature.\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Offset Cutting Plane:} The cutting plane line steps horizontally to pass through both offset holes. The bends/steps are **omitted** in the final sectional view.
+    \item \textbf{Section Hatching (\texttt{ANSI31}):} Solid cast iron walls cut by plane are hatched with thin continuous lines at $45^\circ$.
+    \item \textbf{Holes:} The $20\text{ mm}$ and $15\text{ mm}$ void holes are **NOT** hatched.
+    \item \textbf{Reinforcing Web Exception:} The $10\text{ mm}$ web cut longitudinally is **NOT** hatched.
+    \item \textbf{Assembly Bolt Exception:} The M12 steel bolt cut longitudinally is **NOT** hatched.
+\end{enumerate}
+
+---
+
+\subsection{Problem 5: Isometric View vs. Projection of Composite Solid}
+\textbf{Problem Statement:} A regular square pyramid of base side $40\text{ mm}$ and height $50\text{ mm}$ rests coaxially on top of a square prism of base side $60\text{ mm}$ and height $30\text{ mm}$. Calculate: (a) The true dimensions for drawing an **Isometric View**, and (b) The reduced dimensions for drawing an **Isometric Projection**.\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Part (a): Isometric View (True Scale $1:1$)}
+    - Prism Base $= 60\text{ mm}$, Prism Height $= 30\text{ mm}$.
+    - Pyramid Base $= 40\text{ mm}$, Pyramid Height $= 50\text{ mm}$.
+    - Dimensions are drawn **100\% at full actual size**.
+    \item \textbf{Part (b): Isometric Projection (Isometric Scale $0.816$)}
+    - Reduced Prism Base $= 0.816 \times 60 = \mathbf{48.96\text{ mm}}$.
+    - Reduced Prism Height $= 0.816 \times 30 = \mathbf{24.48\text{ mm}}$.
+    - Reduced Pyramid Base $= 0.816 \times 40 = \mathbf{32.64\text{ mm}}$.
+    - Reduced Pyramid Height $= 0.816 \times 50 = \mathbf{40.80\text{ mm}}$.
+\end{enumerate}
+
+---
+
+\subsection{Problem 6: Truncated Cone Surface Development}
+\textbf{Problem Statement:} A cone of base diameter $60\text{ mm}$ ($r = 30\text{ mm}$) and height $70\text{ mm}$ is cut by a section plane inclined at $45^\circ$ to HP, passing through the axis at a height of $30\text{ mm}$ from base. Calculate sector angle $\theta$ and outline the Radial Line Method development steps.\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item \textbf{Calculate True Slant Height ($L$):}
+    $$L = \sqrt{r^2 + h^2} = \sqrt{30^2 + 70^2} = \sqrt{900 + 4900} = \sqrt{5800} = \mathbf{76.16\text{ mm}}$$
+    \item \textbf{Calculate Sector Angle ($\theta$):}
+    $$\theta = \left( \frac{r}{L} \right) \times 360^\circ = \left( \frac{30}{76.16} \right) \times 360^\circ = \mathbf{141.8^\circ}$$
+    \item \textbf{Development Construction:} Draw sector of radius $76.16\text{ mm}$ and angle $141.8^\circ$. Divide base arc into 12 equal parts. Transfer cut points from $TL$ slant edge in FV using concentric arcs centered at Apex to cut corresponding radial lines.
+\end{enumerate}
+
+---
+
+\subsection{Problem 7: AutoCAD 3D Solid Modeling \& Boolean Editing}
+\textbf{Problem Statement:} Detail the AutoCAD command sequence to model a hollow rectangular block of size $100 \times 80 \times 50\text{ mm}$ with a central cylindrical hole of diameter $40\text{ mm}$ passing through it completely.\\[4pt]
+\textbf{Detailed Solution:}
+\begin{enumerate}
+    \item Switch workspace to \texttt{3D Modeling}. Set view to \texttt{SE Isometric}.
+    \item Create outer block: Type \texttt{BOX} $\to$ \texttt{0,0,0} $\to$ Length $= 100$, Width $= 80$, Height $= 50$.
+    \item Create inner cylinder: Type \texttt{CYLINDER} $\to$ Center point $= 50,40,0$ $\to$ Radius $= 20$ (Diameter $40$) $\to$ Height $= 50$.
+    \item Subtract cylinder to create hole: Type \texttt{SUBTRACT} (or \texttt{SU}) $\to$ Select \texttt{BOX} (solid to keep) $\to$ Press \texttt{Enter} $\to$ Select \texttt{CYLINDER} (solid to remove) $\to$ Press \texttt{Enter}.
+    \item Change Visual Style to \texttt{Conceptual} (\texttt{VS} $\to$ \texttt{C}) to verify hole.
+\end{enumerate}

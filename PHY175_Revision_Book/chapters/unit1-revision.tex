@@ -1,0 +1,32 @@
+\chapter{Solid State Physics: Rapid Revision}
+
+\begin{highyieldbox}[Core Physics Summary]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Drude Electrical Conductivity:} $\sigma = \frac{n e^2 \tau}{m}$. $\sigma$ is directly proportional to carrier concentration $n$ and relaxation time $\tau$.
+    \item \textbf{Fermi-Dirac Function:} $f(E) = \frac{1}{1 + e^{(E-E_F)/k_B T}}$.
+    \begin{itemize}
+        \item At $T = 0\,\text{K}$: $f(E) = 1$ for $E < E_F$, $f(E) = 0$ for $E > E_F$.
+        \item At any $T > 0\,\text{K}$: $f(E_F) = \frac{1}{2} = 50\%$.
+    \end{itemize}
+    \item \textbf{3D Fermi Energy:} $E_F \propto n^{2/3}$. If density increases $8\times$, $E_F$ increases $(8)^{2/3} = 4\times$.
+    \item \textbf{Effective Mass:} $m^* = \frac{\hbar^2}{d^2E/dk^2}$. Negative band curvature at valence band top corresponds to holes with positive effective mass $m_h^* = -m_e^* > 0$.
+    \item \textbf{Hall Effect:} $V_H = \frac{I B}{n q t}, \quad R_H = \frac{1}{n q}$. Negative $R_H \implies$ electrons; positive $R_H \implies$ holes.
+    \item \textbf{Direct vs Indirect Gap:} Direct gap (GaAs, InP) recombines radiatively with crystal momentum conservation ($\Delta k = 0$); Indirect gap (Si, Ge) requires phonon emission/absorption.
+    \item \textbf{Solar Cell Parameters:} $V_{oc} \approx \frac{k_B T}{q}\ln\left(\frac{I_{sc}}{I_0}\right), \quad FF = \frac{V_m I_m}{V_{oc} I_{sc}}, \quad \eta = \frac{V_m I_m}{P_{in}}$.
+\end{itemize}
+\end{highyieldbox}
+
+\begin{fastcheck}[Quick Formula Card]
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Concept} & \textbf{Formula} \\
+\midrule
+Drude Conductivity & $\sigma = n e \mu_e = \frac{n e^2 \tau}{m}$ \\
+Fermi Energy (3D) & $E_F = \frac{\hbar^2}{2m}(3\pi^2 n)^{2/3}$ \\
+Effective Mass & $m^* = \hbar^2 / (d^2E/dk^2)$ \\
+Hall Voltage & $V_H = \frac{R_H I B}{t} = \frac{I B}{n q t}$ \\
+Intrinsic Carrier Concentration & $n_i = \sqrt{N_C N_V} e^{-E_g/2k_BT}$ \\
+Einstein Relation & $\frac{D_n}{\mu_n} = \frac{D_p}{\mu_p} = \frac{k_B T}{q}$ \\
+\bottomrule
+\end{tabularx}
+\end{fastcheck}

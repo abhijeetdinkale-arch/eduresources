@@ -1,0 +1,13 @@
+\chapter{Number Systems and Logic Gates: Rapid Revision}
+
+\begin{highyieldbox}[Digital Logic Essentials]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Radix Conversion:} Hexadecimal to Octal: convert each hex digit to 4-bit binary, regroup in 3s from the radix point.
+    \item \textbf{Gray Code:} Unit distance code (1-bit change). $G_{MSB} = B_{MSB}, G_i = B_{i+1} \oplus B_i$.
+    \item \textbf{BCD \& Excess-3:} BCD is 8421 ($0-9$). Invalid: $10-15$. BCD addition correction: add $+6$ ($0110_2$) if nibble $> 9$ or carry generated. Excess-3 $= \text{BCD} + 3$.
+    \item \textbf{2's Complement Arithmetic:} Subtraction $A - B = A + (\bar{B} + 1)$. Signed overflow flag $V = C_{in} \oplus C_{out}$ at the MSB stage.
+    \item \textbf{Universal Gates:} NAND and NOR gates can implement any Boolean function.
+    \item \textbf{Boolean Laws:} $A + \bar{A}B = A + B$, $\overline{A + B} = \bar{A}\bar{B}$, $\overline{AB} = \bar{A} + \bar{B}$.
+    \item \textbf{K-Map Rules:} Cells grouped in powers of 2 ($1, 2, 4, 8, 16$). Overlapping consensus terms eliminate static-1 hazards.
+\end{itemize}
+\end{highyieldbox}

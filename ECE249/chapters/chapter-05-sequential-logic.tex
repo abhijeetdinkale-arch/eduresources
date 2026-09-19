@@ -1,0 +1,313 @@
+\chapter{Introduction to Sequential Logic Circuits}
+\label{chap:sequential-logic}
+
+\section{Introduction \& Theoretical Overview}
+While combinational logic evaluates expressions instantaneously from current inputs, **sequential logic circuits** incorporate memory elements and feedback loops. The output of a sequential circuit is a function of both the **current external inputs** and the **present internal state** (stored historical information).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Combinational block
+    \draw[fill=boxnavybg, draw=brandnavy, line width=1.5pt, rounded corners=6pt] (0,1.5) rectangle (4,4);
+    \node at (2,2.75) [font=\bfseries\sffamily\color{brandnavy}, align=center] {Combinational\\Logic Circuit};
+
+    % Memory block
+    \draw[fill=boxgoldbg, draw=brandamber, line width=1.5pt, rounded corners=6pt] (0,-1.5) rectangle (4,0.5);
+    \node at (2,-0.5) [font=\bfseries\sffamily\color{brandamber}, align=center] {Memory Elements\\(Flip-Flops / Latches)};
+
+    % External Inputs / Outputs
+    \draw[->, >=Stealth, line width=1.5pt, brandblue] (-2, 3.2) -- (0, 3.2) node[midway, above, font=\small\bfseries] {Inputs ($X$)};
+    \draw[->, >=Stealth, line width=1.5pt, brandaccent] (4, 3.2) -- (6.5, 3.2) node[midway, above, font=\small\bfseries] {Outputs ($Y$)};
+
+    % Feedback connections
+    \draw[->, >=Stealth, line width=1.2pt] (4, 2.0) -- (5.2, 2.0) -- (5.2, -0.5) -- (4, -0.5) node[midway, below, font=\scriptsize\bfseries] {Next State ($Q_{n+1}$)};
+    \draw[->, >=Stealth, line width=1.2pt] (0, -0.5) -- (-1.2, -0.5) -- (-1.2, 2.0) -- (0, 2.0) node[midway, above, font=\scriptsize\bfseries] {Present State ($Q_n$)};
+    
+    % Clock input
+    \draw[->, >=Stealth, line width=1.2pt, brandpurple] (2, -2.5) -- (2, -1.5) node[midway, right, font=\small\bfseries] {Clock ($CLK$)};
+\end{tikzpicture}
+\caption{Canonical architectural model of a Synchronous Sequential Logic Circuit.}
+\label{fig:sequential-model}
+\end{figure}
+
+---
+
+\section{Bistable Latches}
+A **Latch** is a level-sensitive bistable multivibrator. It is asynchronous: outputs respond directly to input levels whenever the enable line is active.
+
+\subsection{Cross-Coupled NOR SR Latch (Active-High)}
+Constructed from two cross-coupled NOR gates with inputs $S$ (Set) and $R$ (Reset).
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % Top NOR gate
+    \node (nor1) at (3,2.2) [nor gate US, draw, logic gate inputs=nn] {};
+    % Bottom NOR gate
+    \node (nor2) at (3,0.2) [nor gate US, draw, logic gate inputs=nn] {};
+    
+    % External inputs
+    \draw (nor1.input 1) -- ++(-1.5,0) node[left, font=\bfseries] {$R$ (Reset)};
+    \draw (nor2.input 2) -- ++(-1.5,0) node[left, font=\bfseries] {$S$ (Set)};
+    
+    % Outputs
+    \draw (nor1.output) -- ++(1.5,0) node[right, font=\bfseries] {$Q$};
+    \draw (nor2.output) -- ++(1.5,0) node[right, font=\bfseries] {$\overline{Q}$};
+    
+    % Feedback
+    \draw (nor1.output) ++(0.5,0) node[circ] {} -- ++(0,-0.8) -- ([yshift=0.3cm]nor2.input 1) -- (nor2.input 1);
+    \draw (nor2.output) ++(0.8,0) node[circ] {} -- ++(0,0.8) -- ([yshift=-0.3cm]nor1.input 2) -- (nor1.input 2);
+\end{circuitikz}
+\caption{Logic gate implementation of an Active-High Cross-Coupled NOR SR Latch.}
+\label{fig:nor-sr-latch}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{cc|cc|p{6.5cm}}
+\toprule
+\textbf{Set ($S$)} & \textbf{Reset ($R$)} & \textbf{Next State $Q_{n+1}$} & \textbf{$\overline{Q}_{n+1}$} & \textbf{Operating State / Mode} \\
+\midrule
+0 & 0 & $Q_n$ & $\overline{Q}_n$ & \textbf{Hold / No Change (Memory Mode)} \\
+0 & 1 & 0 & 1 & \textbf{Reset State} ($Q \rightarrow 0$) \\
+1 & 0 & 1 & 0 & \textbf{Set State} ($Q \rightarrow 1$) \\
+1 & 1 & 0 & 0 & \textbf{Invalid / Forbidden State} ($Q = \overline{Q} = 0$) \\
+\bottomrule
+\end{tabular}
+\caption{Operational Truth Table for Active-High NOR SR Latch.}
+\label{tab:nor-sr-latch}
+\end{table}
+
+\subsection{Cross-Coupled NAND \texorpdfstring{$\overline{S}\overline{R}$}{S-bar R-bar} Latch (Active-Low)}
+Constructed from two cross-coupled NAND gates. The inputs are labeled $\overline{S}$ and $\overline{R}$ because a logic $\mathbf{0}$ activates the respective Set or Reset function.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{cc|cc|l}
+\toprule
+\textbf{$\overline{S}$} & \textbf{$\overline{R}$} & \textbf{Next State $Q_{n+1}$} & \textbf{$\overline{Q}_{n+1}$} & \textbf{Operating State / Mode} \\
+\midrule
+0 & 0 & 1 & 1 & \textbf{Invalid / Forbidden State} ($Q = \overline{Q} = 1$) \\
+0 & 1 & 1 & 0 & \textbf{Set State} ($Q \rightarrow 1$) \\
+1 & 0 & 0 & 1 & \textbf{Reset State} ($Q \rightarrow 0$) \\
+1 & 1 & $Q_n$ & $\overline{Q}_n$ & \textbf{Hold / No Change (Memory Mode)} \\
+\bottomrule
+\end{tabular}
+\caption{Operational Truth Table for Active-Low NAND $\overline{S}\overline{R}$ Latch.}
+\label{tab:nand-sr-latch}
+\end{table}
+
+\subsection{Gated D Latch (Transparent Data Latch)}
+The Gated D Latch eliminates the invalid/forbidden state of the SR latch by connecting an inverter between the Set and Reset inputs ($R = \overline{S} = \overline{D}$), and gating the inputs with an Enable ($E$) line.
+
+\begin{itemize}
+    \item \textbf{When Enable $E = 1$ (Transparent Mode):} The output $Q$ continuously follows the input $D$ ($Q = D$).
+    \item \textbf{When Enable $E = 0$ (Latching Mode):} The inputs are isolated, and the latch stores and holds its previous state $Q_n$ indefinitely.
+\end{itemize}
+
+---
+
+\section{Edge-Triggered Flip-Flops}
+Flip-flops are synchronous bistable storage elements that sample their inputs and transition their output states **only on a designated clock edge** (Positive/Rising edge $\uparrow$ or Negative/Falling edge $\downarrow$).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Clock Pulse Definitions
+    \draw[thick] (0,0) -- (1,0) -- (1,2) -- (3,2) -- (3,0) -- (5,0);
+    \draw[->, >=Stealth, line width=1.5pt, brandblue] (1, -0.6) -- (1, 1.2) node[left=2pt, font=\small\bfseries] {Rising Edge ($\uparrow$)};
+    \draw[->, >=Stealth, line width=1.5pt, brandaccent] (3, 2.6) -- (3, 0.8) node[right=2pt, font=\small\bfseries] {Falling Edge ($\downarrow$)};
+    \node at (2, 2.3) [font=\footnotesize\bfseries] {Clock Pulse Width ($t_p$)};
+\end{tikzpicture}
+\caption{Clock pulse signal anatomy showing rising (positive) and falling (negative) trigger edges.}
+\label{fig:clock-edges}
+\end{figure}
+
+\subsection{The Four Foundational Flip-Flops}
+
+\subsubsection{1. Clocked SR Flip-Flop}
+\begin{itemize}
+    \item **Characteristic Equation:** $Q_{n+1} = S + \overline{R}Q_n \quad (\text{Valid for } SR = 0)$
+    \item **Operation:** $S=0, R=0 \implies \text{Hold}$; $S=0, R=1 \implies 0$; $S=1, R=0 \implies 1$; $S=1, R=1 \implies \text{Invalid}$.
+\end{itemize}
+
+\subsubsection{2. Clocked JK Flip-Flop}
+The JK flip-flop eliminates the invalid state of the SR flip-flop by feeding back the output states ($Q$ and $\overline{Q}$) to the steering input gates.
+\begin{itemize}
+    \item **Characteristic Equation:**
+    \begin{equation}
+        Q_{n+1} = J\overline{Q}_n + \overline{K}Q_n
+    \end{equation}
+    \item **Operation:** $J=0, K=0 \implies \text{Hold}$; $J=0, K=1 \implies \text{Reset } (0)$; $J=1, K=0 \implies \text{Set } (1)$; $J=1, K=1 \implies \textbf{Toggle } (\overline{Q}_n)$.
+\end{itemize}
+
+\subsubsection{3. Clocked D Flip-Flop (Delay / Data)}
+\begin{itemize}
+    \item **Characteristic Equation:**
+    \begin{equation}
+        Q_{n+1} = D
+    \end{equation}
+    \item **Operation:** Directly transfers the input bit $D$ to the output $Q$ on the clock edge, introducing exactly one clock cycle of delay.
+\end{itemize}
+
+\subsubsection{4. Clocked T Flip-Flop (Toggle)}
+Formed by tying the $J$ and $K$ inputs of a JK flip-flop together ($J = K = T$).
+\begin{itemize}
+    \item **Characteristic Equation:**
+    \begin{equation}
+        Q_{n+1} = T \oplus Q_n = T\overline{Q}_n + \overline{T}Q_n
+    \end{equation}
+    \item **Operation:** When $T = 0$, output holds ($Q_{n+1} = Q_n$); when $T = 1$, output toggles ($Q_{n+1} = \overline{Q}_n$).
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c|cc|cc|c|c}
+\toprule
+\textbf{Present State} & \multicolumn{2}{c|}{\textbf{SR Inputs}} & \multicolumn{2}{c|}{\textbf{JK Inputs}} & \textbf{D Input} & \textbf{T Input} \\
+$Q_n \rightarrow Q_{n+1}$ & $S$ & $R$ & $J$ & $K$ & $D$ & $T$ \\
+\midrule
+$0 \longrightarrow 0$ & 0 & X & 0 & X & 0 & 0 \\
+$0 \longrightarrow 1$ & 1 & 0 & 1 & X & 1 & 1 \\
+$1 \longrightarrow 0$ & 0 & 1 & X & 1 & 0 & 1 \\
+$1 \longrightarrow 1$ & X & 0 & X & 0 & 1 & 0 \\
+\bottomrule
+\end{tabularx}
+\caption{Master Excitation Table for all four primary flip-flop types.}
+\label{tab:master-excitation}
+\end{table}
+
+---
+
+\section{The Race-Around Condition \& Master-Slave Architecture}
+
+\subsection{The Race-Around Phenomenon}
+In a level-triggered JK flip-flop, when $J = 1$ and $K = 1$, the flip-flop operates in toggle mode. If the clock pulse width ($t_p$) is greater than the internal propagation delay of the flip-flop ($t_{pd}$):
+\begin{equation}
+    t_{pd} < t_p < T
+\end{equation}
+The output $Q$ will toggle to $\overline{Q}$. Since the clock is still HIGH ($1$), this new output feeds back to the inputs, causing the flip-flop to toggle again and again continuously during the duration of $t_p$. At the end of the clock pulse, the final state of $Q$ is indeterminate and unpredictable. This catastrophic timing glitch is called the **Race-Around Condition**.
+
+\subsection{The Master-Slave JK Flip-Flop Solution}
+The Master-Slave configuration completely eliminates race-around by decoupling input sampling from output state updates through two cascaded stages operated by complementary clock signals.
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % Master Stage Box
+    \draw[fill=boxnavybg, draw=brandnavy, line width=1.2pt, rounded corners=4pt] (0,0) rectangle (3.5, 3.5);
+    \node at (1.75, 3.1) [font=\small\bfseries\color{brandnavy}] {MASTER (JK)};
+    
+    % Slave Stage Box
+    \draw[fill=boxgoldbg, draw=brandamber, line width=1.2pt, rounded corners=4pt] (5.5,0) rectangle (9.0, 3.5);
+    \node at (7.25, 3.1) [font=\small\bfseries\color{brandamber}] {SLAVE (SR)};
+    
+    % Interconnections
+    \draw (3.5, 2.3) -- (5.5, 2.3) node[midway, above, font=\scriptsize] {$Y$};
+    \draw (3.5, 1.0) -- (5.5, 1.0) node[midway, below, font=\scriptsize] {$\overline{Y}$};
+    
+    % External Inputs
+    \draw (-1.5, 2.3) node[left] {$J$} -- (0, 2.3);
+    \draw (-1.5, 1.0) node[left] {$K$} -- (0, 1.0);
+    
+    % Final Outputs
+    \draw (9.0, 2.3) -- ++(1.5,0) node[right, font=\bfseries] {$Q$};
+    \draw (9.0, 1.0) -- ++(1.5,0) node[right, font=\bfseries] {$\overline{Q}$};
+    
+    % Clock Distribution
+    \draw (1.75, -1.5) node[left] {$CLK$} -- (1.75, 0) node[circ] {};
+    \draw (1.75, -0.8) to[inline not, scale=0.6] (7.25, -0.8) -- (7.25, 0);
+    
+    % Overall Feedback
+    \draw (10.0, 1.0) node[circ] {} -- ++(0,-1.8) -- (-0.8, -0.8) -- (-0.8, 2.5) -- (0, 2.5);
+    \draw (10.2, 2.3) node[circ] {} -- ++(0,1.8) -- (-0.8, 4.1) -- (-0.8, 0.8) -- (0, 0.8);
+\end{circuitikz}
+\caption{Master-Slave JK Flip-Flop architectural schematic.}
+\label{fig:master-slave-jk}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Phase 1: Clock is HIGH ($CLK = 1$):}
+    The Master is enabled and responds to inputs $J$ and $K$, updating internal latch nodes $Y$ and $\overline{Y}$. The Slave is disabled (since its inverted clock is $0$) and holds its previous output state.
+    \item \textbf{Phase 2: Clock Transitions to LOW ($CLK = 0$):}
+    The Master is disabled and isolates its inputs. The Slave is enabled, reads the stored values from $Y$ and $\overline{Y}$, and transfers them to the final outputs $Q$ and $\overline{Q}$.
+    \item \textbf{Result:} State transfer occurs cleanly on the falling edge of the clock pulse without feedback during the transition, permanently eliminating race-around.
+\end{itemize}
+
+---
+
+\section{Systematic Flip-Flop Conversion Methodology}
+
+\subsection{Universal 5-Step Conversion Protocol}
+Any available source flip-flop can be converted to behave as any desired target flip-flop:
+\begin{enumerate}
+    \item \textbf{Step 1: Identify Target and Available Flip-Flops.}
+    \item \textbf{Step 2: Construct the Conversion Table:} Tabulate Target Inputs, Present State ($Q_n$), and Next State ($Q_{n+1}$) from the Target Characteristic Table.
+    \item \textbf{Step 3: Determine Available Inputs:} Use the **Excitation Table** of the Available Flip-Flop to find required inputs for each transition $Q_n \rightarrow Q_{n+1}$.
+    \item \textbf{Step 4: K-Map Simplification:} Derive minimal expressions for the Available Flip-Flop inputs in terms of Target Inputs and $Q_n$.
+    \item \textbf{Step 5: Logic Circuit Synthesis:} Connect the derived combinational logic to the available flip-flop terminals.
+\end{enumerate}
+
+\begin{example}[Conversion: SR Flip-Flop to JK Flip-Flop]
+Convert an available SR Flip-Flop into a JK Flip-Flop.
+\tcblower
+\textbf{Step 1: Conversion Table}
+\begin{center}
+\small
+\begin{tabular}{ccc|c|cc}
+\toprule
+\multicolumn{2}{c}{\textbf{Target (JK)}} & \textbf{Present} & \textbf{Next} & \multicolumn{2}{c}{\textbf{Available (SR)}} \\
+$J$ & $K$ & $Q_n$ & $Q_{n+1}$ & $S$ & $R$ \\
+\midrule
+0 & 0 & 0 & 0 & 0 & X \\
+0 & 0 & 1 & 1 & X & 0 \\
+0 & 1 & 0 & 0 & 0 & X \\
+0 & 1 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 1 & 1 & 0 \\
+1 & 0 & 1 & 1 & X & 0 \\
+1 & 1 & 0 & 1 & 1 & 0 \\
+1 & 1 & 1 & 0 & 0 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 2: K-Map Minimization for $S$ ($J, K, Q_n$):}
+\begin{itemize}
+    \item $S = 1$ at $(1,0,0)$ and $(1,1,0) \implies m_4, m_6$.
+    \item $S = X$ at $(0,0,1)$ and $(1,0,1) \implies d_1, d_5$.
+    \item Grouping $m_4, m_6$ yields: $\mathbf{S = J\overline{Q}_n}$.
+\end{itemize}
+
+\textbf{Step 3: K-Map Minimization for $R$ ($J, K, Q_n$):}
+\begin{itemize}
+    \item $R = 1$ at $(0,1,1)$ and $(1,1,1) \implies m_3, m_7$.
+    \item $R = X$ at $(0,0,0)$ and $(0,1,0) \implies d_0, d_2$.
+    \item Grouping $m_3, m_7$ yields: $\mathbf{R = KQ_n}$.
+\end{itemize}
+
+\textbf{Final Implementation Equations:}
+$$\mathbf{S = J \cdot \overline{Q}_n, \qquad R = K \cdot Q_n}$$
+\end{example}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 5 Sequential Logic Mastery Points]
+\begin{itemize}
+    \item \textbf{Latches vs. Flip-Flops:} Latches are level-triggered and transparent; Flip-flops are edge-triggered ($\uparrow$ or $\downarrow$).
+    \item \textbf{SR Latch:} $S=R=1$ forbidden in NOR latch; $\bar{S}=\bar{R}=0$ forbidden in NAND latch.
+    \item \textbf{Flip-Flop Characteristic Equations:}
+    \begin{itemize}
+        \item SR: $Q_{n+1} = S + \bar{R}Q_n \quad (SR=0)$
+        \item JK: $Q_{n+1} = J\bar{Q}_n + \bar{K}Q_n$
+        \item D: $Q_{n+1} = D$
+        \item T: $Q_{n+1} = T \oplus Q_n$
+    \end{itemize}
+    \item \textbf{Race-Around Condition:} Occurs in level-triggered JK flip-flops when $J=K=1$ and $t_p > t_{pd}$.
+    \item \textbf{Master-Slave Solution:} Dual-stage architecture clocked on complementary phases eliminates race-around.
+    \item \textbf{Conversion Method:} Target Characteristic Table $\rightarrow$ Available Excitation Table $\rightarrow$ K-Map Optimization.
+\end{itemize}
+\end{quickrevision}

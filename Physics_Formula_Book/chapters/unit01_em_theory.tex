@@ -1,0 +1,54 @@
+\chapter{Unit 1: Electromagnetic Theory \& Vector Calculus}
+
+\begin{formulabox}{1. Vector Differential Operators in Cartesian Coordinates}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Del Operator:} $\nabla = \hat{i}\frac{\partial}{\partial x} + \hat{j}\frac{\partial}{\partial y} + \hat{k}\frac{\partial}{\partial z}$
+    \item \textbf{Gradient (Scalar field $\phi$):} $\nabla\phi = \frac{\partial\phi}{\partial x}\hat{i} + \frac{\partial\phi}{\partial y}\hat{j} + \frac{\partial\phi}{\partial z}\hat{k}$
+    \item \textbf{Divergence (Vector field $\vec{A}$):} $\nabla \cdot \vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}$
+    \item \textbf{Curl (Vector field $\vec{A}$):} $\nabla \times \vec{A} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ A_x & A_y & A_z \end{vmatrix}$
+    \item \textbf{Laplacian Operator:} $\nabla^2 \phi = \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} + \frac{\partial^2\phi}{\partial z^2}$
+    \item \textbf{Vector Curl of Curl Identity:} $\nabla \times (\nabla \times \vec{A}) = \nabla(\nabla \cdot \vec{A}) - \nabla^2 \vec{A}$
+    \item \textbf{Zero Identities:} $\nabla \times (\nabla \phi) = \vec{0}$ (conservative fields), $\nabla \cdot (\nabla \times \vec{A}) = 0$ (solenoidal fields).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{2. Maxwell's Equations (Differential \& Integral Forms)}
+\begin{tabularx}{\textwidth}{l X X l}
+\toprule
+\textbf{Law / Principle} & \textbf{Differential Form} & \textbf{Integral Form} & \textbf{Physical Meaning} \\
+\midrule
+\textbf{Gauss's Law (Electrostatics)} & $\nabla \cdot \vec{D} = \rho_v \quad (\nabla \cdot \vec{E} = \rho/\epsilon_0)$ & $\oint_S \vec{D} \cdot d\vec{A} = Q_{\text{enc}}$ & Electric charges are flux sources/sinks. \\
+\textbf{Gauss's Law (Magnetism)} & $\nabla \cdot \vec{B} = 0$ & $\oint_S \vec{B} \cdot d\vec{A} = 0$ & No isolated magnetic monopoles exist. \\
+\textbf{Faraday's Law} & $\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t}$ & $\oint_C \vec{E} \cdot d\vec{\ell} = -\frac{d\Phi_B}{dt}$ & Time-varying $\vec{B}$ induces circulating $\vec{E}$. \\
+\textbf{Ampere-Maxwell Law} & $\nabla \times \vec{H} = \vec{J}_c + \frac{\partial \vec{D}}{\partial t}$ & $\oint_C \vec{H} \cdot d\vec{\ell} = I_{\text{enc}} + \int_S \frac{\partial \vec{D}}{\partial t} \cdot d\vec{A}$ & Conduction + displacement current generate $\vec{B}$. \\
+\bottomrule
+\end{tabularx}
+\end{formulabox}
+
+\begin{formulabox}{3. Charge Continuity, Displacement Current \& Poynting Vector}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Equation of Continuity:} $\nabla \cdot \vec{J} + \frac{\partial \rho}{\partial t} = 0 \implies \oint_S \vec{J} \cdot d\vec{A} = -\frac{dQ}{dt}$
+    \item \textbf{Displacement Current Density:} $\vec{J}_d = \frac{\partial \vec{D}}{\partial t} = \epsilon \frac{\partial \vec{E}}{\partial t}$
+    \item \textbf{Total Current across Capacitor Plates:} $I_d = \epsilon_0 A \frac{dE}{dt} = C\frac{dV}{dt} = I_c$
+    \item \textbf{Poynting Vector (Instantaneous Energy Flux):} $\vec{S} = \vec{E} \times \vec{H} = \frac{1}{\mu_0}(\vec{E} \times \vec{B}) \quad [\text{W/m}^2]$
+    \item \textbf{Time-Average Poynting Flux:} $\langle S \rangle = \frac{1}{2}\text{Re}(\vec{E} \times \vec{H}^*) = \frac{E_0^2}{2\eta} = \frac{1}{2}\epsilon v E_0^2$
+    \item \textbf{Poynting Theorem (Energy Conservation):} $-\oint_S \vec{S}\cdot d\vec{A} = \int_V \vec{J}\cdot\vec{E} \, dV + \frac{\partial}{\partial t}\int_V \left(\frac{1}{2}\epsilon E^2 + \frac{1}{2}\mu H^2\right) dV$
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{4. Electromagnetic Wave Propagation in Linear Media}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Wave Equation (Lossless):} $\nabla^2 \vec{E} - \mu\epsilon \frac{\partial^2\vec{E}}{\partial t^2} = 0$, with phase velocity $v = \frac{1}{\sqrt{\mu\epsilon}} = \frac{c}{n}$
+    \item \textbf{Intrinsic Wave Impedance:} $\eta = \sqrt{\frac{\mu}{\epsilon}}$, for free space $\eta_0 = \sqrt{\frac{\mu_0}{\epsilon_0}} \approx 377\,\Omega$
+    \item \textbf{Lossy Media Complex Wave Number:} $\gamma = \alpha + j\beta = \sqrt{j\omega\mu(\sigma + j\omega\epsilon)}$
+    \item \textbf{Good Conductor Limit ($\sigma \gg \omega\epsilon$):}
+    \[
+    \alpha = \beta = \sqrt{\frac{\omega\mu\sigma}{2}} = \sqrt{\pi f \mu \sigma}, \quad \text{Skin Depth } \delta = \frac{1}{\alpha} = \sqrt{\frac{2}{\omega\mu\sigma}} = \frac{1}{\sqrt{\pi f \mu \sigma}}
+    \]
+    \item \textbf{Radiation Pressure:} $P = \frac{\langle S \rangle}{c}$ (perfect absorption), $P = \frac{2\langle S \rangle}{c}$ (perfect reflection).
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{Quick Exam Trap:} Conduction current $\vec{J}_c = \sigma \vec{E}$ and displacement current $\vec{J}_d = j\omega\epsilon \vec{E}$ have a phase difference of exactly $90^\circ$ ($\pi/2$). The loss tangent is $\tan\delta = \frac{|\vec{J}_c|}{|\vec{J}_d|} = \frac{\sigma}{\omega\epsilon}$.
+\end{memorytip}

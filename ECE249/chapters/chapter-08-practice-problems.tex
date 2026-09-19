@@ -1,0 +1,339 @@
+\chapter{Comprehensive Solved Practice Problems}
+\label{chap:practice-problems}
+
+\section{Introduction}
+This chapter provides extensive, multi-tiered solved practice problems covering all six units of the ECE249 curriculum. Each problem follows the standardized engineering solution protocol:
+\begin{center}
+    \small\bfseries\color{brandnavy}
+    $\text{Given} \;\longrightarrow\; \text{Required} \;\longrightarrow\; \text{Principle/Formula} \;\longrightarrow\; \text{Step-by-Step Calculation} \;\longrightarrow\; \text{Final Answer}$
+\end{center}
+
+---
+
+\section{Unit 1: Electrical Laws, Semiconductors, Diodes \& BJTs}
+
+\begin{example}[Multi-Loop DC Circuit Analysis via Mesh Current Method]
+\textbf{Problem Statement:} In the dual-source DC circuit shown below, determine the branch currents $I_1, I_2, I_3$ and calculate the total power dissipated in the $\SI{10}{\ohm}$ central load resistor.
+
+\begin{center}
+\begin{circuitikz}[scale=0.9, transform shape]
+    \draw (0,0) to[V, v=$V_1{=}\SI{30}{\volt}$, invert] (0,3)
+          to[R, l=$R_1{=}\SI{5}{\ohm}$, i>^=$I_1$] (3,3)
+          to[R, l=$R_3{=}\SI{10}{\ohm}$, i>^=$I_3$, -*] (3,0)
+          to[short] (0,0);
+    \draw (3,3) to[R, l=$R_2{=}\SI{15}{\ohm}$, i>^=$I_2$] (6,3)
+          to[V, v=$V_2{=}\SI{45}{\volt}$] (6,0)
+          to[short] (3,0);
+    \node at (1.5, 1.5) [font=\small] {Loop 1 ($\circlearrowright$)};
+    \node at (4.5, 1.5) [font=\small] {Loop 2 ($\circlearrowright$)};
+\end{circuitikz}
+\end{center}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item $V_1 = \SI{30}{\volt}, \quad V_2 = \SI{45}{\volt}$
+    \item $R_1 = \SI{5}{\ohm}, \quad R_2 = \SI{15}{\ohm}, \quad R_3 = \SI{10}{\ohm}$
+\end{itemize}
+
+\textbf{Step 2: Nodal KCL Equation}
+At top node: $I_1 = I_2 + I_3 \implies I_3 = I_1 - I_2$.
+
+\textbf{Step 3: Loop 1 KVL (Clockwise)}
+\begin{align*}
+    +V_1 - I_1 R_1 - I_3 R_3 &= 0 \\
+    30 - 5I_1 - 10(I_1 - I_2) &= 0 \\
+    30 - 15I_1 + 10I_2 = 0 &\implies 15I_1 - 10I_2 = 30 \implies 3I_1 - 2I_2 = 6 \quad \text{--- (1)}
+\end{align*}
+
+\textbf{Step 4: Loop 2 KVL (Clockwise)}
+\begin{align*}
+    +I_3 R_3 - I_2 R_2 - V_2 &= 0 \\
+    10(I_1 - I_2) - 15I_2 - 45 &= 0 \\
+    10I_1 - 25I_2 = 45 &\implies 2I_1 - 5I_2 = 9 \quad \text{--- (2)}
+\end{align*}
+
+\textbf{Step 5: Solve System of Equations}
+Multiply (1) by 5 and (2) by 2:
+\begin{align*}
+    15I_1 - 10I_2 &= 30 \\
+    4I_1 - 10I_2 &= 18 \\
+    \text{Subtract: } 11I_1 &= 12 \implies I_1 = \frac{12}{11} \approx \SI{1.091}{\ampere}
+\end{align*}
+Substitute $I_1$ into (1):
+\begin{equation*}
+    3\left(\frac{12}{11}\right) - 2I_2 = 6 \implies \frac{36}{11} - 6 = 2I_2 \implies 2I_2 = -\frac{30}{11} \implies I_2 = -\frac{15}{11} \approx \SI{-1.364}{\ampere}
+\end{equation*}
+Current through $R_3$:
+\begin{equation*}
+    I_3 = I_1 - I_2 = \frac{12}{11} - \left(-\frac{15}{11}\right) = \frac{27}{11} \approx \SI{2.455}{\ampere}
+\end{equation*}
+
+\textbf{Step 6: Power Dissipated in $R_3$}
+\begin{equation*}
+    P_{R_3} = I_3^2 \cdot R_3 = (2.4545)^2 \times 10 = \SI{60.25}{\watt}
+\end{equation*}
+
+\textbf{Final Answers:}
+$$\mathbf{I_1 = \SI{1.09}{\ampere}, \quad I_2 = \SI{-1.36}{\ampere}, \quad I_3 = \SI{2.45}{\ampere}, \quad P_{R_3} = \SI{60.25}{\watt}}$$
+\noindent\textit{Note: The negative sign for $I_2$ indicates physical current flows counter-clockwise, opposite to the assumed mesh direction.}
+\end{example}
+
+\begin{example}[Full-Wave Bridge Rectifier with Silicon Diodes]
+\textbf{Problem Statement:} A Full-Wave Bridge Rectifier is connected to a $\SI{230}{\volt}_{\text{rms}}$, $\SI{50}{\hertz}$ AC supply through a step-down transformer of turns ratio $10:1$. The load resistance is $R_L = \SI{100}{\ohm}$. Each silicon diode has a forward voltage drop $V_D = \SI{0.7}{\volt}$ and dynamic resistance $r_f = \SI{1.5}{\ohm}$.
+\begin{enumerate}
+    \item Find the peak secondary voltage $V_m$.
+    \item Determine the DC output voltage $V_{dc}$ and DC load current $I_{dc}$.
+    \item Calculate the ripple factor $\gamma$ and rectification efficiency $\eta$.
+\end{enumerate}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item $V_{pri,rms} = \SI{230}{\volt}$, Turns ratio $N_1/N_2 = 10 \implies V_{sec,rms} = \frac{230}{10} = \SI{23}{\volt}$
+    \item $R_L = \SI{100}{\ohm}, \quad V_D = \SI{0.7}{\volt}, \quad r_f = \SI{1.5}{\ohm}$
+\end{itemize}
+
+\textbf{Step 2: Peak Voltage Calculation}
+\begin{equation*}
+    V_m = V_{sec,rms} \times \sqrt{2} = 23 \times \sqrt{2} \approx \SI{32.53}{\volt}
+\end{equation*}
+Effective peak voltage across load taking two conducting diodes into account:
+\begin{equation*}
+    V_{m,\text{eff}} = V_m - 2V_D = 32.53 - 2(0.7) = \SI{31.13}{\volt}
+\end{equation*}
+Peak load current:
+\begin{equation*}
+    I_m = \frac{V_{m,\text{eff}}}{2r_f + R_L} = \frac{31.13}{2(1.5) + 100} = \frac{31.13}{103} \approx \SI{0.3022}{\ampere} = \SI{302.2}{\milli\ampere}
+\end{equation*}
+
+\textbf{Step 3: DC Output Quantities}
+\begin{align*}
+    I_{dc} &= \frac{2I_m}{\pi} = \frac{2 \times 0.3022}{\pi} \approx \SI{0.1924}{\ampere} = \SI{192.4}{\milli\ampere} \\
+    V_{dc} &= I_{dc} \cdot R_L = 0.1924 \times 100 = \SI{19.24}{\volt}
+\end{align*}
+
+\textbf{Step 4: RMS Quantities, Ripple Factor and Efficiency}
+\begin{align*}
+    I_{rms} &= \frac{I_m}{\sqrt{2}} = \frac{0.3022}{\sqrt{2}} \approx \SI{0.2137}{\ampere} \\
+    \gamma &= \sqrt{\left(\frac{I_{rms}}{I_{dc}}\right)^2 - 1} = \sqrt{\left(\frac{0.2137}{0.1924}\right)^2 - 1} = \sqrt{(1.1107)^2 - 1} \approx 0.483 \\
+    \eta &= \frac{P_{dc}}{P_{ac}} = \frac{I_{dc}^2 R_L}{I_{rms}^2 (2r_f + R_L)} = \frac{(0.1924)^2 \times 100}{(0.2137)^2 \times 103} = \frac{3.7018}{4.7037} \approx 78.7\%
+\end{align*}
+
+\textbf{Final Answers:}
+$$\mathbf{V_m = \SI{32.53}{\volt}, \quad V_{dc} = \SI{19.24}{\volt}, \quad I_{dc} = \SI{192.4}{\milli\ampere}, \quad \gamma = 0.483, \quad \eta = 78.7\%}$$
+\end{example}
+
+---
+
+\section{Unit 2: Arduino ADC, PWM \& Sensors}
+
+\begin{example}[Ultrasonic Rangefinder Distance with Temperature Correction]
+\textbf{Problem Statement:} An HC-SR04 ultrasonic sensor interfaced with an Arduino UNO detects an obstacle with an echo pulse duration $\Delta t = \SI{1750}{\micro\second}$. Ambient temperature is measured by a DHT11 sensor as $T = \SI{30}{\celsius}$.
+\begin{enumerate}
+    \item Compute the temperature-corrected velocity of sound in air using $v = 331.3 + 0.606 \cdot T\,(\si{\meter\per\second})$.
+    \item Determine the exact physical distance to the obstacle in centimeters.
+\end{enumerate}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item $\Delta t = \SI{1750}{\micro\second} = \SI{1750e-6}{\second}$
+    \item Temperature $T = \SI{30}{\celsius}$
+\end{itemize}
+
+\textbf{Step 2: Calculate Speed of Sound at $T = \SI{30}{\celsius}$}
+\begin{equation*}
+    v_{\text{sound}} = 331.3 + 0.606(30) = 331.3 + 18.18 = \SI{349.48}{\meter\per\second} = \SI{0.03495}{\centi\meter\per\micro\second}
+\end{equation*}
+
+\textbf{Step 3: Calculate Target Distance}
+\begin{equation*}
+    D = \frac{v_{\text{sound}} \times \Delta t}{2} = \frac{0.034948\text{ cm/}\mu\text{s} \times 1750\,\mu\text{s}}{2} = \frac{61.159}{2} \approx \SI{30.58}{\centi\meter}
+\end{equation*}
+
+\textbf{Final Answers:}
+$$\mathbf{v_{\text{sound}} = \SI{349.48}{\meter\per\second}, \qquad \text{Distance } D = \SI{30.58}{\centi\meter}}$$
+\end{example}
+
+---
+
+\section{Unit 3: Number Systems, Boolean Simplification \& K-Maps}
+
+\begin{example}[Multi-Base Number Conversions]
+\textbf{Problem Statement:} Convert the binary number $N = (11010110.1011)_2$ into:
+\begin{enumerate}
+    \item Octal
+    \item Hexadecimal
+    \item Decimal
+\end{enumerate}
+
+\tcblower
+\textbf{Part 1: Binary to Octal (Group in 3s)}
+\begin{itemize}
+    \item Integer: $\underbrace{011}_{3} \, \underbrace{010}_{2} \, \underbrace{110}_{6} \implies (326)_8$
+    \item Fraction: $\underbrace{101}_{5} \, \underbrace{100}_{4} \implies (.54)_8$
+    \item $\mathbf{N = (326.54)_8}$
+\end{itemize}
+
+\textbf{Part 2: Binary to Hexadecimal (Group in 4s)}
+\begin{itemize}
+    \item Integer: $\underbrace{1101}_{\text{D}} \, \underbrace{0110}_{6} \implies (\text{D}6)_{16}$
+    \item Fraction: $\underbrace{1011}_{\text{B}} \implies (.\text{B})_{16}$
+    \item $\mathbf{N = (\text{D}6.\text{B})_{16}}$
+\end{itemize}
+
+\textbf{Part 3: Hexadecimal to Decimal}
+\begin{align*}
+    N &= 13 \times 16^1 + 6 \times 16^0 + 11 \times 16^{-1} \\
+      &= 208 + 6 + \frac{11}{16} = 214 + 0.6875 = (214.6875)_{10}
+\end{align*}
+\textbf{Final Answer:} $\mathbf{(214.6875)_{10}}$
+\end{example}
+
+\begin{example}[K-Map Minimization with Don't Cares]
+\textbf{Problem Statement:} Minimize the following Boolean expression and realize it using only NAND gates:
+\begin{equation*}
+    F(A,B,C,D) = \sum m(0, 1, 4, 8, 9, 12) + d(2, 10)
+\end{equation*}
+
+\tcblower
+\textbf{Step 1: Plotting K-Map ($AB \setminus CD$)}
+\begin{itemize}
+    \item 1s at: $m_0(0000), m_1(0001), m_4(0100), m_8(1000), m_9(1001), m_{12}(1100)$
+    \item Don't Cares at: $d_2(0010), d_{10}(1010)$
+\end{itemize}
+
+\textbf{Step 2: Grouping Terms}
+\begin{enumerate}
+    \item \textbf{Octet / Quad in Columns 00 and 01:}
+    Notice cells $(m_0, m_1, m_8, m_9)$ form a Quad $\implies \overline{B}\,\overline{C}$.
+    \item \textbf{Quad in Column 00 ($m_0, m_4, m_{12}, m_8$):}
+    All 4 rows in column $CD = 00 \implies \overline{C}\,\overline{D}$.
+    \item \textbf{Check cells $(m_0, d_2, m_8, d_{10})$:}
+    Form a Quad in Rows $00, 10$ and Cols $00, 10 \implies \overline{B}\,\overline{D}$.
+\end{enumerate}
+
+Minimal SOP expression:
+\begin{equation*}
+    F = \overline{B}\,\overline{C} + \overline{C}\,\overline{D}
+\end{equation*}
+(Or factoring: $F = \overline{C}(\overline{B} + \overline{D}) = \overline{C}\,\overline{BD}$).
+
+\textbf{Step 3: NAND-Only Implementation}
+Applying double complement:
+\begin{equation*}
+    F = \overline{\overline{\overline{B}\,\overline{C} + \overline{C}\,\overline{D}}} = \overline{\overline{(\overline{B}\,\overline{C})} \cdot \overline{(\overline{C}\,\overline{D})}}
+\end{equation*}
+Synthesized using 4 NAND gates.
+\end{example}
+
+---
+
+\section{Unit 4: Combinational Logic Circuits}
+
+\begin{example}[Boolean Function Synthesis with 4:1 Multiplexer]
+\textbf{Problem Statement:} Implement the logic function $F(A,B,C) = \sum m(1, 2, 6, 7)$ using a single 4:1 Multiplexer and no external logic gates. Use $A$ and $B$ as the select lines ($S_1 = A, S_0 = B$).
+
+\tcblower
+\textbf{Step 1: Implementation Table}
+With $S_1 = A, S_0 = B$, the remaining variable $C$ provides the data inputs:
+
+\begin{center}
+\small
+\begin{tabular}{c|cccc|l}
+\toprule
+\textbf{Input Line} & \textbf{$S_1 S_0 = 00$} & \textbf{$S_1 S_0 = 01$} & \textbf{$S_1 S_0 = 10$} & \textbf{$S_1 S_0 = 11$} & \textbf{Data Input Assignment} \\
+\midrule
+$\overline{C}$ & $m_0 (0)$ & $m_2 (1)$ & $m_4 (0)$ & $m_6 (1)$ & \makecell[l]{$I_0 = C$\\$I_1 = \overline{C}$\\$I_2 = 0$\\$I_3 = 1$} \\
+$C$ & $m_1 (1)$ & $m_3 (0)$ & $m_5 (0)$ & $m_7 (1)$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 2: Input Evaluations}
+\begin{itemize}
+    \item For $S_1S_0 = 00$: $m_1$ is circled $\implies I_0 = C$.
+    \item For $S_1S_0 = 01$: $m_2$ is circled $\implies I_1 = \overline{C}$.
+    \item For $S_1S_0 = 10$: Neither is circled $\implies I_2 = 0$ (GND).
+    \item For $S_1S_0 = 11$: Both $m_6, m_7$ are circled $\implies I_3 = 1$ (VCC).
+\end{itemize}
+
+\textbf{Final Connections:}
+$$\mathbf{S_1 = A, \quad S_0 = B, \quad I_0 = C, \quad I_1 = \overline{C}, \quad I_2 = 0, \quad I_3 = 1}$$
+\end{example}
+
+---
+
+\section{Unit 5: Sequential Flip-Flop Conversions}
+
+\begin{example}[Flip-Flop Conversion: JK to D Flip-Flop]
+\textbf{Problem Statement:} Convert an available JK Flip-Flop into a D Flip-Flop.
+
+\tcblower
+\textbf{Step 1: Conversion Table}
+\begin{center}
+\small
+\begin{tabular}{c|c|c|cc}
+\toprule
+\textbf{Target Input ($D$)} & \textbf{Present State ($Q_n$)} & \textbf{Next State ($Q_{n+1}$)} & \multicolumn{2}{c}{\textbf{Available Inputs ($J, K$)}} \\
+$D$ & $Q_n$ & $Q_{n+1}$ & $J$ & $K$ \\
+\midrule
+0 & 0 & 0 & 0 & X \\
+0 & 1 & 0 & X & 1 \\
+1 & 0 & 1 & 1 & X \\
+1 & 1 & 1 & X & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 2: K-Map Simplification}
+\begin{itemize}
+    \item For $J(D, Q_n)$: $J = 1$ at $(1,0)$, $J = X$ at $(0,1)$ and $(1,1) \implies \mathbf{J = D}$.
+    \item For $K(D, Q_n)$: $K = 1$ at $(0,1)$, $K = X$ at $(0,0)$ and $(1,0) \implies \mathbf{K = \overline{D}}$.
+\end{itemize}
+
+\textbf{Step 3: Implementation Schematic}
+Connect input $D$ directly to terminal $J$. Connect an inverter between $D$ and terminal $K$ ($K = \overline{D}$).
+\end{example}
+
+---
+
+\section{Unit 6: Synchronous Counter Design}
+
+\begin{example}[Design of a Synchronous Mod-3 Counter using T Flip-Flops]
+\textbf{Problem Statement:} Design a synchronous counter that counts in the sequence $00_2 \rightarrow 01_2 \rightarrow 10_2 \rightarrow 00_2$ using T Flip-Flops.
+
+\tcblower
+\textbf{Step 1: State Table and T-Excitation Mapping}
+Unused state: $11_2$.
+
+\begin{center}
+\small
+\begin{tabular}{cc|cc|cc}
+\toprule
+\multicolumn{2}{c|}{\textbf{Present State}} & \multicolumn{2}{c|}{\textbf{Next State}} & \multicolumn{2}{c}{\textbf{T Inputs ($T = Q_n \oplus Q_{n+1}$)}} \\
+$Q_1$ & $Q_0$ & $Q_1^+$ & $Q_0^+$ & $T_1$ & $T_0$ \\
+\midrule
+0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 0 & 1 & 1 \\
+1 & 0 & 0 & 0 & 1 & 0 \\
+1 & 1 & X & X & X & X \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 2: K-Map Minimization (with Don't Care at $Q_1Q_0 = 11$)}
+\begin{itemize}
+    \item For $T_1$: 1s at $(0,1)$ and $(1,0)$, X at $(1,1)$.
+    Group $(0,1)$ with $(1,1) \implies Q_0$; Group $(1,0)$ with $(1,1) \implies Q_1$.
+    $\mathbf{T_1 = Q_0 + Q_1}$.
+    \item For $T_0$: 1s at $(0,0)$ and $(0,1)$, X at $(1,1)$.
+    Group $(0,0)$ with $(0,1) \implies \overline{Q}_1$.
+    $\mathbf{T_0 = \overline{Q}_1}$.
+\end{itemize}
+
+\textbf{Step 3: Lock-out Verification}
+From unused state $11_2$: $T_1 = 1+1 = 1 \implies Q_1^+ = 0$; $T_0 = \overline{1} = 0 \implies Q_0^+ = 1$.
+Next state is $01_2$ (valid cycle) $\implies$ **Self-Starting**.
+\end{example}

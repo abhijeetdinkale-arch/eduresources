@@ -1,0 +1,660 @@
+\chapter{Expanding HTML Knowledge (Lists, Links, Media, Tables \& Forms)}
+\label{chap:expanding-html-knowledge}
+
+% ==============================================================================
+% SECTION 2.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 2 Academic Scope \lpuBadge]
+Static text alone cannot build interactive web experiences. This unit covers complex HTML data structures including unordered, ordered, and definition lists, hyperlinks, images, native HTML5 audio and video embedding, favicons, advanced tabular data presentation with cell merging (\texttt{colspan} and \texttt{rowspan}), and comprehensive web form architectures for client data collection.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{List Structuring}: Author unordered (\texttt{<ul>}), ordered (\texttt{<ol>}), and definition glossary lists (\texttt{<dl>}) with custom numbering types and start offsets.
+    \item \textbf{Navigation \& Hyperlinks}: Build local, absolute, and bookmark links using the anchor tag (\texttt{<a>}) and configure tab targets.
+    \item \textbf{Multimedia Embedding}: Embed raster images (\texttt{<img>}), native audio streams (\texttt{<audio>}), and video players (\texttt{<video>}) with controls and poster thumbnails.
+    \item \textbf{Tabular Data Presentation}: Design complex tables (\texttt{<table>}, \texttt{<tr>}, \texttt{<th>}, \texttt{<td>}) utilizing horizontal (\texttt{colspan}) and vertical (\texttt{rowspan}) cell spanning.
+    \item \textbf{Form Controls \& Data Collection}: Build interactive forms with text inputs, password masking, radio buttons, checkboxes, dropdown select menus, file uploads, and submit/reset actions.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 2.2: WORKING WITH LISTS
+% ==============================================================================
+\section{Working with Lists (Unordered, Ordered \& Definition)}
+
+HTML provides three primary list architectures to group related items:
+
+\subsection{1. Unordered Lists (\texttt{<ul>})}
+Unordered lists represent collections where sequence is non-ordinal, displayed with bullet markers:
+\begin{syntaxbox}[Unordered List Syntax]
+<ul type="disc|circle|square">
+    <li>List item text</li>
+</ul>
+\end{syntaxbox}
+
+\begin{htmlcode}{Unordered Lists in HTML}
+<ul>
+    <li>HTML5 (Structural Layer)</li>
+    <li>CSS3 (Presentation Layer)</li>
+    <li>JavaScript (Behavioral Layer)</li>
+</ul>
+\end{htmlcode}
+
+\subsection{2. Ordered Lists (\texttt{<ol>})}
+Ordered lists represent sequences where item order matters, displayed with numerical or alphabetical indices:
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{cll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{\texttt{type} Value} & \textbf{Numbering Style} & \textbf{Example Output} & \textbf{Use Case} \\
+\midrule
+\texttt{'1'} (Default) & Decimal Numbers & 1, 2, 3, \dots & Step-by-step algorithms, tutorials \\
+\texttt{'A'} & Uppercase Letters & A, B, C, \dots & Major outline sections \\
+\texttt{'a'} & Lowercase Letters & a, b, c, \dots & Multiple-choice options \\
+\texttt{'I'} & Uppercase Roman & I, II, III, \dots & Classical book chapters \\
+\texttt{'i'} & Lowercase Roman & i, ii, iii, \dots & Preface, appendix listings \\
+\bottomrule
+\end{tabularx}
+\caption{Ordered List \texttt{type} Attribute Values.}
+\label{tab:ol-types}
+\end{table}
+
+\begin{htmlcode}{Ordered List with Custom Type and Start Offset}
+<!-- Starts numbering from Roman numeral III (value 3) -->
+<ol type="I" start="3">
+    <li>System Architecture Analysis</li>
+    <li>Interface Wireframing</li>
+    <li>Implementation and Testing</li>
+</ol>
+\end{htmlcode}
+
+\begin{outputbox}
+III. System Architecture Analysis
+IV. Interface Wireframing
+V. Implementation and Testing
+\end{outputbox}
+
+\subsection{3. Definition Lists (\texttt{<dl>})}
+Definition lists structure glossaries or key-value terms:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{<dl>}}: Encloses the entire description list.
+    \item \textbf{\texttt{<dt>}}: Defines the **definition term**.
+    \item \textbf{\texttt{<dd>}}: Defines the **definition description** (indented by default).
+\end{itemize}
+
+\begin{htmlcode}{Definition List Glossary}
+<dl>
+    <dt>HTTP</dt>
+    <dd>HyperText Transfer Protocol - Application protocol for data communication.</dd>
+    <dt>DOM</dt>
+    <dd>Document Object Model - Object representation of the HTML document tree.</dd>
+</dl>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 2.3: HYPERLINKS \& ANCHOR ELEMENTS
+% ==============================================================================
+\section{Hyperlinks and Anchor Elements (\texttt{<a>})}
+
+Hyperlinks connect web documents across local directories and global networks.
+
+\subsection{Anchor Tag Attributes}
+\begin{syntaxbox}[Anchor Element]
+<a href="destination\_url" target="\_self|\_blank" title="tooltip\_text">Link Label</a>
+\end{syntaxbox}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Target Value} & \textbf{Window Behavior} & \textbf{Security / Usability Note} \\
+\midrule
+\texttt{\_self} (Default) & Opens the destination in the **same browser tab/window** & Standard intra-site navigation \\
+\texttt{\_blank} & Opens the destination in a **new browser tab/window** & External links; recommend \texttt{rel="noopener"} \\
+\texttt{\_parent} & Opens link in parent frame of a frameset/iframe & Nested iframe navigation \\
+\texttt{\_top} & Opens link in full body of current window & Escapes iframe containers \\
+\bottomrule
+\end{tabularx}
+\caption{Anchor Element \texttt{target} Attribute Options.}
+\label{tab:anchor-targets}
+\end{table}
+
+\begin{htmlcode}{Various Hyperlink Types}
+<!-- Absolute External Link -->
+<a href="https://www.lpu.in" target="_blank" title="Visit University Portal">LPU Official Website</a>
+
+<!-- Relative Internal Link -->
+<a href="about.html">About Department</a>
+
+<!-- Bookmark / Fragment Identifier Link -->
+<a href="#syllabus-section">Jump to Syllabus</a>
+
+<!-- Email Link -->
+<a href="mailto:support@lpuverto.xyz">Contact Support Email</a>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 2.4: IMAGES \& FAVICONS
+% ==============================================================================
+\section{Inserting Images and Favicons}
+
+\subsection{The Image Tag (\texttt{<img>})}
+The \texttt{<img>} tag embeds raster or vector images. It is a **void element** (no closing tag):
+
+\begin{htmlcode}{Inserting Images with Accessibility Attributes}
+<img src="campus.jpg" alt="Aerial view of university campus" width="600" height="400">
+\end{htmlcode}
+
+\begin{conceptbox}[The Critical Importance of the alt Attribute]
+The \textbf{\texttt{alt}} (alternative text) attribute serves three critical roles:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Accessibility}: Read aloud by screen readers for visually impaired users.
+    \item \textbf{Network Fallback}: Rendered in the viewport if the image fails to load due to broken URLs or slow connections.
+    \item \textbf{Search Engine Optimization (SEO)}: Indexed by search engine web crawlers to categorize image content.
+\end{enumerate}
+\end{conceptbox}
+
+\subsection{Configuring a Favicon}
+A favicon is a branding icon displayed in the browser tab beside the page title. It is declared inside \texttt{<head>} using \texttt{<link>}:
+\begin{htmlcode}{Favicon Declaration in Head}
+<head>
+    <title>Student Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 2.5: EMBEDDING MULTIMEDIA
+% ==============================================================================
+\section{Embedding Native HTML5 Multimedia (Audio \& Video)}
+
+HTML5 eliminated the need for third-party browser plugins (such as Adobe Flash) by introducing native multimedia tags:
+
+\subsection{Audio Player (\texttt{<audio>})}
+\begin{htmlcode}{HTML5 Audio Player with Fallback}
+<audio controls loop muted>
+    <source src="lecture_audio.mp3" type="audio/mpeg">
+    <source src="lecture_audio.ogg" type="audio/ogg">
+    Your browser does not support the audio element.
+</audio>
+\end{htmlcode}
+
+\subsection{Video Player (\texttt{<video>})}
+\begin{htmlcode}{HTML5 Video Player with Poster Frame}
+<video width="640" height="360" controls poster="thumbnail.jpg">
+    <source src="web_dev_lecture.mp4" type="video/mp4">
+    <source src="web_dev_lecture.webm" type="video/webm">
+    Your browser does not support the video tag.
+</video>
+\end{htmlcode}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Media Attribute} & \textbf{Type} & \textbf{Functionality} \\
+\midrule
+\texttt{controls} & Boolean & Displays playback UI (play/pause button, volume slider, timeline scrubber) \\
+\texttt{autoplay} & Boolean & Starts playback automatically upon page load (browsers require \texttt{muted}) \\
+\texttt{loop} & Boolean & Automatically restarts media from beginning upon reaching end \\
+\texttt{muted} & Boolean & Silences audio output by default \\
+\texttt{poster} & URL String & Displays preview image before video playback begins (\texttt{<video>} only) \\
+\bottomrule
+\end{tabularx}
+\caption{HTML5 Media Attributes Reference.}
+\label{tab:media-attributes}
+\end{table}
+
+% ==============================================================================
+% SECTION 2.6: WORKING WITH TABLES
+% ==============================================================================
+\section{Working with Tables (Structure \& Cell Merging)}
+
+HTML tables present two-dimensional tabular data in rows and columns:
+
+\subsection{Core Table Elements}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{<table>}}: The outermost container for tabular data.
+    \item \textbf{\texttt{<tr>}}: Defines a **table row**.
+    \item \textbf{\texttt{<th>}}: Defines a **table header cell** (rendered bold and centered by default).
+    \item \textbf{\texttt{<td>}}: Defines a standard **table data cell** (left-aligned by default).
+\end{itemize}
+
+\subsection{Merging Cells: \texttt{colspan} and \texttt{rowspan}}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{\texttt{colspan="n"}}: Merges a cell horizontally across $n$ adjacent columns.
+    \item \textbf{\texttt{rowspan="n"}}: Merges a cell vertically across $n$ adjacent rows.
+\end{enumerate}
+
+\begin{htmlcode}{Complex Table with Colspan and Rowspan}
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th colspan="2">Contact Information</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">Aarav Sharma</td>
+            <td>Email: aarav@lpu.in</td>
+            <td>Phone: +91-9876543210</td>
+            <td rowspan="2">Enrolled</td>
+        </tr>
+        <tr>
+            <td colspan="2">Address: Block 34, LPU Campus, Phagwara</td>
+        </tr>
+    </tbody>
+</table>
+\end{htmlcode}
+
+\begin{outputbox}
++-------------------+------------------------------------------+----------+
+| Student Name      | Contact Information                      | Status   |
++-------------------+---------------------+--------------------+----------+
+| Aarav Sharma      | Email: aarav@lpu.in | Phone: 9876543210  | Enrolled |
+|                   +---------------------+--------------------+          |
+|                   | Address: Block 34, LPU Campus, Phagwara  |          |
++-------------------+------------------------------------------+----------+
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 2.7: WORKING WITH FORMS
+% ==============================================================================
+\section{Working with Forms (Controls, Methods \& Data Submission)}
+
+Forms collect user input and transmit payloads to server endpoints for processing.
+
+\subsection{The \texttt{<form>} Element Attributes}
+\begin{syntaxbox}[Form Tag Structure]
+<form action="endpoint\_url" method="GET|POST" enctype="multipart/form-data">
+    <!-- Form Controls -->
+</form>
+\end{syntaxbox}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Feature} & \textbf{GET Method} & \textbf{POST Method} \\
+\midrule
+\textbf{Data Location} & Appended to URL query string (\texttt{?q=term\&page=1}) & Transmitted inside HTTP request body payload \\
+\textbf{Security} & \textbf{Insecure}: Visible in URL, logs, and browser history & \textbf{Secure}: Concealed from URL visibility \\
+\textbf{Data Limit} & Limited by URL length restrictions ($\approx 2048$ chars) & Virtually unlimited payload capacity \\
+\textbf{Bookmarking} & URL can be bookmarked / cached & Cannot be bookmarked directly \\
+\textbf{Primary Use} & Search queries, filter parameters, idempotent lookups & Passwords, registration forms, file uploads \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of HTTP Form Submission Methods: GET vs. POST.}
+\label{tab:get-vs-post}
+\end{table}
+
+\subsection{Comprehensive Form Controls}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Text Inputs (\texttt{<input type="...">})}:
+    \begin{itemize}
+        \item \texttt{type="text"}: Single-line alphanumeric text.
+        \item \texttt{type="password"}: Obscures typed characters with masking dots.
+        \item \texttt{type="email"}: Client-side pattern format verification.
+        \item Attributes: \texttt{placeholder}, \texttt{name}, \texttt{required}, \texttt{value}, \texttt{maxlength}.
+    \end{itemize}
+    \item \textbf{Multi-line Text Area (\texttt{<textarea>})}: Provides expandable multi-line text input configured via \texttt{rows} and \texttt{cols}.
+    \item \textbf{Radio Buttons (\texttt{type="radio"})}: Permits selection of **exactly one option** from a mutually exclusive group. All radio buttons in the group **must share the identical \texttt{name} attribute**.
+    \item \textbf{Checkboxes (\texttt{type="checkbox"})}: Permits independent toggling of zero or more options.
+    \item \textbf{Dropdown Selection Menu (\texttt{<select>})}: Displays compact dropdown menus populated by child \texttt{<option>} tags.
+    \item \textbf{File Upload (\texttt{type="file"})}: Enables file selection from user filesystem. Requires \texttt{enctype="multipart/form-data"} on the parent \texttt{<form>} tag.
+\end{enumerate}
+
+\begin{htmlcode}{Complete University Course Registration Form}
+<form action="/api/register" method="POST" enctype="multipart/form-data">
+    <!-- Text and Password Inputs -->
+    <label for="fullname">Full Name:</label><br>
+    <input type="text" id="fullname" name="student_name" placeholder="Enter full name" required><br><br>
+
+    <label for="pwd">Password:</label><br>
+    <input type="password" id="pwd" name="password" required><br><br>
+
+    <!-- Radio Buttons: Mutual Exclusion via Shared Name -->
+    <label>Gender:</label><br>
+    <input type="radio" id="male" name="gender" value="male" checked>
+    <label for="male">Male</label>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label><br><br>
+
+    <!-- Checkboxes -->
+    <label>Course Electives:</label><br>
+    <input type="checkbox" id="c1" name="electives" value="ai">
+    <label for="c1">Artificial Intelligence</label><br>
+    <input type="checkbox" id="c2" name="electives" value="web" checked>
+    <label for="c2">Web Development</label><br><br>
+
+    <!-- Dropdown Menu -->
+    <label for="dept">Academic Department:</label><br>
+    <select id="dept" name="department">
+        <option value="cse" selected>Computer Science & Engineering</option>
+        <option value="it">Information Technology</option>
+        <option value="ece">Electronics & Communication</option>
+    </select><br><br>
+
+    <!-- File Upload -->
+    <label for="doc">Upload ID Card Document:</label><br>
+    <input type="file" id="doc" name="id_document"><br><br>
+
+    <!-- Submission and Reset Buttons -->
+    <input type="submit" value="Complete Registration">
+    <input type="reset" value="Clear Form">
+</form>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 2.8: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 2 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Broken Radio Groups}: Giving different \texttt{name} attributes to radio buttons intended for the same question allows users to select multiple options simultaneously. Always match the \texttt{name} attribute across the group.
+    \item \textbf{File Upload Failure}: Forgetting \texttt{enctype="multipart/form-data"} on the \texttt{<form>} tag causes browsers to send only the filename string rather than the binary file content.
+    \item \textbf{Colspan vs. Rowspan Confusion}: \texttt{colspan} merges cells across vertical columns (horizontal span); \texttt{rowspan} merges cells across horizontal rows (vertical span).
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 2.9: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Ordered List Offsets and Table Spanning]
+\textbf{Question}: Predict the exact structure rendered:
+\begin{lstlisting}[language=HTML5]
+<ol type="A" start="4">
+    <li>Alpha</li>
+    <li>Beta</li>
+</ol>
+<table border="1">
+    <tr><th colspan="2">Header</th></tr>
+    <tr><td>1</td><td>2</td></tr>
+</table>
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item The \texttt{<ol>} begins at letter index 4: \texttt{D. Alpha}, followed by \texttt{E. Beta}.
+    \item The table has a top header cell spanning 2 columns with \texttt{"Header"}, followed by row 2 containing two cells: \texttt{1} and \texttt{2}.
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing File Uploads and Radio Button Grouping]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=HTML5]
+<form action="upload.php" method="POST">
+    <input type="radio" name="g1" value="M"> Male
+    <input type="radio" name="g2" value="F"> Female
+    <input type="file" name="resume">
+    <input type="submit">
+</form>
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: Radio buttons have different names (\texttt{g1} vs \texttt{g2}), breaking mutual exclusion.
+    \item \textbf{Bug 2}: Missing \texttt{enctype="multipart/form-data"} will prevent binary file uploading.
+\end{enumerate}
+\textbf{Corrected Code}:
+\begin{lstlisting}[language=HTML5]
+<form action="upload.php" method="POST" enctype="multipart/form-data">
+    <input type="radio" name="gender" value="M"> Male
+    <input type="radio" name="gender" value="F"> Female
+    <input type="file" name="resume">
+    <input type="submit">
+</form>
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 2.10: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 2 Practice Exercises]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Create a nested list structure representing a computer science syllabus hierarchy (Modules and Sub-topics).
+    \item \textbf{Level 1 (Foundation)}: Build an HTML link that opens a PDF syllabus document in a new browser tab with tooltip text.
+    \item \textbf{Level 2 (Standard)}: Write HTML code for an embedded video player featuring playback controls, a custom poster frame, and fallback formats.
+    \item \textbf{Level 2 (Standard)}: Create a weekly university lecture timetable table using \texttt{<th>}, \texttt{<td>}, and \texttt{colspan} for lunch breaks.
+    \item \textbf{Level 3 (Exam Tier)}: Construct an employee directory table using \texttt{rowspan} to group employees under departmental divisions.
+    \item \textbf{Level 3 (Exam Tier)}: Design a complete student feedback questionnaire form containing text inputs, rating radio groups, interest checkboxes, a feedback textarea, and validation attributes.
+    \item \textbf{Level 4 (Challenge)}: Build a complex student examination registration portal combining table structures, embedded media instructions, and multi-control forms.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 2 Practice Problems]
+\noindent\textbf{Solution to Problem 4 (Timetable with Colspan)}:
+\begin{lstlisting}[language=HTML5]
+<table border="1" style="width:100%; text-align:center;">
+    <tr>
+        <th>Day</th>
+        <th>9:00 - 10:00</th>
+        <th>10:00 - 11:00</th>
+        <th>11:00 - 12:00</th>
+        <th>12:00 - 1:00</th>
+    </tr>
+    <tr>
+        <td>Monday</td>
+        <td>CSE326 (Web)</td>
+        <td>MTH165 (Math)</td>
+        <td rowspan="2" style="background:#eee;">LUNCH BREAK</td>
+        <td>INT108 (Python)</td>
+    </tr>
+    <tr>
+        <td>Tuesday</td>
+        <td>PHY101 (Physics)</td>
+        <td>CSE111 (IT)</td>
+        <td>Library Study</td>
+    </tr>
+</table>
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 6 (Feedback Form)}:
+\begin{lstlisting}[language=HTML5]
+<form action="/feedback" method="POST">
+    <label for="sname">Student Name:</label>
+    <input type="text" id="sname" name="student_name" required><br><br>
+
+    <label>Course Rating:</label>
+    <input type="radio" id="r1" name="rating" value="5" checked> <label for="r1">Excellent</label>
+    <input type="radio" id="r2" name="rating" value="4"> <label for="r2">Good</label>
+    <input type="radio" id="r3" name="rating" value="3"> <label for="r3">Average</label><br><br>
+
+    <label for="comments">Detailed Feedback:</label><br>
+    <textarea id="comments" name="comments" rows="4" cols="40" placeholder="Your thoughts..."></textarea><br><br>
+
+    <input type="submit" value="Submit Feedback">
+</form>
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.11: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which attribute specifies that an anchor link opens in a new browser tab?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{target="\_self"} \quad (b) \texttt{target="\_blank"} \quad (c) \texttt{target="\_parent"} \quad (d) \texttt{target="\_newtab"}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{\_blank} opens links in a new window/tab.}
+
+    \item What is the required form attribute for uploading files via HTTP POST?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{enctype="text/plain"} \quad (b) \texttt{enctype="multipart/form-data"} \quad (c) \texttt{method="FILE"} \quad (d) \texttt{upload="true"}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Binary file uploads require \texttt{multipart/form-data}.}
+
+    \item Which table attribute merges a single cell horizontally across 3 columns?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{rowspan="3"} \quad (b) \texttt{colspan="3"} \quad (c) \texttt{merge="3"} \quad (d) \texttt{col="3"}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{colspan} merges cells across horizontal columns.}
+
+    \item What is the primary purpose of the \texttt{alt} attribute on an \texttt{<img>} tag?
+    \begin{enumerate}[label=(\alph*)]
+        \item Sets image border \quad (b) Fallback text for accessibility \quad (c) Changes image color \quad (d) Downloads image
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{alt} supplies fallback text for accessibility and broken links.}
+
+    \item How is mutual exclusivity achieved among multiple radio button inputs?
+    \begin{enumerate}[label=(\alph*)]
+        \item Matching \texttt{id} attributes \quad (b) Matching \texttt{name} attributes \quad (c) Matching \texttt{value} attributes \quad (d) Wrapping in \texttt{<div>}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Radio buttons sharing the same \texttt{name} toggle mutually.}
+
+    \item Which list element is used for descriptive glossary lists?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<ul>} \quad (b) \texttt{<ol>} \quad (c) \texttt{<dl>} \quad (d) \texttt{<list>}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{<dl>} defines description/glossary lists.}
+
+    \item Which HTTP form method appends data directly into the URL query string?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{POST} \quad (b) \texttt{GET} \quad (c) \texttt{PUT} \quad (d) \texttt{FETCH}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{GET} appends form data to the URL.}
+
+    \item What is the default starting index for \texttt{<ol type="A" start="3">}?
+    \begin{enumerate}[label=(\alph*)]
+        \item A \quad (b) B \quad (c) C \quad (d) 3
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{start="3"} with \texttt{type="A"} begins at letter 'C'.}
+
+    \item Which attribute displays a thumbnail preview image before video playback?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{src} \quad (b) \texttt{preview} \quad (c) \texttt{poster} \quad (d) \texttt{thumbnail}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{poster} sets the video placeholder image.}
+
+    \item Which element defines the descriptive data inside a \texttt{<dl>} list?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<dt>} \quad (b) \texttt{<dd>} \quad (c) \texttt{<li>} \quad (d) \texttt{<data>}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{<dd>} defines the description data.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.12: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 2 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Differentiate between HTTP \texttt{GET} and \texttt{POST} methods during form submissions.
+    \item Explain the function of \texttt{colspan} and \texttt{rowspan} attributes in HTML tables.
+    \item Why must all radio buttons in a question group share the same \texttt{name} attribute?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this HTML list snippet:
+    \begin{lstlisting}[language=HTML5]
+<ol type="I" start="5">
+    <li>Module 5</li>
+    <li>Module 6</li>
+</ol>
+    \end{lstlisting}
+    \item Identify the errors in the following form definition:
+    \begin{lstlisting}[language=HTML5]
+<form action="save.php" method="GET">
+    <input type="file" name="doc">
+    <input type="submit">
+</form>
+    \end{lstlisting}
+    \item Explain the role of the \texttt{poster} attribute in HTML5 video elements.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete HTML document for a University Student Course Admission Form:
+    \begin{enumerate}[label=(\alph*)]
+        \item Collect candidate name, email, password, and phone number with validation attributes. (3 Marks)
+        \item Provide a department dropdown (\texttt{<select>}), gender radio buttons, and hobby checkboxes. (3 Marks)
+        \item Include a passport photo upload input and submit/reset buttons with proper form encoding. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 2 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{GET vs. POST} [2 Marks]: \texttt{GET} appends form data to the URL (visible, limited length, bookmarkable); \texttt{POST} sends data in the HTTP request body (secure, large payloads, file uploads).
+    \item \textbf{Colspan vs. Rowspan} [2 Marks]: \texttt{colspan} merges cells across horizontal columns; \texttt{rowspan} merges cells across vertical rows.
+    \item \textbf{Radio Button Grouping} [2 Marks]: A shared \texttt{name} attribute informs the browser that the inputs belong to the same logical group, enforcing mutual exclusion (only one selectable at a time).
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{List Tracing} [3 Marks]: \texttt{type="I"} and \texttt{start="5"} renders Roman numerals starting at 5: \texttt{V. Module 5}, followed by \texttt{VI. Module 6}.
+    \item \textbf{File Upload Form Error} [3 Marks]: File inputs cannot send binary payloads over \texttt{GET} without \texttt{enctype}. Fix: Change method to \texttt{POST} and add \texttt{enctype="multipart/form-data"}.
+    \item \textbf{Poster Attribute} [3 Marks]: Specifies a placeholder image URL displayed in the video frame before the user clicks play or while the video buffers.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Complete Admission Form Implementation} [10 Marks]:
+\begin{lstlisting}[language=HTML5]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>University Admission Portal</title>
+</head>
+<body>
+    <h2>Student Admission Registration</h2>
+    <form action="/admissions/submit" method="POST" enctype="multipart/form-data">
+        <label for="name">Candidate Name:</label><br>
+        <input type="text" id="name" name="cand_name" required><br><br>
+
+        <label for="email">Email Address:</label><br>
+        <input type="email" id="email" name="cand_email" required><br><br>
+
+        <label for="pwd">Portal Password:</label><br>
+        <input type="password" id="pwd" name="cand_pwd" required><br><br>
+
+        <label>Gender:</label><br>
+        <input type="radio" id="m" name="gender" value="male" checked> <label for="m">Male</label>
+        <input type="radio" id="f" name="gender" value="female"> <label for="f">Female</label><br><br>
+
+        <label for="dept">Engineering Stream:</label><br>
+        <select id="dept" name="stream">
+            <option value="cse">B.Tech Computer Science</option>
+            <option value="it">B.Tech Information Technology</option>
+            <option value="ai">B.Tech AI & Data Science</option>
+        </select><br><br>
+
+        <label for="photo">Passport Photograph:</label><br>
+        <input type="file" id="photo" name="passport_photo" required><br><br>
+
+        <input type="submit" value="Register Now">
+        <input type="reset" value="Reset Form">
+    </form>
+</body>
+</html>
+\end{lstlisting}
+\textbf{Marking Scheme}: Inputs and validations: 3M; Radio, checkboxes, select: 3M; File upload and form headers: 4M.
+\end{enumerate}
+\end{solutionbox}

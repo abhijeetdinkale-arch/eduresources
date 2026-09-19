@@ -1,0 +1,510 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{style}
+
+\begin{document}
+
+% ==============================================================================
+% COVER PAGE
+% ==============================================================================
+\begin{titlepage}
+\pagecolor{DeepNavy}
+\color{white}
+\vspace*{1cm}
+
+\begin{center}
+    {\LARGE \bfseries \scshape Lovely Professional University}\\[3mm]
+    {\small Department of Computer Science \& Engineering}\\[12mm]
+
+    {\Huge \bfseries CSE111: Orientation to Computing}\\[6mm]
+    {\LARGE \bfseries Handwritten-Style Short Notes \& 1-Shot Revision}\\[8mm]
+    {\color{WarmAmber}\rule{0.85\textwidth}{2pt}}\\[10mm]
+
+    \begin{tcolorbox}[enhanced, width=0.88\textwidth, colback=white, colframe=WarmAmber, boxrule=1.5pt, arc=3mm, halign=center]
+        \color{DarkSlate}
+        \vspace{2mm}
+        {\Large\bfseries Complete 6-Unit Concise Exam Revision Book}\\[3mm]
+        {\large\bfseries Simple $\bullet$ Easy $\bullet$ Direct Recall $\bullet$ High-Yield}\\[3mm]
+        \begin{tabular}{ll}
+            \textbf{Unit 1:} Computer Languages & \quad \textbf{Unit 2:} Computer Fundamentals \\
+            \textbf{Unit 3:} Computer Hardware  & \quad \textbf{Unit 4:} Number Systems \\
+            \textbf{Unit 5:} Version Control    & \quad \textbf{Unit 6:} Modern AI Trends \& Tools \\
+        \end{tabular}\\[3mm]
+        \textit{Specially formatted for night-before revision and quick concept mastery}
+        \vspace{2mm}
+    \end{tcolorbox}
+
+    \vfill
+
+    {\large \bfseries Built by Vertos, for Vertos}\\[2mm]
+    {\small High-Yield Formula Sheet $\bullet$ Memory Hierarchy $\bullet$ 5-Minute One-Shot Recap}\\[8mm]
+
+    \begin{tcolorbox}[width=0.55\textwidth, colback=DeepNavy!80!black, colframe=white, boxrule=0.6pt, halign=center]
+        \color{white}
+        \textbf{LPU Engineering Open Series}\\[1mm]
+        {\footnotesize Academic Year 2025--2026}
+    \end{tcolorbox}
+    \vspace*{1cm}
+\end{center}
+\end{titlepage}
+\nopagecolor
+\newpage
+
+% ==============================================================================
+% TABLE OF CONTENTS
+% ==============================================================================
+{
+\sffamily
+\tableofcontents
+}
+\newpage
+
+% ==============================================================================
+% MASTER FORMULA & FACT SHEET
+% ==============================================================================
+\section{Master Formula \& Memory Cheat Sheet}
+
+\begin{formulabox}[Memory Capacities \& Calculations ($1024$ Powers)]
+\small
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\textbf{Unit} & \textbf{Relation} & \textbf{Exact Bytes} \\
+\midrule
+1 Bit ($b$) & Smallest unit ($0$ or $1$) & $1/8\text{ Byte}$ \\
+1 Nibble & 4 bits & $0.5\text{ Byte}$ \\
+1 Byte ($B$) & 8 bits & 1 Byte \\
+1 KiB (Kibibyte) & $2^{10}\text{ bytes} = 1,024\text{ B}$ & $1,024\text{ Bytes}$ \\
+1 MiB (Mebibyte) & $2^{20}\text{ bytes} = 1,024\text{ KiB}$ & $1,048,576\text{ Bytes}$ \\
+1 GiB (Gibibyte) & $2^{30}\text{ bytes} = 1,024\text{ MiB}$ & $1,073,741,824\text{ Bytes}$ \\
+1 TiB (Tebibyte) & $2^{40}\text{ bytes} = 1,024\text{ GiB}$ & $1,099,511,627,776\text{ Bytes}$ \\
+\bottomrule
+\end{tabular}
+\vspace{2mm}
+
+\noindent\textbf{Direct Calculation Example:} $4\text{ GiB} = 4 \times 1024^3 = 4,294,967,296\text{ bytes}$.
+\end{formulabox}
+
+\begin{formulabox}[Number System Bases, Symbols \& Direct Grouping]
+\small
+\begin{tabular}{@{}l c l c@{}}
+\toprule
+\textbf{System} & \textbf{Base} & \textbf{Digits Allowed} & \textbf{Bit Grouping} \\
+\midrule
+\textbf{Binary} & 2 & 0, 1 & 1 bit \\
+\textbf{Octal} & 8 & 0, 1, 2, 3, 4, 5, 6, 7 & \textbf{3 bits} ($2^3=8$) \\
+\textbf{Decimal} & 10 & 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 & --- \\
+\textbf{Hexadecimal} & 16 & 0--9, A(10), B(11), C(12), D(13), E(14), F(15) & \textbf{4 bits} ($2^4=16$) \\
+\bottomrule
+\end{tabular}
+\vspace{2mm}
+
+\noindent\textbf{Binary Fractional Weights:} $2^{-1} = 0.5$, $2^{-2} = 0.25$, $2^{-3} = 0.125$, $2^{-4} = 0.0625$.
+\end{formulabox}
+
+\begin{handwbox}[Speed \& Latency Order (Memory Hierarchy)]
+\[
+\text{CPU Registers} \;>\; \text{L1 Cache} \;>\; \text{L2 Cache} \;>\; \text{L3 Cache} \;>\; \text{RAM} \;>\; \text{SSD} \;>\; \text{HDD} \;>\; \text{Tape}
+\]
+\textbf{Rule:} As you go left $\rightarrow$ Faster speed, smaller size, higher cost per byte. As you go right $\rightarrow$ Larger capacity, cheaper, slower access.
+\end{handwbox}
+
+\newpage
+
+% ==============================================================================
+% UNIT 1: COMPUTER LANGUAGES
+% ==============================================================================
+\section{Unit 1: Computer Languages}
+
+\subsection{1. Language Hierarchy}
+\begin{conceptbox}[Three Language Levels]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Machine Language (Lowest Level):} Pure binary ($0$s and $1$s). It is the \textit{only} language directly executed by CPU hardware. Extremely fast, but completely processor-dependent and hard for humans to write or debug.
+    \item \textbf{Assembly Language (Symbolic Low Level):} Replaces binary opcodes with short abbreviations called \textbf{mnemonics} (e.g., \texttt{MOV}, \texttt{ADD}, \texttt{SUB}). Has a nearly 1-to-1 correspondence with machine code. Requires an \textbf{Assembler}.
+    \item \textbf{High-Level Language (HLL):} English-like syntax and mathematical expressions (\texttt{total = price * quantity}). Provides abstraction from CPU registers and is \textbf{portable} across different computers (C, C++, Java, Python).
+\end{itemize}
+\end{conceptbox}
+
+\subsection{2. Translators: Compiler vs. Interpreter vs. Assembler}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l p{6cm} p{6cm}@{}}
+\toprule
+\textbf{Feature} & \textbf{Compiler} & \textbf{Interpreter} \\
+\midrule
+\textbf{Translation} & Translates entire program at once beforehand & Translates and executes line-by-line at runtime \\
+\textbf{Execution Speed} & Very fast (native machine code produced) & Slower (translated on the fly) \\
+\textbf{Error Reporting} & Reports all compile-time errors beforehand & Stops immediately at the first error encountered \\
+\textbf{Object Code} & Generates an independent object/executable file & Does not generate an object file \\
+\textbf{Examples} & C, C++ & Python, JavaScript \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{handwbox}[How an Assembler Works (2-Pass Process)]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Pass 1:} Scans source code, identifies all labels and variables, and builds a \textbf{Symbol Table} recording their memory locations.
+    \item \textbf{Pass 2:} Replaces mnemonics and symbolic labels with actual binary opcodes and memory addresses to produce the final object file.
+\end{itemize}
+\end{handwbox}
+
+\subsection{3. Program Compilation Pipeline \& Execution}
+\begin{center}
+\fbox{\textbf{Source Code}} $\xrightarrow{\text{Preprocessor}}$ \fbox{\textbf{Expanded Source}} $\xrightarrow{\text{Compiler}}$ \fbox{\textbf{Assembly/Object}} $\xrightarrow{\text{Linker}}$ \fbox{\textbf{Executable Binary}} $\xrightarrow{\text{Loader}}$ \fbox{\textbf{RAM / CPU}}
+\end{center}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Preprocessor:} Expands macros and includes header files (\texttt{\#include <stdio.h>}).
+    \item \textbf{Linker:} Combines multiple object files and standard libraries into one executable.
+    \item \textbf{Loader:} Places the executable from disk into main memory (RAM) so the CPU can run it.
+    \item \textbf{CPU Instruction Cycle:} \textbf{Fetch} $\rightarrow$ \textbf{Decode} $\rightarrow$ \textbf{Execute} $\rightarrow$ \textbf{Store}.
+\end{itemize}
+
+\begin{examalert}[Common Error Types]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Syntax Error:} Grammar mistakes (missing semicolon, misspelled keyword). Caught at \textit{compile time}.
+    \item \textbf{Runtime Error:} Occurs while running (division by zero, file not found). Crashes the program.
+    \item \textbf{Logic Error:} Program runs completely fine, but outputs wrong mathematical results due to a flawed formula.
+\end{itemize}
+\end{examalert}
+
+\newpage
+
+% ==============================================================================
+% UNIT 2: COMPUTER FUNDAMENTALS
+% ==============================================================================
+\section{Unit 2: Computer Fundamentals}
+
+\subsection{1. Von Neumann Architecture (1945)}
+\begin{conceptbox}[The Stored-Program Principle]
+A computer accepts \textbf{Input}, processes it using an ordered set of instructions (\textbf{Program}), produces \textbf{Output}, and retains it in \textbf{Storage} (the IPO-S cycle).
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Stored-Program Principle:} Both program instructions and working data are stored together in the same unified primary memory space.
+    \item \textbf{Data vs. Information:} Data = raw unprocessed facts (e.g., $72$); Information = processed data with meaning (e.g., "Average test score: 72\%").
+\end{itemize}
+\end{conceptbox}
+
+\subsection{2. The Five Computer Generations}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l l p{5.5cm}@{}}
+\toprule
+\textbf{Gen} & \textbf{Period} & \textbf{Core Switch} & \textbf{Key Highlights} \\
+\midrule
+\textbf{1st} & 1940--1956 & \textbf{Vacuum Tubes} & ENIAC; machine language; huge size and heat. \\
+\textbf{2nd} & 1956--1963 & \textbf{Transistors} & Assembly language; FORTRAN, COBOL; smaller, cooler. \\
+\textbf{3rd} & 1964--1971 & \textbf{Integrated Circuits (ICs)} & Keyboards, monitors, early OS; multiple components on 1 chip. \\
+\textbf{4th} & 1971--Now & \textbf{Microprocessors (VLSI)} & Intel 4004 (1971); Personal Computers (PCs); laptops, mobile. \\
+\textbf{5th} & Present/Future & \textbf{Artificial Intelligence} & Parallel processing; neural networks; natural language. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{3. Functional CPU Units \& System Buses}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{ALU (Arithmetic Logic Unit):} Performs mathematical math ($+, -, \times, \div$) and logical decisions (\texttt{AND}, \texttt{OR}, \texttt{NOT}, comparisons).
+    \item \textbf{CU (Control Unit):} The supervisor. Emits timing and control signals to direct the instruction cycle.
+    \item \textbf{Registers:} Ultra-fast internal CPU memory.
+\end{itemize}
+
+\begin{handwbox}[System Buses Summary]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Data Bus (Bidirectional):} Carries actual data and instructions between CPU, memory, and devices.
+    \item \textbf{Address Bus (Unidirectional):} Carries the memory address being accessed from the CPU to memory chips.
+    \item \textbf{Control Bus:} Carries timing, read/write commands, and interrupt signals.
+\end{itemize}
+\end{handwbox}
+
+\subsection{4. Computer Classifications}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Supercomputers:} Extremely powerful parallel machines for weather modeling, astronomy, and nuclear research (measured in FLOPS).
+    \item \textbf{Mainframes:} Large, fault-tolerant computers supporting high-volume transaction processing for banks and airlines.
+    \item \textbf{Workstations:} Single-user high-performance desktop systems for CAD, 3D animation, and scientific engineering.
+    \item \textbf{Embedded Computers:} Dedicated microcontrollers integrated into appliances (washing machines, cars, microwaves) to perform a single dedicated task.
+    \item \textbf{Analog vs. Digital:} Analog processes continuous signals (voltage, pressure); Digital processes discrete bits ($0$ and $1$).
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% UNIT 3: COMPUTER HARDWARE
+% ==============================================================================
+\section{Unit 3: Computer Hardware}
+
+\subsection{1. CPU vs. GPU}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l p{6.5cm} p{6.5cm}@{}}
+\toprule
+\textbf{Feature} & \textbf{CPU (Central Processing Unit)} & \textbf{GPU (Graphics Processing Unit)} \\
+\midrule
+\textbf{Core Design} & Few powerful cores optimized for sequential tasks & Thousands of smaller cores optimized for parallel tasks \\
+\textbf{Latency/Throughput}& Low latency for varied branching code & High throughput for massive repeated calculations \\
+\textbf{Best Suited For} & OS control, word processing, general computing & 3D graphics rendering, video encoding, Deep Learning \\
+\textbf{Dedicated Memory}& Uses system RAM & Uses high-bandwidth \textbf{VRAM} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{2. Primary Memory (RAM \& ROM)}
+\begin{conceptbox}[RAM vs. ROM]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{RAM (Random-Access Memory):} \textbf{Volatile} memory. Stored data is immediately lost when power is turned off.
+    \begin{itemize}
+        \item \textit{DRAM (Dynamic RAM):} Stores bits in capacitors; requires periodic electrical refresh; used as main system memory.
+        \item \textit{SRAM (Static RAM):} Uses transistor flip-flops; faster and more expensive; used for CPU cache ($L_1, L_2, L_3$).
+    \end{itemize}
+    \item \textbf{ROM (Read-Only Memory):} \textbf{Non-volatile} memory. Retains startup firmware (BIOS/UEFI) permanently.
+    \item \textbf{Flash Memory:} Non-volatile semiconductor storage that can be erased and rewritten electrically (used in SSDs, USB drives).
+\end{itemize}
+\end{conceptbox}
+
+\subsection{3. Secondary Storage: SSD vs. HDD}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Hard Disk Drive (HDD):} Stores data magnetically on rotating circular platters using mechanical read/write heads. Vulnerable to physical drop/shock damage.
+    \item \textbf{Solid-State Drive (SSD):} Uses flash memory with \textbf{no moving mechanical parts}. Completely silent, fast random access, and highly shock-resistant.
+    \item \textbf{Magnetic Tape:} Sequential access media; very slow to locate individual files, but extremely economical for long-term archival storage.
+\end{itemize}
+
+\begin{examalert}[Key Registers to Remember]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{PC (Program Counter):} Holds the memory address of the \textbf{next} instruction to fetch.
+    \item \textbf{IR (Instruction Register):} Holds the binary instruction \textbf{currently being executed or decoded}.
+\end{itemize}
+\end{examalert}
+
+\subsection{4. Peripheral Devices Quick Summary}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Touchscreen:} Dual device (both Input and Output).
+    \item \textbf{Scanners / OCR:} Converts printed paper text into editable digital characters.
+    \item \textbf{Actuators:} Output devices converting electrical signals into physical movement (e.g., motor rotation, robotic joints).
+    \item \textbf{Printers:} \textit{Laser} uses powdered toner and an electrostatic drum (fast text); \textit{Inkjet} sprays liquid ink droplets (photos).
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% UNIT 4: NUMBER SYSTEMS
+% ==============================================================================
+\section{Unit 4: Number Systems}
+
+\subsection{1. Radix \& Base Representation}
+\begin{itemize}[leftmargin=5mm]
+    \item A base-$b$ positional number system uses digits from $0$ to $b-1$.
+    \item \textbf{MSD (Most Significant Digit):} Leftmost non-zero digit with the greatest place weight.
+    \item \textbf{LSD (Least Significant Digit):} Rightmost digit with the smallest place weight.
+    \item \textbf{Radix Point:} The dot separating integer powers from fractional negative powers.
+\end{itemize}
+
+\subsection{2. Step-by-Step Conversion Techniques}
+
+\begin{conceptbox}[Direct Grouping: Binary $\leftrightarrow$ Octal \& Hexadecimal]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Binary $\rightarrow$ Octal (Group in 3s):} Group bits in threes from the radix point.
+    \[
+    (110101)_2 = \underbrace{110}_{6}\;\underbrace{101}_{5} = (65)_8
+    \]
+    \item \textbf{Binary $\rightarrow$ Hexadecimal (Group in 4s):} Group bits in fours from the radix point.
+    \[
+    (11001010)_2 = \underbrace{1100}_{12=\text{C}}\;\underbrace{1010}_{10=\text{A}} = (\text{CA})_{16}
+    \]
+    \item \textbf{Octal $\rightarrow$ Hexadecimal:} Convert Octal $\rightarrow$ Binary (3 bits per digit) $\rightarrow$ Regroup in 4s $\rightarrow$ Hexadecimal.
+    \[
+    (75)_8 = \underbrace{111}_{7}\;\underbrace{101}_{5} = 0011\;1101_2 = (3\text{D})_{16}
+    \]
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[Decimal Integer $\rightarrow$ Any Base (Repeated Division)]
+Divide by the target base, record remainders, and read them \textbf{from bottom (last) to top (first)}.
+\begin{itemize}[leftmargin=5mm]
+    \item Convert $13_{10}$ to Binary:
+    \begin{align*}
+    13 \div 2 &= 6 \quad \text{remainder } 1 \quad (\text{LSD}) \\
+    6 \div 2 &= 3 \quad \text{remainder } 0 \\
+    3 \div 2 &= 1 \quad \text{remainder } 1 \\
+    1 \div 2 &= 0 \quad \text{remainder } 1 \quad (\text{MSD}) \quad \implies \mathbf{(1101)_2}
+    \end{align*}
+\end{itemize}
+\end{handwbox}
+
+\begin{handwbox}[Decimal Fraction $\rightarrow$ Binary (Repeated Multiplication)]
+Multiply fractional part by 2, record generated integer parts \textbf{from top to bottom}.
+\begin{itemize}[leftmargin=5mm]
+    \item Convert $0.625_{10}$ to Binary:
+    \begin{align*}
+    0.625 \times 2 &= \mathbf{1}.25 \quad (\text{record } 1) \\
+    0.25 \times 2  &= \mathbf{0}.50 \quad (\text{record } 0) \\
+    0.50 \times 2  &= \mathbf{1}.00 \quad (\text{record } 1) \quad \implies \mathbf{(0.101)_2}
+    \end{align*}
+\end{itemize}
+\end{handwbox}
+
+\begin{examalert}[Binary Arithmetic Rules]
+\[
+0+0=0, \quad 0+1=1, \quad 1+0=1, \quad 1+1=10_2 \text{ (0 with carry 1)}, \quad 1+1+1=11_2 \text{ (1 with carry 1)}.
+\]
+\end{examalert}
+
+\newpage
+
+% ==============================================================================
+% UNIT 5: VERSION CONTROL
+% ==============================================================================
+\section{Unit 5: Version Control (Git \& GitHub)}
+
+\subsection{1. Core Principles}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Git:} A \textbf{distributed} version control system created by \textbf{Linus Torvalds in 2005}. Every local clone stores the complete history in a hidden \texttt{.git} folder. Operates completely offline.
+    \item \textbf{GitHub:} A cloud-based web hosting platform for remote Git repositories providing collaboration tools (Pull Requests, issue tracking, code reviews).
+\end{itemize}
+
+\subsection{2. The Three Git Areas}
+\begin{center}
+\fbox{\parbox{3.5cm}{\centering\textbf{Working Directory}\\(Files on your disk)}} $\xrightarrow{\texttt{git add}}$ \fbox{\parbox{3.5cm}{\centering\textbf{Staging Area}\\(Index / Preview buffer)}} $\xrightarrow{\texttt{git commit}}$ \fbox{\parbox{3.5cm}{\centering\textbf{Local Repository}\\(Saved in \texttt{.git})}}
+\end{center}
+
+\begin{examalert}[Crucial Golden Rule]
+Saving a file in VS Code (\texttt{Ctrl+S}) only updates the local disk. It does \textbf{not} stage or commit the file. Committing records changes locally; pushing sends them to GitHub.
+\end{examalert}
+
+\subsection{3. Essential Git Commands Cheat Sheet}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l p{10cm}@{}}
+\toprule
+\textbf{Command} & \textbf{Exact Purpose \& Function} \\
+\midrule
+\texttt{git init} & Initializes a brand new local Git repository (creates hidden \texttt{.git} folder). \\
+\texttt{git status} & Checks the state of working directory (untracked, modified, staged files). \\
+\texttt{git add <file>} & Moves a specific file to the Staging Area. \\
+\texttt{git add .} & Stages all modified and newly created files in the current folder. \\
+\texttt{git commit -m "msg"} & Permanently captures staged changes into repository history with a message. \\
+\texttt{git log -{}-oneline} & Displays past commits in reverse chronological order (one line per commit). \\
+\texttt{git switch -c <name>} & Creates and checks out a new branch in one step. \\
+\texttt{git checkout -b <name>} & Older equivalent command to create and switch to a new branch. \\
+\texttt{git branch} & Lists all local branches (an asterisk \texttt{*} marks the active branch). \\
+\texttt{git push -u origin <branch>} & Uploads local commits to remote GitHub repository and sets tracking. \\
+\texttt{git pull} & Fetches remote commits and immediately merges them into the local branch. \\
+\texttt{git clone <URL>} & Downloads a complete remote repository from GitHub to a new local folder. \\
+\texttt{git restore -{}-staged <file>} & Unstages a file while keeping disk edits intact. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{4. Branches \& \texttt{.gitignore}}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Branch:} A lightweight movable pointer to a commit. Allows developers to work on features in isolation without breaking the \texttt{main} production branch.
+    \item \textbf{.gitignore:} A text file listing file names, build output directories (\texttt{/build}), log files (\texttt{*.log}), and environment credentials (\texttt{.env}) that Git should deliberately omit from tracking.
+    \item \textbf{Pull Request (PR):} A GitHub feature allowing teammates to review and comment on branch changes before merging them into \texttt{main}.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% UNIT 6: MODERN AI TRENDS AND TOOLS
+% ==============================================================================
+\section{Unit 6: Modern AI Trends and Tools}
+
+\subsection{1. Foundations: AI vs. ML vs. DL}
+\begin{center}
+\fbox{\textbf{Artificial Intelligence (AI)}} $\;\supset\;$ \fbox{\textbf{Machine Learning (ML)}} $\;\supset\;$ \fbox{\textbf{Deep Learning (DL)}}
+\end{center}
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Dartmouth Workshop (1956):} Where the term "Artificial Intelligence" was formally coined.
+    \item \textbf{Narrow (Weak) AI:} All existing real-world tools (ChatGPT, Siri, Google Gemini). They are specialized to perform specific tasks, not general human consciousness.
+    \item \textbf{Training vs. Inference:}
+    \begin{itemize}
+        \item \textit{Training:} Feeding massive datasets into a model to optimize its parameters and learn patterns.
+        \item \textit{Inference:} Running the trained model to answer a user's prompt or classify new data.
+    \end{itemize}
+\end{itemize}
+
+\subsection{2. Generative AI \& Key Tools}
+\begin{conceptbox}[Generative AI Models]
+Unlike traditional AI that only classifies data, \textbf{Generative AI creates new original content} (text, images, audio, video) in response to natural-language prompts.
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Text Generation (LLMs):} Predicts the most probable next token (ChatGPT from OpenAI, Google Gemini).
+    \item \textbf{Image Generation:} DALL-E, Midjourney, Adobe Firefly, Stable Diffusion.
+    \item \textbf{Video Generation:} Runway (cinematic motion), Synthesia (synthetic presenter avatars).
+    \item \textbf{Research Assistants:}
+    \begin{itemize}
+        \item \textit{Perplexity AI:} AI search engine providing answers with direct web citations.
+        \item \textit{NotebookLM:} Google's assistant grounded strictly in the user's uploaded documents.
+        \item \textit{JenniAI:} Academic writing assistant assisting with drafting and citations.
+    \end{itemize}
+\end{itemize}
+\end{conceptbox}
+
+\subsection{3. Prompt Engineering Architecture}
+A high-quality prompt contains five clear pillars:
+\begin{enumerate}[leftmargin=8mm]
+    \item \textbf{Role:} Give the AI a persona (\texttt{"Act as a computer science teacher"}).
+    \item \textbf{Context:} Background information (\texttt{"For a first-year student"}).
+    \item \textbf{Task:} The core action verb (\texttt{"Explain the function of CPU cache"}).
+    \item \textbf{Constraints:} Limitations (\texttt{"In under 100 words, avoid jargon"}).
+    \item \textbf{Output Format:} How to present the answer (\texttt{"In a bulleted list"}).
+\end{enumerate}
+
+\begin{examalert}[Hallucination \& AI Ethics]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Hallucination:} When an LLM generates fluent, confident-sounding statements or citations that are factually false. Always verify AI output against real sources!
+    \item \textbf{Privacy:} Never upload private passwords, medical records, or sensitive personal data to public AI tools.
+    \item \textbf{Academic Integrity:} Submitting AI-generated text as original coursework without disclosure is academic misconduct.
+    \item \textbf{Accountability Principle:} The human user deploying the tool remains legally and ethically responsible for its output.
+\end{itemize}
+\end{examalert}
+
+\newpage
+
+% ==============================================================================
+% ULTRA ONE-SHOT REVISION CARD
+% ==============================================================================
+\section{Ultra 5-Minute One-Shot Revision Card}
+
+\begin{tcolorbox}[enhanced, colback=NoteYellow, colframe=DeepNavy, boxrule=1.2pt, arc=3mm, title={\large\bfseries The Night-Before Exam Memory Matrix}, fonttitle=\sffamily\bfseries\color{white}, colbacktitle=DeepNavy]
+\small\sffamily
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\textbf{Topic / Keyword} & \textbf{Direct Exam Recall Trigger} \\
+\midrule
+\textbf{Machine Language} & Pure binary ($0$ and $1$); executed directly by CPU; processor-dependent. \\
+\textbf{Assembly Language} & Uses mnemonics (\texttt{MOV}, \texttt{ADD}); 1-to-1 machine correspondence; needs Assembler. \\
+\textbf{Compiler} & Translates entire program beforehand to object code; reports syntax errors early. \\
+\textbf{Interpreter} & Evaluates and runs line-by-line at runtime; stops at first error; slower. \\
+\textbf{Linker \& Loader} & Linker combines object files and libraries; Loader loads binary into RAM. \\
+\midrule
+\textbf{Von Neumann (1945)} & Stored-program principle: code and data reside in common memory space. \\
+\textbf{5 Generations} & 1st: Vacuum Tubes $\rightarrow$ 2nd: Transistors $\rightarrow$ 3rd: ICs $\rightarrow$ 4th: Microprocessors $\rightarrow$ 5th: AI. \\
+\textbf{Intel 4004 (1971)} & First commercial single-chip microprocessor (started 4th Gen). \\
+\textbf{ALU vs. CU} & ALU does arithmetic \& logic ($+, -$, AND, OR); CU manages timing and execution. \\
+\textbf{System Buses} & Address bus = unidirectional; Data bus = bidirectional; Control = read/write signals. \\
+\textbf{Embedded System} & Dedicated microcontroller performing a fixed control task inside an appliance. \\
+\midrule
+\textbf{CPU vs. GPU} & CPU has few high-speed cores for logic; GPU has thousands of cores for parallel tensor math. \\
+\textbf{PC Register} & Stores memory address of the \textit{next} instruction to fetch. \\
+\textbf{IR Register} & Stores the instruction \textit{currently being executed or decoded}. \\
+\textbf{DRAM vs. SRAM} & DRAM = Main RAM (capacitors, needs refresh); SRAM = Cache memory (fast, flip-flops). \\
+\textbf{ROM} & Non-volatile startup firmware storage (BIOS/UEFI). \\
+\textbf{SSD vs. HDD} & SSD = Flash memory (no moving parts, shock-proof); HDD = Spinning magnetic platters. \\
+\midrule
+\textbf{Number Systems} & Binary (base 2), Octal (base 8), Decimal (base 10), Hexadecimal (base 16). \\
+\textbf{Direct Grouping} & Octal $\leftrightarrow$ Binary: 3 bits; Hex $\leftrightarrow$ Binary: 4 bits ($\text{A}=10, \text{B}=11, \dots, \text{F}=15$). \\
+\textbf{Fractions} & $0.1_2 = 0.5$, $0.01_2 = 0.25$, $0.001_2 = 0.125$, $0.11_2 = 0.75$, $0.101_2 = 0.625$. \\
+\midrule
+\textbf{Git (2005)} & Distributed VCS by Linus Torvalds. Local history stored in \texttt{.git}. \\
+\textbf{Git Workflow} & Working Directory $\xrightarrow{\texttt{git add}}$ Staging Area $\xrightarrow{\texttt{git commit}}$ Local Repo $\xrightarrow{\texttt{git push}}$ GitHub. \\
+\textbf{Git Branch} & Movable pointer to a commit; \texttt{git switch -c <name>} creates and switches. \\
+\textbf{.gitignore} & Lists files and build outputs that Git should deliberately omit from tracking. \\
+\midrule
+\textbf{Dartmouth (1956)} & Academic birthplace where the term "Artificial Intelligence" was coined. \\
+\textbf{Narrow AI} & All current tools (ChatGPT, Gemini, Siri) designed for specialized task domains. \\
+\textbf{Hallucination} & Generative AI fluently stating plausible-sounding but factually false answers. \\
+\textbf{AI Tools} & Perplexity = web search with citations; NotebookLM = grounded in user's notes. \\
+\textbf{Prompt Anatomy} & Role + Context + Task + Constraints + Output Format. \\
+\bottomrule
+\end{tabularx}
+\end{tcolorbox}
+
+\end{document}

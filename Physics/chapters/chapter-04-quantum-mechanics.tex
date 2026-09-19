@@ -1,0 +1,677 @@
+\chapter{Quantum Mechanics}
+\label{chap:quantum-mechanics}
+
+\section{Chapter Overview \& Learning Objectives}
+Towards the end of the nineteenth century, classical Newtonian mechanics and Maxwellian electrodynamics appeared capable of describing all observable physical phenomena. However,a series of revolutionary experimental discoveries—including blackbody cavity radiation, the photoelectric effect, the Compton effect, and discrete atomic emission spectra—exposed fundamental limitations in the classical continuum framework. Classical physics failed completely because energy exchange at subatomic scales is not continuous, but quantized in discrete packets called \textit{quanta}.
+
+In 1924, Louis de Broglie formulated the profound hypothesis of wave-particle duality, proposing that moving matter possesses intrinsic wave properties. This chapter develops the foundational principles of non-relativistic quantum mechanics. We study the de Broglie hypothesis and its experimental validation by Davisson and Germer, formulate wave packets and distinguish phase velocity from group velocity, examine Heisenberg's Uncertainty Principle, develop the statistical interpretation of the wave function $\Psi(x,t)$, and solve the time-independent Schrödinger wave equation for a particle confined in a one-dimensional infinite potential well.
+
+\begin{important}[Core Learning Objectives]
+Upon mastering the material in this chapter, you should be able to:
+\begin{enumerate}
+    \item Explain the failure of classical physics and state the de Broglie hypothesis for matter waves ($\lambda = h/p$).
+    \item Describe the Davisson-Germer electron diffraction experiment and verify the de Broglie wavelength formula experimentally.
+    \item Distinguish between phase velocity ($v_p = \omega/k$) and group velocity ($v_g = d\omega/dk$) and prove that the group velocity of a de Broglie wave packet equals the classical particle velocity ($v_g = v$).
+    \item State and apply Heisenberg's Uncertainty Principle ($\Delta x \Delta p_x \ge \hbar/2$) and prove the non-existence of electrons inside the atomic nucleus.
+    \item Explain Born's statistical interpretation of the complex wave function $\Psi(x,t)$, state the physical boundary conditions for well-behaved wave functions, and calculate expectation values using quantum operators.
+    \item Derive the 1D Time-Independent Schrödinger Equation (TISE) from the time-dependent wave equation via separation of variables.
+    \item Solve the TISE for a particle confined in a 1D infinite potential well, deriving the quantized energy eigenvalues $E_n = \frac{n^2 h^2}{8mL^2}$ and normalized eigenfunctions $\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)$.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 4.2: DE BROGLIE HYPOTHESIS & MATTER WAVES
+% ==============================================================================
+\section{Wave-Particle Duality \& The de Broglie Hypothesis}
+
+In 1905, Albert Einstein demonstrated that electromagnetic waves exhibit particle-like characteristics (photons of energy $E = h\nu$ and momentum $p = h/\lambda$). In 1924, the French physicist Louis de Broglie proposed a profound symmetry in nature: \textit{if radiation exhibits both wave and particle properties, then material entities (electrons, protons, atoms) must likewise possess intrinsic wave properties}.
+
+\subsection{The de Broglie Wavelength Relations}
+A particle of rest mass $m_0$ moving with non-relativistic velocity $v$ has momentum $p = m v$. According to de Broglie, the wavelength $\lambda$ of the associated matter wave is:
+
+\begin{keyequation}[de Broglie Matter Wavelength]
+\begin{equation}
+    \lambda = \frac{h}{p} = \frac{h}{m v}
+\end{equation}
+where $h = 6.626 \times 10^{-34}\,\si{J\cdot s}$ is Planck's constant.
+\end{keyequation}
+
+\subsubsection{Matter Wavelength in terms of Kinetic Energy (\texorpdfstring{$E_k$}{Ek})}
+For a non-relativistic particle ($v \ll c$), the kinetic energy is $E_k = \frac{1}{2}m v^2 = \frac{p^2}{2m} \implies p = \sqrt{2m E_k}$:
+\begin{equation}
+    \lambda = \frac{h}{\sqrt{2m E_k}}
+\end{equation}
+
+\subsubsection{Wavelength of an Electron Accelerated through Potential \texorpdfstring{$V$}{V}}
+When an electron of charge $e = 1.602 \times 10^{-19}\,\si{C}$ and rest mass $m_e = 9.109 \times 10^{-31}\,\si{kg}$ is accelerated from rest through an electric potential difference $V$ (Volts), its kinetic energy is $E_k = e V$:
+\begin{equation}
+    \lambda_e = \frac{h}{\sqrt{2 m_e e V}} = \frac{6.626 \times 10^{-34}}{\sqrt{2(9.109 \times 10^{-31})(1.602 \times 10^{-19})V}} = \frac{1.227 \times 10^{-9}}{\sqrt{V}}\,\si{m}
+\end{equation}
+
+\begin{keyequation}[Accelerated Electron Wavelength]
+\begin{equation}
+    \lambda_e = \frac{1.227}{\sqrt{V}}\,\si{nm} = \frac{12.27}{\sqrt{V}}\,\si{\text{\AA}}
+\end{equation}
+\end{keyequation}
+For an accelerating potential $V = 54\,\si{V}$:
+\begin{equation}
+    \lambda_e = \frac{1.227}{\sqrt{54}} \approx 0.167\,\si{nm} = 1.67\,\si{\text{\AA}}
+\end{equation}
+This wavelength is comparable to the interatomic lattice spacing in crystals, making electron diffraction experimentally observable.
+
+\subsection{Experimental Verification: The Davisson-Germer Experiment}
+In 1927, Clinton Davisson and Lester Germer experimentally confirmed de Broglie's hypothesis by observing the diffraction of electrons scattered from a single crystal of Nickel ($\text{Ni}$).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Electron gun
+    \draw[thick, fill=boxnavybg] (0,2.5) rectangle (1.5,3.3);
+    \node[font=\scriptsize\bfseries\color{brandnavy}] at (0.75,2.9) {Electron Gun};
+    \draw[->, ultra thick, brandaccent] (1.5,2.9) -- (3.5,2.9) node[midway, above, font=\footnotesize] {$e^-$ Beam ($54\,\si{V}$)};
+    
+    % Target Nickel Crystal
+    \draw[ultra thick, fill=boxslatebg] (3.5,2.0) rectangle (4.2,3.8);
+    \node[right, font=\footnotesize\bfseries\color{brandslate}] at (4.3,3.0) {Nickel Crystal};
+    
+    % Crystal atomic planes
+    \foreach \y in {2.2, 2.5, 2.8, 3.1, 3.4, 3.6} {
+        \draw[dashed, brandnavy] (3.6,\y) -- (4.1,\y);
+    }
+    
+    % Diffracted beam
+    \draw[->, ultra thick, brandblue] (3.8,2.9) -- (1.5,0.7) node[midway, below left, font=\footnotesize] {Diffracted Beam};
+    
+    % Movable detector
+    \draw[thick, fill=boxgoldbg] (1.1,0.3) rectangle (1.7,0.9);
+    \node[below, font=\scriptsize\bfseries\color{branddark}] at (1.4,0.3) {Detector};
+    
+    % Scattering angle theta
+    \draw[dashed] (3.8,2.9) -- (6.0,2.9);
+    \draw[thick] (2.8,2.9) arc (180:220:1.0);
+    \node[left, font=\small\bfseries\color{brandnavy}] at (2.4,2.5) {$\theta = 50^\circ$};
+\end{tikzpicture}
+\caption{Schematic of the Davisson-Germer electron diffraction experiment.}
+\label{fig:davisson-germer}
+\end{figure}
+
+A narrow beam of electrons accelerated by $V = 54\,\si{V}$ was directed normally onto the target surface of a Nickel crystal. A pronounced scattering peak was recorded by the movable ionization chamber at a scattering angle $\theta = 50^\circ$.
+\begin{itemize}
+    \item \textbf{Theoretical de Broglie Wavelength}:
+    \begin{equation}
+        \lambda_{\text{de Broglie}} = \frac{1.227}{\sqrt{54}} = 0.167\,\si{nm}
+    \end{equation}
+    \item \textbf{Experimental Bragg Diffraction Wavelength}:\\
+    From X-ray crystallographic data, the interplanar spacing for Nickel $(111)$ planes is $d = 0.091\,\si{nm}$. The glancing angle $\theta_B$ is:
+    \begin{equation}
+        \theta_B = 90^\circ - \frac{\theta}{2} = 90^\circ - 25^\circ = 65^\circ
+    \end{equation}
+    Applying \textbf{Bragg's Diffraction Law} for first-order constructive interference ($n=1$):
+    \begin{equation}
+        \lambda_{\text{Bragg}} = 2 d \sin\theta_B = 2(0.091\,\si{nm})\sin 65^\circ = 2(0.091)(0.9063) \approx 0.165\,\si{nm}
+    \end{equation}
+\end{itemize}
+The exceptional agreement ($\lambda_{\text{de Broglie}} = 0.167\,\si{nm}$ vs. $\lambda_{\text{Bragg}} = 0.165\,\si{nm}$) provided conclusive, unambiguous empirical verification of matter waves.
+
+% ==============================================================================
+% SECTION 4.3: PHASE VELOCITY & GROUP VELOCITY
+% ==============================================================================
+\section{Phase Velocity vs. Group Velocity}
+
+A pure monochromatic plane wave $\psi(x,t) = A e^{i(k x - \omega t)}$ has an infinite spatial extent ($-\infty < x < \infty$), meaning it is completely delocalized and cannot represent a spatially localized particle. To describe a localized physical particle, we must form a \textbf{wave packet} by superposing a continuum of harmonic waves with slightly different frequencies and wavevectors.
+
+\subsection{Phase Velocity (\texorpdfstring{$v_p$}{vp})}
+The \textbf{phase velocity} $v_p$ is the velocity at which an individual phase front (a point of constant phase $kx - \omega t = \text{const}$) propagates through space:
+
+\begin{keyequation}[Phase Velocity]
+\begin{equation}
+    v_p = \frac{\omega}{k} = \nu \lambda
+\end{equation}
+\end{keyequation}
+For a relativistic particle of total energy $E = \hbar\omega = \gamma m_0 c^2$ and momentum $p = \hbar k = \gamma m_0 v$:
+\begin{equation}
+    v_p = \frac{\hbar\omega}{\hbar k} = \frac{E}{p} = \frac{\gamma m_0 c^2}{\gamma m_0 v} = \frac{c^2}{v}
+\end{equation}
+Since any material particle moves at a sub-luminal speed ($v < c$), its phase velocity $v_p = c^2/v > c$ is \textbf{strictly superluminal}! This does not violate special relativity because a continuous monochromatic phase front carries no localized information or energy.
+
+\subsection{Group Velocity (\texorpdfstring{$v_g$}{vg})}
+The \textbf{group velocity} $v_g$ is the speed at which the overall envelope of the wave packet (which carries the physical particle and its energy) propagates through space:
+
+\begin{keyequation}[Group Velocity]
+\begin{equation}
+    v_g = \frac{d\omega}{dk}
+\end{equation}
+\end{keyequation}
+
+\subsection{Proof: \texorpdfstring{$v_g = v_{\text{particle}}$}{vg = v(particle)}}
+Let a particle have total relativistic energy $E = \hbar\omega$ and momentum $p = \hbar k$:
+\begin{equation}
+    \omega = \frac{E}{\hbar}, \quad k = \frac{p}{\hbar} \implies v_g = \frac{d\omega}{dk} = \frac{dE/\hbar}{dp/\hbar} = \frac{dE}{dp}
+\end{equation}
+From relativistic kinematics, the energy-momentum dispersion relation is:
+\begin{equation}
+    E^2 = p^2 c^2 + m_0^2 c^4
+\end{equation}
+Differentiating both sides with respect to momentum $p$:
+\begin{equation}
+    2E \frac{dE}{dp} = 2p c^2 \implies \frac{dE}{dp} = \frac{p c^2}{E}
+\end{equation}
+Substituting $E = \gamma m_0 c^2$ and $p = \gamma m_0 v$:
+\begin{equation}
+    v_g = \frac{dE}{dp} = \frac{(\gamma m_0 v) c^2}{\gamma m_0 c^2} = v
+\end{equation}
+
+\begin{keyequation}[Identity of Group and Particle Velocity]
+\begin{equation}
+    v_g = v_{\text{particle}}
+\end{equation}
+\end{keyequation}
+Furthermore, multiplying the phase velocity and group velocity expressions yields the fundamental relation:
+\begin{equation}
+    v_p \cdot v_g = \left(\frac{c^2}{v}\right)(v) = c^2
+\end{equation}
+
+% ==============================================================================
+% SECTION 4.4: HEISENBERG UNCERTAINTY PRINCIPLE
+% ==============================================================================
+\section{Heisenberg's Uncertainty Principle}
+
+Formulated in 1927 by Werner Heisenberg, the Uncertainty Principle is a direct mathematical consequence of the wave nature of matter.
+
+\begin{definition}[Heisenberg's Position-Momentum Uncertainty Principle]
+It is physically impossible to measure simultaneously and with arbitrary precision both the exact position $x$ and the exact conjugate linear momentum $p_x$ of a quantum particle. The product of the uncertainties satisfies:
+\begin{equation}
+    \Delta x \cdot \Delta p_x \ge \frac{\hbar}{2}
+\end{equation}
+where $\hbar = \frac{h}{2\pi} \approx 1.05457 \times 10^{-34}\,\si{J\cdot s}$.
+\end{definition}
+
+Similarly, the \textbf{Energy-Time Uncertainty Principle} states:
+\begin{equation}
+    \Delta E \cdot \Delta t \ge \frac{\hbar}{2}
+\end{equation}
+where $\Delta E$ is the uncertainty in the energy state and $\Delta t$ is the characteristic lifetime of the state.
+
+\subsection{Physical Applications of the Uncertainty Principle}
+
+\subsubsection{Proof of the Non-Existence of Electrons inside the Atomic Nucleus}
+An atomic nucleus has a typical radius $R \approx 5 \times 10^{-15}\,\si{m} = 5\,\si{fm}$. If an electron were confined inside the nucleus, the maximum uncertainty in its position would be the nuclear diameter:
+\begin{equation}
+    \Delta x \approx 2R = 1.0 \times 10^{-14}\,\si{m}
+\end{equation}
+According to the uncertainty principle:
+\begin{equation}
+    \Delta p_x \ge \frac{\hbar}{2\Delta x} \approx \frac{1.054 \times 10^{-34}\,\si{J\cdot s}}{2(1.0 \times 10^{-14}\,\si{m})} \approx 5.27 \times 10^{-21}\,\si{kg\cdot m/s}
+\end{equation}
+Since the magnitude of the momentum must be at least of the order of the uncertainty ($p \ge \Delta p_x$):
+\begin{equation}
+    E \approx p c \approx (5.27 \times 10^{-21}\,\si{kg\cdot m/s})(3.0 \times 10^8\,\si{m/s}) = 1.58 \times 10^{-12}\,\si{J} \approx 9.87\,\si{MeV}
+\end{equation}
+Adding the rest mass energy ($0.511\,\si{MeV}$), an electron confined inside a nucleus would require a total energy $> 10\,\si{MeV}$. However, experimental observations of beta ($\beta^-$) decay show that emitted electrons possess kinetic energies of only $1\text{--}3\,\si{MeV}$ (never $\ge 10\,\si{MeV}$). This conclusively proves that \textbf{electrons cannot exist as permanent structural constituents inside the atomic nucleus}; $\beta$-particles are created at the instant of decay via weak nuclear transformation of a neutron ($n \to p + e^- + \bar{\nu}_e$).
+
+% ==============================================================================
+% SECTION 4.5: WAVE FUNCTION & SCHRODINGER EQUATION
+% ==============================================================================
+\section{The Wave Function \& The Schrödinger Wave Equation}
+
+\subsection{Born\'s Statistical Interpretation of \texorpdfstring{$\Psi(x,t)$}{Psi(x,t)}}
+In quantum mechanics, all observable information about a physical system is contained in its complex wave function $\Psi(x,t)$. In 1926, Max Born proposed the statistical interpretation:
+
+\begin{definition}[Born's Probability Density Postulate]
+The quantity $|\Psi(x,t)|^2 = \Psi^*(x,t) \Psi(x,t)$ represents the \textbf{probability density}. The probability $P$ of finding the particle within an infinitesimal volume element $dx$ around position $x$ at time $t$ is:
+\begin{equation}
+    P(x,t)\,dx = |\Psi(x,t)|^2\,dx = \Psi^*(x,t)\Psi(x,t)\,dx
+\end{equation}
+\end{definition}
+
+\subsubsection{Normalization Condition}
+Because the particle must exist somewhere in the universe with certainty ($100\%$ probability), the total integrated probability across all space must equal unity:
+\begin{equation}
+    \int_{-\infty}^{+\infty} |\Psi(x,t)|^2\,dx = 1 \quad (\text{Normalization Condition})
+\end{equation}
+
+\subsubsection{Physical Boundary Conditions for a Well-Behaved Wave Function}
+For $\Psi(x)$ to be physically acceptable, it must satisfy four mathematical requirements:
+\begin{enumerate}
+    \item $\Psi(x)$ must be \textbf{continuous} everywhere.
+    \item $\frac{d\Psi}{dx}$ must be \textbf{continuous} everywhere (except at points where potential $V(x) \to \infty$).
+    \item $\Psi(x)$ must be \textbf{single-valued} at all spatial coordinates.
+    \item $\Psi(x)$ must be \textbf{square-integrable} ($\int |\Psi|^2 dx < \infty$), ensuring $\Psi \to 0$ as $x \to \pm\infty$.
+\end{enumerate}
+
+\subsection{Quantum Operators and Expectation Values}
+Every classical physical observable is mapped to a linear Hermitian operator:
+\begin{itemize}
+    \item Position Operator: $\hat{x} = x$
+    \item Momentum Operator: $\hat{p}_x = -i\hbar \frac{\partial}{\partial x}$
+    \item Total Energy / Hamiltonian Operator: $\hat{H} = -\frac{\hbar^2}{2m}\nabla^2 + V(x)$
+\end{itemize}
+The \textbf{expectation value} $\langle A \rangle$ (average outcome of repeated measurements) of an observable $A$ is:
+\begin{equation}
+    \langle A \rangle = \int_{-\infty}^{+\infty} \Psi^*(x,t) \hat{A} \Psi(x,t)\,dx
+\end{equation}
+
+\subsection{The Time-Independent Schrödinger Equation (TISE)}
+For a particle of mass $m$ moving in a time-independent potential $V(x)$, the full wave function separates into spatial and temporal components:
+\begin{equation}
+    \Psi(x,t) = \psi(x) e^{-i E t / \hbar}
+\end{equation}
+Substituting Equation (4.32) into the 1D Time-Dependent Schrödinger Equation yields the fundamental eigenvalue equation:
+
+\begin{keyequation}[1D Time-Independent Schrödinger Equation (TISE)]
+\begin{equation}
+    -\frac{\hbar^2}{2m}\frac{d^2\psi(x)}{dx^2} + V(x)\psi(x) = E\psi(x)
+\end{equation}
+\end{keyequation}
+where $E$ is the total energy eigenvalue and $\psi(x)$ is the spatial stationary eigenfunction.
+
+% ==============================================================================
+% SECTION 4.6: PARTICLE IN A 1D INFINITE POTENTIAL WELL
+% ==============================================================================
+\section{Particle in a 1D Infinite Potential Well}
+
+Consider a particle of mass $m$ trapped inside a one-dimensional box of width $L$ with impenetrable, infinitely high potential walls:
+\begin{equation}
+    V(x) = \begin{cases} 0, & 0 < x < L \quad (\text{Inside the well}) \\ \infty, & x \le 0 \text{ and } x \ge L \quad (\text{Outside the well}) \end{cases}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05]
+    % Potential walls
+    \draw[ultra thick, fill=brandnavy!20] (-0.6,-0.5) rectangle (0,4.2);
+    \draw[ultra thick, fill=brandnavy!20] (4.0,-0.5) rectangle (4.6,4.2);
+    \node[above, font=\bfseries\color{brandnavy}] at (-0.3,4.2) {$V=\infty$};
+    \node[above, font=\bfseries\color{brandnavy}] at (4.3,4.2) {$V=\infty$};
+    
+    % Axis
+    \draw[thick, ->] (-0.8,0) -- (5.0,0) node[right, font=\small] {$x$};
+    \node[below left, font=\bfseries] at (0,0) {$0$};
+    \node[below right, font=\bfseries] at (4.0,0) {$L$};
+    
+    % Energy levels & wavefunctions
+    % Level n=1
+    \draw[dashed, thick, branddark] (0,0.8) -- (4.0,0.8) node[right, font=\footnotesize] {$E_1$};
+    \draw[ultra thick, brandblue, domain=0:4.0, samples=50] plot (\x, {0.8 + 0.5*sin(\x*180/4.0)});
+    \node[left, font=\footnotesize\bfseries\color{brandblue}] at (0,0.8) {$n=1$};
+    
+    % Level n=2
+    \draw[dashed, thick, branddark] (0,2.0) -- (4.0,2.0) node[right, font=\footnotesize] {$E_2 = 4E_1$};
+    \draw[ultra thick, brandaccent, domain=0:4.0, samples=50] plot (\x, {2.0 + 0.5*sin(\x*360/4.0)});
+    \node[left, font=\footnotesize\bfseries\color{brandaccent}] at (0,2.0) {$n=2$};
+    
+    % Level n=3
+    \draw[dashed, thick, branddark] (0,3.4) -- (4.0,3.4) node[right, font=\footnotesize] {$E_3 = 9E_1$};
+    \draw[ultra thick, brandnavy, domain=0:4.0, samples=70] plot (\x, {3.4 + 0.45*sin(\x*540/4.0)});
+    \node[left, font=\footnotesize\bfseries\color{brandnavy}] at (0,3.4) {$n=3$};
+\end{tikzpicture}
+\caption{Quantized energy levels and stationary wavefunctions $\psi_n(x)$ for a particle in a 1D infinite square well.}
+\label{fig:infinite-well-levels}
+\end{figure}
+
+\subsection{Mathematical Solution of the Boundary Value Problem}
+Since $V(x) = \infty$ outside the well, the particle cannot penetrate the barriers:
+\begin{equation}
+    \psi(x) = 0 \quad \text{for } x \le 0 \text{ and } x \ge L
+\end{equation}
+Inside the well ($0 < x < L$), $V(x) = 0$, so the TISE (Equation 4.33) becomes:
+\begin{equation}
+    -\frac{\hbar^2}{2m}\frac{d^2\psi(x)}{dx^2} = E\psi(x) \implies \frac{d^2\psi(x)}{dx^2} + k^2\psi(x) = 0
+\end{equation}
+where $k^2 = \frac{2mE}{\hbar^2}$. The general solution to this second-order linear differential equation is:
+\begin{equation}
+    \psi(x) = A\sin(kx) + B\cos(kx)
+\end{equation}
+
+\subsubsection{Applying Boundary Conditions}
+\begin{enumerate}
+    \item \textbf{At $x = 0$}: Continuity requires $\psi(0) = 0$:
+    \begin{equation}
+        \psi(0) = A\sin(0) + B\cos(0) = 0 \implies B = 0
+    \end{equation}
+    Thus, the solution reduces to $\psi(x) = A\sin(kx)$.
+    
+    \item \textbf{At $x = L$}: Continuity requires $\psi(L) = 0$:
+    \begin{equation}
+        \psi(L) = A\sin(kL) = 0
+    \end{equation}
+    Since $A \neq 0$ (otherwise the wave function would be trivially zero everywhere), we must have:
+    \begin{equation}
+        \sin(kL) = 0 \implies kL = n\pi \implies k = \frac{n\pi}{L}, \quad n = 1, 2, 3, \dots
+    \end{equation}
+    (Note: $n=0$ is discarded because it gives $\psi(x)=0$ everywhere, violating normalization).
+\end{enumerate}
+
+\subsection{Energy Eigenvalues (\texorpdfstring{$E_n$}{En})}
+Substituting $k = \frac{n\pi}{L}$ into $k^2 = \frac{2mE}{\hbar^2}$:
+\begin{equation}
+    \frac{2mE_n}{\hbar^2} = \left(\frac{n\pi}{L}\right)^2 = \frac{n^2\pi^2}{L^2} \implies E_n = \frac{n^2\pi^2\hbar^2}{2m L^2}
+\end{equation}
+Using $\hbar = h / (2\pi)$:
+
+\begin{keyequation}[Quantized Energy Levels of 1D Infinite Well]
+\begin{equation}
+    E_n = \frac{n^2 h^2}{8m L^2}, \quad n = 1, 2, 3, \dots
+\end{equation}
+\end{keyequation}
+
+\subsubsection{Key Physical Consequences}
+\begin{enumerate}
+    \item \textbf{Energy Quantization}: Energy is not continuous; only discrete energy eigenvalues ($E_1, 4E_1, 9E_1, \dots$) are allowed.
+    \item \textbf{Zero-Point Energy}: The lowest possible energy state ($n=1$, ground state) is:
+    \begin{equation}
+        E_1 = \frac{h^2}{8m L^2} > 0
+    \end{equation}
+    A quantum particle can \textbf{never be at absolute rest} inside a confined space ($E=0$ is forbidden), which directly satisfies Heisenberg's uncertainty principle ($\Delta p_x \ge \hbar/(2L) > 0$).
+\end{enumerate}
+
+\subsection{Normalization of Eigenfunctions}
+To determine the normalization constant $A$:
+\begin{equation}
+    \int_0^L |\psi_n(x)|^2\,dx = 1 \implies A^2 \int_0^L \sin^2\left(\frac{n\pi x}{L}\right)dx = 1
+\end{equation}
+Using the trigonometric identity $\sin^2\theta = \frac{1 - \cos(2\theta)}{2}$:
+\begin{equation}
+    A^2 \left[ \frac{x}{2} - \frac{\sin\left(\frac{2n\pi x}{L}\right)}{\frac{4n\pi}{L}} \right]_0^L = A^2\left(\frac{L}{2}\right) = 1 \implies A = \sqrt{\frac{2}{L}}
+\end{equation}
+
+\begin{keyequation}[Normalized Eigenfunctions]
+\begin{equation}
+    \psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right) \quad \text{for } 0 \le x \le L
+\end{equation}
+\end{keyequation}
+
+% ==============================================================================
+% SECTION 4.7: QUICK REVISION
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Quantum Mechanics Formula Cheat Sheet]
+\begin{itemize}
+    \item \textbf{de Broglie Wavelength}: $\lambda = \frac{h}{p} = \frac{h}{\sqrt{2m E_k}}$
+    \item \textbf{Accelerated Electron Wavelength}: $\lambda_e = \frac{1.227}{\sqrt{V}}\,\si{nm} = \frac{12.27}{\sqrt{V}}\,\si{\text{\AA}}$
+    \item \textbf{Phase Velocity}: $v_p = \frac{\omega}{k} = \frac{c^2}{v}$
+    \item \textbf{Group Velocity}: $v_g = \frac{d\omega}{dk} = v_{\text{particle}}, \quad v_p \cdot v_g = c^2$
+    \item \textbf{Heisenberg Uncertainty}: $\Delta x \cdot \Delta p_x \ge \frac{\hbar}{2}, \quad \Delta E \cdot \Delta t \ge \frac{\hbar}{2}$
+    \item \textbf{Born Normalization}: $\int_{-\infty}^{+\infty} |\Psi(x,t)|^2\,dx = 1$
+    \item \textbf{Expectation Value}: $\langle A \rangle = \int \Psi^* \hat{A} \Psi\,dx$
+    \item \textbf{1D Infinite Well Energy}: $E_n = \frac{n^2 h^2}{8mL^2} = n^2 E_1$
+    \item \textbf{1D Normalized Eigenfunction}: $\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)$
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 4.8: WORKED NUMERICAL EXAMPLES
+% ==============================================================================
+\section{Worked Numerical Examples}
+
+\begin{example}[de Broglie Wavelength across Microscopic and Macroscopic Domains]
+Calculate the de Broglie wavelength for:
+\begin{enumerate}
+    \item An electron accelerated through an electric potential difference $V = 100\,\si{V}$.
+    \item A macroscopic cricket ball of mass $m = 0.15\,\si{kg}$ thrown at a speed $v = 30\,\si{m/s}$.
+    \item A thermal neutron at room temperature ($T = 300\,\si{K}$, mass $m_n = 1.675 \times 10^{-27}\,\si{kg}$, average kinetic energy $E_k = \frac{3}{2}k_B T$).
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Accelerated Electron ($V = 100\,\si{V}$)}:
+    \begin{equation*}
+        \lambda_e = \frac{1.227}{\sqrt{100}}\,\si{nm} = \frac{1.227}{10} = 0.1227\,\si{nm} = 1.227\,\si{\text{\AA}}
+    \end{equation*}
+    
+    \item \textbf{Macroscopic Cricket Ball}:
+    \begin{equation*}
+        \lambda = \frac{h}{m v} = \frac{6.626 \times 10^{-34}\,\si{J\cdot s}}{(0.15\,\si{kg})(30\,\si{m/s})} = \frac{6.626 \times 10^{-34}}{4.5} \approx 1.47 \times 10^{-34}\,\si{m}
+    \end{equation*}
+    This wavelength is $\sim 10^{-19}$ times smaller than an atomic nucleus, explaining why quantum wave phenomena are completely imperceptible in daily macroscopic life.
+    
+    \item \textbf{Thermal Neutron at $300\,\si{K}$}:
+    \begin{align*}
+        E_k &= \frac{3}{2}k_B T = 1.5(1.381 \times 10^{-23}\,\si{J/K})(300\,\si{K}) = 6.215 \times 10^{-21}\,\si{J} \\
+        \lambda_n &= \frac{h}{\sqrt{2m_n E_k}} = \frac{6.626 \times 10^{-34}}{\sqrt{2(1.675 \times 10^{-27})(6.215 \times 10^{-21})}} \\
+        &= \frac{6.626 \times 10^{-34}}{\sqrt{2.082 \times 10^{-47}}} = \frac{6.626 \times 10^{-34}}{4.563 \times 10^{-24}} \approx 1.45 \times 10^{-10}\,\si{m} = 1.45\,\si{\text{\AA}}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Heisenberg Uncertainty Principle in Atomic Confinement]
+An electron is trapped inside a one-dimensional atomic region of width $\Delta x = 1.0 \times 10^{-10}\,\si{m} = 1.0\,\si{\text{\AA}}$ (typical atomic diameter).
+\begin{enumerate}
+    \item Calculate the minimum uncertainty in the electron's momentum $\Delta p_x$.
+    \item Calculate the minimum kinetic energy of the electron in Joules and Electron-volts ($\si{eV}$).
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Uncertainty in Momentum}:
+    \begin{equation*}
+        \Delta p_x \ge \frac{\hbar}{2\Delta x} = \frac{1.05457 \times 10^{-34}\,\si{J\cdot s}}{2(1.0 \times 10^{-10}\,\si{m})} \approx 5.273 \times 10^{-25}\,\si{kg\cdot m/s}
+    \end{equation*}
+    
+    \item \textbf{Minimum Kinetic Energy}:\\
+    Taking $p \approx \Delta p_x$:
+    \begin{align*}
+        E_{\text{min}} &= \frac{p^2}{2 m_e} = \frac{(5.273 \times 10^{-25}\,\si{kg\cdot m/s})^2}{2(9.109 \times 10^{-31}\,\si{kg})} = \frac{2.780 \times 10^{-49}}{1.8218 \times 10^{-30}} \\
+        &= 1.526 \times 10^{-19}\,\si{J} = \frac{1.526 \times 10^{-19}}{1.602 \times 10^{-19}}\,\si{eV} \approx 0.953\,\si{eV} \approx 1\,\si{eV}
+    \end{align*}
+    This matches the typical order of magnitude of atomic electronic binding energies.
+\end{enumerate}
+\end{example}
+
+\begin{example}[Energy Eigenvalues and Transition Photons in a 1D Well]
+An electron is confined in a 1D infinite square well of width $L = 0.20\,\si{nm} = 2.0 \times 10^{-10}\,\si{m}$.
+\begin{enumerate}
+    \item Calculate the first three energy eigenvalues $E_1, E_2,$ and $E_3$ in $\si{eV}$.
+    \item Calculate the wavelength of the photon emitted when the electron transitions from $n=3$ to $n=1$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Energy Eigenvalues}:
+    \begin{align*}
+        E_1 &= \frac{h^2}{8 m_e L^2} = \frac{(6.626 \times 10^{-34}\,\si{J\cdot s})^2}{8(9.109 \times 10^{-31}\,\si{kg})(2.0 \times 10^{-10}\,\si{m})^2} \\
+        &= \frac{4.390 \times 10^{-67}}{2.915 \times 10^{-49}} = 1.506 \times 10^{-18}\,\si{J} = \frac{1.506 \times 10^{-18}}{1.602 \times 10^{-19}}\,\si{eV} \approx 9.40\,\si{eV}
+    \end{align*}
+    \begin{equation*}
+        E_2 = 2^2 E_1 = 4(9.40\,\si{eV}) = 37.60\,\si{eV}, \quad E_3 = 3^2 E_1 = 9(9.40\,\si{eV}) = 84.60\,\si{eV}
+    \end{equation*}
+    
+    \item \textbf{Transition Photon Wavelength ($n=3 \to n=1$)}:
+    \begin{equation*}
+        \Delta E = E_3 - E_1 = 84.60\,\si{eV} - 9.40\,\si{eV} = 75.20\,\si{eV} = 1.205 \times 10^{-17}\,\si{J}
+    \end{equation*}
+    \begin{equation*}
+        \lambda = \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34})(3.0 \times 10^8)}{1.205 \times 10^{-17}\,\si{J}} \approx 1.650 \times 10^{-8}\,\si{m} = 16.50\,\si{nm} \quad (\text{Extreme UV})
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Spatial Probability Calculation in a 1D Box]
+A particle is in the ground state ($n=1$) of a 1D box of width $L$ ($0 \le x \le L$). Find the probability of finding the particle within the first third of the box, i.e., in the interval $0 \le x \le L/3$.
+
+\textbf{Solution:}
+The ground state normalized wave function is $\psi_1(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)$.
+\begin{align*}
+    P\left(0 \le x \le \frac{L}{3}\right) &= \int_0^{L/3} |\psi_1(x)|^2\,dx = \frac{2}{L}\int_0^{L/3} \sin^2\left(\frac{\pi x}{L}\right)dx \\
+    &= \frac{2}{L}\int_0^{L/3} \frac{1 - \cos\left(\frac{2\pi x}{L}\right)}{2}dx = \frac{1}{L}\left[ x - \frac{L}{2\pi}\sin\left(\frac{2\pi x}{L}\right) \right]_0^{L/3} \\
+    &= \frac{1}{L}\left[ \frac{L}{3} - \frac{L}{2\pi}\sin\left(\frac{2\pi}{3}\right) \right] = \frac{1}{3} - \frac{1}{2\pi}\left(\frac{\sqrt{3}}{2}\right) \\
+    &= \frac{1}{3} - \frac{\sqrt{3}}{4\pi} \approx 0.3333 - \frac{1.732}{12.566} = 0.3333 - 0.1378 \approx 0.1955 \quad (19.55\%)
+\end{align*}
+(Notice that classically the probability would be exactly $1/3 \approx 33.33\%$. The quantum probability is lower because $\psi_1(x)$ builds up towards the center antinode at $x = L/2$).
+\end{example}
+
+% ==============================================================================
+% SECTION 4.9: EXAM TIPS & COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Quantum Numbers in Infinite Well]
+Remember that for an infinite square well, $n = 1, 2, 3, \dots$. \textbf{$n=0$ is strictly forbidden} because it produces $\psi_0(x) \equiv 0$ everywhere, which cannot be normalized.
+\end{examtip}
+
+\begin{commonmistake}[Confusing de Broglie Formula with Relativistic Expressions]
+For low-energy electrons ($V < 1000\,\si{V}$), always use the non-relativistic formula $\lambda = \frac{1.227}{\sqrt{V}}\,\si{nm}$. Only for high accelerating voltages ($V > 50\,\si{kV}$) is relativistic mass correction required.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 4.10: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual \& Numerical Practice Problems]
+\textbf{A. Conceptual Review Questions}
+\begin{enumerate}
+    \item State de Broglie's matter wave hypothesis. How was it experimentally confirmed by Davisson and Germer?
+    \item Define phase velocity and group velocity. Prove that $v_g = v_{\text{particle}}$ and $v_p v_g = c^2$.
+    \item State Heisenberg's Uncertainty Principle. Using it, prove that electrons cannot exist inside the nucleus.
+    \item State the physical requirements for a wave function $\psi(x)$ to be acceptable.
+    \item Explain the physical significance of Zero-Point Energy in a quantum potential well.
+\end{enumerate}
+
+\textbf{B. Numerical Exercises}
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item Find the de Broglie wavelength of an electron having kinetic energy $E_k = 500\,\si{eV}$. \hfill [\textbf{Ans:} $0.0549\,\si{nm} = 0.549\,\si{\text{\AA}}$]
+    \item The position of a $0.01\,\si{kg}$ bullet is measured with an accuracy of $\Delta x = 10^{-5}\,\si{m}$. Calculate the minimum uncertainty in its velocity. \hfill [\textbf{Ans:} $5.27 \times 10^{-28}\,\si{m/s}$]
+    \item An electron is trapped in a 1D box of width $L = 1.0\,\si{\text{\AA}}$. Find the ground state energy in $\si{eV}$. \hfill [\textbf{Ans:} $37.6\,\si{eV}$]
+    \item Calculate the expectation value $\langle x \rangle$ for a particle in the ground state of a 1D box of width $L$. \hfill [\textbf{Ans:} $L/2$]
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 4.11: MCQS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}
+    \item The de Broglie wavelength associated with a particle of mass $m$ and kinetic energy $E_k$ is:
+    \begin{enumerate}
+        \item $\lambda = \frac{h}{2m E_k}$
+        \item $\lambda = \frac{h}{\sqrt{2m E_k}}$
+        \item $\lambda = \frac{\sqrt{2m E_k}}{h}$
+        \item $\lambda = \frac{h^2}{2m E_k}$
+    \end{enumerate}
+    
+    \item The Davisson-Germer experiment proved:
+    \begin{enumerate}
+        \item Wave nature of light
+        \item Wave nature of electrons (matter waves)
+        \item Particle nature of X-rays
+        \item Quantization of atomic charge
+    \end{enumerate}
+    
+    \item The group velocity $v_g$ of a de Broglie wave packet is:
+    \begin{enumerate}
+        \item Equal to the phase velocity $v_p$
+        \item Equal to the classical particle velocity $v$
+        \item Always greater than the speed of light $c$
+        \item Zero
+    \end{enumerate}
+    
+    \item According to Born's interpretation, $|\Psi(x,t)|^2$ represents:
+    \begin{enumerate}
+        \item Particle energy density
+        \item Particle momentum density
+        \item Probability density of finding the particle
+        \item Electric charge
+    \end{enumerate}
+    
+    \item The ground-state energy of a particle of mass $m$ in a 1D box of width $L$ is:
+    \begin{enumerate}
+        \item Zero
+        \item $\frac{h^2}{8mL^2}$
+        \item $\frac{h^2}{4mL^2}$
+        \item $\frac{h^2}{2mL^2}$
+    \end{enumerate}
+    
+    \item In a 1D infinite square well, the number of nodes in the eigenfunction $\psi_n(x)$ (excluding the boundaries) is:
+    \begin{enumerate}
+        \item $n$
+        \item $n-1$
+        \item $n+1$
+        \item $2n$
+    \end{enumerate}
+    
+    \item The product of phase velocity $v_p$ and group velocity $v_g$ for a relativistic matter wave is:
+    \begin{enumerate}
+        \item $c$
+        \item $c^2$
+        \item $v^2$
+        \item $1$
+    \end{enumerate}
+    
+    \item If the width of a 1D potential well is halved ($L \to L/2$), its ground-state energy:
+    \begin{enumerate}
+        \item Doubles
+        \item Quadruples
+        \item Is halved
+        \item Remains unchanged
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[Answer Key to Chapter 4 MCQs]
+\textbf{1.} (b) $\lambda = h/\sqrt{2m E_k}$ \quad \textbar\quad
+\textbf{2.} (b) Wave nature of electrons \quad \textbar\quad
+\textbf{3.} (b) Equal to classical particle velocity $v$ \\
+\textbf{4.} (c) Probability density \quad \textbar\quad
+\textbf{5.} (b) $h^2 / (8mL^2)$ \quad \textbar\quad
+\textbf{6.} (b) $n-1$ \quad \textbar\quad
+\textbf{7.} (b) $c^2$ \quad \textbar\quad
+\textbf{8.} (b) Quadruples ($E \propto 1/L^2$)
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.12: CHAPTER TEST
+% ==============================================================================
+\section{Self-Assessment Chapter Test}
+
+\begin{chaptertest}[Comprehensive Chapter 4 Test (Time: 45 Minutes \textbullet\ Max Marks: 25)]
+\begin{enumerate}
+    \item \textbf{[6 Marks] Derivations}:
+    \begin{enumerate}
+        \item Derive the de Broglie wavelength expression for an electron accelerated through potential $V$, showing $\lambda = \frac{1.227}{\sqrt{V}}\,\si{nm}$.
+        \item Prove that the group velocity of a de Broglie wave packet equals the classical particle velocity ($v_g = v$).
+    \end{enumerate}
+    
+    \item \textbf{[7 Marks] Infinite Potential Well}:
+    \begin{enumerate}
+        \item Set up the TISE for a particle in a 1D infinite well ($0 < x < L$) and derive the quantized energy eigenvalues $E_n = \frac{n^2 h^2}{8mL^2}$.
+        \item Normalize the eigenfunction and show that $A = \sqrt{2/L}$.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Uncertainty Principle}:
+    \begin{enumerate}
+        \item State Heisenberg's Uncertainty Principle for position-momentum and energy-time.
+        \item Use the uncertainty principle to prove that electrons cannot reside inside the nucleus.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Probability \& Expectation Values}:
+    An electron is in the first excited state ($n=2$) of a 1D box of length $L$.
+    \begin{enumerate}
+        \item Sketch the wave function $\psi_2(x)$ and probability density $|\psi_2(x)|^2$.
+        \item Calculate the probability of finding the electron in the region $0 \le x \le L/2$.
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Detailed Solutions to Chapter Test]
+\textbf{Solution 1:}\\
+(a) $E_k = eV = p^2/(2m) \implies p = \sqrt{2me V}$. $\lambda = h/p = h/\sqrt{2me V}$. Substituting $h = 6.626 \times 10^{-34}$, $m_e = 9.109 \times 10^{-31}$, $e = 1.602 \times 10^{-19}$ gives $\lambda = \frac{1.227 \times 10^{-9}}{\sqrt{V}}\,\si{m} = \frac{1.227}{\sqrt{V}}\,\si{nm}$.\\
+(b) $v_g = d\omega/dk = dE/dp$. Relativistic $E^2 = p^2 c^2 + m_0^2 c^4 \implies 2E dE/dp = 2p c^2 \implies dE/dp = p c^2 / E = (\gamma m_0 v c^2)/(\gamma m_0 c^2) = v$.
+
+\vspace{0.3cm}
+\textbf{Solution 2:}\\
+(a) Inside well ($0 < x < L$), $V=0$: $\frac{d^2\psi}{dx^2} + k^2\psi = 0$ with $k^2 = 2mE/\hbar^2$. Solution: $\psi(x) = A\sin(kx) + B\cos(kx)$. Boundary condition $\psi(0)=0 \implies B=0$. $\psi(L)=0 \implies \sin(kL)=0 \implies kL = n\pi \implies k = n\pi/L$. Energy $E_n = \frac{\hbar^2 k^2}{2m} = \frac{\hbar^2 n^2\pi^2}{2mL^2} = \frac{n^2 h^2}{8mL^2}$.\\
+(b) Normalization: $\int_0^L A^2 \sin^2\left(\frac{n\pi x}{L}\right)dx = A^2\left(\frac{L}{2}\right) = 1 \implies A = \sqrt{\frac{2}{L}}$.
+
+\vspace{0.3cm}
+\textbf{Solution 3:}\\
+(a) $\Delta x \Delta p_x \ge \hbar/2, \quad \Delta E \Delta t \ge \hbar/2$.\\
+(b) For nuclear confinement, $\Delta x \approx 10^{-14}\,\si{m} \implies \Delta p \ge \hbar/(2\Delta x) \approx 5.27 \times 10^{-21}\,\si{kg\cdot m/s}$. The required relativistic energy $E \approx p c \approx 9.9\,\si{MeV}$. Beta decay electrons have energies of only $1\text{--}3\,\si{MeV}$, proving electrons cannot pre-exist in the nucleus.
+
+\vspace{0.3cm}
+\textbf{Solution 4:}\\
+(a) $\psi_2(x) = \sqrt{2/L}\sin(2\pi x/L)$ has a node at $x = L/2$ and two antinodes at $x = L/4, 3L/4$. $|\psi_2(x)|^2$ is symmetric about $x = L/2$.\\
+(b) $P(0 \le x \le L/2) = \int_0^{L/2} \frac{2}{L}\sin^2\left(\frac{2\pi x}{L}\right)dx = \frac{1}{L}\left[ x - \frac{L}{4\pi}\sin\left(\frac{4\pi x}{L}\right) \right]_0^{L/2} = \frac{1}{L}\left(\frac{L}{2} - 0\right) = \frac{1}{2} = 50\%$.
+\end{solutionbox}

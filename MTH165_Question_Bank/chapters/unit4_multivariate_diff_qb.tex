@@ -1,0 +1,65 @@
+\chapter{Unit 4: Multivariate Differentiation}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{4.1}
+If $u = \tan^{-1}\left(\frac{x^3 + y^3}{x - y}\right)$, prove that $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \sin 2u$.
+\end{subjectiveq}
+
+\begin{solbox}
+Let $z = \tan u = \frac{x^3 + y^3}{x - y}$.
+$z(tx, ty) = \frac{t^3(x^3+y^3)}{t(x-y)} = t^2 z(x,y)$, so $z$ is homogeneous of degree $n = 2$.
+By Euler's Theorem on $z$:
+\begin{equation}
+x \frac{\partial z}{\partial x} + y \frac{\partial z}{\partial y} = 2 z
+\end{equation}
+Since $z = \tan u$, we have $\frac{\partial z}{\partial x} = \sec^2 u \frac{\partial u}{\partial x}$ and $\frac{\partial z}{\partial y} = \sec^2 u \frac{\partial u}{\partial y}$.
+Substituting:
+\begin{equation}
+\sec^2 u \left( x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} \right) = 2 \tan u
+\end{equation}
+Dividing by $\sec^2 u$:
+\begin{equation}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \frac{2\tan u}{\sec^2 u} = 2\sin u \cos u = \sin 2u
+\end{equation}
+\end{solbox}
+
+\begin{subjectiveq}{4.2}
+Find the local maxima, local minima, and saddle points of $f(x,y) = x^3 + y^3 - 3axy$.
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Critical Points}:
+$f_x = 3x^2 - 3ay = 0 \implies y = \frac{x^2}{a}$.
+$f_y = 3y^2 - 3ax = 0 \implies 3\left(\frac{x^4}{a^2}\right) - 3ax = 0 \implies x(x^3 - a^3) = 0$.
+So $x = 0$ or $x = a$.
+The critical points are $(0, 0)$ and $(a, a)$.
+
+2. \textbf{Hessian Discriminant}:
+$r = f_{xx} = 6x$, $s = f_{xy} = -3a$, $t = f_{yy} = 6y$.
+$D = rt - s^2 = (6x)(6y) - (-3a)^2 = 36xy - 9a^2$.
+\begin{itemize}
+    \item At $(0, 0)$: $D = 0 - 9a^2 = -9a^2 < 0 \implies \mathbf{(0,0)}$ \textbf{is a Saddle Point}.
+    \item At $(a, a)$ (for $a > 0$): $D = 36a^2 - 9a^2 = 27a^2 > 0$ and $r = 6a > 0 \implies \mathbf{(a,a)}$ \textbf{is a Local Minimum} with $f(a,a) = -a^3$.
+\end{itemize}
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+\mcqitem{1}{If $u = f(x, y)$ is homogeneous of degree $n$, then $x u_x + y u_y$ equals:}{$n u$}{$n(n-1)u$}{$u/n$}{$0$}
+\mcqitem{2}{At a critical point, if $D = f_{xx}f_{yy} - f_{xy}^2 < 0$, the point is a:}{Local Maximum}{Local Minimum}{Saddle Point}{Inconclusive}
+\mcqitem{3}{The total differential $dz$ of $z = x^2 y$ is:}{$2xy\,dx + x^2\,dy$}{$x^2\,dx + 2xy\,dy$}{$2x\,dx + dy$}{$x^2 y\,dx$}
+
+\section{Section 3: Answer Key \& Technical Rationales}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 4: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(a)} & Direct statement of Euler's theorem for degree $n$ & 3 & \textbf{(a)} & $dz = z_x dx + z_y dy = 2xy dx + x^2 dy$ \\
+2 & \textbf{(c)} & Negative Hessian discriminant defines a saddle point & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}

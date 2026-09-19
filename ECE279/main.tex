@@ -1,0 +1,83 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Basic Electrical \& Electronics Engineering}
+\author{LPU Engineering Open}
+\date{Practical Companion \& Viva Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+\chapter*{Preface \& Practical Syllabus Correlation}
+\addcontentsline{toc}{chapter}{Preface \& Practical Syllabus Correlation}
+
+\noindent This textbook and laboratory companion has been engineered from the ground up to serve as the definitive, university-level practical guide for \textbf{ECE279: Basic Electrical and Electronics Engineering Laboratory}. 
+
+\section*{Course Architectural Philosophy}
+Laboratory practice in electrical engineering and digital logic forms the physical bridge connecting abstract theoretical principles with real-world circuit implementation. Mastery of ECE279 requires an integrated understanding of:
+\begin{enumerate}
+    \item \textbf{Instrumentation \& Measurement Techniques:} Operating Digital Multimeters (DMM), Cathode Ray Oscilloscopes (CRO/DSO), Regulated DC Power Supplies (RPS), and Function Generators.
+    \item \textbf{DC Circuit Analysis \& Conservation Laws:} Verifying Kirchhoff's Voltage Law (KVL) across multi-mesh resistive networks with rigorous sign convention tracking.
+    \item \textbf{Semiconductor Junction Dynamics:} Characterizing $P$-$N$ junction diodes under forward and reverse bias, determining barrier knee potential, and calculating static ($R_{dc}$) and dynamic ($r_{ac}$) resistances.
+    \item \textbf{Universal Digital Synthesis:} Constructing basic logic gates (NOT, AND, OR) exclusively from universal TTL gates (NAND IC 7400 and NOR IC 7402).
+    \item \textbf{Combinational Arithmetic Circuits:} Synthesizing Half Adders and Full Adders using XOR, AND, and OR gates, deriving minterm expressions, and verifying 8-input truth tables.
+    \item \textbf{Sequential Logic \& Bistable Storage:} Constructing level-triggered JK Flip-Flops using discrete 2-input and 3-input NAND gates, evaluating hold/set/reset/toggle states, and identifying Race-Around conditions.
+\end{enumerate}
+
+\section*{Practical Syllabus Mapping Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lp{5.2cm}p{2.2cm}X}
+\toprule
+\textbf{Exp.} & \textbf{Core Practical Subject} & \textbf{Chapter} & \textbf{Key Highlights} \\
+\midrule
+\textbf{Exp. 1} & The Electronics Expedition & Chapter 1 & Active/Passive components, Resistor Color Coding, Breadboards, DMM, CRO/DSO. \\
+\addlinespace
+\textbf{Exp. 2} & KVL Voltage Hunt & Chapter 2 & KVL Verification, T-Network Mesh Analysis, Voltage Drops/Rises, Error Calculations. \\
+\addlinespace
+\textbf{Exp. 3} & Diode Voltage Quest & Chapter 3 & 1N4007 Diode V-I Characteristics, Knee Voltage ($0.7\text{V}$), Static $R_{dc}$ \& Dynamic $r_{ac}$. \\
+\addlinespace
+\textbf{Exp. 4} & Universal Gate Adventure & Chapter 4 & IC 7400 NAND \& IC 7402 NOR Universality, De Morgan's Realizations, Pin Mapping. \\
+\addlinespace
+\textbf{Exp. 5} & Adder Chronicles & Chapter 5 & Half Adder (7486, 7408) \& Full Adder (2 HAs + OR 7432), Sum/Carry Minterms. \\
+\addlinespace
+\textbf{Exp. 6} & Flip-Flop Warriors: NAND Edition & Chapter 6 & JK Flip-Flop (7400, 7410), Latch + Steering Logic, Toggle State, Race-Around. \\
+\addlinespace
+\textbf{Exp. 7} & Master Viva \& Revision Guide & Chapter 7 & Source Truncation Notice, 40+ Question Master Viva Voce Bank, Exam Strategy. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+
+% ==============================================================================
+% TABLE OF CONTENTS
+% ==============================================================================
+\tableofcontents
+\cleardoublepage
+
+% ==============================================================================
+% MAINMATTER
+% ==============================================================================
+\mainmatter
+
+\include{chapters/chapter-01-electronics-expedition}
+\include{chapters/chapter-02-kvl-voltage-hunt}
+\include{chapters/chapter-03-diode-voltage-quest}
+\include{chapters/chapter-04-universal-gate-adventure}
+\include{chapters/chapter-05-adder-chronicles}
+\include{chapters/chapter-06-flip-flop-warriors}
+\include{chapters/chapter-07-master-viva-and-revision-guide}
+
+\end{document}

@@ -1,0 +1,113 @@
+\section{Continuous Assessment 1 --- Set A}
+\label{sec:ca1_set_a}
+
+\LPUCSHeader{Continuous Assessment 1 (Objective MCQ)}{A}{50 Minutes}{30 Marks}{CO1 \& CO2 (Unit 1: Computer System \& Unit 2: Operating System)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{The fundamental distinction between the von Neumann and Harvard computer architectures is that the Harvard architecture:}{Maintains physically separate memory and buses for instructions and data}{Combines data and instructions into a single unified memory space}{Does not require an Arithmetic Logic Unit (ALU)}{Eliminates the need for a system clock}{1}
+
+\mcqitem{2}{The central processor register that holds the memory address of the next machine instruction to be fetched and executed is the:}{Program Counter (PC)}{Memory Data Register (MDR)}{Instruction Register (IR)}{Accumulator (AC)}{1}
+
+\mcqitem{3}{Cache memory delivers high-speed data access by exploiting which two foundational properties of program execution?}{Spatial Locality and Temporal Locality}{Static Randomness and Branch Prediction}{Clock Multiplication and Direct Memory Access}{Paging and Swapping}{1}
+
+\mcqitem{4}{Dynamic RAM (DRAM) differs from Static RAM (SRAM) because DRAM cells:}{Store charge on microscopic capacitors and require periodic refresh cycles}{Use bistable latching flip-flops with 6 transistors}{Operate at higher clock frequencies than SRAM}{Are completely non-volatile when powered down}{1}
+
+\mcqitem{5}{A microprocessor equipped with a 32-bit address bus can directly address a maximum physical memory address space of:}{$4\text{ GB}$ ($2^{32}\text{ bytes}$)}{$2\text{ GB}$}{$64\text{ GB}$}{$16\text{ MB}$}{1}
+
+\mcqitem{6}{Which storage bus interface communicates directly with the CPU across PCIe lanes to achieve theoretical read throughput exceeding $7000\text{ MB/s}$?}{NVMe (Non-Volatile Memory Express)}{SATA III}{PATA / IDE}{SCSI}{1}
+
+\mcqitem{7}{What is the minimum number of physical storage drives required to deploy a functional RAID 5 array with distributed parity?}{3 drives}{2 drives}{4 drives}{1 drive}{1}
+
+\mcqitem{8}{In modern computer architectures, a Graphic Processing Unit (GPU) differs fundamentally from a Central Processing Unit (CPU) because GPUs:}{Feature thousands of smaller cores designed for massively parallel SIMD matrix operations}{Possess larger L3 caches and complex branch predictors for single-thread speed}{Do not use electrical semiconductors}{Only execute sequential non-parallel algorithms}{1}
+
+\mcqitem{9}{Which non-volatile memory technology allows individual bytes to be erased and reprogrammed electrically without ultraviolet light exposure?}{EEPROM}{PROM}{UV-EPROM}{Mask ROM}{1}
+
+\mcqitem{10}{RAID 0 provides high input/output throughput by striping data across multiple drives, but its primary vulnerability is:}{Zero fault tolerance; the failure of any single drive destroys all array data}{Halving the usable disk capacity due to mirroring}{Excessive parity computation overhead on writes}{Incompatibility with modern solid-state drives}{1}
+
+\mcqitem{11}{The total latency incurred when reading data from a mechanical Hard Disk Drive (HDD) is dominated by:}{Seek time (head positioning) and rotational latency (platter spin)}{Bus clock jitter}{DRAM refresh cycles}{Transistor switching threshold delay}{1}
+
+\mcqitem{12}{Thunderbolt 4 and USB4 interfaces operate over the universal USB-C physical connector at maximum bidirectional speeds up to:}{$40\text{ Gbps}$}{$5\text{ Gbps}$}{$480\text{ Mbps}$}{$10\text{ Gbps}$}{1}
+
+\mcqitem{13}{Which component of the system bus is unidirectional and carries signals from the CPU to external memory and peripherals specifying memory locations?}{Address Bus}{Data Bus}{Control Bus}{Power Bus}{1}
+
+\mcqitem{14}{A CPU word size of 64 bits indicates that:}{The primary general-purpose registers and integer ALUs process 64-bit integers in a single operation}{The processor operates at exactly $64\text{ GHz}$}{The motherboard can only support $64\text{ MB}$ of RAM}{The hard drive sector size is 64 bytes}{1}
+
+\mcqitem{15}{Direct Memory Access (DMA) controllers improve system performance by:}{Transferring blocks of data directly between I/O peripherals and main memory without continuous CPU intervention}{Overclocking the primary ALU}{Eliminating the need for RAM}{Translating high-level source code into assembly}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q16 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{A microkernel operating system architecture increases fault isolation and modularity compared to a monolithic kernel by:}{Running non-essential OS services such as file systems and network stacks as user-space processes}{Compiling all device drivers directly into kernel space}{Removing the distinction between user mode and kernel mode}{Eliminating virtual memory support}{1}
+
+\mcqitem{17}{In computer systems, the CPU switches from User Mode (Ring 3) to Kernel Mode (Ring 0) through:}{A hardware interrupt, software interrupt, or system call instruction (\texttt{syscall})}{A standard C language function call}{A compiler optimization flag}{Direct manipulation of the Program Counter by user applications}{1}
+
+\mcqitem{18}{The modern computer firmware standard that replaced legacy BIOS by supporting drives $>2\text{ TB}$, Secure Boot, and a modular C-based initialization is:}{UEFI (Unified Extensible Firmware Interface)}{MBR (Master Boot Record)}{POST (Power-On Self-Test)}{CMOS}{1}
+
+\mcqitem{19}{Compared to the legacy Master Boot Record (MBR) partitioning scheme, the GUID Partition Table (GPT) standard:}{Supports up to 128 primary partitions in Windows and uses 64-bit logical block addressing with CRC32 integrity checks}{Restricts the hard drive to a maximum of 4 primary partitions and 2 TB capacity}{Stores partition data strictly on cylinder 0, head 0, sector 1 with no backup}{Does not support 64-bit operating systems}{1}
+
+\mcqitem{20}{When a CPU context switch occurs, the operating system saves the running process's state into its:}{Process Control Block (PCB)}{Translation Lookaside Buffer (TLB)}{Boot Sector}{Interrupt Vector Table}{1}
+
+\mcqitem{21}{Which of the following CPU scheduling algorithms is inherently preemptive?}{Round Robin (RR)}{First-Come, First-Served (FCFS)}{Shortest Job First (Non-preemptive SJF)}{Priority Scheduling without preemption}{1}
+
+\mcqitem{22}{The operating system condition where the system spends significantly more time swapping virtual pages in and out of disk than executing useful CPU instructions is known as:}{Thrashing}{Deadlock}{Starvation}{Fragmentation}{1}
+
+\mcqitem{23}{In a paged virtual memory system, the hardware Memory Management Unit (MMU) translates a virtual address into a physical address by mapping:}{Virtual Page Number (VPN) to Physical Frame Number (PFN)}{Thread ID to Process ID}{Register index to memory bus address}{Hard drive sector to cache line}{1}
+
+\mcqitem{24}{A Page Fault exception is generated by the MMU when:}{The referenced virtual page is currently marked as invalid (not present in physical RAM)}{A program accesses a register that does not exist}{The CPU clock speed drops below a threshold}{Two threads read the same memory location simultaneously}{1}
+
+\mcqitem{25}{A Hard Real-Time Operating System (Hard RTOS) is characterized by:}{Catastrophic system failure if a task fails to complete strictly before its designated deadline}{Variable average response times without strict deadlines}{Prioritizing background graphical user interfaces}{Exclusively using the FCFS scheduling algorithm}{1}
+
+\mcqitem{26}{During the C/C++ compilation lifecycle, which software tool processes directives such as \texttt{\#include <stdio.h>} and \texttt{\#define MAX 100}?}{Preprocessor}{Assembler}{Linker}{Loader}{1}
+
+\mcqitem{27}{The phase of the compilation process that converts assembly mnemonic instructions (e.g., \texttt{MOV}, \texttt{ADD}) into relocatable machine object code (\texttt{.o} / \texttt{.obj}) is performed by the:}{Assembler}{Linker}{Loader}{Preprocessor}{1}
+
+\mcqitem{28}{The primary responsibility of the Linker in software compilation is to:}{Combine multiple object files, resolve external cross-module references, and bind library routines}{Parse source code grammar into an Abstract Syntax Tree (AST)}{Load the final executable image into physical RAM memory}{Execute the program line-by-line without compiling}{1}
+
+\mcqitem{29}{The operating system component responsible for allocating memory segments (text, data, heap, stack) and transferring the executable program from storage into main memory for CPU execution is the:}{Loader}{Linker}{Compiler}{Debugger}{1}
+
+\mcqitem{30}{Which category of programming languages is executed directly line-by-line through a virtual machine or software engine without producing an intermediate standalone native machine binary?}{Interpreted Languages (e.g., Python, JavaScript)}{Statically Compiled Languages (e.g., C, C++)}{Assembly Languages}{Hardware Description Languages (e.g., VHDL)}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (CA-1 Set A)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Architectural \& Systems Explanations]
+\textbf{Q.1 (Ans: A)} Harvard architecture features physically separate signal buses and memory address spaces for instructions and data, allowing instruction fetch and data read/write to execute concurrently without bus contention (eliminating the von Neumann bottleneck).\\[2mm]
+\textbf{Q.5 (Ans: A)} An address bus with $N$ lines can generate $2^N$ unique binary addresses. For $N = 32$, $2^{32} = 4,294,967,296\text{ bytes} = 4\text{ GB}$.\\[2mm]
+\textbf{Q.7 (Ans: A)} RAID 5 uses block-level striping with parity distributed across all member disks. Because parity blocks are computed across all data blocks in each stripe ($P = D_1 \oplus D_2 \oplus \dots$), a minimum of 3 physical drives is required to store at least two data blocks and one parity block per stripe.\\[2mm]
+\textbf{Q.19 (Ans: A)} Legacy MBR stores partition records in a 64-byte partition table within the 512-byte Master Boot Record sector, restricting it to 4 primary partitions and 32-bit Logical Block Addressing ($2^{32} \times 512\text{ bytes} = 2.19\text{ TB}$). Modern GPT uses 64-bit LBAs (supporting $18\text{ Exabytes}$), provides up to 128 partitions by default, and includes a backup partition header at the end of the disk with CRC32 checksums.\\[2mm]
+\textbf{Q.22 (Ans: A)} Thrashing occurs when the working sets of active processes exceed the physical memory capacity. The OS repeatedly encounters page faults, queuing page swaps to disk while the CPU remains underutilized, causing system throughput to collapse.\\[2mm]
+\textbf{Q.28 (Ans: A)} The compiler emits relocatable object modules containing unresolved symbol references (e.g., calls to \texttt{printf} or functions defined in external source files). The Linker inspects the symbol tables, resolves external symbol addresses, links static libraries, and stitches together segments into a single cohesive executable binary.
+\end{solutionbox}
+
+\newpage

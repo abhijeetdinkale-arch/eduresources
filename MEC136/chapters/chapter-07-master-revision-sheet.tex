@@ -1,0 +1,106 @@
+\chapter{Chapter 7: MEC136 Master Revision Sheet}
+
+\section{Master Formula \& Equation Reference}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Formula Name} & \textbf{Mathematical Equation} & \textbf{Operational Variables \& Notes} \\
+\midrule
+\textbf{Representative Fraction} & $R.F. = \frac{\text{Drawing Length}}{\text{Actual Length}}$ & Units of numerator and denominator must match before reducing fraction. \\
+\addlinespace
+\textbf{Length of Scale} & $L.O.S. = R.F. \times \text{Max Length}$ & Used to calculate physical line length for scale on paper. \\
+\addlinespace
+\textbf{Lettering Spacing} & Spacing $= \frac{1}{5} h, \quad \text{Line} = 0.5h \text{ to } 1h$ & Single-stroke vertical Gothic, $7:4$ height-to-width ratio. \\
+\addlinespace
+\textbf{Isometric Scale Factor} & $\frac{\text{Iso Length}}{\text{True Length}} = \frac{\cos 45^\circ}{\cos 30^\circ} = \sqrt{\frac{2}{3}} \approx 0.816$ & Isometric Length $= 0.816 \times \text{True Length}$. \\
+\addlinespace
+\textbf{Front View Apparent Length} & $a'b' = TL \cos \phi$ & Where $\phi$ is inclination of line to VP. \\
+\addlinespace
+\textbf{Top View Apparent Length} & $ab = TL \cos \theta$ & Where $\theta$ is inclination of line to HP. \\
+\addlinespace
+\textbf{Cylinder Stretch-out Length} & $L = \pi D$ & Parallel Line Method base perimeter for cylinder. \\
+\addlinespace
+\textbf{Cone Sector Angle} & $\theta = \left( \frac{r}{L} \right) \times 360^\circ$ & Where $r = \text{base radius}$, $L = \text{true slant height}$. \\
+\bottomrule
+\end{tabularx}
+\caption{Master Formula Reference Sheet.}
+\label{tab:master-formulas}
+\end{table}
+
+---
+
+\section{Projection Rules \& Quadrant Quick Reference}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l p{4.5cm} X}
+\toprule
+\textbf{System / Quadrant} & \textbf{View Layout Rules} & \textbf{Key Characteristics} \\
+\midrule
+\textbf{First Angle (ISO)} & FV above $XY$, TV below FV, LSV to right of FV & Object between Observer and Plane. Standard in India/Europe. \\
+\addlinespace
+\textbf{Third Angle (ANSI)} & FV below $XY$, TV above FV, RSV to right of FV & Plane between Observer and Object. Standard in USA/Canada. \\
+\addlinespace
+\textbf{$1^{\text{st}}$ Quadrant Point} & $a'$ above $XY$, $a$ below $XY$ & Point above HP, in front of VP. \\
+\addlinespace
+\textbf{$2^{\text{nd}}$ Quadrant Point} & $a'$ above $XY$, $a$ above $XY$ & Views overlap above reference line $XY$. \\
+\addlinespace
+\textbf{$3^{\text{rd}}$ Quadrant Point} & $a'$ below $XY$, $a$ above $XY$ & Point below HP, behind VP. \\
+\addlinespace
+\textbf{$4^{\text{th}}$ Quadrant Point} & $a'$ below $XY$, $a$ below $XY$ & Views overlap below reference line $XY$. \\
+\bottomrule
+\end{tabularx}
+\caption{Projection System and Point Location Rules.}
+\label{tab:projection-rules-master}
+\end{table}
+
+---
+
+\section{AutoCAD Command Cheat Sheet}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X X}
+\toprule
+\textbf{Command} & \textbf{Shortcut} & \textbf{Primary Purpose} & \textbf{Key Option / Trap} \\
+\midrule
+\texttt{UNITS} & \texttt{UN} & Set precision and unit types & Set Insertion Scale to Millimeters. \\
+\texttt{LIMITS} & — & Set drawing boundaries & Must follow with \texttt{ZOOM ALL} (\texttt{Z} $\to$ \texttt{A}). \\
+\texttt{OSNAP} & \texttt{F3} & Object Snap toggles & Enable Endpoint, Midpoint, Center. \\
+\texttt{ORTHO} & \texttt{F8} & Restrict motion to horizontal/vertical & Essential for straight projection lines. \\
+\texttt{LINE} & \texttt{L} & Create straight line segments & Polar syntax: \texttt{@length<angle}. \\
+\texttt{PLINE} & \texttt{PL} & Create connected 2D polyline & Forms a single unified object. \\
+\texttt{TRIM} & \texttt{TR} & Cut objects to boundary edge & Select cutting edge $\to$ click object. \\
+\texttt{FILLET} & \texttt{F} & Round sharp corner edges & Set radius first: \texttt{F} $\to$ \texttt{R} $\to$ Value. \\
+\texttt{CHAMFER} & \texttt{CHA} & Bevel sharp corner edges & Set distance first: \texttt{CHA} $\to$ \texttt{D} $\to$ Values. \\
+\texttt{STRETCH} & \texttt{S} & Elongate geometry & MUST use Green Crossing Window. \\
+\texttt{HATCH} & \texttt{H} & Fill section with pattern & Pattern \texttt{ANSI31} at $45^\circ$, Pick Points. \\
+\texttt{EXTRUDE} & \texttt{EXT} & Convert 2D profile to 3D solid & Input must be closed polyline/region. \\
+\texttt{REVOLVE} & \texttt{REV} & Sweep 2D profile around axis & Requires closed profile and axis line. \\
+\texttt{PRESSPULL} & — & Dynamic 3D volume pull & Auto-detects enclosed coplanar area. \\
+\texttt{SUBTRACT} & \texttt{SU} & Cut 3D volume & Select KEEP solid $\to$ Select REMOVE solid. \\
+\texttt{VIEWBASE} & — & Generate 2D views from 3D model & Auto-links Model Space to Layout Tab. \\
+\bottomrule
+\end{tabularx}
+\caption{AutoCAD Command Cheat Sheet.}
+\label{tab:autocad-cheat-sheet}
+\end{table}
+
+---
+
+\section{Common Exam Traps \& Pitfalls}
+\begin{enumerate}
+    \item \textbf{IC 7402 / Sectioning Misconceptions:}  
+    In Sectional Views, thin webs/ribs cut longitudinally are **NOT** hatched. Fasteners (bolts, nuts, screws) and solid shafts cut longitudinally are **NOT** hatched.
+    \item **Isometric View vs. Projection:**  
+    Isometric **View** uses True Scale ($1:1$). Isometric **Projection** uses reduced scale factor ($0.816$). Do not confuse the two when reading exam instructions!
+    \item **Line Projection Projector Alignment:**  
+    In the Rotating Line Method, Front View end point $b'$ and Top View end point $b$ **MUST lie on the same vertical projector line**. If they do not align, the construction is incorrect.
+    \item **AutoCAD Stretch Command Error:**  
+    Selecting objects with a single click or a Blue Window fails for \texttt{STRETCH}. You **MUST** use a Green Crossing Window (dragged right-to-left).
+\end{enumerate}

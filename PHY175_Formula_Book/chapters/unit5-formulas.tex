@@ -1,0 +1,31 @@
+\chapter{Sequential Logic Circuits Formulas}
+
+\begin{formulabox}[Flip-Flop Characteristic Equations \& Excitation Tables]
+\begin{align}
+\text{SR Flip-Flop:} \quad Q_{n+1} &= S + \bar{R}Q_n \quad (SR=0) \\
+\text{JK Flip-Flop:} \quad Q_{n+1} &= J\bar{Q}_n + \bar{K}Q_n \\
+\text{D Flip-Flop:} \quad Q_{n+1} &= D \\
+\text{T Flip-Flop:} \quad Q_{n+1} &= T \oplus Q_n = T\bar{Q}_n + \bar{T}Q_n
+\end{align}
+
+\begin{tabularx}{\textwidth}{c c c c c c}
+\toprule
+$Q_n \to Q_{n+1}$ & \textbf{SR Excitation} & \textbf{JK Excitation} & \textbf{D Excitation} & \textbf{T Excitation} \\
+\midrule
+$0 \to 0$ & $S=0, R=X$ & $J=0, K=X$ & $D=0$ & $T=0$ \\
+$0 \to 1$ & $S=1, R=0$ & $J=1, K=X$ & $D=1$ & $T=1$ \\
+$1 \to 0$ & $S=0, R=1$ & $J=X, K=1$ & $D=0$ & $T=1$ \\
+$1 \to 1$ & $S=X, R=0$ & $J=X, K=0$ & $D=1$ & $T=0$ \\
+\bottomrule
+\end{tabularx}
+\end{formulabox}
+
+\begin{formulabox}[Shift Registers \& Counter Timing]
+\begin{align}
+\text{SIPO Total Load Clocks:} \quad N_{clk} &= N \\
+\text{PISO Total Read Clocks:} \quad N_{clk} &= N - 1 \\
+\text{Ripple Counter Min Clock Period:} \quad T_{min} &= N \cdot t_{pd} + t_s \\
+\text{Max Ripple Clock Frequency:} \quad f_{max} &= \frac{1}{N \cdot t_{pd} + t_s} \\
+\text{Mod-N Counter States:} \quad \text{States} &= N, \quad \text{Flip-Flops required: } 2^{k-1} < N \le 2^k
+\end{align}
+\end{formulabox}

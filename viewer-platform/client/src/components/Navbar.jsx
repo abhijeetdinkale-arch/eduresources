@@ -1,0 +1,140 @@
+import React from 'react';
+import { LogOut, ChevronRight, Sun, Moon, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+
+export default function Navbar({
+  currentView,
+  onNavigate,
+  onOpenLogin,
+  onOpenPlans,
+  darkMode,
+  onToggleTheme,
+  isSubscribed,
+}) {
+  const { user, logout } = useAuth();
+
+  return (
+    <header className="sticky top-4 z-40 max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="bg-paper-50/95 dark:bg-darkbg-900/95 backdrop-blur-md border border-paper-300/90 dark:border-darkbg-border rounded-full px-4 sm:px-6 py-2.5 shadow-pill dark:shadow-pill-dark flex items-center justify-between transition-all">
+        {/* Brand with Star Logo */}
+        <button
+          onClick={() => onNavigate('home')}
+          className="flex items-center gap-3 text-left focus:outline-none"
+        >
+          <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-ink-900 dark:bg-paper-50 border border-paper-300 dark:border-darkbg-border shadow-sm p-0.5">
+            <img
+              src="/logo.png"
+              alt="Edu network star logo"
+              className="w-full h-full object-contain filter invert dark:invert-0"
+            />
+          </div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-bold text-ink-900 dark:text-paper-50 text-base tracking-tight font-sans">
+              Edu<span className="font-normal text-ink-600 dark:text-ink-400"> network</span>
+            </span>
+            <span className="hidden md:inline-block text-[10px] font-mono tracking-widest text-ink-400 uppercase">
+              • ARCHIVE / 2026
+            </span>
+          </div>
+        </button>
+
+        {/* Center Links */}
+        <nav className="hidden md:flex items-center gap-6 text-xs font-mono font-medium text-ink-600 dark:text-ink-400">
+          <button
+            onClick={() => onNavigate('home')}
+            className={`transition tracking-wide ${
+              currentView === 'home'
+                ? 'text-ink-900 dark:text-paper-50 font-bold'
+                : 'hover:text-ink-900 dark:hover:text-paper-50'
+            }`}
+          >
+            HOME
+          </button>
+          <span className="text-paper-300 dark:text-ink-800">/</span>
+          <button
+            onClick={() => onNavigate('catalog')}
+            className={`transition tracking-wide ${
+              currentView === 'catalog'
+                ? 'text-ink-900 dark:text-paper-50 font-bold'
+                : 'hover:text-ink-900 dark:hover:text-paper-50'
+            }`}
+          >
+            SUBJECT DOSSIERS
+          </button>
+
+          {/* Only show pricing link if NOT subscribed */}
+          {(!user || !isSubscribed) && (
+            <>
+              <span className="text-paper-300 dark:text-ink-800">/</span>
+              <button
+                onClick={onOpenPlans}
+                className="text-ochre-500 font-bold hover:underline transition tracking-wide flex items-center gap-1"
+              >
+                <Sparkles className="w-3 h-3" />
+                <span>SEMESTER PASS</span>
+              </button>
+            </>
+          )}
+        </nav>
+
+        {/* Right Tools: Dark Mode Toggle + Student Pass / Status */}
+        <div className="flex items-center gap-2.5">
+          {/* Theme Toggle */}
+          <button
+            onClick={onToggleTheme}
+            className="p-2 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-700 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border transition shadow-xs"
+            title={darkMode ? "Switch to Light Paper Theme" : "Switch to Black Grainy Dark Theme"}
+          >
+            {darkMode ? <Sun className="w-3.5 h-3.5 text-ochre-400" /> : <Moon className="w-3.5 h-3.5" />}
+          </button>
+
+          {user ? (
+            <div className="flex items-center gap-2 bg-paper-200/80 dark:bg-darkbg-800 border border-paper-300 dark:border-darkbg-border rounded-full py-1 pl-1.5 pr-3 shadow-xs">
+              {user.picture ? (
+                <img
+                  src={user.picture}
+                  alt={user.name}
+                  className="w-6 h-6 rounded-full object-cover border border-ink-900/20 dark:border-paper-300/20"
+                />
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 flex items-center justify-center text-[10px] font-bold">
+                  {user.name ? user.name[0].toUpperCase() : 'S'}
+                </div>
+              )}
+              <div className="flex flex-col text-left">
+                <div className="flex items-center gap-1">
+                  <span className="text-[11px] font-bold text-ink-900 dark:text-paper-50 leading-tight truncate max-w-[80px] sm:max-w-[120px]">
+                    {user.name}
+                  </span>
+                  {isSubscribed && (
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400 shrink-0" title="Active Pass" />
+                  )}
+                </div>
+                <span className="text-[9px] font-mono text-ink-600 dark:text-ink-400 truncate max-w-[80px] sm:max-w-[120px]">
+                  {isSubscribed ? 'PRO PASS ACTIVE' : user.email}
+                </span>
+              </div>
+              <button
+                onClick={logout}
+                className="ml-1 p-1 rounded-full text-ink-400 hover:text-terracotta-600 transition"
+                title="Sign Out"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={onOpenLogin}
+              className="group flex items-center gap-2 pl-4 pr-3 py-1.5 rounded-full bg-ink-900 dark:bg-paper-50 hover:bg-black dark:hover:bg-paper-200 text-paper-50 dark:text-ink-900 text-xs font-semibold tracking-wide transition shadow-sm"
+            >
+              <span>Student Pass</span>
+              <span className="w-5 h-5 rounded-full bg-[#E5C05B] text-ink-900 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+                <ChevronRight className="w-3.5 h-3.5 stroke-[3]" />
+              </span>
+            </button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}

@@ -1,0 +1,638 @@
+\chapter{Single-Variable Differential Calculus \& Mean Value Theorems}
+\label{chap:single-variable-differential-calculus}
+
+% ==============================================================================
+% SECTION 1.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Single-variable differential calculus is the mathematical study of continuous variation, local rates of change, and geometric characteristics of curves. In engineering analysis, differential calculus provides the quantitative machinery to model dynamic physical systems, optimize design parameters, approximate complex functions by polynomials, and evaluate boundary behaviors.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze Limits, Continuity, and Differentiability} using $\epsilon$-$\delta$ formulations, left/right limits, and classify functional discontinuities.
+    \item \textbf{Execute Successive Differentiation} to establish standard $n$-th derivatives of elementary functions and apply \textbf{Leibniz's Theorem} to derive higher-order differential equation identities and evaluate $y_n(0)$.
+    \item \textbf{Apply Mean Value Theorems} (\textbf{Rolle's Theorem}, \textbf{Lagrange's MVT}, and \textbf{Cauchy's MVT}) to verify root existence, find intermediate points $c \in (a,b)$, and establish analytical inequalities.
+    \item \textbf{Resolve Indeterminate Forms} across all seven classic types ($\left[\frac{0}{0}\right], \left[\frac{\infty}{\infty}\right], [0 \times \infty], [\infty - \infty], [0^0], [\infty^0], [1^\infty]$) using \textbf{L'H\^opital's Rule} and Taylor series expansions.
+    \item \textbf{Formulate Taylor's and Maclaurin's Expansions} with Lagrange and Cauchy remainder bounds to approximate transcendental functions.
+    \item \textbf{Calculate Curvature and Radius of Curvature} across Cartesian, Parametric, and Polar coordinate systems, and determine horizontal, vertical, and oblique \textbf{Asymptotes} of algebraic curves.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 1.2: LIMITS, CONTINUITY \& DIFFERENTIABILITY
+% ==============================================================================
+\section{Limits, Continuity and Differentiability}
+
+\subsection{Formal Limit Definition ($\epsilon$-$\delta$ Criterion)}
+
+\begin{definition}[Limit of a Single-Variable Function]
+Let $f: D \to \mathbb{R}$ be defined on an open interval containing $x = a$, except possibly at $a$ itself. We write $\lim_{x\to a} f(x) = L$ if and only if for every real $\epsilon > 0$, there exists a corresponding real $\delta > 0$ such that:
+\begin{equation}
+    0 < |x - a| < \delta \implies |f(x) - L| < \epsilon
+\end{equation}
+\end{definition}
+
+\subsubsection{Left-Hand and Right-Hand Limit Criteria}
+The two-sided limit exists if and only if both one-sided limits exist and are equal:
+\begin{equation}
+    \lim_{x\to a} f(x) = L \iff \lim_{x\to a^-} f(x) = \lim_{x\to a^+} f(x) = L
+\end{equation}
+
+\subsection{Continuity at a Point and Classification of Discontinuities}
+
+\begin{definition}[Continuity at a Point]
+A function $f(x)$ is continuous at $x = a$ if:
+\begin{enumerate}[leftmargin=1.5em]
+    \item $f(a)$ is defined (i.e., $a$ lies in the domain of $f$).
+    \item $\lim_{x\to a} f(x)$ exists.
+    \item $\lim_{x\to a} f(x) = f(a)$.
+\end{enumerate}
+\end{definition}
+
+\subsubsection{Taxonomy of Discontinuities}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Removable Discontinuity}: $\lim_{x\to a} f(x)$ exists, but $\lim_{x\to a} f(x) \ne f(a)$ (or $f(a)$ is undefined). Example: $f(x) = \frac{\sin x}{x}$ at $x=0$.
+    \item \textbf{Jump (First Kind) Discontinuity}: Both one-sided limits $\lim_{x\to a^-} f(x) = L_1$ and $\lim_{x\to a^+} f(x) = L_2$ exist as finite numbers, but $L_1 \ne L_2$. Jump size $= |L_2 - L_1|$. Example: $f(x) = \frac{x}{|x|}$ at $x=0$.
+    \item \textbf{Infinite (Second Kind) Discontinuity}: One or both one-sided limits approach $\pm\infty$. Example: $f(x) = \frac{1}{x-2}$ at $x=2$.
+    \item \textbf{Essential / Oscillatory Discontinuity}: The limit fails to exist due to infinite oscillation. Example: $f(x) = \sin(1/x)$ as $x \to 0$.
+\end{itemize}
+
+\subsection{Differentiability and its Relation to Continuity}
+
+\begin{definition}[Differentiability at a Point]
+A function $f(x)$ is differentiable at $x = a$ if the limit of the difference quotient exists:
+\begin{equation}
+    f'(a) = \lim_{h\to 0} \frac{f(a+h) - f(a)}{h} = \lim_{x\to a} \frac{f(x) - f(a)}{x - a}
+\end{equation}
+Equivalently, the Left-Hand Derivative (LHD, $f'_-(a)$) must equal the Right-Hand Derivative (RHD, $f'_+(a)$):
+\begin{equation}
+    f'_-(a) = \lim_{h\to 0^+} \frac{f(a-h) - f(a)}{-h}, \quad f'_+(a) = \lim_{h\to 0^+} \frac{f(a+h) - f(a)}{h}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Differentiability Implies Continuity]
+If $f(x)$ is differentiable at $x = a$, then $f(x)$ is continuous at $x = a$.
+\end{theorem}
+
+\begin{solutionbox}[Analytical Proof of Theorem]
+For $x \ne a$, we can write:
+\begin{equation*}
+    f(x) - f(a) = \frac{f(x) - f(a)}{x - a} \cdot (x - a)
+\end{equation*}
+Taking limits on both sides as $x \to a$:
+\begin{equation*}
+    \lim_{x\to a} [f(x) - f(a)] = \lim_{x\to a} \left[\frac{f(x) - f(a)}{x - a}\right] \cdot \lim_{x\to a}(x - a) = f'(a) \cdot 0 = 0
+\end{equation*}
+Therefore, $\lim_{x\to a} f(x) = f(a)$, which proves continuity at $x = a$.
+\end{solutionbox}
+
+\begin{commonmistake}[Converse of Differentiability $\implies$ Continuity]
+Continuity does \textbf{NOT} imply differentiability! A canonical counterexample is $f(x) = |x|$ at $x=0$:
+\begin{equation*}
+    f'_+(0) = \lim_{h\to 0^+} \frac{|0+h| - 0}{h} = +1, \quad f'_-(0) = \lim_{h\to 0^+} \frac{|0-h| - 0}{-h} = \frac{h}{-h} = -1
+\end{equation*}
+Since $f'_+(0) \ne f'_-(0)$, $f(x)=|x|$ is continuous at $x=0$ but has a sharp corner (cusp) and is not differentiable.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 1.3: SUCCESSIVE DIFFERENTIATION \& LEIBNIZ THEOREM
+% ==============================================================================
+\section{Successive Differentiation \& Leibniz's Theorem}
+
+\subsection{Table of Standard $n$-th Derivatives}
+
+\begin{keyequation}[Master Table of Standard $n$-th Derivatives]
+\begin{align}
+    \frac{d^n}{dx^n}\left[e^{ax}\right] &= a^n e^{ax} \\
+    \frac{d^n}{dx^n}\left[(ax+b)^m\right] &= m(m-1)\cdots(m-n+1) a^n (ax+b)^{m-n} = \frac{m!}{(m-n)!} a^n (ax+b)^{m-n} \\
+    \frac{d^n}{dx^n}\left[\frac{1}{ax+b}\right] &= \frac{(-1)^n n! a^n}{(ax+b)^{n+1}} \\
+    \frac{d^n}{dx^n}\left[\ln(ax+b)\right] &= \frac{(-1)^{n-1} (n-1)! a^n}{(ax+b)^n} \\
+    \frac{d^n}{dx^n}\left[\sin(ax+b)\right] &= a^n \sin\left(ax + b + \frac{n\pi}{2}\right) \\
+    \frac{d^n}{dx^n}\left[\cos(ax+b)\right] &= a^n \cos\left(ax + b + \frac{n\pi}{2}\right) \\
+    \frac{d^n}{dx^n}\left[e^{ax}\sin(bx+c)\right] &= (a^2+b^2)^{n/2} e^{ax} \sin\left(bx + c + n\phi\right) \quad \text{where } \phi = \tan^{-1}\left(\frac{b}{a}\right) \\
+    \frac{d^n}{dx^n}\left[e^{ax}\cos(bx+c)\right] &= (a^2+b^2)^{n/2} e^{ax} \cos\left(bx + c + n\phi\right) \quad \text{where } \phi = \tan^{-1}\left(\frac{b}{a}\right)
+\end{align}
+\end{keyequation}
+
+\subsection{Leibniz's Theorem for the $n$-th Derivative of a Product}
+
+\begin{theorem}[Leibniz's Theorem]
+Let $u(x)$ and $v(x)$ be $n$-times differentiable functions. The $n$-th derivative of their product $y = uv$ is:
+\begin{equation}
+    (uv)_n = \sum_{k=0}^n \binom{n}{k} u_{n-k} v_k = u_n v + n u_{n-1} v_1 + \frac{n(n-1)}{2!} u_{n-2} v_2 + \cdots + u v_n
+\end{equation}
+where $u_k = \frac{d^k u}{dx^k}$ and $v_k = \frac{d^k v}{dx^k}$.
+\end{theorem}
+
+\begin{methodbox}[Method: Proving Differential Equations via Leibniz's Theorem]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Step 1 (First Derivative)}: Given $y = f(x)$, differentiate once with respect to $x$ to obtain $y_1$.
+    \item \textbf{Step 2 (Clear Radicals/Denominators)}: Cross-multiply denominators and square both sides if square roots exist to obtain an algebraic form $P(x) y_1^2 = Q(y)$.
+    \item \textbf{Step 3 (Second Derivative)}: Differentiate with respect to $x$ again, and divide by common non-zero factor $2y_1$ to obtain an equation relating $y_2, y_1, y$.
+    \item \textbf{Step 4 (Apply Leibniz Rule)}: Differentiate the resulting differential equation $n$ times using Leibniz's rule. Choose the polynomial term as $v$ so that $v_3 = 0, v_4 = 0$, terminating the expansion after 2 or 3 terms.
+    \item \textbf{Step 5 (Combine Coefficients)}: Group terms by $y_{n+2}, y_{n+1}, y_n$ to establish the desired identity.
+\end{enumerate}
+\end{methodbox}
+
+\begin{example}[Leibniz Differentiation \& Evaluation at $x=0$]
+If $y = e^{m\sin^{-1}x}$, prove that:
+\begin{enumerate}[label=(\alph*)]
+    \item $(1-x^2)y_2 - x y_1 - m^2 y = 0$
+    \item $(1-x^2)y_{n+2} - (2n+1)x y_{n+1} - (n^2+m^2)y_n = 0$
+    \item Find the value of $y_n(0)$ for all $n \ge 1$.
+\end{enumerate}
+\end{example}
+
+\begin{solutionbox}[Complete Step-by-Step Analytical Solution]
+\textbf{Part (a)}: Given $y = e^{m\sin^{-1}x}$. Differentiating with respect to $x$:
+\begin{equation*}
+    y_1 = e^{m\sin^{-1}x} \cdot \frac{m}{\sqrt{1-x^2}} = \frac{m y}{\sqrt{1-x^2}} \implies \sqrt{1-x^2} y_1 = m y
+\end{equation*}
+Squaring both sides: $(1-x^2)y_1^2 = m^2 y^2$. Differentiating with respect to $x$:
+\begin{equation*}
+    (1-x^2) \cdot 2y_1 y_2 + (-2x)y_1^2 = m^2 \cdot 2y y_1
+\end{equation*}
+Dividing throughout by $2y_1 \ne 0$:
+\begin{equation*}
+    \mathbf{(1-x^2)y_2 - x y_1 - m^2 y = 0} \quad \text{(Hence proved)}
+\end{equation*}
+
+\textbf{Part (b)}: Differentiating the equation $(1-x^2)y_2 - x y_1 - m^2 y = 0$ $n$ times using Leibniz's Theorem:
+\begin{align*}
+    D^n[(1-x^2)y_2] &= (1-x^2)y_{n+2} + \binom{n}{1}(-2x)y_{n+1} + \binom{n}{2}(-2)y_n \\
+    &= (1-x^2)y_{n+2} - 2nx y_{n+1} - n(n-1)y_n \\
+    D^n[x y_1] &= x y_{n+1} + \binom{n}{1}(1)y_n = x y_{n+1} + n y_n \\
+    D^n[m^2 y] &= m^2 y_n
+\end{align*}
+Subtracting:
+\begin{align*}
+    \left[(1-x^2)y_{n+2} - 2nx y_{n+1} - n(n-1)y_n\right] - \left[x y_{n+1} + n y_n\right] - m^2 y_n &= 0 \\
+    (1-x^2)y_{n+2} - (2n+1)x y_{n+1} - [n(n-1) + n + m^2]y_n &= 0 \\
+    \mathbf{(1-x^2)y_{n+2} - (2n+1)x y_{n+1} - (n^2+m^2)y_n} &= \mathbf{0} \quad \text{(Hence proved)}
+\end{align*}
+
+\textbf{Part (c)}: Evaluating at $x = 0$:
+From $y(0) = e^{m\sin^{-1}0} = e^0 = 1$, and $y_1(0) = \frac{m(1)}{\sqrt{1-0}} = m$.
+Setting $x = 0$ in the $n$-th derivative identity:
+\begin{equation*}
+    y_{n+2}(0) - (0) - (n^2+m^2)y_n(0) = 0 \implies \mathbf{y_{n+2}(0) = (n^2+m^2)y_n(0)}
+\end{equation*}
+Evaluating odd derivatives by setting $n = 1, 3, 5, \dots$:
+\begin{align*}
+    y_3(0) &= (1^2+m^2)y_1(0) = m(1^2+m^2) \\
+    y_5(0) &= (3^2+m^2)y_3(0) = m(1^2+m^2)(3^2+m^2) \\
+    \mathbf{y_{2k+1}(0)} &= \mathbf{m(1^2+m^2)(3^2+m^2)\cdots((2k-1)^2+m^2)} \quad (k \ge 1)
+\end{align*}
+Evaluating even derivatives by setting $n = 2, 4, 6, \dots$:
+\begin{align*}
+    y_2(0) &= m^2 y(0) = m^2 \\
+    y_4(0) &= (2^2+m^2)y_2(0) = m^2(2^2+m^2) \\
+    \mathbf{y_{2k}(0)} &= \mathbf{m^2(2^2+m^2)(4^2+m^2)\cdots((2k-2)^2+m^2)} \quad (k \ge 1)
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.4: MEAN VALUE THEOREMS
+% ==============================================================================
+\section{Mean Value Theorems (Rolle, Lagrange, Cauchy)}
+
+\subsection{Rolle's Theorem}
+
+\begin{theorem}[Rolle's Theorem]
+Let $f: [a,b] \to \mathbb{R}$ be a real-valued function satisfying three conditions:
+\begin{enumerate}[leftmargin=1.5em]
+    \item $f(x)$ is continuous on the closed interval ${[a,b]}$.
+    \item $f(x)$ is differentiable on the open interval $(a,b)$.
+    \item $f(a) = f(b)$.
+\end{enumerate}
+Then there exists at least one point $c \in (a,b)$ such that $f'(c) = 0$ (i.e., the tangent at $x=c$ is horizontal).
+\end{theorem}
+
+\subsection{Lagrange's Mean Value Theorem (LMVT)}
+
+\begin{theorem}[Lagrange's Mean Value Theorem (First MVT)]
+Let $f: [a,b] \to \mathbb{R}$ be:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Continuous on ${[a,b]}$, and
+    \item Differentiable on $(a,b)$.
+\end{enumerate}
+Then there exists at least one point $c \in (a,b)$ such that:
+\begin{equation}
+    f'(c) = \frac{f(b) - f(a)}{b - a} \iff f(b) = f(a) + (b-a)f'(c)
+\end{equation}
+\end{theorem}
+
+\subsection{Cauchy's Mean Value Theorem (CMVT)}
+
+\begin{theorem}[Cauchy's Generalized Mean Value Theorem]
+Let $f(x)$ and $g(x)$ be two functions such that:
+\begin{enumerate}[leftmargin=1.5em]
+    \item $f(x)$ and $g(x)$ are continuous on ${[a,b]}$,
+    \item $f(x)$ and $g(x)$ are differentiable on $(a,b)$, and
+    \item $g'(x) \ne 0$ for all $x \in (a,b)$.
+\end{enumerate}
+Then there exists at least one point $c \in (a,b)$ such that:
+\begin{equation}
+    \frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}
+\end{equation}
+\end{theorem}
+
+\begin{example}[Proving Inequalities via Lagrange's MVT]
+Use Lagrange's Mean Value Theorem to prove that for all $x > 0$:
+\begin{equation*}
+    \frac{x}{1+x} < \ln(1+x) < x
+\end{equation*}
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Proof]
+Let $f(t) = \ln(1+t)$ on the interval $[0, x]$ where $x > 0$.
+\begin{enumerate}
+    \item $f(t)$ is continuous on $[0, x]$ for $x > 0$.
+    \item $f(t)$ is differentiable on $(0, x)$ with $f'(t) = \frac{1}{1+t}$.
+\end{enumerate}
+By Lagrange's Mean Value Theorem, there exists $c \in (0, x)$ such that:
+\begin{equation*}
+    f'(c) = \frac{f(x) - f(0)}{x - 0} \implies \frac{1}{1+c} = \frac{\ln(1+x) - \ln(1)}{x} = \frac{\ln(1+x)}{x}
+\end{equation*}
+Thus, $\ln(1+x) = \frac{x}{1+c}$. Since $0 < c < x$:
+\begin{align*}
+    1 < 1+c < 1+x &\implies \frac{1}{1+x} < \frac{1}{1+c} < 1 \\
+    \text{Multiplying by } x > 0 &\implies \mathbf{\frac{x}{1+x} < \frac{x}{1+c} < x} \implies \mathbf{\frac{x}{1+x} < \ln(1+x) < x}
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.5: INDETERMINATE FORMS \& L'HOPITAL'S RULE
+% ==============================================================================
+\section{Indeterminate Forms \& L'H\^opital's Rule}
+
+\subsection{The Seven Classic Indeterminate Forms}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Fractional Forms}: $\left[\frac{0}{0}\right]$ and $\left[\frac{\infty}{\infty}\right]$ $\implies$ Apply L'H\^opital's Rule directly.
+    \item \textbf{Product Form}: ${[0 \times \infty]}$ $\implies$ Rewrite $f(x)g(x) = \frac{f(x)}{1/g(x)}$ or $\frac{g(x)}{1/f(x)}$ to obtain $\left[\frac{0}{0}\right]$ or $\left[\frac{\infty}{\infty}\right]$.
+    \item \textbf{Difference Form}: ${[\infty - \infty]}$ $\implies$ Combine via common denominator or rationalize.
+    \item \textbf{Exponential Forms}: $[0^0], [\infty^0], [1^\infty]$ $\implies$ Set $y = f(x)^{g(x)}$, take natural logs $\ln y = g(x)\ln f(x)$, resolve ${[0 \times \infty]}$ limit $L$, then $\lim y = e^L$.
+\end{enumerate}
+
+\begin{example}[Evaluating Exponential Indeterminate Form ${[1^\infty]}$]
+Evaluate $\lim_{x\to 0} \left(\frac{\sin x}{x}\right)^{1/x^2}$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Logarithmic Solution]
+As $x \to 0$, $\frac{\sin x}{x} \to 1$ and $\frac{1}{x^2} \to \infty$, giving the indeterminate form ${[1^\infty]}$.
+Let $y = \left(\frac{\sin x}{x}\right)^{1/x^2}$. Taking natural logarithm:
+\begin{equation*}
+    \ln y = \frac{1}{x^2} \ln\left(\frac{\sin x}{x}\right) = \frac{\ln(\sin x) - \ln x}{x^2} \quad \left[\text{Form } \frac{0}{0}\right]
+\end{equation*}
+Applying L'H\^opital's Rule:
+\begin{equation*}
+    \lim_{x\to 0} \ln y = \lim_{x\to 0} \frac{\frac{\cos x}{\sin x} - \frac{1}{x}}{2x} = \lim_{x\to 0} \frac{x\cos x - \sin x}{2x^2 \sin x}
+\end{equation*}
+Using Maclaurin series expansions $\sin x = x - \frac{x^3}{6} + O(x^5)$ and $\cos x = 1 - \frac{x^2}{2} + O(x^4)$:
+\begin{align*}
+    x\cos x - \sin x &= x\left(1 - \frac{x^2}{2}\right) - \left(x - \frac{x^3}{6}\right) = x - \frac{x^3}{2} - x + \frac{x^3}{6} = -\frac{x^3}{3} \\
+    2x^2 \sin x &= 2x^2(x) = 2x^3 \\
+    \lim_{x\to 0} \ln y &= \lim_{x\to 0} \frac{-x^3 / 3}{2x^3} = -\frac{1}{6}
+\end{align*}
+Since $\ln y \to -\frac{1}{6}$, the required limit is:
+\begin{equation*}
+    \lim_{x\to 0} \left(\frac{\sin x}{x}\right)^{1/x^2} = \mathbf{e^{-1/6}} = \mathbf{\frac{1}{\sqrt[6]{e}}}
+\end{equation*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.6: TAYLOR'S \& MACLAURIN'S THEOREMS
+% ==============================================================================
+\section{Taylor's and Maclaurin's Theorems (Single Variable)}
+
+\begin{theorem}[Taylor's Theorem with Remainder]
+Let $f(x)$ be a function possessing continuous derivatives up to order $(n-1)$ on $[a, a+h]$ and $f^{(n)}(x)$ exists on $(a, a+h)$. Then:
+\begin{equation}
+    f(a+h) = f(a) + h f'(a) + \frac{h^2}{2!} f''(a) + \cdots + \frac{h^{n-1}}{(n-1)!} f^{(n-1)}(a) + R_n
+\end{equation}
+where Lagrange's Form of Remainder is $R_n = \frac{h^n}{n!} f^{(n)}(a + \theta h)$ for some $\theta \in (0,1)$.
+\end{theorem}
+
+\begin{theorem}[Maclaurin's Infinite Series Expansion]
+Setting $a = 0$ and $h = x$ as $n \to \infty$ (assuming $R_n \to 0$):
+\begin{equation}
+    f(x) = f(0) + x f'(0) + \frac{x^2}{2!} f''(0) + \frac{x^3}{3!} f'''(0) + \cdots = \sum_{k=0}^\infty \frac{f^{(k)}(0)}{k!} x^k
+\end{equation}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 1.7: CURVATURE, RADIUS OF CURVATURE \& ASYMPTOTES
+% ==============================================================================
+\section{Curvature, Radius of Curvature \& Asymptotes}
+
+\subsection{Curvature and Radius of Curvature}
+
+\begin{definition}[Curvature and Radius of Curvature]
+The \textbf{Curvature} $\kappa$ of a plane curve at a point $P$ is the rate of bending with respect to arc length: $\kappa = \left|\frac{d\psi}{ds}\right|$. The \textbf{Radius of Curvature} $\rho$ is the reciprocal of curvature:
+\begin{equation}
+    \rho = \frac{1}{\kappa} = \left|\frac{ds}{d\psi}\right|
+\end{equation}
+\end{definition}
+
+\subsubsection{Master Formulas for Radius of Curvature $\rho$}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Cartesian Form $y = f(x)$}:
+    \begin{equation}
+        \rho = \frac{\left[1 + (y')^2\right]^{3/2}}{|y''|} = \frac{\left[1 + \left(\frac{dy}{dx}\right)^2\right]^{3/2}}{\left|\frac{d^2y}{dx^2}\right|}
+    \end{equation}
+    \item \textbf{Parametric Form $x = x(t), y = y(t)$}:
+    \begin{equation}
+        \rho = \frac{(\dot{x}^2 + \dot{y}^2)^{3/2}}{|\dot{x}\ddot{y} - \dot{y}\ddot{x}|} \quad \left(\text{where } \dot{x} = \frac{dx}{dt}, \ddot{x} = \frac{d^2x}{dt^2}\right)
+    \end{equation}
+    \item \textbf{Polar Form $r = f(\theta)$}:
+    \begin{equation}
+        \rho = \frac{(r^2 + r_1^2)^{3/2}}{|r^2 + 2r_1^2 - r r_2|} \quad \left(\text{where } r_1 = \frac{dr}{d\theta}, r_2 = \frac{d^2r}{d\theta^2}\right)
+    \end{equation}
+    \item \textbf{Pedal Form $p = f(r)$}: $\rho = r \frac{dr}{dp}$.
+\end{itemize}
+
+\subsection{Asymptotes of Algebraic Curves}
+
+\begin{definition}[Asymptote]
+An asymptote to a curve is a straight line such that the perpendicular distance from a moving point on the curve to the line approaches zero as the point recedes to infinity along the curve.
+\end{definition}
+
+\subsubsection{Methods for Finding Asymptotes}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Asymptotes Parallel to Axes}:
+    \begin{itemize}
+        \item Parallel to $x$-axis: Equate the coefficient of the highest power of $x$ to zero (if it contains $y$).
+        \item Parallel to $y$-axis: Equate the coefficient of the highest power of $y$ to zero (if it contains $x$).
+    \end{itemize}
+    \item \textbf{Oblique Asymptotes ($y = mx + c$)}:
+    \begin{itemize}
+        \item In the polynomial $f(x,y) = 0$ of degree $n$, substitute $x = 1, y = m$ into the $n$-th degree terms to get $\phi_n(m)$, into $(n-1)$-th degree terms to get $\phi_{n-1}(m)$, etc.
+        \item Find slopes $m$ by solving $\phi_n(m) = 0$.
+        \item For each non-repeated root $m$, calculate $c$ using:
+        \begin{equation}
+            c = -\frac{\phi_{n-1}(m)}{\phi_n'(m)}
+        \end{equation}
+        \item If $\phi_n'(m) = 0$ and $\phi_{n-1}(m) = 0$ (repeated roots $m$), calculate $c$ using:
+        \begin{equation}
+            \frac{c^2}{2!} \phi_n''(m) + c \phi_{n-1}'(m) + \phi_{n-2}(m) = 0
+        \end{equation}
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.8: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Calculus Exam Strategies]
+\begin{itemize}
+    \item \textbf{Leibniz Coefficient Signs}: When expanding $(1-x^2)y_2$, the first derivative of $1-x^2$ is $-2x$ (negative sign!). Always carry the negative sign into $-2nxy_{n+1}$.
+    \item \textbf{Testing MVT Conditions}: On university examinations, you must explicitly state that the function is continuous on ${[a,b]}$ and differentiable on $(a,b)$ before applying LMVT. Writing the formula without verifying the conditions loses marks.
+    \item \textbf{Asymptotes of Rational Functions}: For rational algebraic curves, vertical asymptotes occur at the zeros of the denominator (where the numerator is non-zero).
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Calculation Errors]
+\begin{itemize}
+    \item \textbf{L'H\^opital on Non-Indeterminate Forms}: Blindly differentiating numerator and denominator when the expression is NOT $\frac{0}{0}$ or $\frac{\infty}{\infty}$ (e.g., evaluating $\lim_{x\to 0}\frac{\cos x}{x+1} = \frac{1}{1} = 1$, but differentiating gives $\frac{-\sin 0}{1} = 0$, which is WRONG!).
+    \item \textbf{Radius of Curvature Sign}: The radius of curvature is a physical geometric length and must always be strictly \textbf{positive} ($\rho > 0$). Always apply absolute value $|y''|$ or $|r^2+2r_1^2-rr_2|$.
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 1.9: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 1 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Continuity vs Differentiability}: Differentiability $\implies$ Continuity. Continuity $\not\implies$ Differentiability (e.g., $f(x)=|x|$).
+    \item \textbf{Leibniz Rule}: $(uv)_n = \sum_{k=0}^n \binom{n}{k} u_{n-k} v_k$. Choose $v$ as the polynomial term.
+    \item \textbf{Rolle's MVT}: $f(a)=f(b) \implies f'(c)=0$ for some $c \in (a,b)$.
+    \item \textbf{Lagrange's MVT}: $f'(c) = \frac{f(b)-f(a)}{b-a}$ for some $c \in (a,b)$.
+    \item \textbf{Cauchy's MVT}: $\frac{f'(c)}{g'(c)} = \frac{f(b)-f(a)}{g(b)-g(a)}$.
+    \item \textbf{Indeterminate Forms}: Convert ${[0 \times \infty]}$ and ${[\infty - \infty]}$ to $\frac{0}{0}$. For $[0^0], [\infty^0], [1^\infty]$, use $\ln y$ and compute $\lim y = e^L$.
+    \item \textbf{Taylor/Maclaurin Series}: $f(x) = \sum_{k=0}^\infty \frac{f^{(k)}(0)}{k!} x^k$.
+    \item \textbf{Radius of Curvature}: Cartesian $\rho = \frac{[1+(y')^2]^{3/2}}{|y''|}$; Polar $\rho = \frac{(r^2+r_1^2)^{3/2}}{|r^2+2r_1^2-rr_2|}$.
+    \item \textbf{Oblique Asymptotes}: $y = mx+c$ with $\phi_n(m) = 0$ and $c = -\frac{\phi_{n-1}(m)}{\phi_n'(m)}$.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 1.10: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Find the $n$-th derivative of $y = \frac{1}{x^2 - 5x + 6}$ using partial fractions.
+    \item Verify Rolle's Theorem for $f(x) = x(x-3)^2$ on $[0, 3]$.
+    \item Evaluate $\lim_{x\to 0} \frac{e^x - e^{-x} - 2x}{x - \sin x}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item If $y = (x^2-1)^n$, prove that $(x^2-1)y_{n+2} + 2x y_{n+1} - n(n+1)y_n = 0$.
+    \item Use Lagrange's Mean Value Theorem to prove that $|\sin x - \sin y| \le |x - y|$ for all real $x, y$.
+    \item Find the radius of curvature of the catenary $y = c \cosh(x/c)$ at any point $(x,y)$, and show that $\rho = \frac{y^2}{c}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item If $y = \cos(m\sin^{-1}x)$, prove that $(1-x^2)y_{n+2} - (2n+1)xy_{n+1} + (m^2-n^2)y_n = 0$, and find $y_n(0)$.
+    \item Evaluate the limit $\lim_{x\to 0} \left(\frac{a^x + b^x + c^x}{3}\right)^{1/x}$.
+    \item Find the radius of curvature of the cardioid $r = a(1+\cos\theta)$ and show that $\rho^2 = \frac{8}{9} a r$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Find all asymptotes of the curve $x^3 - 2y^3 + 2x^2y - xy^2 + 2xy - y^2 + 1 = 0$.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 1.11: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $y = \sin(2x)$, what is the $n$-th derivative $y_n$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $2^n \cos\left(2x + \frac{n\pi}{2}\right)$
+        \item $2^n \sin\left(2x + \frac{n\pi}{2}\right)$
+        \item $2^n \sin(2x)$
+        \item $(-1)^n 2^n \cos(2x)$
+    \end{enumerate}
+
+    \item In Leibniz's theorem for the $n$-th derivative of $y = x^2 e^{3x}$, how many non-zero terms exist in the expansion?
+    \begin{enumerate}[label=(\alph*)]
+        \item 1
+        \item 2
+        \item 3
+        \item $n+1$
+    \end{enumerate}
+
+    \item For the function $f(x) = x^3 - 6x^2 + 11x - 6$ on $[1, 3]$, which value of $c$ satisfies Rolle's Theorem?
+    \begin{enumerate}[label=(\alph*)]
+        \item $c = 2$
+        \item $c = 2 \pm \frac{1}{\sqrt{3}}$
+        \item $c = 1.5$
+        \item $c = \sqrt{3}$
+    \end{enumerate}
+
+    \item What is the value of $\lim_{x\to 0} (1 + 2x)^{1/x}$?
+    \begin{enumerate}[label=(\alph*)]
+        \item 1
+        \item $e$
+        \item $e^2$
+        \item $\infty$
+    \end{enumerate}
+
+    \item The radius of curvature of a straight line $y = mx + c$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item $m$
+        \item 1
+        \item $\infty$
+    \end{enumerate}
+
+    \item What is the coefficient of $x^3$ in the Maclaurin series expansion of $f(x) = \tan^{-1}x$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{1}{3}$
+        \item $-\frac{1}{3}$
+        \item $\frac{1}{6}$
+        \item $-\frac{1}{6}$
+    \end{enumerate}
+
+    \item If $f(x) = |x-2|$, then at $x = 2$:
+    \begin{enumerate}[label=(\alph*)]
+        \item $f(x)$ is continuous and differentiable
+        \item $f(x)$ is discontinuous
+        \item $f(x)$ is continuous but not differentiable
+        \item $f'(2) = 0$
+    \end{enumerate}
+
+    \item What are the vertical asymptotes of $y = \frac{x^2+1}{x^2-4}$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $y = 1$
+        \item $x = \pm 2$
+        \item $x = 0$
+        \item $x = \pm 1$
+    \end{enumerate}
+
+    \item If $f(x)$ satisfies the conditions of LMVT on $[a, b]$, the geometrical interpretation is that the tangent at $x=c$ is parallel to:
+    \begin{enumerate}[label=(\alph*)]
+        \item The $x$-axis
+        \item The $y$-axis
+        \item The chord joining $(a, f(a))$ and $(b, f(b))$
+        \item The normal line at $(a, f(a))$
+    \end{enumerate}
+
+    \item The value of $\lim_{x\to 0} \frac{x - \sin x}{x^3}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{1}{6}$
+        \item $\frac{1}{3}$
+        \item 0
+        \item $\infty$
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) $2^n \sin\left(2x + \frac{n\pi}{2}\right)$} --- Standard formula $\frac{d^n}{dx^n}\sin(ax+b) = a^n \sin(ax+b+n\pi/2)$.
+    \item \textbf{(c) 3} --- Setting $v = x^2$, $v_1 = 2x, v_2 = 2$, and $v_k = 0$ for all $k \ge 3$. Only 3 terms survive.
+    \item \textbf{(b) $c = 2 \pm \frac{1}{\sqrt{3}}$} --- $f'(x) = 3x^2 - 12x + 11 = 0 \implies x = \frac{12 \pm \sqrt{144-132}}{6} = 2 \pm \frac{\sqrt{12}}{6} = 2 \pm \frac{1}{\sqrt{3}} \in (1,3)$.
+    \item \textbf{(c) $e^2$} --- $\lim_{x\to 0}(1+2x)^{1/x} = e^{\lim \frac{2x}{x}} = e^2$.
+    \item \textbf{(d) $\infty$} --- For a line, $y'' = 0 \implies \rho = \frac{[1+m^2]^{3/2}}{0} = \infty$.
+    \item \textbf{(b) $-\frac{1}{3}$} --- $\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots$. Coefficient of $x^3$ is $-\frac{1}{3}$.
+    \item \textbf{(c) Continuous but not differentiable} --- Cusp at $x=2$ where $LHD = -1 \ne RHD = +1$.
+    \item \textbf{(b) $x = \pm 2$} --- Denominator $x^2 - 4 = 0 \implies x = \pm 2$.
+    \item \textbf{(c) The chord joining $(a, f(a))$ and $(b, f(b))$} --- Secant slope $= \frac{f(b)-f(a)}{b-a} = f'(c)$.
+    \item \textbf{(a) $\frac{1}{6}$} --- $x - (x - x^3/6 + \dots) / x^3 = \frac{1}{6}$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.12: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 1: Single-Variable Differential Calculus (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Write the $n$-th derivative formula for $\ln(3x+4)$.
+    \item State the three conditions required for Rolle's Theorem.
+    \item Evaluate $\lim_{x\to 0} \frac{\tan x - x}{x^3}$.
+    \item Write the formula for the radius of curvature $\rho$ in polar coordinates $r = f(\theta)$.
+    \item State whether $f(x) = x^{1/3}$ is differentiable at $x = 0$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical \& Technical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Use Lagrange's Mean Value Theorem to prove the inequality $\frac{b-a}{1+b^2} < \tan^{-1}b - \tan^{-1}a < \frac{b-a}{1+a^2}$ for $0 < a < b$.
+    \item Find the radius of curvature of the cycloid $x = a(\theta + \sin\theta), y = a(1 - \cos\theta)$ at the vertex $\theta = 0$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Proof \& Recurrence ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item If $y = (x + \sqrt{1+x^2})^m$:
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $(1+x^2)y_2 + x y_1 - m^2 y = 0$. (3 Marks)
+        \item Prove by Leibniz's Theorem that $(1+x^2)y_{n+2} + (2n+1)x y_{n+1} + (n^2-m^2)y_n = 0$. (4 Marks)
+        \item Determine the general expressions for $y_n(0)$ when $n$ is odd and when $n$ is even. (3 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item $\frac{d^n}{dx^n}\ln(3x+4) = \frac{(-1)^{n-1}(n-1)! 3^n}{(3x+4)^n}$. [1 Mark]
+    \item (1) $f$ is continuous on ${[a,b]}$; (2) $f$ is differentiable on $(a,b)$; (3) $f(a) = f(b)$. [1 Mark]
+    \item $\lim_{x\to 0}\frac{\tan x - x}{x^3} = \lim_{x\to 0}\frac{(x + x^3/3 + \dots) - x}{x^3} = \mathbf{\frac{1}{3}}$. [1 Mark]
+    \item $\rho = \frac{(r^2 + r_1^2)^{3/2}}{|r^2 + 2r_1^2 - r r_2|}$ where $r_1 = \frac{dr}{d\theta}, r_2 = \frac{d^2r}{d\theta^2}$. [1 Mark]
+    \item $f'(0) = \lim_{h\to 0}\frac{h^{1/3}-0}{h} = \lim_{h\to 0}\frac{1}{h^{2/3}} = \infty$. $f(x)$ is \textbf{not differentiable} at $x=0$. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item Let $f(t) = \tan^{-1}t$ on ${[a,b]}$ with $0 < a < b$. $f(t)$ is continuous on ${[a,b]}$ and differentiable on $(a,b)$ with $f'(t) = \frac{1}{1+t^2}$. [2 Marks]
+    By LMVT, $\exists c \in (a,b)$ such that $\frac{\tan^{-1}b - \tan^{-1}a}{b-a} = \frac{1}{1+c^2}$. [1.5 Marks]
+    Since $0 < a < c < b \implies a^2 < c^2 < b^2 \implies 1+a^2 < 1+c^2 < 1+b^2 \implies \frac{1}{1+b^2} < \frac{1}{1+c^2} < \frac{1}{1+a^2}$.
+    Multiplying by $(b-a) > 0$: $\mathbf{\frac{b-a}{1+b^2} < \tan^{-1}b - \tan^{-1}a < \frac{b-a}{1+a^2}}$. [1.5 Marks]
+
+    \item For $x = a(\theta+\sin\theta), y = a(1-\cos\theta)$:
+    $\dot{x} = a(1+\cos\theta) = 2a\cos^2(\theta/2)$, $\dot{y} = a\sin\theta = 2a\sin(\theta/2)\cos(\theta/2)$. [1.5 Marks]
+    $\dot{x}^2 + \dot{y}^2 = a^2(1+2\cos\theta+\cos^2\theta+\sin^2\theta) = 2a^2(1+\cos\theta) = 4a^2\cos^2(\theta/2)$. [1.5 Marks]
+    $\ddot{x} = -a\sin\theta$, $\ddot{y} = a\cos\theta$.
+    $\dot{x}\ddot{y} - \dot{y}\ddot{x} = a^2(1+\cos\theta)\cos\theta - a^2\sin\theta(-\sin\theta) = a^2(\cos\theta + \cos^2\theta + \sin^2\theta) = a^2(1+\cos\theta) = 2a^2\cos^2(\theta/2)$. [1 Mark]
+    $\rho = \frac{[4a^2\cos^2(\theta/2)]^{3/2}}{2a^2\cos^2(\theta/2)} = \frac{8a^3\cos^3(\theta/2)}{2a^2\cos^2(\theta/2)} = 4a\cos(\theta/2)$.
+    At $\theta = 0$: $\mathbf{\rho = 4a}$. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Leibniz Proof and Evaluation}:
+    \begin{enumerate}[label=(\alph*)]
+        \item $y_1 = \frac{m y}{\sqrt{1+x^2}} \implies (1+x^2)y_1^2 = m^2 y^2 \implies (1+x^2)2y_1 y_2 + 2x y_1^2 = m^2 2y y_1 \implies \mathbf{(1+x^2)y_2 + x y_1 - m^2 y = 0}$. [3 Marks]
+        \item Applying Leibniz rule $n$ times:
+        $D^n[(1+x^2)y_2] = (1+x^2)y_{n+2} + 2nx y_{n+1} + n(n-1)y_n$. [1.5 Marks]
+        $D^n[x y_1] = x y_{n+1} + n y_n$. [1 Mark]
+        Combining: $(1+x^2)y_{n+2} + (2n+1)xy_{n+1} + [n(n-1)+n-m^2]y_n = 0 \implies \mathbf{(1+x^2)y_{n+2} + (2n+1)xy_{n+1} + (n^2-m^2)y_n = 0}$. [1.5 Marks]
+        \item At $x=0$: $y_{n+2}(0) = (m^2-n^2)y_n(0)$. [1 Mark]
+        $y(0)=1, y_1(0)=m$.
+        For $n$ odd: $y_3(0) = (m^2-1^2)m$, $y_5(0) = (m^2-3^2)(m^2-1^2)m \implies \mathbf{y_{2k+1}(0) = m(m^2-1^2)(m^2-3^2)\cdots(m^2-(2k-1)^2)}$. [1.5 Marks]
+        For $n$ even: $y_2(0) = m^2(1) = m^2$, $y_4(0) = (m^2-2^2)m^2 \implies \mathbf{y_{2k}(0) = m^2(m^2-2^2)(m^2-4^2)\cdots(m^2-(2k-2)^2)}$. [1.5 Marks]
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

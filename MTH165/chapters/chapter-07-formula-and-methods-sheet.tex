@@ -1,0 +1,60 @@
+\chapter{Master Formula and Methods Sheet}
+\label{chap:formula-methods-sheet}
+
+\section{Unit 1: Matrix Methods and Linear Systems}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Rank Definition}: $\rho(A) =$ Number of non-zero rows in REF $=$ Order of largest non-vanishing minor.
+    \item \textbf{Rouch\'e--Capelli Theorem}:
+    \begin{itemize}
+        \item Inconsistent (No Solution): $\rho(A) < \rho([A|b])$
+        \item Unique Solution: $\rho(A) = \rho([A|b]) = n$
+        \item Infinitely Many Solutions: $\rho(A) = \rho([A|b]) = r < n$ ($n-r$ free variables)
+    \end{itemize}
+    \item \textbf{Eigenvalues \& Cayley--Hamilton}:
+    \begin{itemize}
+        \item Characteristic Eq: $|A - \lambda I| = 0 \implies \lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0$
+        \item Cayley--Hamilton: $A^3 - S_1 A^2 + S_2 A - S_3 I = O$
+        \item $\sum \lambda_i = \operatorname{tr}(A), \quad \prod \lambda_i = \det(A)$
+    \end{itemize}
+\end{itemize}
+
+\section{Unit 2: Differential Calculus}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Leibniz Rule}: $(uv)_n = \sum_{k=0}^n \binom{n}{k} u_{n-k} v_k$
+    \item \textbf{Mean Value Theorems}:
+    \begin{itemize}
+        \item Rolle's: $f'(c) = 0$ for $c \in (a,b)$ when $f(a)=f(b)$.
+        \item LMVT: $f'(c) = \frac{f(b)-f(a)}{b-a}$
+        \item CMVT: $\frac{f'(c)}{g'(c)} = \frac{f(b)-f(a)}{g(b)-g(a)}$
+    \end{itemize}
+    \item \textbf{Taylor's Theorem}: $f(a+h) = \sum_{k=0}^n \frac{h^k}{k!} f^{(k)}(a) + \frac{h^{n+1}}{(n+1)!} f^{(n+1)}(a+\theta h)$
+\end{itemize}
+
+\section{Unit 3: Integral Calculus}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Integration by Parts}: $\int u v'\,dx = uv - \int u' v\,dx$ (ILATE order)
+    \item \textbf{King's Property}: $\int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx$
+    \item \textbf{Even/Odd Property}: $\int_{-a}^a f(x)\,dx = 2\int_0^a f(x)\,dx$ (even), $0$ (odd).
+\end{itemize}
+
+\section{Unit 4: Multivariate Differentiation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Euler's Theorem}: $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n u$
+    \item \textbf{Hessian Discriminant}: $D = f_{xx}f_{yy} - (f_{xy})^2$. If $D > 0, f_{xx} > 0 \implies$ Min; $D > 0, f_{xx} < 0 \implies$ Max; $D < 0 \implies$ Saddle point.
+    \item \textbf{Lagrange Multipliers}: $\nabla f = \lambda \nabla g$.
+\end{itemize}
+
+\section{Unit 5: Multivariable Integration}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Polar}: $dA = r\,dr\,d\theta$
+    \item \textbf{Cylindrical}: $dV = r\,dr\,d\theta\,dz$
+    \item \textbf{Spherical}: $dV = \rho^2 \sin\phi\,d\rho\,d\phi\,d\theta$
+\end{itemize}
+
+\section{Unit 6: Fourier Series}
+\begin{itemize}[leftmargin=1.5em]
+    \item $f(x) = \frac{a_0}{2} + \sum_{n=1}^\infty [a_n \cos(nx) + b_n \sin(nx)]$
+    \item $a_0 = \frac{1}{\pi}\int_{-\pi}^\pi f(x)dx, \; a_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x)\cos(nx)dx, \; b_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x)\sin(nx)dx$
+    \item Even: $b_n = 0$; Odd: $a_0 = a_n = 0$.
+    \item Discontinuity Average: $S(x_0) = \frac{f(x_0^+) + f(x_0^-)}{2}$.
+\end{itemize}

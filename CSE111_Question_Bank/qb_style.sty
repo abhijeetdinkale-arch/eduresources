@@ -1,0 +1,90 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qb_style}[2026/09/16 v1.0 CSE111 Question Bank Style]
+
+% Core Packages
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=14pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=CSNavy,urlcolor=CSCyan,citecolor=CSNavy]{hyperref}
+
+% Color Palette for CSE111
+\definecolor{CSNavy}{RGB}{15, 32, 67}         % Deep Navy
+\definecolor{CSCyan}{RGB}{0, 128, 160}        % Tech Cyan
+\definecolor{CSBlue}{RGB}{28, 90, 160}        % Accent Blue
+\definecolor{LPUOrange}{RGB}{232, 90, 16}     % Accent Orange
+\definecolor{DarkSlate}{RGB}{35, 45, 55}      % Body text
+\definecolor{LightBg}{RGB}{246, 248, 252}     % Background tint
+\definecolor{BorderGray}{RGB}{205, 215, 225}  % Card borders
+\definecolor{SuccessGreen}{RGB}{24, 134, 75}  % Correct answer color
+
+% Page Setup & Headers
+\color{DarkSlate}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{CSNavy}\textbf{CSE111: Orientation to Computing} --- Comprehensive Question Bank}
+\fancyhead[R]{\small\sffamily\color{CSCyan}\textbf{300 Chapter-Wise MCQs}}
+\fancyfoot[C]{\small\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{CSNavy}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% Chapter & Section Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{CSNavy}}
+  {\Large\color{CSCyan}\chaptertitlename\ \thechapter}{8pt}
+  {\titlerule[1.5pt]\vspace{4pt}}
+
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{CSNavy}}
+  {\thesection}{1em}{}
+
+% MCQ Command
+\newcommand{\mcqitem}[6]{%
+  \noindent
+  \textbf{Q.#1}\quad #2\\[1.5mm]
+  \begin{enumerate}[label=(\Alph*), itemsep=0.5mm, topsep=1mm, leftmargin=8mm]
+    \item #3
+    \item #4
+    \item #5
+    \item #6
+  \end{enumerate}
+  \vspace{2mm}
+}
+
+% Answer Key Table Environment
+\newenvironment{answerkeytable}[1]{%
+  \begin{tcolorbox}[enhanced, colback=white, colframe=CSNavy, arc=2mm, boxrule=1pt, title={\textbf{#1}}, fonttitle=\bfseries\sffamily\color{white}, colbacktitle=CSNavy]
+  \centering
+  \small\sffamily
+}{%
+  \end{tcolorbox}
+}
+
+% Explanation Box
+\newtcolorbox{expbox}[1][Answer Key \& Explanations]{%
+  enhanced,
+  breakable,
+  colback=LightBg,
+  colframe=CSCyan,
+  arc=1.5mm,
+  boxrule=0.8pt,
+  fonttitle=\bfseries\sffamily\color{white},
+  coltitle=white,
+  colbacktitle=CSCyan,
+  title={#1},
+  top=2.5mm, bottom=2.5mm, left=3.5mm, right=3.5mm
+}
+
+\endinput

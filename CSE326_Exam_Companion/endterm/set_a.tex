@@ -1,0 +1,152 @@
+\section{End-Term Examination --- Set A (Comprehensive)}
+\LPUCSHeader{COMPREHENSIVE UNIVERSITY END-TERM EXAMINATION}{A}{180 Minutes}{70 Marks}{Complete Syllabus: Units 1 to 6}
+
+\vspace{3mm}
+\noindent\textbf{Structure of Question Paper:}
+\begin{itemize}[itemsep=1mm]
+  \item \textbf{Section A}: 10 Objective MCQs $\times$ 2 Marks = \textbf{20 Marks}.
+  \item \textbf{Section B}: 4 Short Theory \& Analytical Questions $\times$ 5 Marks = \textbf{20 Marks}.
+  \item \textbf{Section C}: 2 Long Practical Coding \& Design Problems $\times$ 15 Marks = \textbf{30 Marks}.
+\end{itemize}
+
+\vspace{4mm}
+\subsection*{SECTION A: Objective MCQs (10 Questions $\times$ 2 Marks = 20 Marks)}
+
+\mcqitem{1}{Which HTTP response status code indicates that the requested resource could not be found on the server?}{200 OK}{301 Moved Permanently}{404 Not Found}{500 Internal Server Error}
+\mcqitem{2}{What type of combinator is used in the CSS rule \texttt{section.main-content > p.lead}?}{Descendant Combinator}{Direct Child Combinator}{Adjacent Sibling Combinator}{General Sibling Combinator}
+\mcqitem{3}{Which array method removes the last element of an array and returns that element?}{shift()}{unshift()}{pop()}{splice()}
+\mcqitem{4}{Which client-side storage mechanism stores key-value pairs permanently without an expiration date?}{sessionStorage}{Session Cookie}{localStorage}{Memory Cache}
+\mcqitem{5}{What is the effect of adding the \texttt{defer} attribute to an external \texttt{<script>} tag in \texttt{<head>}?}{Executes script synchronously, halting HTML parsing}{Executes script after HTML parsing completes, preserving execution order}{Converts code to server-side execution}{Disables script on mobile devices}
+\mcqitem{6}{What does \texttt{Boolean("false")} evaluate to in JavaScript?}{false}{true}{NaN}{undefined}
+\mcqitem{7}{Which Git command creates a new branch and immediately switches the working directory to it?}{git branch -c <name>}{git switch -c <name> (or git checkout -b <name>)}{git push -b <name>}{git merge <name>}
+\mcqitem{8}{Which CSS Flexbox property controls whether flex items wrap onto multiple lines?}{flex-direction}{justify-content}{flex-wrap}{align-items}
+\mcqitem{9}{Which DOM method removes an element directly from the Document Object Model tree?}{element.delete()}{element.remove()}{element.clear()}{document.purge(element)}
+\mcqitem{10}{In regular expressions, what does the quantifier \texttt{\{2,4\}} match?}{Between 2 and 4 occurrences of the preceding token}{Exactly 2 or 4 occurrences}{Any multiple of 2 and 4}{8 occurrences}
+
+\vspace{4mm}
+\subsection*{SECTION B: Short Theory \& Analytical Questions (4 $\times$ 5 Marks = 20 Marks)}
+
+\noindent\textbf{Q.11 [5 Marks]} Compare \texttt{localStorage}, \texttt{sessionStorage}, and \texttt{Cookies} with respect to capacity, lifespan, and server transmission.
+
+\vspace{2mm}\noindent\textbf{Q.12 [5 Marks]} Explain the CSS Box Model. Calculate the total rendered width of a box with \texttt{width: 250px}, \texttt{padding: 15px}, \texttt{border: 3px solid black}, and \texttt{margin: 20px} under \texttt{content-box}.
+
+\vspace{2mm}\noindent\textbf{Q.13 [5 Marks]} Diagram and describe the Request-Response cycle from the moment a user enters a URL until the browser renders the page.
+
+\vspace{2mm}\noindent\textbf{Q.14 [5 Marks]} Differentiate between \texttt{var}, \texttt{let}, and \texttt{const}. Explain the concept of the Temporal Dead Zone (TDZ).
+
+\vspace{4mm}
+\subsection*{SECTION C: Long Practical Coding \& Design Problems (2 $\times$ 15 Marks = 30 Marks)}
+
+\noindent\textbf{Q.15 [15 Marks]} Develop an interactive, dynamic Product Catalog with real-time Shopping Cart calculation using HTML5, CSS3, and JavaScript DOM manipulation.
+\begin{enumerate}[label=(\alph*), leftmargin=8mm]
+  \item Initialize an array of product objects in JavaScript with \texttt{id}, \texttt{name}, and \texttt{price}.
+  \item Dynamically render product cards into a responsive CSS grid layout using \texttt{document.createElement}.
+  \item Attach click event listeners to "Add to Cart" buttons.
+  \item Render the cart list in a sidebar and calculate the total bill dynamically using \texttt{Array.prototype.reduce}.
+\end{enumerate}
+
+\vspace{3mm}
+\noindent\textbf{Q.16 [15 Marks]} Build a complete Client-Side Form Validation Engine using HTML5 and JavaScript Regular Expressions.
+\begin{enumerate}[label=(\alph*), leftmargin=8mm]
+  \item Design a form with Name, Email, Password, Confirm Password, and Age fields.
+  \item Intercept form submission using \texttt{event.preventDefault()}.
+  \item Validate that:
+    \begin{itemize}
+      \item Name contains only alphabets and spaces.
+      \item Email satisfies the standard email pattern \texttt{/\textasciicircum[\textasciicircum\ ]+@[\textasciicircum\ ]+\textbackslash.[a-z]\{2,3\}\$/}.
+      \item Password is at least 8 characters long and contains at least 1 digit and 1 special symbol.
+      \item Confirm Password matches Password exactly.
+      \item Age is an integer between 18 and 60.
+    \end{itemize}
+  \item Display inline error messages in red under invalid inputs and display a green success message upon valid submission.
+\end{enumerate}
+
+\newpage
+\subsection*{Solutions \& Model Code --- End-Term Set A}
+
+\begin{solutionbox}[Section A: MCQ Answer Key]
+\textbf{1.} C (404 Not Found) \quad \textbf{2.} B (Child Combinator) \quad \textbf{3.} C (pop) \quad \textbf{4.} C (localStorage) \quad \textbf{5.} B (Defers script till DOM parsed) \quad \textbf{6.} B (true - non-empty string) \quad \textbf{7.} B (git switch -c) \quad \textbf{8.} C (flex-wrap) \quad \textbf{9.} B (element.remove) \quad \textbf{10.} A (Between 2 and 4 occurrences)
+\end{solutionbox}
+
+\begin{solutionbox}[Section B: Model Answers (Q11 to Q14)]
+\textbf{Q.11 Storage Comparison}:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{localStorage}: 5--10MB capacity, persistent indefinitely until cleared, never sent with HTTP requests.
+  \item \textbf{sessionStorage}: 5MB capacity, scoped to tab lifetime (destroyed on tab close), never sent with HTTP.
+  \item \textbf{Cookies}: 4KB capacity, configurable expiration date, automatically sent with every matching HTTP request header.
+\end{itemize}
+
+\textbf{Q.12 Box Model Calculation}:
+$$\text{Rendered Box Width} = \text{width} + 2 \times \text{padding} + 2 \times \text{border} = 250 + (2 \times 15) + (2 \times 3) = 286\text{px}$$
+$$\text{Total Space in Flow} = 286 + 2 \times \text{margin} = 286 + (2 \times 20) = 326\text{px}$$
+
+\textbf{Q.13 Request-Response Lifecycle}:
+1. DNS lookup resolves domain to IP address. 2. TCP 3-way handshake (SYN $\to$ SYN-ACK $\to$ ACK) + TLS handshake for HTTPS. 3. Browser sends HTTP GET request. 4. Server responds with 200 OK + HTML. 5. Browser executes Critical Rendering Path: DOM $\to$ CSSOM $\to$ Render Tree $\to$ Layout $\to$ Paint.
+
+\textbf{Q.14 Scopes \& TDZ}:
+\texttt{var} is function-scoped and hoisted to \texttt{undefined}. \texttt{let} and \texttt{const} are block-scoped. They are hoisted but remain in the Temporal Dead Zone (TDZ) where accessing them prior to declaration throws \texttt{ReferenceError}.
+\end{solutionbox}
+
+\begin{solutionbox}[Section C: Model Code for Q15 (Dynamic Cart Catalog)]
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tech Catalog</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial; display: flex; gap: 20px; padding: 20px; }
+    #grid { flex: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .card { border: 1px solid #ccc; padding: 15px; border-radius: 6px; text-align: center; }
+    #cart { flex: 1; border: 1px solid #333; padding: 15px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div id="grid"></div>
+  <div id="cart">
+    <h2>Shopping Cart</h2>
+    <ul id="cartList"></ul>
+    <h3 id="total">Total: &#8377;0</h3>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: "Wireless Mouse", price: 600 },
+      { id: 2, name: "Mechanical Keyboard", price: 2200 },
+      { id: 3, name: "HD Webcam", price: 1500 }
+    ];
+    const cart = [];
+
+    function renderProducts() {
+      const grid = document.getElementById("grid");
+      products.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<h3>${p.name}</h3><p>&#8377;${p.price}</p>`;
+        const btn = document.createElement("button");
+        btn.textContent = "Add to Cart";
+        btn.onclick = () => { cart.push(p); updateCart(); };
+        card.appendChild(btn);
+        grid.appendChild(card);
+      });
+    }
+
+    function updateCart() {
+      const list = document.getElementById("cartList");
+      list.innerHTML = "";
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - &#8377;${item.price}`;
+        list.appendChild(li);
+      });
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById("total").innerHTML = `Total: &#8377;${total}`;
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
+\end{lstlisting}
+\end{solutionbox}

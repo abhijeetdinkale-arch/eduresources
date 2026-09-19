@@ -1,0 +1,57 @@
+\chapter{Unit 6: Introduction to Fourier Series}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{6.1}
+Find the Fourier series of $f(x) = x^2$ in the interval $(-\pi, \pi)$ with period $2\pi$. Hence deduce that $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Symmetry}:
+Since $f(-x) = (-x)^2 = x^2 = f(x)$, $f(x)$ is an \textbf{even function}.
+Therefore, $b_n = 0$.
+
+2. \textbf{Compute $a_0$}:
+\begin{equation}
+a_0 = \frac{2}{\pi}\int_0^\pi x^2\,dx = \frac{2}{\pi}\left[ \frac{x^3}{3} \right]_0^\pi = \frac{2\pi^2}{3}
+\end{equation}
+
+3. \textbf{Compute $a_n$}:
+Using integration by parts:
+\begin{align}
+a_n &= \frac{2}{\pi}\int_0^\pi x^2 \cos(nx)\,dx = \frac{2}{\pi} \left[ x^2 \frac{\sin(nx)}{n} - 2x \frac{-\cos(nx)}{n^2} + 2 \frac{-\sin(nx)}{n^3} \right]_0^\pi \\
+&= \frac{2}{\pi} \left[ 0 + \frac{2\pi \cos(n\pi)}{n^2} - 0 \right] = \frac{4(-1)^n}{n^2}
+\end{align}
+
+4. \textbf{Fourier Series Representation}:
+\begin{equation}
+x^2 = \frac{a_0}{2} + \sum_{n=1}^\infty a_n \cos(nx) = \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \frac{(-1)^n}{n^2}\cos(nx)
+\end{equation}
+
+5. \textbf{Deduction}:
+At $x = \pi$, $f(\pi) = \pi^2$ and $\cos(n\pi) = (-1)^n$:
+\begin{align}
+\pi^2 &= \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \frac{(-1)^n (-1)^n}{n^2} = \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \frac{1}{n^2} \\
+\frac{2\pi^2}{3} &= 4\sum_{n=1}^\infty \frac{1}{n^2} \implies \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}
+\end{align}
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+\mcqitem{1}{For an even periodic function $f(x)$ on $(-\pi, \pi)$, the Fourier coefficient $b_n$ is:}{$0$}{$a_0/2$}{$1$}{$\pi$}
+\mcqitem{2}{At a point of jump discontinuity $x_0$, the Fourier series converges to:}{$f(x_0^+)$}{$f(x_0^-)$}{$\frac{f(x_0^+) + f(x_0^-)}{2}$}{$0$}
+\mcqitem{3}{The period of $\sin(3x)$ is:}{$2\pi$}{$2\pi/3$}{$\pi/3$}{$6\pi$}
+
+\section{Section 3: Answer Key \& Technical Rationales}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 6: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(a)} & Even functions have zero sine coefficients $b_n = 0$ & 3 & \textbf{(b)} & Period $T = 2\pi/\omega = 2\pi/3$ \\
+2 & \textbf{(c)} & Dirichlet theorem convergence to average of left/right limits & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}

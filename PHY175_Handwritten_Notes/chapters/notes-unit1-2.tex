@@ -1,0 +1,44 @@
+\chapter{Solid State Physics \& Electronic Devices}
+
+\section{Solid State Physics Intuition}
+\begin{notebox}[Physical Meaning of Drude Model]
+\begin{itemize}[leftmargin=*]
+    \item Think of conduction electrons as a \textbf{billiard ball gas} bouncing elastically off stationary ionic bumpers.
+    \item Electric field $\vec{E}$ tilts the pinball table, creating a gentle net drift velocity $\vec{v}_d = -\frac{e\tau}{m}\vec{E}$.
+    \item Conductivity $\sigma = \frac{ne^2\tau}{m}$ means: more carriers ($n\uparrow$) or longer flight between hits ($\tau\uparrow$) boosts current!
+\end{itemize}
+\end{notebox}
+
+\begin{trickbox}[Fermi Level Memory Hack]
+\begin{itemize}[leftmargin=*]
+    \item At $T=0\,\text{K}$: $E_F$ is the \textbf{water level} of a filled glass. Below $E_F \implies 100\%$ full; above $E_F \implies 0\%$ full.
+    \item At $T > 0\,\text{K}$: Thermal splashing occurs, but at exactly the water mark $E=E_F$, probability is always \textbf{exactly 50\%} ($1/2$).
+    \item In 3D: $E_F \propto n^{2/3}$. Density $8\times \implies E_F$ is $4\times$.
+\end{itemize}
+\end{trickbox}
+
+\begin{notebox}[Hall Effect Right-Hand Rule]
+\begin{itemize}[leftmargin=*]
+    \item Current along $+x$, Magnetic field along $+z$.
+    \item Both electrons (moving left) and holes (moving right) experience Lorentz force pushing them toward the \textbf{$-y$ edge}!
+    \item If electrons accumulate at $-y \implies V(-y)$ is negative ($R_H < 0$).
+    \item If holes accumulate at $-y \implies V(-y)$ is positive ($R_H > 0$).
+    \item This directly identifies whether a semiconductor is n-type or p-type!
+\end{itemize}
+\end{notebox}
+
+\section{Electricity \& Circuit Devices}
+\begin{trickbox}[Voltage Divider vs Current Divider]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Voltage Divider:} Voltage drops proportionally to its \textbf{OWN} resistance: $V_1 = V_S \frac{R_1}{R_1+R_2}$. Bigger resistor gets bigger share.
+    \item \textbf{Current Divider:} Current flows preferentially through the \textbf{OPPOSITE} smaller resistance: $I_1 = I_T \frac{R_2}{R_1+R_2}$.
+\end{itemize}
+\end{trickbox}
+
+\begin{notebox}[CMOS Inverter Action]
+\begin{itemize}[leftmargin=*]
+    \item PMOS connects to $V_{DD}$ and turns ON when gate is \textbf{LOW} ($0\,\text{V}$).
+    \item NMOS connects to $\text{GND}$ and turns ON when gate is \textbf{HIGH} ($V_{DD}$).
+    \item They never conduct simultaneously in DC steady state $\implies$ near-zero standby battery drain! Dynamic power only during switching: $P = \alpha C V^2 f$.
+\end{itemize}
+\end{notebox}

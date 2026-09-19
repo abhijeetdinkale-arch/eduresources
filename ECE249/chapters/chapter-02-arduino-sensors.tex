@@ -1,0 +1,409 @@
+\chapter{Introduction of Arduino, Signals, and Sensor Interfacing}
+\label{chap:arduino-sensors}
+
+\section{Introduction \& Engineering Relevance}
+The physical world is inherently analog—temperatures fluctuate continuously, acoustic pressures oscillate smoothly, and illumination levels vary over an infinite spectrum. Conversely, digital microprocessors and microcontrollers operate exclusively on discrete binary states ($\mathbf{0}$ and $\mathbf{1}$). 
+
+\noindent This chapter examines the bridge between these domains: signal classification, the architecture and peripheral subsystems of the **Arduino UNO (ATmega328P)** platform, and the operational physics of primary electronic sensors (IR, LDR, Ultrasonic, and DHT11/22).
+
+---
+
+\section{Signal Characterization: Analog vs. Digital}
+
+\subsection{Analog Signals}
+An analog signal is a time-varying, continuous physical quantity whose amplitude can assume an infinite number of values within a specified range.
+\begin{itemize}
+    \item \textbf{Continuous in Time and Amplitude:} At every infinitesimal instant $t$, there exists a corresponding defined potential $v(t)$.
+    \item \textbf{Mathematical Representation:} Often represented as Fourier series combinations of sinusoidal waveforms:
+    \begin{equation}
+        v(t) = V_m \sin(\omega t + \phi)
+    \end{equation}
+    \item \textbf{Vulnerability to Noise:} Any external electromagnetic interference (EMI) directly corrupts the signal amplitude, making perfect noise separation impossible without filtering.
+\end{itemize}
+
+\subsection{Digital Signals}
+A digital signal is a discrete representation of information, constrained to a finite set of predetermined voltage levels (typically binary: HIGH and LOW).
+\begin{itemize}
+    \item \textbf{Discrete States:} In TTL (Transistor-Transistor Logic) systems:
+    \begin{itemize}
+        \item \textbf{Logic HIGH ($\mathbf{1}$):} Defined between $+3.5\text{ V}$ and $+5.0\text{ V}$.
+        \item \textbf{Logic LOW ($\mathbf{0}$):} Defined between $0\text{ V}$ and $+0.8\text{ V}$.
+        \item \textbf{Indeterminate Region:} $0.8\text{ V}$ to $2.0\text{ V}$ (forbidden transition zone).
+    \end{itemize}
+    \item \textbf{Noise Immunity:} Because receivers only distinguish whether a voltage is above or below a threshold, minor noise fluctuations do not alter the binary data value.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Analog Waveform
+    \begin{scope}[xshift=0cm]
+        \draw[->, >=Stealth, thick] (0,0) -- (5.5,0) node[right, font=\small] {$t$};
+        \draw[->, >=Stealth, thick] (0,-1.8) -- (0,2.2) node[above, font=\small] {$v(t)$};
+        \draw[line width=1.5pt, brandblue, domain=0:5, samples=100] plot (\x, {1.5*sin(\x*150)});
+        \node at (2.5, -2.3) [font=\bfseries\sffamily\color{brandnavy}] {(a) Continuous Analog Signal};
+    \end{scope}
+
+    % Digital Waveform
+    \begin{scope}[xshift=7cm]
+        \draw[->, >=Stealth, thick] (0,0) -- (5.5,0) node[right, font=\small] {$t$};
+        \draw[->, >=Stealth, thick] (0,-0.5) -- (0,2.2) node[above, font=\small] {$v(t)$};
+        \draw[line width=1.5pt, brandaccent] (0,0) -- (1,0) -- (1,1.8) -- (2,1.8) -- (2,0) -- (3,0) -- (3,1.8) -- (4,1.8) -- (4,0) -- (5,0);
+        \node at (1.5, 2.1) [font=\footnotesize\bfseries\color{brandaccent}] {HIGH (5V)};
+        \node at (2.5, -0.4) [font=\footnotesize\bfseries\color{brandslate}] {LOW (0V)};
+        \node at (2.5, -2.3) [font=\bfseries\sffamily\color{brandnavy}] {(b) Discrete Digital Square Wave};
+    \end{scope}
+\end{tikzpicture}
+\caption{Comparison between (a) continuous analog and (b) discrete digital signals.}
+\label{fig:analog-vs-digital}
+\end{figure}
+
+\subsection{Comparative Analysis: Analog vs. Digital Signals}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Parameter} & \textbf{Analog Signal} & \textbf{Digital Signal} \\
+\midrule
+\textbf{Nature} & Continuous in time and amplitude. & Discrete in time and quantized in amplitude. \\
+\textbf{Information Representation} & Continuous physical voltage or current. & Binary bit strings ($\mathbf{0}$s and $\mathbf{1}$s). \\
+\textbf{Possible Values} & Infinite values within dynamic range. & Exactly two states (HIGH / LOW). \\
+\textbf{Noise Immunity} & Low (noise directly alters signal data). & High (noise rejected by threshold margins). \\
+\textbf{Storage \& Transmission} & Difficult without signal degradation. & Easily stored (Flash, RAM, EEPROM) without loss. \\
+\textbf{Processing Hardware} & Operational amplifiers, passive RLC filters. & Microcontrollers, DSPs, FPGA, Logic gates. \\
+\textbf{Real-World Examples} & Natural human voice, LDR light level, thermocouple. & Computer bus data, square clock, digital switch. \\
+\bottomrule
+\end{tabularx}
+\caption{Systematic comparison between Analog and Digital Signals.}
+\label{tab:analog-digital-comp}
+\end{table}
+
+---
+
+\section{The Arduino UNO Architecture \& Hardware Ecosystem}
+
+\subsection{Microcontroller Specifications (ATmega328P)}
+The **Arduino UNO** is an open-source microcontroller development board centered on the 8-bit **Microchip ATmega328P** AVR RISC processor.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Board Outline
+    \draw[fill=brandblue!15, draw=brandblue!80, line width=2pt, rounded corners=8pt] (0,0) rectangle (10,7);
+    \node at (5, 6.4) [font=\large\bfseries\sffamily\color{brandnavy}] {Arduino UNO (ATmega328P)};
+
+    % Microcontroller Chip
+    \draw[fill=branddark, draw=black, line width=1pt] (4.5, 2.0) rectangle (8.8, 3.2);
+    \node at (6.65, 2.6) [font=\small\bfseries\color{white}] {ATmega328P (28-DIP)};
+
+    % USB Port
+    \draw[fill=boxgrayborder, draw=black, line width=1pt] (-0.3, 4.2) rectangle (1.5, 5.8);
+    \node at (0.6, 5.0) [font=\tiny\bfseries, align=center] {USB\\Port};
+
+    % Power Jack
+    \draw[fill=branddark, draw=black, line width=1pt] (-0.3, 0.8) rectangle (1.8, 2.4);
+    \node at (0.75, 1.6) [font=\tiny\bfseries\color{white}, align=center] {DC Barrel\\Jack (7-12V)};
+
+    % Voltage Regulator
+    \draw[fill=branddark, draw=black] (2.2, 1.2) rectangle (3.2, 2.2);
+    \node at (2.7, 1.7) [font=\tiny\color{white}] {5V Reg};
+
+    % 16 MHz Crystal
+    \draw[fill=boxgoldbg, draw=brandamber] (3.6, 3.8) rectangle (4.4, 4.4);
+    \node at (4.0, 4.1) [font=\tiny\bfseries] {16MHz};
+
+    % Reset Button
+    \draw[fill=brandaccent, draw=black] (0.5, 6.2) circle (4pt);
+    \node at (1.4, 6.2) [font=\tiny\bfseries] {Reset};
+
+    % Top Headers (Digital Pins)
+    \draw[fill=black] (3.0, 6.6) rectangle (9.5, 6.9);
+    \node at (6.25, 6.75) [font=\tiny\bfseries\color{white}] {Digital I/O Pins 0 to 13 (PWM~: 3, 5, 6, 9, 10, 11)};
+
+    % Bottom Headers (Power & Analog)
+    \draw[fill=black] (2.5, 0.1) rectangle (5.0, 0.4);
+    \node at (3.75, 0.25) [font=\tiny\bfseries\color{white}] {Power: 5V, 3.3V, GND, Vin};
+
+    \draw[fill=black] (5.5, 0.1) rectangle (9.2, 0.4);
+    \node at (7.35, 0.25) [font=\tiny\bfseries\color{white}] {Analog Inputs: A0 to A5 (10-bit ADC)};
+\end{tikzpicture}
+\caption{Architectural layout and peripheral subsystems of the Arduino UNO board.}
+\label{fig:arduino-layout}
+\end{figure}
+
+\begin{pinoutbox}[Arduino UNO Technical Specification Matrix]
+\begin{itemize}
+    \item \textbf{Microcontroller:} Microchip ATmega328P (8-bit AVR Enhanced RISC Architecture)
+    \item \textbf{Operating Voltage:} $\SI{5.0}{\volt}$ DC
+    \item \textbf{Recommended Input Voltage (VIN / Barrel Jack):} $\SI{7}{\volt} \text{ to } \SI{12}{\volt}$ DC (Absolute limits: $6\text{--}\SI{20}{\volt}$)
+    \item \textbf{Digital I/O Pins:} 14 total (Pins 0 to 13)
+    \item \textbf{PWM (Pulse Width Modulation) Channels:} 6 pins (Pins 3, 5, 6, 9, 10, 11 marked with $\sim$)
+    \item \textbf{Analog Input Channels:} 6 channels (Pins A0 to A5, 10-bit SAR ADC)
+    \item \textbf{DC Current per I/O Pin:} $\SI{20}{\milli\ampere}$ recommended ($\SI{40}{\milli\ampere}$ absolute maximum)
+    \item \textbf{DC Current for 3.3V Pin:} $\SI{50}{\milli\ampere}$ maximum
+    \item \textbf{Flash Memory:} $\SI{32}{\kilo\byte}$ (of which $\SI{0.5}{\kilo\byte}$ is reserved by bootloader)
+    \item \textbf{SRAM (Static RAM):} $\SI{2}{\kilo\byte}$ (volatile data storage)
+    \item \textbf{EEPROM (Electrically Erasable PROM):} $\SI{1}{\kilo\byte}$ (non-volatile storage)
+    \item \textbf{Clock Frequency:} $\SI{16}{\mega\hertz}$ (governed by quartz crystal oscillator)
+\end{itemize}
+\end{pinoutbox}
+
+\subsection{Pin Configuration and Functional Descriptions}
+
+\subsubsection{1. Power Distribution Subsystem}
+\begin{itemize}
+    \item \textbf{VIN:} The unregulated input voltage pin when supplying power via an external DC supply or battery pack ($\SI{7}{\volt}\text{--}\SI{12}{\volt}$).
+    \item \textbf{5V:} The regulated $+5.0\text{ V}$ power supply output derived from on-board linear voltage regulators (NCP1117 or LP2985). Used to power external sensors and integrated circuits.
+    \item \textbf{3.3V:} A regulated $+3.3\text{ V}$ supply generated on-board, delivering up to $\SI{50}{\milli\ampere}$ for low-voltage sensor modules (e.g., ESP8266, XBee).
+    \item \textbf{GND:} Ground reference pins ($0\text{ V}$).
+    \item \textbf{IOREF:} Supplies the reference voltage at which the microcontroller I/O pins operate ($5\text{ V}$ on standard UNO), allowing shield boards to adapt voltage levels.
+\end{itemize}
+
+\subsubsection{2. Analog Input Subsystem (Pins A0 – A5)}
+The Arduino UNO features a 10-bit **Successive Approximation Register (SAR) Analog-to-Digital Converter (ADC)** multiplexed across 6 channels (A0 to A5).
+\begin{itemize}
+    \item \textbf{Resolution:} $2^{10} = 1024$ discrete digital quantization levels ($0$ to $1023$).
+    \item \textbf{Step Size (Quantization Voltage):}
+    \begin{equation}
+        \Delta V = \frac{V_{ref}}{1024} = \frac{\SI{5.0}{\volt}}{1024} = \SI{4.8828}{\milli\volt\per\text{step}}
+    \end{equation}
+    \item \textbf{Reading Function:} `analogRead(pin)` returns an integer in the range $[0, 1023]$.
+    \item \textbf{Voltage Calculation Formula:}
+    \begin{equation}
+        V_{measured} = \text{ADC\_Value} \times \left( \frac{V_{ref}}{1023} \right)
+    \end{equation}
+\end{itemize}
+
+\subsubsection{3. Digital Input/Output Subsystem (Pins 0 – 13)}
+Each digital pin can be programmed in software as an **INPUT**, **INPUT\_PULLUP**, or **OUTPUT**.
+\begin{itemize}
+    \item \textbf{UART Serial Pins:}
+    \begin{itemize}
+        \item **Pin 0 (RX):** Receives asynchronous TTL serial data.
+        \item **Pin 1 (TX):** Transmits asynchronous TTL serial data.
+    \end{itemize}
+    \item \textbf{External Hardware Interrupts:}
+    \begin{itemize}
+        \item **Pin 2 (Interrupt 0 / INT0)** and **Pin 3 (Interrupt 1 / INT1)** can trigger immediate asynchronous ISR execution on `LOW`, `CHANGE`, `RISING`, or `FALLING` signal transitions via `attachInterrupt()`.
+    \end{itemize}
+    \item \textbf{Pulse Width Modulation (PWM) Subsystem (Pins ~3, ~5, ~6, ~9, ~10, ~11):}
+    Simulates variable analog voltage output by rapidly switching digital pins between $0\text{ V}$ and $5\text{ V}$ at fixed carrier frequencies:
+    \begin{itemize}
+        \item Pins 5 and 6: Carrier frequency $\approx \SI{980}{\hertz}$ (governed by internal Timer 0).
+        \item Pins 3, 9, 10, 11: Carrier frequency $\approx \SI{490}{\hertz}$ (governed by Timers 1 and 2).
+        \item Output resolution: 8-bit resolution ($0$ to $255$) via `analogWrite(pin, value)`.
+    \end{itemize}
+    \begin{equation}
+        V_{avg} = V_{CC} \times \left( \frac{\text{PWM Value}}{255} \right) = \SI{5.0}{\volt} \times \text{Duty Cycle}
+    \end{equation}
+    \item \textbf{SPI Bus Subsystem:} Pin 10 (SS), Pin 11 (MOSI), Pin 12 (MISO), Pin 13 (SCK).
+    \item \textbf{On-Board LED:} Connected directly to Pin 13.
+\end{itemize}
+
+\begin{example}[ADC Voltage \& PWM Calculation]
+An Arduino analog input pin A0 reads a value of $682$ from an analog sensor. 
+\begin{enumerate}
+    \item Calculate the actual sensor voltage corresponding to this reading (assuming $V_{ref} = \SI{5.0}{\volt}$).
+    \item What 8-bit PWM integer value must be passed to `analogWrite(9, value)` to reproduce this exact average voltage across an LED?
+\end{enumerate}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item $\text{ADC Value} = 682$, $\text{Max ADC} = 1023$, $V_{ref} = \SI{5.0}{\volt}$
+\end{itemize}
+
+\textbf{Step 2: Calculate Measured Sensor Voltage}
+\begin{equation*}
+    V_{measured} = \text{ADC Value} \times \frac{V_{ref}}{1023} = 682 \times \frac{\SI{5.0}{\volt}}{1023} \approx \SI{3.333}{\volt}
+\end{equation*}
+
+\textbf{Step 3: Calculate Required PWM Integer Value}
+The average voltage output by PWM is:
+\begin{equation*}
+    V_{avg} = 5.0 \times \left( \frac{\text{PWM Value}}{255} \right) \implies \text{PWM Value} = 255 \times \left( \frac{V_{avg}}{5.0} \right)
+\end{equation*}
+Substitute $V_{avg} = \SI{3.333}{\volt}$:
+\begin{equation*}
+    \text{PWM Value} = 255 \times \left( \frac{3.333}{5.0} \right) = 255 \times 0.6666 = 170
+\end{equation*}
+
+\textbf{Final Answers:}
+$$\mathbf{V_{measured} = \SI{3.33}{\volt}, \quad \text{PWM Value} = 170 \text{ (Duty Cycle } \approx 66.7\%)}$$
+\end{example}
+
+---
+
+\section{Sensors and Transducers}
+A **Transducer** is a physical device that converts energy from one physical form into another. A **Sensor** is an input transducer that measures a physical parameter (light, temperature, distance) and translates it into a measurable electrical signal (voltage, resistance, frequency).
+
+\subsection{Active Infrared (IR) Obstacle \& Line Tracking Sensor}
+Active IR sensor modules detect object presence, proximity, or surface contrast based on infrared radiation reflection.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Module boundary
+    \draw[fill=brandteal!10, draw=brandteal!80, line width=1.5pt, rounded corners=6pt] (0,0) rectangle (9,4.5);
+    \node at (4.5, 4.1) [font=\bfseries\sffamily\color{brandnavy}] {Active IR Sensor Module Circuit};
+
+    % Emitter LED
+    \draw (1.5, 2.5) to[empty led, l=IR LED] (1.5, 0.8) to[ground] (1.5, 0.5);
+    \draw (1.5, 3.8) to[R, l=$R_1{=}\SI{220}{\ohm}$] (1.5, 2.5);
+    \node at (1.5, 4.0) [above, font=\tiny\bfseries] {VCC (5V)};
+
+    % Photodiode Receiver
+    \draw (3.5, 0.8) to[empty photodiode, l=Photodiode] (3.5, 2.5);
+    \draw (3.5, 3.8) to[R, l=$R_2{=}\SI{10}{\kilo\ohm}$] (3.5, 2.5);
+    \draw (3.5, 0.8) to[ground] (3.5, 0.5);
+
+    % Comparator LM393
+    \draw (5.5, 2.0) node[op amp, scale=0.8] (opamp) {};
+    \draw (3.5, 2.5) -- (opamp.-);
+    
+    % Potentiometer Reference
+    \draw (4.5, 0.8) to[pR, l=Threshold, n=pot] (4.5, 2.0);
+    \draw (pot.wiper) -- (opamp.+);
+
+    % Output
+    \draw (opamp.out) -- (8.5, 2.0) node[right, font=\small\bfseries] {D0 (Digital Output)};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Subsystems:}
+    \begin{enumerate}
+        \item \textbf{IR Transmitter (IR LED):} Emits continuous infrared light at wavelength $\lambda \approx \SI{940}{\nano\meter}$.
+        \item \textbf{IR Receiver (Photodiode):} Placed parallel to the transmitter, operating in reverse bias. When incident IR photons strike its junction, minority carrier photocurrent increases, causing its reverse resistance to drop sharply.
+        \item \textbf{Comparator (LM393 Op-Amp):} Compares the photodiode voltage against an adjustable reference voltage established by an on-board potentiometer.
+    \end{enumerate}
+    \item \textbf{Surface Albedo Principle (Line-Tracking Robots):}
+    \begin{itemize}
+        \item \textbf{White / Reflective Surface:} High albedo causes strong IR reflection. The photodiode receives high IR intensity $\implies$ resistance drops $\implies$ Comparator switches output to **Logic LOW ($0\text{ V}$)**.
+        \item \textbf{Black / Matte Surface:} Absorbs infrared radiation completely. Zero reflected IR reaches photodiode $\implies$ high resistance $\implies$ Comparator output remains **Logic HIGH ($5\text{ V}$)**.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Light Dependent Resistor (LDR / Photoresistor)}
+An LDR is a passive photo-sensitive variable resistor constructed from semiconductor materials such as **Cadmium Sulfide (CdS)** or **Cadmium Selenide (CdSe)**.
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.9, transform shape]
+    \draw (0,0) node[ground] {}
+          to[R, l=$R_{\text{fixed}}{=}\SI{10}{\kilo\ohm}$] (0,2)
+          to[photoresistor, l=LDR ($R_L$)] (0,4)
+          to[short] (0,4.2) node[above] {$V_{CC} = \SI{5.0}{\volt}$};
+    \draw (0,2) to[short, *-o] (2,2) node[right, font=\small\bfseries] {$V_{out} \longrightarrow \text{Arduino Pin A0}$};
+\end{circuitikz}
+\caption{LDR Voltage Divider interfacing circuit with Arduino analog input.}
+\label{fig:ldr-circuit}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Photoconductivity Physics:}
+    In absolute darkness, valence electrons are locked within covalent bonds. The dark resistance is extremely high ($R_{dark} > \SI{1}{\mega\ohm}$). When incident photons with energy $h\nu \ge E_g$ strike the CdS track, valence electrons are excited across the bandgap into the conduction band, generating free electron-hole pairs. Consequently, electrical conductivity increases and resistance falls to a few hundred ohms ($R_{light} \approx \SI{400}{\ohm}$).
+    \item \textbf{Voltage Divider Analysis:}
+    Because microcontrollers cannot measure resistance directly, the LDR is paired with a fixed precision resistor ($R_{fixed} = \SI{10}{\kilo\ohm}$):
+    \begin{equation}
+        V_{out} = V_{CC} \left( \frac{R_{fixed}}{R_{LDR} + R_{fixed}} \right)
+    \end{equation}
+    As light intensity increases $\implies R_{LDR}$ decreases $\implies V_{out}$ increases towards $5\text{ V}$.
+\end{itemize}
+
+\subsection{Ultrasonic Distance Sensor (HC-SR04)}
+The HC-SR04 rangefinder calculates physical distance to target objects by measuring acoustic **Time-of-Flight (ToF)** using ultrasonic pressure waves ($f = \SI{40}{\kilo\hertz}$, beyond human hearing threshold).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Pulse lines
+    \draw[thick] (0,3) -- (1,3) -- (1,4) -- (1.5,4) -- (1.5,3) -- (5,3) node[right, font=\small] {Trig Pin ($10\,\mu\text{s}$ Pulse)};
+    \draw[thick, brandblue] (1.5,2) -- (2.5,2) node[midway, above=4pt, font=\scriptsize\bfseries] {8-Cycle Burst at 40 kHz} -- (3.5,2);
+    
+    % Echo pulse
+    \draw[thick, brandaccent] (0,0.5) -- (2.5,0.5) -- (2.5,1.5) -- (6.5,1.5) -- (6.5,0.5) -- (8,0.5) node[right, font=\small] {Echo Pin (Width $= \Delta t$)};
+    
+    \draw[<->, >=Stealth, line width=1pt] (2.5, 1.7) -- (6.5, 1.7) node[midway, above, font=\small\bfseries] {Echo Time ($\Delta t$)};
+\end{tikzpicture}
+\caption{Operational timing protocol of the Ultrasonic Sensor HC-SR04.}
+\label{fig:ultrasonic-timing}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Operational Protocol:}
+    \begin{enumerate}
+        \item The Arduino applies a $\SI{10}{\micro\second}$ digital HIGH pulse to the **Trig** pin.
+        \item The sensor's on-board ultrasonic transducer emits an 8-cycle burst of acoustic waves at $\SI{40}{\kilo\hertz}$.
+        \item Simultaneously, the **Echo** pin transitions to logic HIGH ($5\text{ V}$).
+        \item The sound wave propagates through air at speed $v \approx \SI{343}{\meter\per\second}$, reflects off the obstacle, and returns to the receiving transducer.
+        \item Upon detecting the return echo, the sensor drives the **Echo** pin back to logic LOW.
+        \item The duration $\Delta t$ for which the Echo pin remained HIGH equals the round-trip acoustic travel time.
+    \end{enumerate}
+    \item \textbf{Mathematical Derivation of Distance:}
+    \begin{equation}
+        \text{Total Distance Traveled} = v_{\text{sound}} \times \Delta t
+    \end{equation}
+    Since the wave travels from sensor to target and back to sensor:
+    \begin{equation}
+        \text{Distance to Target } (D) = \frac{v_{\text{sound}} \times \Delta t}{2}
+    \end{equation}
+    Using $v_{\text{sound}} = \SI{343}{\meter\per\second} = \SI{0.0343}{\centi\meter\per\micro\second}$:
+    \begin{equation}
+        D \, (\si{\centi\meter}) = \frac{\Delta t \, (\si{\micro\second}) \times 0.0343}{2} = \frac{\Delta t \, (\si{\micro\second})}{58.3}
+    \end{equation}
+\end{itemize}
+
+\subsection{Temperature and Humidity Sensors: DHT11 vs. DHT22}
+The DHT-series sensors integrate digital temperature and humidity measurement on a single silicon substrate with built-in ADC and single-wire communication protocol.
+
+\begin{itemize}
+    \item \textbf{Sensing Mechanisms:}
+    \begin{itemize}
+        \item \textbf{Relative Humidity:} Measured using a capacitive humidity sensor consisting of a moisture-holding dielectric polymer sandwiched between two porous electrodes. When humidity changes, water vapor alters dielectric permittivity $\epsilon_r$, directly varying capacitance $C = \frac{\epsilon_r \epsilon_0 A}{d}$.
+        \item \textbf{Temperature:} Measured using a high-precision \textbf{NTC (Negative Temperature Coefficient) Thermistor}, whose resistance decreases non-linearly with increasing temperature.
+    \end{itemize}
+    \item \textbf{Data Protocol:} Communicates via a single bidirectional digital data pin. Transmits a complete \textbf{40-bit data packet}:
+    \begin{equation*}
+        \text{40-Bit Frame} = \text{Hum.Int(8b)} + \text{Hum.Dec(8b)} + \text{Temp.Int(8b)} + \text{Temp.Dec(8b)} + \text{Checksum(8b)}
+    \end{equation*}
+    \begin{equation*}
+        \text{Checksum Check: } \text{Byte 5} = (\text{Byte 1} + \text{Byte 2} + \text{Byte 3} + \text{Byte 4}) \pmod{256}
+    \end{equation*}
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Specification Parameter} & \textbf{DHT11 Sensor} & \textbf{DHT22 Sensor (AM2302)} \\
+\midrule
+\textbf{Operating Voltage} & $\SI{3.3}{\volt}\text{ to }\SI{5.5}{\volt}$ DC & $\SI{3.3}{\volt}\text{ to }\SI{6.0}{\volt}$ DC \\
+\textbf{Humidity Sensing Range} & $20\%\text{ to }90\%\text{ RH}$ & $0\%\text{ to }100\%\text{ RH}$ \\
+\textbf{Humidity Accuracy} & $\pm 5\%\text{ RH}$ & $\pm 2\%\text{ RH}$ \\
+\textbf{Temperature Range} & $\SI{0}{\celsius}\text{ to }\SI{50}{\celsius}$ & $\SI{-40}{\celsius}\text{ to }\SI{80}{\celsius}$ \\
+\textbf{Temperature Accuracy} & $\pm \SI{2.0}{\celsius}$ & $\pm \SI{0.5}{\celsius}$ \\
+\textbf{Sampling Rate} & $\SI{1}{\hertz}$ (1 reading/second) & $\SI{0.5}{\hertz}$ (1 reading/2 seconds) \\
+\textbf{Cost \& Target Application} & Low cost / Educational kits & Precision industrial / Environmental monitoring \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison between DHT11 and DHT22 Sensors.}
+\label{tab:dht-comparison}
+\end{table}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 2 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Signals:} Analog is continuous with infinite resolution; Digital is discrete binary (HIGH/LOW) with high noise immunity.
+    \item \textbf{ATmega328P Specs:} 8-bit AVR RISC, 16 MHz, 5V, 32KB Flash, 2KB SRAM, 1KB EEPROM.
+    \item \textbf{Arduino ADC:} 10-bit resolution ($0\text{--}1023$), step size $= \SI{4.88}{\milli\volt}$.
+    \item \textbf{Arduino PWM:} 8-bit resolution ($0\text{--}255$) on pins ~3, ~5, ~6, ~9, ~10, ~11.
+    \item \textbf{IR Sensor:} Detects reflection; white reflects (Low output), black absorbs (High output).
+    \item \textbf{LDR:} CdS photoconductivity; higher illuminance reduces resistance.
+    \item \textbf{HC-SR04:} Distance $= \frac{t_{\text{echo}} \times 0.0343}{2} = \frac{t_{\text{echo}}(\mu\text{s})}{58.3}$.
+    \item \textbf{DHT11/22:} 40-bit digital stream measuring humidity (capacitive) and temperature (NTC thermistor).
+\end{itemize}
+\end{quickrevision}

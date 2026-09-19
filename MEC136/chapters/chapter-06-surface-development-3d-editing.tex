@@ -1,0 +1,210 @@
+\chapter{Unit 6: Development of Surfaces \& 3D Solid Editing}
+
+\section{A. What You'll Learn}
+Development of surfaces is the geometric unrolling or unfolding of 3D solid surfaces into a 2D flat plane pattern. In this unit, you will master:
+\begin{enumerate}
+    \item Surface development principles and industrial sheet metal applications (ducts, pipes, hoppers, funnels, chimneys).
+    \item Governing rules: **Stretch-out Line** (full perimeter) and **True Length ($TL$)** enforcement.
+    \item **Parallel Line Method** for Prisms and Cylinders.
+    \item **Radial Line Method** for Pyramids and Cones ($\theta = \frac{r}{L} \times 360^\circ$).
+    \item **Triangulation Method** for transition pieces.
+    \item Development procedures for regular and truncated solids.
+    \item AutoCAD 3D Solid Editing \& Boolean operations (`UNION`, `SUBTRACT`, `INTERSECT`).
+    \item AutoCAD 3D Navigation (`3DORBIT`, Visual Styles) and 2D view extraction (`VIEWBASE`).
+\end{enumerate}
+
+---
+
+\section{B. Principles of Surface Development}
+
+\begin{definition}[Development of Surfaces]
+The process of unfolding or unrolling the lateral surfaces of a 3D solid object onto a single 2D plane surface to produce a flat pattern. When cut from sheet metal and folded along bend lines, it forms the 3D solid.
+\end{definition}
+
+\subsection{Industrial Applications}
+Sheet metal fabrication of air conditioning ducts, boiler shells, hoppers, funnels, chimneys, automobile body panels, and packaging boxes.
+
+\subsection{Key Terminology \& Governing Rules}
+\begin{itemize}
+    \item \textbf{Stretch-out Line:} The full length or perimeter of the base laid out in a straight line.
+    \item \textbf{True Length ($TL$):} Every line on the development pattern **MUST represent the true length** of the corresponding edge on the solid. If an edge is inclined in orthographic views, its true length must be determined before drawing development.
+    \item \textbf{Seam Line Selection:} The opening/closing seam line is usually chosen along the **shortest edge** to minimize welding or soldering length.
+\end{itemize}
+
+---
+
+\section{C. Methods of Surface Development}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Method Name} & \textbf{Applicability (Solids)} & \textbf{Governing Geometric Principle} \\
+\midrule
+\textbf{Parallel Line Method} & Prisms and Cylinders & Lateral edges/generators are parallel to each other. Stretch-out line length $=$ Base Perimeter. \\
+\addlinespace
+\textbf{Radial Line Method} & Pyramids and Cones & Lateral edges slant towards a single apex. Development is a sector of a circle with Apex as center and Slant Edge ($TL$) as radius. \\
+\addlinespace
+\textbf{Triangulation Method} & Transition pieces (e.g., square-to-round adapters) & Surface is divided into a series of triangles laid out adjacent to one another. \\
+\bottomrule
+\end{tabularx}
+\caption{Classification of Surface Development Methods.}
+\label{tab:dev-methods}
+\end{table}
+
+---
+
+\section{D. Development Procedures for Prisms \& Pyramids}
+
+\subsection{1. Truncated Prisms (Parallel Line Method)}
+
+\begin{keyequation}[Prism Stretch-out Line Formula]
+\begin{equation}
+    \text{Stretch-out Line Length } (L) = \text{Perimeter of Base}
+\end{equation}
+$$\text{Square Prism: } L = 4 \times s, \quad \text{Hexagonal Prism: } L = 6 \times s, \quad \text{Cylinder: } L = \pi D$$
+\end{keyequation}
+
+\subsubsection{Step-by-Step Procedure}
+1. Draw Top View and Front View of the prism with section cutting plane.
+2. Draw horizontal stretch-out line aligned with base of Front View equal to base perimeter.
+3. Divide stretch-out line into segments corresponding to base side lengths ($s$).
+4. Erect vertical lines (generators) from division points.
+5. Project intersection points of cutting plane from Front View horizontally across to corresponding vertical lines on development.
+6. Join projected points with straight lines to form upper boundary of development pattern.
+
+\subsection{2. Truncated Pyramids \& Cones (Radial Line Method)}
+
+\begin{keyequation}[Cone Development Sector Angle ($\theta$)]
+For a cone with base radius $r$ and true slant height $L$:
+\begin{equation}
+    \theta = \left( \frac{r}{L} \right) \times 360^\circ
+\end{equation}
+\end{keyequation}
+
+\subsubsection{Step-by-Step Procedure}
+1. Draw Top and Front Views. Determine **True Length ($TL$)** of slant edge. (If slant edge in FV is not parallel to $XY$, rotate it to find $TL$).
+2. Draw an arc with Apex $P$ as center and radius equal to $TL$.
+3. Step off chord lengths along arc equal to base polygon side length $s$.
+4. Join chord division points to Apex $P$ with straight lines.
+5. **For Truncated Pyramids:** Mark cut points on the $TL$ slant edge in Front View. Transfer these distances to radial lines using concentric arcs centered at Apex $P$.
+
+\begin{example}[Cone Development Sector Angle]
+\textbf{Problem:} Calculate the sector angle ($\theta$) for developing a cone of base diameter $50\text{ mm}$ ($r = 25\text{ mm}$) and altitude height $60\text{ mm}$.\\[4pt]
+\textbf{Solution Step 1: Calculate True Slant Height ($L$)}
+$$L = \sqrt{r^2 + h^2} = \sqrt{25^2 + 60^2} = \sqrt{625 + 3600} = \sqrt{4225} = \mathbf{65\text{ mm}}$$
+
+\noindent \textbf{Solution Step 2: Calculate Sector Angle ($\theta$)}
+$$\theta = \left( \frac{r}{L} \right) \times 360^\circ = \left( \frac{25}{65} \right) \times 360^\circ = \mathbf{138.46^\circ}$$
+\end{example}
+
+---
+
+\section{E. AutoCAD 3D Solid Editing \& Navigation}
+
+\subsection{3D Boolean Operations}
+
+\begin{autocadcmd}[UNION]
+Merges two or more separate 3D solids or regions into a single composite solid.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{UNION} or \texttt{UNI}
+    \item \textbf{Workflow:} Type \texttt{UNI} $\to$ Select 3D solids $\to$ Press \texttt{Enter}.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[SUBTRACT]
+Removes the volume of one 3D solid from another (essential for creating holes, slots, or truncated cuts).
+\begin{itemize}
+    \item \textbf{Command:} \texttt{SUBTRACT} or \texttt{SU}
+    \item \textbf{Workflow:} Type \texttt{SU} $\to$ Select solid to KEEP $\to$ Press \texttt{Enter} $\to$ Select solid to REMOVE $\to$ Press \texttt{Enter}.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[INTERSECT]
+Creates a 3D solid from the overlapping common volume of two or more solids.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{INTERSECT} or \texttt{IN}
+\end{itemize}
+\end{autocadcmd}
+
+\subsection{3D Navigation \& 2D View Extraction}
+\begin{itemize}
+    \item \textbf{\texttt{3DORBIT} (\texttt{3DO}):} Dynamically rotates 3D view in space (\texttt{Shift} + Middle Mouse Drag).
+    \item \textbf{Visual Styles (\texttt{VS}):} Controls edge/shading display (\texttt{2D Wireframe}, \texttt{Conceptual}, \texttt{Realistic}, \texttt{Hidden}).
+    \item \textbf{\texttt{VIEWBASE}:} Automatically generates linked 2D Orthographic Front, Top, Side, and Isometric views directly from 3D Model Space onto a Layout sheet.
+\end{itemize}
+
+---
+
+\section{F. Chapter 6 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+Which development method is used for Prisms and Cylinders? What is the length of the stretch-out line?\\[4pt]
+\textbf{Answer:} The **Parallel Line Method**. Length of stretch-out line equals the perimeter of the base ($L = \text{Perimeter}$).
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+Write the formula for the development sector angle ($\theta$) of a cone.\\[4pt]
+\textbf{Answer:} $\theta = \left( \frac{r}{L} \right) \times 360^\circ$, where $r$ is base radius and $L$ is true slant height.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+Calculate the sector angle for developing a cone of base radius $30\text{ mm}$ and true slant height $90\text{ mm}$.\\[4pt]
+\textbf{Answer:}  
+$$\theta = \left( \frac{30}{90} \right) \times 360^\circ = \frac{1}{3} \times 360^\circ = \mathbf{120^\circ}$$
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. Which method of development is used for Pyramids and Cones?  
+   A. Parallel Line Method  
+   B. Radial Line Method  
+   C. Triangulation Method  
+   D. Approximate Method  
+   \textbf{Answer: B} — Pyramids and Cones are developed using Radial Line Method.
+
+2. All lines on a surface development pattern MUST represent:  
+   A. Apparent length  
+   B. True length  
+   C. Foreshortened length  
+   D. Isometric length  
+   \textbf{Answer: B} — Every edge on a development pattern must represent True Length ($TL$).
+
+3. Which AutoCAD Boolean command removes one 3D solid from another?  
+   A. \texttt{UNION}  
+   B. \texttt{SUBTRACT}  
+   C. \texttt{INTERSECT}  
+   D. \texttt{SLICE}  
+   \textbf{Answer: B} — \texttt{SUBTRACT} removes 3D solid volumes.
+
+4. The stretch-out line length for a cylinder of diameter $D$ is:  
+   A. $\pi D$  
+   B. $2\pi D$  
+   C. $\pi D^2$  
+   D. $D/2$  
+   \textbf{Answer: A} — Stretch-out line length equals perimeter $= \pi D$.
+
+5. Which AutoCAD command automatically generates linked 2D orthographic views from a 3D model?  
+   A. \texttt{EXTRUDE}  
+   B. \texttt{PRESSPULL}  
+   C. \texttt{VIEWBASE}  
+   D. \texttt{3DORBIT}  
+   \textbf{Answer: C} — \texttt{VIEWBASE} generates 2D views from 3D models.
+
+---
+
+\section{G. Unit 6 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $\text{Parallel Line Method} \to \text{Prisms and Cylinders} \quad (L = \text{Perimeter})$.
+    \item $\text{Radial Line Method} \to \text{Pyramids and Cones} \quad \left(\theta = \frac{r}{L} \times 360^\circ\right)$.
+    \item $\text{Triangulation Method} \to \text{Transition pieces (square-to-round adapters)}$.
+    \item $\text{True Length Rule} \to \text{All edges on development MUST represent True Length } TL$.
+    \item $\text{Seam Line} \to \text{Select shortest edge to minimize welding/soldering}$.
+    \item $\text{AutoCAD Booleans: } \texttt{UNION (combine)}, \quad \texttt{SUBTRACT (cut hole)}, \quad \texttt{INTERSECT (common volume)}$.
+    \item $\texttt{VIEWBASE} \to \text{Auto-generates 2D views from 3D Model Space onto Layout Tab}$.
+\end{itemize}
+\end{revisionchecklist}

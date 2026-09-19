@@ -1,0 +1,124 @@
+\section{End-Term Examination --- Set D}
+\label{sec:endterm_set_d}
+
+\LPUCSHeader{End-Term Examination (Comprehensive MCQ)}{D}{120 Minutes}{30 Marks}{CO1 to CO6 (Units 1 to 6 Comprehensive)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q5)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{The fundamental architectural principle of Reduced Instruction Set Computer (RISC) design is:}{Employing a small set of uniform, fixed-length, single-cycle instructions with a strict load/store architecture}{Supporting hundreds of complex variable-length instructions that access memory in ALU operations}{Eliminating all general-purpose CPU registers}{Running programs exclusively on mechanical relays}{1}
+
+\mcqitem{2}{Under the IEEE 754 standard for 32-bit single-precision floating-point numbers, how many bits are allocated for the Exponent?}{8 bits (with a bias of 127)}{11 bits}{1 bit}{23 bits}{1}
+
+\mcqitem{3}{A computer architecture that stores the least significant byte (LSB) of a multi-byte word at the lowest numerical memory address is classified as:}{Little-Endian (e.g., x86 / x86-64)}{Big-Endian}{Bi-Endian}{Middle-Endian}{1}
+
+\mcqitem{4}{Graphic Processing Units (GPUs) achieve massively high compute throughput on matrix algebra compared to CPUs because GPUs:}{Incorporate thousands of smaller cores designed for SIMD parallel stream processing}{Have larger L3 caches and complex branch predictors for single-threaded tasks}{Operate at higher clock frequencies exceeding $20\text{ GHz}$}{Execute instructions without a system clock}{1}
+
+\mcqitem{5}{Solid-State Drives (SSDs) operating over the NVMe protocol deliver superior I/O throughput compared to SATA SSDs primarily because NVMe:}{Connects directly across high-speed PCIe bus lanes and supports multiple parallel command queues}{Uses mechanical read heads that spin faster}{Requires no electrical power during read operations}{Replaces NAND flash with magnetic tape}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q6 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{6}{In Unix/Linux operating systems, a 'Zombie Process' is a process that:}{Has completed execution and terminated, but retains an entry in the process table because its parent has not invoked \texttt{wait()}}{Continues to execute in an infinite CPU loop}{Has lost its parent and is adopted by \texttt{init}}{Is locked in swap space due to thrashing}{1}
+
+\mcqitem{7}{The three mandatory requirements that any valid synchronization solution to the Critical Section Problem must satisfy are:}{Mutual Exclusion, Progress, and Bounded Waiting}{Atomicity, Consistency, and Durability}{Preemption, Aging, and Throughput}{Compilation, Assembly, and Linking}{1}
+
+\mcqitem{8}{Which CPU scheduling algorithm is preemptive and selects the process with the smallest remaining CPU burst time?}{Shortest Remaining Time First (SRTF)}{First-Come, First-Served (FCFS)}{Shortest Job First (Non-preemptive)}{Priority Scheduling without preemption}{1}
+
+\mcqitem{9}{In virtual memory management, 'Thrashing' occurs when:}{The system spends significantly more time swapping pages between RAM and disk than executing useful CPU instructions}{The hard drive platters collide with the read head}{The CPU clock speed is throttled due to heat}{A process executes a division by zero error}{1}
+
+\mcqitem{10}{The primary functional difference between the Linker and the Loader is that:}{The Linker combines object files and resolves external symbols into a binary; the Loader allocates RAM and loads the binary for execution}{The Linker compiles source code into assembly; the Loader prints text to the screen}{The Linker executes system calls; the Loader translates C into Python}{The Linker manages disk partitions; the Loader controls BIOS settings}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q11 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{According to the Linux Filesystem Hierarchy Standard (FHS), essential user command binaries available to all users (such as \texttt{ls}, \texttt{cp}, \texttt{cat}) reside in:}{\texttt{/bin}}{\texttt{/sbin}}{\texttt{/etc}}{\texttt{/dev}}{1}
+
+\mcqitem{12}{If a Linux user environment has a default \texttt{umask} of \texttt{022}, what are the default permissions assigned to a newly created regular file?}{\texttt{644} (\texttt{-rw-r--r--})}{\texttt{755} (\texttt{-rwxr-xr-x})}{\texttt{777} (\texttt{-rwxrwxrwx})}{\texttt{600} (\texttt{-rw-------})}{1}
+
+\mcqitem{13}{In Linux, which command displays a detailed, active snapshot of all processes running across the entire system?}{\texttt{ps aux}}{\texttt{ls -la}}{\texttt{df -h}}{\texttt{cat /etc/passwd}}{1}
+
+\mcqitem{14}{Which category of hypervisor runs directly on the bare host physical hardware without requiring a host operating system (e.g., VMware ESXi, KVM)?}{Type 1 Hypervisor (Bare-Metal)}{Type 2 Hypervisor (Hosted)}{Container Engine}{VirtualBox Application}{1}
+
+\mcqitem{15}{In Linux, a Hard Link cannot be created across different physical disk filesystems because:}{Inode numbers are unique only within a single physical filesystem partition}{Hard links consume too much network bandwidth}{Symbolic links are faster than hard links}{The Linux kernel disables hard links for security}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 4: COHORTS AND TECHNICAL SKILL SETS (Q16 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{TypeScript enhances JavaScript development for large-scale enterprise web applications by adding:}{Compile-time static typing, interfaces, and rich IDE autocompletion}{Direct hardware memory management without garbage collection}{Support for analog video signals}{Automatic conversion into C++ binaries}{1}
+
+\mcqitem{17}{Under standard RESTful API conventions, which HTTP verb is designated specifically to retrieve or read an existing resource from a server without modifying it?}{\texttt{GET}}{\texttt{POST}}{\texttt{DELETE}}{\texttt{PATCH}}{1}
+
+\mcqitem{18}{The ability of a cloud computing platform to automatically expand or contract computing resources dynamically in response to real-time workload fluctuations is:}{Cloud Elasticity}{Static Provisioning}{Cold Storage}{Local Virtualization}{1}
+
+\mcqitem{19}{In data structures and algorithmic problem solving, searching for a target value in a sorted array of size $N$ using Binary Search takes:}{$O(\log N)$ time}{$O(N)$ time}{$O(N^2)$ time}{$O(1)$ time}{1}
+
+\mcqitem{20}{In technical interviews at tier-1 and MAANG technology corporations, candidates use the STAR framework to structure behavioral answers, where STAR stands for:}{Situation, Task, Action, Result}{System, Testing, Architecture, Reliability}{Security, Threat, Authentication, Response}{Syntax, Types, Arguments, Returns}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 5: COMPUTER NETWORKS AND COMMUNICATION (Q21 TO Q25)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{A communication transmission mode where data travels in only one fixed direction at all times (e.g., traditional television broadcast) is:}{Simplex Mode}{Half-Duplex Mode}{Full-Duplex Mode}{Broadband Mode}{1}
+
+\mcqitem{22}{Which network topology connects all peripheral devices to a central switch, where the failure of one peripheral cable does not disrupt communication among remaining devices?}{Star Topology}{Bus Topology}{Ring Topology}{Linear Topology}{1}
+
+\mcqitem{23}{In the OSI 7-layer Reference Model, which layer is responsible for logical IP addressing, packet forwarding, and path selection across intermediate routers?}{Layer 3: Network Layer}{Layer 2: Data Link Layer}{Layer 4: Transport Layer}{Layer 7: Application Layer}{1}
+
+\mcqitem{24}{Which of the following IPv4 address ranges is designated as Class A private address space under RFC 1918?}{\texttt{10.0.0.0/8} (\texttt{10.0.0.0} to \texttt{10.255.255.255})}{\texttt{172.16.0.0/12}}{\texttt{192.168.0.0/16}}{\texttt{127.0.0.0/8}}{1}
+
+\mcqitem{25}{In information security, the three core pillars of the CIA Triad represent:}{Confidentiality, Integrity, and Availability}{Control, Inspection, and Authorization}{Cryptography, Identification, and Auditing}{Communication, Interoperability, and Access}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 6: VERSION CONTROL & MODERN AI TOOLS (Q26 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{26}{In the Git version control system, a Branch is internally implemented as:}{A lightweight, 41-byte movable pointer referencing a specific commit SHA hash}{A complete physical duplicate copy of all project files on disk}{A compressed zip archive stored on GitHub servers}{A special Linux Inode on the root filesystem}{1}
+
+\mcqitem{27}{Which Git command displays the repository commit history in a concise single-line format accompanied by an ASCII branch topology graph?}{\texttt{git log --oneline --graph}}{\texttt{git status -s}}{\texttt{git branch -a}}{\texttt{git diff --stat}}{1}
+
+\mcqitem{28}{In Git workflow operations, the command \texttt{git pull} is functionally equivalent to executing:}{\texttt{git fetch} followed immediately by \texttt{git merge}}{\texttt{git push} followed by \texttt{git commit}}{\texttt{git clone} followed by \texttt{git checkout}}{\texttt{git add} followed by \texttt{git commit}}{1}
+
+\mcqitem{29}{The core architectural innovation in Transformer-based Large Language Models (LLMs) that enables them to weigh the relevance of all tokens in a sequence simultaneously is the:}{Self-Attention Mechanism}{Convolutional Pooling Layer}{Recurrent Backpropagation Loop}{Decision Tree Ensembling}{1}
+
+\mcqitem{30}{In conversational AI and generative agent systems, 'System Instructions' (or System Prompts) are used to:}{Establish the AI agent's core persona, operational constraints, output formatting rules, and safety guardrails}{Compile user code into assembly language}{Control the physical CPU fan speed}{Encrypt the user's hard disk with BitLocker}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (End-Term Set D)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Comprehensive Technical Explanations]
+\textbf{Q.2 (Ans: A)} Under IEEE 754 single-precision (32-bit), 1 bit is allocated for sign, 8 bits for exponent (range -126 to +127 with bias 127), and 23 bits for the normalized mantissa fraction, delivering $\approx 7$ decimal digits of precision.\\[2mm]
+\textbf{Q.6 (Ans: A)} A Zombie process occurs when a child process terminates execution by calling \texttt{exit()}. The kernel retains its Process Control Block (PCB) entry containing its exit status. Until the parent process reads this status via \texttt{wait()} or \texttt{waitpid()}, the child remains a Zombie in the process table.\\[2mm]
+\textbf{Q.15 (Ans: A)} Inodes are local to a specific filesystem partition (filesystem metadata structure). Because different partitions have completely independent Inode tables, an Inode number on partition $A$ has no relation to the same Inode number on partition $B$. Hence, Hard Links cannot cross filesystem boundaries, whereas Symbolic Links (which store textual paths) can.\\[2mm]
+\textbf{Q.26 (Ans: A)} In Git, creating a branch does not copy the codebase. Git simply creates a text file inside \texttt{.git/refs/heads/<branch-name>} containing the 40-character hexadecimal SHA-1 hash (plus a newline character $= 41\text{ bytes}$) of the latest commit on that branch. This makes branching virtually instantaneous and lightweight.\\[2mm]
+\textbf{Q.29 (Ans: A)} The Self-Attention mechanism computes attention weights between every pair of tokens in a sequence: $\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$. This allows the network to model contextual dependencies across arbitrary distances in constant sequential operations, replacing recurrent loops.
+\end{solutionbox}
+
+\newpage

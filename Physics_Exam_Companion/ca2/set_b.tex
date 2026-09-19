@@ -1,0 +1,56 @@
+\section{Continuous Assessment 2 (CA-2)}
+
+\ExamHeader{Continuous Assessment 2 (CA-2)}{Project Portfolio Set B}{Continuous Submission}{30 Marks}{None}
+
+\noindent
+\textbf{Continuous Assessment 2 (CA-2) Project Assignment Guidelines:}
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+    \item CA-2 evaluates in-depth applied physics project investigations, analytical derivations, and engineering design reports.
+    \item Each report must include: \textbf{Theoretical Foundation}, \textbf{Mathematical Model / Derivation}, \textbf{Engineering Application Case Study}, and \textbf{Performance Analysis}.
+\end{enumerate}
+\vspace{3mm}
+
+\begin{projectbox}{1: Electrodynamic Analysis of Maxwell's Equations and Waveguide Propagation}
+\textbf{Project Overview:} Rigorous investigation of electromagnetic wave propagation in rectangular waveguides and displacement current verification in dielectric media.
+
+\textbf{1. Theoretical Background:}
+Maxwell's equations synthesize electrostatics, magnetostatics, and time-varying electrodynamics. The displacement current term $\frac{\partial \vec{D}}{\partial t}$ resolves the charge conservation paradox in capacitor charging circuits.
+
+\textbf{2. Mathematical Formulation \& Governing Equations:}
+In free space, $\nabla \times (\nabla \times \vec{E}) = -\frac{\partial}{\partial t}(\nabla \times \vec{B}) = -\mu_0 \epsilon_0 \frac{\partial^2 \vec{E}}{\partial t^2}$.
+Using $\nabla \times (\nabla \times \vec{E}) = \nabla(\nabla \cdot \vec{E}) - \nabla^2 \vec{E} = -\nabla^2 \vec{E}$, we obtain:
+\begin{equation}
+\nabla^2 \vec{E} = \frac{1}{c^2}\frac{\partial^2 \vec{E}}{\partial t^2}, \quad c = \frac{1}{\sqrt{\mu_0 \epsilon_0}} \approx 3 \times 10^8\text{ m/s}
+\end{equation}
+
+\textbf{3. Engineering Case Study \& Practical Implementation:}
+Design of a TE10 mode microwave waveguide operating at $10\text{ GHz}$ for radar telecommunications.
+
+\textbf{4. Critical Findings \& Performance Analysis:}
+Waveguide cut-off frequency $f_c = \frac{c}{2a}$ strictly limits propagation. Group velocity $v_g = c\sqrt{1 - (f_c/f)^2}$ remains subluminal, preserving relativistic causality.
+\end{projectbox}
+
+\vspace{4mm}
+
+\begin{projectbox}{2: Quantum Mechanical Modeling of 1D Potential Wells and Tunneling Dynamics}
+\textbf{Project Overview:} Numerical and analytical investigation of electron confinement in semiconductor quantum wells and scanning tunneling microscopy (STM).
+
+\textbf{1. Theoretical Background:}
+When a particle is confined in an infinite potential box of length $L$, boundary conditions quantize momentum and energy into discrete eigenvalues.
+
+\textbf{2. Mathematical Formulation \& Governing Equations:}
+Eigenvalues and eigenfunctions:
+\begin{equation}
+E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2}, \quad \psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)
+\end{equation}
+For finite barriers of height $V_0 > E$, the transmission probability is $T \approx e^{-2\alpha L}$ where $\alpha = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$.
+
+\textbf{3. Engineering Case Study \& Practical Implementation:}
+Analysis of GaAs/AlGaAs quantum-well lasers and atomic-resolution imaging in Scanning Tunneling Microscopes.
+
+\textbf{4. Critical Findings \& Performance Analysis:}
+Exponential dependence of tunnel current $I \propto e^{-2\alpha d}$ yields sub-angstrom vertical resolution for surface topographical mapping.
+\end{projectbox}
+
+\vspace{4mm}
+

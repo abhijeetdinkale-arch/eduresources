@@ -1,0 +1,914 @@
+\chapter{Functions, Scope, Modules \& Recursion}
+\label{chap:functions-modules-recursion}
+
+% ==============================================================================
+% SECTION 3.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 3 Academic Scope \lpuBadge]
+Modular programming is the foundation of scalable software engineering. As programs grow in complexity, writing everything in a single linear sequence becomes unmanageable. This unit transitions your thinking from writing scripts to architecting modular software. We will cover function call mechanics, scope namespaces (LEGB rule), standard and user-defined modules, parameter-passing modalities including arbitrary arguments (\texttt{*args}, \texttt{**kwargs}), anonymous lambda functions, closures, decorators, and the profound concept of recursive algorithmic design.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Function Architecture}: Understand caller-callee relationships, the DRY (Don't Repeat Yourself) principle, stack frame creation, and return value propagation.
+    \item \textbf{Type System Mechanics}: Master implicit coercion versus explicit type casting functions.
+    \item \textbf{Modules and Packages}: Utilize the standard \texttt{math} module, author user-defined modules, and understand import systems and package initialization.
+    \item \textbf{Scope \& Closures}: Master the LEGB rule, state modification via \texttt{global}/\texttt{nonlocal}, and capture state using closures.
+    \item \textbf{Argument Modalities}: Configure positional, keyword, default, and arbitrary argument lists, avoiding mutable default parameter traps.
+    \item \textbf{Recursive Algorithms}: Design terminating recursive functions linked to mathematical induction, trace call stacks, manage recursion limits, and optimize using memoization.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.2: FUNCTION CALLS \& FLOW OF EXECUTION
+% ==============================================================================
+\section{Function Calls \& Execution Mechanics}
+
+\subsection{The Anatomy of a Function}
+In procedural programming, a function is a named, independent block of code designed to perform a single, specific task. Functions embody two critical principles of software engineering: \textbf{Abstraction} and the \textbf{DRY (Don't Repeat Yourself)} principle. Abstraction allows us to use complex logic (like calculating a square root) simply by calling its name, without needing to understand the underlying implementation details. The DRY principle dictates that logic should be written once and reused, preventing code duplication that leads to maintenance nightmares and inconsistent behavior.
+
+When you define a function, you create a blueprint. When you invoke it, the Python interpreter suspends the current flow of execution, jumps to your function's definition, executes the statements within, and finally returns control to the exact point of invocation.
+
+\begin{syntaxbox}[Function Invocation Syntax]
+return\_value = function\_name(argument\_1, argument\_2, ...)
+\end{syntaxbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Caller}: The section of the program that requests the function's execution.
+    \item \textbf{Callee}: The function being invoked.
+    \item \textbf{Arguments}: Actual values, variables, or evaluated expressions passed into the function's parentheses to supply it with necessary data.
+\end{itemize}
+
+\subsection{Fruitful vs. Void Functions}
+Functions in Python can be broadly categorized based on their return behavior. A fundamental distinction exists between functions that yield data and those that perform actions.
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Fruitful Functions}: These functions compute and return a tangible, usable value back to the caller using an explicit \texttt{return} statement. The returned value can be stored in a variable, printed, or used in further mathematical expressions.
+    \item \textbf{Void Functions}: These functions perform operations—often called side effects—such as writing text to the console, modifying an external file, or updating a database. They do not compute a value for the caller to reuse. In Python, void functions implicitly return the special singleton object \texttt{None}.
+\end{enumerate}
+
+\begin{pythoncode}{Fruitful vs. Void Functions}
+# 1. Fruitful Function
+def calculate_area(radius):
+    """Computes area of a circle and returns the value."""
+    area = 3.14159 * radius ** 2
+    return area
+
+# Storing the result of a fruitful function
+circle_area = calculate_area(5.0)
+print("Fruitful Result:", circle_area)
+
+# 2. Void Function
+def print_banner(message):
+    """Prints a formatted banner. Does not return a value."""
+    print("=" * 30)
+    print(f" {message}")
+    print("=" * 30)
+
+# Storing the result of a void function reveals 'None'
+void_result = print_banner("System Initialization Complete")
+print("Void Return Value:", void_result)
+\end{pythoncode}
+
+\begin{outputbox}
+Fruitful Result: 78.53975
+==============================
+ System Initialization Complete
+==============================
+Void Return Value: None
+\end{outputbox}
+
+\subsection{Flow of Execution and Stack Frames}
+Understanding exactly how the interpreter navigates through your code is vital for debugging. Python executes scripts linearly, but function calls cause temporary deviations.
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item When a function is called, execution at the current line is \textbf{suspended}.
+    \item The interpreter creates a new \textbf{Stack Frame} (or Activation Record) and pushes it onto the Call Stack. This frame acts as an isolated memory sandbox containing the function's local variables and parameter bindings.
+    \item Control jumps to the first line of the callee function and executes its block sequentially.
+    \item Upon encountering a \texttt{return} statement (or reaching the end of the block), the function evaluates the return expression. The stack frame is then popped and destroyed, memory is reclaimed, and control jumps back to the caller, replacing the function call with the returned value.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 3.3: TYPE CONVERSION AND COERCION
+% ==============================================================================
+\section{Type Conversion and Coercion}
+
+Python uses strong, dynamic typing. This means variables do not have fixed types, but the objects they point to do. When operations mix different data types, Python must decide whether it can automatically bridge the gap or if it requires explicit instruction from the programmer.
+
+\subsection{Type Coercion (Implicit Conversion)}
+Type coercion occurs automatically without programmer intervention. When Python evaluates an expression involving mixed numeric types, it instinctively converts the "narrower" type (like an integer) into the "broader" type (like a float) to ensure no fractional precision is lost during the arithmetic operation.
+
+\begin{equation*}
+    \texttt{int} + \texttt{float} \longrightarrow \texttt{float} \quad (\text{e.g., } 4 + 3.5 \to 7.5)
+\end{equation*}
+
+\subsection{Type Casting (Explicit Conversion)}
+Type casting involves manually transforming a value from one type to another using built-in constructor functions. This is strictly required when reading user input from the console (which is always a string) or when truncating floating-point numbers.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Function} & \textbf{Conversion Mechanics \& Rules} & \textbf{Example} \\
+\midrule
+\texttt{int(x)} & Truncates floats toward zero; parses valid integer strings & \texttt{int(3.99)} $\to$ \texttt{3}, \texttt{int("42")} $\to$ \texttt{42} \\
+\texttt{float(x)} & Promotes integer to float; parses numeric strings & \texttt{float(5)} $\to$ \texttt{5.0}, \texttt{float("3.14")} $\to$ \texttt{3.14} \\
+\texttt{str(x)} & Converts any object into its string representation & \texttt{str(100)} $\to$ \texttt{"100"}, \texttt{str(True)} $\to$ \texttt{"True"} \\
+\texttt{bool(x)} & Returns \texttt{False} for falsy values (\texttt{0}, \texttt{""}, \texttt{[]}, \texttt{None}); else \texttt{True} & \texttt{bool("")} $\to$ \texttt{False}, \texttt{bool("Hi")} $\to$ \texttt{True} \\
+\bottomrule
+\end{tabularx}
+\caption{Python Type Casting Functions.}
+\label{tab:type-casting}
+\end{table}
+
+\begin{commonmistake}[Invalid String-to-Int Casting]
+Writing \texttt{int("4.5")} directly raises a \texttt{ValueError: invalid literal for int() with base 10: '4.5'}. The \texttt{int()} parser strictly expects whole digits. To convert a string representing a decimal to an integer, you must cast in two stages: \texttt{int(float("4.5"))} $\to$ \texttt{4}.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 3.4: MODULES AND PACKAGES
+% ==============================================================================
+\section{Modules and the Standard Library}
+
+To facilitate massive software projects, Python allows you to logically group related functions, classes, and variables into separate files called modules. A module is simply a file containing Python definitions and statements.
+
+\subsection{The Standard \texttt{math} Module}
+Python ships with a "batteries-included" standard library, offering modules for diverse tasks ranging from internet protocols to advanced mathematics. The \texttt{math} module provides access to underlying C-library mathematical functions for high-performance floating-point arithmetic. 
+
+Before you can use a module, you must bring it into your namespace using the \texttt{import} statement.
+
+\begin{pythoncode}{Importing and Using the Standard Math Module}
+import math
+
+# Using mathematical constants
+radius = 5
+circumference = 2 * math.pi * radius
+print(f"Circumference: {circumference:.2f}")
+
+# Ceiling and Floor operations
+print(f"Ceiling of 4.1: {math.ceil(4.1)}")
+print(f"Floor of 4.9: {math.floor(4.9)}")
+
+# Trigonometry (requires radians)
+angle_degrees = 90
+angle_radians = math.radians(angle_degrees)
+sine_val = math.sin(angle_radians)
+print(f"Sine of 90 degrees: {sine_val}")
+
+# Square root and powers
+print(f"Square root of 144: {math.sqrt(144)}")
+\end{pythoncode}
+
+\begin{outputbox}
+Circumference: 31.42
+Ceiling of 4.1: 5
+Floor of 4.9: 4
+Sine of 90 degrees: 1.0
+Square root of 144: 12.0
+\end{outputbox}
+
+\subsection{Authoring User-Defined Modules}
+You are not restricted to the standard library; creating your own modules is how you build application architecture. To create a module, simply save your Python code in a file with a \texttt{.py} extension. The filename becomes the module name.
+
+Suppose we create a file named \texttt{geometry\_utils.py}:
+
+\begin{pythoncode}{Creating a Module: geometry\_utils.py}
+# Content of geometry_utils.py
+"""A utility module for geometric calculations."""
+
+PI = 3.14159
+
+def area_rectangle(length, width):
+    return length * width
+
+def area_circle(radius):
+    return PI * (radius ** 2)
+\end{pythoncode}
+
+\begin{outputbox}
+(No output. This file just defines functions and constants.)
+\end{outputbox}
+
+\subsection{Import Syntax and Module Search Order}
+To use \texttt{geometry\_utils.py} in another script (say, \texttt{main.py}), both files generally need to be in the same directory. Python locates modules by searching directories listed in \texttt{sys.path}. 
+
+There are three primary ways to import:
+\begin{itemize}
+    \item \textbf{Standard Import}: \texttt{import geometry\_utils} (Requires prefixing: \texttt{geometry\_utils.area\_circle(5)})
+    \item \textbf{Specific Import}: \texttt{from geometry\_utils import area\_circle, PI} (Direct usage: \texttt{area\_circle(5)})
+    \item \textbf{Alias Import}: \texttt{import geometry\_utils as gu} (Shortened prefix: \texttt{gu.area\_circle(5)})
+\end{itemize}
+
+\subsection{The \texttt{\_\_name\_\_ == '\_\_main\_\_'} Guard}
+When a Python file is executed directly as a script, the interpreter assigns the special string \texttt{'\_\_main\_\_'} to the internal variable \texttt{\_\_name\_\_}. If the file is imported into another module, \texttt{\_\_name\_\_} is set to the module's actual filename.
+
+We use an \texttt{if} statement to prevent test code inside a module from running unexpectedly when the module is imported elsewhere:
+
+\begin{pythoncode}{The Execution Guard}
+def greet(name):
+    return f"Hello, {name}!"
+
+# This block only runs if this script is executed directly
+# It will NOT run if someone else does: import this_script
+if __name__ == '__main__':
+    print("Testing the module...")
+    print(greet("Developer"))
+\end{pythoncode}
+
+\subsection{Package Structure Basics}
+When modules multiply, they are organized into directories called \textbf{Packages}. A Python package is a directory containing Python modules and a special file named \texttt{\_\_init\_\_.py} (which can be empty). The presence of \texttt{\_\_init\_\_.py} tells Python that the directory should be treated as a cohesive package, allowing hierarchical imports like \texttt{from my\_package.sub\_package import my\_module}.
+
+% ==============================================================================
+% SECTION 3.5: FUNCTION DEFINITION, SCOPE & CLOSURES
+% ==============================================================================
+\section{Function Definition, Scope \& Closures}
+
+Defining functions robustly requires understanding how Python manages variable lifespans and memory across different regions of your code.
+
+\subsection{Syntax and Function Headers}
+\begin{syntaxbox}[Function Definition Template]
+def function\_name(parameter\_1, parameter\_2):
+    """Optional docstring describing purpose and parameters."""
+    statement\_1
+    statement\_2
+    return expression\_result
+\end{syntaxbox}
+
+\subsection{Variable Scope \& The LEGB Rule}
+The \textbf{scope} of a variable defines the exact lexical region of the source code where that variable identifier is accessible. Python does not use static memory mapping; instead, it uses dictionary-like namespaces. 
+
+When you reference a variable name, Python resolves it by searching namespaces from the innermost scope outwards, known as the \textbf{LEGB Rule}:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, auto]
+    \node[draw=pyred, fill=pyred!10, rectangle, rounded corners, minimum width=10cm, minimum height=1cm, font=\small\bfseries] (b) at (0, 3) {Built-in Scope (B): \texttt{print}, \texttt{len}, \texttt{range}, \texttt{int}, etc.};
+    \node[draw=pygold, fill=pygold!10, rectangle, rounded corners, minimum width=8cm, minimum height=1cm, font=\small\bfseries] (g) at (0, 2) {Global Scope (G): Top-level module script variables};
+    \node[draw=pypurple, fill=pypurple!10, rectangle, rounded corners, minimum width=6cm, minimum height=1cm, font=\small\bfseries] (e) at (0, 1) {Enclosing Scope (E): Outer function in nested functions};
+    \node[draw=pyblue, fill=pyblue!10, rectangle, rounded corners, minimum width=4cm, minimum height=1cm, font=\small\bfseries] (l) at (0, 0) {Local Scope (L): Inside current function};
+\end{tikzpicture}
+\caption{The LEGB Scope Lookup Hierarchy.}
+\label{fig:legb-scope}
+\end{figure}
+
+If the interpreter reaches the Built-in scope and still cannot find the variable name, it raises a \texttt{NameError}.
+
+\subsection{The \texttt{global} and \texttt{nonlocal} Keywords}
+By default, you can \textit{read} global variables inside a function. However, if you attempt to \textit{reassign} a variable, Python assumes you are creating a brand new local variable, \textbf{shadowing} the outer one. To modify variables outside the current local scope, explicit declarations are needed.
+
+\begin{pythoncode}{Scope Modifiers: global and nonlocal}
+global_score = 0  # Global scope
+
+def game_session():
+    multiplier = 2  # Enclosing scope
+    
+    def apply_bonus():
+        nonlocal multiplier # Modifies enclosing scope variable
+        global global_score # Modifies global scope variable
+        
+        multiplier *= 5
+        global_score += 100
+        print(f"Inner: multiplier={multiplier}, score={global_score}")
+        
+    apply_bonus()
+    print(f"Outer after inner call: multiplier={multiplier}")
+
+game_session()
+print(f"Global score after session: {global_score}")
+\end{pythoncode}
+
+\begin{outputbox}
+Inner: multiplier=10, score=100
+Outer after inner call: multiplier=10
+Global score after session: 100
+\end{outputbox}
+
+Relying heavily on \texttt{global} variables is widely considered a severe anti-pattern in software engineering. It creates hidden dependencies, makes functions unpredictable, and leads to bugs that are exceptionally difficult to trace in large codebases. State should ideally be passed via parameters and returned via \texttt{return} statements.
+
+\subsection{Nested Functions and Closures}
+Functions in Python are \textbf{first-class objects}, meaning they can be assigned to variables, passed as arguments, and returned from other functions. You can also define functions \textit{inside} other functions.
+
+A \textbf{Closure} occurs when a nested inner function remembers and has access to the variables of its enclosing (outer) function, \textit{even after the outer function has finished executing}. This is a powerful technique for data hiding and creating function factories.
+
+\begin{pythoncode}{Creating a Closure: The Counter Factory}
+def make_counter(start_value=0):
+    """Outer function defining an enclosing scope."""
+    count = start_value
+    
+    def increment(step=1):
+        """Inner function that captures 'count' from enclosing scope."""
+        nonlocal count
+        count += step
+        return count
+        
+    # Return the inner function object itself, uncalled!
+    return increment
+
+# Create two independent counter closures
+counter_a = make_counter(10)
+counter_b = make_counter(500)
+
+print("Counter A calls:", counter_a(), counter_a(5))
+print("Counter B calls:", counter_b(10), counter_b(20))
+\end{pythoncode}
+
+\begin{outputbox}
+Counter A calls: 11 16
+Counter B calls: 510 530
+\end{outputbox}
+Notice how \texttt{counter\_a} and \texttt{counter\_b} maintain independent, isolated states of \texttt{count}. Closures form the foundational mechanism behind Python \textbf{Decorators}, which are wrappers that augment the behavior of other functions.
+
+% ==============================================================================
+% SECTION 3.6: PARAMETERS, ARGUMENTS & HIGHER-ORDER FUNCTIONS
+% ==============================================================================
+\section{Parameters, Arguments, and Higher-Order Functions}
+
+\subsection{The Five Argument Modalities}
+Python offers immense flexibility in how arguments are passed from caller to callee.
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Positional Arguments}: Bound strictly in the order they are passed.
+    \item \textbf{Keyword Arguments}: Passed explicitly as \texttt{parameter\_name = value}, liberating you from order dependency.
+    \item \textbf{Default Parameters}: Initialized with fallback values if omitted in the call.
+    \item \textbf{Arbitrary Positional Arguments (\texttt{*args})}: Collects any surplus positional arguments into a \textbf{tuple}.
+    \item \textbf{Arbitrary Keyword Arguments (\texttt{**kwargs})}: Collects any surplus keyword arguments into a \textbf{dictionary}.
+\end{enumerate}
+
+\begin{pythoncode}{Demonstrating *args and **kwargs}
+def configure_server(ip, port=8080, *protocols, **metadata):
+    print(f"Connecting to {ip}:{port}")
+    print(f"Supported Protocols: {protocols}")
+    for key, val in metadata.items():
+        print(f" - Meta [{key}]: {val}")
+
+# Mixing all modalities
+configure_server("192.168.1.1", 443, "HTTP", "FTP", "SSH", 
+                 os="Linux", uptime_days=45, secure=True)
+\end{pythoncode}
+
+\begin{outputbox}
+Connecting to 192.168.1.1:443
+Supported Protocols: ('HTTP', 'FTP', 'SSH')
+ - Meta [os]: Linux
+ - Meta [uptime_days]: 45
+ - Meta [secure]: True
+\end{outputbox}
+
+\begin{commonmistake}[The Mutable Default Argument Trap]
+Never use mutable objects (like lists or dictionaries) as default parameter values. Default arguments are evaluated \textit{only once} when the function is defined, not every time the function is called.
+\begin{lstlisting}[language=Python3]
+# DANGEROUS PITFALL:
+def append_item(item, target_list=[]): 
+    target_list.append(item)
+    return target_list
+\end{lstlisting}
+Calling \texttt{append\_item(1)} then \texttt{append\_item(2)} results in \texttt{[1, 2]} instead of two separate \texttt{[1]} and \texttt{[2]} lists. \textbf{Fix}: Use \texttt{None} as the default, and initialize the list inside the function body.
+\end{commonmistake}
+
+\subsection{Anonymous Lambda Functions}
+A \textbf{lambda function} is a small, restricted inline function defined using the \texttt{lambda} keyword. It evaluates and returns a single expression. Note: PEP 8 strongly discourages assigning lambdas to variables (like \texttt{sq = lambda x: x**2}); standard \texttt{def} should be used for named functions. Lambdas are best used as throwaway arguments for higher-order functions.
+
+\begin{syntaxbox}[Lambda Function Syntax]
+lambda arguments: single\_expression
+\end{syntaxbox}
+
+\subsection{Higher-Order Functions: \texttt{map()}, \texttt{filter()}, \texttt{sorted()}}
+A higher-order function is a function that accepts other functions as arguments or returns them. Python provides powerful built-ins for functional programming paradigms.
+
+\begin{pythoncode}{Higher-Order Functions with Lambdas}
+numbers = [1, 2, 3, 4, 5, 6]
+
+# 1. map(): Applies a function to every element in an iterable
+squared = list(map(lambda x: x ** 2, numbers))
+print("Mapped squares:", squared)
+
+# 2. filter(): Keeps only elements where the function returns True
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print("Filtered evens:", evens)
+
+# 3. sorted() with key function
+students = [("Rohan", 85), ("Ananya", 95), ("Deepak", 78)]
+# Sort ascending by marks (index 1 of the tuple)
+ranked = sorted(students, key=lambda s: s[1], reverse=True)
+print("Ranked:", ranked)
+\end{pythoncode}
+
+\begin{outputbox}
+Mapped squares: [1, 4, 9, 16, 25, 36]
+Filtered evens: [2, 4, 6]
+Ranked: [('Ananya', 95), ('Rohan', 85), ('Deepak', 78)]
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 3.7: RECURSION AND MEMOIZATION
+% ==============================================================================
+\section{Recursion, Call Stacks \& Memoization}
+
+\subsection{Mathematical Induction and Recursion}
+Recursion is an elegant algorithmic design technique where a function calls itself to solve smaller instances of the same problem. Conceptually, it is identical to mathematical induction:
+\begin{enumerate}
+    \item \textbf{Base Step $\rightarrow$ Base Case}: A trivial problem instance that can be solved immediately without further self-invocation. Without a base case, recursion loops infinitely.
+    \item \textbf{Inductive Step $\rightarrow$ Recursive Case}: Assuming the function works for smaller inputs, reduce the current problem into a smaller input, invoke the function, and use the result to solve the current problem.
+\end{enumerate}
+
+\subsection{The Call Stack and Recursion Limits}
+Because every recursive call pushes a new Stack Frame onto memory, unconstrained recursion will exhaust the computer's memory. Python implements a safety mechanism, the recursion limit, to prevent system crashes.
+
+\begin{pythoncode}{Inspecting Recursion Limits}
+import sys
+
+# View current limit (typically 1000)
+limit = sys.getrecursionlimit()
+print(f"Current recursion depth limit: {limit}")
+
+# Limit can be increased for deep algorithms, though iteratively is safer
+sys.setrecursionlimit(1500)
+print(f"Updated recursion depth limit: {sys.getrecursionlimit()}")
+\end{pythoncode}
+
+\begin{outputbox}
+Current recursion depth limit: 1000
+Updated recursion depth limit: 1500
+\end{outputbox}
+Exceeding this limit throws a fatal \texttt{RecursionError: maximum recursion depth exceeded}.
+
+\subsection{Classic Algorithms: Euclid's GCD and Tower of Hanoi}
+The Greatest Common Divisor (GCD) of two numbers can be found brilliantly using Euclid's recursive algorithm: $\text{gcd}(a, b) = \text{gcd}(b, a \pmod b)$ until $b=0$.
+
+\begin{pythoncode}{Recursive Algorithms: GCD and Tower of Hanoi}
+# 1. Euclid's GCD Algorithm
+def gcd_recursive(a, b):
+    """Returns GCD using Euclidean algorithm."""
+    if b == 0:
+        return a  # Base Case
+    return gcd_recursive(b, a % b) # Recursive Step
+
+print("GCD of 48 and 18:", gcd_recursive(48, 18))
+
+# 2. Tower of Hanoi Trace
+def hanoi(n, source, target, aux):
+    if n == 1:
+        print(f" Move disk 1 from {source} to {target}")
+        return
+    hanoi(n - 1, source, aux, target)
+    print(f" Move disk {n} from {source} to {target}")
+    hanoi(n - 1, aux, target, source)
+
+print("\nSolving Tower of Hanoi (3 Disks):")
+hanoi(3, 'A', 'C', 'B')
+\end{pythoncode}
+
+\begin{outputbox}
+GCD of 48 and 18: 6
+
+Solving Tower of Hanoi (3 Disks):
+ Move disk 1 from A to C
+ Move disk 2 from A to B
+ Move disk 1 from C to B
+ Move disk 3 from A to C
+ Move disk 1 from B to A
+ Move disk 2 from B to C
+ Move disk 1 from A to C
+\end{outputbox}
+
+\subsection{Recursion Trees and Memoization (\texttt{lru\_cache})}
+Naive recursive algorithms, like the standard Fibonacci generator, exhibit disastrous $O(2^n)$ exponential time complexity because they recalculate the same subproblems repeatedly.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[level distance=1.2cm, sibling distance=2.5cm,
+  every node/.style = {shape=circle, draw=pyblue, align=center, top color=white, bottom color=pyblue!20, font=\footnotesize}]
+  \node {fib(4)}
+    child { node {fib(3)}
+      child { node {fib(2)}
+        child { node {fib(1)} }
+        child { node {fib(0)} }
+      }
+      child { node {fib(1)} }
+    }
+    child { node {fib(2)}
+      child { node {fib(1)} }
+      child { node {fib(0)} }
+    };
+\end{tikzpicture}
+\caption{Recursion Tree for \texttt{fib(4)}. Note the redundant calculations of \texttt{fib(2)} and \texttt{fib(1)}.}
+\label{fig:fib-tree}
+\end{figure}
+
+\textbf{Memoization} optimizes this to $O(n)$ by caching results of expensive function calls. While you can implement this manually with a dictionary, Python provides an elegant decorator in the \texttt{functools} module.
+
+\begin{pythoncode}{Optimizing Recursion with @lru\_cache}
+from functools import lru_cache
+
+# The decorator automatically caches function return values
+@lru_cache(maxsize=None)
+def fibonacci_fast(n):
+    if n <= 1:
+        return n
+    return fibonacci_fast(n - 1) + fibonacci_fast(n - 2)
+
+# Easily computes large numbers without hanging
+print("Fibonacci(50) computed instantly:", fibonacci_fast(50))
+\end{pythoncode}
+
+\begin{outputbox}
+Fibonacci(50) computed instantly: 12586269025
+\end{outputbox}
+
+
+% ==============================================================================
+% SECTION 3.8: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 3 High-Yield Exam Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Default Parameter Positioning}: Non-default arguments cannot follow default arguments. \texttt{def f(a=1, b):} raises a compile-time \texttt{SyntaxError}.
+    \item \textbf{Void Functions in Expressions}: If a function lacks a \texttt{return} statement, doing \texttt{x = print\_result()} assigns \texttt{x = None}. Performing arithmetic on \texttt{x} raises \texttt{TypeError}.
+    \item \textbf{Scope Shadowing}: Reassigning a global variable name inside a function makes it purely local unless explicitly declared with \texttt{global}.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 3.9: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Scope and Default Parameters]
+\textbf{Question 1}: Predict the output:
+\begin{lstlisting}[language=Python3]
+x = 10
+def f1(a, b=x):
+    x = 20
+    return a + b
+print(f1(5))
+\end{lstlisting}
+\textbf{Answer}: \textbf{15}. The default value \texttt{b=x} evaluates to the global \texttt{x} (10) at the time of function \textit{definition}. The local reassignment \texttt{x=20} has no effect on \texttt{b}.
+\end{outputprediction}
+
+\begin{outputprediction}[List Mutation in Scope]
+\textbf{Question 2}: Predict the output:
+\begin{lstlisting}[language=Python3]
+nums = [1, 2]
+def update(lst):
+    lst.append(3)
+    lst = [4, 5]
+update(nums)
+print(nums)
+\end{lstlisting}
+\textbf{Answer}: \textbf{[1, 2, 3]}. Lists are passed by object reference. \texttt{lst.append(3)} mutates the original list. However, \texttt{lst = [4, 5]} merely rebinds the local name \texttt{lst} to a new object, leaving the global \texttt{nums} untouched.
+\end{outputprediction}
+
+\begin{outputprediction}[Arbitrary Arguments unpacked]
+\textbf{Question 3}: Predict the output:
+\begin{lstlisting}[language=Python3]
+def compute(*args):
+    return sum(args) + len(args)
+print(compute(1, 2, 3))
+\end{lstlisting}
+\textbf{Answer}: \textbf{9}. \texttt{args} evaluates to \texttt{(1, 2, 3)}. Sum is 6, length is 3. $6 + 3 = 9$.
+\end{outputprediction}
+
+\begin{outputprediction}[Closures]
+\textbf{Question 4}: Predict the output:
+\begin{lstlisting}[language=Python3]
+def outer():
+    n = 1
+    def inner():
+        return n + 1
+    return inner
+func = outer()
+print(func())
+\end{lstlisting}
+\textbf{Answer}: \textbf{2}. The closure \texttt{inner} captures the variable \texttt{n=1} from the enclosing scope.
+\end{outputprediction}
+
+\begin{outputprediction}[Recursion trace]
+\textbf{Question 5}: Predict the output:
+\begin{lstlisting}[language=Python3]
+def f(n):
+    if n <= 0: return 0
+    return n + f(n - 2)
+print(f(5))
+\end{lstlisting}
+\textbf{Answer}: \textbf{9}. Trace: $f(5) = 5 + f(3)$. $f(3) = 3 + f(1)$. $f(1) = 1 + f(-1)$. $f(-1) = 0$. Summing up: $1 + 3 + 5 = 9$.
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing UnboundLocalError]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+counter = 0
+def increment():
+    counter = counter + 1 # UnboundLocalError!
+    return counter
+\end{lstlisting}
+\textbf{Fix}: Because \texttt{counter} is assigned on the left-hand side, Python treats it as local. But on the right-hand side, it evaluates before initialization. Declare \texttt{global counter} as the first line of the function.
+\end{debuggingbox}
+
+\begin{debuggingbox}[Fixing the Mutable Default]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+def add_to_inventory(item, inventory=[]):
+    inventory.append(item)
+    return inventory
+\end{lstlisting}
+\textbf{Fix}: Mutable defaults leak state across calls. Change to:
+\begin{lstlisting}[language=Python3]
+def add_to_inventory(item, inventory=None):
+    if inventory is None: inventory = []
+    inventory.append(item)
+    return inventory
+\end{lstlisting}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Infinite Recursion]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+def sum_n(n):
+    if n == 1: return 1
+    return n + sum_n(n) # RecursionError
+\end{lstlisting}
+\textbf{Fix}: The recursive step does not converge toward the base case. Change the recursive call to \texttt{sum\_n(n - 1)}.
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 3.10: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 3 Practice Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a function \texttt{is\_even(n)} that returns \texttt{True} if integer $n$ is even, and \texttt{False} otherwise.
+    \item \textbf{Level 1 (Foundation)}: Write a fruitful function \texttt{circle\_properties(r)} that computes and returns both the area and perimeter of a circle of radius $r$ as a tuple.
+    \item \textbf{Level 2 (Standard)}: Write a recursive function \texttt{sum\_of\_digits(n)} that computes the sum of the digits of a non-negative integer $n$ (e.g., $1234 \to 10$).
+    \item \textbf{Level 2 (Standard)}: Write a recursive function \texttt{power(base, exp)} that calculates $\text{base}^{\text{exp}}$ recursively without using \texttt{**}.
+    \item \textbf{Level 2 (Standard)}: Write a function \texttt{filter\_long\_words(words, n)} that uses the built-in \texttt{filter()} and a lambda function to return a list of words strictly longer than $n$ characters.
+    \item \textbf{Level 3 (Exam Tier)}: Write a recursive function to solve the \textbf{Tower of Hanoi} puzzle for $N$ disks, printing each disk transfer step.
+    \item \textbf{Level 3 (Exam Tier)}: Implement a generalized calculator function using \texttt{*args} that accepts an arithmetic operation string (\texttt{'+'}, \texttt{'*'}) and computes the cumulative reduction across all passed numbers.
+    \item \textbf{Level 3 (Exam Tier)}: Write a recursive function \texttt{is\_palindrome\_str(s)} that checks whether a string $s$ is a palindrome by comparing boundary characters.
+    \item \textbf{Level 4 (Challenge)}: Write a function factory \texttt{make\_multiplier(factor)} that returns a closure. The closure should take an argument \texttt{x} and return \texttt{x * factor}.
+    \item \textbf{Level 4 (Challenge)}: Write a recursive implementation of Euclid's \textbf{GCD algorithm} and use it to find the Least Common Multiple (LCM) of two numbers via the formula $LCM(a,b) = |a \times b| / GCD(a,b)$.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions 1-4]
+\noindent\textbf{Problem 1: is\_even(n)}
+\begin{lstlisting}[language=Python3]
+def is_even(n):
+    return n % 2 == 0
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{is\_even(4)} $\to$ True. Boundary: \texttt{is\_even(0)} $\to$ True. Odd: \texttt{is\_even(-3)} $\to$ False.
+
+\noindent\textbf{Problem 2: circle\_properties(r)}
+\begin{lstlisting}[language=Python3]
+import math
+def circle_properties(r):
+    area = math.pi * r ** 2
+    perimeter = 2 * math.pi * r
+    return (area, perimeter)
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{circle\_properties(10)} $\to$ (314.15..., 62.83...). Boundary: \texttt{circle\_properties(0)} $\to$ (0.0, 0.0).
+
+\noindent\textbf{Problem 3: sum\_of\_digits(n)}
+\begin{lstlisting}[language=Python3]
+def sum_of_digits(n):
+    if n < 10: return n  # Base case
+    return (n % 10) + sum_of_digits(n // 10)
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{sum\_of\_digits(123)} $\to$ 6. Boundary: \texttt{sum\_of\_digits(5)} $\to$ 5. Error: Fails on negatives (needs \texttt{n=abs(n)}).
+
+\noindent\textbf{Problem 4: power(base, exp)}
+\begin{lstlisting}[language=Python3]
+def power(base, exp):
+    if exp == 0: return 1 # Base case
+    return base * power(base, exp - 1)
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{power(2, 3)} $\to$ 8. Boundary: \texttt{power(5, 0)} $\to$ 1.
+\end{solutionbox}
+
+\begin{solutionbox}[Solutions 5-7]
+\noindent\textbf{Problem 5: filter\_long\_words}
+\begin{lstlisting}[language=Python3]
+def filter_long_words(words, n):
+    return list(filter(lambda w: len(w) > n, words))
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{filter\_long\_words(["hi", "hello"], 3)} $\to$ ["hello"]. Boundary: \texttt{words=[]} $\to$ [].
+
+\noindent\textbf{Problem 6: Tower of Hanoi Solver}
+\begin{lstlisting}[language=Python3]
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"{source} -> {target}")
+        return
+    tower_of_hanoi(n - 1, source, auxiliary, target)
+    print(f"{source} -> {target}")
+    tower_of_hanoi(n - 1, auxiliary, target, source)
+\end{lstlisting}
+
+\noindent\textbf{Problem 7: Generalized *args Reducer}
+\begin{lstlisting}[language=Python3]
+def reduce_calc(operation, *numbers):
+    if not numbers: return 0
+    if operation == '+': return sum(numbers)
+    if operation == '*':
+        prod = 1
+        for n in numbers: prod *= n
+        return prod
+    raise ValueError("Unsupported operation")
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{reduce\_calc('*', 2, 3, 4)} $\to$ 24. Boundary: \texttt{reduce\_calc('+')} $\to$ 0.
+\end{solutionbox}
+
+\begin{solutionbox}[Solutions 8-10]
+\noindent\textbf{Problem 8: Recursive Palindrome}
+\begin{lstlisting}[language=Python3]
+def is_palindrome_str(s):
+    if len(s) <= 1: return True # Base case
+    if s[0] != s[-1]: return False
+    return is_palindrome_str(s[1:-1])
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{is\_palindrome\_str("racecar")} $\to$ True. Boundary: \texttt{is\_palindrome\_str("a")} $\to$ True.
+
+\noindent\textbf{Problem 9: Multiplier Closure Factory}
+\begin{lstlisting}[language=Python3]
+def make_multiplier(factor):
+    def inner(x):
+        return x * factor
+    return inner
+# Usage: times3 = make_multiplier(3); times3(10) -> 30
+\end{lstlisting}
+
+\noindent\textbf{Problem 10: GCD and LCM}
+\begin{lstlisting}[language=Python3]
+def gcd(a, b):
+    if b == 0: return a
+    return gcd(b, a % b)
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
+\end{lstlisting}
+\textbf{Test Cases}: Normal: \texttt{lcm(12, 15)} $\to$ 60. Boundary: \texttt{lcm(0, 5)} $\to$ Error (ZeroDivision) handled if checked.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.11: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the default return value of a Python function that does not contain an explicit \texttt{return} statement?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{0} \quad (b) \texttt{False} \quad (c) \texttt{None} \quad (d) \texttt{Empty string}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Void functions in Python return the \texttt{None} object.}
+
+    \item In the LEGB rule, what does the letter 'E' stand for?
+    \begin{enumerate}[label=(\alph*)]
+        \item External \quad (b) Enclosing \quad (c) Executable \quad (d) Environment
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{LEGB stands for Local, Enclosing, Global, Built-in.}
+
+    \item What is the value returned by \texttt{math.floor(-3.2)}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{-3} \quad (b) \texttt{-4} \quad (c) \texttt{-3.0} \quad (d) \texttt{-4.0}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{floor()} returns the largest integer $\le -3.2$, which is $-4$.}
+
+    \item How are arbitrary positional arguments (\texttt{*args}) passed into a function represented internally?
+    \begin{enumerate}[label=(\alph*)]
+        \item As a list \quad (b) As a tuple \quad (c) As a dictionary \quad (d) As a set
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{*args} collects positional arguments into an immutable \texttt{tuple}.}
+
+    \item Which keyword allows an inner function to modify a variable defined in its enclosing outer function?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{nonlocal} \quad (b) \texttt{extern} \quad (c) \texttt{global} \quad (d) \texttt{static}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{nonlocal} accesses the enclosing scope; \texttt{global} accesses the module scope.}
+
+    \item What is the base case in the recursive factorial function \texttt{factorial(n)}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{n == 0 or n == 1} \quad (b) \texttt{n < 0} \quad (c) \texttt{n == 100} \quad (d) \texttt{n == 2}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{Factorial terminates when $n=0$ or $n=1$, returning 1.}
+
+    \item What error is raised when converting \texttt{int("abc")}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{TypeError} \quad (b) \texttt{ValueError} \quad (c) \texttt{NameError} \quad (d) \texttt{CastError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Passing an invalid literal string to \texttt{int()} raises \texttt{ValueError}.}
+
+    \item A function that has access to variables from its enclosing scope, even after the outer function has returned, is called a:
+    \begin{enumerate}[label=(\alph*)]
+        \item Lambda \quad (b) Closure \quad (c) Decorator \quad (d) Recursive function
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Closures capture state from their enclosing environments.}
+
+    \item Which of the following function headers is syntactically INVALID?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{def f(a, b=2):} \quad (b) \texttt{def f(a=1, b=2):} \quad (c) \texttt{def f(a=1, b):} \quad (d) \texttt{def f(*args):}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Positional parameters cannot follow default parameters.}
+
+    \item What exception occurs when recursion exceeds Python's maximum call stack limit?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{StackOverflowError} \quad (b) \texttt{MemoryError} \quad (c) \texttt{RecursionError} \quad (d) \texttt{RuntimeError}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Python raises \texttt{RecursionError} on call stack overflow.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 3.12: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 3 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the difference between type coercion and type casting, providing an example for each.
+    \item Define what a closure is and explain why it is useful.
+    \item State the two mandatory components of every recursive algorithm.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this recursive code:
+    \begin{lstlisting}[language=Python3]
+def mystery(n):
+    if n <= 1: return 1
+    return n + mystery(n - 2)
+print(mystery(7))
+    \end{lstlisting}
+    \item Trace the output of this function with default and keyword arguments:
+    \begin{lstlisting}[language=Python3]
+def display(a, b=2, c=3):
+    return a * b + c
+print(display(4), display(2, c=10), display(b=3, a=2))
+    \end{lstlisting}
+    \item Explain why the following code is problematic and how to fix it:
+    \begin{lstlisting}[language=Python3]
+def add_task(task, task_list=[]):
+    task_list.append(task)
+    return task_list
+    \end{lstlisting}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a Python module containing:
+    \begin{enumerate}[label=(\alph*)]
+        \item A recursive function \texttt{fibonacci(n)} using the \texttt{@lru\_cache} decorator. (5 Marks)
+        \item A main execution guard (\texttt{if \_\_name\_\_ == '\_\_main\_\_':}) that takes user input $N$, validates it is non-negative, and prints the first $N$ terms of the sequence. (5 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 3 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{Coercion vs. Casting} [2 Marks]: Coercion is implicit conversion done automatically by Python (e.g., \texttt{3 + 2.5} becomes \texttt{5.5} float). Casting is explicit manual conversion using functions like \texttt{int("5")}.
+    \item \textbf{Closure} [2 Marks]: An inner function that captures and retains access to variables in its enclosing scope even after the outer function finishes execution. Useful for data hiding and factories.
+    \item \textbf{Recursion Components} [2 Marks]: (1) Base Case (termination condition); (2) Recursive Case (self-call progressing toward base case).
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Recursive Tracing} [3 Marks]:
+    $mystery(7) = 7 + mystery(5) = 7 + 5 + 3 + 1 = \mathbf{16}$.
+    \item \textbf{Display Output} [3 Marks]:
+    \texttt{display(4)} $\to 11$. \texttt{display(2, c=10)} $\to 14$. \texttt{display(b=3, a=2)} $\to 9$. Output: \texttt{11 14 9}.
+    \item \textbf{Mutable Default Trap} [3 Marks]: Using a mutable list \texttt{[]} as a default parameter means the same list object is reused across all calls. Fix by setting \texttt{task\_list=None} and initializing \texttt{task\_list = []} inside the function if it is \texttt{None}.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Fibonacci Module} [10 Marks]:
+\begin{lstlisting}[language=Python3]
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n <= 0: return 0
+    if n == 1: return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+if __name__ == '__main__':
+    try:
+        count = int(input("Enter number of terms: "))
+        if count < 0:
+            print("Please enter a positive integer.")
+        else:
+            for i in range(count):
+                print(fibonacci(i), end=" ")
+    except ValueError:
+        print("Invalid input.")
+\end{lstlisting}
+\end{enumerate}
+\end{solutionbox}

@@ -1,0 +1,184 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exam_style}[2026/09/15 Professional LPU Exam Companion Style]
+
+% ------------------------------------------------------------------------------
+% Core Typography, Geometry & Page Layout
+% ------------------------------------------------------------------------------
+\RequirePackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,headheight=14pt]{geometry}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+
+% ------------------------------------------------------------------------------
+% Mathematics & Symbols
+% ------------------------------------------------------------------------------
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\RequirePackage{cancel}
+
+% ------------------------------------------------------------------------------
+% Tables, Lists & Formatting
+% ------------------------------------------------------------------------------
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{enumitem}
+
+% ------------------------------------------------------------------------------
+% Colors & Graphics
+% ------------------------------------------------------------------------------
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+% Corporate & University Palette
+\definecolor{LPUOrange}{RGB}{227, 82, 5}
+\definecolor{LPUNavy}{RGB}{18, 44, 82}
+\definecolor{DarkSlate}{RGB}{33, 43, 54}
+\definecolor{LightGrayBg}{RGB}{248, 249, 250}
+\definecolor{BorderGray}{RGB}{222, 226, 230}
+\definecolor{SuccessGreen}{RGB}{40, 167, 69}
+\definecolor{AlertRed}{RGB}{220, 53, 69}
+\definecolor{SolBg}{RGB}{245, 248, 252}
+\definecolor{SolBorder}{RGB}{180, 205, 237}
+
+% ------------------------------------------------------------------------------
+% Box Environments (tcolorbox)
+% ------------------------------------------------------------------------------
+\RequirePackage[many]{tcolorbox}
+
+% Solution Box
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    colback=SolBg,
+    colframe=LPUNavy,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small Step-by-Step Mathematical Solution \hfill #1},
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=LPUNavy, arc=2mm},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=4mm, bottom=3mm, left=3mm, right=3mm,
+    separator sign none,
+    before skip=8pt, after skip=10pt
+}
+
+% Examiner's Caution / Exam Tip Box
+\newtcolorbox{examinertip}[1][Examiner's Warning \& Common Pitfall]{
+    enhanced,
+    colback=white,
+    colframe=LPUOrange,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    title={#1},
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=LPUOrange, arc=2mm},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=8pt
+}
+
+% Marking Scheme Rubric Box
+\newtcolorbox{markingrubric}{
+    enhanced,
+    colback=LightGrayBg,
+    colframe=BorderGray,
+    boxrule=0.6pt,
+    arc=1.5mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    fontupper=\small\sffamily,
+    before skip=4pt, after skip=6pt
+}
+
+% ------------------------------------------------------------------------------
+% Headers and Footers
+% ------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{LPUNavy} MTH-165: Mathematics for Engineers}
+\fancyhead[R]{\small\sffamily\color{gray} Exam Companion \& Sample Question Papers}
+\fancyfoot[C]{\sffamily\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ------------------------------------------------------------------------------
+% Macros for Question Paper Layout & Metadata
+% ------------------------------------------------------------------------------
+
+% Official LPU Exam Header Box
+% Arguments: {Exam Type}{Set}{Time}{Max Marks}{CO Info}
+\newcommand{\LPUPaperHeader}[5]{
+    \noindent
+    \begin{tcolorbox}[enhanced, colback=white, colframe=LPUNavy, boxrule=1pt, arc=1.5mm, left=2mm, right=2mm, top=2mm, bottom=2mm]
+    \begin{tabularx}{\textwidth}{@{}X r@{}}
+        \begin{tabular}{@{}l@{}}
+            {\Large\bfseries\color{LPUNavy} LOVELY PROFESSIONAL UNIVERSITY} \\[1mm]
+            {\footnotesize\sffamily\color{gray} Transforming Education, Transforming India} \\[2mm]
+            {\textbf{Course Code:}} MTH-165 \quad {\textbf{Course Title:}} Mathematics for Engineers \\
+            {\textbf{Academic Task Type:}} #1 \quad {\textbf{Set:}} \textbf{\color{LPUOrange}#2} \\
+            {\textbf{Maximum Marks:}} #4 \quad {\textbf{Time Allowed:}} #3
+        \end{tabular}
+        &
+        \begin{tabular}{|p{4.2cm}|}
+            \hline
+            {\footnotesize\textbf{Roll No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Reg. No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Section:}} \dotfill \\
+            \hline
+        \end{tabular}
+    \end{tabularx}
+    \vspace{1mm}
+    \hrule height 0.5pt
+    \vspace{1.5mm}
+    \noindent{\footnotesize\sffamily\textbf{Course Outcomes Addressed:} #5}
+    \end{tcolorbox}
+    \vspace{2mm}
+}
+
+% Question environment with metadata
+\newcommand{\questionitem}[5]{
+    % #1: Q Number, #2: Statement, #3: Marks, #4: CO, #5: Bloom's Level
+    \noindent
+    \begin{minipage}{\textwidth}
+    \vspace{2mm}
+    \begin{tcolorbox}[enhanced, colback=white, colframe=BorderGray, boxrule=0.6pt, arc=1mm, top=2mm, bottom=2mm, left=2.5mm, right=2.5mm]
+    \begin{tabularx}{\textwidth}{@{}p{1.2cm} X p{2.2cm} p{1.6cm} p{1.4cm}@{}}
+        \textbf{Q.#1} & #2 & {\footnotesize\color{LPUNavy}\textbf{#4}} & {\footnotesize\color{DarkSlate}#5} & {\bfseries\color{LPUOrange}#3 Marks}
+    \end{tabularx}
+    \end{tcolorbox}
+    \end{minipage}
+}
+
+% MCQ question item
+\newcommand{\mcqitem}[7]{
+    % #1: Q No, #2: Question text, #3: (A), #4: (B), #5: (C), #6: (D), #7: Marks
+    \noindent
+    \parbox{\textwidth}{
+        \vspace{2mm}
+        \textbf{Q.#1} \quad #2 \hfill {\footnotesize\color{LPUOrange}\bfseries [#7 Mark\ifnum#7>1s\fi]}
+        \vspace{1mm}
+        \begin{multicols}{2}
+        \begin{enumerate}[label=(\Alph*), leftmargin=6mm, itemsep=1pt]
+            \item #3
+            \item #4
+            \item #5
+            \item #6
+        \end{enumerate}
+        \end{multicols}
+    }
+}
+
+% Hyperref setup
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,citecolor=LPUNavy,urlcolor=LPUOrange]{hyperref}
+
+\endinput

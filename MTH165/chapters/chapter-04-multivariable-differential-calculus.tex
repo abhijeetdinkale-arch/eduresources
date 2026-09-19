@@ -1,0 +1,519 @@
+\chapter{Multivariable Differential Calculus, Optimization \& Jacobians}
+\label{chap:multivariable-differential-calculus}
+
+% ==============================================================================
+% SECTION 4.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+In physical systems and engineering design, most phenomena depend simultaneously on multiple independent variables (e.g., spatial coordinates, temperature, pressure, time). Multivariable differential calculus extends single-variable analysis to higher dimensions. This unit covers multivariate limits, partial differentiation, Euler's Theorem for homogeneous functions, total differentials, tangent planes, unconstrained optimization via the Hessian discriminant, constrained optimization via Lagrange Multipliers, and Jacobian functional determinants.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze Multivariable Limits and Continuity}, proving non-existence of limits via path-dependence ($y = mx, y = kx^2$).
+    \item \textbf{Compute Higher-Order Partial Derivatives} and apply \textbf{Euler's Theorem on Homogeneous Functions} along with its second-order extensions.
+    \item \textbf{Evaluate Total Differentials and Chain Rules} for composite and implicit functions.
+    \item \textbf{Construct Tangent Planes and Normal Lines} to explicit and implicit 3D surfaces.
+    \item \textbf{Classify Critical Points} into local maxima, local minima, and saddle points using the \textbf{Hessian Discriminant ($rt - s^2$)}.
+    \item \textbf{Solve Constrained Optimization Problems} using \textbf{Lagrange's Method of Undetermined Multipliers}.
+    \item \textbf{Calculate Jacobians}, prove functional dependence, and establish explicit algebraic relations.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 4.2: MULTIVARIABLE LIMITS \& CONTINUITY
+% ==============================================================================
+\section{Functions of Several Variables, Limits \& Continuity}
+
+\subsection{Multivariable Functions and Limits}
+
+\begin{definition}[Two-Variable Limit]
+Let $z = f(x,y)$ be defined in a neighborhood of $(x_0, y_0)$. We write $\lim_{(x,y)\to(x_0,y_0)} f(x,y) = L$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that:
+\begin{equation}
+    0 < \sqrt{(x-x_0)^2 + (y-y_0)^2} < \delta \implies |f(x,y) - L| < \epsilon
+\end{equation}
+\end{definition}
+
+\begin{methodbox}[Testing Non-Existence of Multivariable Limits via Paths]
+To prove that $\lim_{(x,y)\to(0,0)} f(x,y)$ does NOT exist:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Test Linear Paths ($y = mx$)}: Substitute $y = mx$. If the resulting limit depends on $m$, the limit does not exist.
+    \item \textbf{Test Parabolic / Degree-Matching Paths ($y = kx^2$ or $x = ky^2$)}: If the denominator contains terms like $x^2 + y^4$, substitute $x = ky^2$ to balance powers. If the limit depends on $k$, the limit does not exist.
+\end{enumerate}
+\end{methodbox}
+
+\begin{example}[Path-Dependent Limit Non-Existence]
+Show that $\lim_{(x,y)\to(0,0)} \frac{x y^2}{x^2 + y^4}$ does not exist.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Solution]
+\begin{enumerate}
+    \item Along straight line paths $y = mx$:
+    \begin{equation*}
+        \lim_{x\to 0} \frac{x (mx)^2}{x^2 + (mx)^4} = \lim_{x\to 0} \frac{m^2 x^3}{x^2(1 + m^4 x^2)} = \lim_{x\to 0} \frac{m^2 x}{1 + m^4 x^2} = 0 \quad (\text{independent of } m)
+    \end{equation*}
+    \item Along parabolic paths $x = k y^2$:
+    \begin{equation*}
+        \lim_{y\to 0} \frac{(ky^2)y^2}{(ky^2)^2 + y^4} = \lim_{y\to 0} \frac{k y^4}{k^2 y^4 + y^4} = \lim_{y\to 0} \frac{k}{k^2 + 1} = \mathbf{\frac{k}{k^2 + 1}}
+    \end{equation*}
+\end{enumerate}
+Since the limit along $x = ky^2$ depends explicitly on the path parameter $k$ (e.g., for $k=1$, limit is $1/2$; for $k=2$, limit is $2/5$), the limit \textbf{does not exist}.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.3: PARTIAL DIFFERENTIATION \& EULER'S THEOREM
+% ==============================================================================
+\section{Partial Differentiation \& Euler's Theorem}
+
+\subsection{Partial Derivatives \& Clairaut's Theorem}
+
+\begin{definition}[First-Order Partial Derivatives]
+For $z = f(x,y)$, the partial derivatives with respect to $x$ and $y$ are:
+\begin{equation}
+    f_x = \frac{\partial f}{\partial x} = \lim_{h\to 0} \frac{f(x+h,y) - f(x,y)}{h}, \quad f_y = \frac{\partial f}{\partial y} = \lim_{k\to 0} \frac{f(x,y+k) - f(x,y)}{k}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Clairaut's / Schwarz's Theorem on Mixed Partials]
+If $f(x,y)$, $f_x$, $f_y$, $f_{xy}$, and $f_{yx}$ are all continuous in an open region containing $(a,b)$, then the mixed second-order partial derivatives are identical:
+\begin{equation}
+    \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x} \quad (f_{xy} = f_{yx})
+\end{equation}
+\end{theorem}
+
+\subsection{Euler's Theorem on Homogeneous Functions}
+
+\begin{definition}[Homogeneous Function]
+A function $f(x,y)$ is \textbf{homogeneous of degree $n$} in $x$ and $y$ if for all $t > 0$:
+\begin{equation}
+    f(tx, ty) = t^n f(x,y)
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Euler's Theorem on Homogeneous Functions]
+If $u = f(x,y)$ is a homogeneous function of degree $n$ possessing continuous partial derivatives, then:
+\begin{equation}
+    x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n u
+\end{equation}
+and its second-order extension satisfies:
+\begin{equation}
+    x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} = n(n-1) u
+\end{equation}
+\end{theorem}
+
+\begin{example}[Composite Homogeneous Function via Euler's Theorem]
+If $u = \sin^{-1}\left(\frac{x^2+y^2}{x+y}\right)$, prove that:
+\begin{enumerate}[label=(\alph*)]
+    \item $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \tan u$
+    \item $x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} = \tan^3 u$
+\end{enumerate}
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+Let $z = \sin u = \frac{x^2+y^2}{x+y} = f(x,y)$.
+Checking homogeneity of $f(x,y)$:
+\begin{equation*}
+    f(tx, ty) = \frac{t^2 x^2 + t^2 y^2}{tx + ty} = \frac{t^2(x^2+y^2)}{t(x+y)} = t^1 f(x,y) \implies \text{Homogeneous of degree } n = 1
+\end{equation*}
+
+\textbf{Part (a)}: Applying Euler's Theorem to $z = \sin u$:
+\begin{equation*}
+    x \frac{\partial z}{\partial x} + y \frac{\partial z}{\partial y} = 1 \cdot z \implies x \frac{\partial(\sin u)}{\partial x} + y \frac{\partial(\sin u)}{\partial y} = \sin u
+\end{equation*}
+By chain rule: $x (\cos u \frac{\partial u}{\partial x}) + y (\cos u \frac{\partial u}{\partial y}) = \sin u$.
+Dividing by $\cos u \ne 0$:
+\begin{equation*}
+    \mathbf{x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \frac{\sin u}{\cos u} = \tan u} \quad \text{(Hence proved)}
+\end{equation*}
+
+\textbf{Part (b)}: Let $F(u) = \tan u$. For any function $u$ where $x u_x + y u_y = F(u)$, the second-order extension identity is:
+\begin{equation*}
+    x^2 u_{xx} + 2xy u_{xy} + y^2 u_{yy} = F(u)[F'(u) - 1]
+\end{equation*}
+Here $F(u) = \tan u \implies F'(u) = \sec^2 u$. Substituting:
+\begin{align*}
+    x^2 u_{xx} + 2xy u_{xy} + y^2 u_{yy} &= \tan u (\sec^2 u - 1) = \tan u (\tan^2 u) = \mathbf{\tan^3 u} \quad \text{(Hence proved)}
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.4: TOTAL DERIVATIVES \& CHAIN RULE
+% ==============================================================================
+\section{Total Derivatives \& Multivariable Chain Rule}
+
+\subsection{Total Differential}
+\begin{equation}
+    dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy
+\end{equation}
+
+\subsection{Multivariable Chain Rule}
+\begin{itemize}[leftmargin=1.5em]
+    \item If $z = f(x,y)$ where $x = x(t), y = y(t)$:
+    \begin{equation}
+        \frac{dz}{dt} = \frac{\partial z}{\partial x} \frac{dx}{dt} + \frac{\partial z}{\partial y} \frac{dy}{dt}
+    \end{equation}
+    \item If $z = f(u,v)$ where $u = u(x,y), v = v(x,y)$:
+    \begin{equation}
+        \frac{\partial z}{\partial x} = \frac{\partial z}{\partial u}\frac{\partial u}{\partial x} + \frac{\partial z}{\partial v}\frac{\partial v}{\partial x}, \quad \frac{\partial z}{\partial y} = \frac{\partial z}{\partial u}\frac{\partial u}{\partial y} + \frac{\partial z}{\partial v}\frac{\partial v}{\partial y}
+    \end{equation}
+    \item \textbf{Implicit Differentiation}: If $F(x,y,z) = 0$:
+    \begin{equation}
+        \frac{\partial z}{\partial x} = -\frac{F_x}{F_z}, \quad \frac{\partial z}{\partial y} = -\frac{F_y}{F_z} \quad (F_z \ne 0)
+    \end{equation}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 4.5: TANGENT PLANES \& NORMAL LINES
+% ==============================================================================
+\section{Tangent Planes \& Normal Lines to Surfaces}
+
+\begin{theorem}[Tangent Plane and Normal Line Equations]
+For an implicit surface $F(x,y,z) = 0$ at the point $(x_0, y_0, z_0)$:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Equation of Tangent Plane}:
+    \begin{equation}
+        F_x(x_0,y_0,z_0)(x - x_0) + F_y(x_0,y_0,z_0)(y - y_0) + F_z(x_0,y_0,z_0)(z - z_0) = 0
+    \end{equation}
+    \item \textbf{Equations of Normal Line}:
+    \begin{equation}
+        \frac{x - x_0}{F_x} = \frac{y - y_0}{F_y} = \frac{z - z_0}{F_z}
+    \end{equation}
+\end{itemize}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 4.6: MAXIMA, MINIMA \& LAGRANGE MULTIPLIERS
+% ==============================================================================
+\section{Maxima, Minima \& Lagrange's Multipliers}
+
+\subsection{Unconstrained Optimization of Functions of Two Variables}
+
+\begin{definition}[Critical / Stationary Points]
+A point $(a,b)$ is a critical point of $f(x,y)$ if $f_x(a,b) = 0$ and $f_y(a,b) = 0$.
+\end{definition}
+
+\begin{theorem}[Hessian Discriminant Test for Local Extrema]
+Let $(a,b)$ be a critical point. Define:
+\begin{equation}
+    r = f_{xx}(a,b), \quad s = f_{xy}(a,b), \quad t = f_{yy}(a,b), \quad D = rt - s^2
+\end{equation}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Local Minimum}: If $D > 0$ and $r > 0$.
+    \item \textbf{Local Maximum}: If $D > 0$ and $r < 0$.
+    \item \textbf{Saddle Point}: If $D < 0$ (neither maximum nor minimum).
+    \item \textbf{Inconclusive Test}: If $D = 0$ (requires higher-order investigation).
+\end{enumerate}
+\end{theorem}
+
+\subsection{Constrained Optimization via Lagrange Multipliers}
+
+\begin{theorem}[Lagrange's Method of Undetermined Multipliers]
+To find the extreme values of $f(x,y,z)$ subject to the constraint $g(x,y,z) = 0$:
+Construct the auxiliary Lagrangian function:
+\begin{equation}
+    L(x,y,z,\lambda) = f(x,y,z) - \lambda g(x,y,z)
+\end{equation}
+Solve the simultaneous system of four equations:
+\begin{equation}
+    \frac{\partial L}{\partial x} = 0 \implies f_x = \lambda g_x, \quad \frac{\partial L}{\partial y} = 0 \implies f_y = \lambda g_y, \quad \frac{\partial L}{\partial z} = 0 \implies f_z = \lambda g_z, \quad g(x,y,z) = 0
+\end{equation}
+\end{theorem}
+
+\begin{example}[Lagrange Constrained Optimization]
+Find the maximum and minimum distances from the origin to the surface $x^2 + y^2 + z^2 - 2xy = 1$ with $z = 0$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Solution]
+We wish to optimize the squared distance $f(x,y) = x^2 + y^2$ subject to constraint $g(x,y) = x^2 + y^2 - 2xy - 1 = (x-y)^2 - 1 = 0$.
+Forming the Lagrangian: $L(x,y,\lambda) = x^2 + y^2 - \lambda((x-y)^2 - 1)$.
+\begin{align*}
+    L_x &= 2x - 2\lambda(x-y) = 0 \implies x = \lambda(x-y) \\
+    L_y &= 2y + 2\lambda(x-y) = 0 \implies y = -\lambda(x-y)
+\end{align*}
+Adding the two equations: $x + y = 0 \implies y = -x$.
+Substituting into constraint: $(x - (-x))^2 = 1 \implies (2x)^2 = 1 \implies 4x^2 = 1 \implies x = \pm 1/2$.
+Thus $y = \mp 1/2$.
+The minimum squared distance is $f(\pm 1/2, \mp 1/2) = (1/4) + (1/4) = 1/2 \implies \mathbf{d_{\min} = \frac{1}{\sqrt{2}}}$.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.7: JACOBIANS \& FUNCTIONAL DEPENDENCE
+% ==============================================================================
+\section{Jacobians (Functional Determinants)}
+
+\subsection{Definition and Properties}
+
+\begin{definition}[Jacobian Determinant]
+The Jacobian of $u, v$ with respect to $x, y$ is:
+\begin{equation}
+    J = \frac{\partial(u,v)}{\partial(x,y)} = \begin{vmatrix} \frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\[0.4em] \frac{\partial v}{\partial x} & \frac{\partial v}{\partial y} \end{vmatrix} = u_x v_y - u_y v_x
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Fundamental Jacobian Properties]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Reciprocal Property}: $J \cdot J' = \frac{\partial(u,v)}{\partial(x,y)} \cdot \frac{\partial(x,y)}{\partial(u,v)} = 1$.
+    \item \textbf{Chain Rule}: $\frac{\partial(u,v)}{\partial(r,\theta)} = \frac{\partial(u,v)}{\partial(x,y)} \cdot \frac{\partial(x,y)}{\partial(r,\theta)}$.
+    \item \textbf{Functional Dependence Criterion}: The functions $u(x,y,z), v(x,y,z), w(x,y,z)$ are functionally dependent (i.e., there exists a relation $\Phi(u,v,w) = 0$) if and only if:
+    \begin{equation}
+        \frac{\partial(u,v,w)}{\partial(x,y,z)} = 0
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 4.8: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Euler Theorem on Logarithmic/Trigonometric Functions]
+If $u = \ln\left(\frac{x^3+y^3}{x+y}\right)$, do NOT calculate $u_x$ and $u_y$ by direct differentiation! Rewrite as $e^u = \frac{x^3+y^3}{x+y} = f(x,y)$ (homogeneous of degree $n = 2$), apply Euler to $e^u$, yielding $x(e^u u_x) + y(e^u u_y) = 2e^u \implies x u_x + y u_y = 2$.
+\end{examtip}
+
+\begin{commonmistake}[Saddle Points vs. Inconclusive Test]
+Remember:
+\begin{itemize}
+    \item $D = rt - s^2 < 0 \implies$ \textbf{Saddle Point} (Definitive conclusion!).
+    \item $D = rt - s^2 = 0 \implies$ \textbf{Inconclusive} (Test fails).
+\end{itemize}
+Do not confuse $D < 0$ with test failure!
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 4.9: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 4 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Path Limits}: If limits along $y=mx$ or $y=kx^2$ depend on $m$ or $k$, limit does not exist.
+    \item \textbf{Euler's Theorem}: $x u_x + y u_y = n u$; $x^2 u_{xx} + 2xy u_{xy} + y^2 u_{yy} = n(n-1)u$.
+    \item \textbf{Total Differential}: $dz = z_x dx + z_y dy$. Implicit: $\frac{dy}{dx} = -\frac{F_x}{F_y}$.
+    \item \textbf{Tangent Plane}: $F_x(x-x_0) + F_y(y-y_0) + F_z(z-z_0) = 0$.
+    \item \textbf{Hessian Test}: $D = rt - s^2$. $D > 0, r > 0 \implies$ Min; $D > 0, r < 0 \implies$ Max; $D < 0 \implies$ Saddle Point.
+    \item \textbf{Lagrange Multipliers}: $\nabla f = \lambda \nabla g$.
+    \item \textbf{Jacobians}: $J \cdot J' = 1$; $\frac{\partial(u,v,w)}{\partial(x,y,z)} = 0 \iff$ Functionally dependent.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 4.10: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Verify Euler's Theorem for $u = x^3 + y^3 + 3x^2 y$.
+    \item If $z = x^2 y + 3xy^4$, find the total differential $dz$.
+    \item Compute the Jacobian $\frac{\partial(u,v)}{\partial(x,y)}$ for $u = x^2 - y^2$ and $v = 2xy$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item If $u = \tan^{-1}\left(\frac{x^3+y^3}{x-y}\right)$, prove that $x u_x + y u_y = \sin 2u$.
+    \item Find all local maxima, local minima, and saddle points of $f(x,y) = x^3 + y^3 - 3xy$.
+    \item Find the equations of the tangent plane and normal line to $x^2 + 2y^2 + 3z^2 = 12$ at $(1, 2, 1)$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item If $u = x+y+z, v = xy+yz+zx, w = x^3+y^3+z^3-3xyz$, show that $u, v, w$ are functionally dependent and find the functional relation between them.
+    \item Find the dimensions of a rectangular box open at the top of maximum volume that can be made from $48\text{ m}^2$ of cardboard using Lagrange Multipliers.
+    \item If $x = r\sin\theta\cos\phi, y = r\sin\theta\sin\phi, z = r\cos\theta$, compute the Jacobian $\frac{\partial(x,y,z)}{\partial(r,\theta,\phi)}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Find the maximum and minimum values of $f(x,y,z) = x^2 + y^2 + z^2$ subject to the two constraints $x+y+z = 1$ and $x^2+y^2 = 1$.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 4.11: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $u = \frac{x^4+y^4}{x+y}$, the degree of homogeneity is:
+    \begin{enumerate}[label=(\alph*)]
+        \item 4
+        \item 3
+        \item 1
+        \item 0
+    \end{enumerate}
+
+    \item If $u = \sin^{-1}\left(\frac{x+y}{\sqrt{x}+\sqrt{y}}\right)$, the value of $x u_x + y u_y$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{1}{2}\tan u$
+        \item $\tan u$
+        \item $\frac{1}{2}\sin u$
+        \item $2\tan u$
+    \end{enumerate}
+
+    \item At a stationary point $(a,b)$, if $rt - s^2 < 0$, then the point is a:
+    \begin{enumerate}[label=(\alph*)]
+        \item Local Maximum
+        \item Local Minimum
+        \item Saddle Point
+        \item Inconclusive Point
+    \end{enumerate}
+
+    \item If $F(x,y) = x^3 + y^3 - 3xy = 0$, what is $\frac{dy}{dx}$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $-\frac{x^2 - y}{y^2 - x}$
+        \item $\frac{x^2 - y}{y^2 - x}$
+        \item $-\frac{3x^2}{3y^2}$
+        \item $\frac{y^2-x}{x^2-y}$
+    \end{enumerate}
+
+    \item For $x = r\cos\theta, y = r\sin\theta$, the Jacobian $\frac{\partial(x,y)}{\partial(r,\theta)}$ equals:
+    \begin{enumerate}[label=(\alph*)]
+        \item 1
+        \item $r$
+        \item $r^2$
+        \item $1/r$
+    \end{enumerate}
+
+    \item If two functions $u(x,y)$ and $v(x,y)$ are functionally dependent, their Jacobian $\frac{\partial(u,v)}{\partial(x,y)}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item 1
+        \item Constant
+        \item 0
+        \item $\infty$
+    \end{enumerate}
+
+    \item The normal vector to the level surface $\phi(x,y,z) = c$ at $(x_0,y_0,z_0)$ is given by:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\nabla\phi$
+        \item $\nabla\cdot\vec{F}$
+        \item $\nabla\times\vec{F}$
+        \item $\phi_x + \phi_y + \phi_z$
+    \end{enumerate}
+
+    \item In Lagrange's method with objective $f(x,y,z)$ and constraint $g(x,y,z)=0$, the vector equation is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\nabla f \cdot \nabla g = 0$
+        \item $\nabla f = \lambda \nabla g$
+        \item $\nabla f \times \nabla g = \vec{0}$
+        \item Both (b) and (c)
+    \end{enumerate}
+
+    \item For $f(x,y) = x^2 + y^2$, the origin $(0,0)$ is a:
+    \begin{enumerate}[label=(\alph*)]
+        \item Local Maximum
+        \item Local Minimum
+        \item Saddle Point
+        \item Inconclusive Point
+    \end{enumerate}
+
+    \item If $J = \frac{\partial(u,v)}{\partial(x,y)}$, then $\frac{\partial(x,y)}{\partial(u,v)}$ equals:
+    \begin{enumerate}[label=(\alph*)]
+        \item $J$
+        \item $-J$
+        \item $\frac{1}{J}$
+        \item $J^2$
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) 3} --- $f(tx,ty) = \frac{t^4(x^4+y^4)}{t(x+y)} = t^3 f(x,y) \implies n = 3$.
+    \item \textbf{(a) $\frac{1}{2}\tan u$} --- $z = \sin u$ is homogeneous of degree $1 - 1/2 = 1/2$. Euler gives $x z_x + y z_y = \frac{1}{2}z \implies \cos u (x u_x + y u_y) = \frac{1}{2}\sin u \implies x u_x + y u_y = \frac{1}{2}\tan u$.
+    \item \textbf{(c) Saddle Point} --- $rt - s^2 < 0$ defines a saddle point.
+    \item \textbf{(a) $-\frac{x^2 - y}{y^2 - x}$} --- $\frac{dy}{dx} = -\frac{F_x}{F_y} = -\frac{3x^2-3y}{3y^2-3x} = -\frac{x^2-y}{y^2-x}$.
+    \item \textbf{(b) $r$} --- $J = \begin{vmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{vmatrix} = r\cos^2\theta + r\sin^2\theta = r$.
+    \item \textbf{(c) 0} --- Vanishing of the Jacobian determinant is the necessary and sufficient condition for functional dependence.
+    \item \textbf{(a) $\nabla\phi$} --- The gradient $\nabla\phi = \phi_x\hat{i} + \phi_y\hat{j} + \phi_z\hat{k}$ is perpendicular to level surfaces.
+    \item \textbf{(d) Both (b) and (c)} --- $\nabla f = \lambda \nabla g \iff \nabla f \times \nabla g = \vec{0}$ (parallel gradient vectors).
+    \item \textbf{(b) Local Minimum} --- $f_x=2x=0, f_y=2y=0 \implies (0,0)$. $r=2, s=0, t=2 \implies D = 4 > 0, r=2 > 0 \implies$ Min.
+    \item \textbf{(c) $\frac{1}{J}$} --- Reciprocal property of Jacobians $J \cdot J' = 1$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.12: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 4: Multivariable Differential Calculus (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State Euler's Theorem for a homogeneous function $u = f(x,y)$ of degree $n$.
+    \item State the condition on $D = rt - s^2$ and $r$ for a point $(a,b)$ to be a Local Maximum.
+    \item Write the formula for the Jacobian of three variables $\frac{\partial(u,v,w)}{\partial(x,y,z)}$.
+    \item Write the equation of the tangent plane to $F(x,y,z) = 0$ at $(x_0,y_0,z_0)$.
+    \item Evaluate the limit $\lim_{(x,y)\to(0,0)} \frac{xy}{x^2+y^2}$ along $y = mx$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item If $u = \sin^{-1}\left(\frac{x+2y+3z}{\sqrt{x^8+y^8+z^8}}\right)$, evaluate $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} + z \frac{\partial u}{\partial z}$.
+    \item Find the critical points of $f(x,y) = x^3 + y^3 - 3xy$ and classify each point using the Hessian discriminant test.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Optimization ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item Using Lagrange's Method of Undetermined Multipliers:
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the maximum volume of a rectangular box inscribed in the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ with sides parallel to coordinate planes. (6 Marks)
+        \item If $u = x+y+z, v = x^2+y^2+z^2, w = x^3+y^3+z^3$, show that $\frac{\partial(u,v,w)}{\partial(x,y,z)} = 0$ and deduce functional dependence. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n u$. [1 Mark]
+    \item $D = rt - s^2 > 0$ and $r < 0$. [1 Mark]
+    \item $J = \begin{vmatrix} u_x & u_y & u_z \\ v_x & v_y & v_z \\ w_x & w_y & w_z \end{vmatrix}$. [1 Mark]
+    \item $F_x(x-x_0) + F_y(y-y_0) + F_z(z-z_0) = 0$. [1 Mark]
+    \item $\lim_{x\to 0} \frac{x(mx)}{x^2+m^2 x^2} = \mathbf{\frac{m}{1+m^2}}$. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item Let $z = \sin u = \frac{x+2y+3z}{\sqrt{x^8+y^8+z^8}}$.
+    Degree of numerator $= 1$; Degree of denominator $= \sqrt{t^8} = t^4 \implies$ Degree $n = 1 - 4 = -3$. [2 Marks]
+    By Euler's Theorem for 3 variables on $z = \sin u$:
+    $x z_x + y z_y + z z_z = n z \implies x(\cos u u_x) + y(\cos u u_y) + z(\cos u u_z) = -3\sin u$. [2 Marks]
+    $\mathbf{x u_x + y u_y + z u_z = -3\frac{\sin u}{\cos u} = -3\tan u}$. [1 Mark]
+
+    \item $f_x = 3x^2 - 3y = 0 \implies y = x^2$.
+    $f_y = 3y^2 - 3x = 0 \implies 3(x^2)^2 - 3x = 0 \implies 3x(x^3 - 1) = 0 \implies x = 0$ or $x = 1$. [1.5 Marks]
+    Critical points are $(0,0)$ and $(1,1)$.
+    $r = f_{xx} = 6x, s = f_{xy} = -3, t = f_{yy} = 6y$. [1 Mark]
+    \begin{itemize}
+        \item At $(0,0)$: $r = 0, s = -3, t = 0 \implies D = rt - s^2 = 0 - (-3)^2 = -9 < 0 \implies \mathbf{(0,0) \text{ is a Saddle Point}}$. [1.25 Marks]
+        \item At $(1,1)$: $r = 6, s = -3, t = 6 \implies D = rt - s^2 = (6)(6) - (-3)^2 = 36 - 9 = 27 > 0$, and $r = 6 > 0 \implies \mathbf{(1,1) \text{ is a Local Minimum}}$, with value $f(1,1) = 1+1-3 = -1$. [1.25 Marks]
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Comprehensive Optimization \& Jacobians}:
+    \begin{enumerate}[label=(\alph*)]
+        \item Let box dimensions be $2x, 2y, 2z$. Volume $V = 8xyz$.
+        Constraint: $g(x,y,z) = \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} - 1 = 0$. [1.5 Marks]
+        Lagrange system $\nabla V = \lambda \nabla g$:
+        $8yz = \lambda \frac{2x}{a^2} \implies 8xyz = \lambda \frac{2x^2}{a^2}$
+        $8xz = \lambda \frac{2y}{b^2} \implies 8xyz = \lambda \frac{2y^2}{b^2}$
+        $8xy = \lambda \frac{2z}{c^2} \implies 8xyz = \lambda \frac{2z^2}{c^2}$ [2 Marks]
+        Thus $\frac{x^2}{a^2} = \frac{y^2}{b^2} = \frac{z^2}{c^2}$. Substituting into constraint:
+        $3\frac{x^2}{a^2} = 1 \implies x = \frac{a}{\sqrt{3}}, y = \frac{b}{\sqrt{3}}, z = \frac{c}{\sqrt{3}}$. [1.5 Marks]
+        Maximum Volume $\mathbf{V_{\max} = 8 \left(\frac{a}{\sqrt{3}}\right)\left(\frac{b}{\sqrt{3}}\right)\left(\frac{c}{\sqrt{3}}\right) = \frac{8abc}{3\sqrt{3}}}$. [1 Mark]
+
+        \item $J = \begin{vmatrix} 1 & 1 & 1 \\ 2x & 2y & 2z \\ 3x^2 & 3y^2 & 3z^2 \end{vmatrix} = 6 \begin{vmatrix} 1 & 1 & 1 \\ x & y & z \\ x^2 & y^2 & z^2 \end{vmatrix}$ (Vandermonde Determinant). [2 Marks]
+        $J = 6(y-x)(z-x)(z-y)$. For functions of 3 independent variables to be dependent on each other, $J = 0$, which proves that the functions $u, v, w$ are functionally dependent throughout their shared algebraic space. [2 Marks]
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

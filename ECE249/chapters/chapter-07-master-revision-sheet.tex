@@ -1,0 +1,161 @@
+\chapter{Master Revision Sheet \& Formula Reference}
+\label{chap:master-revision-sheet}
+
+\section{Introduction}
+This chapter provides a high-density, authoritative reference sheet designed for rapid revision before university examinations. It condenses all essential formulas, operational tables, conversion protocols, and circuit rules from Units 1 through 6.
+
+---
+
+\section{Unit 1: DC Circuit Laws, Semiconductors, Diodes \& BJTs}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Law / Component} & \textbf{Formula / Relationship} & \textbf{Key Physical Context} \\
+\midrule
+\textbf{Ohm's Law} & $V = I \cdot R$ & Constant temperature; linear ohmic materials only. \\
+\textbf{Resistivity Formula} & $R = \rho \frac{L}{A} = \frac{L}{\sigma A}$ & Geometric resistance derivation. \\
+\textbf{KCL (Node Rule)} & $\sum I_{\text{in}} = \sum I_{\text{out}} \iff \sum I = 0$ & Conservation of Electric Charge. \\
+\textbf{KVL (Loop Rule)} & $\sum V_{\text{rise}} = \sum V_{\text{drop}} \iff \sum V = 0$ & Conservation of Energy. \\
+\textbf{Voltage Division (Series)} & $V_1 = V_s \left(\frac{R_1}{R_1 + R_2}\right)$ & Applies strictly to series-connected resistors. \\
+\textbf{Current Division (Parallel)} & $I_1 = I_s \left(\frac{R_2}{R_1 + R_2}\right)$ & Applies strictly to two parallel branches. \\
+\textbf{Energy Band Gap ($E_g$)} & $\text{Si: } 1.12\text{ eV}, \; \text{Ge: } 0.72\text{ eV}$ & Insulator ($>5\text{ eV}$), Conductor ($0\text{ eV}$). \\
+\textbf{Mass-Action Law} & $n \cdot p = n_i^2$ & Holds in equilibrium for intrinsic and extrinsic semiconductors. \\
+\textbf{Extrinsic Doping} & \makecell[l]{N-Type: Pentavalent ($n \approx N_D$)\\P-Type: Trivalent ($p \approx N_A$)} & Both types remain electrically neutral overall. \\
+\textbf{Shockley Diode Eq.} & $I = I_0 \left(e^{\frac{V}{\eta V_T}} - 1\right)$ & $V_T = \frac{k_B T}{q} \approx 26\text{ mV}$ at $300\text{ K}$. \\
+\textbf{Diode Knee Voltage} & $\text{Si: } 0.7\text{ V}, \quad \text{Ge: } 0.3\text{ V}$ & Cut-in forward conduction potential. \\
+\textbf{Half-Wave Rectifier} & $V_{dc} = \frac{V_m}{\pi}, \; \gamma = 1.21, \; \eta = 40.6\%, \; \text{PIV} = V_m$ & Single diode; conducts on positive half-cycle. \\
+\textbf{Bridge Rectifier} & $V_{dc} = \frac{2V_m}{\pi}, \; \gamma = 0.482, \; \eta = 81.2\%, \; \text{PIV} = V_m$ & 4 diodes; no center-tap transformer required. \\
+\textbf{Center-Tap Rectifier} & $V_{dc} = \frac{2V_m}{\pi}, \; \gamma = 0.482, \; \eta = 81.2\%, \; \text{PIV} = 2V_m$ & 2 diodes; center-tapped transformer. \\
+\textbf{BJT Current Law} & $I_E = I_B + I_C$ & $I_B \approx 1\text{--}5\% \implies I_E \approx I_C$. \\
+\textbf{BJT Current Gains} & $\beta = \frac{I_C}{I_B}, \quad \alpha = \frac{I_C}{I_E}, \quad \beta = \frac{\alpha}{1 - \alpha}$ & $\beta \in [20, 500], \; \alpha \in [0.95, 0.998]$. \\
+\textbf{BJT Operating Modes} & \makecell[l]{\textbf{Cut-off:} $J_E$ Rev, $J_C$ Rev (Switch OFF)\\\textbf{Active:} $J_E$ Fwd, $J_C$ Rev (Amplifier)\\\textbf{Saturation:} $J_E$ Fwd, $J_C$ Fwd (Switch ON)} & $V_{CE(sat)} \approx 0.2\text{ V}$, $V_{BE} \approx 0.7\text{ V}$ in active/sat. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Formula Reference: DC Circuits, Semiconductors, Diodes, and BJTs.}
+\label{tab:rev-unit1}
+\end{table}
+
+---
+
+\section{Unit 2: Arduino UNO, Signals \& Sensor Interfacing}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Hardware Subsystem} & \textbf{Specification / Formula} & \textbf{Operational Context} \\
+\midrule
+\textbf{ATmega328P Core} & 8-bit AVR RISC @ 16 MHz, 5V & 32KB Flash, 2KB SRAM, 1KB EEPROM. \\
+\textbf{Power Inputs} & USB (5V), DC Jack / VIN ($7\text{--}12\text{ V}$) & On-board 5V and 3.3V regulators. \\
+\textbf{10-bit SAR ADC (A0–A5)} & $V_{\text{in}} = \text{ADC\_Val} \times \left(\frac{5.0}{1023}\right)$ & $2^{10} = 1024$ levels ($0\text{--}1023$), Step $= 4.88\text{ mV}$. \\
+\textbf{8-bit PWM (~3, 5, 6, 9, 10, 11)} & $V_{\text{avg}} = 5.0 \times \left(\frac{\text{PWM\_Val}}{255}\right)$ & Pins 5, 6: $\approx 980\text{ Hz}$; Pins 3, 9, 10, 11: $\approx 490\text{ Hz}$. \\
+\textbf{Active IR Sensor} & IR LED + Photodiode + LM393 & White reflects (Out LOW); Black absorbs (Out HIGH). \\
+\textbf{LDR Photoresistor} & $V_{\text{out}} = V_{CC}\left(\frac{R_{\text{fixed}}}{R_{LDR} + R_{\text{fixed}}}\right)$ & CdS photoconductivity; light decreases resistance. \\
+\textbf{Ultrasonic (HC-SR04)} & $D = \frac{v \cdot \Delta t}{2} = \frac{\Delta t(\mu\text{s})}{58.3}\text{ cm}$ & $10\,\mu\text{s}$ Trig $\rightarrow$ 8-cycle 40 kHz burst $\rightarrow$ Echo pulse. \\
+\textbf{DHT11 vs. DHT22} & \makecell[l]{\textbf{DHT11:} $20\text{--}90\%\text{ RH}, \; 0\text{--}50^\circ\text{C}, \; 1\text{ Hz}$\\\textbf{DHT22:} $0\text{--}100\%\text{ RH}, \; -40\text{--}80^\circ\text{C}, \; 0.5\text{ Hz}$} & 40-bit single-bus serial digital packet. \\
+\bottomrule
+\end{tabularx}
+\caption{Arduino UNO Subsystems and Sensor Interfacing Reference Table.}
+\label{tab:rev-unit2}
+\end{table}
+
+---
+
+\section{Unit 3: Number Systems, Binary Codes, Logic Gates \& K-Maps}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Topic Domain} & \textbf{Algorithm / Mathematical Rule} & \textbf{Example / Significance} \\
+\midrule
+\textbf{Decimal $\rightarrow$ Base $r$} & Successive division (int), successive mult (frac). & $(25.625)_{10} = (11001.101)_2$. \\
+\textbf{Binary $\leftrightarrow$ Octal / Hex} & Group into 3 bits (Octal) or 4 bits (Hex). & $(110110)_2 = (66)_8 = (36)_{16}$. \\
+\textbf{BCD (8421 Code)} & 4-bit representation of digits $0\text{--}9$. & $1010_2\text{--}1111_2$ are invalid; add $0110_2$. \\
+\textbf{Excess-3 Code (XS-3)} & $\text{BCD} + 0011_2$. & Self-complementing code. \\
+\textbf{Binary $\rightarrow$ Gray Code} & $G_{n-1} = B_{n-1}, \quad G_i = B_{i+1} \oplus B_i$ & Unit-distance code; eliminates glitching. \\
+\textbf{Gray $\rightarrow$ Binary Code} & $B_{n-1} = G_{n-1}, \quad B_i = B_{i+1} \oplus G_i$ & Sequential XOR decoding. \\
+\textbf{2's Comp. Subtraction} & $A - B = A + (\overline{B} + 1)$ & Carry $= 1 \implies (+)$; Carry $= 0 \implies (-)$. \\
+\textbf{De Morgan's Laws} & $\overline{A \cdot B} = \overline{A} + \overline{B}, \quad \overline{A + B} = \overline{A} \cdot \overline{B}$ & Fundamental duality theorem. \\
+\textbf{Absorption Laws} & $A + AB = A, \quad A(A + B) = A, \quad A + \overline{A}B = A + B$ & Key Boolean minimization tool. \\
+\textbf{Canonical Forms} & $\text{SOP: } F = \sum m(\dots), \quad \text{POS: } F = \prod M(\dots)$ & $m_i = \overline{M_i}$. \\
+\textbf{K-Map Grouping} & Group sizes $1, 2, 4, 8, 16$. Gray code layout. & Corner Quad $(m_0, m_2, m_8, m_{10}) = \overline{B}\,\overline{D}$. \\
+\bottomrule
+\end{tabularx}
+\caption{Number Systems, Codes, and Boolean Minimization Reference Table.}
+\label{tab:rev-unit3}
+\end{table}
+
+---
+
+\section{Unit 4: Combinational Logic Circuits}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Circuit Block} & \textbf{Output Boolean Expressions} & \textbf{Structural Implementation} \\
+\midrule
+\textbf{Half Adder} & $S = A \oplus B, \quad C = A \cdot B$ & 1 XOR gate, 1 AND gate. \\
+\textbf{Full Adder} & $S = A \oplus B \oplus C_{in}, \quad C_{out} = AB + C_{in}(A \oplus B)$ & 2 Half Adders + 1 OR gate. \\
+\textbf{Half Subtractor} & $D = A \oplus B, \quad B_{out} = \overline{A} \cdot B$ & 1 XOR gate, 1 AND gate, 1 NOT gate. \\
+\textbf{Full Subtractor} & $D = A \oplus B \oplus B_{in}, \quad B_{out} = \overline{A}B + B_{in}\overline{(A \oplus B)}$ & 2 Half Subtractors + 1 OR gate. \\
+\textbf{4:1 Multiplexer} & $Y = \overline{S_1}\,\overline{S_0}I_0 + \overline{S_1}S_0I_1 + S_1\overline{S_0}I_2 + S_1S_0I_3$ & 4 AND gates, 1 OR gate, 2 NOT gates. \\
+\textbf{1:4 De-multiplexer} & $Y_k = S_{\text{term}} \cdot D_{in}$ & 4 AND gates, 2 NOT gates. \\
+\textbf{2-to-4 Decoder} & $Y_0 = E\overline{A}\overline{B}, \; Y_1 = E\overline{A}B, \; Y_2 = EA\overline{B}, \; Y_3 = EAB$ & Active-High or Active-Low (74138). \\
+\textbf{8-to-3 Octal Encoder} & $X = D_4+D_5+D_6+D_7, \; Y = D_2+D_3+D_6+D_7, \; Z = D_1+D_3+D_5+D_7$ & 3 OR gates. Priority encoders resolve collisions. \\
+\textbf{2-Bit Comparator} & \makecell[l]{$x_1 = \overline{A_1 \oplus B_1}, \; x_0 = \overline{A_0 \oplus B_0}$\\$(A = B) = x_1 x_0$\\$(A > B) = A_1\overline{B_1} + x_1 A_0\overline{B_0}$\\$(A < B) = \overline{A_1}B_1 + x_1 \overline{A_0}B_0$} & Standard XNOR, AND, OR network. \\
+\bottomrule
+\end{tabularx}
+\caption{Master Summary Table of Combinational Logic Blocks.}
+\label{tab:rev-unit4}
+\end{table}
+
+---
+
+\section{Unit 5 \& 6: Sequential Logic, Flip-Flops, Registers \& Counters}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+\textbf{Flip-Flop Type} & \textbf{Characteristic Equation} & \textbf{Excitation Table ($Q_n \rightarrow Q_{n+1}$)} \\
+\midrule
+\textbf{SR Flip-Flop} & $Q_{n+1} = S + \overline{R}Q_n \quad (SR = 0)$ & $0\rightarrow 0: 0\text{X}, \; 0\rightarrow 1: 10, \; 1\rightarrow 0: 01, \; 1\rightarrow 1: \text{X}0$ \\
+\textbf{JK Flip-Flop} & $Q_{n+1} = J\overline{Q}_n + \overline{K}Q_n$ & $0\rightarrow 0: 0\text{X}, \; 0\rightarrow 1: 1\text{X}, \; 1\rightarrow 0: \text{X}1, \; 1\rightarrow 1: \text{X}0$ \\
+\textbf{D Flip-Flop} & $Q_{n+1} = D$ & $0\rightarrow 0: 0, \; 0\rightarrow 1: 1, \; 1\rightarrow 0: 0, \; 1\rightarrow 1: 1$ \\
+\textbf{T Flip-Flop} & $Q_{n+1} = T \oplus Q_n$ & $0\rightarrow 0: 0, \; 0\rightarrow 1: 1, \; 1\rightarrow 0: 1, \; 1\rightarrow 1: 0$ \\
+\bottomrule
+\end{tabularx}
+\caption{Characteristic and Excitation Table Summary for all Flip-Flops.}
+\label{tab:rev-flipflops}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Sequential Subsystem} & \textbf{Operational Principle} & \textbf{Performance / Modulus} \\
+\midrule
+\textbf{Master-Slave JK FF} & Dual-stage clocked on complementary clock levels. & Eliminates Race-Around glitch ($t_p > t_{pd}$). \\
+\textbf{SISO Shift Register} & Serial in, serial out via cascaded D-FFs. & $N$ cycles to load, $N$ cycles to shift out. \\
+\textbf{SIPO Shift Register} & Serial in, parallel readout on bus. & $N$ cycles to load, 0 cycles to read. \\
+\textbf{PISO Shift Register} & Parallel load via Shift/$\overline{\text{Load}}$ gate, serial out. & Parallel-to-serial conversion. \\
+\textbf{PIPO Shift Register} & Parallel load, parallel read. & 1 clock pulse to store and read. \\
+\textbf{Asynchronous (Ripple) Counter} & Clock ripples from $Q_k \rightarrow CLK_{k+1}$. & Low speed ($f_{max} \le \frac{1}{N \cdot t_{pd}}$); Mod-$N$ via NAND clear. \\
+\textbf{Synchronous Counter} & Common clock to all FFs; look-ahead AND gates. & High speed ($f_{max} = \frac{1}{t_{pd} + t_{gate}}$); glitch-free. \\
+\textbf{Ring Counter} & Circular shift ($Q_{\text{last}} \rightarrow D_{\text{first}}$); initialized with $1000$. & $\text{MOD-}N$ ($N$ states for $N$ flip-flops). \\
+\textbf{Johnson Counter} & Inverted feedback ($\overline{Q}_{\text{last}} \rightarrow D_{\text{first}}$); initialized $0000$. & $\text{MOD-}2N$ ($2N$ states for $N$ flip-flops). \\
+\bottomrule
+\end{tabularx}
+\caption{Summary Comparison of Sequential Registers and Counters.}
+\label{tab:rev-registers-counters}
+\end{table}

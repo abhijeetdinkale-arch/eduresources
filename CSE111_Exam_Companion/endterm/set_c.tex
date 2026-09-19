@@ -1,0 +1,124 @@
+\section{End-Term Examination --- Set C}
+\label{sec:endterm_set_c}
+
+\LPUCSHeader{End-Term Examination (Comprehensive MCQ)}{C}{120 Minutes}{30 Marks}{CO1 to CO6 (Units 1 to 6 Comprehensive)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q5)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{During the CPU instruction fetch cycle, which register provides the memory address of the next machine instruction to be read?}{Program Counter (PC)}{Instruction Register (IR)}{Memory Buffer Register (MBR)}{Stack Pointer (SP)}{1}
+
+\mcqitem{2}{In modern multi-core processor architectures, Level 3 (L3) cache is typically characterized as:}{Shared across all cores on the die, with larger capacity and slightly higher latency than L1 and L2 caches}{Dedicated exclusively to a single ALU}{Slower than mechanical magnetic tape drives}{Volatile only during system restarts}{1}
+
+\mcqitem{3}{NAND Flash memory used in Solid-State Drives operates under the physical constraint that:}{Data cannot be overwritten directly; existing flash blocks must be erased before individual pages can be rewritten}{Flash memory is volatile and loses data when powered down}{Flash drives require mechanical actuator arms to seek tracks}{Individual bits must be erased using ultraviolet light}{1}
+
+\mcqitem{4}{Which RAID level uses dual distributed parity blocks ($P$ and $Q$) to ensure complete data recovery even if two member drives fail simultaneously?}{RAID 6}{RAID 5}{RAID 0}{RAID 1}{1}
+
+\mcqitem{5}{A 64-bit computer data bus operating at a bus clock frequency of $800\text{ MHz}$ achieves a peak theoretical bandwidth of:}{$6.4\text{ GB/s}$ ($8\text{ bytes} \times 800 \times 10^6\text{ cycles/s}$)}{$64\text{ GB/s}$}{$800\text{ MB/s}$}{$1.6\text{ GB/s}$}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q6 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{6}{Dual-mode processor operation enforces operating system security by:}{Restricting execution of privileged I/O and memory management instructions strictly to Kernel Mode (Ring 0)}{Running all web browsers in supervisor mode}{Allowing user programs to directly modify motherboard hardware registers}{Disabling CPU interrupts permanently}{1}
+
+\mcqitem{7}{In operating system process scheduling, a transition from the 'Running' state to the 'Ready' state occurs when:}{The executing process's allocated CPU time slice expires in a preemptive scheduling algorithm}{The process issues a blocking disk read system call}{The process terminates execution cleanly}{The program divides a number by zero}{1}
+
+\mcqitem{8}{Paged virtual memory architectures completely eliminate which form of memory fragmentation?}{External Fragmentation}{Internal Fragmentation}{Page Fault Overhead}{TLB Misses}{1}
+
+\mcqitem{9}{Dijkstra's Banker's Algorithm is deployed in operating systems for:}{Deadlock Avoidance by ensuring that the system never enters an unsafe state}{Deadlock Detection and killing random processes}{Memory defragmentation on SSDs}{Formatting hard disk partitions}{1}
+
+\mcqitem{10}{The software compilation tool that converts assembly mnemonics (such as \texttt{MOV}, \texttt{ADD}) into relocatable machine object code is the:}{Assembler}{Preprocessor}{Linker}{Loader}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q11 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{Under the Linux Filesystem Hierarchy Standard (FHS), device node files representing physical hardware storage drives (such as \texttt{/dev/sda}) are located in:}{\texttt{/dev}}{\texttt{/etc}}{\texttt{/bin}}{\texttt{/var}}{1}
+
+\mcqitem{12}{Executing the command \texttt{chmod 700 private\_dir/} in a Linux terminal results in which permission configuration?}{Owner has full \texttt{rwx} permissions, while Group and Others have zero permissions (\texttt{rwx------})}{Every user on the system has read and write access}{The directory is locked from the root superuser}{The directory is converted into a hidden file}{1}
+
+\mcqitem{13}{When the Set Group ID (SGID, octal \texttt{2000}) permission is applied to a collaborative shared directory, newly created files inside that directory:}{Inherit the group ownership of the directory rather than the primary group of the creating user}{Are immediately deleted upon closing}{Become readable only by the root superuser}{Are automatically compressed with gzip}{1}
+
+\mcqitem{14}{To forcefully and unconditionally terminate an unresponsive Linux process without giving it the opportunity to ignore or catch the signal, the command is:}{\texttt{kill -9 <PID>} (sends \texttt{SIGKILL})}{\texttt{kill -15 <PID>} (sends \texttt{SIGTERM})}{\texttt{kill -1 <PID>} (sends \texttt{SIGHUP})}{\texttt{kill -STOP <PID>}}{1}
+
+\mcqitem{15}{In the Linux operating system, the standard file descriptor associated with Standard Error (\texttt{stderr}) is integer:}{2}{0 (\texttt{stdin})}{1 (\texttt{stdout})}{3}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 4: COHORTS AND TECHNICAL SKILL SETS (Q16 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{In backend web engineering, Node.js achieves high throughput and handles thousands of concurrent connections efficiently by utilizing:}{An asynchronous, event-driven, single-threaded event loop based on Google's V8 engine}{Creating a separate heavy OS process for every incoming HTTP request}{Compiling all JavaScript code into C++ binaries before execution}{Disabling network socket timeouts}{1}
+
+\mcqitem{17}{In database architecture, traditional Relational Database Management Systems (RDBMS) differ from NoSQL document databases because RDBMS:}{Enforce rigid structured schemas and strict ACID transactional guarantees}{Do not support SQL queries}{Store data exclusively in plain text files}{Are non-relational and key-value only}{1}
+
+\mcqitem{18}{Under cloud computing service models, Infrastructure as a Service (IaaS, e.g., Amazon EC2, Google Compute Engine) supplies:}{Raw virtualized compute instances, block storage volumes, and virtual networking infrastructure}{Complete turnkey office software like Microsoft 365}{Managed application runtimes without virtual machine access}{Physical copper cables delivered to offices}{1}
+
+\mcqitem{19}{In algorithm analysis, searching for an element in an unbalanced, degenerate Binary Search Tree (which resembles a linked list) exhibits a worst-case time complexity of:}{$O(N)$}{$O(\log N)$}{$O(1)$}{$O(N \log N)$}{1}
+
+\mcqitem{20}{Engineering recruiters evaluate a candidate's practical technical competence most favorably when their portfolio displays:}{Public GitHub repositories featuring production-grade code, unit tests, architecture diagrams, and live demo links}{Word documents containing uncompiled code}{Screenshots of software user interfaces without code}{A list of courses completed without any projects}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 5: COMPUTER NETWORKS AND COMMUNICATION (Q21 TO Q25)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{A communication channel where transmission can occur in both directions simultaneously without mutual interference operates in:}{Full-Duplex Mode}{Half-Duplex Mode}{Simplex Mode}{Asynchronous Simplex Mode}{1}
+
+\mcqitem{22}{In a fully interconnected Mesh network topology with $N = 8$ computer nodes, how many physical point-to-point links are required?}{28 links (computed as $\frac{N(N - 1)}{2}$)}{64 links}{16 links}{8 links}{1}
+
+\mcqitem{23}{The Domain Name System (DNS) operates primarily over which transport-layer protocol and port for standard domain resolution lookups?}{UDP Port 53}{TCP Port 80}{TCP Port 443}{UDP Port 67}{1}
+
+\mcqitem{24}{An IPv4 subnet configured with a \texttt{/26} CIDR prefix has a subnet mask of \texttt{255.255.255.192} and provides how many usable host IP addresses?}{62 usable hosts ($2^6 - 2$)}{64 usable hosts}{30 usable hosts}{126 usable hosts}{1}
+
+\mcqitem{25}{Multi-Factor Authentication (MFA) provides robust account security by requiring credentials from at least two different categories, such as:}{Something you know (password) and Something you have (authenticator app OTP token)}{A password and your mother's maiden name}{Your username and your email address}{Two identical passwords typed twice}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 6: VERSION CONTROL & MODERN AI TOOLS (Q26 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{26}{Git's local architecture is structured around Three Trees, which are:}{Working Directory, Staging Area (Index), and Local Repository}{Local Disk, RAM, and Cloud Cache}{Browser, Terminal, and Server}{Compiler, Linker, and Loader}{1}
+
+\mcqitem{27}{Which Git command simultaneously creates a new branch named \texttt{feature-login} and switches the working environment to it?}{\texttt{git checkout -b feature-login} (or \texttt{git switch -c feature-login})}{\texttt{git branch -d feature-login}}{\texttt{git commit -m "feature-login"}}{\texttt{git merge feature-login}}{1}
+
+\mcqitem{28}{To inspect the exact line-by-line diff of changes that have been added to the Git staging area compared to the last commit, the command is:}{\texttt{git diff --staged} (or \texttt{git diff --cached})}{\texttt{git diff}}{\texttt{git status}}{\texttt{git log}}{1}
+
+\mcqitem{29}{In Prompt Engineering with Generative AI, 'Zero-Shot Prompting' refers to:}{Providing a direct instructional prompt to the Large Language Model without supplying any prior input-output examples}{Asking the model to generate zero words}{Setting model temperature to zero}{Running the AI model with zero RAM}{1}
+
+\mcqitem{30}{Modern AI developer tools (such as GitHub Copilot and Gemini Code Assist) accelerate software engineering workflows primarily by:}{Generating context-aware code completions, writing unit tests, and explaining complex codebases using autoregressive LLMs}{Recompiling the Linux kernel automatically}{Formatting the local hard drive on every commit}{Replacing computer hardware switches}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (End-Term Set C)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Comprehensive Technical Explanations]
+\textbf{Q.5 (Ans: A)} Bus bandwidth is the product of bus width in bytes and clock frequency. A 64-bit bus carries $64 / 8 = 8\text{ bytes}$ per transfer cycle. At $800\text{ MHz} = 800 \times 10^6\text{ cycles/s}$, Bandwidth $= 8\text{ bytes} \times 800 \times 10^6 = 6.4 \times 10^9\text{ bytes/s} = 6.4\text{ GB/s}$.\\[2mm]
+\textbf{Q.22 (Ans: A)} In a mesh network of $N = 8$ nodes, each node requires $N - 1 = 7$ links to every other node. Total links $= \frac{N(N - 1)}{2} = \frac{8 \times 7}{2} = 28\text{ links}$.\\[2mm]
+\textbf{Q.28 (Ans: A)} While \texttt{git diff} shows unstaged modifications in the working tree compared to the index, \texttt{git diff --staged} (or \texttt{git diff --cached}) displays the exact staged patch changes that are currently prepared to be recorded into the next commit snapshot.\\[2mm]
+\textbf{Q.29 (Ans: A)} In Zero-Shot prompting, the model relies purely on its pre-trained parametric knowledge and instruction tuning without receiving in-context demonstration pairs. When tasks require specialized formatting or domain constraints, Few-Shot prompting provides $k$ examples to condition the autoregressive generation.\\[2mm]
+\textbf{Q.30 (Ans: A)} AI coding assistants process surrounding code context (open files, preceding functions, imports, docstrings) as prompt context in an LLM trained on billions of lines of open-source software, predicting likely next tokens to synthesize complete functions, boilerplate, and unit tests in real time.
+\end{solutionbox}
+
+\newpage

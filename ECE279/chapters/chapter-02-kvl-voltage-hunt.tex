@@ -1,0 +1,199 @@
+\chapter{Practical 2: KVL Voltage Hunt}
+
+\section{Aim / Objective}
+To verify Kirchhoff's Voltage Law (KVL) in a DC resistive network by measuring voltage drops across various components in closed loops and comparing the algebraic sum with theoretical predictions.
+
+\section{Apparatus / Components Required}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c l X c}
+\toprule
+\textbf{S.No.} & \textbf{Component / Equipment} & \textbf{Specification} & \textbf{Quantity} \\
+\midrule
+1 & DC Regulated Power Supply (RPS) & $0\text{--}30\text{V}, 1\text{A}$ (Dual Channel preferred) & 1 \\
+2 & Digital Multimeter (DMM) & Standard Laboratory Grade & 1 \\
+3 & Breadboard & Standard size & 1 \\
+4 & Resistors (Fixed) & $1\text{ k}\Omega, 2.2\text{ k}\Omega, 3.3\text{ k}\Omega$ ($1/4\text{ Watt}$) & 1 each \\
+5 & Connecting Wires & Single strand hook-up wires & As req. \\
+\bottomrule
+\end{tabularx}
+\caption{Apparatus and Components for KVL Verification.}
+\label{tab:kvl-apparatus}
+\end{table}
+
+\section{Theory}
+
+\begin{definition}[Kirchhoff's Voltage Law (KVL)]
+Kirchhoff's Voltage Law states that the algebraic sum of all voltages (potential differences and electromotive forces) around any closed loop (mesh) in a circuit is equal to zero. This law is a direct manifestation of the \textbf{Law of Conservation of Energy}.
+\end{definition}
+
+\begin{keyequation}[Mathematical Expression of KVL]
+\begin{equation}
+    \sum_{k=1}^{n} V_k = 0
+\end{equation}
+\end{keyequation}
+
+\subsection{Sign Convention for Loop Analysis}
+\begin{itemize}
+    \item \textbf{Voltage Rise ($+$):} Moving from a lower potential to a higher potential (e.g., traversing a voltage source from negative $-$ to positive $+$ terminal). Value is taken as \textbf{Positive}.
+    \item \textbf{Voltage Drop ($-$):} Moving from a higher potential to a lower potential (e.g., in the direction of current flowing through a resistor). Value is taken as \textbf{Negative}.
+\end{itemize}
+
+\section{Circuit Diagram / Setup}
+
+We utilize a \textbf{T-Network circuit} which provides two distinct meshes for loop analysis.
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=1.0]
+    \draw (0,0) to[V, l=$V_1{=}10\text{V}$] (0,3)
+          to[R, l=$R_1{=}1\text{ k}\Omega$] (3,3)
+          to[R, l=$R_3{=}3.3\text{ k}\Omega$] (6,3)
+          -- (6,0) -- (0,0);
+    \draw (3,3) to[R, l=$R_2{=}2.2\text{ k}\Omega$] (3,0);
+    \node[above] at (3,3) {Node A};
+    \node[below] at (3,0) {GND};
+    \draw (3,0) node[ground]{};
+\end{circuitikz}
+\caption{T-Network Circuit Diagram for KVL Verification.}
+\label{fig:kvl-t-network}
+\end{figure}
+
+\subsection{Circuit Parameters}
+\begin{itemize}
+    \item $V_1$: $10\text{V DC Source}$
+    \item $R_1$: $1\text{ k}\Omega$ (Series arm)
+    \item $R_2$: $2.2\text{ k}\Omega$ (Shunt / Shared arm)
+    \item $R_3$: $3.3\text{ k}\Omega$ (Output arm)
+\end{itemize}
+
+\section{Step-by-Step Procedure}
+\begin{enumerate}
+    \item \textbf{Preparation:} Check resistance values of $R_1, R_2, R_3$ using DMM (Ohmmeter mode) and record actual measured values.
+    \item \textbf{Circuit Assembly:} Connect the circuit on the breadboard as shown in the T-network diagram. Ensure tight connections.
+    \item \textbf{Power Up:} Switch on Regulated DC Power Supply (RPS) and set output voltage ($V_s$) to exactly $10\text{V}$.
+    \item \textbf{Measurement Strategy:} Always place Red probe of DMM at the point where current enters component and Black probe where current leaves to get a positive reading for a drop.
+    \item \textbf{Measure Loop 1 (Mesh 1):}
+    \begin{itemize}
+        \item Measure voltage across Source ($V_s$).
+        \item Measure voltage across $R_1$ ($V_{R1}$).
+        \item Measure voltage across $R_2$ ($V_{R2}$).
+    \end{itemize}
+    \item \textbf{Measure Loop 2 (Mesh 2):}
+    \begin{itemize}
+        \item Measure voltage across $R_2$ ($V_{R2}$). (Note: This is the shared branch).
+        \item Measure voltage across $R_3$ ($V_{R3}$).
+    \end{itemize}
+    \item \textbf{Verification:} Record all readings with proper signs in the observation table.
+\end{enumerate}
+
+\section{Observations and Readings}
+
+\noindent Input Voltage ($V_s$): \underline{\hspace{1.5cm}} V (Set to approx 10V)\\[4pt]
+Resistor Values (Measured): $R_1 = \underline{\hspace{1.2cm}}\,\Omega, \quad R_2 = \underline{\hspace{1.2cm}}\,\Omega, \quad R_3 = \underline{\hspace{1.2cm}}\,\Omega$
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X c}
+\toprule
+\textbf{Component} & \textbf{Theoretical Voltage ($V$)} & \textbf{Practical (Measured) Voltage ($V$)} \\
+\midrule
+$V_{R1}$ & Calculate in Section 7 ($4.31\text{ V}$) & — \\
+$V_{R2}$ & Calculate in Section 7 ($5.69\text{ V}$) & — \\
+$V_{R3}$ & Calculate in Section 7 ($5.69\text{ V}$) & — \\
+\bottomrule
+\end{tabularx}
+\caption{Voltage Drops across T-Network Components.}
+\label{tab:kvl-drops}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l p{3.2cm} X c c}
+\toprule
+\textbf{Loop Path} & \textbf{Equation} & \textbf{Calculation (Sum of Measured Values)} & \textbf{Result} & \textbf{Ideally} \\
+\midrule
+\textbf{Mesh 1} & $V_s - V_{R1} - V_{R2}$ & $10 - (\dots) - (\dots)$ & \underline{\hspace{1.2cm}} V & $0\text{ V}$ \\
+\textbf{Mesh 2} & $V_{R2} - V_{R3}$ & $(\dots) - (\dots)$ & \underline{\hspace{1.2cm}} V & $0\text{ V}$ \\
+\textbf{Outer Loop} & $V_s - V_{R1} - V_{R3}$ & $10 - (\dots) - (\dots)$ & \underline{\hspace{1.2cm}} V & $0\text{ V}$ \\
+\bottomrule
+\end{tabularx}
+\caption{KVL Verification Table (Algebraic Sums).}
+\label{tab:kvl-sum}
+\end{table}
+
+\begin{examtip}[Clockwise Traversal in Mesh 2]
+In Mesh 2, if traversing clockwise, we go "up" against current in $R_2$ (Voltage Rise) and "down" with current in $R_3$ (Voltage Drop). Thus the mesh equation is $V_{R2} - V_{R3} = 0$.
+\end{examtip}
+
+\section{Detailed Calculations}
+
+\subsection{Step 1: Calculate Total Equivalent Resistance (\texorpdfstring{$R_{eq}$}{Req})}
+In this T-configuration, $R_2$ and $R_3$ are connected in parallel to Node A after $R_1$:
+\begin{equation}
+    R_p = \frac{R_2 \times R_3}{R_2 + R_3} = \frac{2200 \times 3300}{2200 + 3300} = \frac{7,260,000}{5500} = 1320\,\Omega
+\end{equation}
+
+\begin{equation}
+    R_{total} = R_1 + R_p = 1000 + 1320 = 2320\,\Omega
+\end{equation}
+
+\subsection{Step 2: Calculate Total Current (\texorpdfstring{$I_{total}$}{Itotal})}
+\begin{equation}
+    I_{total} = \frac{V_s}{R_{total}} = \frac{10\text{V}}{2320\,\Omega} \approx 4.31\text{ mA}
+\end{equation}
+
+\subsection{Step 3: Theoretical Voltage Drops}
+\begin{itemize}
+    \item $V_{R1} = I_{total} \times R_1 = 4.31\text{ mA} \times 1\text{ k}\Omega = \mathbf{4.31\text{ V}}$
+    \item Voltage at Node A ($V_A$) = $V_s - V_{R1} = 10 - 4.31 = \mathbf{5.69\text{ V}}$
+    \item Since $R_2$ and $R_3$ are in parallel connected to Node A:
+    \begin{equation*}
+        V_{R2} = \mathbf{5.69\text{ V}}, \quad V_{R3} = \mathbf{5.69\text{ V}}
+    \end{equation*}
+\end{itemize}
+
+\subsection{Step 4: Percentage Error Calculation}
+\begin{equation}
+    \% \text{ Error} = \left| \frac{\text{Theoretical} - \text{Practical}}{\text{Theoretical}} \right| \times 100
+\end{equation}
+
+\section{Result}
+Kirchhoff's Voltage Law (KVL) has been verified for the given resistive network.
+\begin{enumerate}
+    \item \textbf{Mesh 1 Sum:} Algebraic sum of voltages in Mesh 1 was found to be \underline{\hspace{1cm}} V (approx $0\text{V}$).
+    \item \textbf{Mesh 2 Sum:} Algebraic sum of voltages in Mesh 2 was found to be \underline{\hspace{1cm}} V (approx $0\text{V}$).
+\end{enumerate}
+
+Small deviations from zero are attributed to tolerance of resistors, contact resistance of the breadboard, and internal resistance of the multimeter.
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[Fundamental Principle of KVL]
+\textbf{Question:} On what fundamental principle is KVL based?\\[4pt]
+\textbf{Answer:} KVL is based on the \textbf{Law of Conservation of Energy}. It states that energy gained by charge moving through a source must equal energy dissipated across passive elements in a closed loop.
+\end{vivaqa}
+
+\begin{vivaqa}[Voltmeter Parallel Connection]
+\textbf{Question:} Why must the DMM be connected in parallel to measure voltage?\\[4pt]
+\textbf{Answer:} Voltage is a potential difference between two points. Connecting in parallel allows the meter to sample energy difference without interrupting circuit current. Ideally, a voltmeter has infinite internal resistance.
+\end{vivaqa}
+
+\begin{vivaqa}[Traversing Opposite to Current]
+\textbf{Question:} If you traverse a resistor opposite to the direction of current, is it a voltage rise or drop?\\[4pt]
+\textbf{Answer:} It is considered a \textbf{Voltage Rise ($+$)}, because you move from a lower potential to a higher potential.
+\end{vivaqa}
+
+\begin{vivaqa}[KVL Open Loop Application]
+\textbf{Question:} Can KVL be applied to an open loop?\\[4pt]
+\textbf{Answer:} No, KVL specifically applies to closed conducting paths (loops or meshes) where starting and ending points are identical.
+\end{vivaqa}
+
+\begin{vivaqa}[Non-Zero Voltage Sum Error Analysis]
+\textbf{Question:} What happens if you sum the voltages around a loop but get a value significantly non-zero (e.g., 2V)?\\[4pt]
+\textbf{Answer:} This indicates an error: loose breadboard connections, a faulty component, incorrect measurement polarity, or a battery draining under load.
+\end{vivaqa}

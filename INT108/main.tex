@@ -1,0 +1,58 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Python Programming}
+\author{LPU Engineering Open}
+\date{Semester 1 Study \& Practice Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer, and Table of Contents
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% MAINMATTER: CHAPTER INCLUSIONS
+% ==============================================================================
+\mainmatter
+
+% Part I / Unit 1
+\include{chapters/chapter-01-environment-variables-statements}
+
+% Part II / Unit 2
+\include{chapters/chapter-02-conditionals-loops-algorithms}
+
+% Part III / Unit 3
+\include{chapters/chapter-03-functions-modules-recursion}
+
+% Part IV / Unit 4
+\include{chapters/chapter-04-strings-lists-tuples-dictionaries}
+
+% Part V / Unit 5
+\include{chapters/chapter-05-object-oriented-programming}
+
+% Part VI / Unit 6
+\include{chapters/chapter-06-files-exceptions-regex}
+
+% Part VII: Master Cheatsheets & Reference Matrices
+\include{chapters/chapter-07-master-syntax-methods-sheet}
+
+% Part VIII: Practical Multi-Unit Coding Challenges
+\include{chapters/chapter-08-practical-coding-challenges}
+
+% Part IX: Full-Length University Mock Examinations
+\include{chapters/chapter-09-mock-examinations}
+
+\end{document}

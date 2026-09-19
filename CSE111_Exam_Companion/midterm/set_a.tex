@@ -1,0 +1,115 @@
+\section{Mid-Term Examination --- Set A}
+\label{sec:midterm_set_a}
+
+\LPUCSHeader{Mid-Term Examination (Comprehensive MCQ)}{A}{90 Minutes}{30 Marks}{CO1, CO2 \& CO3 (Unit 1: System, Unit 2: OS, Unit 3: Linux)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{In the von Neumann computer model, the bottleneck resulting from sharing a single physical bus for both instruction fetching and data transfers is called the:}{von Neumann Bottleneck}{Harvard Latency}{Bus Skew}{Cache Miss Penalty}{1}
+
+\mcqitem{2}{Which level of the CPU cache hierarchy is typically the largest in storage capacity, shared among all cores on a multi-core silicon die, and incurs higher latency than L1 or L2 caches?}{Level 3 (L3) Cache}{Level 1 Instruction Cache (L1i)}{Level 1 Data Cache (L1d)}{Level 2 (L2) Cache}{1}
+
+\mcqitem{3}{Static RAM (SRAM) is preferred over Dynamic RAM (DRAM) for building CPU caches because SRAM:}{Does not require periodic capacitive refresh cycles and offers significantly lower access latency}{Has a much higher storage density per unit silicon area}{Consumes zero power at all times}{Is non-volatile when main power is removed}{1}
+
+\mcqitem{4}{The high-performance storage protocol specifically architected to leverage the low latency and massive parallelism of solid-state storage across direct PCIe lanes is:}{NVMe (Non-Volatile Memory Express)}{SATA 3.0}{SCSI-3}{PATA IDE}{1}
+
+\mcqitem{5}{A storage administrator configures four $1\text{ TB}$ hard drives in a RAID 5 array. The usable capacity available to the operating system is:}{$3\text{ TB}$ (calculated as $(N - 1) \times \text{Drive Capacity}$)}{$4\text{ TB}$}{$2\text{ TB}$}{$1\text{ TB}$}{1}
+
+\mcqitem{6}{Which computer component coordinates and directs the flow of data, control signals, and instruction cycles between the ALU, registers, and memory?}{Control Unit (CU)}{Arithmetic Logic Unit (ALU)}{Floating-Point Unit (FPU)}{DMA Controller}{1}
+
+\mcqitem{7}{The principle of 'Spatial Locality' in cache memory systems states that:}{When a memory location is accessed, nearby contiguous memory addresses are highly likely to be accessed soon}{An accessed memory address will be referenced repeatedly within a short time window}{All cache lines are refreshed simultaneously every millisecond}{Data in cache is mirrored across two identical chips}{1}
+
+\mcqitem{8}{Under the RAID 0 storage specification, data blocks are:}{Striped across multiple member disks without parity or mirroring, providing no fault tolerance}{Mirrored identically across two disks}{Protected by double distributed parity}{Stored sequentially on magnetic tape}{1}
+
+\mcqitem{9}{A motherboard PCIe 5.0 expansion slot with 16 lanes (x16) delivers a theoretical bidirectional throughput of approximately:}{$\approx 128\text{ GB/s}$}{$\approx 16\text{ GB/s}$}{$\approx 32\text{ GB/s}$}{$\approx 4\text{ GB/s}$}{1}
+
+\mcqitem{10}{Which CPU register holds the actual physical memory address from which data is to be read or to which data is to be written?}{Memory Address Register (MAR)}{Instruction Register (IR)}{Accumulator (AC)}{Program Counter (PC)}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q11 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{In modern operating system architectures, the transition from unprivileged user space to privileged kernel space is triggered by executing a:}{System Call (\texttt{syscall} / software interrupt)}{Preprocessor directive}{Memory compaction command}{Standard C variable declaration}{1}
+
+\mcqitem{12}{Which operating system kernel architecture incorporates core services (file systems, memory management, device drivers, network protocols) within a single contiguous address space running in supervisor mode?}{Monolithic Kernel}{Microkernel}{Exokernel}{Hybrid Nano-Kernel}{1}
+
+\mcqitem{13}{In CPU process management, the state transition that occurs when a running process issues a blocking I/O request (such as reading a disk file) is:}{Running $\to$ Waiting (Blocked)}{Running $\to$ Ready}{Ready $\to$ Running}{Waiting $\to$ Terminated}{1}
+
+\mcqitem{14}{A CPU scheduling algorithm assigns a fixed time slice (quantum $q$) to each process in the ready queue in a cyclical manner. This algorithm is known as:}{Round Robin (RR)}{Shortest Job First (SJF)}{First-Come, First-Served (FCFS)}{Priority Scheduling}{1}
+
+\mcqitem{15}{Virtual memory systems implement 'Demand Paging', which means that:}{Pages are brought from disk swap space into physical RAM only when referenced by the executing program}{All virtual pages must be allocated in physical RAM before the program begins execution}{Pages are locked in cache and never written to secondary storage}{Virtual addresses directly match physical RAM addresses without translation}{1}
+
+\mcqitem{16}{The hardware component within the CPU that intercepts virtual addresses generated by program execution and translates them into physical memory addresses is the:}{Memory Management Unit (MMU)}{Arithmetic Logic Unit (ALU)}{Direct Memory Access (DMA) engine}{Interrupt Vector Table (IVT)}{1}
+
+\mcqitem{17}{A severe operating system state where multiple processes are indefinitely blocked because each holds a resource while waiting for a resource held by another process in a closed loop is called:}{Deadlock}{Thrashing}{Starvation}{Livelock}{1}
+
+\mcqitem{18}{In the C program compilation lifecycle, which software tool resolves unresolved external symbols and binds static libraries into a standalone executable binary?}{Linker}{Compiler}{Assembler}{Preprocessor}{1}
+
+\mcqitem{19}{Which segment of a running process's memory layout stores local automatic variables, function parameters, and return addresses in a Last-In, First-Out sequence?}{Stack Segment}{Heap Segment}{Data Segment}{Text (Code) Segment}{1}
+
+\mcqitem{20}{In software compilation, the C Preprocessor interprets commands beginning with which symbol before lexical analysis begins?}{\texttt{\#}}{\texttt{\&}}{\texttt{\$}}{\texttt{\%}}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q21 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{The Linux operating system kernel was initially created and released in 1991 by:}{Linus Torvalds}{Richard Stallman}{Ken Thompson}{Dennis Ritchie}{1}
+
+\mcqitem{22}{According to the Linux Filesystem Hierarchy Standard (FHS), host-specific, system-wide configuration files (such as \texttt{passwd}, \texttt{fstab}, and \texttt{hosts}) are stored in which directory?}{\texttt{/etc}}{\texttt{/bin}}{\texttt{/dev}}{\texttt{/proc}}{1}
+
+\mcqitem{23}{Which directory in a Linux system serves as a virtual pseudo-filesystem generated dynamically by the kernel to provide runtime diagnostic and process information?}{\texttt{/proc}}{\texttt{/var}}{\texttt{/usr}}{\texttt{/home}}{1}
+
+\mcqitem{24}{In Linux file permissions, executing the command \texttt{chmod 755 script.sh} assigns what permissions to the Owner, Group, and Others respectively?}{Owner: \texttt{rwx}, Group: \texttt{r-x}, Others: \texttt{r-x}}{Owner: \texttt{rwx}, Group: \texttt{rw-}, Others: \texttt{r--}}{Owner: \texttt{rw-}, Group: \texttt{r--}, Others: \texttt{---}}{Owner: \texttt{r-x}, Group: \texttt{r-x}, Others: \texttt{r-x}}{1}
+
+\mcqitem{25}{What does an Inode (index node) in a Linux filesystem store?}{File metadata (size, permissions, owner, timestamps, data block pointers), but NOT the filename}{Only the human-readable filename}{The complete text content of the file}{The user password hashes}{1}
+
+\mcqitem{26}{How does a Linux 'Hard Link' differ from a 'Symbolic (Soft) Link'?}{A hard link shares the exact same Inode number and points directly to data blocks; a symbolic link has a distinct Inode containing the path string}{A hard link can span across different mounted filesystems}{A symbolic link cannot be deleted once created}{A hard link creates a duplicate copy of file contents on disk}{1}
+
+\mcqitem{27}{Which Bash command-line utility uses regular expressions to search text files for lines matching a specified pattern?}{\texttt{grep}}{\texttt{sed}}{\texttt{awk}}{\texttt{find}}{1}
+
+\mcqitem{28}{In Linux input/output redirection, the standard file descriptor integer corresponding to Standard Error (\texttt{stderr}) is:}{2}{0 (\texttt{stdin})}{1 (\texttt{stdout})}{3}{1}
+
+\mcqitem{29}{The special permission bit that, when set on a directory (such as \texttt{/tmp}, octal \texttt{1777}), allows any user to create files but permits ONLY the file's owner (or root) to delete it is the:}{Sticky Bit}{SUID (Set User ID)}{SGID (Set Group ID)}{Immutable Bit}{1}
+
+\mcqitem{30}{Which category of hypervisor runs directly on the bare physical host hardware without an underlying host operating system (e.g., VMware ESXi, KVM)?}{Type 1 Hypervisor (Bare-Metal)}{Type 2 Hypervisor (Hosted)}{Type 3 Hypervisor}{Container Engine}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (Mid-Term Set A)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Architectural, Systems \& Linux Explanations]
+\textbf{Q.5 (Ans: A)} For RAID 5, distributed parity consumes the capacity equivalent of exactly one disk. With $N = 4$ disks of size $1\text{ TB}$, usable capacity is $(4 - 1) \times 1\text{ TB} = 3\text{ TB}$.\\[2mm]
+\textbf{Q.9 (Ans: A)} PCIe 5.0 operates at $32\text{ GT/s}$ using a 128b/130b encoding, delivering $\approx 3.938\text{ GB/s}$ ($\approx 4\text{ GB/s}$) per lane. Across 16 lanes ($x16$), the unidirectional bandwidth is $16 \times 4\text{ GB/s} = 64\text{ GB/s}$, yielding a bidirectional aggregate throughput of $\approx 128\text{ GB/s}$.\\[2mm]
+\textbf{Q.24 (Ans: A)} Octal 7 is $4+2+1 \implies \texttt{rwx}$ (Read, Write, Execute). Octal 5 is $4+0+1 \implies \texttt{r-x}$ (Read, Execute). Thus, \texttt{chmod 755} yields \texttt{-rwxr-xr-x}: full access for the file owner, and read/execute access for group members and others.\\[2mm]
+\textbf{Q.25 \& Q.26 (Ans: A)} In Unix filesystems, directory entries map human-readable filenames to Inode numbers. The Inode contains all file metadata (permissions, UID, GID, file size, timestamps, direct and indirect block pointers). A Hard Link creates a second directory entry referencing the identical Inode; hence, deleting one link retains the file until the link count reaches 0.\\[2mm]
+\textbf{Q.29 (Ans: A)} The Sticky Bit on a directory (indicated by \texttt{t} in the permissions, e.g., \texttt{drwxrwxrwt}) prevents unprivileged users from deleting or renaming files that belong to other users within a shared public directory, even if they have write permission on the parent directory.
+\end{solutionbox}
+
+\newpage

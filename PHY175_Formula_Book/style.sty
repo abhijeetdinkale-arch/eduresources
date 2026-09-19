@@ -1,0 +1,73 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/18 v1.0 PHY175 Formula Book Style System]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=18mm,
+    bottom=18mm,
+    left=18mm,
+    right=18mm,
+    headheight=14pt,
+    headsep=12pt,
+    footskip=10mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty = true}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{formnavy}{RGB}{2, 48, 71}
+\definecolor{formblue}{RGB}{33, 158, 188}
+\definecolor{formorange}{RGB}{251, 133, 0}
+\definecolor{formbg}{RGB}{240, 248, 255}
+
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+    boxrule=1pt,
+    arc=2pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\sffamily,
+    before skip=6pt,
+    after skip=6pt
+}
+
+\newtcolorbox{formulabox}[1][Formula Sheet]{
+    enhanced, breakable, colback=formbg, colframe=formnavy,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+    boxed title style={colback=formnavy, arc=2pt}
+}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+\titleformat{\chapter}[display]
+{\normalfont\sffamily\LARGE\bfseries\color{formnavy}}
+{\flushright\fontsize{32}{36}\selectfont\color{formblue!30}Unit \thechapter}
+{-15pt}
+{\titlerule[1.5pt]\vspace{1ex}}
+[\vspace{1ex}\titlerule]
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\small\thepage}
+\fancyhead[RE]{\sffamily\small\nouppercase{\leftmark}}
+\fancyhead[LO]{\sffamily\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\sffamily\scriptsize LPU Engineering Open $\cdot$ PHY175 Formula Handbook}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=formnavy, citecolor=formblue}

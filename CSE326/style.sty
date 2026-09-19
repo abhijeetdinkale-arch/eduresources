@@ -1,0 +1,585 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/08/29 CSE326 Web Development Textbook Package]
+
+% --- Core Typography & Encoding ---
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{calc}
+
+% --- Page Geometry (Standardized to Physics Textbook Specifications) ---
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% --- Color Palette ---
+\RequirePackage[table,x11names,dvipsnames]{xcolor}
+\definecolor{webblue}{HTML}{0284C7}     % Ocean Blue
+\definecolor{webnavy}{HTML}{0F172A}     % Deep Slate
+\definecolor{webgreen}{HTML}{16A34A}    % Emerald
+\definecolor{webgold}{HTML}{D97706}     % Amber / Accent
+\definecolor{webred}{HTML}{DC2626}      % Ruby Red
+\definecolor{webpurple}{HTML}{7C3AED}   % Violet
+\definecolor{webbg}{HTML}{F8FAFC}       % Light Slate BG
+\definecolor{webcodebg}{HTML}{1E293B}   % Dark Code Slate
+\definecolor{slate}{HTML}{64748B}
+\definecolor{amber}{HTML}{D97706}
+\definecolor{indigo}{HTML}{4F46E5}
+\definecolor{teal}{HTML}{0D9488}
+\definecolor{purple}{HTML}{7C3AED}
+\definecolor{blue}{HTML}{2563EB}
+\definecolor{green}{HTML}{16A34A}
+\definecolor{red}{HTML}{DC2626}
+
+% LPU Engineering Open Brand Palette
+\definecolor{brandnavy}{HTML}{0F2C59}    % Primary Navy
+\definecolor{brandblue}{HTML}{0284C7}    % Secondary Accent Blue
+\definecolor{brandslate}{HTML}{475569}   % Muted Slate
+\definecolor{branddark}{HTML}{0F172A}    % Text Dark
+\definecolor{boxnavybg}{HTML}{F0F4F8}    % Soft Light Navy Background
+\definecolor{boxamberbg}{HTML}{FFFBEB}   % Soft Light Amber Background
+\definecolor{boxamberborder}{HTML}{D97706}
+
+% --- Tables & Lists ---
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\RequirePackage{multicol}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, trees}
+
+% --- Code Listings ---
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+
+% --- Hyperlinks ---
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=webblue,
+    citecolor=webpurple,
+    urlcolor=webblue,
+    pdfauthor={Lovely Professional University},
+    pdftitle={CSE326: Web Development — University Study Guide},
+    pdfsubject={HTML5, CSS3, JavaScript, DOM, Web Protocols}
+}
+
+% --- Listings Language Styling ---
+\lstdefinelanguage{HTML5}{
+    language=html,
+    sensitive=true,
+    alsoletter={<>=-/},
+    morecomment=[s]{<!--}{-->},
+    tag=[s]
+}
+
+\lstdefinelanguage{CSS3}{
+    keywords={color,background,background-color,background-image,background-repeat,background-position,background-size,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,border,border-width,border-style,border-color,border-radius,border-collapse,width,height,font-family,font-size,font-weight,text-align,line-height,text-decoration,text-transform,box-sizing,display,cursor,outline},
+    sensitive=false,
+    morecomment=[s]{/*}{*/},
+    morestring=[b]",
+    morestring=[b]'
+}
+
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, const, let, document, window, console, for, continue, default, throw, try, finally, this, typeof, instanceof, arguments},
+    sensitive=true,
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]"
+}
+
+
+\definecolor{LightGreen}{HTML}{86EFAC}
+\definecolor{LightBlue1}{HTML}{93C5FD}
+\definecolor{SkyBlue2}{HTML}{38BDF8}
+\definecolor{SlateGray3}{HTML}{94A3B8}
+\definecolor{Gold1}{HTML}{FCD34D}
+\definecolor{Thistle1}{HTML}{E9D5FF}
+\definecolor{Khaki1}{HTML}{FDE047}
+
+% --- Listings General Style ---
+\lstset{
+    basicstyle=\small\ttfamily\color{white},
+    keywordstyle=\bfseries\color{SkyBlue2},
+    commentstyle=\itshape\color{SlateGray3},
+    stringstyle=\color{Gold1},
+    numberstyle=\tiny\color{slate},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=2,
+    keepspaces=true
+}
+
+% --- TColorBoxes for Web Code Listings ---
+\newtcblisting{htmlcode}[2][]{
+    enhanced,
+    breakable,
+    colback=webcodebg,
+    colframe=webblue!80!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\ttfamily,
+    title={HTML: #2},
+    listing only,
+    listing options={
+        language=HTML5,
+        basicstyle=\small\ttfamily\color{white},
+        keywordstyle=\bfseries\color{LightBlue1},
+        commentstyle=\itshape\color{SlateGray3},
+        stringstyle=\color{Gold1},
+        numbers=left,
+        numbersep=8pt
+    },
+    arc=4pt,
+    boxrule=1pt,
+    left=6mm,
+    right=3mm,
+    top=2mm,
+    bottom=2mm,
+    #1
+}
+
+\newtcblisting{csscode}[2][]{
+    enhanced,
+    breakable,
+    colback=webcodebg,
+    colframe=webpurple!80!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\ttfamily,
+    title={CSS: #2},
+    listing only,
+    listing options={
+        language=CSS3,
+        basicstyle=\small\ttfamily\color{white},
+        keywordstyle=\bfseries\color{Thistle1},
+        commentstyle=\itshape\color{SlateGray3},
+        stringstyle=\color{Gold1},
+        numbers=left,
+        numbersep=8pt
+    },
+    arc=4pt,
+    boxrule=1pt,
+    left=6mm,
+    right=3mm,
+    top=2mm,
+    bottom=2mm,
+    #1
+}
+
+\newtcblisting{jscode}[2][]{
+    enhanced,
+    breakable,
+    colback=webcodebg,
+    colframe=webgold!90!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\ttfamily,
+    title={JavaScript: #2},
+    listing only,
+    listing options={
+        language=JavaScript,
+        basicstyle=\small\ttfamily\color{white},
+        keywordstyle=\bfseries\color{Khaki1},
+        commentstyle=\itshape\color{SlateGray3},
+        stringstyle=\color{LightGreen},
+        numbers=left,
+        numbersep=8pt
+    },
+    arc=4pt,
+    boxrule=1pt,
+    left=6mm,
+    right=3mm,
+    top=2mm,
+    bottom=2mm,
+    #1
+}
+
+% --- Visual Output Box ---
+\newtcolorbox{outputbox}[1][Browser Rendered Output / Console Display]{
+    enhanced,
+    breakable,
+    colback=slate!10,
+    colframe=slate!60!black,
+    coltitle=white,
+    fonttitle=\footnotesize\bfseries\sffamily,
+    title={#1},
+    fontupper=\small\ttfamily\color{webnavy},
+    arc=3pt,
+    boxrule=0.8pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+% --- Custom Environments ---
+\newtcolorbox{conceptbox}[1][Key Concept]{
+    enhanced,
+    breakable,
+    colback=webblue!6,
+    colframe=webblue,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{syntaxbox}[1][Syntax]{
+    enhanced,
+    breakable,
+    colback=webpurple!6,
+    colframe=webpurple,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={Syntax Specification: #1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{examtip}[1][High-Yield Exam Strategy \& Traps]{
+    enhanced,
+    breakable,
+    colback=webgold!8,
+    colframe=webgold!90!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{commonmistake}[1][Common Student Mistakes \& Pitfalls]{
+    enhanced,
+    breakable,
+    colback=webred!6,
+    colframe=webred,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{outputprediction}[1][Output Prediction Challenge]{
+    enhanced,
+    breakable,
+    colback=teal!6,
+    colframe=teal!80!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={Output Prediction: #1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{debuggingbox}[1][Debugging Challenge]{
+    enhanced,
+    breakable,
+    colback=webred!5,
+    colframe=webred!80!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={Debugging Challenge: #1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{practiceset}[1][Graded Practice Set]{
+    enhanced,
+    breakable,
+    colback=webbg,
+    colframe=webnavy,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+\newtcolorbox{chaptertest}[1][Self-Assessment Unit Examination]{
+    enhanced,
+    breakable,
+    colback=webnavy!5,
+    colframe=webnavy,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1.2pt,
+    top=3mm,
+    bottom=3mm,
+    left=4mm,
+    right=4mm
+}
+
+\newtcolorbox{mockexam}[1][Full-Length University Mock Examination]{
+    enhanced,
+    breakable,
+    colback=webnavy!4,
+    colframe=webnavy!90!black,
+    coltitle=white,
+    fonttitle=\normalsize\bfseries\sffamily,
+    title={#1},
+    arc=4pt,
+    boxrule=1.2pt,
+    top=3mm,
+    bottom=3mm,
+    left=4mm,
+    right=4mm
+}
+
+\newtcolorbox{solutionbox}[1][Worked Solution \& Marking Scheme]{
+    enhanced,
+    breakable,
+    colback=webgreen!6,
+    colframe=webgreen!80!black,
+    coltitle=white,
+    fonttitle=\small\bfseries\sffamily,
+    title={Worked Solution: #1},
+    arc=4pt,
+    boxrule=1pt,
+    top=3mm,
+    bottom=3mm,
+    left=3mm,
+    right=3mm
+}
+
+% --- Headers & Footers (fancyhdr) ---
+\RequirePackage[breakall]{truncate}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhead[L]{\small\sffamily\color{slate}\textbf{CSE326} \textbar\ Web Development}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\truncate{0.55\linewidth}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\small\sffamily\color{slate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{webblue}\thepage}
+
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[L]{\small\sffamily\color{slate}LPU Engineering Open}
+    \fancyfoot[R]{\small\sffamily\bfseries\color{webblue}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% --- Chapter Titles (titlesec) ---
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{webblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{webnavy}}
+  [\vspace{4pt}{\color{webblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{webnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{slate!40}\rule{\linewidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{webblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{branddark}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+\newcommand{\lpuBadge}{\hfill\colorbox{webnavy}{\color{white}\footnotesize\bfseries\ LPU CSE326\ }}
+\newcommand{\examBadge}{\hfill\colorbox{webgold!90!black}{\color{white}\footnotesize\bfseries\ HIGH YIELD\ }}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ==============================================================================
+% FRONTMATTER MACROS: COVER, COPYRIGHT & DISCLAIMER
+% ==============================================================================
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    % Top background accent band
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[webblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    % Series badge at top
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ STUDY GUIDE SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Open-Source Academic Textbooks for Engineering Students};
+    
+    % Decorative bottom band
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[webblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Student-Led Educational Initiative \textbullet\ 2026 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Source (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{34}{40}\selectfont\bfseries\sffamily\color{brandnavy} Web Development\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{webblue} CSE326 $\cdot$ Semester 1 \& 2 Study Guide\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{HTML5 \textbullet\ CSS3 \textbullet\ Modern JavaScript (ES6+) \textbullet\ DOM Engine \textbullet\ Regex Forms}\par}
+    
+    \vspace{2.0cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Subject Features:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Complete authoritative coverage of all 6 Units of the LPU CSE326 syllabus.
+            \item Semantic HTML5 architecture, responsive CSS3 Flexbox/Grid, and modern UI design.
+            \item Deep JavaScript fundamentals: closures, prototypes, event delegation, and asynchronous fetch.
+            \item Form validation matrices, regular expressions, and full-length university examination papers.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Team / Publisher:}\\
+    LPU Engineering Open Publishing Project\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large CSE326: Web Development --- Study \& Practice Guide}\\
+\textit{\sffamily An Open-Source Educational Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Release Edition:} 2026 Edition (Phase 1 Base Architecture)\\
+\textbf{\sffamily Primary Source Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Contributors of LPU Engineering Open.\\
+This manuscript, diagrams, and educational text are distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\noindent
+The accompanying web examples, JavaScript implementations, and style macros are distributed under the terms of the \textbf{MIT License}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Open Contributors, \textit{CSE326: Web Development --- Study \& Practice Guide}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Important Disclaimer \& Institutional Non-Affiliation}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Student-Created Resource}\\
+This book is an independent, non-profit, student-led open educational resource designed to aid students in mastering web technologies and preparing for engineering examinations.
+
+\textbf{2. Non-Affiliation Notice}\\
+\textbf{LPU Engineering Open is NOT affiliated with, sponsored by, authorized by, or endorsed by Lovely Professional University (LPU).} Lovely Professional University is not responsible for the contents, factual accuracy, exam representations, or editorial choices in this book.
+
+\textbf{3. Trademark \& Fair Use}\\
+Any references to university curriculum structures, course codes (e.g., CSE326), subject syllabi, or exam formats are made strictly under educational \textbf{fair use} principles to provide appropriate context and academic alignment for students studying these topics.
+
+\textbf{4. Accuracy \& Standards Compliance}\\
+While every effort has been made by student and educator contributors to verify standard compliance across modern browsers (W3C HTML5, WHATWG, ECMAScript), the publishers provide this material on an ``as-is'' basis. Readers are encouraged to report any typographical or code issues on the project's repository.
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

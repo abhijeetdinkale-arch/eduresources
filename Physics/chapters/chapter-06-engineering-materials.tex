@@ -1,0 +1,653 @@
+\chapter{Engineering Materials}
+\label{chap:materials}
+
+\section{Chapter Overview \& Learning Objectives}
+The technological advancement of modern engineering disciplines—ranging from microelectronics, power distribution, and renewable energy to quantum computing and aerospace—is driven by the development and functional exploitation of advanced materials.
+
+In this chapter, we explore four major classes of advanced functional materials: **Dielectric Materials**, **Magnetic Materials**, **Superconductors**, and **Nanomaterials**. We examine the microscopic polarization mechanisms in dielectrics, derive the Lorentz internal local field and the Clausius-Mossotti equation, classify magnetic materials and analyze magnetic hysteresis loops ($B$-$H$ curve), study the fundamental physics of superconductivity (the Meissner effect, Type-I vs. Type-II, BCS Cooper pairs, and high-$T_c$ ceramics), and investigate quantum confinement and synthesis in low-dimensional nanomaterials.
+
+\begin{important}[Core Learning Objectives]
+Upon mastering the material in this chapter, you should be able to:
+\begin{enumerate}
+    \item Define electric polarization $\mathbf{P}$, electric susceptibility $\chi_e$, and dielectric constant $\varepsilon_r$, and formulate the four microscopic polarization mechanisms.
+    \item Derive the Lorentz internal local field $\mathbf{E}_{\text{loc}} = \mathbf{E} + \frac{\mathbf{P}}{3\varepsilon_0}$ and the Clausius-Mossotti equation.
+    \item Classify magnetic materials (diamagnetic, paramagnetic, ferromagnetic, antiferromagnetic, ferrimagnetic) and analyze their temperature dependencies.
+    \item Explain the Weiss domain theory of ferromagnetism, analyze the $B$-$H$ magnetic hysteresis loop, and compare soft and hard magnetic materials.
+    \item Describe the fundamental characteristics of superconductors (zero electrical resistance, critical field $H_c(T)$, Silsbee's rule, and the Meissner effect).
+    \item Distinguish between Type-I and Type-II superconductors and explain the vortex/mixed state and flux pinning.
+    \item Outline the elementary BCS theory of superconductivity (Cooper pairs and energy gap).
+    \item Define nanomaterials (0D, 1D, 2D, 3D), explain quantum confinement and surface-to-volume ratio scaling, and calculate crystallite size using Scherrer's equation.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 6.2: DIELECTRIC MATERIALS & POLARIZATION
+% ==============================================================================
+\section{Dielectric Materials \& Polarization Mechanics}
+
+Dielectrics are non-conducting insulating materials that lack free charge carriers but possess the ability to store electrical energy through microscopic electrostatic charge displacement (\textbf{polarization}).
+
+\subsection{Macroscopic Polarization Parameters}
+When an external electric field $\mathbf{E}$ is applied across a dielectric:
+\begin{enumerate}
+    \item \textbf{Electric Dipole Moment} ($\mathbf{p}$): For two equal and opposite charges $\pm q$ separated by displacement $\mathbf{d}$: $\mathbf{p} = q \mathbf{d}$ ($\si{C\cdot m}$).
+    \item \textbf{Polarization Vector} ($\mathbf{P}$): The net electric dipole moment per unit volume:
+    \begin{equation}
+        \mathbf{P} = \lim_{\Delta V \to 0}\frac{\sum \mathbf{p}_i}{\Delta V} = N \mathbf{p} \quad \left[\si{\frac{C}{m^2}}\right]
+    \end{equation}
+    where $N$ is the number of dipoles per unit volume.
+    \item In linear, isotropic dielectrics, the polarization is proportional to the applied macroscopic field:
+    \begin{equation}
+        \mathbf{P} = \varepsilon_0 \chi_e \mathbf{E}
+    \end{equation}
+    where $\chi_e$ is the dimensionless \textbf{electric susceptibility}.
+    \item The total \textbf{electric displacement} $\mathbf{D}$ is:
+    \begin{equation}
+        \mathbf{D} = \varepsilon_0 \mathbf{E} + \mathbf{P} = \varepsilon_0 (1 + \chi_e)\mathbf{E} = \varepsilon_0 \varepsilon_r \mathbf{E} = \varepsilon \mathbf{E}
+    \end{equation}
+    where $\varepsilon_r = 1 + \chi_e$ is the \textbf{relative permittivity} (dielectric constant).
+\end{enumerate}
+
+\subsection{Microscopic Polarization Mechanisms}
+The microscopic induced dipole moment is $\mathbf{p} = \alpha \mathbf{E}_{\text{loc}}$, where $\alpha$ is the \textbf{polarizability} ($\si{F\cdot m^2}$). The total polarizability is the sum of four distinct physical mechanisms:
+
+\begin{keyequation}[Total Dielectric Polarizability]
+\begin{equation}
+    \alpha_{\text{total}} = \alpha_e + \alpha_i + \alpha_o + \alpha_{sc}
+\end{equation}
+\end{keyequation}
+
+\begin{enumerate}
+    \item \textbf{Electronic Polarization ($\alpha_e$)}: Occurs in all atoms when an electric field shifts the negative electron cloud relative to the positive nucleus. Electronic polarizability is independent of temperature:
+    \begin{equation}
+        \alpha_e = 4\pi\varepsilon_0 R^3
+    \end{equation}
+    where $R$ is the atomic radius. Responds extremely rapidly up to optical frequencies ($\sim 10^{15}\,\si{Hz}$).
+    \item \textbf{Ionic Polarization ($\alpha_i$)}: Occurs in ionic solids (e.g., $\text{NaCl}$) due to relative displacement of positive ($\text{Na}^+$) and negative ($\text{Cl}^-$) ions. Independent of temperature; active up to infrared frequencies ($\sim 10^{13}\,\si{Hz}$).
+    \item \textbf{Orientational / Dipolar Polarization ($\alpha_o$)}: Occurs in substances containing permanent electric dipoles (e.g., $\text{H}_2\text{O}, \text{HCl}$). The field tends to align the randomly oriented thermal dipoles. According to Langevin-Debye theory, it is \textbf{inversely proportional to absolute temperature}:
+    \begin{equation}
+        \alpha_o = \frac{\mu^2}{3 k_B T}
+    \end{equation}
+    where $\mu$ is the permanent dipole moment. Active up to microwave frequencies ($\sim 10^{10}\,\si{Hz}$).
+    \item \textbf{Space Charge / Interfacial Polarization ($\alpha_{sc}$)}: Occurs in multiphase or polycrystalline materials due to the trapping of mobile charge carriers at grain boundaries and interfaces. Very slow; active only at power and audio frequencies ($<10^3\,\si{Hz}$).
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Axes
+    \draw[->, thick, branddark] (0,0) -- (8.0,0) node[right, font=\small] {Frequency $f$ (Hz)};
+    \draw[->, thick, branddark] (0,0) -- (0,4.0) node[above, font=\small] {Dielectric Constant $\varepsilon_r$};
+    
+    % Stepped curve
+    \draw[ultra thick, brandnavy] (0.5,3.6) -- (1.5,3.6) to[out=-20, in=160] (2.5,2.6) -- (3.5,2.6) to[out=-20, in=160] (4.5,1.7) -- (5.5,1.7) to[out=-20, in=160] (6.5,0.8) -- (7.5,0.8);
+    
+    % Region labels
+    \node[above, font=\tiny\bfseries\color{brandnavy}] at (1.0,3.6) {Space Charge};
+    \node[above, font=\tiny\bfseries\color{brandnavy}] at (3.0,2.6) {Orientational};
+    \node[above, font=\tiny\bfseries\color{brandnavy}] at (5.0,1.7) {Ionic};
+    \node[above, font=\tiny\bfseries\color{brandnavy}] at (7.0,0.8) {Electronic};
+    
+    % Frequency ticks
+    \draw (2.0,0.05) -- (2.0,-0.05) node[below, font=\scriptsize] {$10^3$};
+    \draw (4.0,0.05) -- (4.0,-0.05) node[below, font=\scriptsize] {$10^{10}$};
+    \draw (6.0,0.05) -- (6.0,-0.05) node[below, font=\scriptsize] {$10^{13}$};
+    \draw (7.5,0.05) -- (7.5,-0.05) node[below, font=\scriptsize] {$10^{15}$};
+\end{tikzpicture}
+\caption{Frequency dispersion spectrum of dielectric permittivity showing relaxation of polarization mechanisms.}
+\label{fig:dielectric-dispersion}
+\end{figure}
+
+\subsection{Internal Local Field \& Clausius-Mossotti Equation}
+The actual microscopic field acting on a single atom inside a solid is not the macroscopic average field $\mathbf{E}$, but the \textbf{Lorentz internal local field} $\mathbf{E}_{\text{loc}}$, which includes the polarization field from surrounding polarized atoms. For a cubic crystal or isotropic dielectric:
+
+\begin{keyequation}[Lorentz Local Internal Field]
+\begin{equation}
+    \mathbf{E}_{\text{loc}} = \mathbf{E} + \frac{\mathbf{P}}{3\varepsilon_0}
+\end{equation}
+\end{keyequation}
+
+\subsubsection{Derivation of the Clausius-Mossotti Relation}
+The microscopic polarization is:
+\begin{equation}
+    \mathbf{P} = N \alpha_e \mathbf{E}_{\text{loc}} = N \alpha_e \left( \mathbf{E} + \frac{\mathbf{P}}{3\varepsilon_0} \right)
+\end{equation}
+Rearranging for $\mathbf{P}$:
+\begin{equation}
+    \mathbf{P}\left( 1 - \frac{N\alpha_e}{3\varepsilon_0} \right) = N\alpha_e \mathbf{E} \implies \mathbf{P} = \frac{N\alpha_e}{1 - \frac{N\alpha_e}{3\varepsilon_0}}\mathbf{E}
+\end{equation}
+From macroscopic electrodynamics, $\mathbf{P} = \varepsilon_0(\varepsilon_r - 1)\mathbf{E}$. Equating the two expressions:
+\begin{equation}
+    \varepsilon_0(\varepsilon_r - 1) = \frac{N\alpha_e}{1 - \frac{N\alpha_e}{3\varepsilon_0}} \implies \frac{\varepsilon_r - 1}{\varepsilon_r + 2} = \frac{N\alpha_e}{3\varepsilon_0}
+\end{equation}
+
+\begin{keyequation}[Clausius-Mossotti Equation]
+\begin{equation}
+    \frac{\varepsilon_r - 1}{\varepsilon_r + 2} = \frac{N\alpha_e}{3\varepsilon_0}
+\end{equation}
+\end{keyequation}
+The Clausius-Mossotti relation directly bridges the macroscopic observable dielectric constant $\varepsilon_r$ with the microscopic atomic polarizability $\alpha_e$.
+
+% ==============================================================================
+% SECTION 6.3: MAGNETIC MATERIALS & HYSTERESIS
+% ==============================================================================
+\section{Magnetic Materials \& Magnetic Hysteresis}
+
+\subsection{Macroscopic Magnetic Quantities}
+\begin{enumerate}
+    \item \textbf{Magnetization Vector} ($\mathbf{M}$): Magnetic dipole moment per unit volume ($\si{A/m}$).
+    \item \textbf{Magnetic Flux Density} ($\mathbf{B}$):
+    \begin{equation}
+        \mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M}) = \mu_0(1 + \chi_m)\mathbf{H} = \mu_0 \mu_r \mathbf{H} = \mu \mathbf{H}
+    \end{equation}
+    where $\mathbf{H}$ is the magnetic field intensity ($\si{A/m}$), $\chi_m = M/H$ is the dimensionless \textbf{magnetic susceptibility}, and $\mu_r = 1 + \chi_m$ is the \textbf{relative permeability}.
+\end{enumerate}
+
+\subsection{Classification of Magnetic Materials}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{3.2cm}}
+\toprule
+\textbf{Class} & \textbf{Microscopic Mechanism} & \textbf{Susceptibility ($\chi_m$)} & \textbf{Temperature Law} \\
+\midrule
+\textbf{Diamagnetism} & Induced orbital dipoles opposing field (Lenz's law) & Small, negative ($\chi_m \sim -10^{-5}$); $\mu_r < 1$ & Independent of $T$ (Bi, Cu, Au) \\
+\textbf{Paramagnetism} & Alignment of permanent unpaired spin dipoles & Small, positive ($\chi_m \sim +10^{-4}$); $\mu_r > 1$ & \textbf{Curie's Law}: $\chi_m = C/T$ (Al, Pt, $\text{O}_2$) \\
+\textbf{Ferromagnetism} & Quantum exchange alignment in Weiss domains & Large, positive ($\chi_m \sim 10^3\text{--}10^6$); $\mu_r \gg 1$ & \textbf{Curie-Weiss Law}: $\chi_m = \frac{C}{T - \theta_p}$ (Fe, Co, Ni) \\
+\textbf{Antiferromagnetism} & Antiparallel spins of equal magnitude cancel moment & Small, positive & Peaks at Néel temperature $T_N$ ($\text{MnO}$) \\
+\textbf{Ferrimagnetism} & Antiparallel spins of unequal magnitude yield net moment & High positive susceptibility & Paramagnetic above $T_C$ (Ferrites, $\text{Fe}_3\text{O}_4$) \\
+\bottomrule
+\end{tabularx}
+\caption{Classification of Magnetic Materials.}
+\label{tab:magnetic-classification-master}
+\end{table}
+
+\subsection{Magnetic Hysteresis (\texorpdfstring{$B$-$H$}{B-H} Loop)}
+When a ferromagnetic material is subjected to a cyclic magnetizing field $H$, the induced flux density $B$ lags behind $H$ due to the friction of magnetic domain wall motion.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Axes
+    \draw[->, thick, branddark] (-3.8,0) -- (3.8,0) node[right, font=\small] {$H$ ($\si{A/m}$)};
+    \draw[->, thick, branddark] (0,-3.2) -- (0,3.2) node[above, font=\small] {$B$ ($\si{Tesla}$)};
+    
+    % Hysteresis loop
+    \draw[ultra thick, brandnavy] (2.8,2.6) to[out=170, in=50] (0,1.8) to[out=230, in=60] (-1.2,0) to[out=240, in=170] (-2.8,-2.6) to[out=-10, in=230] (0,-1.8) to[out=50, in=240] (1.2,0) to[out=60, in=-10] (2.8,2.6);
+    
+    % Initial virgin magnetization curve
+    \draw[thick, dashed, brandaccent] (0,0) to[out=45, in=220] (1.5,1.5) to[out=40, in=190] (2.8,2.6);
+    
+    % Points & Labels
+    \node[right, font=\footnotesize\bfseries\color{brandnavy}] at (2.8,2.6) {Saturation ($B_s$)};
+    \node[above left, font=\footnotesize\bfseries\color{brandnavy}] at (0,1.8) {Retentivity ($B_r$)};
+    \node[below left, font=\footnotesize\bfseries\color{brandaccent}] at (-1.2,0) {Coercivity ($H_c$)};
+    \fill[brandnavy] (0,1.8) circle (2.5pt);
+    \fill[brandaccent] (-1.2,0) circle (2.5pt);
+\end{tikzpicture}
+\caption{Magnetic hysteresis ($B$-$H$) loop for a ferromagnetic material.}
+\label{fig:hysteresis-loop}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Retentivity / Remanence ($B_r$)}: The residual magnetic flux density remaining inside the material when the external field is reduced to zero ($H=0$).
+    \item \textbf{Coercivity ($H_c$)}: The magnitude of the reverse demagnetizing field required to completely reduce the residual magnetic induction to zero ($B=0$).
+    \item \textbf{Hysteresis Loss}: The area enclosed by the $B$-$H$ loop equals the magnetic energy converted irreversibly into heat per unit volume per cycle:
+    \begin{equation}
+        W_h = \oint B\,dH \quad \left[\si{\frac{J}{m^3\cdot cycle}}\right]
+    \end{equation}
+    \textbf{Steinmetz's Empirical Formula}: $P_h = \eta B_{\text{max}}^{1.6} f V$ ($\si{Watts}$).
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lXX}
+\toprule
+\textbf{Property} & \textbf{Soft Magnetic Materials (e.g., Silicon Steel, Permalloy)} & \textbf{Hard Magnetic Materials (e.g., Alnico, NdFeB)} \\
+\midrule
+\textbf{Hysteresis Loop Area} & Very narrow, tall loop $\implies$ Low energy loss & Very wide, broad loop $\implies$ High energy product $(BH)_{\text{max}}$ \\
+\textbf{Retentivity ($B_r$)} & High retentivity & High retentivity \\
+\textbf{Coercivity ($H_c$)} & Very low coercivity ($H_c < 100\,\si{A/m}$) & Very high coercivity ($H_c > 10^4\,\si{A/m}$) \\
+\textbf{Permeability ($\mu_r$)} & Extremely high permeability ($\mu_r > 10^4$) & Low permeability \\
+\textbf{Primary Applications} & Transformer cores, AC electric motor rotors, inductors & Permanent magnets, DC motor stators, loudspeakers, MRI \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Soft and Hard Magnetic Materials.}
+\label{tab:soft-vs-hard-magnetic}
+\end{table}
+
+% ==============================================================================
+% SECTION 6.4: SUPERCONDUCTIVITY
+% ==============================================================================
+\section{Superconductivity Fundamentals}
+
+Discovered in 1911 by Heike Kamerlingh Onnes in solid Mercury ($T_c = 4.2\,\si{K}$), superconductivity is a macroscopic quantum state characterized by zero electrical resistivity and complete magnetic flux expulsion below a critical transition temperature $T_c$.
+
+\subsection{Fundamental Superconducting Properties}
+\begin{enumerate}
+    \item \textbf{Zero DC Electrical Resistance}: Below $T_c$, electrical resistivity $\rho < 10^{-25}\,\si{\Omega\cdot m}$, allowing persistent circulating currents to flow without decay for decades.
+    \item \textbf{Critical Magnetic Field ($H_c$)}: Superconductivity is destroyed and normal resistivity is restored if an applied magnetic field exceeds a critical value $H_c(T)$:
+    \begin{equation}
+        H_c(T) = H_c(0)\left[ 1 - \left(\frac{T}{T_c}\right)^2 \right]
+    \end{equation}
+    where $H_c(0)$ is the critical field at absolute zero ($0\,\si{K}$).
+    \item \textbf{Silsbee's Rule for Critical Current ($I_c$)}: The maximum transport current a superconducting wire of radius $r$ can carry without quenching superconductivity is limited by its own self-induced surface magnetic field:
+    \begin{equation}
+        I_c = 2\pi r H_c(T)
+    \end{equation}
+\end{enumerate}
+
+\subsection{The Meissner Effect: Perfect Diamagnetism}
+Discovered in 1933 by Walther Meissner and Robert Ochsenfeld:
+
+\begin{definition}[The Meissner Effect]
+When a material is cooled below its critical temperature $T_c$ in the presence of an applied magnetic field, it \textbf{completely expels all magnetic flux lines from its interior}:
+\begin{equation}
+    \mathbf{B}_{\text{interior}} = 0 \quad \text{for } T < T_c \text{ and } H < H_c
+\end{equation}
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Panel (a): Normal state T > Tc
+    \begin{scope}[xshift=0cm]
+        \draw[thick, fill=boxslatebg] (0,0) circle (1.2cm);
+        \node[font=\footnotesize\bfseries\color{brandslate}] at (0,0) {Normal ($T > T_c$)};
+        % Flux lines penetrating
+        \foreach \y in {-0.8, -0.4, 0.0, 0.4, 0.8} {
+            \draw[->, thick, brandblue] (-2.2,\y) -- (2.2,\y);
+        }
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (0,-1.7) {(a) Magnetic flux penetrates};
+    \end{scope}
+    
+    % Panel (b): Superconducting state T < Tc
+    \begin{scope}[xshift=6.5cm]
+        \draw[thick, fill=boxskybg] (0,0) circle (1.2cm);
+        \node[font=\footnotesize\bfseries\color{brandnavy}] at (0,0) {Superconducting};
+        % Flux lines expelled around sphere
+        \draw[->, thick, brandblue] (-2.2,0.8) to[out=0, in=180] (-1.2,1.5) to[out=0, in=180] (1.2,1.5) to[out=0, in=180] (2.2,0.8);
+        \draw[->, thick, brandblue] (-2.2,0.4) to[out=0, in=180] (-1.2,1.3) to[out=0, in=180] (1.2,1.3) to[out=0, in=180] (2.2,0.4);
+        \draw[->, thick, brandblue] (-2.2,-0.4) to[out=0, in=180] (-1.2,-1.3) to[out=0, in=180] (1.2,-1.3) to[out=0, in=180] (2.2,-0.4);
+        \draw[->, thick, brandblue] (-2.2,-0.8) to[out=0, in=180] (-1.2,-1.5) to[out=0, in=180] (1.2,-1.5) to[out=0, in=180] (2.2,-0.8);
+        \node[below, font=\small\sffamily\bfseries\color{brandnavy}] at (0,-1.7) {(b) Complete Flux Expulsion ($\mathbf{B}=0$)};
+    \end{scope}
+\end{tikzpicture}
+\caption{The Meissner effect: Magnetic flux expulsion when transitioning into the superconducting state.}
+\label{fig:meissner-effect}
+\end{figure}
+
+From $\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M}) = 0 \implies \mathbf{M} = -\mathbf{H}$. The magnetic susceptibility is:
+\begin{equation}
+    \chi_m = \frac{M}{H} = -1 \quad (\text{Perfect Diamagnetism})
+\end{equation}
+
+\begin{examtip}[Superconductor vs. Perfect Classical Conductor]
+A hypothetical perfect classical conductor ($\sigma = \infty$) would trap whatever magnetic flux was present inside it when cooled ($d\mathbf{B}/dt = 0 \implies \mathbf{B} = \text{constant}$). In contrast, a true superconductor \textbf{actively ejects} internal flux regardless of field history ($\mathbf{B} \equiv 0$). Thus, superconductivity is a true thermodynamic state, not merely zero resistance.
+\end{examtip}
+
+\subsection{Type-I vs. Type-II Superconductors}
+\begin{itemize}
+    \item \textbf{Type-I (Soft) Superconductors} (e.g., Pb, Sn, Hg, Al): Exhibit a single, low critical field $H_c$ ($<0.1\,\si{T}$). Transition abruptly from superconducting to normal state. Incapable of carrying high electrical currents; unsuitable for high-field electromagnets.
+    \item \textbf{Type-II (Hard) Superconductors} (e.g., $\text{Nb}_3\text{Sn}, \text{NbTi}, \text{YBCO}$): Exhibit two critical magnetic fields ($H_{c1}$ and $H_{c2}$):
+    \begin{itemize}
+        \item For $H < H_{c1}$: Complete Meissner state ($\mathbf{B}=0$).
+        \item For $H_{c1} < H < H_{c2}$: \textbf{Vortex / Mixed State (Shubnikov Phase)}. Magnetic flux penetrates the material in quantized flux tubes (Abrikosov vortices), while the intervening bulk remains superconducting.
+        \item For $H > H_{c2}$: Normal state. Upper critical fields can exceed $H_{c2} > 30\text{--}100\,\si{T}$, enabling ultra-high-field superconducting magnets for MRI and Maglev trains.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Elementary BCS Theory Overview}
+Formulated in 1957 by John Bardeen, Leon Cooper, and John Robert Schrieffer (Nobel Prize 1972):
+\begin{enumerate}
+    \item \textbf{Electron-Phonon Interaction}: A passing electron slightly attracts surrounding positive lattice ions, creating a localized positive polarization wave (virtual phonon). A second electron of opposite spin and momentum is attracted to this positive deformation.
+    \item \textbf{Cooper Pairs}: This indirect phonon-mediated attraction binds two electrons into a composite boson pair (\textbf{Cooper pair}, charge $-2e$, zero net spin).
+    \item \textbf{Macroscopic Quantum Condensation}: As bosons, all Cooper pairs condense into a single coherent ground state protected by an energy gap $E_g(0) \approx 3.52 k_B T_c$, preventing lattice scattering and eliminating electrical resistance.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.5: NANOMATERIALS & NANOTECHNOLOGY
+% ==============================================================================
+\section{Nanomaterials \& Nanotechnology}
+
+\subsection{Dimensional Classification of Nanomaterials}
+Nanomaterials are defined as materials having at least one spatial dimension within the range of $1\text{--}100\,\si{nm}$:
+\begin{itemize}
+    \item \textbf{0D (Zero-Dimensional)}: Confined in all 3 spatial dimensions (e.g., Quantum Dots, Fullerenes $\text{C}_{60}$, nanoparticles).
+    \item \textbf{1D (One-Dimensional)}: Confined in 2 dimensions; free along 1 dimension (e.g., Carbon Nanotubes / CNTs, semiconductor nanowires, nanorods).
+    \item \textbf{2D (Two-Dimensional)}: Confined in 1 dimension; free along 2 dimensions (e.g., Graphene, $\text{MoS}_2$ monolayers, nanoribbons).
+    \item \textbf{3D (Three-Dimensional)}: Bulk materials composed of nanoscale grains, nanocomposites, or arrays.
+\end{itemize}
+
+\subsection{Quantum Confinement \& Surface-to-Volume Ratio}
+\begin{enumerate}
+    \item \textbf{Quantum Confinement Effect}: When nanoparticle size $R$ becomes comparable to the de Broglie wavelength or exciton Bohr radius $a_B$, the continuous energy bands break up into discrete atomic-like levels, and the effective bandgap increases:
+    \begin{equation}
+        E_g(R) = E_g(\text{bulk}) + \frac{\hbar^2\pi^2}{2\mu R^2}
+    \end{equation}
+    This enables continuous optical color tuning simply by controlling particle diameter (e.g., CdSe quantum dot displays).
+    \item \textbf{Surface-to-Volume Scaling}: For a spherical nanoparticle of radius $r$, the ratio of surface area to volume scales as:
+    \begin{equation}
+        \frac{\text{Surface Area}}{\text{Volume}} = \frac{4\pi r^2}{\frac{4}{3}\pi r^3} = \frac{3}{r}
+    \end{equation}
+    As $r \to \si{nm}$, a massive fraction of atoms resides on the surface, dramatically enhancing catalytic reactivity, chemical adsorption, and lowering melting points.
+\end{enumerate}
+
+\subsection{Structural Characterization: Scherrer's Equation}
+In X-Ray Diffraction (XRD), the average crystallite grain size $D$ is calculated from diffraction peak broadening using \textbf{Scherrer's Equation}:
+
+\begin{keyequation}[Scherrer's Formula]
+\begin{equation}
+    D = \frac{K \lambda}{\beta \cos\theta}
+\end{equation}
+where $K \approx 0.9$ is the shape factor, $\lambda$ is the X-ray wavelength ($\si{nm}$), $\beta$ is the full width at half maximum (FWHM) in radians, and $\theta$ is the Bragg diffraction angle.
+\end{keyequation}
+
+% ==============================================================================
+% SECTION 6.6: QUICK REVISION
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Engineering Materials Formula Cheat Sheet]
+\begin{itemize}
+    \item \textbf{Polarization \& Susceptibility}: $\mathbf{P} = \varepsilon_0 \chi_e \mathbf{E} = N \mathbf{p}, \quad \varepsilon_r = 1 + \chi_e$
+    \item \textbf{Lorentz Local Field}: $\mathbf{E}_{\text{loc}} = \mathbf{E} + \frac{\mathbf{P}}{3\varepsilon_0}$
+    \item \textbf{Clausius-Mossotti Equation}: $\frac{\varepsilon_r - 1}{\varepsilon_r + 2} = \frac{N\alpha_e}{3\varepsilon_0}$
+    \item \textbf{Magnetic Flux Density}: $\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M}) = \mu_0 \mu_r \mathbf{H}, \quad \mu_r = 1 + \chi_m$
+    \item \textbf{Curie-Weiss Law}: $\chi_m = \frac{C}{T - \theta_p}$ ($T > T_C$)
+    \item \textbf{Superconducting Critical Field}: $H_c(T) = H_c(0)\left[ 1 - \left(\frac{T}{T_c}\right)^2 \right]$
+    \item \textbf{Silsbee's Critical Current}: $I_c = 2\pi r H_c(T)$
+    \item \textbf{Meissner Diamagnetism}: $\mathbf{B}=0 \implies \chi_m = -1$
+    \item \textbf{Scherrer Crystallite Size}: $D = \frac{K\lambda}{\beta\cos\theta}$
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 6.7: WORKED NUMERICAL EXAMPLES
+% ==============================================================================
+\section{Worked Numerical Examples}
+
+\begin{example}[Clausius-Mossotti Relation and Atomic Polarizability]
+Helium gas at standard temperature and pressure ($T = 273\,\si{K}$, $P = 1.013 \times 10^5\,\si{Pa}$) has atomic number density $N = 2.7 \times 10^{25}\,\si{atoms/m^3}$ and relative permittivity $\varepsilon_r = 1.0000684$.
+\begin{enumerate}
+    \item Calculate the electronic polarizability $\alpha_e$ of Helium.
+    \item Calculate the effective atomic radius $R$ of the Helium atom.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Electronic Polarizability $\alpha_e$}:\\
+    From the Clausius-Mossotti equation (for gases, $\varepsilon_r \approx 1 \implies \varepsilon_r + 2 \approx 3$):
+    \begin{equation*}
+        \frac{\varepsilon_r - 1}{3} \approx \frac{N\alpha_e}{3\varepsilon_0} \implies \alpha_e = \frac{\varepsilon_0(\varepsilon_r - 1)}{N}
+    \end{equation*}
+    \begin{align*}
+        \alpha_e &= \frac{(8.854 \times 10^{-12}\,\si{F/m})(1.0000684 - 1)}{2.7 \times 10^{25}\,\si{m^{-3}}} \\
+        &= \frac{(8.854 \times 10^{-12})(6.84 \times 10^{-5})}{2.7 \times 10^{25}} = \frac{6.056 \times 10^{-16}}{2.7 \times 10^{25}} \approx 2.243 \times 10^{-41}\,\si{F\cdot m^2}
+    \end{align*}
+    
+    \item \textbf{Effective Atomic Radius $R$}:\\
+    Since $\alpha_e = 4\pi\varepsilon_0 R^3$:
+    \begin{align*}
+        R^3 &= \frac{\alpha_e}{4\pi\varepsilon_0} = \frac{2.243 \times 10^{-41}}{4\pi (8.854 \times 10^{-12})} \approx 2.016 \times 10^{-31}\,\si{m^3} \\
+        R &= (2.016 \times 10^{-31})^{1/3} \approx 5.86 \times 10^{-11}\,\si{m} = 0.0586\,\si{nm} = 0.586\,\si{\text{\AA}}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Superconducting Critical Field and Silsbee Transport Current]
+Lead ($\text{Pb}$) is a Type-I superconductor with critical temperature $T_c = 7.2\,\si{K}$ and critical magnetic field at absolute zero $H_c(0) = 6.4 \times 10^4\,\si{A/m}$.
+\begin{enumerate}
+    \item Calculate the critical magnetic field $H_c(T)$ of Lead at $T = 4.2\,\si{K}$ (liquid Helium boiling point).
+    \item Calculate the maximum critical transport current $I_c$ that a Lead wire of diameter $d = 1.0\,\si{mm}$ can carry at $4.2\,\si{K}$ without quenching superconductivity.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Critical Magnetic Field at $4.2\,\si{K}$}:
+    \begin{align*}
+        H_c(4.2\,\si{K}) &= H_c(0)\left[ 1 - \left(\frac{T}{T_c}\right)^2 \right] = (6.4 \times 10^4\,\si{A/m})\left[ 1 - \left(\frac{4.2}{7.2}\right)^2 \right] \\
+        &= (6.4 \times 10^4)[1 - (0.5833)^2] = (6.4 \times 10^4)(1 - 0.3403) \\
+        &= (6.4 \times 10^4)(0.6597) \approx 4.222 \times 10^4\,\si{A/m}
+    \end{align*}
+    
+    \item \textbf{Silsbee Critical Current $I_c$}:\\
+    Wire radius $r = d/2 = 0.5 \times 10^{-3}\,\si{m}$.
+    \begin{align*}
+        I_c &= 2\pi r H_c(T) = 2\pi (0.5 \times 10^{-3}\,\si{m})(4.222 \times 10^4\,\si{A/m}) \\
+        &= \pi (10^{-3})(4.222 \times 10^4) = 42.22 \pi \approx 132.64\,\si{A}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Transformer Core Magnetic Hysteresis Power Loss]
+A transformer iron core has a volume $V = 0.02\,\si{m^3}$ and operates at AC power frequency $f = 50\,\si{Hz}$. The area of the $B$-$H$ hysteresis loop is determined to be $A_{\text{loop}} = 400\,\si{J/m^3}$ per cycle.
+\begin{enumerate}
+    \item Calculate the hysteresis power loss density in $\si{W/m^3}$.
+    \item Calculate the total thermal power dissipated by the core in Watts.
+    \item What is the total thermal energy lost by the core over a continuous $24\text{-hour}$ operating day?
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Hysteresis Power Loss Density}:
+    \begin{equation*}
+        P_{\text{density}} = A_{\text{loop}} \times f = (400\,\si{J/m^3})(50\,\si{s^{-1}}) = 20,000\,\si{W/m^3} = 20\,\si{kW/m^3}
+    \end{equation*}
+    
+    \item \textbf{Total Power Dissipated}:
+    \begin{equation*}
+        P_{\text{total}} = P_{\text{density}} \times V = (20,000\,\si{W/m^3})(0.02\,\si{m^3}) = 400\,\si{W}
+    \end{equation*}
+    
+    \item \textbf{Total Energy Lost in 24 Hours}:
+    \begin{align*}
+        \text{Time } t &= 24 \times 3600\,\si{s} = 86,400\,\si{s} \\
+        E_{\text{lost}} &= P_{\text{total}} \times t = (400\,\si{W})(86,400\,\si{s}) = 3.456 \times 10^7\,\si{J} = 34.56\,\si{MJ} = 9.6\,\si{kWh}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[XRD Crystallite Size Calculation via Scherrer's Equation]
+An X-ray diffraction scan of a Zinc Oxide ($\text{ZnO}$) nanopowder using $\text{Cu-K}\alpha$ radiation ($\lambda = 0.15418\,\si{nm}$) exhibits a prominent $(101)$ diffraction peak at Bragg angle $2\theta = 36.25^\circ$. The Full Width at Half Maximum (FWHM) of the peak is measured to be $\beta = 0.45^\circ$. Taking shape factor $K = 0.90$, calculate the average crystallite size $D$.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Convert Angles to Radians}:
+    \begin{align*}
+        \theta &= \frac{36.25^\circ}{2} = 18.125^\circ \implies \cos\theta = \cos(18.125^\circ) \approx 0.9504 \\
+        \beta &= 0.45^\circ \times \left(\frac{\pi}{180^\circ}\right) = 0.45 \times 0.017453 \approx 7.854 \times 10^{-3}\,\si{rad}
+    \end{align*}
+    
+    \item \textbf{Apply Scherrer's Formula}:
+    \begin{align*}
+        D &= \frac{K \lambda}{\beta \cos\theta} = \frac{(0.90)(0.15418\,\si{nm})}{(7.854 \times 10^{-3})(0.9504)} \\
+        &= \frac{0.13876\,\si{nm}}{7.464 \times 10^{-3}} \approx 18.59\,\si{nm}
+    \end{align*}
+    The average nanocrystallite grain size of the $\text{ZnO}$ sample is $18.6\,\si{nm}$.
+\end{enumerate}
+\end{example}
+
+% ==============================================================================
+% SECTION 6.8: EXAM TIPS & COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Angles in Scherrer's Formula]
+In Scherrer's equation $D = \frac{K\lambda}{\beta\cos\theta}$:
+\begin{itemize}
+    \item $\beta$ MUST be in \textbf{radians}, not degrees!
+    \item Use $\theta$, not the full detector angle $2\theta$.
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Confusing Soft vs. Hard Magnetic Materials]
+``Soft'' and ``hard'' magnetic materials refer to magnetic coercivity ($H_c$) and ease of magnetization/demagnetization, \textbf{not} mechanical mechanical hardness or softness!
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 6.9: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual \& Numerical Practice Problems]
+\textbf{A. Conceptual Review Questions}
+\begin{enumerate}
+    \item State the four microscopic polarization mechanisms in dielectrics and sketch their frequency dispersion spectrum.
+    \item Derive the Clausius-Mossotti equation relating dielectric constant $\varepsilon_r$ to electronic polarizability $\alpha_e$.
+    \item Differentiate between diamagnetic, paramagnetic, and ferromagnetic materials with respect to origin, susceptibility, and temperature dependence.
+    \item Describe the Meissner effect and explain why a superconductor is a perfect diamagnet ($\chi_m = -1$).
+    \item Differentiate between Type-I and Type-II superconductors with appropriate $M$-$H$ magnetization curves.
+\end{enumerate}
+
+\textbf{B. Numerical Exercises}
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item A solid dielectric with $\varepsilon_r = 4.0$ contains $3 \times 10^{28}\,\si{atoms/m^3}$. Assuming cubic symmetry, calculate the electronic polarizability $\alpha_e$. \hfill [\textbf{Ans:} $4.43 \times 10^{-40}\,\si{F\cdot m^2}$]
+    \item A superconducting tin wire of radius $1.0\,\si{mm}$ has $T_c = 3.7\,\si{K}$ and $H_c(0) = 2.4 \times 10^4\,\si{A/m}$. Find the critical current at $T = 2.0\,\si{K}$. \hfill [\textbf{Ans:} $106.8\,\si{A}$]
+    \item A magnetic material has a relative permeability $\mu_r = 1500$. If a magnetizing field $H = 200\,\si{A/m}$ is applied, calculate the magnetization $M$ and flux density $B$. \hfill [\textbf{Ans:} $M = 2.998 \times 10^5\,\si{A/m}$, $B = 0.377\,\si{T}$]
+    \item In an XRD pattern ($\lambda = 0.154\,\si{nm}$), a diffraction peak at $\theta = 22.5^\circ$ has a FWHM $\beta = 0.30^\circ$. Calculate the crystallite size. \hfill [\textbf{Ans:} $28.6\,\si{nm}$]
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 6.10: MCQS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}
+    \item The polarization mechanism that is inversely proportional to absolute temperature ($1/T$) is:
+    \begin{enumerate}
+        \item Electronic polarization
+        \item Ionic polarization
+        \item Orientational / Dipolar polarization
+        \item Space charge polarization
+    \end{enumerate}
+    
+    \item The Clausius-Mossotti equation is valid for:
+    \begin{enumerate}
+        \item Highly conducting metals
+        \item Non-polar solids with cubic crystal symmetry
+        \item Strongly polar liquids
+        \item Plasma gases
+    \end{enumerate}
+    
+    \item The magnetic susceptibility $\chi_m$ of a superconductor in the Meissner state is:
+    \begin{enumerate}
+        \item $+1$
+        \item $0$
+        \item $-1$
+        \item $\infty$
+    \end{enumerate}
+    
+    \item Soft magnetic materials are characterized by:
+    \begin{enumerate}
+        \item High coercivity and large hysteresis loop area
+        \item Low coercivity and narrow hysteresis loop area
+        \item Zero retentivity
+        \item Negative permeability
+    \end{enumerate}
+    
+    \item In BCS theory of superconductivity, Cooper pairs are formed due to:
+    \begin{enumerate}
+        \item Direct Coulomb attraction between electrons
+        \item Electron-phonon-electron interaction
+        \item Strong nuclear force
+        \item Magnetic dipole interaction
+    \end{enumerate}
+    
+    \item Type-II superconductors in the mixed state (Shubnikov phase) allow magnetic flux to penetrate in the form of:
+    \begin{enumerate}
+        \item Continuous uniform fields
+        \item Quantized Abrikosov flux vortices
+        \item Electric dipoles
+        \item Acoustic phonons
+    \end{enumerate}
+    
+    \item Carbon nanotubes and semiconductor nanowires are examples of:
+    \begin{enumerate}
+        \item 0D nanomaterials
+        \item 1D nanomaterials
+        \item 2D nanomaterials
+        \item 3D bulk materials
+    \end{enumerate}
+    
+    \item In Scherrer's equation for crystallite size $D = \frac{K\lambda}{\beta\cos\theta}$, the parameter $\beta$ is:
+    \begin{enumerate}
+        \item Peak intensity in counts
+        \item Full width at half maximum (FWHM) in radians
+        \item Lattice constant in Angstroms
+        \item X-ray incident angle
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[Answer Key to Chapter 6 MCQs]
+\textbf{1.} (c) Orientational polarization ($\alpha_o \propto 1/T$) \quad \textbar\quad
+\textbf{2.} (b) Non-polar solids with cubic symmetry \quad \textbar\quad
+\textbf{3.} (c) $-1$ (Perfect diamagnetism) \\
+\textbf{4.} (b) Low coercivity and narrow loop \quad \textbar\quad
+\textbf{5.} (b) Electron-phonon-electron interaction \quad \textbar\quad
+\textbf{6.} (b) Quantized Abrikosov vortices \quad \textbar\quad
+\textbf{7.} (b) 1D nanomaterials \quad \textbar\quad
+\textbf{8.} (b) FWHM in radians
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.11: CHAPTER TEST
+% ==============================================================================
+\section{Self-Assessment Chapter Test}
+
+\begin{chaptertest}[Comprehensive Chapter 6 Test (Time: 45 Minutes \textbullet\ Max Marks: 25)]
+\begin{enumerate}
+    \item \textbf{[6 Marks] Derivations}:
+    \begin{enumerate}
+        \item State the Lorentz local field $\mathbf{E}_{\text{loc}} = \mathbf{E} + \frac{\mathbf{P}}{3\varepsilon_0}$ and derive the Clausius-Mossotti equation.
+        \item Differentiate between electronic and orientational polarizability with respect to temperature and frequency response.
+    \end{enumerate}
+    
+    \item \textbf{[7 Marks] Magnetic Materials \& Hysteresis}:
+    \begin{enumerate}
+        \item Draw the magnetic hysteresis ($B$-$H$) loop for a ferromagnetic material and define saturation magnetization $B_s$, retentivity $B_r$, and coercivity $H_c$.
+        \item Compare soft and hard magnetic materials in terms of loop shape, coercivity, and engineering applications.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Superconductivity}:
+    \begin{enumerate}
+        \item Explain the Meissner effect and derive the magnetic susceptibility of a superconductor.
+        \item A superconducting wire of radius $r = 0.5\,\si{mm}$ has $T_c = 9.0\,\si{K}$ and $H_c(0) = 8.0 \times 10^4\,\si{A/m}$. Calculate the critical current at $T = 6.0\,\si{K}$.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Nanotechnology}:
+    \begin{enumerate}
+        \item Explain the quantum confinement effect and surface-to-volume ratio scaling in nanomaterials.
+        \item An XRD peak of a nanoparticle sample at $2\theta = 44.0^\circ$ has FWHM $\beta = 0.50^\circ$ with $\lambda = 0.154\,\si{nm}$ and $K = 0.90$. Calculate the crystallite size.
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Detailed Solutions to Chapter Test]
+\textbf{Solution 1:}\\
+(a) Polarization $\mathbf{P} = N \alpha_e \mathbf{E}_{\text{loc}} = N \alpha_e (\mathbf{E} + \mathbf{P}/(3\varepsilon_0)) \implies \mathbf{P}(1 - N\alpha_e/(3\varepsilon_0)) = N\alpha_e \mathbf{E}$. Since $\mathbf{P} = \varepsilon_0(\varepsilon_r-1)\mathbf{E}$, equating gives $\varepsilon_0(\varepsilon_r-1) = \frac{N\alpha_e}{1 - N\alpha_e/(3\varepsilon_0)}$. Dividing numerator and denominator leads to $\frac{\varepsilon_r - 1}{\varepsilon_r + 2} = \frac{N\alpha_e}{3\varepsilon_0}$.\\
+(b) Electronic polarizability $\alpha_e = 4\pi\varepsilon_0 R^3$ is temperature-independent and operates up to optical frequencies ($\sim 10^{15}\,\si{Hz}$). Orientational polarizability $\alpha_o = \mu^2/(3k_B T)$ is inversely proportional to temperature and rolls off at microwave frequencies ($\sim 10^{10}\,\si{Hz}$).
+
+\vspace{0.3cm}
+\textbf{Solution 2:}\\
+(a) $B_s$ is the maximum saturation flux density where all domains align; $B_r$ is the residual flux density when $H=0$; $H_c$ is the reverse field required to reduce $B$ to zero. Hysteresis loss is $W_h = \oint B dH$.\\
+(b) Soft magnets (transformer cores) have narrow loops, low coercivity ($H_c < 100\,\si{A/m}$), high permeability, and low hysteresis loss. Hard magnets (permanent magnets) have broad loops, high coercivity ($H_c > 10^4\,\si{A/m}$), and high energy product $(BH)_{\text{max}}$.
+
+\vspace{0.3cm}
+\textbf{Solution 3:}\\
+(a) Below $T_c$, a superconductor expels magnetic flux: $\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M}) = 0 \implies \mathbf{M} = -\mathbf{H} \implies \chi_m = M/H = -1$ (perfect diamagnetism).\\
+(b) $H_c(6\,\si{K}) = (8 \times 10^4)[1 - (6/9)^2] = (8 \times 10^4)[1 - 4/9] = (8 \times 10^4)(5/9) \approx 4.444 \times 10^4\,\si{A/m}$.\\
+Silsbee critical current: $I_c = 2\pi r H_c = 2\pi (0.5 \times 10^{-3})(4.444 \times 10^4) = 44.44\pi \approx 139.6\,\si{A}$.
+
+\vspace{0.3cm}
+\textbf{Solution 4:}\\
+(a) Quantum confinement occurs when dimensions are comparable to the exciton Bohr radius, discretizing energy bands and expanding the bandgap ($E_g(R) = E_g(\text{bulk}) + \frac{\hbar^2\pi^2}{2\mu R^2}$). Surface-to-volume ratio $S/V = 3/r \propto 1/r$, dramatically increasing surface atom fraction and chemical reactivity.\\
+(b) $\theta = 22.0^\circ \implies \cos(22.0^\circ) \approx 0.9272$. $\beta = 0.50^\circ \times (\pi/180^\circ) \approx 8.727 \times 10^{-3}\,\si{rad}$.\\
+$D = \frac{K\lambda}{\beta\cos\theta} = \frac{(0.90)(0.154\,\si{nm})}{(8.727 \times 10^{-3})(0.9272)} = \frac{0.1386}{8.092 \times 10^{-3}} \approx 17.13\,\si{nm}$.
+\end{solutionbox}

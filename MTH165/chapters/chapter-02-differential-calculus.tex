@@ -1,0 +1,183 @@
+\chapter{Differential Calculus and Applications}
+\label{chap:differential-calculus}
+
+% ==============================================================================
+% SECTION 2.1: OVERVIEW & LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Differential calculus investigates instantaneous rates of change, slopes of tangents, geometric curvatures, and local functional approximations. In engineering analysis, derivatives quantify velocities, accelerations, dynamic strain gradients, optimization criteria for structural design, and error margins.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Master Advanced Differentiation}: Execute implicit, parametric, and logarithmic differentiation on complex engineering relations.
+    \item \textbf{Apply Successive Differentiation}: Compute the $n$-th derivatives of standard functions ($e^{ax}, \sin(ax+b), \cos(ax+b), (ax+b)^m, \ln(ax+b)$) and apply \textbf{Leibniz's Rule} for product differentiation.
+    \item \textbf{Apply Mean Value Theorems}: Verify and apply Rolle's Theorem, Lagrange's Mean Value Theorem (LMVT), and Cauchy's Mean Value Theorem (CMVT) to establish analytical bounds and inequalities.
+    \item \textbf{Expand Functions via Taylor and Maclaurin Series}: Construct polynomial approximations with remainder terms (Lagrange and Cauchy forms) and estimate approximation errors.
+    \item \textbf{Resolve Indeterminate Forms}: Systematically apply L'H\^opital's Rule to indeterminate limits ($\frac{0}{0}, \frac{\infty}{\infty}, 0 \cdot \infty, \infty - \infty, 0^0, 1^\infty, \infty^0$).
+    \item \textbf{Optimize Single-Variable Systems}: Identify critical points, apply the First and Second Derivative Tests, and solve real-world engineering optimization problems.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 2.2: HIGHER-ORDER DIFFERENTIATION & LEIBNIZ RULE
+% ==============================================================================
+\section{Successive Differentiation \& Leibniz's Rule}
+
+\subsection{Standard $n$-th Derivatives}
+\begin{enumerate}[leftmargin=1.5em]
+    \item $y = e^{ax} \implies y_n = a^n e^{ax}$
+    \item $y = (ax+b)^m \implies y_n = m(m-1)\cdots(m-n+1) a^n (ax+b)^{m-n} = \frac{m!}{(m-n)!} a^n (ax+b)^{m-n}$
+    \item $y = \frac{1}{ax+b} = (ax+b)^{-1} \implies y_n = \frac{(-1)^n n! a^n}{(ax+b)^{n+1}}$
+    \item $y = \ln(ax+b) \implies y_n = \frac{(-1)^{n-1} (n-1)! a^n}{(ax+b)^n}$
+    \item $y = \sin(ax+b) \implies y_n = a^n \sin\left(ax+b + \frac{n\pi}{2}\right)$
+    \item $y = \cos(ax+b) \implies y_n = a^n \cos\left(ax+b + \frac{n\pi}{2}\right)$
+    \item $y = e^{ax} \sin(bx+c) \implies y_n = (a^2+b^2)^{n/2} e^{ax} \sin\left(bx+c + n\tan^{-1}\frac{b}{a}\right)$
+    \item $y = e^{ax} \cos(bx+c) \implies y_n = (a^2+b^2)^{n/2} e^{ax} \cos\left(bx+c + n\tan^{-1}\frac{b}{a}\right)$
+\end{enumerate}
+
+\begin{theorem}[Leibniz's Theorem for $n$-th Derivative of a Product]
+If $u(x)$ and $v(x)$ are $n$-times differentiable functions, then:
+\begin{equation}
+(uv)_n = \sum_{k=0}^n \binom{n}{k} u_{n-k} v_k = u_n v + \binom{n}{1} u_{n-1} v_1 + \binom{n}{2} u_{n-2} v_2 + \cdots + u v_n
+\end{equation}
+\end{theorem}
+
+\begin{example}[Successive Differentiation via Leibniz]
+If $y = (x^2 - 1)^n$, prove that $(x^2 - 1)y_{n+2} + 2x y_{n+1} - n(n+1)y_n = 0$.
+\end{example}
+
+\begin{solutionbox}
+Given $y = (x^2 - 1)^n$. Differentiating once with respect to $x$:
+\begin{equation}
+y_1 = n(x^2 - 1)^{n-1}(2x)
+\end{equation}
+Multiply both sides by $(x^2 - 1)$:
+\begin{equation}
+(x^2 - 1)y_1 = 2n x (x^2 - 1)^n = 2n x y
+\end{equation}
+Differentiating this equation $(n+1)$ times using Leibniz's Theorem:
+\begin{align}
+\frac{d^{n+1}}{dx^{n+1}}[(x^2 - 1)y_1] &= y_{n+2}(x^2 - 1) + \binom{n+1}{1}y_{n+1}(2x) + \binom{n+1}{2}y_n(2) \\
+&= (x^2 - 1)y_{n+2} + 2(n+1)x y_{n+1} + n(n+1)y_n
+\end{align}
+And the right-hand side is:
+\begin{align}
+\frac{d^{n+1}}{dx^{n+1}}[2n x y] &= 2n \left[ y_{n+1} x + \binom{n+1}{1}y_n(1) \right] = 2n x y_{n+1} + 2n(n+1)y_n
+\end{align}
+Equating left and right sides:
+\begin{align}
+(x^2 - 1)y_{n+2} + 2(n+1)x y_{n+1} + n(n+1)y_n &= 2n x y_{n+1} + 2n(n+1)y_n \\
+(x^2 - 1)y_{n+2} + 2x y_{n+1} - n(n+1)y_n &= 0
+\end{align}
+This completes the proof.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.3: MEAN VALUE THEOREMS
+% ==============================================================================
+\section{Mean Value Theorems (Rolle, Lagrange, Cauchy)}
+
+\begin{theorem}[Rolle's Theorem]
+Let $f:[a,b] \to \mathbb{R}$ be:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Continuous on the closed interval $[a,b]$.
+    \item Differentiable on the open interval $(a,b)$.
+    \item $f(a) = f(b)$.
+\end{enumerate}
+Then there exists at least one point $c \in (a,b)$ such that $f'(c) = 0$.
+\end{theorem}
+
+\begin{theorem}[Lagrange's Mean Value Theorem (LMVT)]
+Let $f:[a,b] \to \mathbb{R}$ be continuous on $[a,b]$ and differentiable on $(a,b)$. Then there exists at least one $c \in (a,b)$ such that:
+\begin{equation}
+f'(c) = \frac{f(b) - f(a)}{b - a}
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Cauchy's Mean Value Theorem (CMVT)]
+Let $f, g:[a,b] \to \mathbb{R}$ be continuous on $[a,b]$ and differentiable on $(a,b)$, with $g'(x) \ne 0$ on $(a,b)$. Then there exists at least one $c \in (a,b)$ such that:
+\begin{equation}
+\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}
+\end{equation}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 2.4: TAYLOR & MACLAURIN EXPANSIONS
+% ==============================================================================
+\section{Taylor's and Maclaurin's Theorems with Remainders}
+
+\begin{theorem}[Taylor's Theorem with Lagrange's Remainder]
+If $f(x)$ and its first $n$ derivatives are continuous on $[a, a+h]$ and $f^{(n+1)}(x)$ exists on $(a, a+h)$, then:
+\begin{equation}
+f(a+h) = f(a) + h f'(a) + \frac{h^2}{2!} f''(a) + \cdots + \frac{h^n}{n!} f^{(n)}(a) + R_n
+\end{equation}
+where Lagrange's remainder is:
+\begin{equation}
+R_n = \frac{h^{n+1}}{(n+1)!} f^{(n+1)}(a + \theta h), \quad 0 < \theta < 1
+\end{equation}
+\end{theorem}
+
+\subsection{Standard Maclaurin Series ($a = 0$)}
+\begin{itemize}[leftmargin=1.5em]
+    \item $e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots = \sum_{n=0}^\infty \frac{x^n}{n!}, \quad \forall x \in \mathbb{R}$
+    \item $\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots = \sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}, \quad \forall x \in \mathbb{R}$
+    \item $\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots = \sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!}, \quad \forall x \in \mathbb{R}$
+    \item $\ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots, \quad -1 < x \le 1$
+\end{itemize}
+
+% ==============================================================================
+% SECTION 2.5: INDETERMINATE FORMS & L'HOPITAL'S RULE
+% ==============================================================================
+\section{Indeterminate Forms and L'H\^opital's Rule}
+
+\begin{theorem}[L'H\^opital's Rule for $\frac{0}{0}$ and $\frac{\infty}{\infty}$]
+If $\lim_{x\to a} \frac{f(x)}{g(x)}$ is of the form $\left[\frac{0}{0}\right]$ or $\left[\frac{\pm\infty}{\pm\infty}\right]$, and $g'(x) \ne 0$ near $a$, then:
+\begin{equation}
+\lim_{x\to a} \frac{f(x)}{g(x)} = \lim_{x\to a} \frac{f'(x)}{g'(x)}
+\end{equation}
+provided the latter limit exists or is $\pm\infty$.
+\end{theorem}
+
+\subsection{Transformations for Other Indeterminate Forms}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Product Form $[0 \cdot \infty]$}: Write $f(x) g(x) = \frac{f(x)}{1/g(x)}$ to obtain $\left[\frac{0}{0}\right]$ or $\left[\frac{\infty}{\infty}\right]$.
+    \item \textbf{Difference Form $[\infty - \infty]$}: Combine into a common fraction: $\frac{1}{f} - \frac{1}{g} = \frac{g - f}{fg}$.
+    \item \textbf{Exponential Forms $[0^0, 1^\infty, \infty^0]$}: Take the natural logarithm $y = [f(x)]^{g(x)} \implies \ln y = g(x) \ln f(x)$, find $L = \lim \ln y$, then $\lim y = e^L$.
+\end{itemize}
+
+\begin{example}[Evaluation of $1^\infty$ Form]
+Evaluate $\lim_{x\to 0} (\cos x)^{1/x^2}$.
+\end{example}
+
+\begin{solutionbox}
+This is an indeterminate form of type $[1^\infty]$.
+Let $y = (\cos x)^{1/x^2}$. Taking natural logarithm:
+\begin{equation}
+\ln y = \frac{\ln(\cos x)}{x^2}
+\end{equation}
+As $x \to 0$, this is of form $\left[\frac{0}{0}\right]$. Applying L'H\^opital's rule:
+\begin{equation}
+\lim_{x\to 0} \frac{\frac{-\sin x}{\cos x}}{2x} = \lim_{x\to 0} \frac{-\tan x}{2x} = -\frac{1}{2} \lim_{x\to 0} \frac{\tan x}{x} = -\frac{1}{2}(1) = -\frac{1}{2}
+\end{equation}
+Therefore, $\lim_{x\to 0} y = e^{-1/2} = \frac{1}{\sqrt{e}}$.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.6: SINGLE-VARIABLE OPTIMIZATION
+% ==============================================================================
+\section{Single-Variable Optimization}
+
+\begin{definition}[Critical Points \& Extrema Tests]
+A point $x = c$ is a \textbf{critical point} if $f'(c) = 0$ or $f'(c)$ is undefined.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Second Derivative Test}: If $f'(c) = 0$:
+    \begin{itemize}
+        \item $f''(c) < 0 \implies x = c$ is a \textbf{Local Maximum}.
+        \item $f''(c) > 0 \implies x = c$ is a \textbf{Local Minimum}.
+        \item $f''(c) = 0 \implies$ Test is inconclusive (use First Derivative Test).
+    \end{itemize}
+\end{itemize}
+\end{definition}
+

@@ -1,0 +1,273 @@
+\chapter{Unit 3: Orthographic Projections of Objects}
+
+\section{A. What You'll Learn}
+In this unit, you transition from points and lines to complete 3D mechanical components and objects. You will master:
+\begin{itemize}
+    \item Multi-view orthographic projection theory and the **Glass Box Concept**.
+    \item ISO First Angle vs. ANSI Third Angle view arrangements and symbol differentiation.
+    \item The **Miter-Line Method ($45^\circ$)** for depth transfer between Top View and Side Views.
+    \item Application of visible object lines, hidden lines, and center lines on engineering views.
+    \item AutoCAD Layer Management (`LINETYPE`, `LTSCALE`).
+    \item AutoCAD 2D Modification commands (`MOVE`, `COPY`, `ROTATE`, `TRIM`, `MIRROR`, `SCALE`, `FILLET`, `CHAMFER`, `ARRAY`).
+    \item Complete step-by-step AutoCAD 2D drafting workflow for multi-view orthographic drawings.
+\end{itemize}
+
+---
+
+\section{B. Multi-View Orthographic Projection Principles}
+
+\subsection{The "Glass Box" Concept}
+Imagine a 3D object suspended inside a transparent glass box.
+\begin{enumerate}
+    \item The observer looks perpendicular ($90^\circ$) to each face of the box.
+    \item Points and features of the object are projected onto the transparent glass walls.
+    \item The glass box is unfolded flat into a single 2D plane surface.
+    \item The resulting 2D drawings form the set of orthographic views: **Front View (FV)**, **Top View (TV)**, **Left Side View (LSV)**, and **Right Side View (RSV)**.
+\end{enumerate}
+
+\subsection{View Layout Systems: First Angle vs. Third Angle}
+
+\begin{importantrule}[First Angle View Placement (ISO Standard)]
+The object is between Observer and Plane of Projection.
+\begin{itemize}
+    \item **Front View (FV):** Placed above the $XY$ reference line.
+    \item **Top View (Plan):** Placed directly **below** the Front View.
+    \item **Left Side View (LSV):** Drawn to the **right** of the Front View.
+    \item **Right Side View (RSV):** Drawn to the **left** of the Front View.
+\end{itemize}
+\end{importantrule}
+
+\begin{importantrule}[Third Angle View Placement (ANSI Standard)]
+The Plane of Projection is between Observer and Object.
+\begin{itemize}
+    \item **Front View (FV):** Placed below the $XY$ reference line.
+    \item **Top View (Plan):** Placed directly **above** the Front View.
+    \item **Right Side View (RSV):** Drawn to the **right** of the Front View.
+    \item **Left Side View (LSV):** Drawn to the **left** of the Front View.
+\end{itemize}
+\end{importantrule}
+
+---
+
+\section{C. The Miter-Line Method for View Projection}
+
+When constructing 2D orthographic projections manually or in AutoCAD, dimensions are correlated across views:
+\begin{itemize}
+    \item \textbf{Front View \& Top View:} Share identical \textbf{Length (Width)} dimensions horizontally.
+    \item \textbf{Front View \& Side View:} Share identical \textbf{Height} dimensions vertically.
+    \item \textbf{Top View \& Side View:} Share identical \textbf{Depth} dimensions.
+\end{itemize}
+
+\begin{keyequation}[Miter Line ($45^\circ$) Depth Transfer]
+To project depth dimensions accurately between Top View and Side View:
+\begin{enumerate}
+    \item Draw a diagonal construction line at $45^\circ$ starting from the intersection of the main reference axes in the projection quadrant.
+    \item Project horizontal lines from Top View features to meet the $45^\circ$ Miter Line.
+    \item At each intersection point on the Miter Line, project vertical lines down (or up) into the Side View area.
+    \item Project horizontal lines from Front View across into the Side View. The grid intersection forms the Side View geometry.
+\end{enumerate}
+\end{keyequation}
+
+---
+
+\section{D. AutoCAD Layer Properties \& Line Management}
+
+Technical drawings rely on standardized line properties managed via the **Layer Properties Manager**.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Layer Name} & \textbf{Color} & \textbf{Line Type} & \textbf{Line Weight \& Purpose} \\
+\midrule
+\textbf{Object Lines} & White / Black & Continuous & $0.5\text{--}0.7\text{ mm}$ (Thick visible outlines) \\
+\textbf{Hidden Lines} & Yellow & \texttt{DASHED} & $0.3\text{ mm}$ (Medium interior hidden details) \\
+\textbf{Center Lines} & Red & \texttt{CENTER} & $0.3\text{ mm}$ (Thin long-short-long axes) \\
+\textbf{Projectors} & Grey / Cyan & Continuous & $0.15\text{ mm}$ (Thin layout guide lines) \\
+\textbf{Dimensions} & Green & Continuous & $0.25\text{ mm}$ (Dimension text and arrows) \\
+\bottomrule
+\end{tabularx}
+\caption{Standard AutoCAD Layer Property Configuration.}
+\label{tab:autocad-layers}
+\end{table}
+
+\begin{autocadcmd}[LTSCALE]
+Globally scales the length of dashes and gaps in non-continuous line types (e.g., \texttt{DASHED}, \texttt{CENTER}).
+\begin{itemize}
+    \item \textbf{Command:} \texttt{LTSCALE}
+    \item \textbf{Usage:} If dashed center lines appear as continuous solid lines, type \texttt{LTSCALE} $\to$ Enter scale factor (e.g., \texttt{0.5} or \texttt{10}).
+\end{itemize}
+\end{autocadcmd}
+
+---
+
+\section{E. AutoCAD 2D Modification Commands}
+
+\begin{autocadcmd}[MOVE \& COPY]
+Displaces or duplicates objects.
+\begin{itemize}
+    \item \textbf{Move Command:} \texttt{MOVE} or \texttt{M}
+    \item \textbf{Copy Command:} \texttt{COPY} or \texttt{CO} / \texttt{CP}
+    \item \textbf{Workflow:} Select objects $\to$ Press \texttt{Enter} $\to$ Specify Base Point $\to$ Specify Second Point.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[ROTATE]
+Revolves selected objects around a base point.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{ROTATE} or \texttt{RO}
+    \item \textbf{Direction:} Positive angle values rotate **Counter-Clockwise**; negative values rotate Clockwise.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[TRIM]
+Cuts objects to meet the edges of other boundary objects.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{TRIM} or \texttt{TR}
+    \item \textbf{Workflow:} Select cutting edges (or press \texttt{Enter} for select-all) $\to$ Click object segments to remove.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[MIRROR]
+Creates a reverse symmetrical copy of selected objects across a defined axis.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{MIRROR} or \texttt{MI}
+    \item \textbf{Workflow:} Select objects $\to$ Specify 1st and 2nd points of mirror line $\to$ Choose whether to delete source objects (\texttt{Yes/No}).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[FILLET \& CHAMFER]
+Rounds or bevels corner edges of objects.
+\begin{itemize}
+    \item \textbf{Fillet Command:} \texttt{FILLET} or \texttt{F} (Set radius first: Type \texttt{F} $\to$ \texttt{R} $\to$ Enter radius value $\to$ Select two lines).
+    \item \textbf{Chamfer Command:} \texttt{CHAMFER} or \texttt{CHA} (Set distance first: Type \texttt{CHA} $\to$ \texttt{D} $\to$ Enter Dist 1 \& Dist 2 $\to$ Select two lines).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[ARRAY]
+Creates multiple copies of objects in a rectangular, polar, or path pattern.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{ARRAY} or \texttt{AR}
+    \item \textbf{Rectangular Array:} Arranges copies into Rows and Columns grid.
+    \item \textbf{Polar Array:} Copies objects in a circular pattern around a center axis point.
+\end{itemize}
+\end{autocadcmd}
+
+---
+
+\section{F. Hands-on AutoCAD Workflow: 2D Orthographic Views}
+
+Follow this exact multi-step procedure when converting a 3D isometric view into 2D orthographic drawings:
+
+\begin{enumerate}
+    \item \textbf{Setup Phase:}
+    \begin{itemize}
+        \item Set units: Type \texttt{UN} $\to$ Decimal, $0.00$ precision, Millimeters.
+        \item Set limits: Type \texttt{LIMITS} $\to$ \texttt{0,0} to \texttt{210,297} $\to$ Type \texttt{Z} $\to$ \texttt{A}.
+        \item Create Layers: Object Lines (Thick White), Hidden Lines (Yellow Dashed), Center Lines (Red Center), Projectors (Grey).
+    \end{itemize}
+    \item **Construction Grid:**
+    \begin{itemize}
+        \item Draw horizontal and vertical reference lines using \texttt{XLINE} or \texttt{LINE}.
+        \item Enable \texttt{ORTHO (F8)} for straight projection lines.
+    \end{itemize}
+    \item **Front View Construction:**
+    \begin{itemize}
+        \item Switch to 'Object Layer'.
+        \item Draw Front View outline using \texttt{LINE}, \texttt{CIRCLE}, \texttt{FILLET}.
+    \end{itemize}
+    \item **Top View Construction:**
+    \begin{itemize}
+        \item Switch to 'Projector Layer'. Use \texttt{XLINE} to project vertical lines down from Front View corners.
+        \item Switch to 'Object Layer' and draw Top View width and depth outlines.
+        \item Add hidden lines for internal holes using 'Hidden Layer'.
+    \end{itemize}
+    \item **Side View Construction (Miter Line Method):**
+    \begin{itemize}
+        \item Draw a $45^\circ$ line from reference axis intersection.
+        \item Project horizontal lines from Top View rightwards to meet $45^\circ$ line.
+        \item Project vertical lines down from $45^\circ$ line into Side View quadrant.
+        \item Project horizontal lines from Front View into Side View quadrant.
+        \item Trace Side View outlines at grid intersections.
+    \end{itemize}
+    \item \textbf{Final Details \& Dimensioning:}
+    \begin{itemize}
+        \item Mark hole centers using 'Center Layer'.
+        \item Add linear dimensions (\texttt{DLI}) and radial dimensions (\texttt{DRA}).
+    \end{itemize}
+\end{enumerate}
+
+---
+
+\section{G. Chapter 3 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+Explain the "Glass Box Concept" in orthographic projections.\\[4pt]
+\textbf{Answer:} The 3D object is imagined suspended inside a transparent glass box. Views are projected perpendicularly onto the faces of the box, which is then unfolded flat into a 2D plane.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+In First Angle Projection, where are the Top View and Left Side View placed relative to the Front View?\\[4pt]
+\textbf{Answer:} Top View is placed **below** the Front View. Left Side View is drawn to the **right** of the Front View.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+Describe the steps to draw a Fillet of radius $15\text{ mm}$ on a sharp corner in AutoCAD.\\[4pt]
+\textbf{Answer:} Type \texttt{FILLET} (or \texttt{F}) $\to$ Press \texttt{Enter} $\to$ Type \texttt{R} (Radius) $\to$ Press \texttt{Enter} $\to$ Type \texttt{15} $\to$ Press \texttt{Enter} $\to$ Click first line $\to$ Click second line.
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. In First Angle Projection, the Right Side View is drawn to the:  
+   A. Right of Front View  
+   B. Left of Front View  
+   C. Top of Front View  
+   D. Bottom of Front View  
+   \textbf{Answer: B} — Right Side View is drawn to the left of Front View in First Angle Projection.
+
+2. Which AutoCAD command is used to round sharp corners with a specific radius?  
+   A. \texttt{CHAMFER}  
+   B. \texttt{FILLET}  
+   C. \texttt{ARC}  
+   D. \texttt{CIRCLE}  
+   \textbf{Answer: B} — \texttt{FILLET} rounds sharp corners.
+
+3. What angle is used for the Miter Line to transfer depth between Top View and Side View?  
+   A. $30^\circ$  
+   B. $45^\circ$  
+   C. $60^\circ$  
+   D. $90^\circ$  
+   \textbf{Answer: B} — The Miter Line is drawn at $45^\circ$.
+
+4. Which line type is used to represent hidden interior edges in orthographic views?  
+   A. Continuous Thick Line  
+   B. Long dash -- short dash Chain Line  
+   C. Dashed Medium Line  
+   D. Continuous Thin Line  
+   \textbf{Answer: C} — Dashed lines represent hidden interior edges.
+
+5. What does the AutoCAD command \texttt{LTSCALE} control?  
+   A. Scale of drawing limits  
+   B. Global dash and gap spacing of non-continuous lines  
+   C. Text height in dimension style  
+   D. Zoom magnification level  
+   \textbf{Answer: B} — \texttt{LTSCALE} controls global non-continuous line dash scale.
+
+---
+
+\section{H. Unit 3 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $\text{First Angle: } \text{FV above } XY, \text{ TV below FV}, \text{ LSV to right of FV}, \text{ RSV to left of FV}$.
+    \item $\text{Third Angle: } \text{FV below } XY, \text{ TV above FV}, \text{ RSV to right of FV}, \text{ LSV to left of FV}$.
+    \item $\text{Depth Transfer: } \text{Use } 45^\circ \text{ Miter Line between TV and Side View}$.
+    \item $\text{Visible Outlines } \to 0.5\text{--}0.7\text{ mm Thick}$; $\text{Hidden Lines } \to 0.3\text{ mm Dashed}$; $\text{Center Lines } \to \text{Chain Line}$.
+    \item $\text{AutoCAD Fillet: } \texttt{F} \to \texttt{R} \to \text{Radius Value} \to \text{Select Lines}$.
+    \item $\text{AutoCAD Chamfer: } \texttt{CHA} \to \texttt{D} \to \text{Dist 1, Dist 2} \to \text{Select Lines}$.
+    \item $\text{AutoCAD Rotate: } \text{Positive angle rotates Counter-Clockwise}$.
+    \item $\text{AutoCAD Array: } \text{Rectangular (Rows/Cols) vs. Polar (Circular)}$.
+\end{itemize}
+\end{revisionchecklist}

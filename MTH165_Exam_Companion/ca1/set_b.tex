@@ -1,0 +1,335 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+\label{sec:ca1_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{B}{50 Minutes}{30 Marks}{CO1 (Matrices \& Systems of Linear Equations), CO2 (Higher-Order ODEs \& Calculus)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    Find for what values of $\lambda$ and $\mu$ the system of linear equations:
+    \[
+    \begin{aligned}
+    x + y + z &= 6 \\
+    x + 2y + 3z &= 10 \\
+    x + 2y + \lambda z &= \mu
+    \end{aligned}
+    \]
+    has: \textbf{(i)} a unique solution, \textbf{(ii)} no solution, and \textbf{(iii)} infinitely many solutions.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    Solve the third-order linear homogeneous differential equation by the operator method:
+    \[
+    y''' + y = 0 \quad \iff \quad (D^3 + 1)y = 0
+    \]
+}{5}{CO2}{L3 Apply}
+
+\questionitem{3}{
+    Find the rank of the $4\times 4$ matrix $A$, given that parameters $w, r, s, t \neq 0$:
+    \[
+    A = \begin{bmatrix}
+    1 & w & r & 0 \\
+    0 & s & t & 1 \\
+    -1 & -w & -r & 0 \\
+    0 & s & t & 1
+    \end{bmatrix}
+    \]
+}{5}{CO1}{L2 Understand}
+
+\questionitem{4}{
+    Verify the \textbf{Cayley-Hamilton Theorem} for the matrix:
+    \[
+    A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+    \]
+    and hence compute $A^{-1}$ and $A^3$.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{5}{
+    Determine whether the matrix:
+    \[
+    A = \begin{bmatrix} 2 & 3+4i \\ 3-4i & 5 \end{bmatrix}
+    \]
+    is a \textbf{Hermitian matrix}. Find its eigenvalues and verify that they are strictly real.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{6}{
+    Find the complete general solution of the second-order differential equation:
+    \[
+    (D^2 - 4D + 4)y = e^{2x}
+    \]
+}{5}{CO2}{L3 Apply}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-1 Set B)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Augmented Matrix Formulation}
+\[
+[A|B] = \begin{bmatrix}
+1 & 1 & 1 & | & 6 \\
+1 & 2 & 3 & | & 10 \\
+1 & 2 & \lambda & | & \mu
+\end{bmatrix}
+\]
+\textbf{Step 2: Row Echelon Reduction}
+Apply $R_2 \to R_2 - R_1$ and $R_3 \to R_3 - R_1$:
+\[
+\begin{bmatrix}
+1 & 1 & 1 & | & 6 \\
+0 & 1 & 2 & | & 4 \\
+0 & 1 & \lambda-1 & | & \mu-6
+\end{bmatrix}
+\]
+Apply $R_3 \to R_3 - R_2$:
+\[
+\begin{bmatrix}
+1 & 1 & 1 & | & 6 \\
+0 & 1 & 2 & | & 4 \\
+0 & 0 & \lambda-3 & | & \mu-10
+\end{bmatrix}
+\]
+
+\textbf{Step 3: Classification of Solutions}
+\begin{enumerate}[label=(\roman*), leftmargin=6mm]
+    \item \textbf{Unique Solution:}
+    Requires $\text{rank}(A) = \text{rank}[A|B] = 3$ (number of unknowns).
+    Hence, the pivot $\lambda - 3 \neq 0 \implies \mathbf{\lambda \neq 3}$, and $\mathbf{\mu \in \mathbb{R}}$ (any value).
+    \item \textbf{No Solution (Inconsistent):}
+    Requires $\text{rank}(A) = 2$ and $\text{rank}[A|B] = 3$.
+    This occurs when $\lambda - 3 = 0$ and $\mu - 10 \neq 0$:
+    \[
+    \mathbf{\lambda = 3 \quad \text{and} \quad \mu \neq 10}
+    \]
+    \item \textbf{Infinitely Many Solutions:}
+    Requires $\text{rank}(A) = \text{rank}[A|B] = 2 < 3$.
+    This occurs when the entire third row becomes zero:
+    \[
+    \mathbf{\lambda = 3 \quad \text{and} \quad \mu = 10}
+    \]
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Augmented matrix and row operations: \textbf{2 Marks}\\
+$\bullet$ Unique solution condition ($\lambda \neq 3, \mu \in \mathbb{R}$): \textbf{1 Mark}\\
+$\bullet$ No solution condition ($\lambda = 3, \mu \neq 10$): \textbf{1 Mark}\\
+$\bullet$ Infinite solution condition ($\lambda = 3, \mu = 10$): \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: Auxiliary Equation}
+Given $(D^3 + 1)y = 0$, replace $D$ by $m$:
+\[
+m^3 + 1 = 0
+\]
+Use algebraic identity $a^3 + b^3 = (a+b)(a^2 - ab + b^2)$:
+\[
+(m + 1)(m^2 - m + 1) = 0
+\]
+\textbf{Step 2: Finding Roots}
+\begin{itemize}[leftmargin=6mm]
+    \item From $m + 1 = 0 \implies \mathbf{m_1 = -1}$.
+    \item From $m^2 - m + 1 = 0$, using quadratic formula:
+    \[
+    m = \frac{-(-1) \pm \sqrt{(-1)^2 - 4(1)(1)}}{2(1)} = \frac{1 \pm \sqrt{-3}}{2} = \mathbf{\frac{1}{2} \pm i\frac{\sqrt{3}}{2}}
+    \]
+\end{itemize}
+\textbf{Step 3: General Solution}
+For the real root $m_1 = -1$, the term is $c_1 e^{-x}$.
+For complex conjugate roots $\alpha \pm i\beta$ with $\alpha = 1/2, \beta = \sqrt{3}/2$:
+\[
+e^{\frac{1}{2}x}\left(c_2 \cos\frac{\sqrt{3}}{2}x + c_3 \sin\frac{\sqrt{3}}{2}x\right)
+\]
+Therefore, the general solution is:
+\[
+\mathbf{y(x) = c_1 e^{-x} + e^{\frac{x}{2}}\left(c_2 \cos\frac{\sqrt{3}}{2}x + c_3 \sin\frac{\sqrt{3}}{2}x\right)}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Auxiliary equation $m^3 + 1 = 0$ and factorization: \textbf{1.5 Marks}\\
+$\bullet$ Correct roots $m = -1, \frac{1}{2} \pm i\frac{\sqrt{3}}{2}$: \textbf{1.5 Marks}\\
+$\bullet$ Final general solution with all 3 arbitrary constants: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Matrix Inspection \& Row Operations}
+\[
+A = \begin{bmatrix}
+1 & w & r & 0 \\
+0 & s & t & 1 \\
+-1 & -w & -r & 0 \\
+0 & s & t & 1
+\end{bmatrix}
+\]
+Notice that:
+\begin{itemize}[leftmargin=6mm]
+    \item Row 3 is the exact negative of Row 1: $R_3 = -R_1$.
+    \item Row 4 is identical to Row 2: $R_4 = R_2$.
+\end{itemize}
+\textbf{Step 2: Row Reduction to Echelon Form}
+Apply $R_3 \to R_3 + R_1$ and $R_4 \to R_4 - R_2$:
+\[
+\begin{bmatrix}
+1 & w & r & 0 \\
+0 & s & t & 1 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\]
+\textbf{Step 3: Determining Rank}
+Since $s \neq 0$, the first two rows are non-zero and linearly independent. The remaining two rows are entirely zero.
+The number of non-zero rows in the row echelon form is 2.
+Therefore:
+\[
+\mathbf{\text{rank}(A) = 2}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Identifying linear dependency between rows: \textbf{2 Marks}\\
+$\bullet$ Performing row operations to echelon form: \textbf{2 Marks}\\
+$\bullet$ Correct rank $= 2$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Characteristic Equation of $A$}
+For $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$:
+\[
+\text{trace}(A) = 1 + 4 = 5, \quad \det(A) = (1)(4) - (2)(3) = 4 - 6 = -2
+\]
+The characteristic equation is:
+\[
+\lambda^2 - 5\lambda - 2 = 0
+\]
+\textbf{Step 2: Verifying Cayley-Hamilton Theorem}
+The theorem asserts that $A$ satisfies its own characteristic equation:
+\[
+A^2 - 5A - 2I = O
+\]
+Compute $A^2$:
+\[
+A^2 = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 1+6 & 2+8 \\ 3+12 & 6+16 \end{bmatrix} = \begin{bmatrix} 7 & 10 \\ 15 & 22 \end{bmatrix}
+\]
+Now compute $A^2 - 5A - 2I$:
+\[
+\begin{bmatrix} 7 & 10 \\ 15 & 22 \end{bmatrix} - 5\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} - 2\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 7 - 5 - 2 & 10 - 10 - 0 \\ 15 - 15 - 0 & 22 - 20 - 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = O
+\]
+Hence, Cayley-Hamilton Theorem is verified!
+
+\textbf{Step 3: Calculating $A^{-1}$ using Cayley-Hamilton}
+Multiply the verified relation by $A^{-1}$:
+\[
+A - 5I - 2A^{-1} = O \implies 2A^{-1} = A - 5I \implies A^{-1} = \frac{1}{2}(A - 5I)
+\]
+\[
+A^{-1} = \frac{1}{2}\left(\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} - \begin{bmatrix} 5 & 0 \\ 0 & 5 \end{bmatrix}\right) = \frac{1}{2}\begin{bmatrix} -4 & 2 \\ 3 & -1 \end{bmatrix} = \mathbf{\begin{bmatrix} -2 & 1 \\ 3/2 & -1/2 \end{bmatrix}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Characteristic equation $\lambda^2 - 5\lambda - 2 = 0$: \textbf{1.5 Marks}\\
+$\bullet$ Verification $A^2 - 5A - 2I = O$: \textbf{2 Marks}\\
+$\bullet$ Computation of $A^{-1}$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Definition and Verification of Hermitian Matrix}
+A complex square matrix $A$ is Hermitian if $A^\dagger = (\bar{A})^T = A$.
+Given:
+\[
+A = \begin{bmatrix} 2 & 3+4i \\ 3-4i & 5 \end{bmatrix}
+\]
+Take the complex conjugate $\bar{A}$:
+\[
+\bar{A} = \begin{bmatrix} 2 & 3-4i \\ 3+4i & 5 \end{bmatrix}
+\]
+Transpose $(\bar{A})^T$:
+\[
+(\bar{A})^T = \begin{bmatrix} 2 & 3+4i \\ 3-4i & 5 \end{bmatrix} = A
+\]
+Thus, \textbf{$A$ is indeed a Hermitian matrix}.
+
+\textbf{Step 2: Eigenvalues Computation}
+Characteristic equation: $\det(A - \lambda I) = 0$:
+\[
+\begin{vmatrix} 2-\lambda & 3+4i \\ 3-4i & 5-\lambda \end{vmatrix} = 0
+\]
+\[
+(2-\lambda)(5-\lambda) - (3+4i)(3-4i) = 0
+\]
+\[
+(\lambda^2 - 7\lambda + 10) - (3^2 - (4i)^2) = 0
+\]
+\[
+(\lambda^2 - 7\lambda + 10) - (9 + 16) = 0 \implies \lambda^2 - 7\lambda - 15 = 0
+\]
+Solve for $\lambda$:
+\[
+\lambda = \frac{7 \pm \sqrt{(-7)^2 - 4(1)(-15)}}{2} = \frac{7 \pm \sqrt{49 + 60}}{2} = \mathbf{\frac{7 \pm \sqrt{109}}{2}}
+\]
+Since $109 > 0$, both eigenvalues $\mathbf{\lambda_1 = \frac{7 + \sqrt{109}}{2} \approx 8.72}$ and $\mathbf{\lambda_2 = \frac{7 - \sqrt{109}}{2} \approx -1.72}$ are \textbf{strictly real}. This confirms the fundamental theorem that every Hermitian matrix has real eigenvalues.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Proving $(\bar{A})^T = A$ for Hermitian: \textbf{2 Marks}\\
+$\bullet$ Characteristic equation $\lambda^2 - 7\lambda - 15 = 0$: \textbf{1.5 Marks}\\
+$\bullet$ Finding real eigenvalues: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Complementary Function ($y_c$)}
+Auxiliary equation:
+\[
+m^2 - 4m + 4 = 0 \implies (m - 2)^2 = 0 \implies m = 2, 2 \text{ (repeated real root)}
+\]
+\[
+\mathbf{y_c = (c_1 + c_2 x) e^{2x}}
+\]
+\textbf{Step 2: Particular Integral ($y_p$)}
+\[
+y_p = \frac{1}{(D - 2)^2} e^{2x}
+\]
+Notice that substituting $D = 2$ gives $(2-2)^2 = 0$ (Case of failure of order 2).
+Using the standard operator rule $\frac{1}{(D - a)^n} e^{ax} = \frac{x^n}{n!} e^{ax}$:
+Here $a = 2, n = 2$:
+\[
+y_p = \frac{x^2}{2!} e^{2x} = \mathbf{\frac{1}{2} x^2 e^{2x}}
+\]
+\textbf{Step 3: General Solution}
+\[
+y = y_c + y_p = \mathbf{(c_1 + c_2 x) e^{2x} + \frac{1}{2} x^2 e^{2x}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function $y_c = (c_1 + c_2 x)e^{2x}$: \textbf{2 Marks}\\
+$\bullet$ Case of failure recognition and Particular Integral $y_p$: \textbf{2 Marks}\\
+$\bullet$ Final general solution $y = y_c + y_p$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

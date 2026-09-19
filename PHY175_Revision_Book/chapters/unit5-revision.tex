@@ -1,0 +1,18 @@
+\chapter{Sequential Logic Circuits: Rapid Revision}
+
+\begin{highyieldbox}[Flip-Flops, Registers and Counters]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{SR Latch:} NOR latch: $S=1 \implies Q=1, R=1 \implies Q=0, S=R=1$ is FORBIDDEN.
+    \item \textbf{JK Flip-Flop:} $Q_{next} = J\bar{Q} + \bar{K}Q$. When $J=K=1$, the state toggles.
+    \item \textbf{Master-Slave JK:} Master latches on clock HIGH, Slave transfers to output on clock LOW, eliminating race-around conditions.
+    \item \textbf{Flip-Flop Conversions:}
+    \begin{itemize}
+        \item JK to D: $J = D, K = \bar{D}$.
+        \item JK to T: $J = T, K = T$.
+        \item D to T: $D = T \oplus Q$.
+    \end{itemize}
+    \item \textbf{Shift Registers:} SISO (serial in/out), SIPO (serial load, parallel read in $N$ cycles), PISO (parallel load in 1 cycle, serial shift), PIPO (instant 1-cycle parallel transfer).
+    \item \textbf{Ripple Counters:} Asynchronous counter where stage $k$ clocks stage $k+1$. Maximum frequency $f_{max} = \frac{1}{N \cdot t_{pd} + t_s}$.
+    \item \textbf{Mod-N Counters:} Mod-10 (decade) cycles $0 \to 9$; asynchronous reset triggers on detection of count $10$ ($1010_2$).
+\end{itemize}
+\end{highyieldbox}

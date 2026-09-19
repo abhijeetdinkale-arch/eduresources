@@ -1,0 +1,4 @@
+Registration Number,Name,Marks
+123001,Ananya,92
+123002,Karan,88
+123003,Deepika,95

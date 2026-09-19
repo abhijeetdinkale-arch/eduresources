@@ -1,0 +1,65 @@
+\chapter{Unit 2: Lasers \& Optical Resonance}
+
+\begin{formulabox}{1. Einstein's Phenomenological Coefficients \& Relations}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Transition Rates:}
+    \begin{align*}
+    \text{Stimulated Absorption Rate:} \quad & R_{12} = B_{12} N_1 u(\nu) \\
+    \text{Spontaneous Emission Rate:} \quad & R_{21}^{\text{spont}} = A_{21} N_2 \\
+    \text{Stimulated Emission Rate:} \quad & R_{21}^{\text{stim}} = B_{21} N_2 u(\nu)
+    \end{align*}
+    \item \textbf{Einstein Relations (Thermodynamic Equilibrium with Planck's Law):}
+    \[
+    B_{12} = \frac{g_2}{g_1} B_{21} \quad (\text{if } g_1 = g_2, \, B_{12} = B_{21})
+    \]
+    \[
+    \frac{A_{21}}{B_{21}} = \frac{8\pi h \nu^3}{c^3} = \frac{8\pi h}{\lambda^3}
+    \]
+    \item \textbf{Ratio of Spontaneous to Stimulated Emission Rate:}
+    \[
+    \frac{R_{\text{spont}}}{R_{\text{stim}}} = \frac{A_{21}}{B_{21} u(\nu)} = e^{h\nu / k_B T} - 1
+    \]
+    At optical frequencies ($\nu \sim 5 \times 10^{14}\text{ Hz}$) and room temp, $h\nu \gg k_B T \implies$ Spontaneous emission dominates without an active pumping cavity.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{2. Population Inversion, Threshold Condition \& Gain Coefficient}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Boltzmann Population Distribution:} $\frac{N_2}{N_1} = e^{-(E_2 - E_1)/k_B T} < 1 \quad (\text{for } E_2 > E_1, T > 0)$.
+    \item \textbf{Population Inversion Condition:} $N_2 > \frac{g_2}{g_1} N_1$.
+    \item \textbf{Small-Signal Gain Coefficient:} $\gamma(\nu) = \sigma_{21}(\nu) \left[ N_2 - \frac{g_2}{g_1} N_1 \right]$.
+    \item \textbf{Optical Intensity Amplification along Medium:} $I(z) = I_0 e^{[\gamma(\nu) - \alpha_s] z}$.
+    \item \textbf{Threshold Condition for Sustained Oscillation in Cavity (Length $L$, mirror reflectivities $R_1, R_2$):}
+    \[
+    \gamma_{\text{th}} = \alpha_s + \frac{1}{2L}\ln\left(\frac{1}{R_1 R_2}\right)
+    \]
+    \item \textbf{Fabry-Perot Longitudinal Cavity Modes:} $L = m\frac{\lambda_m}{2} \implies \nu_m = m\frac{c}{2n L}, \quad \Delta\nu = \nu_{m+1} - \nu_m = \frac{c}{2n L}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{3. Comparison of Common Laser Systems}
+\begin{tabularx}{\textwidth}{l l l l X}
+\toprule
+\textbf{Laser Type} & \textbf{Active Medium} & \textbf{Pumping} & \textbf{Wavelength} & \textbf{Key Characteristics} \\
+\midrule
+\textbf{Ruby Laser} & $\text{Cr}^{3+}\text{:Al}_2\text{O}_3$ & Optical (Xenon Flash) & $694.3\text{ nm}$ (Red) & 3-level pulsed system, high peak power. \\
+\textbf{He-Ne Laser} & He : Ne (10:1 gas) & Electric Discharge & $632.8\text{ nm}$ (Red) & 4-level CW laser, high spatial coherence. \\
+\textbf{Nd:YAG} & $\text{Nd}^{3+}\text{:Y}_3\text{Al}_5\text{O}_{12}$ & Optical (Krypton/LED) & $1064\text{ nm}$ (NIR) & 4-level high efficiency CW/pulsed system. \\
+\textbf{Semiconductor} & GaAs / InP junction & Direct Current Injection & $840\text{--}1550\text{ nm}$ & Ultra-compact, high electrical-to-optical conversion. \\
+\bottomrule
+\end{tabularx}
+\end{formulabox}
+
+\begin{formulabox}{4. Holography (Gabor Principle)}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Recording:} Interference of coherent Reference beam $R = A_r e^{i\phi_r}$ and Object beam $O = A_o e^{i\phi_o}$:
+    \[
+    I(x,y) = |R + O|^2 = |R|^2 + |O|^2 + R^* O + R O^*
+    \]
+    \item \textbf{Reconstruction:} Illuminating recorded hologram transmittance $t \propto I(x,y)$ with original reference beam $R$:
+    \[
+    R \cdot I(x,y) = R(|R|^2 + |O|^2) + |R|^2 O + R^2 O^*
+    \]
+    The term $|R|^2 O$ generates the \textbf{virtual 3D image} (exact true object wave reconstructed in space).
+\end{itemize}
+\end{formulabox}

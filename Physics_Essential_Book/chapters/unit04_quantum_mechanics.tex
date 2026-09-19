@@ -1,0 +1,226 @@
+\chapter{Quantum Mechanics}
+
+\section{The Breakdown of Classical Physics}
+By the close of the 19th century, classical Newtonian mechanics and Maxwellian electrodynamics appeared complete. However, precise experimental investigations of microphysical systems revealed insurmountable failures of classical concepts:
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item \textbf{Blackbody Radiation \& Ultraviolet Catastrophe:} Classical Rayleigh-Jeans theory ($u(\nu)d\nu = \frac{8\pi\nu^2 k_B T}{c^3}d\nu$) predicted infinite energy emission as $\nu \to \infty$. Max Planck (1900) resolved this by postulating that atomic oscillators absorb and emit energy only in discrete quantized packets:
+    \begin{equation}
+    E = n h \nu, \quad n = 0, 1, 2, \dots
+    \end{equation}
+    \item \textbf{Photoelectric Effect:} Classical wave theory failed to explain why emission is instantaneous and why electron kinetic energy depends on light frequency rather than intensity. Albert Einstein (1905) proposed that light consists of localized particle quanta called \textbf{photons} with energy $E = h\nu$, establishing:
+    \begin{equation}
+    E_k^{\text{max}} = \frac{1}{2}m v_{\text{max}}^2 = h\nu - \phi_0 = e V_0
+    \end{equation}
+    where $\phi_0 = h\nu_0$ is the work function and $V_0$ is the stopping potential.
+    \item \textbf{Compton Scattering (1923):} Arthur Compton directed X-rays of wavelength $\lambda$ at graphite targets and observed scattered photons of longer wavelength $\lambda'$. Applying relativistic energy and momentum conservation ($p = h/\lambda$) to photon-electron collisions yielded:
+    \begin{equation}
+    \Delta\lambda = \lambda' - \lambda = \frac{h}{m_0 c}(1 - \cos\theta) = \lambda_C (1 - \cos\theta)
+    \end{equation}
+    where $\lambda_C = \frac{h}{m_0 c} = 0.02426\text{ \AA}$ is the \textbf{Compton Wavelength} of an electron.
+\end{enumerate}
+
+\section{de Broglie's Matter Wave Hypothesis}
+In 1924, Louis de Broglie reasoned from the deep symmetry of nature: if radiation exhibits particle-like behavior, material particles (electrons, protons, neutrons) must also possess wave-like characteristics. The \textbf{de Broglie wavelength} associated with a particle of mass $m$ and velocity $v$ is:
+\begin{equation}
+\lambda = \frac{h}{p} = \frac{h}{m v} = \frac{h}{\sqrt{2m E_k}}
+\end{equation}
+For an electron accelerated from rest across an electrostatic potential $V$:
+\begin{equation}
+\lambda_e = \frac{h}{\sqrt{2m_e e V}} = \frac{1.227}{\sqrt{V}}\text{ nm} = \sqrt{\frac{150}{V}}\text{ \AA}
+\end{equation}
+
+\subsection{Davisson-Germer Experiment (1927)}
+Clinton Davisson and Lester Germer directed a $54\text{ V}$ beam of electrons normally onto the surface of a cleaved single-crystal nickel target with interatomic plane spacing $D = 2.15\text{ \AA}$ (Bragg plane spacing $d = D\sin(\theta/2) = 0.91\text{ \AA}$). A sharp intensity maximum was detected at scattering angle $\theta = 50^\circ$ (glancing angle $\phi = 90^\circ - \theta/2 = 65^\circ$).
+\begin{itemize}
+    \item \textbf{Experimental Bragg wavelength:} $\lambda = 2d\sin\phi = 2(0.91\text{ \AA})\sin(65^\circ) = 1.65\text{ \AA}$.
+    \item \textbf{Theoretical de Broglie wavelength:} $\lambda_{\text{dB}} = \frac{12.27}{\sqrt{54}}\text{ \AA} = 1.67\text{ \AA}$.
+\end{itemize}
+The exact agreement proved beyond doubt that moving electrons diffract as physical waves.
+
+\section{Wave Packets, Phase Velocity, and Group Velocity}
+A localized matter particle cannot be modeled by a single monochromatic plane wave $\psi = A e^{i(kx - \omega t)}$ because an infinite plane wave is uniformly distributed across all space ($\Delta x = \infty$). A localized quantum entity is described by a \textbf{Wave Packet} formed by a continuous superposition of harmonic plane waves:
+\begin{equation}
+\Psi(x,t) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} A(k) e^{i(kx - \omega(k) t)} \, dk
+\end{equation}
+\begin{itemize}[leftmargin=*,itemsep=3pt]
+    \item \textbf{Phase Velocity ($v_p$):} The propagation speed of individual monochromatic phase crests within the packet:
+    \begin{equation}
+    v_p = \frac{\omega}{k} = \frac{E}{p} = \frac{mc^2}{mv} = \frac{c^2}{v} > c
+    \end{equation}
+    The phase velocity exceeds the speed of light in vacuum, but because a single phase crest carries no information, this does not violate relativistic causality.
+    \item \textbf{Group Velocity ($v_g$):} The propagation speed of the overall modulation envelope that encloses the wave packet energy and information:
+    \begin{equation}
+    v_g = \frac{d\omega}{dk} = \frac{dE}{dp} = \frac{d}{dp}\left(\frac{p^2}{2m}\right) = \frac{p}{m} = v_{\text{particle}}
+    \end{equation}
+    Thus, the group velocity of the matter wave packet is exactly identical to the classical particle velocity.
+\end{itemize}
+
+\section{Heisenberg's Uncertainty Principle}
+Formulated by Werner Heisenberg in 1927, the Uncertainty Principle establishes an intrinsic quantum limit on measurement precision: it is physically impossible to simultaneously measure the exact position and momentum of a particle along the same spatial coordinate:
+\begin{equation}
+\Delta x \cdot \Delta p_x \ge \frac{\hbar}{2} \quad \left(\text{where } \hbar = \frac{h}{2\pi} \approx 1.0546 \times 10^{-34}\text{ J}\cdot\text{s}\right)
+\end{equation}
+Other canonical conjugate pairs:
+\begin{align}
+\text{Energy and Time:} \quad & \Delta E \cdot \Delta t \ge \frac{\hbar}{2} \\
+\text{Angular Position and Angular Momentum:} \quad & \Delta \theta \cdot \Delta L_z \ge \frac{\hbar}{2}
+\end{align}
+
+\begin{derivbox}{Proof of Non-Existence of Electrons in the Nucleus}
+A typical atomic nucleus has a radius $R \approx 10^{-14}\text{ m}$. If an electron existed inside the nucleus, its maximum position uncertainty would be $\Delta x \approx 2R \approx 2 \times 10^{-14}\text{ m}$.
+By Heisenberg's uncertainty principle, its minimum momentum uncertainty is:
+\begin{equation}
+\Delta p \ge \frac{\hbar}{2\Delta x} = \frac{1.0546 \times 10^{-34}\text{ J}\cdot\text{s}}{2 \times (2 \times 10^{-14}\text{ m})} \approx 2.64 \times 10^{-21}\text{ kg}\cdot\text{m/s}
+\end{equation}
+Since electron momentum must be at least of the order of its uncertainty ($p \ge \Delta p$), its relativistic kinetic energy is:
+\begin{equation}
+E \approx \sqrt{p^2 c^2 + m_0^2 c^4} \approx p c = (2.64 \times 10^{-21}\text{ kg}\cdot\text{m/s})(3 \times 10^8\text{ m/s}) \approx 7.92 \times 10^{-13}\text{ J} \approx 4.95\text{ MeV}
+\end{equation}
+However, experimental measurements of electrons emitted during nuclear $\beta$-decay reveal kinetic energies of only $2\text{--}3\text{ MeV}$, and atomic electron binding energies are merely $\sim 10\text{ eV}$. Hence, electrons cannot exist as permanent residents inside the atomic nucleus (they are created at the instant of $\beta$-decay).
+\end{derivbox}
+
+\section{Schrödinger Wave Mechanics}
+In 1926, Erwin Schrödinger formulated wave mechanics by associating every physical observable with a linear Hermitian differential operator:
+\begin{center}
+\begin{tabularx}{0.85\textwidth}{l l l}
+\toprule
+\textbf{Physical Observable} & \textbf{Operator Symbol} & \textbf{Mathematical Form} \\
+\midrule
+Position coordinate $x$ & $\hat{x}$ & $x$ \\
+Linear Momentum $p_x$ & $\hat{p}_x$ & $-i\hbar\frac{\partial}{\partial x}$ \\
+Total Energy $E$ & $\hat{E}$ & $i\hbar\frac{\partial}{\partial t}$ \\
+Kinetic Energy $T = p^2/2m$ & $\hat{T}$ & $-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}$ \\
+Hamiltonian $\hat{H} = \hat{T} + V(x)$ & $\hat{H}$ & $-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} + V(x)$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Time-Dependent Schrödinger Equation (TDSE)}
+Substituting operators into the classical total energy relation $H = E$:
+\begin{equation}
+-\frac{\hbar^2}{2m}\nabla^2 \Psi(\vec{r},t) + V(\vec{r})\Psi(\vec{r},t) = i\hbar\frac{\partial \Psi(\vec{r},t)}{\partial t}
+\end{equation}
+
+\subsection{Time-Independent Schrödinger Equation (TISE)}
+For conservative potential fields $V(\vec{r})$ that do not depend on time, we use separation of variables: $\Psi(\vec{r},t) = \psi(\vec{r})e^{-iEt/\hbar}$. Substituting into TDSE yields the 1D TISE:
+\begin{equation}
+\frac{d^2 \psi(x)}{dx^2} + \frac{2m}{\hbar^2}\left[ E - V(x) \right]\psi(x) = 0
+\end{equation}
+
+\subsection{Born Statistical Interpretation and Physical Wavefunction Criteria}
+Max Born established that the complex wavefunction $\Psi(x,t)$ itself is not directly measurable; rather, the quantity:
+\begin{equation}
+P(x)\,dx = |\Psi(x,t)|^2\,dx = \Psi^* \Psi \, dx
+\end{equation}
+represents the \textbf{probability} of locating the particle in the spatial interval $[x, x + dx]$.
+For $\psi(x)$ to be physically admissible, it must satisfy four standard boundary conditions:
+\begin{enumerate}[itemsep=2pt]
+    \item $\psi(x)$ must be \textbf{finite} everywhere.
+    \item $\psi(x)$ must be \textbf{single-valued} at every point.
+    \item $\psi(x)$ and its first derivative $\frac{d\psi}{dx}$ must be \textbf{continuous} across all boundaries (except where potential $V(x)$ is infinite).
+    \item $\psi(x)$ must be \textbf{square-integrable} (Normalizability): $\int_{-\infty}^{\infty} |\psi(x)|^2\,dx = 1$.
+\end{enumerate}
+
+\section{Particle in a 1D Infinite Potential Well (Rigid Box)}
+Consider a quantum particle of mass $m$ confined inside a 1D potential well of width $L$:
+\begin{equation}
+V(x) = \begin{cases} 0 & 0 \le x \le L \\ \infty & x < 0 \text{ or } x > L \end{cases}
+\end{equation}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item Inside the well ($0 \le x \le L$), $V(x) = 0$. The TISE is:
+    \begin{equation}
+    \frac{d^2\psi}{dx^2} + k^2\psi = 0, \quad \text{where } k = \frac{\sqrt{2mE}}{\hbar}
+    \end{equation}
+    General solution: $\psi(x) = A\sin(kx) + B\cos(kx)$.
+    \item Applying boundary conditions:
+    \begin{itemize}
+        \item At $x = 0$, $\psi(0) = 0 \implies B = 0$.
+        \item At $x = L$, $\psi(L) = A\sin(kL) = 0 \implies kL = n\pi \quad (n = 1, 2, 3, \dots)$.
+    \end{itemize}
+    \item Energy Eigenvalues:
+    \begin{equation}
+    k_n = \frac{n\pi}{L} \implies \frac{\sqrt{2mE_n}}{\hbar} = \frac{n\pi}{L} \implies E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2}
+    \end{equation}
+    \item Wavefunction Normalization:
+    \begin{equation}
+    \int_0^L A^2 \sin^2\left(\frac{n\pi x}{L}\right)dx = 1 \implies A^2\left(\frac{L}{2}\right) = 1 \implies A = \sqrt{\frac{2}{L}}
+    \end{equation}
+\end{enumerate}
+Thus, the normalized stationary eigenstates are:
+\begin{equation}
+\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right), \quad E_n = n^2 E_1 = n^2 \left(\frac{h^2}{8m L^2}\right)
+\end{equation}
+\textbf{Zero-Point Energy:} The lowest allowable energy state is $E_1 = \frac{h^2}{8mL^2} > 0$. The particle can never be completely at rest ($E = 0$) because zero kinetic energy would imply exact certainty in momentum ($p=0 \implies \Delta p = 0$), violating the Heisenberg uncertainty principle ($\Delta x \le L$).
+
+
+\section{Ehrenfest's Theorem: Quantum to Classical Correspondence}
+Paul Ehrenfest (1927) proved that the expectation values of quantum mechanical operators obey the classical equations of Newtonian mechanics.
+Taking the time derivative of the position expectation value $\langle x \rangle = \int \Psi^* x \Psi \, dx$:
+\begin{equation}
+\frac{d\langle x \rangle}{dt} = \frac{\langle p_x \rangle}{m}
+\end{equation}
+Taking the time derivative of the momentum expectation value $\langle p_x \rangle$:
+\begin{equation}
+\frac{d\langle p_x \rangle}{dt} = -\left\langle \frac{\partial V}{\partial x} \right\rangle = \langle F_x \rangle
+\end{equation}
+This establishes the \textbf{Bohr Correspondence Principle}: quantum mechanics transitions continuously into classical mechanics in the limit of macroscopic masses and high quantum numbers ($n \gg 1$).
+
+\section{Quantum Particle in a Finite Potential Well}
+Consider a finite potential well of depth $V_0$:
+\begin{equation}
+V(x) = \begin{cases} 0 & -a \le x \le a \\ V_0 & |x| > a \end{cases}
+\end{equation}
+For bound states ($E < V_0$):
+\begin{itemize}[itemsep=2pt]
+    \item Inside the well ($|x| \le a$): $\psi(x)$ exhibits oscillatory behavior $\sin(kx)$ (odd parity) or $\cos(kx)$ (even parity), where $k = \frac{\sqrt{2mE}}{\hbar}$.
+    \item Outside the well ($|x| > a$): Wavefunction penetrates the classically forbidden barrier as decaying exponentials $\psi(x) \propto e^{-\alpha |x|}$, where $\alpha = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$.
+\end{itemize}
+Matching boundary conditions $\psi$ and $\frac{d\psi}{dx}$ at $x = \pm a$ yields the transcendental eigenvalue equations:
+\begin{align}
+\text{Even Parity States:} \quad & \xi \tan\xi = \sqrt{R^2 - \xi^2} \\
+\text{Odd Parity States:} \quad & -\xi \cot\xi = \sqrt{R^2 - \xi^2}
+\end{align}
+where $\xi = ka$ and $R = \frac{a}{\hbar}\sqrt{2m V_0}$.
+Unlike the infinite well, a finite well supports only a \textbf{finite number of discrete bound states}, and the wavefunction has non-zero probability of penetrating into the barrier walls.
+
+\section{Quantum Tunneling and Scanning Tunneling Microscopy (STM)}
+When a quantum particle with energy $E$ encounters a finite rectangular potential barrier of height $V_0 > E$ and thickness $L$, classical mechanics predicts 100\% reflection. However, the quantum wavefunction inside the barrier does not vanish abruptly; rather, it decays exponentially:
+\begin{equation}
+\psi_{\text{barrier}}(x) = C e^{-\alpha x}, \quad \text{where } \alpha = \frac{\sqrt{2m(V_0 - E)}}{\hbar}
+\end{equation}
+If the barrier is sufficiently thin, the wavefunction emerges on the other side with non-zero amplitude, yielding a finite \textbf{Transmission Probability (Tunneling Coefficient)}:
+\begin{equation}
+T \approx 16\frac{E}{V_0}\left(1 - \frac{E}{V_0}\right) e^{-2\alpha L}
+\end{equation}
+In a \textbf{Scanning Tunneling Microscope (STM)}, an atomically sharp metallic tip is positioned within $d \sim 0.5\text{ nm}$ of a conductive sample surface. Because tunnel current depends exponentially on tip-sample distance ($I_{\text{tunnel}} \propto e^{-2\alpha d}$), a displacement of barely $0.1\text{ nm}$ changes the current by a factor of 10, enabling atomic-scale surface topographic imaging.
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}{Worked Example 4.1: Energy Eigenvalues in a Semiconductor Quantum Well}
+\textbf{Problem:} An electron ($m_e = 9.11 \times 10^{-31}\text{ kg}$) is trapped in a 1D GaAs quantum well of width $L = 10\text{ nm}$. (a) Calculate the ground state energy $E_1$ and first excited state energy $E_2$ in electron-volts ($\text{eV}$). (b) Find the wavelength of the photon emitted during transition $n = 2 \to n = 1$.\\
+\textbf{Solution:}\\
+(a) The ground state energy eigenvalue is:
+\[
+E_1 = \frac{h^2}{8m_e L^2} = \frac{(6.626 \times 10^{-34}\text{ J}\cdot\text{s})^2}{8 \times (9.11 \times 10^{-31}\text{ kg}) \times (10 \times 10^{-9}\text{ m})^2}
+\]
+\[
+E_1 = \frac{4.390 \times 10^{-67}}{7.288 \times 10^{-46}} = 6.024 \times 10^{-22}\text{ J} = \frac{6.024 \times 10^{-22}}{1.602 \times 10^{-19}}\text{ eV} \approx 3.76\text{ meV}
+\]
+For $n = 2$:
+\[
+E_2 = 2^2 \times E_1 = 4 \times 3.76\text{ meV} = 15.04\text{ meV}
+\]
+(b) Energy difference $\Delta E = E_2 - E_1 = 15.04 - 3.76 = 11.28\text{ meV} = 1.807 \times 10^{-21}\text{ J}$.\\
+Wavelength of emitted photon:
+\[
+\lambda = \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34})(3 \times 10^8)}{1.807 \times 10^{-21}} \approx 1.10 \times 10^{-4}\text{ m} = 110\text{ }\mu\text{m}\text{ (Far Infrared)}
+\]
+\end{examplebox}
+
+\section{Review Questions}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item Explain the de Broglie matter wave hypothesis and describe how the Davisson-Germer experiment verified it.
+    \item State Heisenberg's uncertainty principle. Prove why electrons cannot reside inside the atomic nucleus.
+    \item Formulate the 1D time-independent Schrödinger equation for an infinite potential well and derive the normalized wavefunctions and energy eigenvalues.
+    \item What is quantum mechanical tunneling? Explain how STM achieves sub-angstrom resolution.
+\end{enumerate}

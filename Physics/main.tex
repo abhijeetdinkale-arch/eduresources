@@ -1,0 +1,38 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Engineering Physics}
+\author{LPU Engineering Open}
+\date{Semester 1 Study \& Practice Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer, and Table of Contents
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% MAINMATTER: Chapters 1 to 6
+% ==============================================================================
+\mainmatter
+
+\input{chapters/chapter-01-electromagnetic-theory}
+\input{chapters/chapter-02-lasers-and-applications}
+\input{chapters/chapter-03-fiber-optics}
+\input{chapters/chapter-04-quantum-mechanics}
+\input{chapters/chapter-05-semiconductor-physics}
+\input{chapters/chapter-06-engineering-materials}
+
+\end{document}

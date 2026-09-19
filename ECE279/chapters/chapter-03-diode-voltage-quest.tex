@@ -1,0 +1,216 @@
+\chapter{Practical 3: Diode Voltage Quest}
+
+\section{Aim / Objective}
+To experimentally analyze the Voltage-Current ($V$-$I$) characteristics of a silicon PN junction diode in both Forward Bias and Reverse Bias conditions. To determine the Cut-in (Knee) Voltage and calculate Static ($R_{dc}$) and Dynamic ($r_{ac}$) resistance.
+
+\section{Apparatus / Components Required}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c l X c}
+\toprule
+\textbf{S.No.} & \textbf{Component / Equipment} & \textbf{Specification / Value} & \textbf{Quantity} \\
+\midrule
+1 & PN Junction Diode & 1N4007 or 1N4001 & 1 \\
+2 & Current Limiting Resistor & $1\text{ k}\Omega$ or $470\,\Omega, 1/4\text{W}$ & 1 \\
+3 & Regulated Power Supply (RPS) & $0\text{--}30\text{V DC}$, Variable & 1 \\
+4 & DC Voltmeter (or DMM) & $0\text{--}2\text{V} / 0\text{--}20\text{V}$ Range & 1 \\
+5 & DC Ammeter (or DMM) & $0\text{--}200\text{ mA}$ (FB), $0\text{--}200\,\mu\text{A}$ (RB) & 1 \\
+6 & Breadboard & Standard & 1 \\
+7 & Connecting Wires & Single strand & As required \\
+\bottomrule
+\end{tabularx}
+\caption{Apparatus and Components for Diode V-I Characteristics.}
+\label{tab:diode-apparatus}
+\end{table}
+
+\section{Theory}
+
+A PN junction diode is a two-terminal semiconductor device that allows current to flow primarily in one direction.
+
+\begin{definition}[Forward Bias]
+When the P-type region (Anode) is connected to the positive terminal and N-type (Cathode) to the negative terminal of the supply. The potential barrier is reduced. Current flows freely once external voltage exceeds the \textbf{Barrier Potential ($V_\gamma$) / Cut-in Voltage} ($\approx 0.7\text{V}$ for Silicon and $0.3\text{V}$ for Germanium).
+\end{definition}
+
+\begin{definition}[Reverse Bias]
+When the P-type region is connected to negative and N-type to positive. The depletion region widens, preventing majority carrier flow. Only a very small \textbf{Reverse Saturation Current ($I_s$)} flows due to minority carriers until breakdown voltage ($V_{\text{BR}}$) is reached.
+\end{definition}
+
+\begin{keyequation}[Shockley Diode Equation]
+The current-voltage relationship of a semiconductor diode is governed by:
+\begin{equation}
+    I = I_s \left( e^{\frac{V}{\eta V_T}} - 1 \right)
+\end{equation}
+where $I_s$ is reverse saturation current, $\eta$ is ideality factor ($1$ for Ge, $2$ for Si), and $V_T$ is thermal voltage ($\approx 26\text{ mV}$ at $300\text{ K}$).
+\end{keyequation}
+
+\section{Circuit Diagram / Setup}
+
+\subsection{Forward Bias Setup}
+In this configuration, Anode is positive with respect to Cathode.
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=1.0]
+    \draw (0,0) to[V, l=$V_{\text{in}}$] (0,3)
+          to[R, l=$R_{limit}$] (2,3)
+          to[ammeter, l=$\text{mA}$] (4,3)
+          to[D, l=1N4007] (4,0)
+          -- (0,0);
+    \draw (4,3) -- (5.5,3) to[voltmeter, l=$V$] (5.5,0) -- (4,0);
+    \draw (4,0) node[ground]{};
+\end{circuitikz}
+\caption{Forward Bias Diode Test Circuit Setup.}
+\label{fig:forward-bias-circuit}
+\end{figure}
+
+\subsection{Reverse Bias Setup}
+In this configuration, Cathode is positive with respect to Anode. Ammeter must be set to micro-amperes ($\mu\text{A}$).
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=1.0]
+    \draw (0,0) to[V, l=$V_{\text{in}}$] (0,3)
+          to[R, l=$R_{limit}$] (2,3)
+          to[ammeter, l=$\mu\text{A}$] (4,3)
+          to[D, l=1N4007] (4,0)
+          -- (0,0);
+    \draw (4,3) -- (5.5,3) to[voltmeter, l=$V$] (5.5,0) -- (4,0);
+    \draw (4,0) node[ground]{};
+\end{circuitikz}
+\caption{Reverse Bias Diode Test Circuit Setup.}
+\label{fig:reverse-bias-circuit}
+\end{figure}
+
+\section{Step-by-Step Procedure}
+
+\subsection{Part A: Forward Bias Characteristics}
+\begin{enumerate}
+    \item Connect circuit as shown in Forward Bias Circuit Diagram. Set RPS voltage to $0\text{V}$ initially.
+    \item Gradually increase supply voltage in small steps ($0.1\text{V}$ steps up to $0.8\text{V}$, then $0.5\text{V}$ steps).
+    \item For every step, record Voltage across diode ($V_f$) using voltmeter and Current through diode ($I_f$) using milli-ammeter.
+    \item Notice that current remains negligible until voltage reaches approx. $0.6\text{V}\text{--}0.7\text{V}$ (Knee Voltage).
+    \item Beyond $0.7\text{V}$, current increases rapidly. Do not exceed maximum current rating of diode.
+\end{enumerate}
+
+\subsection{Part B: Reverse Bias Characteristics}
+\begin{enumerate}
+    \item Turn off power supply and rearrange circuit as shown in Reverse Bias Circuit Diagram (reverse diode polarity).
+    \item Change ammeter setting to Micro-ampere ($\mu\text{A}$) range.
+    \item Increase supply voltage in larger steps ($2\text{V}, 4\text{V}, 6\text{V} \dots$ up to $20\text{V}$).
+    \item Record Voltage across diode ($V_r$) and leakage Current ($I_r$).
+    \item Note that reverse current is very small and nearly constant.
+\end{enumerate}
+
+\section{Observations and Readings}
+
+\noindent Diode Type: Silicon (1N4007) $\quad \bullet \quad$ Room Temperature: $25^\circ\text{C}$
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.85\textwidth}{c c c c}
+\toprule
+\textbf{S.No.} & \textbf{Source Voltage $V_s$ ($V$)} & \textbf{Diode Voltage $V_F$ ($V$)} & \textbf{Diode Current $I_F$ ($\text{mA}$)} \\
+\midrule
+1 & 0.0 & 0.0 & 0.0 \\
+2 & 0.2 & 0.2 & 0.0 \\
+3 & 0.4 & 0.4 & 0.0 \\
+4 & 0.5 & 0.5 & 0.1 \\
+5 & 0.6 & 0.6 & 0.8 \\
+6 & 0.65 & 0.65 & 2.5 \\
+7 & 0.7 & 0.7 & 8.0 \\
+8 & 0.75 & 0.72 & 15.0 \\
+9 & 1.0 & 0.74 & 30.0 \\
+10 & 2.0 & 0.76 & 60.0 \\
+\bottomrule
+\end{tabularx}
+\caption{Forward Bias Observations Table.}
+\label{tab:fb-readings}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.85\textwidth}{c c c c}
+\toprule
+\textbf{S.No.} & \textbf{Source Voltage $V_s$ ($V$)} & \textbf{Diode Voltage $V_R$ ($V$)} & \textbf{Diode Current $I_R$ ($\mu\text{A}$)} \\
+\midrule
+1 & 0 & 0.0 & 0.00 \\
+2 & 2 & 2.0 & 0.01 \\
+3 & 5 & 5.0 & 0.02 \\
+4 & 10 & 10.0 & 0.02 \\
+5 & 15 & 15.0 & 0.03 \\
+\bottomrule
+\end{tabularx}
+\caption{Reverse Bias Observations Table.}
+\label{tab:rb-readings}
+\end{table}
+
+\section{Graph and Calculations}
+
+Plot graph with Voltage ($V$) on X-axis and Current ($I$) on Y-axis:
+\begin{itemize}
+    \item \textbf{Quadrant I:} Forward Bias ($V$ in Volts, $I$ in $\text{mA}$).
+    \item \textbf{Quadrant III:} Reverse Bias ($V$ in Volts, $I$ in $\mu\text{A}$).
+\end{itemize}
+
+\subsection{1. Static DC Resistance ($R_{dc}$)}
+From Forward Bias graph, select an operating Q-point on linear rising portion:
+\begin{equation}
+    R_{dc} = \frac{V_f}{I_f}
+\end{equation}
+
+\begin{example}[Static DC Resistance Calculation]
+At $V_f = 0.7\text{ V}$ and $I_f = 10\text{ mA}$:
+\begin{equation*}
+    R_{dc} = \frac{0.7}{10 \times 10^{-3}} = \mathbf{70\,\Omega}
+\end{equation*}
+\end{example}
+
+\subsection{2. Dynamic AC Resistance ($r_{ac}$)}
+\begin{equation}
+    r_{ac} = \frac{\Delta V_f}{\Delta I_f}
+\end{equation}
+
+\begin{example}[Dynamic AC Resistance Calculation]
+Between $V_1 = 0.70\text{V}$ ($I_1 = 8\text{mA}$) and $V_2 = 0.72\text{V}$ ($I_2 = 15\text{mA}$):
+\begin{equation*}
+    r_{ac} = \frac{0.72 - 0.70}{(15 - 8) \times 10^{-3}} = \frac{0.02}{0.007} \approx \mathbf{2.85\,\Omega}
+\end{equation*}
+\end{example}
+
+\section{Result}
+\begin{enumerate}
+    \item V-I characteristics of PN junction diode were plotted.
+    \item Cut-in (Knee) voltage for Silicon diode is found to be approx. \underline{\hspace{1cm}} V (Expected $\sim 0.7\text{V}$).
+    \item Diode conducts current in forward bias only after overcoming barrier potential and blocks current in reverse bias (acting as an open switch).
+\end{enumerate}
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[Knee Voltage Definition]
+\textbf{Question:} What is the "Knee Voltage"?\\[4pt]
+\textbf{Answer:} It is the forward voltage at which current through the junction starts to increase rapidly. For Silicon it is $\sim 0.7\text{V}$; for Germanium it is $\sim 0.3\text{V}$.
+\end{vivaqa}
+
+\begin{vivaqa}[Current Limiting Series Resistor]
+\textbf{Question:} Why do we use a resistor in series with the diode?\\[4pt]
+\textbf{Answer:} To limit current flowing through the diode. Without it, once voltage exceeds $0.7\text{V}$, current would rise infinitely, burning out the diode.
+\end{vivaqa}
+
+\begin{vivaqa}[Peak Inverse Voltage (PIV)]
+\textbf{Question:} What is PIV?\\[4pt]
+\textbf{Answer:} Peak Inverse Voltage. It is the maximum reverse voltage a diode can withstand in reverse bias without entering breakdown.
+\end{vivaqa}
+
+\begin{vivaqa}[Micro-Ampere Reverse Leakage]
+\textbf{Question:} Why is reverse current measured in micro-amperes?\\[4pt]
+\textbf{Answer:} Reverse current is caused by minority charge carriers (thermally generated), which are very few in number compared to majority carriers.
+\end{vivaqa}
+
+\begin{vivaqa}[Physical Terminal Identification]
+\textbf{Question:} How do you identify the terminals of a diode physically?\\[4pt]
+\textbf{Answer:} The terminal near the silver/grey band on the black body is the \textbf{Cathode ($-$)}, and the other end is the \textbf{Anode ($+$)}.
+\end{vivaqa}

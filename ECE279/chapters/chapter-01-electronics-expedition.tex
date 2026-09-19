@@ -1,0 +1,222 @@
+\chapter{Practical 1: The Electronics Expedition}
+
+\section{Aim / Objective}
+To identify, categorize, and familiarize with basic electronic active and passive components, breadboards (trainer modules), input sources (DC Power Supply, Function Generator), and measuring/display instruments (Digital Multimeter, CRO/DSO).
+
+\section{Apparatus / Components Required}
+\begin{enumerate}
+    \item \textbf{Passive Components:} Assorted Resistors (Carbon film), Capacitors (Ceramic disk, Electrolytic), Inductors, Transformers.
+    \item \textbf{Active Components:} Diodes (1N4007), Zener Diodes, Transistors (BJT BC547), Integrated Circuits (e.g., 555 Timer, 7400 series).
+    \item \textbf{Prototyping Hardware:} Breadboard / Analog-Digital Trainer Kit, Connecting wires (single strand).
+    \item \textbf{Input Sources:} Regulated DC Power Supply ($0\text{--}30\text{V}$), Function Generator ($1\text{Hz}\text{--}1\text{MHz}$).
+    \item \textbf{Measuring Instruments:} Digital Multimeter (DMM), Cathode Ray Oscilloscope (CRO) or Digital Storage Oscilloscope (DSO).
+\end{enumerate}
+
+\section{Theory}
+
+\subsection{Electronic Components Classification}
+Electronic components are fundamentally divided into two major categories:
+
+\begin{definition}[Passive Component]
+A device that cannot introduce net energy into a circuit; it relies entirely on an external source of electric power.
+\begin{itemize}
+    \item \textbf{Resistor ($R$):} Opposes the flow of electrical current. Unit: Ohm ($\Omega$).
+    \item \textbf{Capacitor ($C$):} Stores electrical energy in an electric field between dielectric plates. Unit: Farad ($\text{F}$).
+    \item \textbf{Inductor ($L$):} Stores electrical energy in a magnetic field created by current flow. Unit: Henry ($\text{H}$).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Active Component]
+A device capable of amplifying signals or switching currents; requires an external power supply to operate.
+\begin{itemize}
+    \item \textbf{Diode:} Semiconductor device allowing current to flow in only one direction (rectification).
+    \item \textbf{Transistor:} Semiconductor device used to amplify or switch electrical signals and power.
+    \item \textbf{Integrated Circuit (IC):} A set of electronic circuits integrated onto one small flat piece ("chip") of semiconductor material.
+\end{itemize}
+\end{definition}
+
+\subsection{Resistor Color Coding}
+Carbon film resistors use color bands to indicate their nominal resistance value and manufacturing tolerance.
+
+\begin{keyequation}[4-Band Resistor Formula]
+For a 4-band resistor with digits $A, B$, multiplier exponent $C$, and tolerance $D\%$:
+\begin{equation}
+    R = (AB \times 10^C) \pm D\%
+\end{equation}
+\end{keyequation}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lcccc}
+\toprule
+\textbf{Color Name} & \textbf{Digit 1 ($A$)} & \textbf{Digit 2 ($B$)} & \textbf{Multiplier ($10^C$)} & \textbf{Tolerance ($D\%$)} \\
+\midrule
+\textbf{Black} & 0 & 0 & $\times 10^0 = 1$ & — \\
+\textbf{Brown} & 1 & 1 & $\times 10^1 = 10$ & — \\
+\textbf{Red} & 2 & 2 & $\times 10^2 = 100$ & — \\
+\textbf{Orange} & 3 & 3 & $\times 10^3 = 1,000$ & — \\
+\textbf{Yellow} & 4 & 4 & $\times 10^4 = 10,000$ & — \\
+\textbf{Green} & 5 & 5 & $\times 10^5 = 100,000$ & — \\
+\textbf{Blue} & 6 & 6 & $\times 10^6 = 1,000,000$ & — \\
+\textbf{Violet} & 7 & 7 & $\times 10^7 = 10,000,000$ & — \\
+\textbf{Gray} & 8 & 8 & — & — \\
+\textbf{White} & 9 & 9 & — & — \\
+\textbf{Gold} & — & — & $\times 0.1$ & $\pm 5\%$ \\
+\textbf{Silver} & — & — & $\times 0.01$ & $\pm 10\%$ \\
+\bottomrule
+\end{tabularx}
+\caption{Standard 4-Band Resistor Color Code Table.}
+\label{tab:resistor-color-code}
+\end{table}
+
+\subsection{The Breadboard (Prototyping Board)}
+A breadboard is a solderless prototyping tool used for temporary circuit assembly:
+\begin{itemize}
+    \item \textbf{Bus Strips:} Located on the outer sides, typically used for power supply rails ($+\text{Vcc}$ and $\text{GND}$). All holes in a vertical column are connected internally.
+    \item \textbf{Terminal Strips:} Located in the center. Holes are connected horizontally in rows of five. A central ravine separates the two sides and is specifically sized for Dual In-line Package (DIP) ICs.
+\end{itemize}
+
+\section{Input Sources and Display Devices Setup}
+
+\subsection{Digital Multimeter (DMM)}
+A DMM is a versatile instrument used to measure Voltage ($\text{AC/DC}$), Current ($\text{AC/DC}$), Resistance, and Continuity.
+\begin{itemize}
+    \item \textbf{Voltmeter Mode:} Connect in \textbf{Parallel} across the component under test.
+    \item \textbf{Ammeter Mode:} Connect in \textbf{Series} with the circuit path.
+\end{itemize}
+
+\subsection{Cathode Ray Oscilloscope (CRO) / DSO}
+Used to observe electrical signals changing over time (Voltage vs. Time):
+\begin{itemize}
+    \item \textbf{X-axis:} Represents Time (controlled by \texttt{Time/Div} knob).
+    \item \textbf{Y-axis:} Represents Voltage / Amplitude (controlled by \texttt{Volts/Div} knob).
+\end{itemize}
+
+\section{Step-by-Step Procedure}
+
+\subsection{Part A: Identification and Reading of Resistors}
+\begin{enumerate}
+    \item Select 5 different resistors from the assortment.
+    \item Observe the color bands on each resistor.
+    \item Calculate theoretical resistance using the color code chart.
+    \item Switch the DMM to Resistance ($\Omega$) mode.
+    \item Connect multimeter probes across the resistor leads (polarity does not matter).
+    \item Record measured value and calculate percentage error.
+\end{enumerate}
+
+\subsection{Part B: Familiarization with Regulated Power Supply (RPS)}
+\begin{enumerate}
+    \item Switch on the Regulated DC Power Supply.
+    \item Set DMM to DC Voltage ($V_{\text{DC}}$) mode.
+    \item Connect Red probe of DMM to Positive ($+$) terminal and Black probe to Negative ($-$) terminal of RPS.
+    \item Adjust voltage knob on RPS to set values (e.g., $3.3\text{V}, 5\text{V}, 12\text{V}$) and verify reading on DMM.
+\end{enumerate}
+
+\subsection{Part C: Familiarization with Function Generator and CRO}
+\begin{enumerate}
+    \item Switch on Function Generator and CRO.
+    \item Connect output of Function Generator to Channel 1 of CRO using a BNC probe.
+    \item Set Function Generator to produce a \textbf{Sine Wave} at $1\text{ kHz}$ frequency.
+    \item Press \texttt{Autoset} (on DSO) or adjust \texttt{Volts/Div} and \texttt{Time/Div} knobs (on Analog CRO) until a stable wave is visible.
+    \item Observe waveform. Change wave shape to Square and Triangular and observe display.
+    \item Measure Peak-to-Peak voltage ($V_{pp}$) and Time Period ($T$) from the screen grid.
+\end{enumerate}
+
+\section{Observations and Tables}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c c c c X X}
+\toprule
+\textbf{Sr. No.} & \textbf{Band 1} & \textbf{Band 2} & \textbf{Band 3} & \textbf{Band 4} & \textbf{Calculated ($R_{\text{TH}}$)} & \textbf{Measured ($R_{\text{MEAS}}$)} \\
+\midrule
+1 & Brown & Black & Red & Gold & $10 \times 10^2 = 1\text{ k}\Omega$ & $0.98\text{ k}\Omega$ \\
+2 & Red & Red & Red & Gold & $22 \times 10^2 = 2.2\text{ k}\Omega$ & — \\
+3 & Yellow & Violet & Orange & Silver & $47 \times 10^3 = 47\text{ k}\Omega$ & — \\
+\bottomrule
+\end{tabularx}
+\caption{Resistor Color Code Verification Table.}
+\label{tab:res-verify}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c X c}
+\toprule
+\textbf{Sr. No.} & \textbf{Voltage Set on RPS ($V$)} & \textbf{Voltage Measured on DMM ($V$)} & \textbf{Remark} \\
+\midrule
+1 & $3.3\text{ V}$ & — & Verified \\
+2 & $5.0\text{ V}$ & — & Verified \\
+3 & $12.0\text{ V}$ & — & Verified \\
+\bottomrule
+\end{tabularx}
+\caption{DC Source Voltage Verification Table.}
+\label{tab:dc-verify}
+\end{table}
+
+\section{Calculations}
+
+\begin{keyequation}[Percentage Error Formula]
+\begin{equation}
+    \% \text{ Error} = \left| \frac{R_{\text{theoretical}} - R_{\text{measured}}}{R_{\text{theoretical}}} \right| \times 100
+\end{equation}
+\end{keyequation}
+
+\begin{example}[Sample Resistor Percentage Error]
+If $R_{\text{theoretical}} = 1000\,\Omega$ and $R_{\text{measured}} = 980\,\Omega$:
+\begin{equation*}
+    \% \text{ Error} = \left| \frac{1000 - 980}{1000} \right| \times 100 = \frac{20}{1000} \times 100 = 2\%
+\end{equation*}
+\end{example}
+
+\section{Result}
+\begin{enumerate}
+    \item Various electronic active and passive components (Resistors, Capacitors, Inductors, Diodes, Transistors) were identified successfully.
+    \item Resistance values were calculated using color codes and verified using a Digital Multimeter.
+    \item Breadboard internal connections were studied and understood.
+    \item Input sources (DC Supply, Function Generator) and output devices (DMM, CRO/DSO) were successfully operated and verified.
+\end{enumerate}
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[Active vs. Passive Components]
+\textbf{Question:} What is the difference between active and passive components?\\[4pt]
+\textbf{Answer:} Passive components ($R, L, C$) dissipate or store energy but cannot generate or amplify it. Active components (Transistors, Op-Amps, Diodes) can amplify signals or switch currents and require an external power source.
+\end{vivaqa}
+
+\begin{vivaqa}[Breadboard Functionality]
+\textbf{Question:} Why do we use a breadboard?\\[4pt]
+\textbf{Answer:} It allows for temporary prototyping and testing of circuits without soldering, making it fast and easy to modify connections.
+\end{vivaqa}
+
+\begin{vivaqa}[Gold Band Resistor Tolerance]
+\textbf{Question:} What is the tolerance of a Gold band resistor?\\[4pt]
+\textbf{Answer:} $\pm 5\%$.
+\end{vivaqa}
+
+\begin{vivaqa}[Ammeter Circuit Connection]
+\textbf{Question:} How is an Ammeter connected in a circuit and why?\\[4pt]
+\textbf{Answer:} An ammeter is connected in \textbf{series} because current remains identical throughout a series branch, and the ammeter has very low internal resistance to prevent affecting the circuit.
+\end{vivaqa}
+
+\begin{vivaqa}[CRO Functionality]
+\textbf{Question:} What does 'CRO' stand for and what does it measure?\\[4pt]
+\textbf{Answer:} Cathode Ray Oscilloscope. It visualizes electrical signal voltage amplitude with respect to time.
+\end{vivaqa}
+
+\begin{vivaqa}[Diode Functionality]
+\textbf{Question:} What is the function of a Diode?\\[4pt]
+\textbf{Answer:} A diode allows current to flow in only one direction (forward bias) and blocks it in the reverse direction (reverse bias).
+\end{vivaqa}
+
+\begin{vivaqa}[BJT Pin Identification]
+\textbf{Question:} Identify the pins of a BJT (Transistor).\\[4pt]
+\textbf{Answer:} Emitter ($E$), Base ($B$), and Collector ($C$).
+\end{vivaqa}
+
+\begin{examtip}[Multimeter Probe Placement]
+Always check probe socket placement before turning on power: Red probe into $\text{V}/\Omega$ for voltage/resistance measurement, and into $\text{mA}$ or $10\text{A}$ for current measurement! Connecting an ammeter in parallel across a voltage source causes a direct short circuit.
+\end{examtip}

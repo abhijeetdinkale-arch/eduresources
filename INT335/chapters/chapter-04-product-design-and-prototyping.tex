@@ -1,0 +1,184 @@
+\chapter{Product Design and Prototyping}
+\label{chap:product_design_prototyping}
+
+\begin{tcolorbox}[enhanced, colback=boxnavybg, colframe=brandnavy, boxrule=1.2pt, arc=4pt, title={\Large\bfseries\sffamily Unit 4 Overview \& Learning Objectives}]
+\sffamily\normalsize
+This unit covers the philosophy, techniques, and toolkits for transforming abstract ideas into testable, tangible artifacts. By the end of this chapter, students will be able to:
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+    \item Understand the core prototyping philosophy: *``Build to think, test to learn''*.
+    \item Contrast the speed, cost, and testing goals of \textbf{Low-Fidelity} vs. \textbf{High-Fidelity} prototypes.
+    \item Execute realistic \textbf{Paper Prototyping} tests with defined participant, computer, and observer roles.
+    \item Create narrative \textbf{Storyboards} visualizing user touchpoints and emotional context over time.
+    \item Apply UI/UX \textbf{Wireframing Conventions} (grayscale, visual hierarchy, radio buttons vs. checkboxes, screen states).
+    \item Map structured \textbf{User Flows} using standard flowchart symbols (ovals, rectangles, diamonds, arrows).
+    \item Define and construct \textbf{Minimum Viable Products (MVPs)} including Landing Page, Concierge, and Wizard of Oz models.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Prototyping Philosophy \& Rapid Learning}
+
+A prototype is a tangible, testable simulation or experimental artifact created to answer specific hypotheses and discover unknown unknowns before full engineering investment.
+
+\begin{definition}[The Prototyping Mindset]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{Build to Think:} Tangible models reveal logical inconsistencies and structural gaps that abstract mental reasoning misses.
+    \item \textbf{Test the Riskiest Assumptions First:} Never spend weeks polishing visual details if the fundamental user value proposition remains unvalidated.
+    \item \textbf{Separate Ego from the Artifact:} Low-fidelity materials ensure team members and users feel comfortable pointing out flaws and suggesting radical revisions.
+\end{itemize}
+\end{definition}
+
+\section{Prototype Fidelity: Trade-Offs \& Decision Matrix}
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{p{2.8cm}X X}
+\toprule
+\textbf{Dimension} & \textbf{Low-Fidelity (Lo-Fi)} & \textbf{High-Fidelity (Hi-Fi)} \\
+\midrule
+\textbf{Materials} & Paper, cardboard, sticky notes, block wireframes. & Clickable Figma mockups, functional frontend code, 3D prints. \\
+\textbf{Creation Time} & Minutes to hours; negligible monetary cost. & Days to weeks; requires specialized design/code skills. \\
+\textbf{Primary Goal} & Validate mental models, workflows, information architecture. & Validate micro-interactions, visual hierarchy, timing, and aesthetics. \\
+\textbf{Feedback Type} & Broad, structural, honest conceptual feedback. & Fine-grained feedback on typography, colors, and button placement. \\
+\textbf{Risk} & Cannot test microsecond interaction or responsive gestures. & Risk of sunk-cost fallacy and premature attachment to flawed ideas. \\
+\bottomrule
+\end{tabularx}
+\caption{Comparative Analysis of Prototype Fidelity Levels.}
+\end{table}
+
+\section{Paper Prototyping \& Storyboarding}
+
+\subsection{Paper Prototyping Mechanics}
+Paper prototyping uses physical paper cutouts, sticky notes, and acetate sheets to simulate a digital application.
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{The User:} Interacts with the paper screen by touching, pointing, or writing with a pen.
+    \item \textbf{The ``Computer'' (Facilitator):} Silently swaps screens, drops popup sticky notes, and slides lists in response to user actions.
+    \item \textbf{The Observer:} Records user hesitation, misclicks, and verbal confusion without offering assistance.
+\end{itemize}
+
+\subsection{Interaction Storyboarding}
+Storyboards adapt comic-strip visual narratives to show how a user experiences a product within their physical and social environment over time.
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{Panel 1 (Trigger / Problem):} User in context experiencing friction (e.g., student rushing to print an assignment before class).
+    \item \textbf{Panel 2 (Discovery / Entry):} User encounters the solution (e.g., spots a cloud-connected campus printer kiosk).
+    \item \textbf{Panel 3 (Core Action):} User interacts with the core feature (e.g., scans phone QR code to instantly release print queue).
+    \item \textbf{Panel 4 (Outcome / Resolution):} User achieves their goal with emotional relief (e.g., submits assignment on time).
+\end{itemize}
+
+\section{Wireframing Conventions \& UI Rules}
+
+A wireframe is a grayscale architectural blueprint that defines content hierarchy, layout geometry, and UI controls before applying visual styling.
+
+\begin{keyequation}[Wireframing Best Practices]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{Grayscale Restraint:} Use only black, white, and gray shades to keep feedback focused on layout and functionality rather than color debates.
+    \item \textbf{Control Semantics:}
+    \begin{itemize}
+        \item \textbf{Radio Buttons ($\odot$):} Exactly ONE selection from a mutually exclusive list (e.g., Gender: Male $\odot$ Female $\bigcirc$).
+        \item \textbf{Checkboxes ($\boxtimes$):} Zero, one, or MULTIPLE independent selections (e.g., Toppings: Cheese $\boxtimes$ Olives $\boxtimes$).
+        \item \textbf{Toggle Switch:} Immediate binary state change (e.g., Airplane Mode: ON/OFF).
+    \end{itemize}
+    \item \textbf{Image Placeholders:} A rectangle with diagonal crossing lines ($[\boxtimes]$) universally indicates an image or video placeholder.
+    \item \textbf{State Completeness:} Wireframes must specify Default, Loading, Empty, Error, and Success states.
+\end{itemize}
+\end{keyequation}
+
+\section{User Flows \& Flowchart Conventions}
+
+A **User Flow** tracks the step-by-step navigational sequence required to accomplish a specific user goal.
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Oval / Pill (Terminator):} Indicates the Start or End of a task (e.g., ``Start: App Launch'', ``End: Order Placed'').
+    \item \textbf{Rectangle (Process / Screen):} Represents a screen, system action, or user step (e.g., ``Enter Shipping Details'').
+    \item \textbf{Diamond (Decision Point):} Represents a conditional branch (e.g., ``Is User Logged In?'' $\rightarrow$ Yes / No).
+    \item \textbf{Arrow:} Indicates the directional flow of user movement.
+\end{itemize}
+
+\section{The Minimum Viable Product (MVP)}
+
+\begin{definition}[Minimum Viable Product (Eric Ries)]
+That version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort.
+\end{definition}
+
+\begin{keyequation}[The Core MVP Principle]
+An MVP is NOT an incomplete, half-built product (e.g., a car chassis without wheels). An MVP is the simplest coherent product that delivers \textbf{complete end-to-end functional value} (e.g., a skateboard that solves personal transport, followed iteratively by a scooter, bicycle, motorcycle, and car).
+\end{keyequation}
+
+\subsection{Types of Prototyping MVPs}
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Landing Page MVP:} A single web page detailing the core value proposition with a call-to-action (``Pre-order / Join Waitlist'') to empirically measure market demand before writing code.
+    \item \textbf{Concierge MVP:} Delivering the service entirely manually and personally to early adopters to directly observe friction and expectations before building automated software.
+    \item \textbf{Wizard of Oz MVP:} The front-end appears fully automated, but behind the scenes, humans perform all the heavy backend operations manually (e.g., Zappos founder Nick Swinmurn taking shoe orders online and physically purchasing them from local stores).
+\end{enumerate}
+
+\section{Unit 4 Self-Assessment Test}
+
+\begin{chaptertest}[Product Design and Prototyping]
+\textbf{Time Allowed: 30 Minutes \hfill Maximum Marks: 25}
+
+\vspace{0.4cm}
+\noindent\textbf{Part A: Conceptual Multiple Choice (5 $\times$ 1 = 5 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=2pt]
+    \item What is the main goal of low-fidelity paper prototyping?
+    \item In a flowchart, which geometric shape represents a conditional decision point?
+    \item Which UI control should be used when a user can select multiple toppings on a pizza order?
+    \item What is a Wizard of Oz prototype?
+    \item Why are early wireframes strictly designed in grayscale?
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent\textbf{Part B: Short Analytical Questions (2 $\times$ 5 = 10 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=4pt]
+    \setcounter{enumi}{5}
+    \item Contrast \textbf{Low-Fidelity} and \textbf{High-Fidelity} prototypes across four dimensions: creation time, cost, testing objective, and user feedback quality.
+    \item Explain the three roles in a paper prototyping test session (User, Facilitator/``Computer'', Observer).
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent\textbf{Part C: Practical User Flow Design (1 $\times$ 10 = 10 Marks)}
+\begin{enumerate}[leftmargin=1.2em, itemsep=4pt]
+    \setcounter{enumi}{7}
+    \item Design a complete User Flow for a **Campus Bike Sharing App**. Map both the *Happy Path* (successful unlock and payment) and at least two *Alternate/Error Paths* (e.g., Bike Battery Low, Payment Gateway Failure) using formal flowchart symbols.
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Step-by-Step Unit Test Solutions]
+\textbf{Part A Solutions:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=2pt]
+    \item Rapid, low-cost exploration of structural layout, mental models, and navigational flows.
+    \item Diamond shape.
+    \item Checkboxes ($\boxtimes$).
+    \item A prototype that appears fully automated on the frontend but is operated manually by humans in the backend.
+    \item To prevent premature debates on color/aesthetics and keep attention focused on layout and hierarchy.
+\end{enumerate}
+
+\textbf{Part B Solutions:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \setcounter{enumi}{5}
+    \item \textbf{Lo-Fi vs. Hi-Fi Comparison:}
+    \begin{itemize}
+        \item *Time \& Cost:* Lo-Fi is crafted in minutes at zero cost; Hi-Fi takes days/weeks with significant resource investment.
+        \item *Testing Objective:* Lo-Fi validates information architecture and user flows; Hi-Fi validates visual design, micro-interactions, and usability metrics.
+        \item *Feedback Quality:* Lo-Fi elicits broad conceptual critique; Hi-Fi elicits detailed aesthetic and micro-interaction feedback.
+    \end{itemize}
+    \item \textbf{Paper Prototyping Roles:}
+    \begin{itemize}
+        \item *User:* Attempts the realistic task by pointing and tapping paper cutouts.
+        \item *Computer (Facilitator):* Manipulates paper states, screens, and dialogs dynamically without speaking.
+        \item *Observer:* Silently records time, hesitation, errors, and think-aloud statements.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Part C Solution:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=3pt]
+    \setcounter{enumi}{7}
+    \item \textbf{Campus Bike Sharing User Flow:}
+    \begin{itemize}
+        \item *Terminator:* Start $\rightarrow$ [Scan Bike QR Code].
+        \item *Decision 1:* [Is QR Code Valid?] $\rightarrow$ No $\rightarrow$ [Show ``Invalid QR'' + Option to enter Bike ID manually].
+        \item *Decision 2:* [Is Bike Battery $\ge 20\%$?] $\rightarrow$ No $\rightarrow$ [Display ``Battery Low, please select nearby Bike B-12''].
+        \item *Process:* [Unlock Lock Mechanism] $\rightarrow$ [Ride in Progress Timer] $\rightarrow$ [Dock at Destination Station].
+        \item *Decision 3:* [Payment Successful?] $\rightarrow$ No $\rightarrow$ [Trigger Retry / Alternative UPI Gateway] $\rightarrow$ Yes $\rightarrow$ [Show Receipt] $\rightarrow$ Terminator (End).
+    \end{itemize}
+\end{enumerate}
+\end{solutionbox}

@@ -1,0 +1,437 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/08/27 v1.0 LPU Engineering Open Textbook Style System]
+
+% ==============================================================================
+% 1. CORE ENCODING, FONTS & MICRO-TYPOGRAPHY
+% ==============================================================================
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+% ==============================================================================
+% 2. PAGE GEOMETRY & LAYOUT
+% ==============================================================================
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% ==============================================================================
+% 3. MATHEMATICS, SYMBOLS & UNITS
+% ==============================================================================
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{esint}
+\RequirePackage{bm}
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\sisetup{
+    separate-uncertainty = true,
+    inter-unit-product = \ensuremath{{}\cdot{}}
+}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+% ==============================================================================
+% 4. COLOR PALETTE
+% ==============================================================================
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+
+\definecolor{brandnavy}{RGB}{15, 44, 89}        % Primary #0F2C59
+\definecolor{brandblue}{RGB}{30, 86, 160}       % Secondary #1E56A0
+\definecolor{brandslate}{RGB}{71, 85, 105}      % Muted Slate #475569
+\definecolor{branddark}{RGB}{15, 23, 42}        % Text Dark #0F172A
+\definecolor{brandaccent}{RGB}{217, 4, 41}      % Vivid Accent Crimson
+\definecolor{brandgold}{RGB}{217, 119, 6}       % Amber Gold
+
+\definecolor{boxnavyborder}{RGB}{15, 44, 89}
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+
+\definecolor{boxamberborder}{RGB}{217, 119, 6}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+
+\definecolor{boxgreenborder}{RGB}{13, 148, 136}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+
+\definecolor{boxpurpleborder}{RGB}{126, 34, 206}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+
+\definecolor{boxgrayborder}{RGB}{148, 163, 184}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxslatebg}{RGB}{241, 245, 249}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+
+% ==============================================================================
+% 5. BOXES & CALLOUT ENVIRONMENTS (tcolorbox)
+% ==============================================================================
+\RequirePackage[most]{tcolorbox}
+
+% Global tcolorbox styling defaults
+\tcbset{
+    boxrule=1pt,
+    arc=3pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    fonttitle=\bfseries\sffamily,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% 1. Definition Environment
+\newtcolorbox{definition}[1][Definition]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=boxnavyborder,
+    coltitle=white,
+    title={\textbf{Definition: #1}},
+    boxrule=1.2pt
+}
+
+% 2. Important / Key Concept Environment
+\newtcolorbox{important}[1][Important Concept]{
+    enhanced,
+    breakable,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    coltitle=white,
+    title={\textbf{Important: #1}},
+    boxrule=1.2pt
+}
+
+% 3. Key Equation Environment
+\newtcolorbox{keyequation}[1][Key Formula]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=boxgreenborder,
+    coltitle=white,
+    title={\textbf{Key Equation: #1}},
+    boxrule=1.2pt
+}
+
+% 4. Worked Example Environment
+\newtcolorbox{example}[1][Worked Example]{
+    enhanced,
+    breakable,
+    colback=boxskybg,
+    colframe=boxskyborder,
+    coltitle=white,
+    title={\textbf{Worked Example: #1}},
+    boxrule=1.2pt
+}
+
+% 5. Exam Tip Environment
+\newtcolorbox{examtip}[1][Exam High-Yield Tip]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=boxgreenborder,
+    coltitle=white,
+    title={\textbf{Exam Tip: #1}},
+    boxrule=1.2pt
+}
+
+% 6. Common Mistake Environment
+\newtcolorbox{commonmistake}[1][Common Student Pitfall]{
+    enhanced,
+    breakable,
+    colback=boxrosebg,
+    colframe=boxroseborder,
+    coltitle=white,
+    title={\textbf{Common Mistake to Avoid: #1}},
+    boxrule=1.2pt
+}
+
+% 7. Quick Revision Environment
+\newtcolorbox{quickrevision}[1][Quick Revision Summary]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=brandnavy,
+    coltitle=white,
+    title={\textbf{Chapter Summary: #1}},
+    boxrule=1.2pt
+}
+
+% 8. Practice Set Environment
+\newtcolorbox{practiceset}[1][Practice Exercises]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=brandnavy,
+    coltitle=white,
+    title={\textbf{Practice Set: #1}},
+    boxrule=1.2pt
+}
+
+% 9. Chapter Test Environment
+\newtcolorbox{chaptertest}[1][Self-Assessment Chapter Test]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=boxpurpleborder,
+    coltitle=white,
+    title={\textbf{Chapter Test: #1}},
+    boxrule=1.2pt
+}
+
+% 10. Solution / Answer Environment
+\newtcolorbox{solutionbox}[1][Solution]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=boxgrayborder,
+    coltitle=branddark,
+    title={\textbf{#1}},
+    boxrule=0.8pt
+}
+
+% ==============================================================================
+% 6. LISTS & ENUMERATION (enumitem)
+% ==============================================================================
+\RequirePackage{enumitem}
+\setlist{itemsep=3pt, topsep=4pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate,1]{label=\textbf{\arabic*.}, leftmargin=1.5em}
+\setlist[enumerate,2]{label=(\alph*), leftmargin=1.5em}
+\setlist[itemize,1]{label=\color{brandnavy}$\bullet$, leftmargin=1.5em}
+
+% Markdown/Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ==============================================================================
+% 7. TABLES & GRAPHICS
+% ==============================================================================
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,decorations.pathmorphing,patterns}
+
+% ==============================================================================
+% 8. HEADINGS & CHAPTER STYLING (titlesec)
+% ==============================================================================
+\RequirePackage{titlesec}
+
+% Chapter style: Clean numbered banner with bottom accent rule
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{branddark}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+% ==============================================================================
+% 9. RUNNING HEADERS & FOOTERS (fancyhdr)
+% ==============================================================================
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhead[L]{\small\sffamily\color{brandslate}\textbf{Engineering Physics} \textbar\ Semester 1}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\leftmark}
+\fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{brandnavy}\thepage}
+
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain page style (for chapter opener pages)
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+    \fancyfoot[R]{\small\sffamily\bfseries\color{brandnavy}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% ==============================================================================
+% 10. HYPERREF & BOOKMARKS
+% ==============================================================================
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=brandnavy,
+    urlcolor=brandblue,
+    bookmarksnumbered=true,
+    pdfpagelayout=OneColumn,
+    pdfpagemode=UseOutlines
+}
+
+% ==============================================================================
+% 11. FRONTMATTER MACROS: COVER, COPYRIGHT & DISCLAIMER
+% ==============================================================================
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    % Top background accent band
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    % Series badge at top
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ STUDY GUIDE SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Open-Source Academic Textbooks for Engineering Students};
+    
+    % Decorative bottom band
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Student-Led Educational Initiative \textbullet\ 2026 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Source (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{34}{40}\selectfont\bfseries\sffamily\color{brandnavy} Engineering Physics\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} Semester 1 Study \& Practice Guide\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Core Theory \textbullet\ Step-by-Step Derivations \textbullet\ Worked Problems \textbullet\ Exam Pitfalls}\par}
+    
+    \vspace{2.5cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.9\linewidth,
+        colback=boxnavybg,
+        colframe=boxnavyborder,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Subject Features:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Complete coverage of 6 core Semester 1 Physics modules.
+            \item Rigorous derivations with intermediate algebraic steps.
+            \item Over 100+ worked numerical examples and conceptual practice problems.
+            \item Dedicated chapter test banks with complete solution keys.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Team / Publisher:}\\
+    LPU Engineering Open Publishing Project\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large Engineering Physics: Semester 1 Study \& Practice Guide}\\
+\textit{\sffamily An Open-Source Educational Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Release Edition:} 2026 Edition (Phase 1 Base Architecture)\\
+\textbf{\sffamily Primary Source Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Contributors of LPU Engineering Open.\\
+This manuscript, diagrams, and educational text are distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\noindent
+The accompanying LaTeX document classes, build scripts, and style macros are distributed under the terms of the \textbf{MIT License}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Open Contributors, \textit{Engineering Physics: Semester 1 Study \& Practice Guide}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Important Disclaimer \& Institutional Non-Affiliation}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Student-Created Resource}\\
+This book is an independent, non-profit, student-led open educational resource designed to aid students in learning physics and preparing for engineering examinations.
+
+\textbf{2. Non-Affiliation Notice}\\
+\textbf{LPU Engineering Open is NOT affiliated with, sponsored by, authorized by, or endorsed by Lovely Professional University (LPU).} Lovely Professional University is not responsible for the contents, factual accuracy, exam representations, or editorial choices in this book.
+
+\textbf{3. Trademark \& Fair Use}\\
+Any references to university curriculum structures, subject syllabi, or course guidelines are made strictly under educational \textbf{fair use} principles to provide appropriate context and alignment for students studying these topics.
+
+\textbf{4. Accuracy \& Corrections}\\
+While every effort is made by student and educator contributors to verify physical accuracy and numerical solutions, the publishers provide this material on an ``as-is'' basis. Readers are encouraged to report any typographical, mathematical, or pedagogical errors on the project's repository.
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

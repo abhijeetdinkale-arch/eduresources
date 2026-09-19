@@ -1,0 +1,52 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exam_style}[2026/09/18 v1.0 PHY175 Exam Paper Style System]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=22mm,bottom=22mm,headheight=20pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+
+\definecolor{ExamNavy}{RGB}{15, 32, 67}
+\definecolor{ExamRed}{RGB}{180, 20, 20}
+\definecolor{ExamBg}{RGB}{248, 249, 252}
+\definecolor{SolutionBg}{RGB}{240, 253, 244}
+\definecolor{SolutionBorder}{RGB}{34, 197, 94}
+
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=ExamNavy,urlcolor=ExamRed,citecolor=ExamNavy]{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{ExamNavy}\textbf{PHY175: Modern Physics \& Electronics --- Model Examination Suite}}
+\fancyhead[R]{\small\color{ExamRed}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{ExamNavy}}{\chaptertitlename\ \thechapter}{10pt}{\LARGE}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{ExamNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{ExamRed}}{\thesubsection}{1em}{}
+
+\newtcolorbox{examqbox}[2][]{
+    enhanced, breakable, colback=ExamBg, colframe=ExamNavy,
+    fonttitle=\bfseries\color{white}, coltitle=white,
+    title={Question #2}, boxrule=1pt, arc=2mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm, #1
+}
+
+\newtcolorbox{solbox}[1][Detailed Solution \& Marking Scheme]{
+    enhanced, breakable, colback=SolutionBg, colframe=SolutionBorder,
+    coltitle=black, title={\textbf{#1}}, boxrule=0.8pt, arc=2mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm
+}

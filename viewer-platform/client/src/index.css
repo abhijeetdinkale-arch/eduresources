@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Anti-Print DRM CSS */
+@media print {
+  html, body {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Global Anti-Selection & Anti-Drag */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  min-height: 100vh;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode: Authentic Distressed White Paper Grain Texture */
+body:not(.dark) {
+  background-color: #F8F6F0;
+  color: #18181B;
+  background-image: url('/textures/light-grain.png');
+  background-repeat: repeat;
+  background-size: 650px auto;
+  background-attachment: fixed;
+}
+
+/* Dark Mode: Authentic Black Distressed Film / Xerox Grain Texture */
+body.dark {
+  background-color: #09090B;
+  color: #F5F2EB;
+  background-image: url('/textures/dark-grain.png');
+  background-repeat: repeat;
+  background-size: 550px auto;
+  background-attachment: fixed;
+}
+
+/* Disable drag on all images and canvases */
+img, canvas {
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Punch Hole Decoration */
+.punch-hole {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: #F8F6F0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.dark .punch-hole {
+  background-color: #09090B;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Barcode Font / Simulator */
+.barcode {
+  letter-spacing: 2px;
+  font-family: 'Space Mono', monospace;
+}
+
+/* Custom Editorial Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C5BCAC;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #18181B;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #E5C05B;
+}

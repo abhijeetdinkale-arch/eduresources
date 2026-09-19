@@ -1,0 +1,38 @@
+\chapter{Unit 5: Multivariable Integration and Applications}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{5.1}
+Evaluate by changing into polar coordinates:
+\begin{equation}
+\int_0^\infty \int_0^\infty e^{-(x^2+y^2)}\,dx\,dy
+\end{equation}
+\end{subjectiveq}
+
+\begin{solbox}
+The region of integration is the entire first quadrant: $x \ge 0, y \ge 0$.
+In polar coordinates: $x = r\cos\theta, y = r\sin\theta, dx\,dy = r\,dr\,d\theta$.
+The limits become $r \in [0, \infty)$ and $\theta \in [0, \pi/2]$.
+\begin{align}
+I &= \int_0^{\pi/2} \int_0^\infty e^{-r^2} r \, dr \, d\theta = \left( \int_0^{\pi/2} d\theta \right) \left( \int_0^\infty r e^{-r^2} \, dr \right) \\
+&= \left( \frac{\pi}{2} \right) \left[ -\frac{1}{2} e^{-r^2} \right]_0^\infty = \left( \frac{\pi}{2} \right) \left( 0 - \left(-\frac{1}{2}\right) \right) = \frac{\pi}{4}
+\end{align}
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+\mcqitem{1}{The Jacobian $J = \frac{\partial(x,y)}{\partial(r,\theta)}$ for polar coordinates $x=r\cos\theta, y=r\sin\theta$ is:}{$1$}{$r$}{$r^2$}{$1/r$}
+\mcqitem{2}{The area of a region $R$ in the $xy$-plane is given by:}{$\iint_R xy\,dA$}{$\iint_R 1\,dA$}{$\iint_R (x+y)\,dA$}{$\iint_R (x^2+y^2)\,dA$}
+
+\section{Section 3: Answer Key \& Technical Rationales}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 5: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(b)} & $J = \cos\theta(r\cos\theta) - (-r\sin\theta)\sin\theta = r(\cos^2\theta+\sin^2\theta)=r$ & 2 & \textbf{(b)} & Unit integrand over $R$ gives total planar area $A = \iint_R 1\,dA$ \\
+\bottomrule
+\end{tabularx}
+\end{table}

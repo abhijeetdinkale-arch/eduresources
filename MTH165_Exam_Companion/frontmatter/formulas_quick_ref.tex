@@ -1,0 +1,99 @@
+\chapter*{Master Formula Sheet: Units 1 to 6}
+\addcontentsline{toc}{chapter}{Master Formula Sheet: Units 1 to 6}
+
+\begin{multicols}{2}
+{\small
+\section*{Unit 1: Matrices \& Linear Algebra}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Characteristic Eqn:} $\det(A - \lambda I) = 0$
+    \item For $3\times 3$ matrix:
+    $\lambda^3 - \text{tr}(A)\lambda^2 + (M_{11}+M_{22}+M_{33})\lambda - \det(A) = 0$
+    \item \textbf{Cayley-Hamilton:} Matrix $A$ satisfies its own characteristic equation: $P(A) = O$.
+    \item $\sum \lambda_i = \text{trace}(A)$, $\prod \lambda_i = \det(A)$.
+    \item Eigenvalues of $A^{-1}$ are $1/\lambda_i$; eigenvalues of $A^k$ are $\lambda_i^k$.
+    \item \textbf{System $AX=B$ Consistency:}
+    \begin{itemize}
+        \item $\text{rank}(A) \neq \text{rank}[A|B] \implies$ Inconsistent (No solution).
+        \item $\text{rank}(A) = \text{rank}[A|B] = n \implies$ Unique solution.
+        \item $\text{rank}(A) = \text{rank}[A|B] < n \implies$ Infinitely many solutions ($n-r$ arbitrary constants).
+    \end{itemize}
+    \item \textbf{Hermitian Matrix:} $A^\dagger = (\bar{A})^T = A$. (Eigenvalues are strictly real).
+    \item \textbf{Skew-Hermitian:} $A^\dagger = -A$. (Eigenvalues are zero or purely imaginary).
+    \item \textbf{Orthogonal:} $A^T A = I \implies \det(A) = \pm 1$.
+\end{itemize}
+
+\section*{Unit 2: Differential Equations}
+\begin{itemize}[leftmargin=*]
+    \item General solution: $y = y_c + y_p$
+    \item Roots of auxiliary equation $f(m) = 0$:
+    \begin{itemize}
+        \item Real \& distinct: $c_1 e^{m_1 x} + c_2 e^{m_2 x}$
+        \item Repeated: $(c_1 + c_2 x) e^{m x}$
+        \item Complex $\alpha \pm i\beta$: $e^{\alpha x}(c_1 \cos\beta x + c_2 \sin\beta x)$
+    \end{itemize}
+    \item \textbf{Particular Integral (P.I.):}
+    \begin{itemize}
+        \item $\frac{1}{f(D)} e^{ax} = \frac{e^{ax}}{f(a)}$ if $f(a) \neq 0$.
+        \item $\frac{1}{D^2+a^2} \sin ax = -\frac{x}{2a}\cos ax$.
+        \item $\frac{1}{D^2+a^2} \cos ax = \frac{x}{2a}\sin ax$.
+        \item $\frac{1}{f(D)} e^{ax}V = e^{ax}\frac{1}{f(D+a)} V$.
+        \item $\frac{1}{f(D)} x^m = [f(D)]^{-1} x^m$ (expand in powers of $D$).
+    \end{itemize}
+\end{itemize}
+
+\section*{Unit 3: Infinite Series}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{p-Series Test:} $\sum \frac{1}{n^p}$ converges if $p > 1$, diverges if $p \le 1$.
+    \item \textbf{D'Alembert's Ratio Test:} $L = \lim_{n\to\infty} \frac{u_{n+1}}{u_n}$. $L < 1$ converges, $L > 1$ diverges, $L=1$ inconclusive.
+    \item \textbf{Cauchy's Root Test:} $L = \lim_{n\to\infty} (u_n)^{1/n}$.
+    \item \textbf{Raabe's Test:} $L = \lim_{n\to\infty} n\left(\frac{u_n}{u_{n+1}} - 1\right)$. $L > 1$ conv., $L < 1$ div.
+    \item \textbf{Leibniz's Test (Alternating):} $\sum (-1)^{n-1} u_n$ converges if $u_{n+1} \le u_n$ and $\lim u_n = 0$.
+\end{itemize}
+
+\columnbreak
+
+\section*{Unit 4: Multivariable Calculus}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Limits in $\mathbb{R}^2$:} If limits along $y = mx$ or $y = mx^2$ depend on $m$, the limit does not exist.
+    \item \textbf{Schwarz's Theorem:} If $f_{xy}$ and $f_{yx}$ are continuous, then $f_{xy} = f_{yx}$.
+    \item \textbf{Euler's Theorem:} If $f(x,y)$ is homogeneous of degree $n$:
+    $x \frac{\partial f}{\partial x} + y \frac{\partial f}{\partial y} = n f(x,y)$.
+    \item \textbf{Jacobian:} $J = \frac{\partial(u,v)}{\partial(x,y)} = \begin{vmatrix} u_x & u_y \\ v_x & v_y \end{vmatrix}$.
+    \item \textbf{Chain Rule for Jacobians:} $J \cdot J' = 1$.
+    \item \textbf{Maxima/Minima in $\mathbb{R}^2$:}
+    Let $r = f_{xx}$, $s = f_{xy}$, $t = f_{yy}$ at stationary point $(a,b)$ where $f_x = f_y = 0$:
+    \begin{itemize}
+        \item $rt - s^2 > 0$ and $r < 0 \implies$ Local Maximum.
+        \item $rt - s^2 > 0$ and $r > 0 \implies$ Local Minimum.
+        \item $rt - s^2 < 0 \implies$ Saddle Point.
+        \item $rt - s^2 = 0 \implies$ Inconclusive test.
+    \end{itemize}
+    \item \textbf{Lagrange Multipliers:} $\nabla f = \lambda \nabla g$.
+\end{itemize}
+
+\section*{Unit 5: Multiple Integrals}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Cartesian to Polar:} $x = r\cos\theta, y = r\sin\theta, dx dy = r \, dr d\theta$.
+    \item \textbf{Change of Order of Integration:}
+    Sketch the domain, reverse slicing direction (vertical strips $\leftrightarrow$ horizontal strips).
+    \item \textbf{Cylindrical Coordinates:} $x = r\cos\theta, y = r\sin\theta, z = z$, $dV = r\,dz\,dr\,d\theta$.
+    \item \textbf{Spherical Coordinates:}
+    $x = \rho\sin\phi\cos\theta, y = \rho\sin\phi\sin\theta, z = \rho\cos\phi$,
+    $dV = \rho^2 \sin\phi \, d\rho\,d\phi\,d\theta$.
+\end{itemize}
+
+\section*{Unit 6: Vector Calculus}
+\begin{itemize}[leftmargin=*]
+    \item $\nabla \phi = \frac{\partial \phi}{\partial x}\hat{i} + \frac{\partial \phi}{\partial y}\hat{j} + \frac{\partial \phi}{\partial z}\hat{k}$ (Normal vector).
+    \item \textbf{Directional Derivative:} $D_{\hat{u}}\phi = \nabla\phi \cdot \hat{u}$.
+    \item \textbf{Divergence:} $\nabla \cdot \vec{F} = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}$.
+    (Solenoidal if $\nabla \cdot \vec{F} = 0$).
+    \item \textbf{Curl:} $\nabla \times \vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ F_1 & F_2 & F_3 \end{vmatrix}$.
+    (Irrotational if $\nabla \times \vec{F} = \vec{0}$).
+    \item \textbf{Green's Theorem:} $\oint_C (P dx + Q dy) = \iint_R \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA$.
+    \item \textbf{Stokes' Theorem:} $\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot \hat{n} \, dS$.
+    \item \textbf{Gauss Divergence Theorem:} $\iint_S \vec{F} \cdot \hat{n} \, dS = \iiint_V (\nabla \cdot \vec{F}) \, dV$.
+\end{itemize}
+}
+\end{multicols}
+\newpage

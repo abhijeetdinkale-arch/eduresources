@@ -1,0 +1,74 @@
+\section{Mid-Term Examination --- Set A}
+\LPUCSHeader{OBJECTIVE MULTIPLE-CHOICE QUESTION PAPER}{A}{90 Minutes}{30 Marks}{Units 1, 2 \& 3 (HTML Basics, Forms, Tables, CSS3 Selectors \& Box Model)}
+
+\vspace{3mm}
+\noindent\textbf{Marking Scheme:} 30 Questions $\times$ 1 Mark = 30 Marks. Negative Marking: $-0.25$ marks for each incorrect response.
+
+\vspace{4mm}
+\subsection*{Part I: Foundational Level (Questions 1 to 15 --- 50\% Easy)}
+
+\mcqitem{1}{Which HTML5 element represents the primary content of the document body and must occur at most once?}{<body>}{<main>}{<section>}{<div>}
+\mcqitem{2}{What is the default character encoding recommended for modern HTML5 documents?}{ASCII}{UTF-8}{ISO-8859-1}{UTF-16}
+\mcqitem{3}{Which of the following elements is a void (self-closing) element in HTML5?}{<dfn>}{<hr>}{<cite>}{<strong>}
+\mcqitem{4}{Which CSS property is used to combine adjacent table cell borders into a single border?}{border-style: collapse;}{border-collapse: collapse;}{border-spacing: 0;}{table-border: single;}
+\mcqitem{5}{What is the primary role of the \texttt{alt} attribute in the \texttt{<img>} tag?}{Provide image tooltip animation}{Provide alternative text for accessibility and load failure}{Define image alignment}{Specify link destination}
+\mcqitem{6}{Which CSS selector matches all \texttt{<p>} elements that are direct children of a \texttt{<div>}?}{div + p}{div \~{} p}{div > p}{div p}
+\mcqitem{7}{What \texttt{<form>} attribute is mandatory when transmitting files via \texttt{<input type="file">}?}{enctype="text/plain"}{enctype="multipart/form-data"}{method="GET"}{type="binary"}
+\mcqitem{8}{Which tag marks the title of a creative work (such as a book, movie, or song)?}{<i>}{<em>}{<cite>}{<dfn>}
+\mcqitem{9}{Which CSS display value causes an element to begin on a new line and take up full container width?}{inline}{block}{inline-block}{none}
+\mcqitem{10}{Inside an HTML \texttt{<form>}, what is the default behavior of a \texttt{<button>} element without an explicit \texttt{type}?}{type="button"}{type="reset"}{type="submit"}{type="menu"}
+\mcqitem{11}{Which boolean attribute allows multiple options to be selected in a \texttt{<select>} dropdown?}{multiselect}{size="4"}{multiple}{group}
+\mcqitem{12}{In the CSS Box Model, which layer is located between the content and the border?}{Margin}{Padding}{Outline}{Gutter}
+\mcqitem{13}{Which CSS background property value stretches and scales an image to cover the entire background area, cropping if necessary?}{contain}{cover}{auto}{repeat}
+\mcqitem{14}{Which target attribute opens a linked document in a new browser tab or window?}{target="\_parent"}{target="\_self"}{target="\_blank"}{target="\_top"}
+\mcqitem{15}{What is the correct HTML tag to display the formula $\text{H}_2\text{O}$?}{H<sup>2</sup>O}{H<sub>2</sub>O}{H<small>2</small>O}{H<mark>2</mark>O}
+
+\vspace{4mm}
+\subsection*{Part II: Intermediate Analytical Level (Questions 16 to 24 --- 30\% Medium)}
+
+\mcqitem{16}{Given the rules \texttt{div.card p\#desc \{ color: green; \}} and \texttt{\#desc \{ color: red; \}}, which color will the paragraph render?}{Red because \#desc appears last}{Green because div.card p\#desc has higher specificity (1, 1, 2) than (1, 0, 0)}{Black by default}{Browser throws a syntax conflict}
+\mcqitem{17}{An element has \texttt{width: 200px; padding: 20px; border: 5px solid black; margin: 15px;} with \texttt{box-sizing: content-box}. What is its total rendered box width?}{200px}{250px}{280px}{230px}
+\mcqitem{18}{What is the primary difference between \texttt{<strong>} and \texttt{<b>}?}{\texttt{<strong>} is block while \texttt{<b>} is inline}{\texttt{<strong>} imparts semantic importance/stress; \texttt{<b>} applies visual bold font only}{\texttt{<b>} is deprecated in HTML5}{\texttt{<strong>} is unsupported in CSS}
+\mcqitem{19}{In an HTML table, a cell has \texttt{rowspan="3"}. How many rows does it span vertically?}{1 row}{2 rows}{3 rows}{4 rows}
+\mcqitem{20}{Which order of pseudo-classes must be maintained to avoid anchor link styling conflicts?}{:hover, :link, :visited, :active}{:link, :visited, :hover, :active (LVHA)}{:active, :hover, :visited, :link}{:visited, :active, :link, :hover}
+\mcqitem{21}{What happens when a user submits an input \texttt{<input type="text" pattern="[0-9]{4}" required>} filled with "12A"?}{It submits value "12A" to server}{Browser prevents submission, focuses input, and shows a pattern mismatch alert}{"A" is stripped automatically}{Page crashes}
+\mcqitem{22}{What is the specificity triple $(a, b, c)$ of the selector \texttt{nav.menu ul > li a[target="\_blank"]}?}{(0, 2, 4)}{(0, 1, 4)}{(1, 0, 4)}{(0, 2, 3)}
+\mcqitem{23}{When \texttt{box-sizing: border-box} is set on an element with \texttt{width: 300px; padding: 30px; border: 10px solid red;}, what is the inner content width?}{300px}{220px}{380px}{240px}
+\mcqitem{24}{Which attribute selector specifically targets links whose destination starts with "https://"?}{a[href\$="https://"]}{a[href*="https://"]}{a[href\textasciicircum="https://"]}{a[href\~{}="https://"]}
+
+\vspace{4mm}
+\subsection*{Part III: Advanced Mastery Level (Questions 25 to 30 --- 20\% Hard)}
+
+\mcqitem{25}{Consider two vertical sibling block elements with \texttt{margin-bottom: 30px} on the first and \texttt{margin-top: 20px} on the second. What is the collapsed vertical gap between them?}{50px}{30px}{20px}{10px}
+\mcqitem{26}{Examine: \texttt{<div class="box"><span class="highlight">Text</span></div>} styled with \texttt{div \{ color: blue; \}}, \texttt{span.highlight \{ color: red; \}}, and \texttt{div span \{ color: green; \}}. What color renders?}{Blue}{Green}{Red}{Black}
+\mcqitem{27}{What is the semantic implication of nesting a \texttt{<section>} element inside an \texttt{<article>} element?}{It is invalid in HTML5}{It represents a thematic sub-chapter of the standalone article}{It removes the article from the DOM tree}{It renders as a sidebar}
+\mcqitem{28}{If an \texttt{<img>} tag is placed inside a \texttt{<p>} tag, what content model rule applies?}{Invalid because <p> only accepts block elements}{Valid because <img> is phrasing (inline) content and <p> accepts phrasing content}{Browser closes <p> automatically}{Image becomes SVG}
+\mcqitem{29}{Which CSS function sets a fluid font-size that scales smoothly between 16px and 24px across viewport widths?}{font-size: calc(16px + 24px);}{font-size: clamp(1rem, 2.5vw, 1.5rem);}{font-size: min(16px, 24px);}{font-size: 1.5em;}
+\mcqitem{30}{In CSS, how does setting \texttt{margin: 0 auto;} center a \texttt{<div>} element horizontally?}{It only works for inline elements}{It divides remaining available width equally to left and right margins for fixed-width block elements}{It shrinks viewport width}{It sets coordinates to (0,0)}
+
+\newpage
+\subsection*{Answer Key \& Explanations --- Mid-Term Set A}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{B} & \texttt{<main>} holds unique page content. & 16 & \textbf{B} & Specificity (1,1,2) beats (1,0,0). \\
+2 & \textbf{B} & UTF-8 is universal standard encoding. & 17 & \textbf{B} & $200 + 40(\text{pad}) + 10(\text{border}) = 250\text{px}$. \\
+3 & \textbf{C} & \texttt{<hr>} is void self-closing tag. & 18 & \textbf{B} & \texttt{<strong>} is semantic importance. \\
+4 & \textbf{B} & \texttt{border-collapse: collapse}. & 19 & \textbf{C} & \texttt{rowspan="3"} spans 3 rows. \\
+5 & \textbf{B} & Fallback text \& screen readers. & 20 & \textbf{B} & LVHA prevents rule masking. \\
+6 & \textbf{C} & Child combinator \texttt{>}. & 21 & \textbf{B} & Native constraint validation stops submit. \\
+7 & \textbf{B} & Required for binary file uploads. & 22 & \textbf{A} & 2 classes/attribs, 4 elements $\to$ (0,2,4). \\
+8 & \textbf{C} & \texttt{<cite>} marks creative work titles. & 23 & \textbf{B} & Content width $= 300 - 60 - 20 = 220\text{px}$. \\
+9 & \textbf{B} & Block elements take 100\% width. & 24 & \textbf{C} & \texttt{\textasciicircum=} matches start of string. \\
+10 & \textbf{C} & Form button defaults to submit. & 25 & \textbf{B} & Adjoining vertical margins collapse to max. \\
+11 & \textbf{C} & \texttt{multiple} allows multi-selection. & 26 & \textbf{C} & \texttt{span.highlight} (0,1,1) > \texttt{div span} (0,0,2). \\
+12 & \textbf{B} & Padding is inner clearance. & 27 & \textbf{B} & \texttt{<section>} divides \texttt{<article>} sub-parts. \\
+13 & \textbf{B} & \texttt{cover} fills and crops container. & 28 & \textbf{B} & \texttt{<img>} is phrasing/inline content. \\
+14 & \textbf{C} & \texttt{target="\_blank"} opens new tab. & 29 & \textbf{B} & \texttt{clamp(min, val, max)} handles fluid scale. \\
+15 & \textbf{B} & \texttt{<sub>} creates subscript lower text. & 30 & \textbf{B} & Auto margins balance remaining width. \\
+\bottomrule
+\end{tabularx}
+\end{center}

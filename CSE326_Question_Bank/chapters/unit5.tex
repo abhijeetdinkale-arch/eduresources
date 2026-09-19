@@ -1,0 +1,139 @@
+\chapter{Unit 5: JavaScript Functions, DOM, Events \& Regex Validation}
+
+\section{Section 1: 50 Chapter-Wise Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25 --- 50\% Easy)}
+\mcqitem{1}{[Easy] What does DOM stand for in web development?}{Data Object Model}{Document Object Model}{Digital Order Module}{Document Oriented Matrix}
+\mcqitem{2}{[Easy] Which object represents the entire loaded HTML document in JavaScript?}{window.document}{browser}{html}{dom}
+\mcqitem{3}{[Easy] Which method selects an element by its unique ID?}{document.getElementById()}{document.getId()}{document.selectId()}{document.find()}
+\mcqitem{4}{[Easy] Which method selects all elements sharing a specific CSS class name?}{document.getClasses()}{document.getElementsByClassName()}{document.findClass()}{document.select()}
+\mcqitem{5}{[Easy] Which method returns the FIRST element matching a given CSS selector?}{document.querySelector()}{document.querySelectorAll()}{document.getElement()}{document.find()}
+\mcqitem{6}{[Easy] Which method returns ALL elements matching a CSS selector as a static NodeList?}{document.querySelector()}{document.querySelectorAll()}{document.getAll()}{document.match()}
+\mcqitem{7}{[Easy] Which property sets or returns the HTML markup inside an element?}{textContent}{innerHTML}{value}{innerText}
+\mcqitem{8}{[Easy] Which property sets or returns safe raw plain text without parsing markup?}{textContent}{innerHTML}{outerHTML}{sourceText}
+\mcqitem{9}{[Easy] How do you change the background color of an element 'box' to yellow in JavaScript?}{box.color = 'yellow';}{box.style.backgroundColor = 'yellow';}{box.background = 'yellow';}{box.css.bg = 'yellow';}
+\mcqitem{10}{[Easy] Which method adds a CSS class 'active' to an element's classList?}{el.classList.add('active')}{el.classList.append('active')}{el.classes.add('active')}{el.addClass('active')}
+\mcqitem{11}{[Easy] Which method removes a CSS class 'active' from an element?}{el.classList.remove('active')}{el.classList.delete('active')}{el.classes.remove('active')}{el.removeClass('active')}
+\mcqitem{12}{[Easy] Which method creates a brand new HTML element node in memory?}{document.newElement()}{document.createElement()}{document.buildNode()}{document.create()}
+\mcqitem{13}{[Easy] Which method inserts a newly created child node into a parent element?}{parent.insert()}{parent.appendChild()}{parent.appendNode()}{parent.push()}
+\mcqitem{14}{[Easy] Which method removes an element directly from the DOM tree?}{el.remove()}{el.delete()}{el.destroy()}{document.purge(el)}
+\mcqitem{15}{[Easy] Which event triggers when a user clicks an element?}{hover}{click}{dblclick}{press}
+\mcqitem{16}{[Easy] Which event triggers when a mouse pointer moves over an element?}{mouseover}{mouseout}{click}{mouseenter}
+\mcqitem{17}{[Easy] Which event triggers when the mouse pointer leaves an element?}{mouseover}{mouseout}{mouseleave}{blur}
+\mcqitem{18}{[Easy] Which event fires when a form's input value is changed and loses focus?}{oninput}{onchange}{onsubmit}{onblur}
+\mcqitem{19}{[Easy] Which event fires immediately on every character keystroke inside an input?}{oninput}{onchange}{onclick}{onfocus}
+\mcqitem{20}{[Easy] Which event fires when a form is submitted?}{onsubmit}{onchange}{onclick}{onpost}
+\mcqitem{21}{[Easy] Which array method adds an element to the end of an array?}{push()}{pop()}{shift()}{unshift()}
+\mcqitem{22}{[Easy] Which array method removes the last element and returns it?}{pop()}{push()}{shift()}{slice()}
+\mcqitem{23}{[Easy] Which array method removes the first element of an array?}{shift()}{unshift()}{pop()}{slice()}
+\mcqitem{24}{[Easy] Which array method adds an element to the very beginning of an array?}{unshift()}{shift()}{push()}{insert()}
+\mcqitem{25}{[Easy] How do you convert a JavaScript object into a JSON string?}{JSON.parse(obj)}{JSON.stringify(obj)}{obj.toJSON()}{JSON.serialize(obj)}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 26 to 40 --- 30\% Medium)}
+\mcqitem{26}{[Medium] What does 'event.preventDefault()' do when called inside a form's submit listener?}{Resets input values}{Cancels default browser submission and page reload}{Stops event propagation}{Deletes the form}
+\mcqitem{27}{[Medium] What does 'event.stopPropagation()' accomplish?}{Cancels form submit}{Stops the event from bubbling up the parent node hierarchy}{Disables the button}{Prevents keyboard input}
+\mcqitem{28}{[Medium] What is Event Delegation in the DOM?}{Attaching a listener to every child node}{Attaching a single listener to a common parent and inspecting event.target}{Delegating events to Web Workers}{Using inline onclick handlers}
+\mcqitem{29}{[Medium] What will '[1, 2, 3, 4].filter(x =$>$ x \% 2 === 0)' return?}{[1, 3]}{[2, 4]}{[true, false]}{6}
+\mcqitem{30}{[Medium] What will '[1, 2, 3].map(x =$>$ x * 2)' return?}{[2, 4, 6]}{[1, 2, 3]}{12}{undefined}
+\mcqitem{31}{[Medium] What will '[10, 20, 30].reduce((sum, val) =$>$ sum + val, 0)' return?}{[10, 20, 30]}{60}{0}{NaN}
+\mcqitem{32}{[Medium] What is the output of 'let obj = \{ x: 10 \}; let copy = \{ ...obj \}; copy.x = 20; console.log(obj.x);'?}{10}{20}{undefined}{TypeError}
+\mcqitem{33}{[Medium] What will 'JSON.parse('\{"name":"Alex","age":20\}')' produce?}{A JSON string}{A JavaScript object with properties name and age}{An array}{SyntaxError}
+\mcqitem{34}{[Medium] What is the value of 'this' inside a standard object method invoked as 'obj.method()'?}{The global window object}{The object 'obj' itself}{undefined}{The document body}
+\mcqitem{35}{[Medium] What is the output of 'const sq = x =$>$ x * x; console.log(sq(5));'?}{25}{10}{undefined}{NaN}
+\mcqitem{36}{[Medium] In regular expressions, what does '\^\{\}' at the start of a pattern indicate?}{Matches end of string}{Matches beginning of string}{Matches a space}{Negates the string}
+\mcqitem{37}{[Medium] In regular expressions, what does '\$' at the end of a pattern indicate?}{Matches currency}{Matches beginning}{Matches end of string}{Matches digits}
+\mcqitem{38}{[Medium] In the regex '/\^\{\}[\^\{\} ]+@[\^\{\} ]+\textbackslash .[a-z]\{2,3\}\$/', why is the dot escaped as '\textbackslash .'?}{To match any character}{To match a literal period character rather than the wildcard dot}{To create a line break}{To separate words}
+\mcqitem{39}{[Medium] What does 'pattern.test("admin@site.com")' return for '/\^\{\}[a-z]+@[a-z]+\textbackslash .[a-z]\{2,3\}\$/'?}{true}{false}{null}{["admin@site.com"]}
+\mcqitem{40}{[Medium] Which array method determines if an array contains a specific element, returning boolean?}{find()}{includes()}{indexOf()}{some()}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 50 --- 20\% Hard)}
+\mcqitem{41}{[Hard] What happens when an object method is extracted to a variable: 'let f = obj.func; f();'?}{It executes with obj as this}{this loses context and refers to window/undefined in strict mode}{Throws TypeError immediately}{Clones the function}
+\mcqitem{42}{[Hard] Why does '[10, 2, 5].sort()' produce '[10, 2, 5]' instead of numeric order?}{sort() is broken}{sort() converts elements to strings and compares UTF-16 code units lexicographically by default}{Arrays cannot be sorted}{Requires reverse() first}
+\mcqitem{43}{[Hard] What is the output of '[1, 2, 3].map(parseInt)'?}{[1, 2, 3]}{[1, NaN, NaN]}{[1, 2, NaN]}{TypeError}
+\mcqitem{44}{[Hard] How does the Event Capturing phase differ from Event Bubbling?}{Capturing propagates from root down to target; Bubbling propagates from target up to root}{Capturing is obsolete}{Bubbling runs first}{Capturing is only for mouse events}
+\mcqitem{45}{[Hard] What does 'document.myForm.username.value' access in DOM?}{The submit button}{The value of the input with name='username' inside form name='myForm'}{The form action}{All inputs}
+\mcqitem{46}{[Hard] Why should 'element.textContent' be preferred over 'element.innerHTML' when rendering user comments?}{textContent is slower}{innerHTML introduces Cross-Site Scripting (XSS) injection vulnerabilities if user strings contain unescaped tags}{textContent enables HTML formatting}{innerHTML only works in Chrome}
+\mcqitem{47}{[Hard] In regex '/[a-z]\{2,4\}/', how many characters are matched?}{Between 2 and 4 lowercase alphabetic characters}{Exactly 2 or 4}{Any 6 characters}{None}
+\mcqitem{48}{[Hard] What does 'Object.freeze(obj)' do vs declaring 'const obj'?}{const freezes object properties; Object.freeze prevents variable re-assignment}{const prevents variable re-assignment; Object.freeze prevents mutating the object's properties}{They are identical}{Object.freeze deletes properties}
+\mcqitem{49}{[Hard] What will 'delete student.age;' do on 'let student = \{ name: "A", age: 20 \};'?}{Sets student.age to 0}{Removes the 'age' property completely, so 'student.age' returns undefined}{Throws SyntaxError}{Deletes student object}
+\mcqitem{50}{[Hard] What does 'Array.from(document.querySelectorAll("p"))' do?}{Converts static NodeList into a true Array supporting map/filter methods}{Deletes all paragraphs}{Renders paragraphs}{Creates an HTMLCollection}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Explanations}
+
+\begin{answerkeytable}{Unit 5: 50 Questions Answer Key}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{B} & DOM stands for Document Object Model. & 26 & \textbf{B} & preventDefault() halts default browser actions. \\
+2 & \textbf{A} & document is the root object of the DOM. & 27 & \textbf{B} & stopPropagation() halts event bubbling. \\
+3 & \textbf{A} & getElementById() returns single matching node. & 28 & \textbf{B} & Event delegation handles events from multiple children at parent tier. \\
+4 & \textbf{B} & getElementsByClassName() returns HTMLCollection. & 29 & \textbf{B} & filter() returns elements satisfying condition. \\
+5 & \textbf{A} & querySelector() returns first matching element. & 30 & \textbf{A} & map() returns transformed array. \\
+6 & \textbf{B} & querySelectorAll() returns static NodeList. & 31 & \textbf{B} & reduce() aggregates values into a single result (60). \\
+7 & \textbf{B} & innerHTML parses and sets HTML markup. & 32 & \textbf{A} & Spread creates a shallow clone of top-level primitives. \\
+8 & \textbf{A} & textContent treats input as plain text. & 33 & \textbf{B} & JSON.parse() deserializes JSON string to object. \\
+9 & \textbf{B} & element.style.backgroundColor modifies CSS. & 34 & \textbf{B} & In method invocation, this refers to the calling object. \\
+10 & \textbf{A} & classList.add('className') adds class. & 35 & \textbf{A} & Arrow function returns x*x (25). \\
+11 & \textbf{A} & classList.remove('className') removes class. & 36 & \textbf{B} & \^\{\} anchors matching to the start. \\
+12 & \textbf{B} & document.createElement('tagName') creates nodes. & 37 & \textbf{C} & \$ anchors matching to the end. \\
+13 & \textbf{B} & appendChild() appends node to parent. & 38 & \textbf{B} & Backslash escapes the period so it matches a literal dot. \\
+14 & \textbf{A} & element.remove() removes node. & 39 & \textbf{A} & admin@site.com matches all pattern constraints -$>$ true. \\
+15 & \textbf{B} & click event fires on mouse click. & 40 & \textbf{B} & includes() returns true if value is present. \\
+16 & \textbf{A} & mouseover fires when pointer hovers over. & 41 & \textbf{B} & Unbound function references lose their original this context. \\
+17 & \textbf{B} & mouseout fires when pointer exits. & 42 & \textbf{B} & Default sort() is lexicographical; numeric sort requires .sort((a,b)=$>$a-b). \\
+18 & \textbf{B} & change fires after modification upon blur. & 43 & \textbf{B} & parseInt receives (element, index) as radix -$>$ parseInt(1,0)=1, parseInt(2,1)=NaN, parseInt(3,2)=NaN. \\
+19 & \textbf{A} & input fires immediately on modification. & 44 & \textbf{A} & Capturing travels top-down; bubbling travels bottom-up. \\
+20 & \textbf{A} & submit fires on form submission. & 45 & \textbf{B} & DOM legacy form collection access by name attribute. \\
+21 & \textbf{A} & push() appends items to end. & 46 & \textbf{B} & innerHTML with unsanitized inputs allows XSS script injection. \\
+22 & \textbf{A} & pop() removes last element. & 47 & \textbf{A} & \{2,4\} bounds match length between 2 and 4. \\
+23 & \textbf{A} & shift() removes first element. & 48 & \textbf{B} & const protects binding; Object.freeze makes property values immutable. \\
+24 & \textbf{A} & unshift() adds items to front. & 49 & \textbf{B} & delete operator removes the key-value pair from object. \\
+25 & \textbf{B} & JSON.stringify() converts object to JSON text. & 50 & \textbf{A} & Array.from() converts array-like objects/NodeLists to arrays. \\
+\bottomrule
+\end{tabularx}
+\end{answerkeytable}
+
+\section{Section 3: Conceptual Theory \& Coding Questions}
+\noindent\textbf{Q.51 [Theory --- 5 Marks]} Explain Event Delegation in the JavaScript DOM. Why is it more performant than attaching individual listeners?
+
+\begin{qbsolutionbox}[Answer to Q.51]
+\textbf{Event Delegation} is an event handling pattern where a single event listener is attached to a parent element rather than attaching separate listeners to each child element.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Mechanism}: It leverages \textbf{Event Bubbling}, where events triggered on child nodes propagate upward through parent ancestors. The parent handler inspects \texttt{event.target} to identify which child originated the action.
+  \item \textbf{Performance Benefits}:
+  \begin{enumerate}
+    \item \textbf{Memory Efficiency}: Conserves memory by creating 1 listener instead of hundreds (e.g. on a 500-row table).
+    \item \textbf{Dynamic DOM Elements}: Automatically handles newly added elements without needing to bind new listeners after AJAX/DOM inserts.
+  \end{enumerate}
+\end{itemize}
+\end{qbsolutionbox}
+
+\noindent\textbf{Q.52 [Coding --- 5 Marks]} Write a complete JavaScript email validation script using Regular Expressions that validates input on form submission.
+
+\begin{qbsolutionbox}[Answer to Q.52]
+\begin{lstlisting}[language=JavaScript]
+function validateEmailForm(event) {
+  event.preventDefault(); // Stop native submission
+  
+  const emailField = document.getElementById("emailInput").value.trim();
+  const emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  const errorDisplay = document.getElementById("errorMsg");
+
+  if (emailField === "") {
+    errorDisplay.textContent = "Email field cannot be empty!";
+    return false;
+  }
+  if (!emailRegex.test(emailField)) {
+    errorDisplay.textContent = "Invalid email format (e.g. user@domain.com)!";
+    return false;
+  }
+
+  errorDisplay.textContent = "";
+  alert("Email validated successfully!");
+  return true;
+}
+\end{lstlisting}
+\end{qbsolutionbox}
+

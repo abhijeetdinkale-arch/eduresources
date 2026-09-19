@@ -1,0 +1,82 @@
+\chapter{Comprehensive Physical Reference \& Mathematical Tools}
+
+\section{Universal Physical Constants}
+The table below compiles the internationally accepted CODATA recommended values for all fundamental constants encountered throughout the PHY110 Engineering Physics course:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{l l l X}
+\toprule
+\textbf{Physical Constant} & \textbf{Symbol} & \textbf{Value in SI Units} & \textbf{Standard Engineering Units} \\
+\midrule
+Speed of Light in Vacuum & $c$ & $2.99792458 \times 10^8\text{ m/s}$ & $\approx 3.0 \times 10^8\text{ m/s}$ \\
+Planck Constant & $h$ & $6.62607015 \times 10^{-34}\text{ J}\cdot\text{s}$ & $4.1357 \times 10^{-15}\text{ eV}\cdot\text{s}$ \\
+Reduced Planck Constant & $\hbar = h/(2\pi)$ & $1.0545718 \times 10^{-34}\text{ J}\cdot\text{s}$ & $6.5821 \times 10^{-16}\text{ eV}\cdot\text{s}$ \\
+Elementary Electron Charge & $e$ & $1.602176634 \times 10^{-19}\text{ C}$ & --- \\
+Electron Rest Mass & $m_e$ & $9.1093837 \times 10^{-31}\text{ kg}$ & $0.511\text{ MeV}/c^2$ \\
+Proton Rest Mass & $m_p$ & $1.6726219 \times 10^{-27}\text{ kg}$ & $938.27\text{ MeV}/c^2$ \\
+Neutron Rest Mass & $m_n$ & $1.6749275 \times 10^{-27}\text{ kg}$ & $939.57\text{ MeV}/c^2$ \\
+Permittivity of Free Space & $\epsilon_0$ & $8.8541878 \times 10^{-12}\text{ F/m}$ & $\frac{1}{4\pi\epsilon_0} \approx 8.99 \times 10^9\text{ N}\cdot\text{m}^2/\text{C}^2$ \\
+Permeability of Free Space & $\mu_0$ & $4\pi \times 10^{-7}\text{ H/m}$ & $\approx 1.2566 \times 10^{-6}\text{ N/A}^2$ \\
+Free Space Wave Impedance & $\eta_0$ & $376.73\,\Omega \approx 120\pi\,\Omega$ & $\approx 377\,\Omega$ \\
+Boltzmann Constant & $k_B$ & $1.380649 \times 10^{-23}\text{ J/K}$ & $8.6173 \times 10^{-5}\text{ eV/K}$ \\
+Avogadro Constant & $N_A$ & $6.02214076 \times 10^{23}\text{ mol}^{-1}$ & --- \\
+Bohr Magneton & $\mu_B$ & $9.274009 \times 10^{-24}\text{ J/T}$ & $5.7884 \times 10^{-5}\text{ eV/T}$ \\
+Bohr Radius & $a_0$ & $5.291772 \times 10^{-11}\text{ m}$ & $0.529\text{ \AA}$ \\
+Rydberg Constant & $R_\infty$ & $1.097373 \times 10^7\text{ m}^{-1}$ & $13.606\text{ eV}$ \\
+Flux Quantum & $\Phi_0 = h/(2e)$ & $2.0678338 \times 10^{-15}\text{ Wb}$ & $2.07\times 10^{-7}\text{ G}\cdot\text{cm}^2$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Essential Mathematical Operators in Curvilinear Coordinates}
+Many physical systems possess cylindrical or spherical symmetry (e.g., optical fiber cores, spherical colloidal particles). The gradient, divergence, curl, and Laplacian in non-Cartesian coordinate systems are compiled below:
+
+\subsection{1. Cylindrical Coordinates $(\rho, \phi, z)$}
+\begin{align}
+\nabla \Phi &= \frac{\partial \Phi}{\partial \rho}\hat{\rho} + \frac{1}{\rho}\frac{\partial \Phi}{\partial \phi}\hat{\phi} + \frac{\partial \Phi}{\partial z}\hat{z} \\
+\nabla \cdot \vec{A} &= \frac{1}{\rho}\frac{\partial}{\partial \rho}(\rho A_\rho) + \frac{1}{\rho}\frac{\partial A_\phi}{\partial \phi} + \frac{\partial A_z}{\partial z} \\
+\nabla \times \vec{A} &= \left(\frac{1}{\rho}\frac{\partial A_z}{\partial \phi} - \frac{\partial A_\phi}{\partial z}\right)\hat{\rho} + \left(\frac{\partial A_\rho}{\partial z} - \frac{\partial A_z}{\partial \rho}\right)\hat{\phi} + \frac{1}{\rho}\left(\frac{\partial(\rho A_\phi)}{\partial \rho} - \frac{\partial A_\rho}{\partial \phi}\right)\hat{z} \\
+\nabla^2 \Phi &= \frac{1}{\rho}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial \Phi}{\partial \rho}\right) + \frac{1}{\rho^2}\frac{\partial^2 \Phi}{\partial \phi^2} + \frac{\partial^2 \Phi}{\partial z^2}
+\end{align}
+
+\subsection{2. Spherical Coordinates $(r, \theta, \phi)$}
+\begin{align}
+\nabla \Phi &= \frac{\partial \Phi}{\partial r}\hat{r} + \frac{1}{r}\frac{\partial \Phi}{\partial \theta}\hat{\theta} + \frac{1}{r\sin\theta}\frac{\partial \Phi}{\partial \phi}\hat{\phi} \\
+\nabla \cdot \vec{A} &= \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 A_r) + \frac{1}{r\sin\theta}\frac{\partial}{\partial \theta}(A_\theta \sin\theta) + \frac{1}{r\sin\theta}\frac{\partial A_\phi}{\partial \phi} \\
+\nabla^2 \Phi &= \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2 \frac{\partial \Phi}{\partial r}\right) + \frac{1}{r^2 \sin\theta}\frac{\partial}{\partial \theta}\left(\sin\theta \frac{\partial \Phi}{\partial \theta}\right) + \frac{1}{r^2 \sin^2\theta}\frac{\partial^2 \Phi}{\partial \phi^2}
+\end{align}
+
+\section{Comprehensive Master Formula Matrix Across All Six Units}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Unit / Domain} & \textbf{Governing Relationship} & \textbf{Key Physical Takeaway} \\
+\midrule
+\textbf{Unit 1: EM Theory} & $\nabla \times \vec{H} = \vec{J}_c + \frac{\partial \vec{D}}{\partial t}$ & Continuity requirement led to Maxwell's displacement current. \\
+& $\delta = \sqrt{2/(\omega\mu\sigma)}$ & High frequency AC current concentrates in thin outer conductor skin. \\
+& $\vec{S} = \vec{E} \times \vec{H}, \quad \langle S \rangle = \frac{E_0^2}{2\eta_0}$ & Electromagnetic power density in $\text{W/m}^2$, $\eta_0 \approx 377\,\Omega$. \\
+\midrule
+\textbf{Unit 2: Lasers} & $\frac{A_{21}}{B_{21}} = \frac{8\pi h \nu^3}{c^3}, \quad B_{12} = B_{21}$ & Spontaneous emission dominates at optical frequencies without cavity. \\
+& $\gamma_{\text{th}} = \alpha_s + \frac{1}{2L}\ln\left(\frac{1}{R_1 R_2}\right)$ & Threshold optical gain must balance mirror transmission and distributed losses. \\
+& $\lambda_{\text{HeNe}} = 632.8\text{ nm}, \quad \text{He:Ne} = 10:1$ & Resonant inelastic collision transfers pump energy from He to Ne. \\
+\midrule
+\textbf{Unit 3: Fiber Optics} & $\text{NA} = \sqrt{n_1^2 - n_2^2} \approx n_1\sqrt{2\Delta}$ & Light-gathering power independent of physical fiber diameter. \\
+& $V = \frac{\pi d}{\lambda}\text{NA} < 2.405$ & Single-mode fiber cutoff prevents intermodal pulse dispersion. \\
+& $\alpha_{\text{min}} \approx 0.18\text{ dB/km at } 1550\text{ nm}$ & Rayleigh scattering ($\lambda^{-4}$) and IR absorption define 3rd window. \\
+\midrule
+\textbf{Unit 4: Quantum} & $\lambda = \frac{h}{p} = \frac{1.227}{\sqrt{V}}\text{ nm}, \quad \Delta x \Delta p \ge \frac{\hbar}{2}$ & Wave-particle duality verified by Davisson-Germer electron diffraction. \\
+& $E_n = \frac{n^2 h^2}{8mL^2}, \quad E_1 > 0$ & Quantum spatial confinement mandates non-zero ground-state energy. \\
+& $T \propto e^{-2\alpha d}, \quad \alpha = \frac{\sqrt{2m(V_0-E)}}{\hbar}$ & Exponential tunneling current gives sub-angstrom STM resolution. \\
+\midrule
+\textbf{Unit 5: Semiconductors} & $P\frac{\sin(\alpha a)}{\alpha a} + \cos(\alpha a) = \cos(ka)$ & Periodic lattice potential creates allowed bands and forbidden bandgaps. \\
+& $f(E) = \frac{1}{1 + \exp\left(\frac{E-E_F}{k_B T}\right)}$ & Fermi-Dirac distribution governs fermion state occupation probability. \\
+& $R_H = \frac{1}{n q} = \frac{V_H t}{B I}$ & Polarity of Hall voltage determines majority charge carrier type. \\
+\midrule
+\textbf{Unit 6: Materials} & $\frac{\epsilon_r - 1}{\epsilon_r + 2} = \frac{N\alpha}{3\epsilon_0}$ & Connects microscopic polarizability to bulk dielectric constant. \\
+& $H_c(T) = H_c(0)[1 - (T/T_c)^2]$ & Parabolic decrease of critical magnetic field with temperature. \\
+& $\vec{B} \equiv 0 \implies \chi_m = -1$ & Meissner effect proves superconductors are perfect diamagnets. \\
+\bottomrule
+\end{tabularx}
+\end{center}

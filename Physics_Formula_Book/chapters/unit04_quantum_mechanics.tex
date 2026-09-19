@@ -1,0 +1,57 @@
+\chapter{Unit 4: Quantum Mechanics}
+
+\begin{formulabox}{1. Wave-Particle Duality \& de Broglie Hypothesis}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Planck-Einstein Relation:} $E = h\nu = \hbar\omega$.
+    \item \textbf{de Broglie Wavelength:} $\lambda = \frac{h}{p} = \frac{h}{m v} = \frac{h}{\sqrt{2m E_k}}$.
+    \item \textbf{Thermal Neutron / Gas Particle Wavelength:} $\lambda_{\text{th}} = \frac{h}{\sqrt{3 m k_B T}}$.
+    \item \textbf{Phase Velocity vs Group Velocity:}
+    \[
+    v_p = \frac{\omega}{k}, \quad v_g = \frac{d\omega}{dk} = v_{\text{particle}} \implies v_p \cdot v_g = c^2 \quad (\text{for relativistic matter waves})
+    \]
+    \item \textbf{Bragg's Diffraction Law:} $2d\sin\theta = n\lambda$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{2. Heisenberg Uncertainty Principle}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Position-Momentum Uncertainty:} $\Delta x \cdot \Delta p_x \ge \frac{\hbar}{2}$.
+    \item \textbf{Energy-Time Uncertainty:} $\Delta E \cdot \Delta t \ge \frac{\hbar}{2}$ (determines atomic transition natural linewidth $\Delta\nu = \frac{1}{2\pi \Delta t}$).
+    \item \textbf{Angular Position-Angular Momentum:} $\Delta \theta \cdot \Delta L_z \ge \frac{\hbar}{2}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{3. Schr\"odinger Wave Equations \& Quantum Operators}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Quantum Mechanical Operators in Coordinate Representation:}
+    \begin{align*}
+    \text{Position Operator:} \quad & \hat{x} = x \\
+    \text{Momentum Operator:} \quad & \hat{p}_x = -i\hbar\frac{\partial}{\partial x} \implies \hat{\vec{p}} = -i\hbar\nabla \\
+    \text{Energy / Hamiltonian:} \quad & \hat{H} = -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r}), \quad \hat{E} = i\hbar\frac{\partial}{\partial t}
+    \end{align*}
+    \item \textbf{Time-Dependent Schr\"odinger Equation (TDSE):}
+    \[
+    i\hbar\frac{\partial \Psi(\vec{r},t)}{\partial t} = -\frac{\hbar^2}{2m}\nabla^2 \Psi(\vec{r},t) + V(\vec{r})\Psi(\vec{r},t)
+    \]
+    \item \textbf{Time-Independent Schr\"odinger Equation (TISE):}
+    \[
+    \nabla^2 \psi(\vec{r}) + \frac{2m}{\hbar^2}\left[ E - V(\vec{r}) \right]\psi(\vec{r}) = 0
+    \]
+    \item \textbf{Born Statistical Interpretation \& Normalization:}
+    \[
+    P(x)\,dx = |\psi(x)|^2\,dx, \quad \int_{-\infty}^{\infty} |\psi(x)|^2\,dx = 1
+    \]
+    \item \textbf{Expectation Value:} $\langle \hat{A} \rangle = \int_{-\infty}^{\infty} \psi^*(x) \hat{A} \psi(x)\,dx$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{4. Particle in a 1D Infinite Potential Well ($V(x)=0$ for $0 \le x \le L$)}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Normalized Wavefunctions:} $\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, \dots$
+    \item \textbf{Energy Eigenvalues:}
+    \[
+    E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2} \implies E_n = n^2 E_1
+    \]
+    \item \textbf{Ground State (Zero-Point Energy):} $E_1 = \frac{h^2}{8m L^2} > 0$ (direct consequence of Heisenberg uncertainty).
+\end{itemize}
+\end{formulabox}

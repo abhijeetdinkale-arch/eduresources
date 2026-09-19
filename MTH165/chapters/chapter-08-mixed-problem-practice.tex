@@ -1,0 +1,94 @@
+\chapter{Multi-Unit Mixed Problem Practice Suites}
+\label{chap:mixed-problem-practice}
+
+% ==============================================================================
+% SECTION 8.1: OVERVIEW
+% ==============================================================================
+\section{Cross-Unit Synthesis \& Advanced Problem Suites}
+
+Engineering mathematics examinations frequently present multi-stage problems that require recognizing which analytical techniques to combine across differential calculus, infinite series, multivariable analysis, and vector field theorems. This chapter provides a rigorous collection of mixed-concept practice suites accompanied by complete step-by-step solutions.
+
+% ==============================================================================
+% SECTION 8.2: MIXED PROBLEM SUITE
+% ==============================================================================
+\section{Multi-Unit Practice Suite}
+
+\begin{practiceset}[Comprehensive Cross-Unit Examination Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{(Leibniz \& Series)}: If $y = (x + \sqrt{1+x^2})^m$, prove that $(1+x^2)y_{n+2} + (2n+1)xy_{n+1} + (n^2-m^2)y_n = 0$, and find the Maclaurin series expansion of $y$.
+    \item \textbf{(Beta-Gamma \& Reduction)}: Evaluate $\int_0^1 \frac{x^4}{\sqrt{1-x^2}}\,dx \times \int_0^\infty \frac{x^2}{(1+x^2)^4}\,dx$ using Beta-Gamma special functions.
+    \item \textbf{(Infinite Series Escalation)}: Test the convergence of the series $\sum_{n=1}^\infty \left[ \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{2 \cdot 4 \cdot 6 \cdots (2n)} \right]^2$.
+    \item \textbf{(Euler's Theorem \& Multivariable Chain)}: If $u = \sin^{-1}\left(\frac{x^3+y^3}{x+y}\right)$, prove that $x^2 u_{xx} + 2xy u_{xy} + y^2 u_{yy} = 2\tan u (2\sec^2 u - 1)$.
+    \item \textbf{(Lagrange Constrained Optimization)}: Find the point on the plane $x + 2y + 3z = 14$ that is nearest to the origin using Lagrange Multipliers.
+    \item \textbf{(Change of Order of Integration)}: Change the order of integration and evaluate $I = \int_0^a \int_{\sqrt{ax}}^a \frac{y^2}{\sqrt{y^4 - a^2 x^2}}\,dy dx$.
+    \item \textbf{(Gaussian Double Integral)}: Evaluate $\iint_R e^{-(x^2+y^2)}\,dx dy$ over the circle $x^2+y^2 \le a^2$ by converting to polar coordinates.
+    \item \textbf{(Conservative Vector Field)}: Show that $\vec{F} = (2xyz + z^3)\hat{i} + x^2 z\hat{j} + (x^2 y + 3xz^2)\hat{k}$ is conservative, find its scalar potential $\phi$, and compute the work done from $(0,0,0)$ to $(1,2,1)$.
+    \item \textbf{(Stokes' Theorem Verification)}: Verify Stokes' Theorem for $\vec{F} = (x^2+y-4)\hat{i} + 3xy\hat{j} + (2xz+z^2)\hat{k}$ over the hemisphere $x^2+y^2+z^2 = 16, z \ge 0$.
+    \item \textbf{(Gauss Divergence Flux)}: Evaluate $\iint_S \vec{F}\cdot\hat{n}\,dS$ where $\vec{F} = 4x\hat{i} - 2y^2\hat{j} + z^2\hat{k}$ and $S$ is the cylinder $x^2+y^2 = 4, 0 \le z \le 3$.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 8.3: WORKED SOLUTIONS
+% ==============================================================================
+\section{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solution to Problem 1 (Leibniz \& Maclaurin Series)]
+From Chapter 1, the recurrence at $x = 0$ is $y_{n+2}(0) = (m^2 - n^2)y_n(0)$.
+Since $y(0) = 1, y_1(0) = m$:
+\begin{itemize}
+    \item Even derivatives: $y_2(0) = m^2, y_4(0) = m^2(m^2-2^2), \dots$
+    \item Odd derivatives: $y_3(0) = m(m^2-1^2), y_5(0) = m(m^2-1^2)(m^2-3^2), \dots$
+\end{itemize}
+By Maclaurin's Theorem, $y(x) = \sum_{n=0}^\infty \frac{y_n(0)}{n!} x^n$:
+\begin{equation*}
+    \mathbf{y(x) = 1 + mx + \frac{m^2}{2!}x^2 + \frac{m(m^2-1^2)}{3!}x^3 + \frac{m^2(m^2-2^2)}{4!}x^4 + \cdots}
+\end{equation*}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Problem 2 (Beta-Gamma Product)]
+Let $I_1 = \int_0^1 \frac{x^4}{\sqrt{1-x^2}}\,dx$. Put $x^2 = t \implies x = t^{1/2}, dx = \frac{1}{2}t^{-1/2}dt$:
+\begin{equation*}
+    I_1 = \frac{1}{2}\int_0^1 t^{3/2}(1-t)^{-1/2}dt = \frac{1}{2}B\left(\frac{5}{2}, \frac{1}{2}\right) = \frac{1}{2}\frac{\Gamma(5/2)\Gamma(1/2)}{\Gamma(3)} = \frac{1}{2}\frac{(3/4\sqrt{\pi})(\sqrt{\pi})}{2!} = \frac{3\pi}{16}
+\end{equation*}
+Let $I_2 = \int_0^\infty \frac{x^2}{(1+x^2)^4}\,dx$. Put $x^2 = t \implies dx = \frac{1}{2}t^{-1/2}dt$:
+\begin{equation*}
+    I_2 = \frac{1}{2}\int_0^\infty \frac{t^{1/2}}{(1+t)^4}dt = \frac{1}{2}B\left(\frac{3}{2}, \frac{5}{2}\right) = \frac{1}{2}\frac{\Gamma(3/2)\Gamma(5/2)}{\Gamma(4)} = \frac{1}{2}\frac{(1/2\sqrt{\pi})(3/4\sqrt{\pi})}{6} = \frac{3\pi}{96} = \frac{\pi}{32}
+\end{equation*}
+Product:
+\begin{equation*}
+    I_1 \times I_2 = \left(\frac{3\pi}{16}\right) \times \left(\frac{\pi}{32}\right) = \mathbf{\frac{3\pi^2}{512}}
+\end{equation*}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Problem 3 (Raabe's Series Test)]
+$a_n = \left[\frac{1 \cdot 3 \cdots (2n-1)}{2 \cdot 4 \cdots (2n)}\right]^2 \implies \frac{a_n}{a_{n+1}} = \left(\frac{2n+2}{2n+1}\right)^2 = \frac{4n^2 + 8n + 4}{4n^2 + 4n + 1}$.
+Ratio test gives $L = 1$ (fails).
+Applying Raabe's Test:
+\begin{equation*}
+    R = \lim_{n\to\infty} n\left(\frac{a_n}{a_{n+1}}-1\right) = \lim_{n\to\infty} n\left(\frac{4n+3}{4n^2+4n+1}\right) = \lim_{n\to\infty}\frac{4n^2+3n}{4n^2+4n+1} = \mathbf{1}
+\end{equation*}
+Since $R = 1$, Raabe's test fails. Using Gauss's test $\frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + O(1/n^2) \implies$ with coefficient of $1/n$ equal to $1 \le 1$, the series \textbf{Diverges}.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Problem 5 (Lagrange Optimization of Distance)]
+Minimize squared distance $f(x,y,z) = x^2 + y^2 + z^2$ subject to $g(x,y,z) = x + 2y + 3z - 14 = 0$.
+Lagrange system $\nabla f = \lambda \nabla g$:
+\begin{equation*}
+    2x = \lambda \implies x = \lambda/2, \quad 2y = 2\lambda \implies y = \lambda, \quad 2z = 3\lambda \implies z = 3\lambda/2
+\end{equation*}
+Substituting into constraint:
+\begin{equation*}
+    \frac{\lambda}{2} + 2\lambda + 3\left(\frac{3\lambda}{2}\right) = 14 \implies \lambda\left(\frac{1}{2} + 2 + \frac{9}{2}\right) = 14 \implies 7\lambda = 14 \implies \mathbf{\lambda = 2}
+\end{equation*}
+Thus $x = 1, y = 2, z = 3$. The nearest point is $\mathbf{(1, 2, 3)}$, with minimum distance $d = \sqrt{1+4+9} = \mathbf{\sqrt{14}}$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Problem 6 (Change of Order)]
+Given: $y$ from $\sqrt{ax}$ to $a$, $x$ from $0$ to $a$. The region is bounded by $y^2 = ax$ ($x = y^2/a$), $y = a$, and $x = 0$.
+Reversing order: $x$ varies from $0$ to $y^2/a$, $y$ varies from $0$ to $a$.
+\begin{align*}
+    I &= \int_0^a \left[ \int_0^{y^2/a} \frac{y^2}{\sqrt{y^4 - a^2 x^2}}\,dx \right] dy = \int_0^a y^2 \left[ \frac{1}{a}\sin^{-1}\left(\frac{ax}{y^2}\right) \right]_0^{y^2/a} dy \\
+    &= \frac{1}{a}\int_0^a y^2 \left[\sin^{-1}(1) - 0\right] dy = \frac{1}{a}\left(\frac{\pi}{2}\right) \left[ \frac{y^3}{3} \right]_0^a = \frac{\pi}{2a} \frac{a^3}{3} = \mathbf{\frac{\pi a^2}{6}}
+\end{align*}
+\end{solutionbox}

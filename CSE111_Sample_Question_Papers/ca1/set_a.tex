@@ -1,0 +1,90 @@
+\section{Continuous Assessment 1 --- Set A}
+\label{sec:ca1_set_a}
+
+\ExamHeader{Continuous Assessment 1}{A}{45 Minutes}{25 Marks}{Unit 1 (Computer Languages) \& Unit 2 (Computer Fundamentals)}
+
+\noindent
+\textbf{Instructions:} All 25 questions are compulsory. Each question carries 1 mark. Select the single best answer.
+
+\vspace{3mm}
+
+\mcqitem{1}{Which of the following languages is executed directly by the CPU without translation?}{Assembly Language}{Machine Language}{Python}{C++}
+
+\mcqitem{2}{In assembly language, readable abbreviations like \texttt{ADD} and \texttt{MOV} are known as:}{Operands}{Mnemonics}{Macros}{Pointers}
+
+\mcqitem{3}{A software tool that converts high-level source code into machine code statement-by-statement at runtime is a/an:}{Compiler}{Interpreter}{Assembler}{Linker}
+
+\mcqitem{4}{Which phase of compilation converts character streams into tokens like identifiers and keywords?}{Syntax Analysis}{Lexical Analysis}{Code Optimization}{Code Generation}
+
+\mcqitem{5}{What is the primary role of the Linker in program translation?}{To edit source code}{To combine object files and libraries into an executable binary}{To load instructions into RAM}{To debug runtime logic}
+
+\mcqitem{6}{Which operating system utility loads the compiled executable file into primary memory (RAM) for execution?}{Compiler}{Loader}{Assembler}{Text Editor}
+
+\mcqitem{7}{What does an assembler do in its first pass?}{Generates final machine instructions}{Records symbols and label definitions with their memory addresses}{Links external libraries}{Executes instructions}
+
+\mcqitem{8}{Which type of programming error allows a program to compile and run, but yields unintended or incorrect results?}{Syntax error}{Logic error}{Compile-time error}{Linker error}
+
+\mcqitem{9}{What is the correct sequence of steps in the CPU instruction cycle?}{Decode $\rightarrow$ Execute $\rightarrow$ Fetch $\rightarrow$ Store}{Fetch $\rightarrow$ Decode $\rightarrow$ Execute $\rightarrow$ Store}{Store $\rightarrow$ Fetch $\rightarrow$ Execute $\rightarrow$ Decode}{Execute $\rightarrow$ Decode $\rightarrow$ Fetch $\rightarrow$ Store}
+
+\mcqitem{10}{A finite, ordered set of step-by-step instructions to solve a given computing problem is called a/an:}{Mnemonic}{Algorithm}{Operand}{Token}
+
+\mcqitem{11}{In the C/C++ compilation pipeline, which tool expands \texttt{\#include} directives and macros?}{Linker}{Preprocessor}{Loader}{Assembler}
+
+\mcqitem{12}{The architecture where program instructions and data share the same internal memory was proposed in 1945 by:}{Charles Babbage}{John von Neumann}{Blaise Pascal}{Alan Turing}
+
+\mcqitem{13}{What electronic switching component was used in first-generation computers (1940--1956)?}{Transistors}{Vacuum tubes}{Integrated circuits}{Microprocessors}
+
+\mcqitem{14}{Second-generation computers (1956--1963) replaced vacuum tubes with:}{Microprocessors}{Transistors}{Integrated circuits}{Magnetic drums}
+
+\mcqitem{15}{Which generation of computers first used Integrated Circuits (ICs) on silicon chips?}{First generation}{Second generation}{Third generation}{Fourth generation}
+
+\mcqitem{16}{The first commercial single-chip microprocessor (Intel 4004) was launched in:}{1956}{1964}{1971}{1981}
+
+\mcqitem{17}{Which CPU component performs arithmetic additions and logical comparisons?}{Control Unit}{Arithmetic Logic Unit (ALU)}{Program Counter}{Address Bus}
+
+\mcqitem{18}{Which CPU component coordinates operations by generating timing and control signals?}{Control Unit (CU)}{ALU}{RAM}{Hard Disk}
+
+\mcqitem{19}{Which system bus is unidirectional and transmits memory addresses from the CPU to memory?}{Data Bus}{Address Bus}{Control Bus}{Serial Bus}
+
+\mcqitem{20}{Which system bus carries the actual data and machine instructions between hardware units?}{Control Bus}{Data Bus}{Address Bus}{Power Bus}
+
+\mcqitem{21}{The computer principle stating that inaccurate input data produces inaccurate output information is:}{FIFO}{GIGO (Garbage In, Garbage Out)}{LIFO}{DMA}
+
+\mcqitem{22}{Which type of computer is designed for computation-intensive scientific tasks like climate modeling?}{Microcontroller}{Supercomputer}{Workstation}{Embedded system}
+
+\mcqitem{23}{Large, highly reliable computers used by banks and airlines for massive transaction processing are:}{Personal computers}{Mainframe computers}{Workstations}{Laptops}
+
+\mcqitem{24}{A small computer built into a washing machine or automobile engine to perform a single dedicated control function is a/an:}{Supercomputer}{Embedded computer}{Mainframe}{Server}
+
+\mcqitem{25}{A computer that processes continuous physical variables like electrical voltage rather than discrete binary digits is a/an:}{Digital computer}{Analog computer}{Hybrid computer}{Mainframe}
+
+\newpage
+\subsection*{Answer Key \& Explanations --- CA-1 (Set A)}
+
+\begin{answerkeytable}{CA-1 Set A --- Answer Key}
+\begin{tabular}{*{10}{c}}
+\toprule
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\midrule
+1 & \textbf{B} & 6 & \textbf{B} & 11 & \textbf{B} & 16 & \textbf{C} & 21 & \textbf{B} \\
+2 & \textbf{B} & 7 & \textbf{B} & 12 & \textbf{B} & 17 & \textbf{B} & 22 & \textbf{B} \\
+3 & \textbf{B} & 8 & \textbf{B} & 13 & \textbf{B} & 18 & \textbf{A} & 23 & \textbf{B} \\
+4 & \textbf{B} & 9 & \textbf{B} & 14 & \textbf{B} & 19 & \textbf{B} & 24 & \textbf{B} \\
+5 & \textbf{B} & 10 & \textbf{B} & 15 & \textbf{C} & 20 & \textbf{B} & 25 & \textbf{B} \\
+\bottomrule
+\end{tabular}
+\end{answerkeytable}
+
+\begin{expbox}[Technical Solutions --- CA-1 Set A]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Q.1 (B):} Machine language is the only language a processor's digital circuits execute natively.
+    \item \textbf{Q.3 (B):} Interpreters evaluate and execute code line-by-line during runtime, unlike compilers which translate everything beforehand.
+    \item \textbf{Q.5 (B):} The linker links external library code (e.g., \texttt{printf}) and object files to create a standalone executable.
+    \item \textbf{Q.12 (B):} John von Neumann introduced the stored-program architecture in 1945.
+    \item \textbf{Q.16 (C):} The Intel 4004 microprocessor was introduced in 1971, marking the beginning of 4th-generation computing.
+    \item \textbf{Q.19 (B):} The Address Bus is unidirectional; memory addresses originate only from the CPU.
+    \item \textbf{Q.24 (B):} Embedded computers are dedicated microcontrollers engineered into non-computer devices for specialized control.
+\end{itemize}
+\end{expbox}
+
+\newpage

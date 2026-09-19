@@ -1,0 +1,321 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\label{sec:ca1_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{A}{50 Minutes}{30 Marks}{CO1 (Matrices \& Systems of Linear Equations), CO2 (Higher-Order ODEs \& Calculus)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    Find the characteristic equation and compute the eigenvalues of the matrix:
+    \[
+    A = \begin{bmatrix} 1 & 2 & 2 \\ 0 & 2 & 1 \\ -1 & 2 & 2 \end{bmatrix}
+    \]
+}{5}{CO1}{L2 Understand}
+
+\questionitem{2}{
+    If the rank of the matrix $A$ is 1, determine the value of the non-zero constant $a$:
+    \[
+    A = \begin{bmatrix} a & -a & 0 \\ 0 & 1 & 0 \\ -a & 0 & 1 \end{bmatrix}
+    \]
+    Can $\text{rank}(A) = 1$ be achieved for any real value of $a$? Justify rigorously.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Determine the values of parameters $a$ and $b$ such that the following non-homogeneous system of linear equations possesses a \textbf{unique solution}:
+    \[
+    \begin{aligned}
+    x - 2y + z &= 1 \\
+    x + 4y + 3z &= -1 \\
+    x + 4y + az &= -b
+    \end{aligned}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{4}{
+    Test whether the following set of vectors in $\mathbb{R}^4$ is linearly dependent or linearly independent:
+    \[
+    v_1 = (0, -1, -1, 0), \quad v_2 = (0, 0, -1, 1), \quad v_3 = (1, -1, 1, 1)
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{5}{
+    Find the eigenvalues and corresponding eigenvectors of the upper triangular matrix:
+    \[
+    A = \begin{bmatrix} 1 & 1 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{6}{
+    Solve the third-order linear homogeneous ordinary differential equation by the operator method:
+    \[
+    3y''' - 2y'' - 3y' + 2y = 0
+    \]
+}{5}{CO2}{L3 Apply}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-1 Set A)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Formula for Characteristic Equation}
+The characteristic equation of a $3\times 3$ matrix $A$ is given by:
+\[
+\det(A - \lambda I) = \lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0
+\]
+where:
+\begin{itemize}[leftmargin=6mm]
+    \item $S_1 = \text{trace}(A) = 1 + 2 + 2 = 5$.
+    \item $S_2 =$ Sum of minors of principal diagonal elements:
+    \[
+    M_{11} = \begin{vmatrix} 2 & 1 \\ 2 & 2 \end{vmatrix} = 4 - 2 = 2
+    \]
+    \[
+    M_{22} = \begin{vmatrix} 1 & 2 \\ -1 & 2 \end{vmatrix} = 2 - (-2) = 4
+    \]
+    \[
+    M_{33} = \begin{vmatrix} 1 & 2 \\ 0 & 2 \end{vmatrix} = 2 - 0 = 2
+    \]
+    Hence, $S_2 = 2 + 4 + 2 = 8$.
+    \item $S_3 = \det(A)$: Expanding along row 1:
+    \[
+    \det(A) = 1(4 - 2) - 2(0 - (-1)) + 2(0 - (-2)) = 1(2) - 2(1) + 2(2) = 2 - 2 + 4 = 4
+    \]
+\end{itemize}
+
+\textbf{Step 2: Characteristic Equation}
+\[
+\lambda^3 - 5\lambda^2 + 8\lambda - 4 = 0
+\]
+
+\textbf{Step 3: Solving for Eigenvalues}
+By inspection, test $\lambda = 1$:
+\[
+1^3 - 5(1)^2 + 8(1) - 4 = 1 - 5 + 8 - 4 = 0 \implies (\lambda - 1) \text{ is a factor.}
+\]
+Factorizing by synthetic division:
+\[
+(\lambda - 1)(\lambda^2 - 4\lambda + 4) = 0 \implies (\lambda - 1)(\lambda - 2)^2 = 0
+\]
+Thus, the eigenvalues are:
+\[
+\mathbf{\lambda_1 = 1, \quad \lambda_2 = 2, \quad \lambda_3 = 2}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Characteristic equation formula \& trace/minors: \textbf{2 Marks}\\
+$\bullet$ Correct determinant \& cubic equation $\lambda^3 - 5\lambda^2 + 8\lambda - 4 = 0$: \textbf{1.5 Marks}\\
+$\bullet$ Correct eigenvalues $\lambda = 1, 2, 2$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: Understanding Rank of Matrix}
+The rank of a matrix is the maximum number of linearly independent rows (or the order of the highest-order non-vanishing minor).
+
+For $\text{rank}(A) = 1$, \textbf{all $2\times 2$ minors must vanish simultaneously}.
+Let us evaluate minors of order 2 from:
+\[
+A = \begin{bmatrix} a & -a & 0 \\ 0 & 1 & 0 \\ -a & 0 & 1 \end{bmatrix}
+\]
+Look at the submatrix formed by rows 2 and 3, columns 2 and 3:
+\[
+M = \begin{vmatrix} 1 & 0 \\ 0 & 1 \end{vmatrix} = (1)(1) - (0)(0) = 1 \neq 0
+\]
+\textbf{Step 2: Analysis}
+Since there exists a $2\times 2$ minor that equals $1 \neq 0$ \textbf{independent of the value of $a$}, the rank of $A$ must be at least 2 for all values of $a$. That is:
+\[
+\text{rank}(A) \ge 2 \quad \forall a \in \mathbb{R}
+\]
+Therefore, \textbf{no value of $a$ exists} such that $\text{rank}(A) = 1$.
+
+\begin{examinertip}[University Exam Twist]
+This is a standard trap question in LPU exams. Students often attempt to set $\det(A) = 0$ to get $a$, but $\det(A) = 0$ only guarantees $\text{rank}(A) \le 2$, NOT $\text{rank}(A) = 1$. Always check $2\times 2$ minors!
+\end{examinertip}
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Condition for rank $= 1$ (all $2\times 2$ minors $= 0$): \textbf{2 Marks}\\
+$\bullet$ Explicit computation of a non-zero $2\times 2$ minor: \textbf{2 Marks}\\
+$\bullet$ Conclusive statement that no such $a$ exists: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Augmented Matrix Formulation}
+The augmented matrix $[A|B]$ is:
+\[
+[A|B] = \begin{bmatrix} 1 & -2 & 1 & | & 1 \\ 1 & 4 & 3 & | & -1 \\ 1 & 4 & a & | & -b \end{bmatrix}
+\]
+\textbf{Step 2: Elementary Row Operations (Echelon Form)}
+Apply $R_2 \to R_2 - R_1$ and $R_3 \to R_3 - R_1$:
+\[
+\begin{bmatrix}
+1 & -2 & 1 & | & 1 \\
+0 & 6 & 2 & | & -2 \\
+0 & 6 & a-1 & | & -b-1
+\end{bmatrix}
+\]
+Now apply $R_3 \to R_3 - R_2$:
+\[
+\begin{bmatrix}
+1 & -2 & 1 & | & 1 \\
+0 & 6 & 2 & | & -2 \\
+0 & 0 & a-3 & | & -b+1
+\end{bmatrix}
+\]
+\textbf{Step 3: Condition for Unique Solution (Rouché-Capelli Theorem)}
+For the system to have a **unique solution**, the rank of coefficient matrix $A$ must equal the rank of the augmented matrix $[A|B]$ and must equal the number of unknowns ($n=3$):
+\[
+\text{rank}(A) = \text{rank}[A|B] = 3
+\]
+This strictly requires the pivot element in the third row to be non-zero:
+\[
+a - 3 \neq 0 \implies \mathbf{a \neq 3}
+\]
+The value of $b$ has no effect on $\text{rank}(A)$ when $a \neq 3$. Therefore:
+\[
+\mathbf{a \neq 3 \quad \text{and} \quad b \in \mathbb{R} \text{ (any real number)}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Setting up augmented matrix: \textbf{1 Mark}\\
+$\bullet$ Row reduction to row echelon form: \textbf{2 Marks}\\
+$\bullet$ Correct condition $a \neq 3$ and $b \in \mathbb{R}$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Linear Combination Setup}
+Let $c_1, c_2, c_3 \in \mathbb{R}$ such that:
+\[
+c_1 v_1 + c_2 v_2 + c_3 v_3 = \vec{0}
+\]
+\[
+c_1(0, -1, -1, 0) + c_2(0, 0, -1, 1) + c_3(1, -1, 1, 1) = (0, 0, 0, 0)
+\]
+\textbf{Step 2: Component-wise Equations}
+\begin{align}
+\text{Component 1: } & c_3 = 0 \label{eq:comp1} \\
+\text{Component 2: } & -c_1 - c_3 = 0 \label{eq:comp2} \\
+\text{Component 3: } & -c_1 - c_2 + c_3 = 0 \label{eq:comp3} \\
+\text{Component 4: } & c_2 + c_3 = 0 \label{eq:comp4}
+\end{align}
+\textbf{Step 3: Solving the System}
+From \eqref{eq:comp1}, $c_3 = 0$.
+Substituting $c_3 = 0$ into \eqref{eq:comp2}:
+\[
+-c_1 - 0 = 0 \implies c_1 = 0
+\]
+Substituting $c_3 = 0$ into \eqref{eq:comp4}:
+\[
+c_2 + 0 = 0 \implies c_2 = 0
+\]
+Check in \eqref{eq:comp3}: $-0 - 0 + 0 = 0$ (Consistent).
+
+Since the only solution is the trivial solution:
+\[
+\mathbf{c_1 = c_2 = c_3 = 0}
+\]
+The vectors $\{v_1, v_2, v_3\}$ are \textbf{Linearly Independent}.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Vector equation setup $c_1 v_1 + c_2 v_2 + c_3 v_3 = \vec{0}$: \textbf{1.5 Marks}\\
+$\bullet$ Matrix or algebraic equation system: \textbf{1.5 Marks}\\
+$\bullet$ Proving $c_1=c_2=c_3=0$ and concluding linear independence: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Eigenvalues}
+For an upper triangular matrix, the eigenvalues are simply the diagonal entries:
+\[
+\det(A - \lambda I) = (1 - \lambda)^3 = 0 \implies \mathbf{\lambda_1 = \lambda_2 = \lambda_3 = 1}
+\]
+Thus, $\lambda = 1$ is a repeated eigenvalue with algebraic multiplicity $AM = 3$.
+
+\textbf{Step 2: Eigenvectors for $\lambda = 1$}
+Solve $(A - 1I)X = \vec{0}$:
+\[
+\begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\]
+This yields a single constraint:
+\[
+0x_1 + 1x_2 + 0x_3 = 0 \implies \mathbf{x_2 = 0}
+\]
+Here, $x_1$ and $x_3$ are completely free variables!
+Let $x_1 = s$ and $x_3 = t$ ($s, t \in \mathbb{R}$, not both zero):
+\[
+X = \begin{bmatrix} s \\ 0 \\ t \end{bmatrix} = s \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} + t \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
+\]
+Thus, there are two linearly independent eigenvectors:
+\[
+\mathbf{X_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \quad X_2 = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}}
+\]
+Geometric multiplicity $GM = 3 - \text{rank}(A-I) = 3 - 1 = 2$.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Finding eigenvalue $\lambda = 1$ (repeated): \textbf{1 Mark}\\
+$\bullet$ Setting up system $(A - I)X = 0$: \textbf{1.5 Marks}\\
+$\bullet$ Identifying free variables and producing two linearly independent eigenvectors: \textbf{2.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Differential Operator Form}
+Let $D = \frac{d}{dx}$. The given ODE is:
+\[
+(3D^3 - 2D^2 - 3D + 2)y = 0
+\]
+\textbf{Step 2: Auxiliary Equation}
+Replace $D$ by $m$:
+\[
+3m^3 - 2m^2 - 3m + 2 = 0
+\]
+Group terms:
+\[
+m^2(3m - 2) - 1(3m - 2) = 0
+\]
+\[
+(3m - 2)(m^2 - 1) = 0 \implies (3m - 2)(m - 1)(m + 1) = 0
+\]
+The roots of the auxiliary equation are:
+\[
+\mathbf{m_1 = \frac{2}{3}, \quad m_2 = 1, \quad m_3 = -1}
+\]
+\textbf{Step 3: General Solution}
+Since all three roots are real and distinct, the complementary function (which is the general solution since the RHS is 0) is:
+\[
+\mathbf{y(x) = c_1 e^{\frac{2}{3}x} + c_2 e^x + c_3 e^{-x}}
+\]
+where $c_1, c_2, c_3$ are arbitrary constants.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Auxiliary equation formulation: \textbf{1.5 Marks}\\
+$\bullet$ Factorization and finding roots $m = 2/3, 1, -1$: \textbf{2 Marks}\\
+$\bullet$ Writing final general solution with arbitrary constants: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

@@ -1,0 +1,103 @@
+\chapter{Fundamentals of Integral Calculus}
+\label{chap:integral-calculus}
+
+% ==============================================================================
+% SECTION 3.1: OVERVIEW & LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Integral calculus represents the mathematical foundation for total accumulation, distributed loads, work done, geometric areas, volumes of revolution, and probability densities. In this chapter, we develop essential analytical integration techniques and the fundamental properties of definite integrals.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Execute Standard Antiderivatives}: Apply linearity and master standard algebraic, trigonometric, exponential, and hyperbolic antiderivative forms.
+    \item \textbf{Perform Integration by Substitution}: Reverse the chain rule efficiently and transform limits of integration correctly.
+    \item \textbf{Apply Integration by Parts}: Utilize the ILATE rule convention and establish recursive reduction formulas.
+    \item \textbf{Decompose Rational Integrals}: Integrate using partial fractions for distinct linear, repeated linear, and irreducible quadratic factors.
+    \item \textbf{Exploit Definite Integral Properties}: Apply interval splitting, reflection (King's property), and even/odd symmetry to evaluate complex definite integrals in closed form.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 3.2: INTEGRATION TECHNIQUES
+% ==============================================================================
+\section{Advanced Methods of Integration}
+
+\subsection{Integration by Substitution}
+If $u = g(x)$, then $du = g'(x)\,dx$, yielding:
+\begin{equation}
+\int f(g(x)) g'(x)\,dx = \int f(u)\,du
+\end{equation}
+For definite integrals:
+\begin{equation}
+\int_a^b f(g(x)) g'(x)\,dx = \int_{g(a)}^{g(b)} f(u)\,du
+\end{equation}
+
+\subsection{Integration by Parts (ILATE Convention)}
+\begin{equation}
+\int u\,v\,dx = u \int v\,dx - \int \left( \frac{du}{dx} \int v\,dx \right) dx
+\end{equation}
+The priority for choosing $u$ is given by \textbf{ILATE}:
+\begin{enumerate}
+    \item \textbf{I}: Inverse Trigonometric functions ($\sin^{-1}x, \tan^{-1}x$)
+    \item \textbf{L}: Logarithmic functions ($\ln x, \log_a x$)
+    \item \textbf{A}: Algebraic polynomials ($x^n, x^2+1$)
+    \item \textbf{T}: Trigonometric functions ($\sin x, \cos x$)
+    \item \textbf{E}: Exponential functions ($e^{ax}, a^x$)
+\end{enumerate}
+
+\subsection{Partial Fractions Decomposition}
+For proper rational functions $P(x)/Q(x)$:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Distinct Linear Factor} $(ax+b)$: $\frac{A}{ax+b}$
+    \item \textbf{Repeated Linear Factor} $(ax+b)^k$: $\frac{A_1}{ax+b} + \frac{A_2}{(ax+b)^2} + \cdots + \frac{A_k}{(ax+b)^k}$
+    \item \textbf{Irreducible Quadratic Factor} $(ax^2+bx+c)$: $\frac{Ax+B}{ax^2+bx+c}$
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.3: DEFINITE INTEGRALS & SPECIAL PROPERTIES
+% ==============================================================================
+\section{Definite Integrals \& Symmetry Properties}
+
+\begin{theorem}[Master Properties of Definite Integrals]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Dummy Variable Invariance}: $\int_a^b f(x)\,dx = \int_a^b f(t)\,dt$
+    \item \textbf{Order Inversion}: $\int_a^b f(x)\,dx = -\int_b^a f(x)\,dx$
+    \item \textbf{Interval Splitting}: $\int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx$
+    \item \textbf{King's Reflection Property}:
+    \begin{equation}
+    \int_a^b f(x)\,dx = \int_a^b f(a + b - x)\,dx
+    \end{equation}
+    Special case ($a = 0$): $\int_0^a f(x)\,dx = \int_0^a f(a - x)\,dx$.
+    \item \textbf{Symmetric Interval for Even/Odd Functions}:
+    \begin{equation}
+    \int_{-a}^a f(x)\,dx = \begin{cases}
+    2 \int_0^a f(x)\,dx, & \text{if } f(-x) = f(x) \text{ (Even)} \\
+    0, & \text{if } f(-x) = -f(x) \text{ (Odd)}
+    \end{cases}
+    \end{equation}
+    \item \textbf{Periodic Function Property}: If $f(x+T) = f(x)$, then $\int_0^{nT} f(x)\,dx = n \int_0^T f(x)\,dx$.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Evaluation via King's Property]
+Evaluate $I = \int_0^{\pi/2} \frac{\sqrt{\sin x}}{\sqrt{\sin x} + \sqrt{\cos x}}\,dx$.
+\end{example}
+
+\begin{solutionbox}
+Let:
+\begin{equation}
+I = \int_0^{\pi/2} \frac{\sqrt{\sin x}}{\sqrt{\sin x} + \sqrt{\cos x}}\,dx \quad \text{--- (1)}
+\end{equation}
+Apply King's property $\int_0^a f(x)\,dx = \int_0^a f(a - x)\,dx$ with $a = \pi/2$:
+\begin{equation}
+I = \int_0^{\pi/2} \frac{\sqrt{\sin(\pi/2 - x)}}{\sqrt{\sin(\pi/2 - x)} + \sqrt{\cos(\pi/2 - x)}}\,dx = \int_0^{\pi/2} \frac{\sqrt{\cos x}}{\sqrt{\cos x} + \sqrt{\sin x}}\,dx \quad \text{--- (2)}
+\end{equation}
+Adding equations (1) and (2):
+\begin{equation}
+2I = \int_0^{\pi/2} \frac{\sqrt{\sin x} + \sqrt{\cos x}}{\sqrt{\sin x} + \sqrt{\cos x}}\,dx = \int_0^{\pi/2} 1\,dx = \frac{\pi}{2}
+\end{equation}
+Therefore, $I = \frac{\pi}{4}$.
+\end{solutionbox}
+

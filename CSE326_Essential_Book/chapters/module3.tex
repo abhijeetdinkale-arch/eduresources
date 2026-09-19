@@ -1,0 +1,66 @@
+\chapter{Cascading Style Sheets (CSS3) \& The Box Model}
+
+\section{3.1 What is CSS?}
+CSS stands for \textbf{Cascading Style Sheets}. It controls the visual presentation and layout of HTML pages.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Separation of Concerns}: HTML handles structure and content; CSS handles the look and feel.
+    \item \textbf{Cascading}: Styles apply in layers where the most specific or last declared rule takes precedence.
+    \item \textbf{Features}: Styling (colors, fonts, sizes), Responsiveness (media queries), Reusability, and Consistency.
+\end{itemize}
+
+\section{3.2 Types of CSS}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Inline CSS}: Defined inside HTML tags using \texttt{style="..."} (affects single element).
+    \item \textbf{Internal CSS}: Defined inside the \texttt{<style>} tag in \texttt{<head>} (affects one HTML page).
+    \item \textbf{External CSS}: Written in a separate \texttt{.css} file linked via \texttt{<link rel="stylesheet" href="style.css">} (reusable across multiple pages).
+\end{enumerate}
+
+\section{3.3 CSS Selectors}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Type Selector}: Selects elements by HTML tag name: \texttt{p \{ color: blue; \}}.
+    \item \textbf{ID Selector}: Selects an element with a unique ID using \texttt{\#}: \texttt{\#main-title \{ color: red; \}}.
+    \item \textbf{Class Selector}: Selects elements sharing a class using \texttt{.}: \texttt{.highlight \{ font-weight: bold; \}}.
+    \item \textbf{Universal Selector}: Matches all elements using \texttt{*}: \texttt{* \{ margin: 0; padding: 0; \}}.
+    \item \textbf{Grouping Selectors}: Applies same style to multiple selectors: \texttt{h1, h2, p \{ color: green; \}}.
+    \item \textbf{Combining Selectors}: Targets specific element with class: \texttt{p.highlight \{ background: yellow; \}}.
+\end{itemize}
+
+\section{3.4 Text \& Typography Properties}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{color}: Sets text color (\texttt{color: red;}).
+    \item \texttt{text-align}: Aligns text horizontally (\texttt{left}, \texttt{center}, \texttt{right}, \texttt{justify}).
+    \item \texttt{text-decoration}: Adds or removes underlines (\texttt{none}, \texttt{underline}, \texttt{line-through}).
+    \item \texttt{text-transform}: Capitalization (\texttt{uppercase}, \texttt{lowercase}, \texttt{capitalize}).
+    \item \texttt{text-indent}: Indents first line (\texttt{text-indent: 40px;}).
+    \item \texttt{letter-spacing} \& \texttt{word-spacing}: Spacing between letters/words.
+    \item \texttt{line-height}: Vertical line height (\texttt{line-height: 1.5;}).
+    \item \texttt{font-family}, \texttt{font-size}, \texttt{font-style: italic;}, \texttt{font-weight: bold;}.
+    \item \texttt{text-shadow}: Adds shadow effect (\texttt{text-shadow: 2px 2px 5px gray;}).
+    \item \texttt{white-space}: Whitespace handling (\texttt{nowrap}, \texttt{pre}, \texttt{normal}).
+\end{itemize}
+
+\section{3.5 The CSS Box Model}
+Every HTML element is treated as a rectangular box with 4 components:
+\begin{center}
+\begin{tabular}{|c|}
+\hline
+\textbf{MARGIN} (Outside space separating element from neighbors) \\
+\hline
+\textbf{BORDER} (Surrounds padding and content: width, style, color) \\
+\hline
+\textbf{PADDING} (Inside space between content and border) \\
+\hline
+\textbf{CONTENT} (Actual text, image, dimensions: \texttt{width}, \texttt{height}) \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{3.6 CSS Background Properties}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{background-image}: \texttt{url("bg.jpg");}
+    \item \texttt{background-repeat}: \texttt{repeat} (default), \texttt{repeat-x}, \texttt{repeat-y}, \texttt{no-repeat}.
+    \item \texttt{background-size}: \texttt{auto}, \texttt{cover} (fills screen, crops edges), \texttt{contain} (fits entirely).
+    \item \texttt{background-position}: \texttt{center center}, \texttt{top left}, \texttt{bottom right}.
+    \item \texttt{background-attachment}: \texttt{scroll} (default), \texttt{fixed} (stays fixed while page scrolls).
+    \item \textbf{Shorthand}: \texttt{background: url("bg.jpg") no-repeat center center / cover fixed;}
+\end{itemize}

@@ -1,0 +1,24 @@
+\chapter{Combinational Logic Circuits Formulas}
+
+\begin{formulabox}[Adders, Subtractors \& Carry Lookahead]
+\begin{align}
+\text{Half Adder:} \quad S &= A \oplus B, \quad C = AB \\
+\text{Full Adder:} \quad S &= A \oplus B \oplus C_{in}, \quad C_{out} = AB + BC_{in} + AC_{in} \\
+\text{Half Subtractor:} \quad D &= A \oplus B, \quad B_{out} = \bar{A}B \\
+\text{Full Subtractor:} \quad D &= A \oplus B \oplus B_{in}, \quad B_{out} = \bar{A}B + \bar{A}B_{in} + BB_{in} \\
+\text{CLA Generate \& Propagate:} \quad G_i &= A_i B_i, \quad P_i = A_i \oplus B_i \\
+\text{CLA Carry Equations:} \quad C_1 &= G_0 + P_0 C_0 \\
+C_2 &= G_1 + P_1 G_0 + P_1 P_0 C_0 \\
+C_3 &= G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 C_0
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[Multiplexers, Encoders \& Comparators]
+\begin{align}
+\text{4-to-1 MUX Output:} \quad Y &= \bar{S}_1\bar{S}_0 I_0 + \bar{S}_1 S_0 I_1 + S_1\bar{S}_0 I_2 + S_1 S_0 I_3 \\
+\text{4-to-2 Priority Encoder ($D_3$ highest):} \quad Q_1 &= D_3 + D_2, \quad Q_0 = D_3 + \bar{D}_2 D_1, \quad V = \sum D_i \\
+\text{2-bit Comparator Equality:} \quad (A=B) &= (A_1 \odot B_1)(A_0 \odot B_0) \\
+\text{2-bit Comparator Greater:} \quad (A>B) &= A_1 \bar{B}_1 + (A_1 \odot B_1) A_0 \bar{B}_0 \\
+\text{2-bit Comparator Lesser:} \quad (A<B) &= \bar{A}_1 B_1 + (A_1 \odot B_1) \bar{A}_0 B_0
+\end{align}
+\end{formulabox}

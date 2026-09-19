@@ -1,0 +1,78 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/18 v1.0 PHY175 Handwritten Notes Style System]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=22mm,
+    bottom=22mm,
+    left=22mm,
+    right=22mm,
+    headheight=14pt,
+    headsep=14pt,
+    footskip=12mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{noteteal}{RGB}{13, 148, 136}
+\definecolor{notedark}{RGB}{19, 78, 74}
+\definecolor{notebg}{RGB}{240, 253, 250}
+\definecolor{noteyellow}{RGB}{254, 240, 138}
+
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+    boxrule=1pt,
+    arc=4pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\sffamily,
+    before skip=8pt,
+    after skip=8pt
+}
+
+\newtcolorbox{notebox}[1][Student Note \& Intuition]{
+    enhanced, breakable, colback=notebg, colframe=noteteal,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+    boxed title style={colback=noteteal, arc=3pt}
+}
+
+\newtcolorbox{trickbox}[1][Exam Trick / Mnemonic]{
+    enhanced, breakable, colback=noteyellow!40, colframe=notedark,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+    boxed title style={colback=notedark, arc=3pt}
+}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+\titleformat{\chapter}[display]
+{\normalfont\sffamily\LARGE\bfseries\color{notedark}}
+{\flushright\fontsize{32}{36}\selectfont\color{noteteal!30}Module \thechapter}
+{-15pt}
+{\titlerule[1.5pt]\vspace{1ex}}
+[\vspace{1ex}\titlerule]
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\small\thepage}
+\fancyhead[RE]{\sffamily\small\nouppercase{\leftmark}}
+\fancyhead[LO]{\sffamily\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\sffamily\scriptsize LPU Engineering Open $\cdot$ PHY175 Handwritten Study Notes}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=notedark, citecolor=noteteal}

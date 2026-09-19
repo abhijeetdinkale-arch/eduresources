@@ -1,0 +1,395 @@
+\chapter{Matrix Methods and Linear Systems}
+\label{chap:matrix-methods}
+
+% ==============================================================================
+% SECTION 1.1: OVERVIEW & LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Matrix algebra and the theory of linear systems form the fundamental computational backbone of modern engineering disciplines. From structural finite element analysis and electrical circuit simulation to machine learning, robotics, and fluid dynamics, physical systems are routinely modeled as systems of linear equations and linear transformations.
+
+This chapter develops the rigorous algebraic and geometric framework of matrices: elementary row and column operations, row echelon reductions, determinantal and echelon ranks, vector space independence, the solvability and consistency of linear systems ($Ax=b$ and $Ax=0$) via the Rouch\'e--Capelli theorem, matrix inversion techniques, spectral analysis (eigenvalues and eigenvectors), and the Cayley--Hamilton theorem.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Classify Matrix Types \& Properties}: Analyze symmetric, skew-symmetric, orthogonal, Hermitian, and unitary matrices.
+    \item \textbf{Perform Elementary Transformations}: Reduce any matrix $A \in \mathbb{R}^{m\times n}$ to Row Echelon Form (REF) and Reduced Row Echelon Form (RREF).
+    \item \textbf{Compute Matrix Rank}: Determine $\operatorname{rank}(A)$ using minor determinants and pivot counts in echelon forms.
+    \item \textbf{Test Vector Independence}: Establish linear dependence or independence of a set of vectors $\{v_1, v_2, \dots, v_k\} \subset \mathbb{R}^n$.
+    \item \textbf{Solve Linear Systems ($Ax=b$ and $Ax=0$)}: Characterize unique, infinite, and no-solution regimes using augmented matrices $[A|b]$ and the Rouch\'e--Capelli theorem.
+    \item \textbf{Invert Matrices}: Compute $A^{-1}$ using the classical Adjugate formula and the Gauss--Jordan row-elimination method $[A | I] \sim [I | A^{-1}]$.
+    \item \textbf{Compute Eigenvalues \& Eigenvectors}: Solve the characteristic equation $|A - \lambda I| = 0$, construct eigenspaces, and analyze algebraic vs. geometric multiplicity.
+    \item \textbf{Apply the Cayley--Hamilton Theorem}: Verify that every square matrix satisfies its own characteristic polynomial, and compute matrix inverses $A^{-1}$ and powers $A^n$.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 1.2: MATRIX FUNDAMENTALS & SPECIAL MATRICES
+% ==============================================================================
+\section{Matrix Fundamentals \& Classification}
+
+\begin{definition}[Matrix Definition]
+A matrix $A$ of order $m \times n$ is a rectangular array of $m \times n$ real or complex numbers arranged in $m$ horizontal rows and $n$ vertical columns:
+\begin{equation}
+A = [a_{ij}] = \begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}, \quad i \in \{1,\dots,m\}, \; j \in \{1,\dots,n\}
+\end{equation}
+\end{definition}
+
+\subsection{Special Matrix Classes in Engineering}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Symmetric Matrix}: A square matrix $A$ where $A^T = A$, meaning $a_{ij} = a_{ji}$. All eigenvalues are strictly real.
+    \item \textbf{Skew-Symmetric Matrix}: A square matrix where $A^T = -A$, meaning $a_{ij} = -a_{ji}$ and all diagonal entries $a_{ii} = 0$. Eigenvalues are either zero or purely imaginary.
+    \item \textbf{Orthogonal Matrix}: A real square matrix $A$ satisfying $A^T A = A A^T = I$, so $A^{-1} = A^T$. The determinant satisfies $\det(A) = \pm 1$.
+    \item \textbf{Hermitian Matrix}: A complex square matrix $A$ satisfying $A^* = (\bar{A})^T = A$.
+    \item \textbf{Unitary Matrix}: A complex square matrix satisfying $A^* A = I$.
+    \item \textbf{Idempotent Matrix}: A matrix satisfying $A^2 = A$. Its eigenvalues are always 0 or 1.
+    \item \textbf{Nilpotent Matrix}: A matrix for which there exists an integer $k \ge 1$ such that $A^k = O$. All eigenvalues of a nilpotent matrix are 0.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.3: ELEMENTARY TRANSFORMATIONS & MATRIX RANK
+% ==============================================================================
+\section{Elementary Operations, Echelon Form \& Rank}
+
+\subsection{Elementary Row and Column Operations}
+There are three elementary row operations:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Interchange}: $R_i \leftrightarrow R_j$ (swap row $i$ and row $j$).
+    \item \textbf{Scaling}: $R_i \to k R_i$ where $k \ne 0$ is a non-zero scalar.
+    \item \textbf{Row Addition}: $R_i \to R_i + c R_j$ where $c \in \mathbb{R}$ and $j \ne i$.
+\end{enumerate}
+Elementary operations preserve the row space and rank of a matrix.
+
+\begin{definition}[Row Echelon Form (REF)]
+A matrix is in \textbf{Row Echelon Form (REF)} if:
+\begin{enumerate}[leftmargin=1.5em]
+    \item All all-zero rows are grouped at the bottom of the matrix.
+    \item In each non-zero row, the leading entry (the first non-zero entry from the left, called the \textbf{pivot}) occurs strictly to the right of the leading entry of the row above it.
+\end{enumerate}
+If in addition each pivot is $1$ and is the only non-zero entry in its column, the matrix is in \textbf{Reduced Row Echelon Form (RREF)}.
+\end{definition}
+
+\begin{definition}[Rank of a Matrix]
+The \textbf{rank} of a matrix $A$, denoted $\operatorname{rank}(A)$ or $\rho(A)$, is defined equivalently as:
+\begin{enumerate}[leftmargin=1.5em]
+    \item The maximum number of linearly independent row (or column) vectors of $A$.
+    \item The number of non-zero rows in the Row Echelon Form of $A$.
+    \item The order of the largest square submatrix of $A$ whose determinant is non-zero (determinantal rank).
+\end{enumerate}
+\end{definition}
+
+\begin{example}[Rank via Row Reduction]
+Determine the rank of the matrix:
+\begin{equation}
+A = \begin{bmatrix}
+1 & 2 & -1 & 3 \\
+2 & 4 & 1 & -2 \\
+3 & 6 & 3 & -7
+\end{bmatrix}
+\end{equation}
+\end{example}
+
+\begin{solutionbox}
+Apply elementary row operations to reduce $A$ to Row Echelon Form:
+\begin{enumerate}[leftmargin=1.5em]
+    \item $R_2 \to R_2 - 2R_1$:
+    \begin{equation}
+    \begin{bmatrix}
+    1 & 2 & -1 & 3 \\
+    0 & 0 & 3 & -8 \\
+    3 & 6 & 3 & -7
+    \end{bmatrix}
+    \end{equation}
+    \item $R_3 \to R_3 - 3R_1$:
+    \begin{equation}
+    \begin{bmatrix}
+    1 & 2 & -1 & 3 \\
+    0 & 0 & 3 & -8 \\
+    0 & 0 & 6 & -16
+    \end{bmatrix}
+    \end{equation}
+    \item $R_3 \to R_3 - 2R_2$:
+    \begin{equation}
+    \begin{bmatrix}
+    1 & 2 & -1 & 3 \\
+    0 & 0 & 3 & -8 \\
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+    \end{equation}
+\end{enumerate}
+The row echelon form contains \textbf{2 non-zero rows}. Therefore, $\operatorname{rank}(A) = 2$.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.4: LINEAR DEPENDENCE & INDEPENDENCE
+% ==============================================================================
+\section{Linear Dependence and Independence of Vectors}
+
+\begin{definition}[Linear Independence]
+A set of vectors $\{v_1, v_2, \dots, v_k\}$ in $\mathbb{R}^n$ is \textbf{linearly independent} if the vector equation:
+\begin{equation}
+c_1 v_1 + c_2 v_2 + \cdots + c_k v_k = \mathbf{0}
+\end{equation}
+admits only the trivial solution $c_1 = c_2 = \cdots = c_k = 0$. If there exists at least one non-zero scalar $c_i \ne 0$ satisfying the equation, the vectors are \textbf{linearly dependent}.
+\end{definition}
+
+\begin{theorem}[Matrix Criterion for Linear Independence]
+Let $A = [v_1 | v_2 | \cdots | v_k]$ be the $n \times k$ matrix formed by placing the vectors as column vectors.
+\begin{itemize}[leftmargin=1.5em]
+    \item The vectors are linearly independent if and only if $\operatorname{rank}(A) = k$.
+    \item For $n$ vectors in $\mathbb{R}^n$, the set is linearly independent if and only if $\det(A) \ne 0$.
+\end{itemize}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 1.5: SYSTEMS OF LINEAR EQUATIONS
+% ==============================================================================
+\section{Systems of Linear Equations \& Rouch\'e--Capelli Theorem}
+
+Consider a system of $m$ linear equations in $n$ unknowns:
+\begin{equation}
+Ax = b, \quad A \in \mathbb{R}^{m\times n}, \; x \in \mathbb{R}^n, \; b \in \mathbb{R}^m
+\end{equation}
+The augmented matrix is defined as $\tilde{A} = [A | b]$.
+
+\begin{theorem}[Rouch\'e--Capelli Theorem]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Inconsistent System (No Solution)}:
+    \begin{equation}
+    \operatorname{rank}(A) < \operatorname{rank}([A | b])
+    \end{equation}
+    \item \textbf{Consistent System with Unique Solution}:
+    \begin{equation}
+    \operatorname{rank}(A) = \operatorname{rank}([A | b]) = n \quad (\text{where } n \text{ is the number of unknowns})
+    \end{equation}
+    \item \textbf{Consistent System with Infinitely Many Solutions}:
+    \begin{equation}
+    \operatorname{rank}(A) = \operatorname{rank}([A | b]) = r < n
+    \end{equation}
+    The solution space has $(n - r)$ free parameters (degrees of freedom).
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Homogeneous Linear Systems $Ax = 0$]
+For a homogeneous system $Ax = 0$ ($n$ unknowns):
+\begin{enumerate}[leftmargin=1.5em]
+    \item The system is always consistent because $x = \mathbf{0}$ (the trivial solution) is always a solution.
+    \item If $\operatorname{rank}(A) = n$, the system has \textbf{only the trivial solution}.
+    \item If $\operatorname{rank}(A) < n$, the system possesses \textbf{infinitely many non-trivial solutions} with $(n - \operatorname{rank}(A))$ linearly independent basic solutions.
+    \item For a square system $n \times n$, non-trivial solutions exist if and only if $\det(A) = 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Parametric Consistency Investigation]
+Investigate for what values of $\lambda$ and $\mu$ the following system has (i) no solution, (ii) a unique solution, and (iii) infinitely many solutions:
+\begin{align}
+x + y + z &= 6 \\
+x + 2y + 3z &= 10 \\
+x + 2y + \lambda z &= \mu
+\end{align}
+\end{example}
+
+\begin{solutionbox}
+Write the augmented matrix $[A|b]$ and row reduce:
+\begin{equation}
+[A|b] = \begin{bmatrix}
+1 & 1 & 1 & 6 \\
+1 & 2 & 3 & 10 \\
+1 & 2 & \lambda & \mu
+\end{bmatrix}
+\end{equation}
+Apply $R_2 \to R_2 - R_1$ and $R_3 \to R_3 - R_1$:
+\begin{equation}
+\sim \begin{bmatrix}
+1 & 1 & 1 & 6 \\
+0 & 1 & 2 & 4 \\
+0 & 1 & \lambda - 1 & \mu - 6
+\end{bmatrix}
+\end{equation}
+Apply $R_3 \to R_3 - R_2$:
+\begin{equation}
+\sim \begin{bmatrix}
+1 & 1 & 1 & 6 \\
+0 & 1 & 2 & 4 \\
+0 & 0 & \lambda - 3 & \mu - 10
+\end{bmatrix}
+\end{equation}
+
+\textbf{Case Analysis}:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{No Solution}: Occurs when $\operatorname{rank}(A) \ne \operatorname{rank}([A|b])$.
+    This requires $\lambda - 3 = 0$ and $\mu - 10 \ne 0 \implies \mathbf{\lambda = 3, \; \mu \ne 10}$. Then $\operatorname{rank}(A) = 2$ while $\operatorname{rank}([A|b]) = 3$.
+    \item \textbf{Unique Solution}: Occurs when $\operatorname{rank}(A) = \operatorname{rank}([A|b]) = 3$.
+    This requires $\lambda - 3 \ne 0 \implies \mathbf{\lambda \ne 3}$, for any real value of $\mu$.
+    \item \textbf{Infinitely Many Solutions}: Occurs when $\operatorname{rank}(A) = \operatorname{rank}([A|b]) = 2 < 3$.
+    This requires $\lambda - 3 = 0$ and $\mu - 10 = 0 \implies \mathbf{\lambda = 3, \; \mu = 10}$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.6: EIGENVALUES & EIGENVECTORS
+% ==============================================================================
+\section{Eigenvalues, Eigenvectors \& Spectral Properties}
+
+\begin{definition}[Eigenvalue and Eigenvector]
+Let $A$ be an $n \times n$ square matrix. A scalar $\lambda \in \mathbb{C}$ is called an \textbf{eigenvalue} (or characteristic root) of $A$ if there exists a non-zero vector $v \in \mathbb{C}^n$ such that:
+\begin{equation}
+A v = \lambda v \iff (A - \lambda I) v = \mathbf{0}
+\end{equation}
+The vector $v \ne \mathbf{0}$ is called the \textbf{eigenvector} corresponding to $\lambda$.
+\end{definition}
+
+\begin{definition}[Characteristic Equation]
+The condition for non-trivial solutions to $(A - \lambda I) v = \mathbf{0}$ is:
+\begin{equation}
+\det(A - \lambda I) = 0
+\end{equation}
+For a $2 \times 2$ matrix $A$:
+\begin{equation}
+\lambda^2 - \operatorname{tr}(A) \lambda + \det(A) = 0
+\end{equation}
+For a $3 \times 3$ matrix $A$:
+\begin{equation}
+\lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0
+\end{equation}
+where $S_1 = \operatorname{tr}(A) = a_{11}+a_{22}+a_{33}$, $S_2 = M_{11}+M_{22}+M_{33}$ (sum of principal minors), and $S_3 = \det(A)$.
+\end{definition}
+
+\begin{theorem}[Fundamental Properties of Eigenvalues]
+Let $\lambda_1, \lambda_2, \dots, \lambda_n$ be the eigenvalues of $A$:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Sum of Eigenvalues}: $\sum_{i=1}^n \lambda_i = \operatorname{trace}(A) = \sum_{i=1}^n a_{ii}$.
+    \item \textbf{Product of Eigenvalues}: $\prod_{i=1}^n \lambda_i = \det(A)$.
+    \item \textbf{Eigenvalues of Powers}: If $\lambda$ is an eigenvalue of $A$, then $\lambda^k$ is an eigenvalue of $A^k$ ($k \in \mathbb{N}$).
+    \item \textbf{Eigenvalues of Inverse}: If $A$ is invertible, the eigenvalues of $A^{-1}$ are $1/\lambda_i$.
+    \item \textbf{Eigenvalues of Transpose}: $A$ and $A^T$ have identical eigenvalues.
+    \item \textbf{Triangular Matrices}: The eigenvalues of upper/lower triangular and diagonal matrices are simply their main diagonal elements.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Complete Spectral Decomposition]
+Find the eigenvalues and corresponding eigenvectors of:
+\begin{equation}
+A = \begin{bmatrix}
+2 & 2 & 1 \\
+1 & 3 & 1 \\
+1 & 2 & 2
+\end{bmatrix}
+\end{equation}
+\end{example}
+
+\begin{solutionbox}
+Compute the coefficients of the characteristic polynomial:
+\begin{align}
+S_1 &= \operatorname{tr}(A) = 2 + 3 + 2 = 7 \\
+S_2 &= \begin{vmatrix} 3 & 1 \\ 2 & 2 \end{vmatrix} + \begin{vmatrix} 2 & 1 \\ 1 & 2 \end{vmatrix} + \begin{vmatrix} 2 & 2 \\ 1 & 3 \end{vmatrix} = (6 - 2) + (4 - 1) + (6 - 2) = 4 + 3 + 4 = 11 \\
+S_3 &= \det(A) = 2(6-2) - 2(2-1) + 1(2-3) = 8 - 2 - 1 = 5
+\end{align}
+The characteristic equation is:
+\begin{equation}
+\lambda^3 - 7\lambda^2 + 11\lambda - 5 = 0
+\end{equation}
+Testing rational roots: $\lambda = 1 \implies 1 - 7 + 11 - 5 = 0$.
+Factoring: $(\lambda - 1)(\lambda^2 - 6\lambda + 5) = (\lambda - 1)^2(\lambda - 5) = 0$.
+Thus, the eigenvalues are $\mathbf{\lambda_1 = 5, \; \lambda_2 = 1, \; \lambda_3 = 1}$.
+
+\textbf{Eigenvector for $\lambda = 5$}:
+Solve $(A - 5I) v = 0$:
+\begin{equation}
+\begin{bmatrix}
+-3 & 2 & 1 \\
+1 & -2 & 1 \\
+1 & 2 & -3
+\end{bmatrix} \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\end{equation}
+From equations: $-3x + 2y + z = 0$ and $x - 2y + z = 0$.
+Adding them: $-2x + 2z = 0 \implies x = z$.
+Then $x - 2y + x = 0 \implies 2y = 2x \implies y = x$.
+Setting $x = 1$, we obtain:
+\begin{equation}
+v_1 = \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}
+\end{equation}
+
+\textbf{Eigenvectors for repeated eigenvalue $\lambda = 1$}:
+Solve $(A - I) v = 0$:
+\begin{equation}
+\begin{bmatrix}
+1 & 2 & 1 \\
+1 & 2 & 1 \\
+1 & 2 & 1
+\end{bmatrix} \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\end{equation}
+This yields a single independent equation: $x + 2y + z = 0 \implies x = -2y - z$.
+Since $\operatorname{rank}(A-I) = 1$, the geometric multiplicity is $n - r = 3 - 1 = 2$.
+Choosing free parameters $(y=1, z=0)$ gives $v_2 = \begin{bmatrix} -2 \\ 1 \\ 0 \end{bmatrix}$.
+Choosing free parameters $(y=0, z=1)$ gives $v_3 = \begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix}$.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.7: CAYLEY-HAMILTON THEOREM
+% ==============================================================================
+\section{The Cayley--Hamilton Theorem \& Applications}
+
+\begin{theorem}[Cayley--Hamilton Theorem]
+Every square matrix $A \in \mathbb{R}^{n\times n}$ satisfies its own characteristic equation. That is, if the characteristic polynomial of $A$ is:
+\begin{equation}
+p(\lambda) = \det(A - \lambda I) = (-1)^n \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0
+\end{equation}
+then the matrix equation holds identically:
+\begin{equation}
+p(A) = (-1)^n A^n + c_{n-1} A^{n-1} + \cdots + c_1 A + c_0 I = O
+\end{equation}
+\end{theorem}
+
+\subsection{Engineering Applications}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Computation of Matrix Inverse}: If $A$ is non-singular ($c_0 \ne 0$), multiplying by $A^{-1}$ yields:
+    \begin{equation}
+    A^{-1} = -\frac{1}{c_0} \left[ (-1)^n A^{n-1} + c_{n-1} A^{n-2} + \cdots + c_1 I \right]
+    \end{equation}
+    \item \textbf{Reduction of Higher Matrix Powers}: Any polynomial $P(A)$ of degree $k \ge n$ can be reduced using polynomial division $P(\lambda) = Q(\lambda)p(\lambda) + R(\lambda)$ to a polynomial $R(A)$ of degree at most $n-1$:
+    \begin{equation}
+    P(A) = R(A) = r_{n-1} A^{n-1} + \cdots + r_1 A + r_0 I
+    \end{equation}
+\end{enumerate}
+
+\begin{example}[Inverse and Higher Powers via Cayley--Hamilton]
+Given $A = \begin{bmatrix} 1 & 2 \\ 2 & -1 \end{bmatrix}$, verify the Cayley--Hamilton theorem, find $A^{-1}$, and evaluate $A^8$.
+\end{example}
+
+\begin{solutionbox}
+1. \textbf{Characteristic Equation}:
+\begin{equation}
+|A - \lambda I| = \begin{vmatrix} 1 - \lambda & 2 \\ 2 & -1 - \lambda \end{vmatrix} = (1-\lambda)(-1-\lambda) - 4 = \lambda^2 - 1 - 4 = \lambda^2 - 5 = 0
+\end{equation}
+By Cayley--Hamilton, $A^2 - 5I = O \implies A^2 = 5I$.
+
+2. \textbf{Verification}:
+\begin{equation}
+A^2 = \begin{bmatrix} 1 & 2 \\ 2 & -1 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 2 & -1 \end{bmatrix} = \begin{bmatrix} 1+4 & 2-2 \\ 2-2 & 4+1 \end{bmatrix} = \begin{bmatrix} 5 & 0 \\ 0 & 5 \end{bmatrix} = 5I
+\end{equation}
+Hence $A^2 - 5I = O$ is verified.
+
+3. \textbf{Computation of $A^{-1}$}:
+Multiply $A^2 - 5I = O$ by $A^{-1}$:
+\begin{equation}
+A - 5A^{-1} = O \implies A^{-1} = \frac{1}{5}A = \frac{1}{5}\begin{bmatrix} 1 & 2 \\ 2 & -1 \end{bmatrix}
+\end{equation}
+
+4. \textbf{Computation of $A^8$}:
+Since $A^2 = 5I$:
+\begin{equation}
+A^8 = (A^2)^4 = (5I)^4 = 5^4 I = 625 I = \begin{bmatrix} 625 & 0 \\ 0 & 625 \end{bmatrix}
+\end{equation}
+\end{solutionbox}
+
+\begin{examtip}[Speed Technique for Cayley--Hamilton]
+When computing $A^n$ for large $n$, if the eigenvalues are distinct $\lambda_1, \lambda_2$, set $\lambda^n = q(\lambda)p(\lambda) + a\lambda + b$. Substituting $\lambda = \lambda_1, \lambda_2$ instantly gives the two linear equations for $a$ and $b$, avoiding tedious matrix multiplications!
+\end{examtip}
+

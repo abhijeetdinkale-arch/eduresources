@@ -1,0 +1,654 @@
+\chapter{Computer Network and Communication}
+\label{chap:computer-network-and-communication}
+
+% ==============================================================================
+% SECTION 5.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Computer networks and digital communication systems form the backbone of modern global infrastructure. An interconnected world relies on standard protocols, physical topologies, layered network devices, distributed client-server models, and information security frameworks. Understanding how data travels across local and global networks, alongside the mechanisms required to safeguard digital systems against cyber threats, malware, phishing, and unauthorized access, is essential for every engineer.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze the 5 Core Components of Data Communication}: Sender, Receiver, Message, Transmission Medium, and Protocol.
+    \item \textbf{Classify Networks by Geographic Scale}, contrasting Personal Area Networks (PAN), Local Area Networks (LAN), Metropolitan Area Networks (MAN), and Wide Area Networks (WAN).
+    \item \textbf{Evaluate Network Topologies}, comparing Bus, Star, Ring, Mesh (calculating physical links via $\frac{N(N-1)}{2}$), and Tree topologies.
+    \item \textbf{Differentiate Layered Network Hardware Devices}, explaining the exact functions of Hubs (Layer 1 broadcast), Switches (Layer 2 MAC unicast), Routers (Layer 3 IP routing), Modems, and Wireless Access Points (WAP).
+    \item \textbf{Analyze the Client-Server Distributed Model}, identifying its operational workflows, port conventions, and single-point-of-failure vulnerabilities.
+    \item \textbf{Apply the CIA Security Triad} (Confidentiality, Integrity, Availability) to evaluate threat vectors such as Social Engineering, DDoS, and Man-in-the-Middle (MitM) attacks.
+    \item \textbf{Classify Malware Types}, rigorously distinguishing Viruses (host required), Worms (self-replicating), Trojan Horses (backdoors), Spyware/Keyloggers, and Ransomware.
+    \item \textbf{Examine Cyber Attack Vectors}, analyzing Phishing variants (Spear Phishing, Whaling, Vishing) and Password Cracking techniques (Brute Force, Dictionary, Rainbow Tables).
+    \item \textbf{Implement Defensive Controls}, detailing Multi-Factor Authentication (MFA), the Principle of Least Privilege in user account management, and packet-filtering Firewalls.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 5.2: INTRODUCTION TO NETWORKS \& 5 COMPONENTS
+% ==============================================================================
+\section{Introduction to Computer Networks}
+
+\subsection{Definition \& Purpose}
+
+\begin{definition}[Computer Network]
+A collection of autonomous computing devices (nodes) interconnected by physical or wireless communication channels to enable data exchange, hardware resource sharing (e.g., printers, storage arrays), and access to distributed network services (the World Wide Web).
+\end{definition}
+
+\subsection{The Five Core Components of Data Communication}
+
+Data communication is the exchange of data between two nodes via some form of transmission medium. Every communication session requires five indispensable components:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    cnode/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, font=\sffamily\bfseries\small},
+    arrow/.style={-{Stealth[scale=1.1]}, thick, draw=brandaccent}
+]
+    \node[cnode, fill=boxgoldbg, draw=brandgold] (sender) at (0, 0) {1. Sender\\{\scriptsize (Initiator)}};
+    \node[cnode, fill=boxskybg, draw=boxskyborder] (med) at (5.5, 0) {4. Transmission Medium\\{\scriptsize (Guided: Fiber/Copper; Unguided: RF)}};
+    \node[cnode, fill=boxgoldbg, draw=brandgold] (rec) at (11, 0) {2. Receiver\\{\scriptsize (Destination)}};
+    
+    \node[rectangle, draw=brandaccent, fill=boxrosebg, rounded corners=2pt, thick, font=\sffamily\small\bfseries] (msg) at (5.5, 1.2) {3. Message Payload (Data)};
+    \node[rectangle, draw=boxpurpleborder, fill=boxpurplebg, rounded corners=2pt, thick, font=\sffamily\small\bfseries] (proto) at (5.5, -1.2) {5. Protocol (Governing Rules \& Syntax)};
+
+    \draw[arrow] (sender) -- (med);
+    \draw[arrow] (med) -- (rec);
+    \draw[dashed, draw=brandslate] (proto) -- (sender);
+    \draw[dashed, draw=brandslate] (proto) -- (rec);
+    \draw[dashed, draw=brandslate] (msg) -- (med);
+\end{tikzpicture}
+\caption{The Five Fundamental Components of Data Communication.}
+\label{fig:data-comm-components}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Sender}: The source device that creates and transmits the data message (e.g., a computer workstation, smartphone, server, or IoT video camera).
+    \item \textbf{Receiver}: The designated destination device that ingests and processes the transmitted message.
+    \item \textbf{Message}: The actual information payload being communicated (e.g., plaintext, binary executable, JPEG image, digital audio, or streaming video stream).
+    \item \textbf{Transmission Medium}: The physical physical communication channel over which the message travels from sender to receiver:
+    \begin{itemize}
+        \item \textbf{Guided (Wired) Media}: Twisted-pair copper cables (UTP/STP Category 6), coaxial cables, or optical fiber strands.
+        \item \textbf{Unguided (Wireless) Media}: Radio waves (Wi-Fi, Bluetooth), microwaves (satellite links), or infrared signals.
+    \end{itemize}
+    \item \textbf{Protocol}: A formalized set of governing rules, syntaxes, and synchronization standards that dictate how data is formatted, transmitted, error-checked, and acknowledged (e.g., TCP/IP, HTTP/HTTPS, Ethernet IEEE 802.3). Without a common protocol, two connected devices can exchange electrical signals but cannot understand each other.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.3: TYPES OF NETWORKS BY SCALE
+% ==============================================================================
+\section{Classifications of Networks by Geographic Scale}
+
+Networks are categorized based on the physical geographical area they span:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{PAN (Personal Area Network)}:
+    \begin{itemize}
+        \item \textbf{Geographical Scope}: Very small, typically centered around an individual within a range of \textbf{$\le \mathbf{10\,\text{meters}}$} ($33\,\text{feet}$).
+        \item \textbf{Technologies}: Bluetooth, Zigbee, USB, NFC.
+        \item \textbf{Primary Usage}: Interconnecting personal electronic devices (smartphones, wireless earbuds, smartwatches, laptops).
+    \end{itemize}
+
+    \item \textbf{LAN (Local Area Network)}:
+    \begin{itemize}
+        \item \textbf{Geographical Scope}: Privately owned high-speed network confined to a localized physical perimeter, such as a single room, university laboratory, office suite, or school building.
+        \item \textbf{Technologies}: High-speed Ethernet (1Gbps/10Gbps copper/fiber) and Wi-Fi (IEEE 802.11ax).
+        \item \textbf{Characteristics}: High data transfer rates ($100\,\text{Mbps}\text{--}10\,\text{Gbps}$), low latency, low error rates, and owned by a single administrative organization.
+    \end{itemize}
+
+    \item \textbf{MAN (Metropolitan Area Network)}:
+    \begin{itemize}
+        \item \textbf{Geographical Scope}: Spans a larger geographical area than a LAN, typically covering an entire city, municipal region, or sprawling multi-campus enterprise ($\sim \mathbf{5\text{--}50\,\text{km}}$).
+        \item \textbf{Technologies}: High-bandwidth optical fiber rings (SONET/SDH, Metro Ethernet).
+        \item \textbf{Examples}: Citywide cable television distribution networks, municipal free public Wi-Fi grids.
+    \end{itemize}
+
+    \item \textbf{WAN (Wide Area Network)}:
+    \begin{itemize}
+        \item \textbf{Geographical Scope}: Spans immense geographical regions across countries, continents, or the entire globe.
+        \item \textbf{Technologies}: Leased telecommunication lines, transatlantic fiber-optic subsea cables, and geostationary satellite transponders.
+        \item \textbf{Characteristics}: Interconnects thousands of smaller LANs and MANs. \textbf{The Internet is the world's largest public WAN}.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.4: NETWORK TOPOLOGIES
+% ==============================================================================
+\section{Network Topologies}
+
+\textbf{Network Topology} defines the physical or logical arrangement of nodes (computers, printers) and interconnecting links (cables, radio paths) in a network.
+
+\subsection{Topological Comparison \& Link Formulas}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node/.style={circle, draw=brandnavy, fill=boxskybg, thick, minimum size=0.65cm, font=\sffamily\bfseries\scriptsize},
+    snode/.style={rectangle, draw=brandaccent, fill=boxrosebg, thick, minimum size=0.7cm, font=\sffamily\bfseries\scriptsize}
+]
+    % Bus Topology
+    \draw[ultra thick, brandnavy] (-5.5, 2.5) -- (-1.5, 2.5);
+    \node[fill=brandaccent, inner sep=2pt, font=\tiny\color{white}] at (-5.5, 2.5) {T};
+    \node[fill=brandaccent, inner sep=2pt, font=\tiny\color{white}] at (-1.5, 2.5) {T};
+    \node[node] (b1) at (-4.8, 1.6) {A}; \draw[thick] (b1) -- (-4.8, 2.5);
+    \node[node] (b2) at (-3.5, 3.4) {B}; \draw[thick] (b2) -- (-3.5, 2.5);
+    \node[node] (b3) at (-2.2, 1.6) {C}; \draw[thick] (b3) -- (-2.2, 2.5);
+    \node[font=\sffamily\scriptsize\bfseries\color{brandnavy}] at (-3.5, 0.9) {Bus (Shared Backbone)};
+
+    % Star Topology
+    \node[snode] (hub) at (0, 2.5) {Switch};
+    \node[node] (s1) at (-1.2, 3.4) {1}; \draw[thick, brandblue] (s1) -- (hub);
+    \node[node] (s2) at (1.2, 3.4) {2}; \draw[thick, brandblue] (s2) -- (hub);
+    \node[node] (s3) at (-1.2, 1.6) {3}; \draw[thick, brandblue] (s3) -- (hub);
+    \node[node] (s4) at (1.2, 1.6) {4}; \draw[thick, brandblue] (s4) -- (hub);
+    \node[font=\sffamily\scriptsize\bfseries\color{brandnavy}] at (0, 0.9) {Star (Central Switch)};
+
+    % Ring Topology
+    \node[node] (r1) at (4.5, 3.2) {A};
+    \node[node] (r2) at (6.0, 2.5) {B};
+    \node[node] (r3) at (5.5, 1.4) {C};
+    \node[node] (r4) at (3.5, 1.4) {D};
+    \node[node] (r5) at (3.0, 2.5) {E};
+    \draw[thick, brandnavy, ->] (r1) -- (r2);
+    \draw[thick, brandnavy, ->] (r2) -- (r3);
+    \draw[thick, brandnavy, ->] (r3) -- (r4);
+    \draw[thick, brandnavy, ->] (r4) -- (r5);
+    \draw[thick, brandnavy, ->] (r5) -- (r1);
+    \node[font=\sffamily\scriptsize\bfseries\color{brandnavy}] at (4.5, 0.9) {Ring (Token Loop)};
+
+    % Mesh Topology
+    \node[node] (m1) at (8.5, 3.2) {1};
+    \node[node] (m2) at (10.5, 3.2) {2};
+    \node[node] (m3) at (10.5, 1.6) {3};
+    \node[node] (m4) at (8.5, 1.6) {4};
+    \draw[thick, brandaccent] (m1) -- (m2);
+    \draw[thick, brandaccent] (m2) -- (m3);
+    \draw[thick, brandaccent] (m3) -- (m4);
+    \draw[thick, brandaccent] (m4) -- (m1);
+    \draw[thick, brandaccent] (m1) -- (m3);
+    \draw[thick, brandaccent] (m2) -- (m4);
+    \node[font=\sffamily\scriptsize\bfseries\color{brandnavy}] at (9.5, 0.9) {Full Mesh ($N(N-1)/2$)};
+\end{tikzpicture}
+\caption{Architectural Layout of Common Network Topologies.}
+\label{fig:network-topologies}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Topology} & \textbf{Physical Structure} & \textbf{Key Advantages} & \textbf{Key Disadvantages / Failure Modes} \\
+\midrule
+\textbf{Bus} & All nodes tap into a single linear central backbone cable terminated at both ends. & Low cabling cost; simple installation for small numbers of nodes. & \textbf{Single Point of Failure}: A break in the backbone halts the entire network. Heavy packet collisions under load. \\
+\textbf{Star} & Every node connects independently via a dedicated point-to-point cable to a central \textbf{Switch or Hub}. & \textbf{Modern LAN Standard}: Fault isolation (one cable break affects only that single node); easy to expand. & \textbf{Central Switch is a Single Point of Failure}; requires significantly more cabling than Bus. \\
+\textbf{Ring} & Nodes form a closed circular loop. Data travels unidirectionally via \textbf{Token Passing}. & Deterministic traffic flow; zero packet collisions under heavy traffic. & A break in the cable or failure of a single node brings down the entire network loop. \\
+\textbf{Mesh} & Every node has a dedicated point-to-point link to every other node in the network. & \textbf{Extreme Fault Tolerance}: Multiple redundant paths; maximum security and dedicated bandwidth. & \textbf{Prohibitively Expensive}: Cabling complexity scales quadratically: $\text{Links} = \frac{N(N-1)}{2}$. \\
+\textbf{Tree} & Hierarchical parent-child topology branching out from a root central switch. & High scalability; easy to manage corporate sub-departments in branching tiers. & Failure of the primary root switch cuts off inter-branch communications. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Synthesis of Network Topologies.}
+\label{tab:network-topologies-master}
+\end{table}
+
+% ==============================================================================
+% SECTION 5.5: NETWORK COMMUNICATION DEVICES
+% ==============================================================================
+\section{Network Communication Devices \& OSI Layering}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    dev/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=11.5cm, minimum height=0.85cm, align=left, font=\sffamily\small}
+]
+    \node[dev, fill=boxgoldbg, draw=brandgold] at (0, 3.6) {\textbf{Hub (Layer 1 - Physical)}: Non-intelligent repeater; \textbf{broadcasts} bits to all connected ports.};
+    \node[dev, fill=boxskybg, draw=boxskyborder] at (0, 2.7) {\textbf{Switch (Layer 2 - Data Link)}: Intelligent bridge; inspects \textbf{MAC Addresses} for directed \textbf{unicast}.};
+    \node[dev, fill=boxamberbg, draw=boxamberborder] at (0, 1.8) {\textbf{Router (Layer 3 - Network)}: Connects separate subnets; routes packets using \textbf{IP Addresses}.};
+    \node[dev, fill=boxpurplebg, draw=boxpurpleborder] at (0, 0.9) {\textbf{Modem (Signal Conversion)}: \textbf{Mo}dulator-\textbf{Dem}odulator; translates Digital $\leftrightarrow$ Analog signals.};
+    \node[dev, fill=boxgreenbg, draw=boxgreenborder] at (0, 0.0) {\textbf{Access Point (WLAN)}: Connects to wired infrastructure to project IEEE 802.11 \textbf{Wi-Fi} signals.};
+\end{tikzpicture}
+\caption{OSI Layer Mapping and Functions of Network Communication Devices.}
+\label{fig:network-devices-osi}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Hub (OSI Layer 1 --- Physical Layer)}:
+    \begin{itemize}
+        \item A non-intelligent, multi-port hardware device used to connect Ethernet segments.
+        \item \textbf{Operational Behavior}: Operates purely on electrical signals. When a data packet arrives at one port, the hub \textbf{broadcasts (re-transmits) the packet to every single connected port}, regardless of destination.
+        \item \textbf{Drawback}: Creates a single large collision domain, saturates bandwidth, and causes severe security risks (all devices can sniff unencrypted traffic). Obsolete in modern networks.
+    \end{itemize}
+
+    \item \textbf{Switch (OSI Layer 2 --- Data Link Layer)}:
+    \begin{itemize}
+        \item An intelligent multi-port network bridge that interconnects devices within a LAN.
+        \item \textbf{Operational Behavior}: Inspects incoming Ethernet frame headers to read the destination \textbf{MAC (Media Access Control) Address}. It builds a dynamic \textbf{MAC Address Table (CAM Table)} mapping physical ports to hardware addresses and forwards frames \textbf{via unicast exclusively to the intended recipient device}.
+        \item \textbf{Advantage}: Isolates collision domains per port, maximizes bandwidth, and improves security.
+    \end{itemize}
+
+    \item \textbf{Router (OSI Layer 3 --- Network Layer)}:
+    \begin{itemize}
+        \item An intelligent gateway device that connects \textbf{different logical networks and subnets} (e.g., connecting a corporate LAN to the public Internet WAN).
+        \item \textbf{Operational Behavior}: Inspects the \textbf{Destination IP Address} in network packet headers and consults internal dynamic \textbf{Routing Tables} to calculate the most efficient path for packets to traverse multi-hop networks.
+    \end{itemize}
+
+    \item \textbf{Modem (Modulator-Demodulator)}:
+    \begin{itemize}
+        \item Converts digital binary signals from a computer into analog waveforms for transmission over copper telephone lines, fiber lines, or coaxial cable TV systems (Modulation), and converts incoming analog signals back into digital binary data (Demodulation).
+    \end{itemize}
+
+    \item \textbf{Wireless Access Point (WAP / AP)}:
+    \begin{itemize}
+        \item A transceiver device that plugs directly into a wired switch or router via an Ethernet cable and broadcasts an IEEE 802.11 radio signal, creating a \textbf{Wireless Local Area Network (WLAN)}.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.6: CLIENT-SERVER MODEL
+% ==============================================================================
+\section{Distributed Systems: The Client-Server Model}
+
+\subsection{Architectural Paradigm}
+
+\begin{definition}[Client-Server Architecture]
+A distributed computing structure that partitions tasks and workloads between service requesters (\textbf{Clients}) and centralized service providers (\textbf{Servers}) communicating over a standardized network protocol.
+\end{definition}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{The Client}: A user-facing application running on a personal workstation, smartphone, or browser that initiates requests for resources or compute services (e.g., a web browser requesting \texttt{GET /index.html} on Port 443).
+    \item \textbf{The Server}: A high-availability, high-capacity computing daemon continuously listening on standardized network ports for incoming client requests, processing them, and returning structured data responses (e.g., an Apache HTTP Server, PostgreSQL Database Server).
+\end{itemize}
+
+\subsection{Trade-off Analysis}
+\begin{itemize}
+    \item \textbf{Advantages}: Centralized management of user credentials, streamlined database backup policies, unified access security, and vertical/horizontal scalability.
+    \item \textbf{Disadvantages}: The server represents a \textbf{Single Point of Failure} (if the server crashes, all clients lose service); vulnerable to network traffic congestion and Denial of Service (DoS) attacks; expensive hardware and maintenance.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.7: INFORMATION SECURITY \& THE CIA TRIAD
+% ==============================================================================
+\section{Network Security and The CIA Triad}
+
+Information security is governed by three foundational pillars termed the \textbf{CIA Triad}:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    tri/.style={circle, draw=brandnavy, fill=boxnavybg, thick, minimum size=3.2cm, align=center, font=\sffamily\bfseries\small}
+]
+    \node[tri, fill=boxgoldbg, draw=brandgold] (c) at (0, 2.6) {\textbf{Confidentiality}\\{\scriptsize Data Privacy \& Encryption}\\{\tiny (AES, Access Control)}};
+    \node[tri, fill=boxskybg, draw=boxskyborder] (i) at (-2.6, -1.3) {\textbf{Integrity}\\{\scriptsize Accuracy \& Trust}\\{\tiny (SHA-256 Hashes, Signatures)}};
+    \node[tri, fill=boxrosebg, draw=brandaccent] (a) at (2.6, -1.3) {\textbf{Availability}\\{\scriptsize Timely System Access}\\{\tiny (Redundancy, Backups, DDoS Mitigation)}};
+    
+    \draw[thick, brandnavy, dashed] (c) -- (i);
+    \draw[thick, brandnavy, dashed] (i) -- (a);
+    \draw[thick, brandnavy, dashed] (a) -- (c);
+\end{tikzpicture}
+\caption{The CIA Security Triad.}
+\label{fig:cia-triad}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Confidentiality}: Ensuring sensitive data is accessible exclusively to authorized individuals and processes. Enforced via strong encryption (AES-256, TLS), password hashing, and Access Control Lists.
+    \item \textbf{Integrity}: Guaranteeing that data remains completely accurate, consistent, and unaltered during storage or network transit. Enforced via cryptographic hash digests (SHA-256) and digital signatures.
+    \item \textbf{Availability}: Ensuring computing services and data are reliably and timely accessible to authorized users when needed. Enforced via redundant server power supplies, load balancers, and fault-tolerant RAID storage.
+\end{enumerate}
+
+\subsection{Core Threat Vectors}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Social Engineering}: Psychological manipulation of human employees into disclosing confidential credentials or security tokens.
+    \item \textbf{DDoS (Distributed Denial of Service)}: Flooding a target server with massive volumes of fraudulent network traffic generated by compromised botnets, saturating bandwidth and violating the \textbf{Availability} pillar.
+    \item \textbf{Man-in-the-Middle (MitM)}: An attacker covertly intercepts and potentially alters communication between two trusting endpoints without their knowledge.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.8: MALWARE TAXONOMY
+% ==============================================================================
+\section{Malware Taxonomy}
+
+\begin{definition}[Malware (Malicious Software)]
+Any software code, script, or executable program intentionally engineered to infiltrate, compromise, damage, or gain unauthorized access to computer systems, data, or networks.
+\end{definition}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Malware Class} & \textbf{Host Dependency \& Propagation} & \textbf{Payload Mechanism \& Real-World Damage} \\
+\midrule
+\textbf{Computer Virus} & \textbf{Requires a Host File} (e.g., \texttt{.exe}, \texttt{.docx}). Spreads *only* when the infected host file is executed by a human user. & Modifies or corrupts files, overwrites hard disk boot sectors, destroys operational data. \\
+\textbf{Computer Worm} & \textbf{Standalone program} (No host file needed). \textbf{Self-replicating}: spreads automatically across network vulnerabilities. & Consumes network bandwidth, degrades server infrastructure, installs remote-access backdoors. \\
+\textbf{Trojan Horse} & Disguises itself as legitimate software (fake game or antivirus). \textbf{Does not self-replicate}. & Establishes covert remote-access backdoors allowing hackers full remote control over the compromised machine. \\
+\textbf{Spyware} & Runs invisibly in the background without user consent. & Secretly harvests personal data, browsing history, and keystrokes (\textbf{Keyloggers} capture typed passwords and credit cards). \\
+\textbf{Ransomware} & Standalone or Trojan-delivered cryptographic malware. & \textbf{Encrypts user files with military-grade ciphers} (RSA/AES), displaying a ransom note demanding cryptocurrency (e.g., \textbf{WannaCry}). \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison of Malware Types.}
+\label{tab:malware-taxonomy-master}
+\end{table}
+
+% ==============================================================================
+% SECTION 5.9: PHISHING \& PASSWORD ATTACKS
+% ==============================================================================
+\section{Social Engineering, Phishing \& Password Attacks}
+
+\subsection{Phishing Vectors}
+
+\begin{definition}[Phishing]
+A cybercrime in which attackers disguise themselves as trustworthy entities (banks, universities, employers) via deceptive electronic messages to lure victims into surrendering sensitive personal identifying information, passwords, or credit card numbers.
+\end{definition}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Spear Phishing}: Highly tailored, customized phishing attacks targeting a specific individual using pre-gathered biographical information (e.g., referencing their exact department or manager).
+    \item \textbf{Whaling}: High-value spear phishing targeted specifically at executive corporate leadership (CEOs, CFOs, Board Members).
+    \item \textbf{Vishing}: Voice-based phishing conducting social engineering scams over telephone calls (e.g., impersonating bank fraud departments).
+\end{itemize}
+
+\subsection{Password Cracking Methodologies}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Brute Force Attack}: Systematically generating and testing every mathematical combination of letters, numbers, and symbols until the correct password matches. Guaranteed to succeed mathematically, but takes immense computational time on long, complex passwords.
+    \item \textbf{Dictionary Attack}: Iterating through pre-compiled lists of thousands of common words, dictionary entries, and breached passwords (e.g., "password123", "admin").
+    \item \textbf{Rainbow Table Attack}: Referencing pre-computed lookup tables of cryptographic hash values (e.g., MD5/SHA-1) to reverse password hashes without performing raw compute calculations on every attempt.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.10: DEFENSIVE CONTROLS: MFA, ACCOUNTS \& FIREWALLS
+% ==============================================================================
+\section{Defensive Controls: MFA, Privilege Management \& Firewalls}
+
+\subsection{Multi-Factor Authentication (MFA)}
+
+\textbf{MFA} is a security mechanism requiring a user to present two or more independent authentication factors to verify identity:
+
+\begin{keyequation}[The Three Independent Factors of Authentication]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Knowledge Factor (Something You Know)}: Password, PIN, or security question answer.
+    \item \textbf{Possession Factor (Something You Have)}: Smartphone authenticator app (TOTP code), SMS OTP, hardware security key (YubiKey), or physical smart card.
+    \item \textbf{Inherence Factor (Something You Are)}: Biological physical characteristics: Fingerprint scan, Apple Face ID, retina scan, or voice recognition.
+\end{enumerate}
+\end{keyequation}
+
+\subsection{User Account Types \& The Principle of Least Privilege}
+
+Operating systems protect system stability by partitioning user accounts:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Principle of Least Privilege}: A security concept mandating that users and software processes should be granted only the absolute minimum permissions necessary to perform their required tasks.
+    \item \textbf{Administrator / Root / Superuser}: Unrestricted system authority; can install software, modify kernel parameters, alter filesystem permissions, and delete other user accounts. \textbf{High risk}: Should never be used for everyday web browsing.
+    \item \textbf{Standard User}: Restricted permissions; can execute applications and manage personal files, but cannot install system-wide software or modify system settings.
+    \item \textbf{Guest Account}: Temporary, highly restricted account; cannot alter settings or establish persistent passwords. All created files are wiped upon session logout.
+\end{itemize}
+
+\subsection{Firewall Fundamentals}
+
+A \textbf{Firewall} is a hardware device or software security module that monitors, inspects, and filters incoming and outgoing network traffic based on predetermined security policies:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Packet Filtering}: The firewall inspects every packet header, evaluating:
+    \begin{itemize}
+        \item Source IP Address and Destination IP Address.
+        \item Transport Protocol (TCP, UDP, ICMP).
+        \item Source and Destination Port Numbers (e.g., Port 80 for HTTP, Port 22 for SSH, Port 23 for Telnet).
+    \end{itemize}
+    \item \textbf{Example Firewall Rule}: \texttt{DENY ALL INBOUND TRAFFIC ON PORT 23 (Telnet)} prevents unencrypted remote shell intrusion.
+    \item \textbf{Host-Based Firewall}: Software running on an individual computer protecting that single host (e.g., Windows Defender Firewall).
+    \item \textbf{Network-Based Firewall}: Dedicated enterprise hardware appliance (e.g., Cisco ASA, Palo Alto Networks) filtering traffic at the perimeter between an internal trusted LAN and the untrusted public Internet.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.11: WORKED EXAMPLES
+% ==============================================================================
+\section{Worked Numerical \& Practical Examples}
+
+\begin{example}[Calculating Required Links in a Full Mesh Topology]
+A high-security banking branch deploys a \textbf{Full Mesh Network Topology} connecting \textbf{eight (8) core database servers}. Calculate:
+\begin{enumerate}[label=(\alph*)]
+    \item The total number of physical point-to-point communication links required.
+    \item The number of physical I/O network interface ports required per server.
+\end{enumerate}
+
+\begin{solutionbox}[Step-by-Step Topology Solution]
+Given: Number of nodes $N = 8$.
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Total Physical Links Formula}:
+    $$\text{Links} = \frac{N(N-1)}{2}$$
+    \item \textbf{Calculation}:
+    $$\text{Links} = \frac{8 \times (8 - 1)}{2} = \frac{8 \times 7}{2} = \frac{56}{2} = \mathbf{28\text{ physical duplex cables}}$$
+    \item \textbf{Ports per Server}: Each individual server must connect directly to every other server ($N - 1$).
+    $$\text{Ports per Server} = 8 - 1 = \mathbf{7\text{ network interface ports}}$$
+\end{enumerate}
+\end{solutionbox}
+\end{example}
+
+% ==============================================================================
+% SECTION 5.12: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Exam Points]
+\begin{itemize}
+    \item \textbf{Hub vs. Switch}: In short-answer questions, emphasize: \textbf{Hub = Layer 1 = Broadcasts indiscriminately to all ports = Collision domain}. \textbf{Switch = Layer 2 = Inspects MAC addresses = Unicasts to specific port}.
+    \item \textbf{Virus vs. Worm}: A \textbf{Virus} requires a human user to execute an infected host file; a \textbf{Worm} is a standalone program that self-replicates across networks automatically.
+    \item \textbf{MFA Factors}: When listing the three factors of MFA, use the formal classifications: \textbf{Something you know}, \textbf{Something you have}, and \textbf{Something you are}.
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Concept Confusions]
+\begin{itemize}
+    \item \textbf{Confusing Trojan Horses and Viruses}: A Trojan Horse does \textbf{not} replicate itself. It relies on deception to trick the user into installing a covert backdoor.
+    \item \textbf{Confusing Routers and Switches}: Switches connect devices \textbf{within the same LAN} using MAC addresses; Routers connect \textbf{different networks} using IP addresses.
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 5.13: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 5 Key Takeaways]
+\begin{itemize}
+    \item \textbf{5 Components of Data Comm}: Sender, Receiver, Message, Transmission Medium (Guided/Unguided), Protocol.
+    \item \textbf{Network Types}: PAN ($\le 10\,\text{m}$, Bluetooth), LAN (office/building, Ethernet/Wi-Fi), MAN ($5\text{--}50\,\text{km}$, city), WAN (global, Internet).
+    \item \textbf{Topologies}: Bus (backbone, terminators), Star (central switch, modern standard), Ring (token passing), Mesh ($\frac{N(N-1)}{2}$ links, fault tolerant), Tree (hierarchical).
+    \item \textbf{OSI Devices}: Hub (Layer 1 broadcast), Switch (Layer 2 MAC unicast), Router (Layer 3 IP routing), Modem (Digital $\leftrightarrow$ Analog), AP (Wi-Fi).
+    \item \textbf{CIA Triad}: Confidentiality (encryption), Integrity (hashes), Availability (redundancy/uptime).
+    \item \textbf{Malware}: Virus (host file needed), Worm (standalone, self-replicating), Trojan (disguised, backdoor), Spyware (Keyloggers), Ransomware (encrypts files, demands ransom).
+    \item \textbf{Attacks}: Phishing (Spear, Whaling, Vishing), Password cracking (Brute Force, Dictionary, Rainbow Tables).
+    \item \textbf{MFA}: Something you know (password), have (phone/token), are (biometrics).
+    \item \textbf{Firewall}: Packet filter inspecting Source/Dest IP, protocol, and port numbers.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 5.14: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Technical, Conceptual \& Calculation Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Short Answer}: State the primary operational difference between a network Hub and a network Switch.
+    \item \textbf{Short Answer}: Name the three independent authentication factors used in Multi-Factor Authentication (MFA).
+    \item \textbf{Topology Calculation}: A hospital connects 12 critical diagnostic machines in a Full Mesh topology. Calculate the total number of physical cable runs required.
+    \item \textbf{Technical Comparison}: Compare Computer Viruses and Computer Worms with respect to host file dependency and network propagation mechanisms.
+    \item \textbf{Security Analysis}: Explain the three pillars of the CIA Triad, providing one technical defense mechanism for each pillar.
+    \item \textbf{Firewall Analysis}: Explain how a packet-filtering firewall evaluates an incoming TCP connection request.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 5.15: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which component of data communication represents the physical path over which a message travels?
+    \begin{enumerate}[label=(\alph*)]
+        \item Protocol
+        \item Transmission Medium
+        \item Receiver
+        \item Operating System
+    \end{enumerate}
+
+    \item Which network topology connects all devices to a single central shared cable with terminators at both ends?
+    \begin{enumerate}[label=(\alph*)]
+        \item Star Topology
+        \item Ring Topology
+        \item Bus Topology
+        \item Mesh Topology
+    \end{enumerate}
+
+    \item At which layer of the OSI model does an intelligent network Switch operate?
+    \begin{enumerate}[label=(\alph*)]
+        \item Layer 1 (Physical Layer)
+        \item Layer 2 (Data Link Layer)
+        \item Layer 3 (Network Layer)
+        \item Layer 4 (Transport Layer)
+    \end{enumerate}
+
+    \item How many physical communication links are required to interconnect 6 computers in a Full Mesh topology?
+    \begin{enumerate}[label=(\alph*)]
+        \item 6
+        \item 12
+        \item 15
+        \item 30
+    \end{enumerate}
+
+    \item Which type of malware is a standalone program capable of replicating itself automatically across networks without human intervention?
+    \begin{enumerate}[label=(\alph*)]
+        \item Computer Virus
+        \item Computer Worm
+        \item Trojan Horse
+        \item Spyware
+    \end{enumerate}
+
+    \item A phishing email crafted specifically to target the Chief Financial Officer (CFO) of a corporation is termed:
+    \begin{enumerate}[label=(\alph*)]
+        \item Vishing
+        \item Whaling
+        \item Smishing
+        \item Brute Forcing
+    \end{enumerate}
+
+    \item Entering an SMS one-time password (OTP) received on a smartphone alongside your standard password satisfies which two MFA factors?
+    \begin{enumerate}[label=(\alph*)]
+        \item Something you know and something you have
+        \item Something you know and something you are
+        \item Something you have and something you are
+        \item Something you are and somewhere you are
+    \end{enumerate}
+
+    \item Which network security attack floods a web server with millions of concurrent requests to exhaust bandwidth and crash services?
+    \begin{enumerate}[label=(\alph*)]
+        \item Man-in-the-Middle (MitM)
+        \item Distributed Denial of Service (DDoS)
+        \item Keylogging
+        \item Rainbow Table Attack
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) Transmission Medium} --- The guided/unguided physical channel carrying the signal.
+    \item \textbf{(c) Bus Topology} --- A single backbone cable with terminators at both ends.
+    \item \textbf{(b) Layer 2 (Data Link Layer)} --- Switches inspect Layer 2 MAC addresses.
+    \item \textbf{(c) 15} --- Links $= \frac{6(6-1)}{2} = \frac{30}{2} = 15$.
+    \item \textbf{(b) Computer Worm} --- Worms are standalone and self-replicating across networks.
+    \item \textbf{(b) Whaling} --- High-value phishing targeted at executive corporate leadership.
+    \item \textbf{(a) Something you know and something you have} --- Password (Knowledge) + Phone OTP (Possession).
+    \item \textbf{(b) Distributed Denial of Service (DDoS)} --- Floods servers to violate system Availability.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.16: UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 5: Computer Network and Communication (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the formula used to calculate the number of physical links in a Full Mesh topology with $N$ nodes.
+    \item What is the function of a \textit{Modem}?
+    \item Define \textit{Ransomware} and state its typical financial demand mechanism.
+    \item Which OSI layer device utilizes IP addresses to route data between different networks?
+    \item State the Principle of Least Privilege.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Technical Explanations \& Architecture ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Compare and contrast a Network Hub and a Network Switch across five parameters: OSI operating layer, data transmission mode (broadcast vs. unicast), addressing scheme, collision domain behavior, and overall security.
+    \item Explain the three pillars of the CIA Triad (Confidentiality, Integrity, Availability), detailing how each pillar is protected in an enterprise network.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Security \& Topology Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item A university campus is upgrading its network and cybersecurity infrastructure.
+    \begin{enumerate}[label=(\alph*)]
+        \item Compare the \textbf{Star Topology} with the \textbf{Bus Topology}, highlighting cabling requirements, fault isolation, and single points of failure. (4 Marks)
+        \item Explain the mechanics of \textbf{Multi-Factor Authentication (MFA)}, defining the three independent factor categories with concrete real-world examples. (3 Marks)
+        \item Differentiate between \textbf{Viruses}, \textbf{Worms}, and \textbf{Trojan Horses} with respect to host file dependency, replication capability, and payload damage. (3 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item \textbf{Mesh Links Formula}: $\text{Links} = \frac{N(N-1)}{2}$. [1 Mark]
+    \item \textbf{Modem Function}: Modulates digital computer signals into analog waveforms for transmission over ISP lines, and demodulates analog signals into digital bits. [1 Mark]
+    \item \textbf{Ransomware}: Cryptographic malware that encrypts a victim's files and demands payment (usually in cryptocurrency) for the decryption key. [1 Mark]
+    \item \textbf{Layer 3 Device}: \textbf{Router} (Network Layer). [1 Mark]
+    \item \textbf{Principle of Least Privilege}: Users and applications must be granted only the minimum permissions necessary to perform their required operational tasks. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Hub vs. Switch Comparison Table} (1 Mark per parameter):
+    \begin{itemize}
+        \item \textit{OSI Layer}: Hub = Layer 1 (Physical); Switch = Layer 2 (Data Link).
+        \item \textit{Transmission}: Hub = Broadcast (all ports); Switch = Unicast (destination port).
+        \item \textit{Addressing}: Hub = No addressing; Switch = MAC Address Table (CAM table).
+        \item \textit{Collision Domain}: Hub = Single shared collision domain; Switch = Dedicated collision domain per port.
+        \item \textit{Security}: Hub = Low security (traffic sniffing); Switch = High security (isolated port traffic).
+    \end{itemize}
+
+    \item \textbf{CIA Triad Explanation} (5 Marks):
+    \begin{itemize}
+        \item \textit{Confidentiality}: Protecting data from unauthorized viewing; enforced via AES encryption and access control. [1.5 Marks]
+        \item \textit{Integrity}: Ensuring data is not altered or corrupted; enforced via SHA-256 hashes and digital signatures. [1.5 Marks]
+        \item \textit{Availability}: Ensuring systems remain operational; enforced via redundant power, RAID disks, and load balancers. [2 Marks]
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Comprehensive Network Design \& Security}:
+    \begin{enumerate}[label=(\alph*)]
+        \item \textit{Star vs. Bus Topology} (4 Marks):
+        \begin{itemize}
+            \item \textbf{Star Topology}: Each node connects to a central switch. Excellent fault isolation (one cable failure affects only that node). Central switch is single point of failure. Higher cabling requirement. [2 Marks]
+            \item \textbf{Bus Topology}: All nodes tap into a single backbone. Low cabling cost, but a single backbone break collapses the entire network. Difficult to isolate faults. [2 Marks]
+        \end{itemize}
+
+        \item \textit{MFA Factor Categories} (3 Marks):
+        \begin{itemize}
+            \item \textbf{Something You Know}: Password or PIN. [1 Mark]
+            \item \textbf{Something You Have}: Smartphone SMS OTP, authenticator app, or YubiKey hardware token. [1 Mark]
+            \item \textbf{Something You Are}: Biometrics (Fingerprint scan, Apple Face ID). [1 Mark]
+        \end{itemize}
+
+        \item \textit{Virus vs. Worm vs. Trojan Horse} (3 Marks):
+        \begin{itemize}
+            \item \textbf{Virus}: Requires a host file; requires human execution to propagate; corrupts files. [1 Mark]
+            \item \textbf{Worm}: Standalone program; self-replicates across network vulnerabilities automatically; consumes bandwidth. [1 Mark]
+            \item \textbf{Trojan Horse}: Disguised as legitimate software; does not self-replicate; opens remote backdoors. [1 Mark]
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

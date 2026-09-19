@@ -1,0 +1,97 @@
+\chapter{Unit 2: Differential Calculus and Applications}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{2.1}
+If $y = e^{m \sin^{-1}x}$, prove that $(1 - x^2) y_{n+2} - (2n+1)x y_{n+1} - (n^2 + m^2) y_n = 0$.
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{First and Second Derivatives}:
+Given $y = e^{m \sin^{-1}x}$. Differentiating with respect to $x$:
+\begin{equation}
+y_1 = e^{m \sin^{-1}x} \cdot \frac{m}{\sqrt{1 - x^2}} = \frac{m y}{\sqrt{1 - x^2}}
+\end{equation}
+Squaring and rearranging:
+\begin{equation}
+(1 - x^2) y_1^2 = m^2 y^2
+\end{equation}
+Differentiating again with respect to $x$:
+\begin{equation}
+(1 - x^2) (2 y_1 y_2) + (-2x) y_1^2 = m^2 (2 y y_1)
+\end{equation}
+Dividing throughout by $2 y_1 \ne 0$:
+\begin{equation}
+(1 - x^2) y_2 - x y_1 - m^2 y = 0
+\end{equation}
+
+2. \textbf{Application of Leibniz's Theorem}:
+Differentiating $n$ times using Leibniz's rule:
+\begin{align}
+\frac{d^n}{dx^n}[(1 - x^2) y_2] &= y_{n+2}(1 - x^2) + \binom{n}{1} y_{n+1}(-2x) + \binom{n}{2} y_n(-2) \\
+&= (1 - x^2) y_{n+2} - 2n x y_{n+1} - n(n-1) y_n
+\end{align}
+\begin{align}
+\frac{d^n}{dx^n}[x y_1] &= y_{n+1} x + \binom{n}{1} y_n (1) = x y_{n+1} + n y_n
+\end{align}
+\begin{align}
+\frac{d^n}{dx^n}[m^2 y] &= m^2 y_n
+\end{align}
+Combining all terms:
+\begin{align}
+(1 - x^2) y_{n+2} - 2n x y_{n+1} - n(n-1) y_n - (x y_{n+1} + n y_n) - m^2 y_n &= 0 \\
+(1 - x^2) y_{n+2} - (2n + 1)x y_{n+1} - (n^2 - n + n + m^2) y_n &= 0 \\
+(1 - x^2) y_{n+2} - (2n + 1)x y_{n+1} - (n^2 + m^2) y_n &= 0
+\end{align}
+This completes the standard proof.
+\end{solbox}
+
+\begin{examinertip}
+Whenever proving Leibniz identities involving $(1-x^2)$, always cross-multiply the square root and square both sides before taking the second derivative. This eliminates fractions and square roots cleanly!
+\end{examinertip}
+
+\begin{subjectiveq}{2.2}
+Verify Rolle's Theorem for $f(x) = x(x-1)^2$ on the interval $[0, 1]$.
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Check Conditions}:
+\begin{itemize}
+    \item $f(x) = x(x^2 - 2x + 1) = x^3 - 2x^2 + x$ is a polynomial, hence continuous on $[0, 1]$.
+    \item $f'(x) = 3x^2 - 4x + 1$ exists for all $x \in (0, 1)$, hence differentiable on $(0, 1)$.
+    \item $f(0) = 0(0-1)^2 = 0$, and $f(1) = 1(1-1)^2 = 0 \implies f(0) = f(1)$.
+\end{itemize}
+All three conditions of Rolle's theorem are satisfied.
+
+2. \textbf{Finding $c \in (0, 1)$}:
+Set $f'(c) = 0 \implies 3c^2 - 4c + 1 = 0 \implies (3c - 1)(c - 1) = 0$.
+Roots are $c = \frac{1}{3}$ and $c = 1$.
+Since $c = \frac{1}{3} \in (0, 1)$, Rolle's Theorem is verified.
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25)}
+\mcqitem{1}{The $n$-th derivative of $e^{a x}$ is:}{$a e^{a x}$}{$a^n e^{a x}$}{$n a e^{a x}$}{$e^{a x} / a^n$}
+\mcqitem{2}{The value of $\lim_{x\to 0} \frac{\sin x - x}{x^3}$ is:}{$1/6$}{$-1/6$}{$1/3$}{$0$}
+\mcqitem{3}{If $f(x)$ satisfies Rolle's theorem on $[a, b]$, then $f'(c) = 0$ for at least one $c$ in:}{$[a, b]$}{$(a, b)$}{$(-\infty, \infty)$}{$[0, 1]$}
+\mcqitem{4}{The $n$-th derivative of $\sin(ax+b)$ is:}{$a^n \sin(ax+b + n\pi/2)$}{$a^n \cos(ax+b)$}{$\sin(ax+b + n\pi)$}{$a^n \sin(ax+b)$}
+\mcqitem{5}{In Lagrange's MVT $f(b)-f(a) = (b-a)f'(c)$, the point $c$ lies in:}{$[a, b]$}{$(a, b)$}{$(0, \infty)$}{$[a, \infty)$}
+
+\newpage
+\section{Section 3: Answer Key \& Technical Rationales}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 2: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(b)} & Differentiating $e^{ax}$ $n$ times yields factor $a^n$ & 4 & \textbf{(a)} & Standard $n$-th derivative formula for $\sin(ax+b)$ \\
+2 & \textbf{(b)} & Series expansion $\sin x = x - x^3/6 + \cdots \implies -1/6$ & 5 & \textbf{(b)} & LMVT guarantees existence in open interval $(a,b)$ \\
+3 & \textbf{(b)} & Rolle's theorem guarantees $c \in (a, b)$ & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}

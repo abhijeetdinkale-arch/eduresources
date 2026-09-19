@@ -1,0 +1,60 @@
+\chapter{JavaScript Functions, Events, Validation \& The DOM}
+
+\section{5.1 JavaScript Functions}
+A function is a block of code designed to perform a particular task when invoked.
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Named Function}: \texttt{function add(a, b) \{ return a + b; \}}
+    \item \textbf{Anonymous Function}: \texttt{const multiply = function(a, b) \{ return a * b; \};}
+    \item \textbf{Arrow Function (ES6)}: \texttt{const square = (x) => x * x;}
+    \item \textbf{Default Parameter}: \texttt{function greet(name = "Guest") \{ console.log("Hello " + name); \}}
+    \item \textbf{Return Statement}: Returns a value to caller. If omitted, returns \texttt{undefined}. \texttt{return;} without value exits function early.
+\end{enumerate}
+
+\section{5.2 Arrays in JavaScript}
+\begin{itemize}[leftmargin=*]
+    \item An array stores multiple values: \texttt{let colors = ["red", "green", "blue"];}.
+    \item \textbf{Iterating}: Traditional \texttt{for(let i=0; i<arr.length; i++)} vs. \texttt{arr.forEach(item => console.log(item))}.
+    \item \textbf{Methods}: \texttt{push()} (add end), \texttt{pop()} (remove end), \texttt{shift()} (remove front), \texttt{unshift()} (add front), \texttt{map()}, \texttt{filter()}, \texttt{reduce()}.
+\end{itemize}
+
+\section{5.3 JavaScript Events}
+Events are browser signals responding to user actions:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Mouse Events}: \texttt{onclick}, \texttt{ondblclick}, \texttt{onmouseover}, \texttt{onmouseout}.
+    \item \textbf{Keyboard Events}: \texttt{onkeydown} (key pressed down), \texttt{onkeyup} (key released).
+    \item \textbf{Form Events}: \texttt{onsubmit}, \texttt{onchange}, \texttt{onfocus}, \texttt{onblur}.
+    \item \textbf{Event Listeners}: \texttt{btn.addEventListener("click", function() \{ alert("Clicked!"); \});}.
+\end{itemize}
+
+\section{5.4 Form Validation \& Regular Expressions (RegEx)}
+Form validation ensures user input is complete and correct before submission.
+\begin{summarybox}[Email Regular Expression Breakdown]
+Pattern: \textbf{\texttt{let pattern = /\textasciicircum[\textasciicircum\ ]+@[\textasciicircum\ ]+\textbackslash.[a-z]\{2,3\}\$/;}}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{\textasciicircum} : Start of text string.
+    \item \texttt{[\textasciicircum\ ]+} : 1 or more characters except space (username/provider).
+    \item \texttt{@} : Literal @ sign.
+    \item \texttt{\textbackslash.} : Literal dot character (escaped).
+    \item \texttt{[a-z]\{2,3\}} : 2 or 3 lowercase letters (\texttt{.com}, \texttt{.in}, \texttt{.org}).
+    \item \texttt{\$} : End of text string.
+    \item \textbf{Validation Hook}: If invalid, \texttt{alert("Invalid"); return false;} (stops form submission).
+\end{itemize}
+\end{summarybox}
+
+\section{5.5 Document Object Model (DOM)}
+The DOM is a bridge between JavaScript and the webpage, representing HTML tags as a tree of objects.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Selection}:
+    \begin{itemize}
+        \item \texttt{document.getElementById("id")} $\to$ Selects single element by ID.
+        \item \texttt{document.getElementsByClassName("cls")} $\to$ Collection of elements by class.
+        \item \texttt{document.getElementsByTagName("p")} $\to$ Collection by tag name.
+        \item \texttt{document.querySelector(".box")} $\to$ First matching CSS selector.
+        \item \texttt{document.querySelectorAll("p")} $\to$ All matching CSS selectors.
+    \end{itemize}
+    \item \textbf{Changing Content}: \texttt{el.innerHTML = "<b>Bold</b>";} vs. \texttt{el.textContent = "Text";}.
+    \item \textbf{Changing Styles}: \texttt{el.style.color = "red";} | \texttt{el.style.backgroundColor = "yellow";}.
+    \item \textbf{CSS Classes}: \texttt{el.classList.add("highlight");} | \texttt{el.classList.remove("highlight");}.
+    \item \textbf{Adding Elements}: \texttt{let p = document.createElement("p"); document.body.appendChild(p);}.
+    \item \textbf{Removing Elements}: \texttt{document.getElementById("box").remove();}.
+\end{itemize}

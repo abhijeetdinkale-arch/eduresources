@@ -1,0 +1,1131 @@
+\chapter{Programming Environment, Variables, Expressions \& Statements}
+\label{chap:environment-variables-statements}
+
+% ==============================================================================
+% SECTION 1.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 1 Academic Scope \lpuBadge]
+This unit introduces the foundational architecture of the Python programming language. As a first-year engineering student, you will master the mechanics of the Python Virtual Machine (PVM), understand the critical distinctions between Python 2 and Python 3, configure environment variables, execute code in interactive and script modes, and manipulate data using dynamically typed variables, operators, expressions, formatted I/O, and string operations.
+\end{conceptbox}
+
+Welcome to the world of Python programming! Before we write complex algorithms or build robust applications, it is absolutely essential to understand the tools and environments where Python code lives. Many beginners rush into writing syntax without knowing how the underlying system processes their instructions. In this chapter, we establish the core foundation. We will explore how Python bridges the gap between human-readable source code and machine-executable binary instructions.
+
+Furthermore, we will establish a deep understanding of Python's dynamic memory model. Unlike strictly typed languages such as C or Java, Python offers flexibility by dynamically assigning data types. You will learn how variables point to objects in memory, how operators manipulate these objects, and how to control user input and format the resulting output for a professional presentation.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Environment Architecture}: Configure Python on local systems (Windows, macOS, Linux), understand the PATH variable, and distinguish bytecode compilation from virtual machine interpretation.
+    \item \textbf{Variables \& Dynamic Memory}: Understand Python's reference model, identifier naming rules, small integer caching, and keyword constraints.
+    \item \textbf{Statements vs. Expressions}: Distinguish between code that produces a value (expressions) and code that performs an action (statements).
+    \item \textbf{Type System \& Casting}: Inspect and manipulate primitive types (\texttt{int}, \texttt{float}, \texttt{str}, \texttt{bool}) using explicit constructor functions.
+    \item \textbf{Operators \& Precedence}: Apply arithmetic, relational, logical, assignment, and bitwise operators with precision, mastering PEMDAS evaluation.
+    \item \textbf{Interactive Input \& Formatted Output}: Utilize the \texttt{input()} function, cast inputs safely, and format outputs using modern f-string interpolation.
+    \item \textbf{String Operations}: Perform string concatenation, indexing, slicing, and utilize escape characters.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.2: SETTING UP THE PROGRAMMING ENVIRONMENT
+% ==============================================================================
+\section{Setting up the Programming Environment}
+
+\subsection{Python Architecture: Compilation vs. Interpretation}
+
+Every programming language must eventually translate human-readable source code into the binary language of the computer's CPU. Python is universally classified as an interpreted, high-level language. However, this is a simplification. Under the hood, the standard implementation of Python (CPython) utilizes a highly efficient two-stage hybrid execution model. Understanding this architecture is crucial for diagnosing performance issues and deploying Python applications in professional environments.
+
+When you execute a Python script, the process does not go directly to the CPU. Instead, the source code first passes through a compiler, which strips away comments and translates the syntax into an intermediate format. This format is then handed off to a specialized piece of software known as a Virtual Machine, which acts as a simulated computer to run the code.
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Source Code Compilation to Bytecode}: When a Python source file (\texttt{.py}) is executed, the CPython compiler translates human-readable source code into platform-independent intermediate instructions known as \textbf{bytecode}. This bytecode is often cached and saved in \texttt{.pyc} files inside a hidden \texttt{\_\_pycache\_\_} directory, skipping the compilation step on future runs to improve performance.
+    \item \textbf{Bytecode Interpretation via PVM}: The \textbf{Python Virtual Machine (PVM)} is the runtime engine of Python. It reads the bytecode instructions line-by-line and translates them into native machine-level instructions for the host CPU (whether that is an Intel, AMD, or Apple Silicon processor).
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.8cm, auto, >=Stealth]
+    \node [draw=pyblue, fill=pyblue!10, rectangle, rounded corners, minimum width=3cm, minimum height=1cm, font=\small\bfseries, align=center] (source) {Python Source Code\\(\texttt{program.py})};
+    \node [draw=pypurple, fill=pypurple!10, rectangle, rounded corners, minimum width=3cm, minimum height=1cm, right=1.8cm of source, font=\small\bfseries, align=center] (bytecode) {CPython Bytecode\\(\texttt{program.pyc})};
+    \node [draw=pygreen, fill=pygreen!10, rectangle, rounded corners, minimum width=3cm, minimum height=1cm, right=1.8cm of bytecode, font=\small\bfseries, align=center] (pvm) {Python Virtual\\Machine (PVM)};
+    \node [draw=pygold, fill=pygold!10, rectangle, rounded corners, minimum width=2.5cm, minimum height=1cm, right=1.8cm of pvm, font=\small\bfseries, align=center] (cpu) {Host CPU\\Execution};
+
+    \draw [->, thick, pyblue] (source) -- node[above, font=\footnotesize\ttfamily] {Compiler} (bytecode);
+    \draw [->, thick, pypurple] (bytecode) -- node[above, font=\footnotesize\ttfamily] {Interpreter} (pvm);
+    \draw [->, thick, pygreen] (pvm) -- node[above, font=\footnotesize\ttfamily] {Native Code} (cpu);
+\end{tikzpicture}%
+}
+\caption{The CPython Two-Stage Execution Lifecycle.}
+\label{fig:python-runtime}
+\end{figure}
+
+\subsection{Python 2 vs. Python 3: Core Differences}
+
+Python 3 was a monumental update to the language that broke backward compatibility to fix fundamental design flaws in Python 2. While Python 2 officially reached its end-of-life on January 1, 2020, you may still encounter legacy codebases in the industry. As an engineer, you must be capable of identifying Python 2 code and updating it to modern Python 3 standards.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Feature / Behavior} & \textbf{Python 2 (Legacy --- Deprecated 2020)} & \textbf{Python 3 (Modern University Standard)} \\
+\midrule
+\textbf{Print Syntax} & Statement without parentheses: \texttt{print "Hello"} & Built-in function: \texttt{print("Hello")} \\
+\textbf{Integer Division} & Truncating floor division: \texttt{5 / 2} yields \texttt{2} & True float division: \texttt{5 / 2} yields \texttt{2.5} \\
+\textbf{String Encoding} & ASCII by default; Unicode requires \texttt{u"..."} & All strings are Unicode (UTF-8) by default \\
+\textbf{User Input} & \texttt{raw\_input()} for strings; \texttt{input()} evaluates & Unified \texttt{input()} always returns a \texttt{str} \\
+\textbf{Range Generator} & \texttt{range()} creates list; \texttt{xrange()} is generator & \texttt{range()} is an efficient generator sequence object \\
+\bottomrule
+\end{tabularx}
+\caption{Key Technical Distinctions Between Python 2 and Python 3.}
+\label{tab:py2-vs-py3}
+\end{table}
+
+\subsection{Platform Installations \& PATH Environment Variables}
+
+Installing Python varies slightly depending on your operating system. Modern development utilizes advanced IDEs (Integrated Development Environments), but the underlying interpreter must be correctly mapped to your system's PATH.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Windows}: Download the executable from python.org. Checking \textbf{"Add Python to PATH"} is the most critical step. This modifies the OS environment variables so that the \texttt{python} command is globally recognized in CMD or PowerShell.
+    \item \textbf{macOS}: macOS comes with a pre-installed, often outdated version of Python. It is highly recommended to use Homebrew (\texttt{brew install python}) to install the latest Python 3 version, which is accessed via the terminal using the \texttt{python3} command.
+    \item \textbf{Linux (Ubuntu/Debian)}: Python is heavily integrated into Linux. Use the package manager: \texttt{sudo apt install python3}. Linux terminals also use \texttt{python3} to differentiate from legacy versions.
+\end{itemize}
+
+\begin{conceptbox}[Why PATH Configuration Matters]
+The \textbf{PATH} is an operating system environment variable that specifies a list of directories containing executable binaries. Adding Python to PATH ensures that typing \texttt{python} or \texttt{pip} in any terminal allows the OS to immediately locate and launch the interpreter without requiring the absolute file path (e.g., \texttt{C:/Users/AppData/Local/Programs/Python/python.exe}).
+\end{conceptbox}
+
+\textbf{Modern Development Environments (IDEs)}:
+While terminal execution is fundamental, writing large codebases requires robust tools. 
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{VS Code (Visual Studio Code)}: A lightweight, highly extensible editor by Microsoft. The Python extension provides IntelliSense, linting, and debugging.
+    \item \textbf{PyCharm}: A heavyweight, full-featured IDE by JetBrains designed specifically for Python. It automatically manages virtual environments and provides enterprise-grade refactoring tools.
+\end{itemize}
+
+To verify installation and environment configuration via CLI:
+\begin{outputbox}
+C:/Users/Student> python --version
+Python 3.11.4
+
+C:/Users/Student> python -c "print('Environment configured successfully!')"
+Environment configured successfully!
+\end{outputbox}
+
+\subsection{Running Python: Interactive Mode vs. Script Mode}
+
+Python accommodates two primary modes of execution, each serving a distinct purpose in the software development lifecycle.
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Interactive Mode (REPL)}: Launching \texttt{python} in your terminal opens the \textbf{Read-Eval-Print Loop}. This environment is perfect for rapid prototyping and testing isolated expressions. Expressions typed at the prompt are evaluated and printed immediately:
+    \begin{outputbox}
+>>> 5 + 7
+12
+>>> type("LPU")
+<class 'str'>
+    \end{outputbox}
+    \item \textbf{Script Mode}: For permanent, reusable software, code is written into a text file with a \texttt{.py} extension (e.g., \texttt{calculator.py}) and executed via the terminal command \texttt{python calculator.py}. In script mode, lone expressions (e.g., \texttt{5 + 7}) are evaluated silently; you must explicitly use the \texttt{print()} function to display results to the console.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.3: VARIABLES, NAMING \& KEYWORDS
+% ==============================================================================
+\section{Variables: Naming, Dynamic Typing, and Keywords}
+
+\subsection{Python's Dynamic Memory Model}
+
+In Python, a variable acts fundamentally differently than in strictly typed languages like C++ or Java. In C++, declaring \texttt{int x = 5;} reserves a specific 4-byte chunk of memory designated solely for integers. If you try to place a string in \texttt{x}, the program crashes.
+
+Python utilizes a \textbf{Dynamic Memory Model}. A variable in Python is not a memory container; it is simply a \textbf{name tag} (a reference pointer) bound to an object living in heap memory. The object itself knows its data type, size, and value. The variable is merely a convenient label for the programmer.
+
+\begin{syntaxbox}[Variable Assignment]
+variable\_name = value\_expression
+\end{syntaxbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, auto, >=Stealth]
+    % Variables (Tags)
+    \node[draw=pydark, fill=slate!10, rounded corners, minimum width=2cm, minimum height=0.8cm, font=\small\bfseries] (varX) at (0, 1.5) {\texttt{x}};
+    \node[draw=pydark, fill=slate!10, rounded corners, minimum width=2cm, minimum height=0.8cm, font=\small\bfseries] (varY) at (0, -0.5) {\texttt{y}};
+
+    % Heap Objects
+    \node[draw=pyblue, fill=pyblue!15, rectangle, rounded corners, minimum width=2.8cm, minimum height=1.2cm, font=\small\bfseries, align=center] (objInt) at (6, 1.5) {Integer Object\\\texttt{value: 42}\\\texttt{type: int}};
+    \node[draw=pygreen, fill=pygreen!15, rectangle, rounded corners, minimum width=2.8cm, minimum height=1.2cm, font=\small\bfseries, align=center] (objStr) at (6, -0.5) {String Object\\\texttt{value: "Hello"}\\\texttt{type: str}};
+
+    \draw [->, thick, pyblue] (varX) -- node[above, font=\footnotesize] {References} (objInt);
+    \draw [->, thick, pygreen] (varY) -- node[above, font=\footnotesize] {References} (objStr);
+\end{tikzpicture}
+\caption{Python's Name-Binding Pointer Architecture.}
+\label{fig:variable-binding}
+\end{figure}
+
+Because a variable is just a tag, it can be ripped off one object and placed onto another object of a completely different data type. This is known as \textbf{dynamic typing}.
+
+\begin{pythoncode}{Dynamic Rebinding and Identity Inspection}
+# Dynamic Typing in action
+x = 100              # x references an integer object
+print("Initial x:", x, "| Type:", type(x), "| ID:", id(x))
+
+x = "Lovely University" # x is rebound to a string object
+print("Rebound x:", x, "| Type:", type(x), "| ID:", id(x))
+\end{pythoncode}
+
+\begin{outputbox}
+Initial x: 100 | Type: <class 'int'> | ID: 4301294864
+Rebound x: Lovely University | Type: <class 'str'> | ID: 4301982128
+\end{outputbox}
+
+\subsection{Object Identity vs. Equality (\texttt{is} vs \texttt{==})}
+
+Because variables are pointers, Python provides two distinct ways to compare them. Students frequently confuse value equality with memory identity.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Equality Operator (\texttt{==})}: Compares whether two objects hold the \textbf{same value or content}.
+    \item \textbf{Identity Operator (\texttt{is})}: Compares whether two variables point to the \textbf{exact same memory address} (\texttt{id(a) == id(b)}).
+    \item \textbf{Small Integer Caching (Integer Pooling)}: For performance optimization, the CPython interpreter pre-allocates and caches small integer objects in the range $[-5, 256]$ at startup. Any variables assigned integers within this range point to the identical, cached memory object.
+\end{itemize}
+
+\begin{pythoncode}{Demonstrating Integer Pooling and Identity}
+a = 256
+b = 256
+print("256: a == b ->", a == b, "| a is b ->", a is b) 
+
+# Distinct allocations outside [-5, 256]
+x = 1000
+y = 1000
+print("1000: x == y ->", x == y, "| x is y ->", x is y) 
+\end{pythoncode}
+
+\begin{outputbox}
+256: a == b -> True | a is b -> True
+1000: x == y -> True | x is y -> False
+\end{outputbox}
+
+\subsection{Variable Naming Rules \& Conventions}
+
+\begin{conceptbox}[Identifier Construction Rules]
+An \textbf{identifier} is a name used to identify a variable, function, class, or module. A valid identifier must obey strict rules set by the parser:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Starting Character}: Must begin with a letter (\texttt{A--Z}, \texttt{a--z}) or an underscore (\texttt{\_}).
+    \item \textbf{Subsequent Characters}: Can contain letters, digits (\texttt{0--9}), and underscores.
+    \item \textbf{No Digits at Start}: \texttt{2nd\_value} is invalid and raises a \texttt{SyntaxError}.
+    \item \textbf{No Special Symbols}: Characters like \texttt{@}, \texttt{\$}, \texttt{\%}, \texttt{-}, \texttt{.} are illegal.
+    \item \textbf{Case-Sensitivity}: \texttt{total}, \texttt{Total}, and \texttt{TOTAL} refer to three entirely distinct memory locations.
+    \item \textbf{Conventions (PEP 8)}: Use \texttt{snake\_case} for variables and functions, \texttt{ALL\_CAPS} for constants, and \texttt{PascalCase} for classes.
+\end{enumerate}
+\end{conceptbox}
+
+\subsection{Python Keywords (Reserved Words)}
+
+Keywords are reserved words that define the core syntax and grammar rules of Python. Because they carry special meaning to the interpreter, they cannot be used as variable names or identifiers.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{XXXXX}
+\toprule
+\texttt{False} & \texttt{None} & \texttt{True} & \texttt{and} & \texttt{as} \\
+\texttt{assert} & \texttt{async} & \texttt{await} & \texttt{break} & \texttt{class} \\
+\texttt{continue} & \texttt{def} & \texttt{del} & \texttt{elif} & \texttt{else} \\
+\texttt{except} & \texttt{finally} & \texttt{for} & \texttt{from} & \texttt{global} \\
+\texttt{if} & \texttt{import} & \texttt{in} & \texttt{is} & \texttt{lambda} \\
+\texttt{nonlocal} & \texttt{not} & \texttt{or} & \texttt{pass} & \texttt{raise} \\
+\texttt{return} & \texttt{try} & \texttt{while} & \texttt{with} & \texttt{yield} \\
+\bottomrule
+\end{tabularx}
+\caption{The Complete Set of Python Reserved Keywords.}
+\label{tab:python-keywords}
+\end{table}
+
+\subsection{Understanding and Preventing \texttt{NameError}}
+
+A \texttt{NameError} is one of the most common runtime exceptions. It occurs when your code attempts to read the value of a variable identifier that has not been defined in the current namespace.
+
+\begin{commonmistake}[Causes of NameError]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Misspelling}: Defining \texttt{radius = 5} and later typing \texttt{print(raduis)}.
+    \item \textbf{Usage Before Assignment}: Referencing a variable line \textit{before} the line where it is defined. Python executes line-by-line from the top down.
+    \item \textbf{Forgetting Quotes on Strings}: Writing \texttt{city = Phagwara} instead of \texttt{city = "Phagwara"}. Python treats unquoted text as a variable identifier, looks for a variable named \texttt{Phagwara}, fails to find it, and crashes.
+\end{enumerate}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 1.4: STATEMENTS VS EXPRESSIONS
+% ==============================================================================
+\section{Statements vs. Expressions}
+
+It is crucial to differentiate between expressions and statements in Python. These two concepts form the atomic building blocks of all programs.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Expression}: A combination of values, variables, and operators that the interpreter evaluates to produce a single new value. Expressions always return something. Examples include: \texttt{5 + 3}, \texttt{len("Python")}, or \texttt{x > 10}.
+    \item \textbf{Statement}: An instruction that tells the Python interpreter to perform an action. Statements do not return a value; they simply execute. Examples include variable assignment (\texttt{x = 5}), loops (\texttt{for}, \texttt{while}), and conditional branches (\texttt{if}).
+\end{itemize}
+
+Every expression can be used as a statement (though it may just compute a value and discard it), but not every statement can be used as an expression. For instance, you cannot write \texttt{y = (x = 5)} in Python because \texttt{x = 5} is an assignment statement and does not evaluate to a value.
+
+% ==============================================================================
+% SECTION 1.5: VALUES, DATA TYPES, AND TYPE CASTING
+% ==============================================================================
+\section{Values, Data Types, and Type Casting}
+
+\subsection{Fundamental Primitive Data Types}
+
+Python classifies data into types to determine how it is stored in memory and what operations can be legally performed on it. You cannot, for example, mathematically divide a string by a boolean.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Data Type} & \textbf{Class} & \textbf{Description / Characteristics} & \textbf{Example Literal} \\
+\midrule
+\textbf{Integer} & \texttt{int} & Whole numbers of arbitrary precision (no overflow limit in Python) & \texttt{42}, \texttt{-1000}, \texttt{0} \\
+\textbf{Float} & \texttt{float} & Double-precision 64-bit IEEE 754 floating-point decimal numbers & \texttt{3.14159}, \texttt{-0.005} \\
+\textbf{String} & \texttt{str} & Immutable sequence of Unicode text characters & \texttt{"Python"}, \texttt{'LPU'} \\
+\textbf{Boolean} & \texttt{bool} & Logical truth values representing binary states & \texttt{True}, \texttt{False} \\
+\bottomrule
+\end{tabularx}
+\caption{Core Primitive Data Types in Python 3.}
+\label{tab:primitive-types}
+\end{table}
+
+\begin{pythoncode}{Inspecting Data Types}
+a = 15
+b = 15.0
+c = "15"
+d = True
+
+print("a:", type(a))
+print("b:", type(b))
+print("c:", type(c))
+print("d:", type(d))
+\end{pythoncode}
+
+\begin{outputbox}
+a: <class 'int'>
+b: <class 'float'>
+c: <class 'str'>
+d: <class 'bool'>
+\end{outputbox}
+
+\subsection{Type Casting / Conversion}
+
+While Python is dynamically typed, it is also \textbf{strongly typed}. This means Python will not implicitly magically convert a string to an integer if you try to add them. The expression \texttt{"5" + 2} will raise a \texttt{TypeError}. You must explicitly convert (or \textit{cast}) types using constructor functions.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{int(x)}: Converts \texttt{x} to an integer. If \texttt{x} is a float, it truncates (chops off) the decimal. If \texttt{x} is a string, it parses the string for numeric digits.
+    \item \texttt{float(x)}: Converts \texttt{x} to a floating-point number.
+    \item \texttt{str(x)}: Converts \texttt{x} to a string representation.
+    \item \texttt{bool(x)}: Evaluates the "truthiness" of \texttt{x}. Almost all values evaluate to \texttt{True} except for zero (\texttt{0}, \texttt{0.0}), empty strings (\texttt{""}), and \texttt{None}.
+\end{itemize}
+
+\begin{pythoncode}{Type Conversion and Truncation Rules}
+# Float to Integer truncation
+float_val = 9.99
+int_val = int(float_val)  # Decimals are chopped off, NOT rounded!
+print("Truncated 9.99 to int:", int_val)
+
+# String parsing
+str_num = "45"
+total = int(str_num) + 5
+print("String parsed to int:", total)
+
+# Truthiness
+print("bool(0):", bool(0), "| bool(14):", bool(14))
+print("bool(''):", bool(""), "| bool('Hello'):", bool("Hello"))
+\end{pythoncode}
+
+\begin{outputbox}
+Truncated 9.99 to int: 9
+String parsed to int: 50
+bool(0): False | bool(14): True
+bool(''): False | bool('Hello'): True
+\end{outputbox}
+
+\begin{commonmistake}[ValueError during Casting]
+Using \texttt{int()} on a string that does not perfectly represent a whole number will crash the program with a \texttt{ValueError}. For example, \texttt{int("3.14")} or \texttt{int("Hello")} will fail. To safely parse a decimal string to an integer, you must nest the casting: \texttt{int(float("3.14"))}.
+\end{commonmistake}
+
+\begin{pythoncode}{Demonstrating Type Conversion Errors}
+try:
+    invalid_cast = int("3.14")
+except ValueError as e:
+    print("Caught ValueError:", e)
+\end{pythoncode}
+
+\begin{outputbox}
+Caught ValueError: invalid literal for int() with base 10: '3.14'
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 1.6: OPERATORS, PRECEDENCE & IEEE 754
+% ==============================================================================
+\section{Operators, Evaluation Precedence, and Floating-Point Issues}
+
+Python operators allow you to perform mathematical calculations, compare values, and manipulate boolean logic.
+
+\subsection{Arithmetic Operators}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{cll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Operator} & \textbf{Name} & \textbf{Mathematical} & \textbf{Behavioral Details} & \textbf{Example} \\
+\midrule
+\texttt{+} & Addition & $a + b$ & Sum of numeric values & \texttt{7 + 3} $\to$ \texttt{10} \\
+\texttt{-} & Subtraction & $a - b$ & Difference of numeric values & \texttt{7 - 3} $\to$ \texttt{4} \\
+\texttt{*} & Multiplication & $a \times b$ & Product of values & \texttt{7 * 3} $\to$ \texttt{21} \\
+\texttt{/} & True Division & $a \div b$ & \textbf{Always returns a float} & \texttt{7 / 2} $\to$ \texttt{3.5} \\
+\texttt{//} & Floor Division & $\lfloor a / b \rfloor$ & Rounds quotient down to nearest int & \texttt{7 // 2} $\to$ \texttt{3} \\
+\texttt{\%} & Modulus & $a \pmod b$ & Returns remainder of division & \texttt{7 \% 3} $\to$ \texttt{1} \\
+\texttt{**} & Exponentiation & $a^b$ & Raises base $a$ to power $b$ & \texttt{2 ** 3} $\to$ \texttt{8} \\
+\bottomrule
+\end{tabularx}
+\caption{Python Arithmetic Operators and Evaluation Mechanics.}
+\label{tab:arithmetic-ops}
+\end{table}
+
+\begin{examtip}[Negative Floor Division \& Modulus]
+Python's floor division rounds toward negative infinity, which catches many students off guard:
+\begin{itemize}
+    \item \texttt{7 // 2 = 3} (since $3.5 \to 3$)
+    \item \texttt{-7 // 2 = -4} (since $-3.5$ rounded down is $-4$, not $-3$)
+    \item \texttt{-7 \% 2 = 1} (satisfying the equation $a = (a // b) \times b + (a \% b) \implies -7 = (-4 \times 2) + 1$)
+\end{itemize}
+\end{examtip}
+
+\subsection{The IEEE 754 Floating-Point Surprise}
+
+\begin{pythoncode}{Floating-Point Arithmetic Anomaly}
+result = 0.1 + 0.2
+print("0.1 + 0.2 =", result)
+print("Is it equal to 0.3?", result == 0.3)
+\end{pythoncode}
+
+\begin{outputbox}
+0.1 + 0.2 = 0.30000000000000004
+Is it equal to 0.3? False
+\end{outputbox}
+
+Why does this happen? Computers store numbers in binary (base-2). Just like the fraction $1/3$ cannot be represented perfectly in base-10 ($0.3333\dots$), numbers like $0.1$ and $0.2$ produce infinitely repeating binary fractions. Python follows the \textbf{IEEE 754 standard} for floating-point arithmetic. It stores an approximation, leading to tiny rounding errors. Never use \texttt{==} to directly compare floating-point values; instead, check if their difference is infinitesimally small (e.g., using \texttt{math.isclose()}).
+
+\subsection{Relational (Comparison) Operators}
+
+Relational operators compare two values and evaluate to a boolean expression (\texttt{True} or \texttt{False}).
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{cXlX}
+\toprule
+\textbf{Operator} & \textbf{Meaning} & \textbf{Example} & \textbf{Evaluates To} \\
+\midrule
+\texttt{==} & Equal to & \texttt{5 == 5.0} & \texttt{True} \\
+\texttt{!=} & Not equal to & \texttt{5 != 4} & \texttt{True} \\
+\texttt{>} & Greater than & \texttt{10 > 20} & \texttt{False} \\
+\texttt{<} & Less than & \texttt{10 < 20} & \texttt{True} \\
+\texttt{>=} & Greater than or equal to & \texttt{7 >= 7} & \texttt{True} \\
+\texttt{<=} & Less than or equal to & \texttt{7 <= 6} & \texttt{False} \\
+\bottomrule
+\end{tabularx}
+\caption{Relational Operators in Python.}
+\end{table}
+
+\begin{pythoncode}{Chained Comparisons}
+# Python allows intuitive chaining of relational operators
+x = 15
+is_valid_range = 10 < x <= 20
+print("Is 15 between 10 and 20?", is_valid_range)
+\end{pythoncode}
+
+\begin{outputbox}
+Is 15 between 10 and 20? True
+\end{outputbox}
+
+\subsection{Logical Operators \& Short-Circuit Evaluation}
+
+Logical operators (\texttt{and}, \texttt{or}, \texttt{not}) combine multiple boolean expressions. 
+Python uses \textbf{short-circuit evaluation}. This means Python stops evaluating logical expressions as soon as the final result is known, saving computation time and potentially preventing errors.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{and}: Returns \texttt{True} if \textit{both} operands are true. If the left operand is \texttt{False}, the overall expression must be \texttt{False}, so the right operand is \textbf{not evaluated at all}.
+    \item \texttt{or}: Returns \texttt{True} if \textit{at least one} operand is true. If the left operand is \texttt{True}, the overall expression must be \texttt{True}, so the right operand is \textbf{not evaluated}.
+    \item \texttt{not}: Unary operator that inverts the boolean value.
+\end{itemize}
+
+\begin{pythoncode}{Logical Operations and Short-Circuiting}
+age = 20
+has_license = True
+can_drive = (age >= 18) and has_license
+print("Can drive?", can_drive)
+
+# Short-circuit demonstration
+# If x = 0, (x > 0) is False. The code after 'and' is skipped!
+x = 0
+result = (x > 0) and (10 / x > 2) # Prevents ZeroDivisionError!
+print("Short-circuited result:", result)
+\end{pythoncode}
+
+\begin{outputbox}
+Can drive? True
+Short-circuited result: False
+\end{outputbox}
+
+\subsection{Order of Operations (PEMDAS Rules)}
+
+When multiple operators appear, Python resolves their order via \textbf{PEMDAS}:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{P}arentheses \texttt{()}: Highest precedence.
+    \item \textbf{E}xponentiation \texttt{**}: Evaluates \textbf{Right to Left}!
+    \begin{equation*}
+        \texttt{2 ** 3 ** 2} \implies 2^{(3^2)} = 2^9 = \mathbf{512}
+    \end{equation*}
+    \item \textbf{M}ultiplication \texttt{*}, \textbf{D}ivision \texttt{/}, \textbf{F}loor Division \texttt{//}, \textbf{M}odulus \texttt{\%}: Left to Right.
+    \item \textbf{A}ddition \texttt{+}, \textbf{S}ubtraction \texttt{-}: Left to Right.
+    \item \textbf{R}elational: \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{>}.
+    \item \textbf{L}ogical Operators: \texttt{not} > \texttt{and} > \texttt{or}.
+\end{enumerate}
+
+
+% ==============================================================================
+% SECTION 1.7: INPUT() AND FORMATTED I/O
+% ==============================================================================
+\section{Interactive Input and Formatted Output}
+
+To create dynamic software, programs must gather information from users and present computed results cleanly.
+
+\subsection{The \texttt{input()} Function}
+
+The \texttt{input()} function halts the execution of the program and waits for the user to type something into the terminal and press \texttt{Enter}. You can pass an optional prompt string to tell the user what to type.
+
+\begin{syntaxbox}[The input() Function]
+variable = input("Prompt message to display: ")
+\end{syntaxbox}
+
+\begin{conceptbox}[The Critical Input Rule]
+The \texttt{input()} function \textbf{ALWAYS} returns user data as a \textbf{String (\texttt{str})}, regardless of what they type. Even if the user types \texttt{42}, Python reads it as \texttt{"42"}. Attempting to perform mathematical operations on this raw input will fail. You must cast the result using \texttt{int()} or \texttt{float()}.
+\end{conceptbox}
+
+\begin{pythoncode}{input() with Type Casting}
+# Raw input is a string
+age_str = input("Enter your age: ")
+# We must cast it to an integer for math
+age_int = int(age_str)
+next_year = age_int + 1
+
+# Often done in a single concise line:
+weight = float(input("Enter weight in kg: "))
+
+print("Next year you will be:", next_year)
+print("Weight entered:", weight)
+\end{pythoncode}
+
+\begin{outputbox}
+Enter your age: 19
+Enter weight in kg: 65.5
+Next year you will be: 20
+Weight entered: 65.5
+\end{outputbox}
+
+\subsection{Modern Formatted String Literals (f-strings)}
+
+Introduced in Python 3.6, formatted string literals (f-strings) provide an elegant way to embed expressions directly inside string constants. By placing an \texttt{f} or \texttt{F} before the quotation marks, you can insert variables directly inside curly braces \texttt{\{\}}.
+
+You can also include formatting specifiers to control decimals, alignment, and spacing.
+
+\begin{pythoncode}{Advanced f-string Formatting}
+item = "Laptop"
+price = 45999.5
+discount = 0.15
+final_price = price * (1 - discount)
+
+# .2f forces exactly 2 decimal places
+# , adds comma thousands separators
+# >15 right-aligns within 15 spaces
+print(f"Product:  {item:>15}")
+print(f"Original: Rs. {price:12,.2f}")
+print(f"Discount: {discount * 100:11.1f}%")
+print(f"Final:    Rs. {final_price:12,.2f}")
+\end{pythoncode}
+
+\begin{outputbox}
+Product:           Laptop
+Original: Rs.    45,999.50
+Discount:        15.0%
+Final:    Rs.    39,099.57
+\end{outputbox}
+
+\subsection{The \texttt{print()} Function Parameters}
+
+The built-in \texttt{print()} function can be customized using keyword arguments:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{sep="string"}: Replaces the default space inserted between multiple values.
+    \item \texttt{end="string"}: Replaces the default newline appended at the very end.
+\end{itemize}
+
+\begin{pythoncode}{Customizing print() with sep and end}
+print("INT108", "MTH165", "CSE111", sep=" | ")
+print("Loading sequence", end="... ")
+print("Complete!")
+\end{pythoncode}
+
+\begin{outputbox}
+INT108 | MTH165 | CSE111
+Loading sequence... Complete!
+\end{outputbox}
+
+
+% ==============================================================================
+% SECTION 1.8: STRING BASICS & COMMENTS
+% ==============================================================================
+\section{String Fundamentals, Comments, and Documentation}
+
+\subsection{String Operations: Indexing, Slicing, and Escaping}
+
+Strings are ordered sequences of text characters. Python provides powerful tools to manipulate them.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Concatenation (\texttt{+})}: Glues strings together.
+    \item \textbf{Repetition (\texttt{*})}: Repeats a string multiple times.
+    \item \textbf{Indexing (\texttt{[]})}: Accesses a single character by its position (0-based index). Negative indices count backward from the end (\texttt{-1} is the last character).
+    \item \textbf{Slicing (\texttt{[start:stop]})} Extracts a substring from \texttt{start} up to, but not including, \texttt{stop}.
+    \item \textbf{Length (\texttt{len()})}: Returns the total number of characters.
+    \item \textbf{Escape Characters}: Use a backslash to insert special formatting. \texttt{\textbackslash n} creates a new line. \texttt{\textbackslash t} creates a horizontal tab. \texttt{\textbackslash \textbackslash} inserts a literal backslash. Raw strings (prefixing with \texttt{r}) ignore escape characters entirely (useful for file paths).
+\end{itemize}
+
+\begin{pythoncode}{String Indexing, Slicing, and Escapes}
+word = "Python"
+print("First letter:", word[0])
+print("Last letter:", word[-1])
+print("First 3 letters:", word[0:3])
+
+# Escape characters vs. Raw Strings
+print("Line 1\nLine 2")
+print(r"Raw string ignores \n")
+\end{pythoncode}
+
+\begin{outputbox}
+First letter: P
+Last letter: n
+First 3 letters: Pyt
+Line 1
+Line 2
+Raw string ignores \n
+\end{outputbox}
+
+\subsection{Comments and PEP 257 Docstrings}
+
+Writing code is only half the battle. Good engineers document their code so that others (and their future selves) can understand the logic and architecture. Python executes none of these comments.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Single-Line Comments}: Preceded by a hash \texttt{\#}. Best used for brief explanations.
+    \item \textbf{Docstrings (PEP 257)}: Multi-line string literals enclosed in triple quotes (\texttt{"""..."""}). These are placed immediately underneath module, class, or function definitions to automatically document the codebase.
+\end{itemize}
+
+\begin{pythoncode}{Demonstrating Docstrings and Comments}
+"""
+Module Name: physics_calculator.py
+Author: Jane Doe
+Description: Computes various kinematic equations.
+"""
+
+# Initialize gravity constant
+GRAVITY = 9.81  # m/s^2
+
+# Compute falling distance
+time = 5
+distance = 0.5 * GRAVITY * (time ** 2)
+print(f"Fell {distance} meters.")
+\end{pythoncode}
+
+\begin{outputbox}
+Fell 122.625 meters.
+\end{outputbox}
+
+
+% ==============================================================================
+% SECTION 1.9: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Unit 1 Exam Insights]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Division Output}: In Python 3, \texttt{/} ALWAYS produces a \texttt{float} (\texttt{4 / 2} is \texttt{2.0}, not \texttt{2}).
+    \item \textbf{Exponentiation Associativity}: \texttt{x ** y ** z} evaluates from right to left.
+    \item \textbf{String Multiplying by Zero/Negative}: Multiplying a string by \texttt{0} or a negative integer results in an empty string (\texttt{""}).
+    \item \textbf{Input Return Type}: The \texttt{input()} function ALWAYS returns a \texttt{str}. Arithmetic operations on raw inputs fail unless converted via \texttt{int()} or \texttt{float()}.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 1.10: OUTPUT PREDICTION \& DEBUGGING CHALLENGES
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Tricky Syntax and Expression Evaluation]
+\textbf{Question}: Predict the exact output of the following code snippet:
+\begin{lstlisting}[language=Python3]
+a = 16
+b = 3
+print(a // b, a % b, a / b)
+x = "3"
+y = 2
+print(x * y * 2)
+print(2 ** 2 ** 3)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{enumerate}
+    \item \texttt{a // b} is \texttt{16 // 3 = 5}.
+    \item \texttt{a \% b} is \texttt{16 \% 3 = 1}.
+    \item \texttt{a / b} is \texttt{16 / 3 = 5.333333333333333}.
+    \item \texttt{x * y} gives \texttt{"3" * 2 = "33"}. Then \texttt{"33" * 2} gives \texttt{"3333"}.
+    \item \texttt{2 ** 2 ** 3} evaluates right-to-left: $2^3 = 8$, then $2^8 = \mathbf{256}$.
+\end{enumerate}
+\end{outputprediction}
+
+\begin{outputprediction}[Short-Circuit and Logic]
+\textbf{Question}: What does this script output?
+\begin{lstlisting}[language=Python3]
+x = 0
+y = 10
+print(bool(x) and (y / x > 1))
+print(bool(y) or (y / x > 1))
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+It prints \texttt{False} then \texttt{True}. \texttt{bool(x)} is \texttt{False}, so \texttt{and} short-circuits. \texttt{bool(y)} is \texttt{True}, so \texttt{or} short-circuits. It never executes \texttt{y / x}, completely avoiding the \texttt{ZeroDivisionError}.
+\end{outputprediction}
+
+\begin{outputprediction}[String Formatting]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+word = "Python"
+print(f"[{word:>10}]")
+print(word[-3:])
+\end{lstlisting}
+\textbf{Answer}:
+\texttt{[    Python]} (right-aligned in 10 spaces)
+\texttt{hon} (Slice from 3rd to last character to end)
+\end{outputprediction}
+
+\begin{outputprediction}[Boolean Casting]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+print(bool("False"))
+print(bool(0.0))
+\end{lstlisting}
+\textbf{Answer}:
+\texttt{True} (Because it's a non-empty string, even if the text says 'False')
+\texttt{False} (Zero value)
+\end{outputprediction}
+
+\begin{outputprediction}[Floor Division Negatives]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+print(-13 // 4)
+print(-13 % 4)
+\end{lstlisting}
+\textbf{Answer}:
+\texttt{-4} ($-13/4 = -3.25$, rounded down to negative infinity is $-4$)
+\texttt{3} ($-13 = (-4 \times 4) + 3$)
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing Input Casting Errors]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+# Calculate BMI from user input
+weight = input("Enter weight in kg: ")
+height = input("Enter height in meters: ")
+bmi = weight / (height ** 2)
+print("BMI is: " + bmi)
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: \texttt{weight} and \texttt{height} are read as strings. \texttt{**} and \texttt{/} on strings raise a \texttt{TypeError}. Fix: cast with \texttt{float()}.
+    \item \textbf{Bug 2}: Concatenating a string with a float in \texttt{print("BMI is: " + bmi)} raises a \texttt{TypeError}. Fix: use f-strings or commas.
+\end{enumerate}
+\textbf{Corrected Code}:
+\begin{lstlisting}[language=Python3]
+weight = float(input("Enter weight in kg: "))
+height = float(input("Enter height in meters: "))
+bmi = weight / (height ** 2)
+print(f"BMI is: {bmi:.2f}")
+\end{lstlisting}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Fixing Syntax and NameErrors]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+score = 85
+if Score > 90
+    print("A")
+print("Score is: " score)
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: \texttt{Score} (capitalized) is not defined, raises \texttt{NameError}. Fix: use \texttt{score}.
+    \item \textbf{Bug 2}: Missing colon \texttt{:} after the \texttt{if} statement condition, raises \texttt{SyntaxError}.
+    \item \textbf{Bug 3}: Missing comma in \texttt{print} arguments, raises \texttt{SyntaxError}.
+\end{enumerate}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Logic Error with Floating Point]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+change = 0.3 - 0.2
+if change == 0.1:
+    print("Correct change")
+else:
+    print("Wrong change")
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\textbf{Bug}: IEEE 754 precision error. \texttt{change} evaluates to \texttt{0.09999999999999998}. Fix: Use \texttt{round()} or a tolerance check.
+\end{debuggingbox}
+
+
+% ==============================================================================
+% SECTION 1.11: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 1 Programming Challenges]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a Python program that prompts the user for their name and year of birth, calculates their current age, and prints: \texttt{"Hello [Name], you are [Age] years old."}
+    \item \textbf{Level 1 (Foundation)}: Write a program to calculate the Simple Interest given principal $P$, rate $R$, and time $T$ using formula $SI = \frac{P \times R \times T}{100}$.
+    \item \textbf{Level 2 (Standard)}: Write a Python program that accepts a temperature in Fahrenheit and converts it to Celsius ($C = \frac{5}{9}(F - 32)$) and Kelvin ($K = C + 273.15$).
+    \item \textbf{Level 2 (Standard)}: Write a program to extract the individual digits of a 3-digit integer (e.g., $385 \to 3, 8, 5$) and print their sum using only modulus (\texttt{\%}) and floor division (\texttt{//}).
+    \item \textbf{Level 3 (Exam Tier)}: Write a program to compute the compound amount $A = P(1 + \frac{r}{n})^{nt}$ using Python's \texttt{**} operator.
+    \item \textbf{Level 3 (Exam Tier)}: Given a total number of seconds (e.g., $7534\text{ s}$), write a Python script to convert it into Hours, Minutes, and Seconds format ($H:M:S$).
+    \item \textbf{Level 4 (Challenge)}: Write a Python program that swaps the values of two variables without using a temporary third variable, utilizing mathematical operations.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 1 Practice Problems]
+
+\noindent\textbf{Solution to Problem 1 (Age Calculator)}:
+\begin{lstlisting}[language=Python3]
+name = input("Enter your name: ")
+birth_year = int(input("Enter your year of birth: "))
+current_year = 2026
+age = current_year - birth_year
+print(f"Hello {name}, you are {age} years old.")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 1)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & name: "Alice", year: 2000 & "Hello Alice, you are 26 years old." & Normal \\
+2 & name: "Bob", year: 2026 & "Hello Bob, you are 0 years old." & Edge \\
+3 & name: "Eve", year: "abc" & ValueError Exception & Error \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 2 (Simple Interest)}:
+\begin{lstlisting}[language=Python3]
+principal = float(input("Enter principal amount: "))
+rate = float(input("Enter annual interest rate (%): "))
+time = float(input("Enter time in years: "))
+si = (principal * rate * time) / 100
+print(f"Simple Interest: Rs. {si:.2f}")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 2)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & P: 1000, R: 5, T: 2 & Simple Interest: Rs. 100.00 & Normal \\
+2 & P: 0, R: 10, T: 5 & Simple Interest: Rs. 0.00 & Edge \\
+3 & P: 500.5, R: 3.5, T: 1.5 & Simple Interest: Rs. 26.28 & Normal (Float) \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 3 (Temperature Conversion)}:
+\begin{lstlisting}[language=Python3]
+fahrenheit = float(input("Enter temperature in F: "))
+celsius = (5/9) * (fahrenheit - 32)
+kelvin = celsius + 273.15
+print(f"Celsius: {celsius:.2f} C")
+print(f"Kelvin: {kelvin:.2f} K")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 3)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & F: 32 & Celsius: 0.00 C, Kelvin: 273.15 K & Boundary \\
+2 & F: 212 & Celsius: 100.00 C, Kelvin: 373.15 K & Normal \\
+3 & F: -40 & Celsius: -40.00 C, Kelvin: 233.15 K & Edge (Equality) \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 4 (3-Digit Extraction and Sum)}:
+\begin{lstlisting}[language=Python3]
+num = int(input("Enter a 3-digit integer: "))
+d3 = num % 10          # Units digit
+d2 = (num // 10) % 10   # Tens digit
+d1 = num // 100         # Hundreds digit
+digit_sum = d1 + d2 + d3
+print(f"Digits: {d1}, {d2}, {d3} | Sum = {digit_sum}")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 4)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & num: 385 & Digits: 3, 8, 5 | Sum = 16 & Normal \\
+2 & num: 100 & Digits: 1, 0, 0 | Sum = 1 & Edge (Zeros) \\
+3 & num: 999 & Digits: 9, 9, 9 | Sum = 27 & Boundary (Max) \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 5 (Compound Interest)}:
+\begin{lstlisting}[language=Python3]
+p = float(input("Principal: "))
+r = float(input("Annual rate (decimal): "))
+n = int(input("Times compounded per year: "))
+t = float(input("Years: "))
+
+amount = p * (1 + (r / n)) ** (n * t)
+print(f"Final Amount: Rs. {amount:.2f}")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 5)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & p:1000, r:0.05, n:1, t:1 & Final Amount: Rs. 1050.00 & Normal \\
+2 & p:1000, r:0.05, n:12, t:5 & Final Amount: Rs. 1283.36 & Complex \\
+3 & p:0, r:0.1, n:1, t:10 & Final Amount: Rs. 0.00 & Edge \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 6 (Seconds to H:M:S Conversion)}:
+\begin{lstlisting}[language=Python3]
+total_sec = int(input("Enter total seconds: "))
+hours = total_sec // 3600
+rem_sec = total_sec % 3600
+minutes = rem_sec // 60
+seconds = rem_sec % 60
+print(f"Formatted Time: {hours:02d}:{minutes:02d}:{seconds:02d}")
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 6)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & \texttt{total\_sec}: 7534 & Formatted Time: 02:05:34 & Normal \\
+2 & \texttt{total\_sec}: 59 & Formatted Time: 00:00:59 & Boundary \\
+3 & \texttt{total\_sec}: 0 & Formatted Time: 00:00:00 & Edge \\
+\hline
+\end{tabular}
+\vspace{8pt}
+
+\noindent\textbf{Solution to Problem 7 (Variable Swap without Temp)}:
+\begin{lstlisting}[language=Python3]
+a = float(input("Enter first number (a): "))
+b = float(input("Enter second number (b): "))
+
+# Arithmetic swap
+a = a + b
+b = a - b
+a = a - b
+
+print(f"After swap: a = {a}, b = {b}")
+
+# Note: Python also supports tuple packing swap: a, b = b, a
+\end{lstlisting}
+\vspace{4pt}
+\noindent\textbf{Test Cases (Problem 7)}:
+
+\noindent\begin{tabular}{|c|p{4cm}|p{4.5cm}|p{2.2cm}|}
+\hline
+\textbf{Test \#} & \textbf{Input} & \textbf{Expected Output} & \textbf{Case Type} \\
+\hline
+1 & a: 5, b: 10 & After swap: a = 10.0, b = 5.0 & Normal \\
+2 & a: -3, b: 7 & After swap: a = 7.0, b = -3.0 & Normal (Negative) \\
+3 & a: 0, b: 0 & After swap: a = 0.0, b = 0.0 & Edge \\
+\hline
+\end{tabular}
+
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.12: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the output of the expression \texttt{print(2 ** 3 ** 2)}?
+    \begin{enumerate}[label=(\alph*)]
+        \item 64 \quad (b) 512 \quad (c) 36 \quad (d) 256
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Exponentiation evaluates right-to-left: $3^2 = 9$, then $2^9 = 512$.}
+
+    \item Which of the following is an invalid variable name in Python?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{\_student\_id} \quad (b) \texttt{student\_1} \quad (c) \texttt{1st\_student} \quad (d) \texttt{studentId}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Identifiers cannot begin with a digit.}
+
+    \item What is the data type of the expression \texttt{10 / 2} in Python 3?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{int} \quad (b) \texttt{float} \quad (c) \texttt{number} \quad (d) \texttt{double}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{True division \texttt{/} in Python 3 always returns a \texttt{float}.}
+
+    \item What is the result of \texttt{print("Python" * 0)}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{None} \quad (b) Error \quad (c) Empty string \texttt{""} \quad (d) \texttt{"0"}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Multiplying a string by zero or negative integers produces an empty string.}
+
+    \item What error is raised when executing \texttt{print(result)} if \texttt{result} has not been assigned?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{TypeError} \quad (b) \texttt{ValueError} \quad (c) \texttt{NameError} \quad (d) \texttt{SyntaxError}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Using an undefined identifier raises \texttt{NameError}.}
+
+    \item What is the value of \texttt{-17 // 5} in Python?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{-3} \quad (b) \texttt{-4} \quad (c) \texttt{-3.4} \quad (d) \texttt{3}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Floor division rounds towards negative infinity: $-3.4 \to -4$.}
+
+    \item Which built-in function returns the unique data type class of an object?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{typeof()} \quad (b) \texttt{datatype()} \quad (c) \texttt{type()} \quad (d) \texttt{class()}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{type()} returns the type of the passed object.}
+
+    \item What is the output of \texttt{print("5" + "5")}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{10} \quad (b) \texttt{55} \quad (c) \texttt{Error} \quad (d) \texttt{"10"}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{The \texttt{+} operator performs string concatenation on string operands.}
+
+    \item In the Python execution model, what is the role of PVM?
+    \begin{enumerate}[label=(\alph*)]
+        \item Compiles Python code to C \quad (b) Converts bytecode to native machine code \quad (c) Formats text \quad (d) Packages libraries
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{The Python Virtual Machine (PVM) interprets bytecode instructions for the CPU.}
+
+    \item Which of the following keywords is capitalized in Python?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{none} \quad (b) \texttt{true} \quad (c) \texttt{True} \quad (d) \texttt{pass}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Only \texttt{True}, \texttt{False}, and \texttt{None} start with uppercase letters.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.13: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 1 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the significance of the PATH environment variable during Python installation.
+    \item Differentiate between \texttt{5 / 2} and \texttt{5 // 2} in Python 3.
+    \item Why does \texttt{msg = "Score: " + 100} raise an error, and how do you fix it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Output Prediction \& Analysis ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output:
+    \begin{lstlisting}[language=Python3]
+x = 10
+y = 4
+print(x % y, x ** y // 100, "X" + str(x) * 2)
+    \end{lstlisting}
+    \item State whether the following variable names are valid or invalid, and give reasons:
+    \texttt{(i) 3total \quad (ii) \_user\_name \quad (iii) student-marks \quad (iv) True}
+    \item Evaluate step-by-step: \texttt{result = 4 + 3 ** 2 * 2 // 3 - 1}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete, well-documented Python program that takes the coordinates of two 2D points $(x\_1, y\_1)$ and $(x\_2, y\_2)$ from user input, computes the Euclidean distance $d = \sqrt{(x\_2-x\_1)^2 + (y\_2-y\_1)^2}$, and prints the result rounded to 2 decimal places using string formatting.
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 1 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{PATH Variable} [2 Marks]: Adding Python to PATH allows the operating system's command-line shell to recognize \texttt{python} and \texttt{pip} commands from any working directory by searching the registered directory paths.
+    \item \textbf{Division Operators} [2 Marks]: \texttt{5 / 2} performs true division and returns a float (\texttt{2.5}). \texttt{5 // 2} performs floor division and returns the integer floor quotient (\texttt{2}).
+    \item \textbf{Type Mismatch Fix} [2 Marks]: Python cannot concatenate \texttt{str} and \texttt{int} directly. Fix: \texttt{msg = "Score: " + str(100)} or \texttt{msg = f"Score: \{100\}"}.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Output} [3 Marks]:
+    \begin{itemize}
+        \item \texttt{10 \% 4} = \texttt{2}
+        \item \texttt{10 ** 4 // 100 = 10000 // 100 = 100}
+        \item \texttt{"X" + str(10) * 2 = "X" + "1010" = "X1010"}
+        \item Printed: \texttt{2 100 X1010}
+    \end{itemize}
+    \item \textbf{Identifier Validation} [3 Marks]:
+    \begin{itemize}
+        \item \texttt{3total}: Invalid (starts with digit).
+        \item \texttt{\_user\_name}: Valid (starts with underscore).
+        \item \texttt{student-marks}: Invalid (contains hyphen operator).
+        \item \texttt{True}: Invalid (reserved keyword).
+    \end{itemize}
+    \item \textbf{Step-by-Step PEMDAS} [3 Marks]:
+    \begin{itemize}
+        \item $3^2 = 9 \implies \texttt{4 + 9 * 2 // 3 - 1}$
+        \item $9 \times 2 = 18 \implies \texttt{4 + 18 // 3 - 1}$
+        \item $18 // 3 = 6 \implies \texttt{4 + 6 - 1}$
+        \item $4 + 6 = 10 \implies 10 - 1 = \mathbf{9}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Euclidean Distance Program} [10 Marks]:
+\begin{lstlisting}[language=Python3]
+# Euclidean Distance Calculation Program
+import math
+
+# Step 1: Input coordinates from user
+x1 = float(input("Enter x1: "))
+y1 = float(input("Enter y1: "))
+x2 = float(input("Enter x2: "))
+y2 = float(input("Enter y2: "))
+
+# Step 2: Compute Euclidean distance formula
+distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
+# Step 3: Display formatted result
+print(f"Distance between ({x1}, {y1}) and ({x2}, {y2}) is: {distance:.2f}")
+\end{lstlisting}
+\textbf{Marking Scheme}: Inputs and casting: 3M; Formula implementation: 4M; Formatted output: 3M.
+\end{enumerate}
+\end{solutionbox}

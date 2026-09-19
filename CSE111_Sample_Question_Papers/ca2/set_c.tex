@@ -1,0 +1,88 @@
+\section{Continuous Assessment 2 --- Set C}
+\label{sec:ca2_set_c}
+
+\ExamHeader{Continuous Assessment 2}{C}{45 Minutes}{25 Marks}{Unit 4 (Number Systems) \& Unit 5 (Version Control)}
+
+\noindent
+\textbf{Instructions:} All 25 questions are compulsory. Each question carries 1 mark. Select the single best answer.
+
+\vspace{3mm}
+
+\mcqitem{1}{In the hexadecimal system, what decimal value does the letter 'B' represent?}{10}{11}{12}{13}
+
+\mcqitem{2}{What is the decimal equivalent of the binary number $(1010)_2$?}{8}{10}{12}{14}
+
+\mcqitem{3}{What is the decimal equivalent of the binary number $(1100)_2$?}{10}{12}{14}{16}
+
+\mcqitem{4}{What is the binary representation of the decimal integer $8_{10}$?}{$(1000)_2$}{$(0100)_2$}{$(1100)_2$}{$(1111)_2$}
+
+\mcqitem{5}{What is the octal equivalent of the binary number $(101111)_2$?}{$(57)_8$}{$(47)_8$}{$(67)_8$}{$(55)_8$}
+
+\mcqitem{6}{What is the binary equivalent of the hexadecimal number $(\text{F}5)_{16}$?}{$(11110101)_2$}{$(11100101)_2$}{$(11110110)_2$}{$(10100101)_2$}
+
+\mcqitem{7}{In binary addition, what is the result of $1 + 1 + 1$?}{$10_2$}{$11_2$}{$01_2$}{$100_2$}
+
+\mcqitem{8}{What is the decimal value of the binary fraction $(0.101)_2$?}{0.5}{0.625}{0.75}{0.125}
+
+\mcqitem{9}{In a positional number, what is the rightmost digit called?}{Most Significant Digit (MSD)}{Least Significant Digit (LSD)}{Base exponent}{Radix root}
+
+\mcqitem{10}{When converting a decimal integer to binary by repeated division, remainders are read:}{From first remainder to last}{From last remainder (bottom) to first remainder (top)}{In random order}{From smallest to largest}
+
+\mcqitem{11}{What is the decimal equivalent of the octal number $(70)_8$?}{56}{64}{70}{49}
+
+\mcqitem{12}{What is the decimal equivalent of the hexadecimal number $(20)_{16}$?}{20}{32}{40}{16}
+
+\mcqitem{13}{Why does the decimal fraction $0.1_{10}$ cause small rounding errors in standard binary arithmetic?}{Because $0.1_{10}$ is an infinitely repeating binary fraction}{Because the CPU cannot process decimals}{Because binary is base 8}{Because $0.1$ is an integer}
+
+\mcqitem{14}{Which command removes a file from the staging area while leaving it safe in your working directory?}{\texttt{git rm -f}}{\texttt{git restore --staged <filename>}}{\texttt{git delete}}{\texttt{git wipe}}
+
+\mcqitem{15}{Which command displays commit history in reverse chronological order?}{\texttt{git history}}{\texttt{git log}}{\texttt{git show-all}}{\texttt{git list}}
+
+\mcqitem{16}{In the command \texttt{git push -u origin feature1}, what does \texttt{origin} refer to?}{The author's user name}{The short name for the remote repository}{The local branch}{The commit hash}
+
+\mcqitem{17}{Which command lists all local branches in the current repository?}{\texttt{git branch}}{\texttt{git list --branches}}{\texttt{git status}}{\texttt{git show}}
+
+\mcqitem{18}{Which command sets your global commit email address in Git?}{\texttt{git email "your@email.com"}}{\texttt{git config --global user.email "your@email.com"}}{\texttt{git config set email "your@email.com"}}{\texttt{git register --email}}
+
+\mcqitem{19}{Which command downloads remote repository history without automatically merging it into your working branch?}{\texttt{git fetch}}{\texttt{git pull}}{\texttt{git push}}{\texttt{git commit}}
+
+\mcqitem{20}{What is a unique 40-character hexadecimal string identifying a Git commit called?}{A commit hash / SHA-1 checksum}{A PIN number}{A file extension}{A branch label}
+
+\mcqitem{21}{A GitHub repository that can only be viewed and accessed by authorized collaborators is a:}{Public repository}{Private repository}{Open-source repository}{Forked repository}
+
+\mcqitem{22}{What does \texttt{git status} report when all working files have been staged and committed?}{"Fatal error"}{"Nothing to commit, working tree clean"}{"Staging overflow"}{"Remote disconnected"}
+
+\mcqitem{23}{What happens if you delete the hidden \texttt{.git} folder from a project directory?}{All source code is deleted}{Git tracking history is removed, turning the folder into an unversioned directory}{The computer operating system crashes}{GitHub repository is deleted}
+
+\mcqitem{24}{What is the primary function of the \texttt{README.md} file in a GitHub repository?}{To store passwords}{To provide project overview, setup instructions, and documentation}{To compile C++ code}{To hold binary images}
+
+\mcqitem{25}{Which file specifies files and patterns that Git should deliberately ignore and not track?}{\texttt{config.sys}}{\texttt{.gitignore}}{\texttt{git.config}}{\texttt{README.md}}
+
+\newpage
+\subsection*{Answer Key \& Explanations --- CA-2 (Set C)}
+
+\begin{answerkeytable}{CA-2 Set C --- Answer Key}
+\begin{tabular}{*{10}{c}}
+\toprule
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\midrule
+1 & \textbf{B} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{B} & 21 & \textbf{B} \\
+2 & \textbf{B} & 7 & \textbf{B} & 12 & \textbf{B} & 17 & \textbf{A} & 22 & \textbf{B} \\
+3 & \textbf{B} & 8 & \textbf{B} & 13 & \textbf{A} & 18 & \textbf{B} & 23 & \textbf{B} \\
+4 & \textbf{A} & 9 & \textbf{B} & 14 & \textbf{B} & 19 & \textbf{A} & 24 & \textbf{B} \\
+5 & \textbf{A} & 10 & \textbf{B} & 15 & \textbf{B} & 20 & \textbf{A} & 25 & \textbf{B} \\
+\bottomrule
+\end{tabular}
+\end{answerkeytable}
+
+\begin{expbox}[Technical Solutions --- CA-2 Set C]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Q.5 (A):} $101111_2$ in 3-bit groups: $\underbrace{101}_{5}\;\underbrace{111}_{7} = (57)_8$.
+    \item \textbf{Q.8 (B):} $0.101_2 = 1(0.5) + 0(0.25) + 1(0.125) = 0.625_{10}$.
+    \item \textbf{Q.11 (A):} $(70)_8 = 7(8^1) + 0(8^0) = 56_{10}$.
+    \item \textbf{Q.12 (B):} $(20)_{16} = 2(16^1) + 0(16^0) = 32_{10}$.
+    \item \textbf{Q.19 (A):} \texttt{git fetch} downloads remote commits without merging, unlike \texttt{git pull} which merges automatically.
+\end{itemize}
+\end{expbox}
+
+\newpage

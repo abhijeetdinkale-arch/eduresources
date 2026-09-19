@@ -1,0 +1,62 @@
+\chapter{Unit 3: Fiber Optics \& Waveguides}
+
+\begin{formulabox}{1. Total Internal Reflection, Acceptance Angle \& Numerical Aperture}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Critical Angle at Core-Cladding Interface:} $\sin\theta_c = \frac{n_2}{n_1} \quad (n_1 > n_2)$.
+    \item \textbf{Maximum Acceptance Angle ($\theta_a$ in medium of index $n_0$):}
+    \[
+    \sin\theta_a = \frac{\sqrt{n_1^2 - n_2^2}}{n_0}
+    \]
+    For air launcher ($n_0 = 1$): $\theta_a = \arcsin\left(\sqrt{n_1^2 - n_2^2}\right)$.
+    \item \textbf{Numerical Aperture ($\text{NA}$):}
+    \[
+    \text{NA} = \sin\theta_a = \sqrt{n_1^2 - n_2^2} \approx n_1 \sqrt{2\Delta}, \quad \text{where } \Delta = \frac{n_1 - n_2}{n_1} \approx \frac{n_1^2 - n_2^2}{2n_1^2}
+    \]
+    $\Delta$ is the fractional refractive index change ($\approx 0.005\text{--}0.01$).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{2. V-Number (Normalized Frequency) \& Modal Capacity}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{V-Number Definition (Core radius $a$, diameter $d = 2a$):}
+    \[
+    V = \frac{2\pi a}{\lambda_0} \text{NA} = \frac{\pi d}{\lambda_0} \sqrt{n_1^2 - n_2^2}
+    \]
+    \item \textbf{Single-Mode Cutoff Condition (Step-Index):} $V < 2.405$.
+    \item \textbf{Number of Bound Guided Modes ($M$):}
+    \begin{align*}
+    \text{Step-Index Fiber (SIF):} \quad & M_{\text{SIF}} \approx \frac{V^2}{2} \\
+    \text{Graded-Index Fiber (GRIN, Parabolic $\alpha=2$):} \quad & M_{\text{GRIN}} \approx \frac{V^2}{4} = \frac{1}{2} M_{\text{SIF}}
+    \end{align*}
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{3. Dispersion \& Pulse Broadening}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Intermodal Dispersion in Step-Index Fiber (Time delay per length):}
+    \[
+    \Delta \tau_{\text{modal}} = \frac{L}{c}\left(\frac{n_1^2 - n_2 n_1}{n_2}\right) \approx \frac{L n_1 \Delta}{c} = \frac{L (\text{NA})^2}{2 n_1 c} \quad [\text{s}]
+    \]
+    \item \textbf{Intermodal Dispersion in Graded-Index Fiber (Optimal $\alpha = 2 - 2\Delta$):}
+    \[
+    \Delta \tau_{\text{GRIN}} \approx \frac{L n_1 \Delta^2}{8 c} \implies \text{Reduced by factor of } \frac{\Delta}{8} \approx 100\text{--}1000\times
+    \]
+    \item \textbf{Material Dispersion (Wavelength dependent $n(\lambda)$):} $\Delta \tau_{\text{mat}} = -\frac{L \lambda}{c}\left(\frac{d^2 n}{d\lambda^2}\right) \Delta\lambda$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{4. Attenuation \& Optical Transmission Windows}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Attenuation Coefficient ($\alpha$ in dB/km):}
+    \[
+    \alpha_{\text{dB/km}} = \frac{10}{L\text{ (km)}} \log_{10}\left(\frac{P_{\text{in}}}{P_{\text{out}}}\right) \iff P_{\text{out}} = P_{\text{in}} \cdot 10^{-\alpha L / 10}
+    \]
+    \item \textbf{Rayleigh Scattering Loss:} $\alpha_{\text{Rayleigh}} \propto \frac{1}{\lambda^4}$.
+    \item \textbf{Standard Optical Communication Windows:}
+    \begin{enumerate}[itemsep=1pt]
+        \item \textbf{1st Window ($850\text{ nm}$):} $\alpha \approx 2\text{--}3\text{ dB/km}$ (GaAs emitters, multimode LANs).
+        \item \textbf{2nd Window ($1310\text{ nm}$):} $\alpha \approx 0.35\text{--}0.5\text{ dB/km}$ (Zero material dispersion in silica).
+        \item \textbf{3rd Window ($1550\text{ nm}$):} $\alpha \approx 0.18\text{--}0.20\text{ dB/km}$ (Global minimum attenuation, EDFA amplification band).
+    \end{enumerate}
+\end{itemize}
+\end{formulabox}

@@ -1,0 +1,601 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/08/28 v1.0 MTH165 Mathematics Textbook Style Package]
+
+% ==============================================================================
+% 1. CORE ENCODING, FONTS & MICRO-TYPOGRAPHY
+% ==============================================================================
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+% ==============================================================================
+% 2. PAGE GEOMETRY & LAYOUT (Designed for comprehensive textbooks)
+% ==============================================================================
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% ==============================================================================
+% 3. MATHEMATICS, SYMBOLS, MATRICES & PHYSICS NOTATION
+% ==============================================================================
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,amsthm}
+\RequirePackage{bm}
+\RequirePackage{physics}
+\RequirePackage{esint}
+\RequirePackage{siunitx}
+\sisetup{
+    separate-uncertainty = true,
+    inter-unit-product = \ensuremath{{}\cdot{}}
+}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+% Additional Math Operators and Shorthands
+\providecommand{\grad}{\operatorname{grad}}
+\providecommand{\Div}{\operatorname{div}}
+\providecommand{\curl}{\operatorname{curl}}
+\providecommand{\arcsec}{\operatorname{arcsec}}
+\providecommand{\arccot}{\operatorname{arccot}}
+\providecommand{\arccsc}{\operatorname{arccsc}}
+
+% ==============================================================================
+% 4. COLOR PALETTE (Restrained Academic University Theme)
+% ==============================================================================
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+
+\definecolor{brandnavy}{RGB}{15, 44, 89}        % Primary Deep Navy #0F2C59
+\definecolor{brandblue}{RGB}{30, 86, 160}       % Secondary Slate Blue #1E56A0
+\definecolor{brandslate}{RGB}{71, 85, 105}      % Muted Slate #475569
+\definecolor{branddark}{RGB}{15, 23, 42}        % Text Dark #0F172A
+\definecolor{brandaccent}{RGB}{185, 28, 28}     % Crimson Accent #B91C1C
+\definecolor{brandgold}{RGB}{180, 83, 9}        % Amber Gold #B45309
+\definecolor{brandteal}{RGB}{15, 118, 110}      % Emerald Teal #0F766E
+\definecolor{brandpurple}{RGB}{109, 40, 217}    % Royal Purple #6D28D9
+
+\definecolor{boxnavyborder}{RGB}{15, 44, 89}
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+
+\definecolor{boxamberborder}{RGB}{180, 83, 9}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+
+\definecolor{boxgreenborder}{RGB}{15, 118, 110}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+
+\definecolor{boxroseborder}{RGB}{185, 28, 28}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+
+\definecolor{boxpurpleborder}{RGB}{109, 40, 217}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+
+\definecolor{boxgrayborder}{RGB}{148, 163, 184}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxslatebg}{RGB}{241, 245, 249}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+% ==============================================================================
+% 5. BOXES & CALLOUT ENVIRONMENTS (tcolorbox)
+% ==============================================================================
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,hooks}
+
+% Definition Box
+\newtcolorbox{definition}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=boxnavyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Definition}{Definition: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Theorem Box
+\newtcolorbox{theorem}[1][]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Theorem}{Theorem: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandpurple,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Lemma / Corollary Box
+\newtcolorbox{lemma}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=brandslate,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Lemma / Corollary}{#1}},
+    boxrule=1.0pt,
+    leftrule=3.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=5pt,
+    bottom=5pt,
+    coltitle=brandslate,
+    attach title to upper={\par\vspace{3pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Key Formula / Master Identity Box
+\newtcolorbox{keyequation}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgoldbg,
+    colframe=boxamberborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Key Formula / Mathematical Principle}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandgold,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Method Recognition Box
+\newtcolorbox{methodbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Method Recognition \& Execution Heuristic}{Method: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandteal,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Worked Example Box
+\newtcolorbox{example}[1][]{
+    enhanced,
+    breakable,
+    colback=boxskybg,
+    colframe=boxskyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example}{Worked Example: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxskyborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Step-by-Step Solution Box
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=boxgrayborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Step-by-Step Analytical Solution}{#1}},
+    boxrule=1.0pt,
+    leftrule=3.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=branddark,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Exam Tip Box
+\newtcolorbox{examtip}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Exam Strategy \& Shortcut Technique}{Exam Strategy: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandteal,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Common Student Mistake / Exam Trap Box
+\newtcolorbox{commonmistake}[1][]{
+    enhanced,
+    breakable,
+    colback=boxrosebg,
+    colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Common Student Pitfall / Exam Trap}{Common Pitfall: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxroseborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Quick Revision Box
+\newtcolorbox{quickrevision}[1][]{
+    enhanced,
+    breakable,
+    colback=boxslatebg,
+    colframe=brandslate,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Quick Revision Summary}{Quick Revision: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandslate,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Practice Set Box
+\newtcolorbox{practiceset}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=brandblue,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Graded Practice Problems}{Practice Problems: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandblue,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Unit Test Box
+\newtcolorbox{chaptertest}[1][]{
+    enhanced,
+    breakable,
+    colback=boxamberbg,
+    colframe=brandgold,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Self-Assessment Unit Test (25 Marks)}{Unit Test: #1 (25 Marks)}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandgold,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Full Mock Exam Box
+\newtcolorbox{mockexam}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgoldbg,
+    colframe=brandgold,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Full-Length University Mock Examination (100 Marks)}{#1}},
+    boxrule=1.5pt,
+    leftrule=5.5pt,
+    arc=4pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Important Notice Box
+\newtcolorbox{important}[1][]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Important Mathematical Core}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandpurple,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% ==============================================================================
+% 6. GRAPHICS & TIKZ (Coordinate systems, surfaces, vector fields)
+% ==============================================================================
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,decorations.pathmorphing,patterns,backgrounds,fit,3d}
+
+% ==============================================================================
+% 7. TABLES & LISTS
+% ==============================================================================
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\setlist{itemsep=3pt, topsep=4pt, parsep=1pt}
+
+% ==============================================================================
+% 8. HEADERS, FOOTERS & SECTION TITLES
+% ==============================================================================
+\RequirePackage[breakall]{truncate}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhead[L]{\small\sffamily\color{brandslate}\textbf{MTH165} \textbar\ Engineering Mathematics}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\truncate{0.55\linewidth}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+    \fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\RequirePackage{titlesec}
+
+% Chapter style: Clean numbered banner with bottom accent rule
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{brandslate}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+% ==============================================================================
+% 9. HYPERLINKS & PDF METADATA
+% ==============================================================================
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=brandteal,
+    urlcolor=brandblue,
+    pdfauthor={LPU Engineering Open Contributors},
+    pdftitle={MTH165: Mathematics (Engineering Calculus, Series and Vector Analysis)},
+    pdfsubject={Semester 1 Comprehensive Study and Practice Guide},
+    pdfkeywords={MTH165, Calculus, Leibniz, Series, Multivariable, Multiple Integrals, Vector Calculus, Green, Stokes, Gauss, LPU Engineering Open},
+    plainpages=false,
+    bookmarksnumbered=true,
+    pdfpagelayout=OneColumn,
+    pdfpagemode=UseOutlines
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ==============================================================================
+% 10. FRONTMATTER MACROS: COVER, COPYRIGHT & DISCLAIMER
+% ==============================================================================
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    % Top background accent band
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    % Series badge at top
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ STUDY GUIDE SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Open-Source Academic Textbooks for Engineering Students};
+    
+    % Decorative bottom band
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Student-Led Educational Initiative \textbullet\ 2026 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Source (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{34}{40}\selectfont\bfseries\sffamily\color{brandnavy} Engineering Mathematics\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} MTH165 $\cdot$ Semester 1 Study Guide\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Calculus \textbullet\ Infinite Series \textbullet\ Multivariable \textbullet\ Multiple Integrals \textbullet\ Vectors}\par}
+    
+    \vspace{2.0cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Subject Features:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Authoritative and comprehensive coverage of all 6 Units of the LPU MTH165 syllabus.
+            \item Differential calculus: successive differentiation, Leibniz theorem, curvature, asymptotes.
+            \item Convergence of infinite series: D'Alembert ratio, Cauchy root, Raabe, and alternating series tests.
+            \item Partial differentiation, Euler's theorem, Jacobians, multiple integrals, and Green's/Stokes'/Gauss's theorems.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Team / Publisher:}\\
+    LPU Engineering Open Publishing Project\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large MTH165: Engineering Mathematics --- Study \& Practice Guide}\\
+\textit{\sffamily An Open-Source Educational Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Release Edition:} 2026 Edition (Phase 1 Base Architecture)\\
+\textbf{\sffamily Primary Source Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Contributors of LPU Engineering Open.\\
+This manuscript, diagrams, and educational text are distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\noindent
+The accompanying mathematical definitions, algorithm snippets, and typesetting macros are distributed under the terms of the \textbf{MIT License}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Open Contributors, \textit{MTH165: Engineering Mathematics --- Study \& Practice Guide}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Important Disclaimer \& Institutional Non-Affiliation}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Student-Created Resource}\\
+This book is an independent, non-profit, student-led open educational resource designed to aid students in understanding advanced engineering mathematics and preparing for university examinations.
+
+\textbf{2. Non-Affiliation Notice}\\
+\textbf{LPU Engineering Open is NOT affiliated with, sponsored by, authorized by, or endorsed by Lovely Professional University (LPU).} Lovely Professional University is not responsible for the contents, factual accuracy, exam representations, or editorial choices in this book.
+
+\textbf{3. Trademark \& Fair Use}\\
+Any references to university curriculum structures, course codes (e.g., MTH165), subject syllabi, or exam formats are made strictly under educational \textbf{fair use} principles to provide appropriate context and academic alignment for students studying these topics.
+
+\textbf{4. Mathematical Rigor \& Verification}\\
+While every effort has been made by student and educator contributors to verify proofs, derivations, and numerical examples, mathematics contains subtle nuances. The publishers provide this material on an ``as-is'' basis. Readers are encouraged to report any errors on the project's repository.
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

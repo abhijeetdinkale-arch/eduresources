@@ -1,0 +1,1311 @@
+\chapter{Object-Oriented Programming (Classes, Objects, Inheritance \& Encapsulation)}
+\label{chap:object-oriented-programming}
+
+% ==============================================================================
+% SECTION 5.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 5 Academic Scope \lpuBadge]
+Object-Oriented Programming (OOP) is a software design paradigm that models real-world entities into modular, reusable software components called objects. This unit covers class architectures, constructor initialization via \texttt{\_\_init\_\_}, the \texttt{self} reference, class versus instance attributes, class methods and static methods, single, multi-level, and multiple inheritance, method overriding with \texttt{super()}, Method Resolution Order (MRO), operator overloading via special dunder methods, data hiding through name mangling, and property decorators.
+\end{conceptbox}
+
+Before delving into the mechanics of Python's class architecture, it is essential to establish a strong foundational understanding of why the Object-Oriented Programming (OOP) paradigm exists and how it revolutionizes software design. Historically, programming began with the procedural paradigm, where programs were simply long sequences of instructions or functions that operated on loosely connected data. As software applications grew in scale and complexity, the procedural approach became difficult to maintain, prone to side effects, and challenging to debug. OOP addresses these challenges by bundling data (state) and the functions that operate on that data (behavior) into cohesive, self-contained units known as objects. 
+
+In this unit, we will explore the transition from writing linear, function-based scripts to architecting modular, object-oriented systems. By conceptualizing your code as a collection of interacting objects---much like real-world entities interacting with one another---you will learn to build scalable, reusable, and robust Python applications. The learning progression starts with fundamental class creation and systematically advances through complex inheritance hierarchies, encapsulation strategies, and polymorphic designs.
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{OOP Foundations}: Contrast procedural and object-oriented paradigms, defining Class, Object, Method, and Attribute.
+    \item \textbf{Class Mechanics}: Design classes with constructors (\texttt{\_\_init\_\_}), understand \texttt{self}, and distinguish class attributes from instance attributes.
+    \item \textbf{Method Types}: Master instance methods, class methods (\texttt{@classmethod}), and static methods (\texttt{@staticmethod}).
+    \item \textbf{Inheritance Hierarchies \& MRO}: Build single, multi-level, and multiple inheritance hierarchies, tracing C3 Linearization MRO.
+    \item \textbf{Abstract Base Classes}: Design robust class interfaces using the \texttt{abc} module and \texttt{@abstractmethod}.
+    \item \textbf{Polymorphism \& Operator Overloading}: Override methods and implement special dunder methods (\texttt{\_\_str\_\_}, \texttt{\_\_repr\_\_}, \texttt{\_\_add\_\_}, \texttt{\_\_eq\_\_}).
+    \item \textbf{Encapsulation \& Properties}: Protect internal object states using private attributes (\texttt{\_\_attr}) and manage access with \texttt{@property}.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.2: OOP TERMINOLOGY
+% ==============================================================================
+\section{Object-Oriented Programming Terminology and Paradigm Shift}
+
+The shift from procedural programming to object-oriented programming represents a fundamental change in how we think about software architecture. In a procedural paradigm, data and the functions that process that data are fundamentally separate. Variables are passed into functions, modified, and returned. This separation often leads to an entangled web of global state and fragile dependencies, making large codebases brittle.
+
+Object-Oriented Programming (OOP), on the other hand, models software around "objects" rather than "actions." An object is a self-contained entity that encapsulates both its state (data) and its behavior (functions). By organizing code into objects, we create modular boundaries. When a bug occurs in an object's behavior, the developer knows exactly where to look: inside the class definition. This encapsulation limits the ripple effect of changes, allowing teams to build complex software systems collaboratively and safely.
+
+To master OOP in Python, you must internalize the core vocabulary used by software engineers to describe these architectural concepts. The following table formalizes the essential terminology that will form the basis of our discussions throughout this unit.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{OOP Term} & \textbf{Formal Definition \& Software Engineering Role} & \textbf{Analogy / Example} \\
+\midrule
+\textbf{Class} & A user-defined prototype / blueprint defining attributes and methods. & Architectural Blueprint \\
+\textbf{Object / Instance} & A concrete, independent entity created from a class residing in heap memory. & Physical Building \\
+\textbf{Method} & A function defined inside a class that operates on an instance via \texttt{self}. & Vehicle \texttt{accelerate()} \\
+\textbf{Attribute} & A variable belonging to an object (instance variable) or class (class variable). & Vehicle \texttt{color}, \texttt{speed} \\
+\textbf{Inheritance} & Mechanism allowing a child class to inherit features of a parent class. & \texttt{ElectricCar} is a \texttt{Car} \\
+\textbf{Polymorphism} & The ability of different objects to respond uniquely to the same method call. & \texttt{speak()} $\to$ Bark/Meow \\
+\textbf{Encapsulation} & Bundling data and restricting direct external access to internal states. & Private \texttt{\_\_balance} \\
+\bottomrule
+\end{tabularx}
+\caption{Core Object-Oriented Programming Terminology.}
+\label{tab:oop-terms}
+\end{table}
+
+% ==============================================================================
+% SECTION 5.3: CREATING CLASSES & CONSTRUCTORS
+% ==============================================================================
+\section{Creating Classes, Constructors, and the \texttt{self} Parameter}
+
+In Python, creating a new class means defining a new composite data type. Once a class is defined, you can instantiate it to create as many unique objects as you need. Every class provides a structured namespace where attributes and methods are logically grouped. The journey of an object begins with its instantiation, which automatically triggers a special initialization method to set up its initial state.
+
+\subsection{Class Definition Syntax and the \texttt{\_\_init\_\_} Method}
+Classes are created using the \texttt{class} keyword. By convention, class names follow \textbf{PascalCase} (e.g., \texttt{StudentProfile}). The core of an object's lifecycle is the constructor method, denoted by \texttt{\_\_init\_\_}.
+
+\begin{syntaxbox}[Class Definition Structure]
+class ClassName:
+    class\_variable = shared\_value \# Class Attribute
+    
+    def \_\_init\_\_(self, param1, param2):
+        self.instance\_var1 = param1 \# Instance Attribute
+        self.instance\_var2 = param2
+        
+    def method\_name(self):
+        return self.instance\_var1
+\end{syntaxbox}
+
+When you execute \texttt{obj = ClassName(val1, val2)}, Python allocates memory for a new object, and then immediately calls the \texttt{\_\_init\_\_} method, passing the newly created object as the first argument, conventionally named \texttt{self}. 
+
+\subsection{Basic Class Creation with Dot Access}
+
+Let's look at a foundational example demonstrating how to define a class, instantiate objects, and interact with them using dot notation. The dot operator (\texttt{.}) is the universal mechanism in Python to access an object's namespace, whether you are reading an attribute or invoking a method.
+
+\begin{pythoncode}{Basic Class Definition and Method Invocation}
+class Robot:
+    # Constructor: initializes the object's state
+    def __init__(self, name, battery_level):
+        self.name = name
+        self.battery = battery_level
+        
+    # Instance method
+    def status_report(self):
+        print(f"Robot {self.name} is at {self.battery}% battery.")
+        
+    # Method modifying instance state
+    def charge(self, amount):
+        self.battery += amount
+        if self.battery > 100:
+            self.battery = 100
+        print(f"{self.name} charged to {self.battery}%.")
+
+# Instantiating objects
+bot1 = Robot("Alpha", 45)
+bot2 = Robot("Beta", 80)
+
+# Accessing attributes and invoking methods via dot notation
+bot1.status_report()
+bot2.status_report()
+
+bot1.charge(20)
+bot1.status_report()
+\end{pythoncode}
+
+\begin{outputbox}
+Robot Alpha is at 45% battery.
+Robot Beta is at 80% battery.
+Alpha charged to 65%.
+Robot Alpha is at 65% battery.
+\end{outputbox}
+
+\subsection{The \texttt{self} Parameter and Bound Method Mechanics}
+\begin{conceptbox}[The Mechanics of \texttt{self} and Bound Methods]
+The \textbf{\texttt{self}} parameter is an explicit reference to the specific instance of the class upon which a method is being called. Unlike languages like Java or C++ where \texttt{this} is implicit, Python requires \texttt{self} to be explicitly declared as the first parameter of every instance method. 
+
+When you execute \texttt{bot1.status\_report()}, Python automatically translates this bound method call behind the scenes into a standard function call on the class itself: \texttt{Robot.status\_report(bot1)}. The object before the dot is automatically passed as the first argument. This is why \texttt{status\_report(self)} is defined with one parameter but called with zero explicit arguments.
+\end{conceptbox}
+
+Understanding \texttt{self} is critical: it is the bridge that connects a generic function defined in the class to the specific, unique data of individual object instances residing in heap memory.
+
+\subsection{The \texttt{\_\_del\_\_} Destructor Basics}
+While \texttt{\_\_init\_\_} initializes an object, Python also provides a destructor method called \texttt{\_\_del\_\_}. This method is automatically invoked when an object's reference count drops to zero and it is about to be destroyed by Python's Garbage Collector.
+
+\begin{pythoncode}{The Destructor Method}
+class TemporaryFile:
+    def __init__(self, filename):
+        self.filename = filename
+        print(f"File {self.filename} opened.")
+        
+    def __del__(self):
+        print(f"Cleaning up: File {self.filename} closed.")
+
+# Create an object
+temp = TemporaryFile("data.txt")
+# Manually deleting the reference triggers the garbage collector
+del temp 
+\end{pythoncode}
+
+\begin{outputbox}
+File data.txt opened.
+Cleaning up: File data.txt closed.
+\end{outputbox}
+
+It is important to note that relying strictly on \texttt{\_\_del\_\_} for critical resource cleanup (like network sockets or file handles) is discouraged because the exact timing of garbage collection is non-deterministic. Context managers (using the \texttt{with} statement) are preferred for deterministic resource management.
+
+\subsection{Class Attributes vs. Instance Attributes}
+
+Data within a class can be scoped at two levels: the class level and the instance level. The distinction is paramount for managing state correctly.
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Class Attributes}: Variables defined directly in the class body, outside any methods. They belong to the class itself and are shared across \textbf{all instances} of that class. They consume memory only once.
+    \item \textbf{Instance Attributes}: Variables attached to \texttt{self} inside methods (usually inside \texttt{\_\_init\_\_}). They are unique to each individual object instance and are stored in the object's specific memory space.
+\end{enumerate}
+
+\begin{pythoncode}{Class vs. Instance Attributes}
+class Student:
+    university = "Lovely Professional University" # Class Attribute (Shared)
+    
+    def __init__(self, reg_no, name):
+        self.reg_no = reg_no  # Instance Attribute (Unique)
+        self.name = name      # Instance Attribute (Unique)
+
+# Creating two distinct instances
+s1 = Student(123001, "Kavya")
+s2 = Student(123002, "Rohan")
+
+print(f"{s1.name} studies at {s1.university}")
+print(f"{s2.name} studies at {s2.university}")
+\end{pythoncode}
+
+\begin{outputbox}
+Kavya studies at Lovely Professional University
+Rohan studies at Lovely Professional University
+\end{outputbox}
+
+\subsection{Attribute Resolution and the Mutable Class Attribute Trap}
+
+When you access an attribute via \texttt{obj.attribute}, Python follows a specific resolution order:
+1. It first checks the instance's dictionary: \texttt{instance.\_\_dict\_\_}
+2. If not found, it falls back to the class's dictionary: \texttt{Class.\_\_dict\_\_}
+3. If still not found, it traverses up the inheritance chain.
+
+This mechanism works elegantly until developers mutate class attributes inadvertently, particularly mutable structures like lists or dictionaries.
+
+\begin{pythoncode}{The Mutable Class Attribute Shared-State Trap}
+class BuggyCourse:
+    # DANGER: A mutable class attribute shared by ALL instances!
+    enrolled_students = []
+    
+    def __init__(self, course_code):
+        self.course_code = course_code
+        
+    def add_student(self, name):
+        self.enrolled_students.append(name)
+
+# Create two distinct courses
+python_course = BuggyCourse("INT108")
+math_course = BuggyCourse("MTH104")
+
+# Add a student to Python
+python_course.add_student("Aarav")
+
+# Because enrolled_students is a shared class list, Math also gets Aarav!
+print(f"Python Students: {python_course.enrolled_students}")
+print(f"Math Students: {math_course.enrolled_students}")
+\end{pythoncode}
+
+\begin{outputbox}
+Python Students: ['Aarav']
+Math Students: ['Aarav']
+\end{outputbox}
+
+\begin{commonmistake}[Mutable Default State]
+Never use mutable objects (like lists or dictionaries) as class attributes if you intend for them to be unique per instance. Always initialize mutable collections inside the \texttt{\_\_init\_\_} method bound to \texttt{self} to ensure they reside in the instance's \texttt{\_\_dict\_\_}.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 5.4: METHOD TYPES & DECORATORS
+% ==============================================================================
+\section{Instance Methods, Class Methods, and Static Methods}
+
+While standard instance methods define the core behavior of an object, Python provides decorators to define methods that operate at different levels of abstraction. 
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Instance Methods}: The default method type. They take \texttt{self} as the first parameter and can access or modify the unique state of the specific object instance.
+    \item \textbf{Class Methods (\texttt{@classmethod})}: Take \texttt{cls} as the first parameter instead of \texttt{self}. They cannot access instance attributes but can modify class state that applies across all instances. They are frequently used to implement the \textbf{Factory Pattern}---providing alternative ways to construct instances.
+    \item \textbf{Static Methods (\texttt{@staticmethod})}: Take neither \texttt{self} nor \texttt{cls}. They are essentially self-contained utility functions that belong logically to the class's namespace but do not require access to class or instance state.
+\end{itemize}
+
+\begin{pythoncode}{Factory Pattern and Method Decorators}
+import datetime
+
+class Employee:
+    company = "TechCorp" # Class attribute
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        
+    def display(self): # Instance Method
+        print(f"{self.name} is {self.age} years old.")
+        
+    @classmethod
+    def from_birth_year(cls, name, birth_year):
+        """Factory Method: Creates instance calculating age from year."""
+        current_year = datetime.date.today().year
+        age = current_year - birth_year
+        return cls(name, age) # Calls __init__ internally
+        
+    @staticmethod
+    def is_workday(day_of_week):
+        """Utility Method: 0=Monday, 4=Friday. Doesn't need self or cls."""
+        return day_of_week < 5
+
+# Normal instantiation
+emp1 = Employee("Rahul", 28)
+emp1.display()
+
+# Instantiation via Class Method Factory
+emp2 = Employee.from_birth_year("Priya", 1995)
+emp2.display()
+
+# Calling Static Method
+print("Is day 3 (Thursday) a workday?", Employee.is_workday(3))
+print("Is day 6 (Sunday) a workday?", Employee.is_workday(6))
+\end{pythoncode}
+
+\begin{outputbox}
+Rahul is 28 years old.
+Priya is 31 years old.
+Is day 3 (Thursday) a workday? True
+Is day 6 (Sunday) a workday? False
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.5: INHERITANCE
+% ==============================================================================
+\section{Class Inheritance \& Hierarchy Design}
+
+Code reuse is a fundamental principle of software engineering. Instead of rewriting identical code for similar entities, inheritance allows a new class (the derived, child, or subclass) to inherit the attributes and methods of an existing class (the base, parent, or superclass). This establishes an \textbf{"is-a" relationship}. For instance, a \texttt{Manager} "is an" \texttt{Employee}.
+
+\subsection{Multi-Level Inheritance and \texttt{super()}}
+In multi-level inheritance, a class acts as both a child to a higher-level class and a parent to a lower-level class, forming a vertical chain (\texttt{Grandparent $\to$ Parent $\to$ Child}). The \texttt{super()} function is crucial here: it delegates method calls to the parent class, ensuring that the initialization logic in parent constructors is properly executed before the child adds its specific features.
+
+\begin{pythoncode}{Multi-Level Inheritance Hierarchy}
+# Base Class (Grandparent)
+class Person:
+    def __init__(self, name):
+        self.name = name
+        print("Person __init__ called.")
+
+# Intermediate Class (Parent)
+class Employee(Person):
+    def __init__(self, name, emp_id):
+        super().__init__(name) # Delegate to Person
+        self.emp_id = emp_id
+        print("Employee __init__ called.")
+
+# Derived Class (Child)
+class Manager(Employee):
+    def __init__(self, name, emp_id, department):
+        super().__init__(name, emp_id) # Delegate to Employee
+        self.department = department
+        print("Manager __init__ called.")
+        
+    def profile(self):
+        print(f"Manager: {self.name}, ID: {self.emp_id}, Dept: {self.department}")
+
+print("--- Instantiating Manager ---")
+m = Manager("Dr. Sharma", "E992", "Computer Science")
+m.profile()
+\end{pythoncode}
+
+\begin{outputbox}
+--- Instantiating Manager ---
+Person __init__ called.
+Employee __init__ called.
+Manager __init__ called.
+Manager: Dr. Sharma, ID: E992, Dept: Computer Science
+\end{outputbox}
+
+\subsection{Type Inspection: \texttt{isinstance()} and \texttt{issubclass()}}
+When working with complex inheritance hierarchies, you often need to verify object types dynamically. Python provides two built-in functions for this purpose:
+\begin{itemize}
+    \item \texttt{isinstance(object, Class)}: Returns \texttt{True} if the object is an instance of the class \textbf{or any of its subclasses}.
+    \item \texttt{issubclass(Child, Parent)}: Returns \texttt{True} if the first class is a subclass of the second.
+\end{itemize}
+
+\begin{pythoncode}{Type Inspection with isinstance and issubclass}
+# Using the classes defined in the previous example
+m = Manager("Alice", "M100", "HR")
+e = Employee("Bob", "E101")
+
+print("Is 'm' a Manager?", isinstance(m, Manager))
+print("Is 'm' an Employee? (Inheritance)", isinstance(m, Employee))
+print("Is 'e' a Manager?", isinstance(e, Manager))
+
+print("Is Manager a subclass of Person?", issubclass(Manager, Person))
+print("Is Person a subclass of Employee?", issubclass(Person, Employee))
+\end{pythoncode}
+
+\begin{outputbox}
+Person __init__ called.
+Employee __init__ called.
+Manager __init__ called.
+Person __init__ called.
+Employee __init__ called.
+Is 'm' a Manager? True
+Is 'm' an Employee? (Inheritance) True
+Is 'e' a Manager? False
+Is Manager a subclass of Person? True
+Is Person a subclass of Employee? False
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.6: MULTIPLE INHERITANCE & MRO
+% ==============================================================================
+\section{Multiple Inheritance and Method Resolution Order (MRO)}
+
+Unlike Java or C\#, Python allows a class to inherit from multiple parent classes simultaneously (\texttt{class Child(Parent1, Parent2):}). While powerful, this introduces the "Diamond Problem": if both parents define a method with the same name, which one does the child inherit?
+
+Python resolves this ambiguity using a mathematical algorithm called \textbf{C3 Linearization}, which calculates a strict hierarchy called the \textbf{Method Resolution Order (MRO)}.
+
+\begin{conceptbox}[C3 Linearization Step-by-Step]
+The MRO determines the exact order Python searches for methods. The rules are:
+1. Children precede their parents.
+2. If a class inherits from multiple parents, they are kept in the order specified in the tuple of the base classes.
+3. A parent is not searched until all of its derived classes have been searched.
+You can inspect the resulting order using the \texttt{ClassName.\_\_mro\_\_} attribute or \texttt{ClassName.mro()} method.
+\end{conceptbox}
+
+\begin{pythoncode}{Multiple Inheritance and MRO Tracing}
+class A:
+    def process(self): print("Process from A")
+
+class B(A):
+    def process(self): print("Process from B")
+
+class C(A):
+    def process(self): print("Process from C")
+
+# D inherits from B and C. 
+# According to MRO rules, B comes before C.
+class D(B, C):
+    pass
+
+obj = D()
+# Python looks in D -> not found. 
+# Looks in B -> found! Stops searching.
+obj.process() 
+
+print("MRO of class D:")
+for cls in D.__mro__:
+    print(f" - {cls.__name__}")
+\end{pythoncode}
+
+\begin{outputbox}
+Process from B
+MRO of class D:
+ - D
+ - B
+ - C
+ - A
+ - object
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.7: POLYMORPHISM & ABCs
+% ==============================================================================
+\section{Polymorphism and Abstract Base Classes}
+
+\subsection{Polymorphism and Duck Typing}
+Polymorphism literally means "many forms." In OOP, it refers to the ability of different object types to be treated uniformly based on a shared interface, even if their underlying implementations differ. 
+
+Python implements polymorphism through \textbf{Duck Typing}: \textit{"If it walks like a duck and quacks like a duck, it must be a duck."} In Python, we don't care strictly about an object's rigid class lineage; we only care whether it possesses the specific methods we need to invoke.
+
+\subsection{Abstract Base Classes (ABCs)}
+While Duck Typing is flexible, large enterprise systems require strict architectural contracts. We need a way to guarantee that a subclass implements certain methods. This is achieved using \textbf{Abstract Base Classes} provided by Python's built-in \texttt{abc} module.
+
+An Abstract Base Class cannot be instantiated directly. It serves solely as a template. By decorating a method with \texttt{@abstractmethod}, we force any concrete subclass to provide its own implementation. Failure to do so results in a \texttt{TypeError} at instantiation.
+
+\begin{pythoncode}{Abstract Base Classes and Polymorphism}
+from abc import ABC, abstractmethod
+import math
+
+# Abstract Base Class defining a strict interface
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        
+    def area(self): # Must be implemented
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+        
+    def area(self): # Must be implemented
+        return math.pi * (self.radius ** 2)
+
+# Polymorphic iteration
+shapes = [Rectangle(4, 5), Circle(3)]
+
+for shape in shapes:
+    # Dynamic Dispatch: Python automatically calls the correct area() 
+    # method based on the actual object type at runtime.
+    print(f"{type(shape).__name__} Area: {shape.area():.2f}")
+
+# Attempting to instantiate the ABC directly raises an error!
+try:
+    generic_shape = Shape()
+except TypeError as e:
+    print("Caught TypeError:", e)
+\end{pythoncode}
+
+\begin{outputbox}
+Rectangle Area: 20.00
+Circle Area: 28.27
+Caught TypeError: Can't instantiate abstract class Shape with abstract method area
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.8: DUNDER METHODS
+% ==============================================================================
+\section{Operator Overloading \& Magic (Dunder) Methods}
+
+Python allows user-defined classes to intercept and redefine how built-in operators (+, -, ==, <, \texttt{str()}) interact with object instances. This is accomplished by implementing special \textbf{dunder (double underscore) methods}.
+
+\subsection{\texttt{\_\_repr\_\_} vs \texttt{\_\_str\_\_}}
+Printing an object natively yields an unhelpful memory address string. To fix this, we override string conversion dunders:
+\begin{itemize}
+    \item \texttt{\_\_str\_\_(self)}: Intended for end-users. Returns a readable, formatted string representation. Invoked by \texttt{print()} and \texttt{str()}.
+    \item \texttt{\_\_repr\_\_(self)}: Intended for developers. Returns an unambiguous representation of the object, ideally one that could be copied and pasted as code to recreate the object. Invoked by \texttt{repr()} and in interactive REPL environments.
+\end{itemize}
+
+\begin{pythoncode}{\_\_str\_\_ vs \_\_repr\_\_ Demonstration}
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+        
+    def __str__(self):
+        # User-friendly
+        return f"Product: {self.name} at ${self.price:.2f}"
+        
+    def __repr__(self):
+        # Developer-friendly (looks like the constructor)
+        return f"Product('{self.name}', {self.price})"
+
+p = Product("Wireless Mouse", 29.99)
+print("Using str():", str(p))
+print("Using repr():", repr(p))
+\end{pythoncode}
+
+\begin{outputbox}
+Using str(): Product: Wireless Mouse at $29.99
+Using repr(): Product('Wireless Mouse', 29.99)
+\end{outputbox}
+
+\subsection{Rich Comparison and Arithmetic Overloading}
+
+We can overload arithmetic and relational operators to make custom objects behave like native data types.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Operation} & \textbf{Operator} & \textbf{Special Dunder Method} & \textbf{Description} \\
+\midrule
+\textbf{Addition} & \texttt{a + b} & \texttt{\_\_add\_\_(self, other)} & Overloads the \texttt{+} operator \\
+\textbf{Equality} & \texttt{a == b} & \texttt{\_\_eq\_\_(self, other)} & Overloads equality comparison \\
+\textbf{Less Than} & \texttt{a < b} & \texttt{\_\_lt\_\_(self, other)} & Overloads strictly less than \\
+\textbf{Length} & \texttt{len(obj)} & \texttt{\_\_len\_\_(self)} & Returns integer length \\
+\bottomrule
+\end{tabularx}
+\caption{Common Special Dunder Methods for Operator Overloading.}
+\label{tab:dunder-methods}
+\end{table}
+
+\begin{pythoncode}{Rich Comparison and Arithmetic}
+class Vector2D:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        
+    def __add__(self, other):
+        # Overloads + operator
+        return Vector2D(self.x + other.x, self.y + other.y)
+        
+    def __eq__(self, other):
+        # Overloads == operator
+        return self.x == other.x and self.y == other.y
+        
+    def __lt__(self, other):
+        # Overloads < operator based on magnitude (squared)
+        mag1 = self.x**2 + self.y**2
+        mag2 = other.x**2 + other.y**2
+        return mag1 < mag2
+        
+    def __str__(self):
+        return f"V({self.x}, {self.y})"
+
+v1 = Vector2D(2, 3)
+v2 = Vector2D(5, 7)
+v3 = Vector2D(2, 3)
+
+print("v1 + v2 =", v1 + v2)
+print("v1 == v3:", v1 == v3)
+print("v1 < v2:", v1 < v2)
+\end{pythoncode}
+
+\begin{outputbox}
+v1 + v2 = V(7, 10)
+v1 == v3: True
+v1 < v2: True
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.9: ENCAPSULATION & PROPERTIES
+% ==============================================================================
+\section{Data Hiding, Encapsulation, and Property Decorators}
+
+Encapsulation ensures that an object's internal state cannot be arbitrarily modified from the outside. Direct modification of attributes can bypass validation logic, leading to corrupted data states.
+
+\subsection{Private Attributes and Name Mangling}
+Python does not enforce strict privacy at the compiler level like Java does. Instead, it relies on naming conventions and a mechanism called \textbf{Name Mangling}.
+
+Prefixing an attribute with a double underscore (e.g., \texttt{\_\_pin}) signals that it is private. Behind the scenes, the Python interpreter dynamically renames this attribute to \texttt{\_ClassName\_\_pin}. This prevents accidental access or overriding from outside the class, although a determined developer could still access it via the mangled name.
+
+\begin{pythoncode}{Encapsulation and Name Mangling}
+class SecureWallet:
+    def __init__(self, owner, pin):
+        self.owner = owner          # Public
+        self._security_code = 9999  # Protected (Convention only)
+        self.__pin = pin            # Private (Name Mangled)
+        
+    def verify_pin(self, entered_pin):
+        return self.__pin == entered_pin
+
+wallet = SecureWallet("Aditi", 4321)
+print("Public Owner:", wallet.owner)
+
+# Attempting direct access to private attribute
+try:
+    print(wallet.__pin)
+except AttributeError as e:
+    print("Caught Error:", e)
+
+# Accessing via Python's mangled name (Educational Demonstration Only!)
+print("Mangled Access:", wallet._SecureWallet__pin)
+\end{pythoncode}
+
+\begin{outputbox}
+Public Owner: Aditi
+Caught Error: 'SecureWallet' object has no attribute '__pin'
+Mangled Access: 4321
+\end{outputbox}
+
+\subsection{Pythonic Getters, Setters, and Read-Only Properties}
+Languages like Java use explicit \texttt{get\_value()} and \texttt{set\_value()} methods. Python offers a more elegant solution: the \texttt{@property} decorator. This allows you to define methods that behave syntactically like normal attributes but execute underlying logic when accessed or modified.
+
+By omitting the setter, you can create strictly \textbf{read-only properties}. Furthermore, the \texttt{@deleter} decorator allows you to define behavior when an attribute is deleted.
+
+\begin{pythoncode}{Advanced Property Decorators}
+class EmployeeProfile:
+    def __init__(self, first, last, salary):
+        self.first = first
+        self.last = last
+        self._salary = salary
+        
+    @property
+    def email(self):
+        """Read-only property derived dynamically."""
+        return f"{self.first.lower()}.{self.last.lower()}@corp.com"
+        
+    @property
+    def salary(self):
+        """Getter for private salary."""
+        return self._salary
+        
+    @salary.setter
+    def salary(self, value):
+        """Setter with validation logic."""
+        if value < 0:
+            raise ValueError("Salary cannot be negative!")
+        self._salary = value
+        
+    @salary.deleter
+    def salary(self):
+        """Deleter logic."""
+        print("Salary record deleted!")
+        self._salary = None
+
+emp = EmployeeProfile("John", "Doe", 50000)
+
+# Accessing read-only property like an attribute
+print("Email:", emp.email)
+
+# Setting through property validation
+emp.salary = 60000 
+print("Updated Salary:", emp.salary)
+
+# Triggering the deleter
+del emp.salary
+print("Salary after deletion:", emp.salary)
+\end{pythoncode}
+
+\begin{outputbox}
+Email: john.doe@corp.com
+Updated Salary: 60000
+Salary record deleted!
+Salary after deletion: None
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.10: FUNCTION OVERLOADING
+% ==============================================================================
+\section{Function \& Method Overloading in Python}
+
+\begin{conceptbox}[Python Overloading Philosophy \examBadge]
+Unlike statically-typed languages such as C++ or Java, \textbf{Python does NOT support traditional compile-time function overloading by parameter signature}. In Python, if multiple methods with the identical name are defined in the same class, the interpreter executes from top to bottom, and \textbf{the last defined method completely overwrites all prior definitions}. The identifier is simply rebound to the newest function object.
+\end{conceptbox}
+
+\subsection{Simulating Overloading in Python}
+Since true overloading doesn't exist, Python developers simulate polymorphic method flexibility through default arguments and variable-length parameter packing.
+
+\begin{pythoncode}{Simulating Overloading via Default Parameters and *args}
+class FlexibleCalculator:
+    # Approach 1: Default Parameters
+    def compute_area(self, a=None, b=None):
+        if a is not None and b is not None:
+            return a * b # Rectangle Area
+        elif a is not None:
+            return a * a # Square Area
+        return 0.0
+
+    # Approach 2: Variable-Length Arguments
+    def multi_add(self, *args):
+        return sum(args)
+
+calc = FlexibleCalculator()
+print("Area (side 5):", calc.compute_area(5))
+print("Area (4x6):", calc.compute_area(4, 6))
+
+print("Sum 2 args:", calc.multi_add(10, 20))
+print("Sum 4 args:", calc.multi_add(10, 20, 30, 40))
+\end{pythoncode}
+
+\begin{outputbox}
+Area (side 5): 25
+Area (4x6): 24
+Sum 2 args: 30
+Sum 4 args: 100
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 5.11: EXAM TIPS & PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 5 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{The Missing \texttt{self} Trap}: Forgetting \texttt{self} in method definitions (\texttt{def display():}) causes a \texttt{TypeError: display() takes 0 positional arguments but 1 was given} when called on an instance.
+    \item \textbf{Class Variable Mutation}: Modifying a class variable via \texttt{self.var = val} creates a new instance variable on that object that shadows the class variable. To mutate the shared class variable, assign via the class name: \texttt{ClassName.var = val}.
+    \item \textbf{Constructor Calling in Inheritance}: Forgetting to call \texttt{super().\_\_init\_\_()} in a derived class constructor will leave inherited attributes uninitialized, leading to \texttt{AttributeError}s later.
+    \item \textbf{Mangling Trap}: Remember that double underscores trigger name mangling, but single underscores (\texttt{\_var}) are purely a gentleman's agreement and do not prevent access at all.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 5.12: OUTPUT PREDICTION & DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Class vs. Instance Variable Shadowing]
+\textbf{Question}: What is the exact output?
+\begin{lstlisting}[language=Python3]
+class Counter:
+    count = 0
+    def __init__(self):
+        Counter.count += 1
+        self.my_id = Counter.count
+
+c1 = Counter()
+c2 = Counter()
+c1.count = 100 # Mutates instance, not class variable
+print(c1.count, c2.count, Counter.count)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{c1 = Counter()} increments \texttt{Counter.count} to 1.
+    \item \texttt{c2 = Counter()} increments \texttt{Counter.count} to 2.
+    \item \texttt{c1.count = 100} creates an instance attribute \texttt{count=100} on \texttt{c1} shadowing the class variable. \texttt{c2} and \texttt{Counter} still access the class variable (\texttt{2}).
+    \item \textbf{Output}: \texttt{100 2 2}
+\end{itemize}
+\end{outputprediction}
+
+\begin{outputprediction}[Inheritance and Constructor Execution]
+\textbf{Question}: What is the exact output?
+\begin{lstlisting}[language=Python3]
+class Base:
+    def __init__(self):
+        self.val = 10
+        self.setup()
+    def setup(self):
+        self.val += 5
+
+class Derived(Base):
+    def setup(self):
+        self.val *= 2
+
+obj = Derived()
+print(obj.val)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{obj} is created as \texttt{Derived}. It calls \texttt{Base.\_\_init\_\_}.
+    \item Inside \texttt{Base.\_\_init\_\_}, \texttt{self.val = 10}.
+    \item Then \texttt{self.setup()} is called. Since \texttt{self} is an instance of \texttt{Derived}, polymorphism dictates that \texttt{Derived.setup()} is executed!
+    \item \texttt{self.val} becomes $10 \times 2 = 20$.
+    \item \textbf{Output}: \texttt{20}
+\end{itemize}
+\end{outputprediction}
+
+\begin{outputprediction}[Dunder Methods List Addition]
+\textbf{Question}: What is the output?
+\begin{lstlisting}[language=Python3]
+class Box:
+    def __init__(self, item):
+        self.item = item
+    def __add__(self, other):
+        return Box(self.item + other.item)
+
+b1 = Box([1, 2])
+b2 = Box([3, 4])
+b3 = b1 + b2
+print(b3.item)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{b1.item} is \texttt{[1, 2]} and \texttt{b2.item} is \texttt{[3, 4]}.
+    \item \texttt{b1 + b2} calls \texttt{\_\_add\_\_}, which concatenates the lists: \texttt{[1, 2] + [3, 4] = [1, 2, 3, 4]}.
+    \item \textbf{Output}: \texttt{[1, 2, 3, 4]}
+\end{itemize}
+\end{outputprediction}
+
+\begin{outputprediction}[Method Resolution Order]
+\textbf{Question}: What is printed?
+\begin{lstlisting}[language=Python3]
+class X: pass
+class Y: pass
+class Z(X, Y): pass
+
+print(Z.mro()[1].__name__)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item The bases of \texttt{Z} are \texttt{(X, Y)}.
+    \item The MRO list is \texttt{[Z, X, Y, object]}.
+    \item Index 1 is \texttt{X}.
+    \item \textbf{Output}: \texttt{X}
+\end{itemize}
+\end{outputprediction}
+
+\begin{outputprediction}[Private Attributes Name Mangling]
+\textbf{Question}: Will this code crash? If not, what is printed?
+\begin{lstlisting}[language=Python3]
+class Vault:
+    def __init__(self):
+        self.__code = 1234
+
+v = Vault()
+v.__code = 9999
+print(v._Vault__code, v.__code)
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item The constructor creates \texttt{\_Vault\_\_code = 1234}.
+    \item \texttt{v.\_\_code = 9999} dynamically creates a \textbf{new public attribute} named literally \texttt{\_\_code}.
+    \item The print statement accesses the mangled original (\texttt{1234}) and the new public attribute (\texttt{9999}).
+    \item \textbf{Output}: \texttt{1234 9999}
+\end{itemize}
+\end{outputprediction}
+
+
+\begin{debuggingbox}[Missing \texttt{self} in Method Definitions]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+class Book:
+    def __init__(self, title, price):
+        self.title = title
+        self.price = price
+        
+    def get_discounted_price(discount): # Missing self!
+        return self.price * (1 - discount)
+
+b = Book("Python 101", 500)
+print(b.get_discounted_price(0.10))
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+Calling \texttt{b.get\_discounted\_price(0.10)} automatically passes \texttt{b} as the first argument, causing a parameter mismatch (\texttt{TypeError: get\_discounted\_price() takes 1 positional argument but 2 were given}).
+\textbf{Fix}: Add \texttt{self} as the first parameter: \texttt{def get\_discounted\_price(self, discount):}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Mutable Class Default Trap]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+class Player:
+    inventory = []
+    def __init__(self, name):
+        self.name = name
+
+p1 = Player("Hero")
+p2 = Player("Villain")
+p1.inventory.append("Sword")
+print(p2.inventory) # Expecting empty list
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\texttt{inventory} is a class attribute. Appending to it modifies the shared list, affecting all players.
+\textbf{Fix}: Move initialization into the constructor:
+\begin{lstlisting}[language=Python3]
+def __init__(self, name):
+    self.name = name
+    self.inventory = [] # Instance specific!
+\end{lstlisting}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Missing super() call]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+class Animal:
+    def __init__(self, species):
+        self.species = species
+
+class Dog(Animal):
+    def __init__(self, name):
+        self.name = name
+
+d = Dog("Rex")
+print(d.species)
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\texttt{Dog}'s constructor overrides \texttt{Animal}'s constructor but never calls it. \texttt{species} is never initialized, leading to an \texttt{AttributeError}.
+\textbf{Fix}: Call \texttt{super().\_\_init\_\_()}:
+\begin{lstlisting}[language=Python3]
+def __init__(self, name):
+    super().__init__("Canine")
+    self.name = name
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 5.13: GRADED PRACTICE PROBLEMS & SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 5 Practice Exercises]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Create a \texttt{Rectangle} class with attributes \texttt{length} and \texttt{width}, and methods \texttt{area()} and \texttt{perimeter()}.
+    \item \textbf{Level 1 (Foundation)}: Create a \texttt{Circle} class with a constructor that takes \texttt{radius} and computes area and circumference using \texttt{math.pi}.
+    \item \textbf{Level 2 (Standard)}: Design a \texttt{BankAccount} class with private attributes \texttt{\_\_account\_number} and \texttt{\_\_balance}, with deposit, withdraw, and check-balance methods.
+    \item \textbf{Level 2 (Standard)}: Implement a multi-level inheritance hierarchy: \texttt{Vehicle} $\to$ \texttt{Car} $\to$ \texttt{ElectricCar} with constructor delegation via \texttt{super()}.
+    \item \textbf{Level 3 (Exam Tier)}: Create an abstract base class \texttt{Employee} with subclasses \texttt{HourlyEmployee} and \texttt{SalariedEmployee} implementing overridden \texttt{calculate\_salary()} methods.
+    \item \textbf{Level 3 (Exam Tier)}: Implement a \texttt{Time} class that represents hours, minutes, and seconds, with an \texttt{add\_time(t2)} method that returns a new normalized \texttt{Time} object.
+    \item \textbf{Level 4 (Challenge)}: Design a complete \texttt{StudentGradingSystem} class maintaining a private list of student dictionaries with methods to add students, calculate course averages, and find the class topper.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions with Test Cases}
+
+\begin{solutionbox}[Solution 1: Rectangle Class]
+\begin{lstlisting}[language=Python3]
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def area(self):
+        return self.length * self.width
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Instantiation} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{r = Rectangle(5, 4)} & \texttt{r.area()} & \texttt{20} \\ \hline
+\texttt{r = Rectangle(5, 4)} & \texttt{r.perimeter()} & \texttt{18} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 2: Circle Class]
+\begin{lstlisting}[language=Python3]
+import math
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return math.pi * self.radius ** 2
+    def circumference(self):
+        return 2 * math.pi * self.radius
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Instantiation} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{c = Circle(3)} & \texttt{round(c.area(), 2)} & \texttt{28.27} \\ \hline
+\texttt{c = Circle(3)} & \texttt{round(c.circumference(), 2)} & \texttt{18.85} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 3: BankAccount Class]
+\begin{lstlisting}[language=Python3]
+class BankAccount:
+    def __init__(self, acc_no, balance=0.0):
+        self.__acc_no = acc_no       # Private
+        self.__balance = float(balance) # Private
+        
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            return self.__balance
+        raise ValueError("Deposit must be positive.")
+        
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            return self.__balance
+        raise ValueError("Insufficient funds or invalid amount.")
+        
+    def get_balance(self):
+        return self.__balance
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Method Call Sequence} & \textbf{State Check} & \textbf{Expected Result} \\ \hline
+\texttt{acc = BankAccount("101", 100); acc.deposit(50)} & \texttt{acc.get\_balance()} & \texttt{150.0} \\ \hline
+\texttt{acc.withdraw(200)} & \texttt{Exception raised?} & \texttt{ValueError} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 4: Vehicle Hierarchy (Multi-Level)]
+\begin{lstlisting}[language=Python3]
+class Vehicle:
+    def __init__(self, brand):
+        self.brand = brand
+
+class Car(Vehicle):
+    def __init__(self, brand, doors):
+        super().__init__(brand)
+        self.doors = doors
+
+class ElectricCar(Car):
+    def __init__(self, brand, doors, battery_cap):
+        super().__init__(brand, doors)
+        self.battery_cap = battery_cap
+        
+    def display(self):
+        return f"{self.brand} with {self.doors} doors, {self.battery_cap}kWh"
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Instantiation} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{ec = ElectricCar("Tesla", 4, 75)} & \texttt{ec.display()} & \texttt{"Tesla with 4 doors, 75kWh"} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 5: Abstract Employee]
+\begin{lstlisting}[language=Python3]
+from abc import ABC, abstractmethod
+
+class Employee(ABC):
+    def __init__(self, name):
+        self.name = name
+    @abstractmethod
+    def calculate_salary(self):
+        pass
+
+class HourlyEmployee(Employee):
+    def __init__(self, name, hours, rate):
+        super().__init__(name)
+        self.hours = hours
+        self.rate = rate
+    def calculate_salary(self):
+        return self.hours * self.rate
+
+class SalariedEmployee(Employee):
+    def __init__(self, name, annual_salary):
+        super().__init__(name)
+        self.annual_salary = annual_salary
+    def calculate_salary(self):
+        return self.annual_salary / 12
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Instantiation} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{he = HourlyEmployee("Jim", 40, 15)} & \texttt{he.calculate\_salary()} & \texttt{600} \\ \hline
+\texttt{se = SalariedEmployee("Pam", 60000)} & \texttt{se.calculate\_salary()} & \texttt{5000.0} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 6: Time Addition Class]
+\begin{lstlisting}[language=Python3]
+class Time:
+    def __init__(self, hours, minutes, seconds):
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
+        
+    def add_time(self, other):
+        total_sec = self.seconds + other.seconds
+        extra_min = total_sec // 60
+        sec = total_sec % 60
+        
+        total_min = self.minutes + other.minutes + extra_min
+        extra_hr = total_min // 60
+        minute = total_min % 60
+        
+        hr = self.hours + other.hours + extra_hr
+        return Time(hr, minute, sec)
+        
+    def __str__(self):
+        return f"{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}"
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Inputs} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{t1=Time(1,50,40), t2=Time(0,20,30)} & \texttt{str(t1.add\_time(t2))} & \texttt{02:11:10} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution 7: Student Grading System]
+\begin{lstlisting}[language=Python3]
+class StudentGradingSystem:
+    def __init__(self):
+        self.__students = [] # Private list
+        
+    def add_student(self, name, marks):
+        self.__students.append({"name": name, "marks": marks})
+        
+    def course_average(self):
+        if not self.__students:
+            return 0.0
+        total = sum(s["marks"] for s in self.__students)
+        return total / len(self.__students)
+        
+    def find_topper(self):
+        if not self.__students:
+            return None
+        # Sort by marks descending and return top student name
+        sorted_students = sorted(self.__students, key=lambda x: x["marks"], reverse=True)
+        return sorted_students[0]["name"]
+\end{lstlisting}
+\textbf{Test Cases}:
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Input State} & \textbf{Method Call} & \textbf{Expected Output} \\ \hline
+\texttt{sys.add("A", 80); sys.add("B", 90)} & \texttt{sys.course\_average()} & \texttt{85.0} \\ \hline
+\texttt{sys.add("A", 80); sys.add("B", 90)} & \texttt{sys.find\_topper()} & \texttt{"B"} \\ \hline
+\end{tabular}
+\end{solutionbox}
+
+
+% ==============================================================================
+% SECTION 5.14: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which special method is invoked automatically when an object is instantiated?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{\_\_start\_\_} \quad (b) \texttt{\_\_init\_\_} \quad (c) \texttt{\_\_new\_\_} \quad (d) \texttt{\_\_construct\_\_}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{\_\_init\_\_} is the constructor method in Python classes.}
+
+    \item What is the purpose of the \texttt{self} parameter in class methods?
+    \begin{enumerate}[label=(\alph*)]
+        \item Refers to the Python interpreter \quad (b) Refers to the current object instance \quad (c) Reserved system keyword \quad (d) Represents class type
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{self} provides an explicit reference to the calling instance.}
+
+    \item How does Python implement data hiding for attributes starting with double underscores (e.g., \texttt{\_\_data})?
+    \begin{enumerate}[label=(\alph*)]
+        \item Cryptographic encryption \quad (b) Name mangling \quad (c) Memory locking \quad (d) Read-only flags
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Python mangles private attributes to \texttt{\_ClassName\_\_attrName}.}
+
+    \item What is the function used to call methods of the parent class from a child class?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{parent()} \quad (b) \texttt{base()} \quad (c) \texttt{super()} \quad (d) \texttt{inherit()}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{super()} accesses inherited methods from the superclass.}
+
+    \item What happens if two methods with the identical name are defined in the same class in Python?
+    \begin{enumerate}[label=(\alph*)]
+        \item Method Overloading \quad (b) Compile Error \quad (c) Second method overwrites first \quad (d) Both execute
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Python does not support method overloading; the later definition replaces earlier ones.}
+
+    \item Which built-in function verifies if an object is an instance of a given class?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{isinstance()} \quad (b) \texttt{typeof()} \quad (c) \texttt{issubclass()} \quad (d) \texttt{hasattr()}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{isinstance(obj, Class)} checks object instance membership.}
+
+    \item What is an attribute shared across all instances of a class called?
+    \begin{enumerate}[label=(\alph*)]
+        \item Static Attribute \quad (b) Class Attribute \quad (c) Global Attribute \quad (d) Shared Attribute
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Variables defined in the class body are class attributes.}
+
+    \item What is the term for a child class redefining a method with the same signature as its parent?
+    \begin{enumerate}[label=(\alph*)]
+        \item Overloading \quad (b) Overriding \quad (c) Encapsulation \quad (d) Abstraction
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Redefining an inherited method in a subclass is method overriding.}
+
+    \item In \texttt{class Car(Vehicle):}, what is \texttt{Vehicle}?
+    \begin{enumerate}[label=(\alph*)]
+        \item Child class \quad (b) Base / Parent class \quad (c) Instance object \quad (d) Interface
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{Vehicle} is the parent base class.}
+
+    \item What error is raised when accessing \texttt{wallet.\_\_pin} directly from outside the class?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{SecurityError} \quad (b) \texttt{AttributeError} \quad (c) \texttt{KeyError} \quad (d) \texttt{NameError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Private mangled attributes raise \texttt{AttributeError} on raw access.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.15: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 5 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the role of the \texttt{\_\_init\_\_} constructor and the \texttt{self} parameter.
+    \item How does Python handle private attributes through Name Mangling?
+    \item Explain why Python does not natively support function overloading by signature.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this inheritance program:
+    \begin{lstlisting}[language=Python3]
+class A:
+    def show(self):
+        print("A", end=" ")
+
+class B(A):
+    def show(self):
+        super().show()
+        print("B", end=" ")
+
+obj = B()
+obj.show()
+    \end{lstlisting}
+    \item What is the output of this class attribute code:
+    \begin{lstlisting}[language=Python3]
+class Item:
+    rate = 10
+    def __init__(self, qty):
+        self.qty = qty
+    def cost(self):
+        return self.qty * Item.rate
+
+i1 = Item(5)
+Item.rate = 20
+print(i1.cost())
+    \end{lstlisting}
+    \item How can method overloading be simulated in Python?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Implement a complete object-oriented system for a university library:
+    \begin{enumerate}[label=(\alph*)]
+        \item Create a \texttt{Book} base class with attributes \texttt{book\_id}, \texttt{title}, and private attribute \texttt{\_\_is\_issued}. (3 Marks)
+        \item Add methods \texttt{issue\_book()} and \texttt{return\_book()} that validate and update book availability. (3 Marks)
+        \item Create a derived class \texttt{ReferenceBook} that overrides \texttt{issue\_book()} with a rule stating that reference books can only be issued for library reading rooms (maximum 2 hours), returning a special status message. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 5 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{Constructor \& self} [2 Marks]: \texttt{\_\_init\_\_} is the instance initialization method called upon object creation. \texttt{self} represents the specific object instance, binding instance attributes to heap memory.
+    \item \textbf{Name Mangling} [2 Marks]: Double underscore attributes (e.g., \texttt{\_\_pin}) are renamed internally by the compiler to \texttt{\_ClassName\_\_pin} to prevent accidental overriding and direct external access.
+    \item \textbf{Lack of Overloading} [2 Marks]: Python is dynamically typed without compile-time signature binding. Re-defining a method binds the identifier to the latest function object, replacing earlier definitions.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Inheritance Output} [3 Marks]: \texttt{super().show()} prints \texttt{A }, then \texttt{B.show()} prints \texttt{B }. Output: \texttt{A B }.
+    \item \textbf{Class Variable Tracing} [3 Marks]: \texttt{Item.rate} was modified to \texttt{20}. \texttt{i1.cost()} computes $5 \times 20 = \mathbf{100}$.
+    \item \textbf{Simulating Overloading} [3 Marks]: Simulated using default arguments (\texttt{def add(a, b=None, c=None)}) or variable-length arguments (\texttt{def add(*args)}).
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Library System Implementation} [10 Marks]:
+\begin{lstlisting}[language=Python3]
+class Book:
+    def __init__(self, book_id, title):
+        self.book_id = book_id
+        self.title = title
+        self.__is_issued = False # Private attribute
+        
+    def issue_book(self):
+        if not self.__is_issued:
+            self.__is_issued = True
+            print(f"Book '{self.title}' issued successfully.")
+            return True
+        print(f"Book '{self.title}' is already issued!")
+        return False
+        
+    def return_book(self):
+        if self.__is_issued:
+            self.__is_issued = False
+            print(f"Book '{self.title}' returned.")
+        else:
+            print("Book was not issued.")
+
+class ReferenceBook(Book):
+    def issue_book(self):
+        # Overriding with Reference constraints
+        print(f"NOTICE: '{self.title}' is a REFERENCE book.")
+        print("Issued for Library Reading Room only (Max 2 Hours).")
+        return super().issue_book()
+
+# Testing
+b1 = Book(101, "Python Core")
+b1.issue_book()
+b1.issue_book() # Second issue fails
+
+ref = ReferenceBook(201, "Encyclopaedia Britannica")
+ref.issue_book()
+\end{lstlisting}
+\textbf{Marking Scheme}: Base \texttt{Book} with private attribute: 3M; Issue/return logic: 3M; Derived \texttt{ReferenceBook} overriding logic: 4M.
+\end{enumerate}
+\end{solutionbox}

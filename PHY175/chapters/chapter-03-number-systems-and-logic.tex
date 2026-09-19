@@ -1,0 +1,359 @@
+\chapter{Introduction to Number Systems and Logic Gates}
+\label{chap:number-systems-logic}
+
+\section{Introduction and Foundational Concepts}
+In digital electronic systems, information is represented, processed, and stored using discrete electrical voltage levels rather than continuous analog signals. The fundamental building blocks of digital logic operate on two distinct states: binary 0 (typically representing ground or low voltage, $\SI{0}{\volt}$) and binary 1 (representing supply voltage or high voltage, such as $\SI{3.3}{\volt}$ or $\SI{5.0}{\volt}$).
+
+To design, analyze, and optimize digital processors, arithmetic logic units (ALUs), microcontrollers, and digital communications infrastructure, a thorough understanding of positional numeral systems, binary arithmetic, signed complement representations, binary codes, error control schemes, and fundamental Boolean logic gates is required.
+
+\section{Positional Number Systems}
+A positional number system of radix (or base) $r$ represents any real numerical value $N$ as a power series expansion of base $r$:
+\begin{equation}
+N_r = \sum_{i=0}^{n-1} d_i r^i + \sum_{j=1}^{m} d_{-j} r^{-j}
+\end{equation}
+where $d_i$ represents the integer coefficients ($0 \le d_i \le r-1$), $n$ is the number of integer digits, and $m$ is the number of fractional digits.
+
+\begin{table}[htbp]
+\centering
+\caption{Standard Positional Number Systems Used in Computing}
+\label{tab:number-systems}
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{System} & \textbf{Radix ($r$)} & \textbf{Allowed Digits / Symbols} & \textbf{Primary Computing Domain} \\
+\midrule
+Binary & 2 & $\{0, 1\}$ & Native hardware logic, register states, machine code \\
+Octal & 8 & $\{0, 1, 2, 3, 4, 5, 6, 7\}$ & Compact binary shorthand (grouped in 3-bit triplets) \\
+Decimal & 10 & $\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ & Human-facing numerical representation \\
+Hexadecimal & 16 & $\{0, \dots, 9, \text{A, B, C, D, E, F}\}$ & Memory addressing, byte representations (grouped in 4-bit nibbles) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Base Conversion Techniques}
+Converting between arbitrary radix representations follows well-defined algorithmic procedures:
+
+\subsubsection{Conversion from Radix-$r$ to Decimal (Base 10)}
+To convert from any base $r$ to decimal, expand each digit weighted by its positional power of $r$:
+\begin{equation}
+(d_n \dots d_1 d_0 . d_{-1} \dots d_{-m})_r = \left( \sum_{i=0}^n d_i r^i + \sum_{j=1}^m d_{-j} r^{-j} \right)_{10}
+\end{equation}
+
+\subsubsection{Conversion from Decimal to Radix-$r$}
+The conversion of a decimal number to base $r$ requires separating the integer and fractional components:
+\begin{enumerate}
+    \item \textbf{Integer Part (Successive Division):} Divide the integer decimal value repeatedly by the target radix $r$. Record the integer remainder at each stage until the quotient becomes 0. The remainders read in reverse order (bottom-to-top, from Least Significant Bit [LSB] to Most Significant Bit [MSB]) form the target integer representation.
+    \item \textbf{Fractional Part (Successive Multiplication):} Multiply the fractional decimal component by $r$. Record the generated integer digit. Retain only the remaining fractional component and repeat multiplication until the fractional part reaches zero or the desired precision is achieved. Reading the integer parts top-to-bottom yields the fractional representation.
+\end{enumerate}
+
+\begin{derivationbox}[Direct Grouping: Binary $\leftrightarrow$ Octal and Hexadecimal]
+Because $8 = 2^3$ and $16 = 2^4$, conversion between binary and octal/hexadecimal requires no decimal intermediate:
+\begin{itemize}
+    \item \textbf{Binary to Octal:} Group the binary bits into triplets of 3 bits starting from the binary point moving left for the integer part and right for the fractional part (pad with leading/trailing zeros as needed). Replace each 3-bit group with its corresponding octal digit ($000_2 = 0_8, \dots, 111_2 = 7_8$).
+    \item \textbf{Binary to Hexadecimal:} Group the binary bits into 4-bit nibbles starting from the binary point. Replace each 4-bit group with its single hexadecimal character ($0000_2 = 0_{16}, \dots, 1010_2 = \text{A}_{16}, \dots, 1111_2 = \text{F}_{16}$).
+\end{itemize}
+\end{derivationbox}
+
+\section{Binary Complements and Signed Arithmetic}
+In digital computing, complements are used to simplify hardware implementation of arithmetic subtraction by transforming subtraction into addition.
+
+For any number system of base $r$ with $n$ integer digits, there exist two distinct classes of complements:
+\begin{enumerate}
+    \item \textbf{Radix Complement ($r$\textquotesingle s complement):} For a number $N$, defined as $r^n - N$.
+    \item \textbf{Diminished Radix Complement ($(r-1)$\textquotesingle s complement):} Defined as $(r^n - 1) - N$.
+\end{enumerate}
+
+\subsection{1\textquotesingle s and 2\textquotesingle s Complements in Binary}
+In binary systems ($r=2$):
+\begin{itemize}
+    \item \textbf{1\textquotesingle s Complement:} Obtained by bitwise inverting all bits (replacing $0 \to 1$ and $1 \to 0$). Mathematically: $(2^n - 1) - N$.
+    \item \textbf{2\textquotesingle s Complement:} Obtained by adding 1 to the 1\textquotesingle s complement of the number:
+    \begin{equation}
+    \text{2\textquotesingle s Complement}(N) = \text{1\textquotesingle s Complement}(N) + 1 = 2^n - N
+    \end{equation}
+\end{itemize}
+
+\subsection{Signed Binary Number Representations}
+An $n$-bit register can represent signed integers using one of three standard formats:
+\begin{enumerate}
+    \item \textbf{Signed Magnitude:} The MSB is the sign bit ($0 = \text{positive}, 1 = \text{negative}$), and the remaining $n-1$ bits denote the absolute magnitude. Range: $-(2^{n-1}-1)$ to $+(2^{n-1}-1)$. It has a dual representation for zero ($+0$ and $-0$).
+    \item \textbf{Signed 1\textquotesingle s Complement:} MSB is the sign bit; negative numbers are represented as the bitwise NOT of their positive magnitude. Range: $-(2^{n-1}-1)$ to $+(2^{n-1}-1)$, with dual zero representations ($0000_2 = +0$, $1111_2 = -0$).
+    \item \textbf{Signed 2\textquotesingle s Complement:} MSB is the sign bit. A negative number $-X$ is represented by the 2\textquotesingle s complement of $X$. Range: $-2^{n-1}$ to $+(2^{n-1}-1)$. It possesses a unique zero representation ($0000_2$), making it the universal standard in modern digital ALUs.
+\end{enumerate}
+
+\begin{conceptbox}[Subtractions Using 2's Complement Arithmetic]
+To compute $A - B$ using $n$-bit 2's complement:
+\begin{enumerate}
+    \item Calculate the 2's complement of the subtrahend $B$: $[B]_{\text{2's}} = \overline{B} + 1$.
+    \item Perform binary addition: $S = A + [B]_{\text{2's}}$.
+    \item \textbf{End-Around Carry Evaluation:}
+    \begin{itemize}
+        \item If a final carry-out from the MSB occurs ($C_{out} = 1$), the result is positive, the carry is discarded, and the answer is $S$.
+        \item If no carry-out occurs ($C_{out} = 0$), the result is negative and in 2's complement form. To find its true magnitude, take the 2's complement of $S$ and prepend a negative sign.
+    \end{itemize}
+\end{enumerate}
+\end{conceptbox}
+
+\begin{pitfallbox}[Arithmetic Overflow in 2\textquotesingle s Complement]
+Arithmetic overflow occurs when the result of adding two numbers of the same sign exceeds the representable range of the $n$-bit register.
+\begin{itemize}
+    \item Adding two positive numbers yields a negative result (MSB becomes 1).
+    \item Adding two negative numbers yields a positive result (MSB becomes 0).
+    \item \textbf{Hardware Detection Rule:} Overflow occurs if and only if the carry-in to the sign bit ($C_{n-1}$) does not match the carry-out from the sign bit ($C_n$):
+    \begin{equation}
+    V = C_{n-1} \oplus C_n
+    \end{equation}
+\end{itemize}
+\end{pitfallbox}
+
+\section{Binary Codes and Error Detection}
+Information processing requires mapping non-binary alphanumeric and decimal values into binary representations.
+
+\subsection{Binary Coded Decimal (BCD - 8421)}
+BCD encodes each decimal digit ($0 \dots 9$) as an independent 4-bit binary nibble.
+The 6 combinations from $1010_2$ ($10_{10}$) through $1111_2$ ($15_{10}$) are invalid BCD states.
+When binary addition of two BCD digits produces a sum greater than $9$ ($1001_2$) or generates a carry-out, a correction factor of $+6$ ($0110_2$) must be added to skip the 6 forbidden states.
+
+\subsection{Excess-3 Code (XS-3)}
+Excess-3 is an unweighted binary code derived by adding $3$ ($0011_2$) to each BCD code group.
+\begin{itemize}
+    \item \textbf{Self-Complementing Property:} The 1\textquotesingle s complement of an Excess-3 representation directly corresponds to the 9\textquotesingle s complement of the original decimal digit, greatly simplifying decimal arithmetic circuits.
+\end{itemize}
+
+\subsection{Gray Code (Reflected Binary Code)}
+Gray code is an unweighted, non-arithmetic code characterized by the \textbf{unit distance property}: between any two consecutive values, exactly one bit changes state. This property eliminates race conditions and spurious intermediate states in optical shaft encoders, mechanical angle sensors, and asynchronous FIFO pointers.
+
+\begin{derivationbox}[Gray $\leftrightarrow$ Binary Conversions]
+\textbf{Binary to Gray Conversion:}
+Given an $n$-bit binary word $B = b_{n-1} b_{n-2} \dots b_1 b_0$ to Gray $G = g_{n-1} g_{n-2} \dots g_0$:
+\begin{equation}
+g_{n-1} = b_{n-1}, \quad g_i = b_{i+1} \oplus b_i \quad \text{for } 0 \le i \le n-2
+\end{equation}
+
+\textbf{Gray to Binary Conversion:}
+Given an $n$-bit Gray code word $G$, convert back to binary $B$:
+\begin{equation}
+b_{n-1} = g_{n-1}, \quad b_i = b_{i+1} \oplus g_i \quad \text{for } 0 \le i \le n-2
+\end{equation}
+\end{derivationbox}
+
+\subsection{Error Detection and Correction: Parity and Hamming Code}
+Digital transmission across physical channels is susceptible to electromagnetic noise and bit corruption.
+\begin{itemize}
+    \item \textbf{Parity Bit:} A single bit appended to data to make the total number of 1s either even (Even Parity) or odd (Odd Parity). It detects all single-bit errors but cannot correct errors or detect double-bit errors.
+    \item \textbf{Hamming Code:} A linear error-correcting code capable of single-bit error correction and double-bit error detection (SEC-DED). Parity bits are positioned at bit indices that are powers of 2 ($1, 2, 4, 8, \dots$), and each parity bit checks specific bit positions determined by their binary index decomposition.
+\end{itemize}
+
+\section{Boolean Algebra, Axioms, and De Morgan\textquotesingle s Theorems}
+Boolean algebra provides the formal mathematical foundation for modeling two-valued digital switching circuits.
+
+\begin{table}[htbp]
+\centering
+\caption{Fundamental Laws and Identities of Boolean Algebra}
+\label{tab:boolean-laws}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Law / Property} & \textbf{AND Form (Conjunction)} & \textbf{OR Form (Disjunction)} \\
+\midrule
+Identity & $A \cdot 1 = A$ & $A + 0 = A$ \\
+Null / Annihilator & $A \cdot 0 = 0$ & $A + 1 = 1$ \\
+Idempotent & $A \cdot A = A$ & $A + A = A$ \\
+Complementarity & $A \cdot \overline{A} = 0$ & $A + \overline{A} = 1$ \\
+Involution & $\overline{\overline{A}} = A$ & $\overline{\overline{A}} = A$ \\
+Commutative & $A \cdot B = B \cdot A$ & $A + B = B + A$ \\
+Associative & $A \cdot (B \cdot C) = (A \cdot B) \cdot C$ & $A + (B + C) = (A + B) + C$ \\
+Distributive & $A \cdot (B + C) = (A \cdot B) + (A \cdot C)$ & $A + (B \cdot C) = (A + B) \cdot (A + C)$ \\
+Absorption & $A \cdot (A + B) = A$ & $A + (A \cdot B) = A$ \\
+Consensus & $(A \cdot B) + (\overline{A} \cdot C) + (B \cdot C) = AB + \overline{A}C$ & $(A+B)(\overline{A}+C)(B+C) = (A+B)(\overline{A}+C)$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{conceptbox}[De Morgan\textquotesingle s Theorems]
+De Morgan\textquotesingle s theorems state the mathematical equivalence between complemented operations:
+\begin{align}
+\overline{A \cdot B \cdot C \cdots} &= \overline{A} + \overline{B} + \overline{C} + \cdots \quad \text{(NAND is equivalent to Inverted-OR)} \\
+\overline{A + B + C + \cdots} &= \overline{A} \cdot \overline{B} \cdot \overline{C} \cdots \quad \text{(NOR is equivalent to Inverted-AND)}
+\end{align}
+\end{conceptbox}
+
+\section{Fundamental Logic Gates and Universal Logic}
+Logic gates are physical semiconductor circuits implementing Boolean operations.
+
+\begin{table}[htbp]
+\centering
+\caption{Complete Truth Tables of Standard 2-Input Logic Gates}
+\label{tab:logic-gates-tt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} c c c c c c c c}
+\toprule
+$A$ & $B$ & \textbf{NOT} ($\overline{A}$) & \textbf{AND} ($A \cdot B$) & \textbf{OR} ($A + B$) & \textbf{NAND} ($\overline{AB}$) & \textbf{NOR} ($\overline{A+B}$) & \textbf{XOR} ($A \oplus B$) \\
+\midrule
+0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 1 & 0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 \\
+1 & 1 & 0 & 1 & 1 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\subsection{Universal Property of NAND and NOR Gates}
+A logic gate family is defined as \textbf{universal} if any arbitrary Boolean function can be implemented exclusively using that single gate type without requiring other gate families. Both NAND and NOR gates are universal.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Target Gate} & \textbf{NAND-Only Implementation} & \textbf{NOR-Only Implementation} \\
+\midrule
+NOT ($Y = \overline{A}$) & $\overline{A \cdot A}$ (Tie inputs together) & $\overline{A + A}$ (Tie inputs together) \\
+AND ($Y = A \cdot B$) & $\overline{(\overline{A \cdot B}) \cdot (\overline{A \cdot B})}$ (NAND followed by Inverter) & $\overline{\overline{A + A} + \overline{B + B}}$ (Inverted inputs into NOR) \\
+OR ($Y = A + B$) & $\overline{\overline{A \cdot A} \cdot \overline{B \cdot B}}$ (Inverted inputs into NAND) & $\overline{\overline{A + B} + \overline{A + B}}$ (NOR followed by Inverter) \\
+XOR ($Y = A \oplus B$) & 4 NAND gates: $N_1 = \overline{AB}$, $N_2 = \overline{A N_1}$, $N_3 = \overline{B N_1}$, $Y = \overline{N_2 N_3}$ & 5 NOR gates \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}[Example 3.1: Base Conversions with Fractions]
+\textbf{Problem:} Convert $(187.625)_{10}$ into: (a) Binary, (b) Octal, and (c) Hexadecimal.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Integer Conversion ($187_{10}$ to Binary):}
+    \begin{align*}
+    187 / 2 &= 93 \quad \text{rem } 1 \quad (\text{LSB}) \\
+    93 / 2 &= 46 \quad \text{rem } 1 \\
+    46 / 2 &= 23 \quad \text{rem } 0 \\
+    23 / 2 &= 11 \quad \text{rem } 1 \\
+    11 / 2 &= 5 \quad \text{rem } 1 \\
+    5 / 2 &= 2 \quad \text{rem } 1 \\
+    2 / 2 &= 1 \quad \text{rem } 0 \\
+    1 / 2 &= 0 \quad \text{rem } 1 \quad (\text{MSB}) \implies 187_{10} = 10111011_2
+    \end{align*}
+    \item \textbf{Fractional Conversion ($0.625_{10}$ to Binary):}
+    \begin{align*}
+    0.625 \times 2 &= 1.250 \implies \text{digit } 1 \\
+    0.250 \times 2 &= 0.500 \implies \text{digit } 0 \\
+    0.500 \times 2 &= 1.000 \implies \text{digit } 1 \implies 0.625_{10} = 0.101_2
+    \end{align*}
+    Thus, $(187.625)_{10} = (10111011.101)_2$.
+    \item \textbf{Conversion to Octal:}
+    Group binary bits in triplets from binary point: $(010\ 111\ 011 . 101)_2 = (273.5)_8$.
+    \item \textbf{Conversion to Hexadecimal:}
+    Group binary bits in nibbles (4-bits): $(1011\ 1011 . 1010)_2 = (\text{BB.A})_{16}$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 3.2: 2\textquotesingle s Complement Signed Arithmetic]
+\textbf{Problem:} Perform the subtraction $(28)_{10} - (45)_{10}$ using 8-bit 2\textquotesingle s complement arithmetic and verify the result.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Convert values to 8-bit unsigned binary:
+    \begin{align*}
+    +28_{10} &= 00011100_2 \\
+    +45_{10} &= 00101101_2
+    \end{align*}
+    \item Find 2\textquotesingle s complement of $+45_{10}$ (which represents $-45_{10}$):
+    \begin{equation}
+    1\text{\textquotesingle s complement of } 00101101_2 = 11010010_2
+    \end{equation}
+    \begin{equation}
+    2\text{\textquotesingle s complement} = 11010010_2 + 1 = 11010011_2
+    \end{equation}
+    \item Perform binary addition of $(+28) + (-45)$:
+    \begin{align*}
+    &\phantom{+} 00011100_2 \quad (+28) \\
+    &+ 11010011_2 \quad (-45) \\
+    \hline
+    &= 11101111_2
+    \end{align*}
+    \item Evaluate End Carry: Carry-out $C_{out} = 0$. Since there is no carry, the result is negative and stored in 2\textquotesingle s complement form.
+    \item Find magnitude: Take 2\textquotesingle s complement of $11101111_2$:
+    \begin{equation}
+    \text{1\textquotesingle s complement} = 00010000_2 \implies \text{2\textquotesingle s complement} = 00010000 + 1 = 00010001_2 = 17_{10}
+    \end{equation}
+    Result $= -17_{10}$, which exactly equals $28 - 45 = -17$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 3.3: Binary to Gray Code and Inverse Conversion]
+\textbf{Problem:}
+\begin{enumerate}
+    \item Convert binary $B = 110101_2$ to Gray code.
+    \item Convert Gray code $G = 101101_2$ to binary.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Binary to Gray ($B = 110101_2$):}
+    \begin{align*}
+    g_5 &= b_5 = 1 \\
+    g_4 &= b_5 \oplus b_4 = 1 \oplus 1 = 0 \\
+    g_3 &= b_4 \oplus b_3 = 1 \oplus 0 = 1 \\
+    g_2 &= b_3 \oplus b_2 = 0 \oplus 1 = 1 \\
+    g_1 &= b_2 \oplus b_1 = 1 \oplus 0 = 1 \\
+    g_0 &= b_1 \oplus b_0 = 0 \oplus 1 = 1 \implies G = 101111_{\text{Gray}}
+    \end{align*}
+    \item \textbf{Gray to Binary ($G = 101101_2$):}
+    \begin{align*}
+    b_5 &= g_5 = 1 \\
+    b_4 &= b_5 \oplus g_4 = 1 \oplus 0 = 1 \\
+    b_3 &= b_4 \oplus g_3 = 1 \oplus 1 = 0 \\
+    b_2 &= b_3 \oplus g_2 = 0 \oplus 1 = 1 \\
+    b_1 &= b_2 \oplus g_1 = 1 \oplus 0 = 1 \\
+    b_0 &= b_1 \oplus g_0 = 1 \oplus 1 = 0 \implies B = 110110_2
+    \end{align*}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 3.4: Boolean Algebraic Simplification]
+\textbf{Problem:} Simplify the Boolean expression using Boolean algebraic theorems:
+\begin{equation}
+Y = A \overline{B} C + A B C + \overline{A} B C + A \overline{B} \, \overline{C}
+\end{equation}
+
+\textbf{Solution:}
+\begin{align*}
+Y &= A C (\overline{B} + B) + \overline{A} B C + A \overline{B} \, \overline{C} \quad (\text{Factoring } AC) \\
+&= A C (1) + \overline{A} B C + A \overline{B} \, \overline{C} \quad (\text{Since } \overline{B} + B = 1) \\
+&= A (C + \overline{B} \, \overline{C}) + \overline{A} B C \quad (\text{Factoring } A) \\
+&= A (C + \overline{B}) + \overline{A} B C \quad (\text{By Distributive Rule: } C + \overline{B} \overline{C} = C + \overline{B}) \\
+&= A C + A \overline{B} + \overline{A} B C \\
+&= C (A + \overline{A} B) + A \overline{B} \quad (\text{Factoring } C) \\
+&= C (A + B) + A \overline{B} \quad (\text{By Rule: } A + \overline{A} B = A + B) \\
+&= A C + B C + A \overline{B}
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}[Example 3.5: NAND Gate Minimization]
+\textbf{Problem:} Implement the logic function $F(A, B, C) = A B + \overline{A} C$ using minimum number of 2-input NAND gates only.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Apply double negation (involution) over the entire expression:
+    \begin{equation}
+    F = \overline{\overline{A B + \overline{A} C}}
+    \end{equation}
+    \item Apply De Morgan\textquotesingle s Law to the inner negation:
+    \begin{equation}
+    F = \overline{(\overline{A B}) \cdot (\overline{\overline{A} C})}
+    \end{equation}
+    \item Hardware synthesis:
+    \begin{itemize}
+        \item Gate 1: Generate $\overline{A} = \overline{A \cdot A}$ (1 NAND).
+        \item Gate 2: Generate term $T_1 = \overline{A \cdot B}$ (1 NAND).
+        \item Gate 3: Generate term $T_2 = \overline{\overline{A} \cdot C}$ (1 NAND).
+        \item Gate 4: Combine terms $F = \overline{T_1 \cdot T_2} = \overline{(\overline{A B}) \cdot (\overline{\overline{A} C})}$ (1 NAND).
+    \end{itemize}
+    Thus, exactly 4 two-input NAND gates are required.
+\end{enumerate}
+\end{examplebox}
+
+\begin{takeawaybox}[Chapter 3 Key Formulae \& Takeaways]
+\begin{itemize}
+    \item \textbf{2\textquotesingle s Complement Range ($n$-bit):} $-2^{n-1} \le N \le 2^{n-1}-1$.
+    \item \textbf{Gray Code Rule:} Single bit transition between consecutive values; $g_i = b_{i+1} \oplus b_i$.
+    \item \textbf{De Morgan\textquotesingle s Laws:} $\overline{\prod X_i} = \sum \overline{X_i}$ and $\overline{\sum X_i} = \prod \overline{X_i}$.
+    \item \textbf{Universal Gates:} Any switching function can be realized with either NAND-only or NOR-only networks.
+\end{itemize}
+\end{takeawaybox}

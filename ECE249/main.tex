@@ -1,0 +1,86 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Digital Electronics \& Electrical Fundamentals}
+\author{LPU Engineering Open}
+\date{Semester 1 \& 2 Study Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+\chapter*{Preface \& Course Syllabus Correlation}
+\addcontentsline{toc}{chapter}{Preface \& Course Syllabus Correlation}
+
+\noindent This textbook has been engineered from the ground up to serve as the definitive, university-level curriculum companion and self-study guide for \textbf{ECE249: Fundamentals of Electrical Laws, Semiconductor Devices, Digital Electronics, and Arduino Interfacing}. 
+
+\section*{Course Architectural Philosophy}
+Digital engineering and embedded systems form the backbone of modern technological infrastructure. Mastery of these fields requires a seamless bridge connecting:
+\begin{enumerate}
+    \item \textbf{Continuous Physics \& DC Circuit Laws:} How electrons move across potential gradients, resistors, diodes, and transistors according to Ohm's Law and Kirchhoff's Laws.
+    \item \textbf{Microcontroller \& Sensor Integration:} How continuous physical phenomena (light, sound, heat, distance) are transduced, digitized via ADCs, and processed by embedded platforms like the Arduino UNO.
+    \item \textbf{Discrete Mathematical Foundations:} Positional binary number systems, error-detecting codes, Gray code encoders, and Boolean algebraic minimization using Karnaugh Maps.
+    \item \textbf{Combinational Circuit Synthesis:} Building memoryless processing blocks including adders, subtractors, multiplexers, decoders, encoders, and magnitude comparators.
+    \item \textbf{Sequential State Machines:} Storage latches, edge-triggered flip-flops, master-slave glitch elimination, and shift register counters.
+\end{enumerate}
+
+\section*{Syllabus Mapping Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lp{5.2cm}p{2.2cm}X}
+\toprule
+\textbf{Unit} & \textbf{Core Topic Domain} & \textbf{Chapter} & \textbf{Key Highlights} \\
+\midrule
+\textbf{Unit 1} & Electrical Laws \& Semiconductors & Chapter 1 & Ohm's Law, KCL, KVL, VDR, CDR, $E_g$, Doping, Diode V-I, Rectifiers, BJT CE Mode. \\
+\addlinespace
+\textbf{Unit 2} & Arduino \& Sensor Interfacing & Chapter 2 & Analog vs. Digital, ATmega328P, Pinout, ADC, PWM, Active IR, LDR, Ultrasonic, DHT11/22. \\
+\addlinespace
+\textbf{Unit 3} & Number Systems \& Logic Gates & Chapter 3 & Base $r$ conversions, BCD, Excess-3, Gray Code, 2's Comp Arithmetic, 7 Gates, De Morgan's, K-Maps. \\
+\addlinespace
+\textbf{Unit 4} & Combinational Logic Circuits & Chapter 4 & Adders, Subtractors, 4:1/8:1 MUX, 1:4 DEMUX, Decoders, Encoders, Comparators. \\
+\addlinespace
+\textbf{Unit 5} & Sequential Logic Circuits & Chapter 5 & Latches, SR/JK/D/T Flip-Flops, Race-Around, Master-Slave, 5-Step FF Conversion. \\
+\addlinespace
+\textbf{Unit 6} & Sequential Applications & Chapter 6 & SISO/SIPO/PISO/PIPO Shift Registers, Ripple UP/DOWN/Mod-N, Synchronous, Ring \& Johnson. \\
+\addlinespace
+\textbf{Review} & Formula Mastery \& Practice & Chapter 7 \& 8 & Master Revision Sheet, 40+ Solved Step-by-Step Numerical \& Synthesis Problems. \\
+\addlinespace
+\textbf{Exams} & University Assessment Papers & Chapter 9 & Two Complete 100-Mark Mock Exams (Section A, B, C) with full Solutions \& Rubric. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+
+% ==============================================================================
+% TABLE OF CONTENTS
+% ==============================================================================
+\tableofcontents
+\cleardoublepage
+
+% ==============================================================================
+% MAINMATTER
+% ==============================================================================
+\mainmatter
+
+\include{chapters/chapter-01-electrical-laws-semiconductors}
+\include{chapters/chapter-02-arduino-sensors}
+\include{chapters/chapter-03-number-systems-logic-gates}
+\include{chapters/chapter-04-combinational-logic}
+\include{chapters/chapter-05-sequential-logic}
+\include{chapters/chapter-06-sequential-applications}
+\include{chapters/chapter-07-master-revision-sheet}
+\include{chapters/chapter-08-practice-problems}
+\include{chapters/chapter-09-mock-examinations}
+
+\end{document}

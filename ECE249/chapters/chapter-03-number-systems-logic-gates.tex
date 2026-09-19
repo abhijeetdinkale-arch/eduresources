@@ -1,0 +1,457 @@
+\chapter{Number Systems, Binary Codes, Logic Gates \& Karnaugh Maps}
+\label{chap:number-systems-logic-gates}
+
+\section{Introduction}
+Digital computing and communication systems process information exclusively in discrete mathematical abstractions. This chapter establishes the structural foundations of digital systems: multi-base number representations, error-resilient binary codes, 2's complement arithmetic, Boolean algebra postulates, universal gate implementations, and visual minimization using Karnaugh Maps (K-Maps).
+
+---
+
+\section{Positional Number Systems \& Base Conversions}
+
+\subsection{Positional Notation}
+In a positional number system with base (or radix) $r$, any real number $N$ is expressed as an ordered sequence of digits:
+\begin{equation}
+    N = (d_{n-1} d_{n-2} \cdots d_1 d_0 \,.\, d_{-1} d_{-2} \cdots d_{-m})_r
+\end{equation}
+The numerical value is evaluated by the weighted polynomial expansion:
+\begin{keyequation}[Positional Weighted Sum Formula]
+\begin{equation}
+    N = \sum_{i=-m}^{n-1} d_i \cdot r^i = d_{n-1}r^{n-1} + \cdots + d_1 r^1 + d_0 r^0 + d_{-1}r^{-1} + \cdots + d_{-m}r^{-m}
+\end{equation}
+\end{keyequation}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{2.5cm}cp{4.5cm}X}
+\toprule
+\textbf{System Name} & \textbf{Base ($r$)} & \textbf{Permissible Digits} & \textbf{Example Expression} \\
+\midrule
+\textbf{Binary} & $2$ & $0, 1$ & $(11010.11)_2$ \\
+\textbf{Octal} & $8$ & $0, 1, 2, 3, 4, 5, 6, 7$ & $(754.2)_8$ \\
+\textbf{Decimal} & $10$ & $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ & $(254.625)_{10}$ \\
+\textbf{Hexadecimal} & $16$ & $0\text{--}9, \text{A}\text{--}\text{F} \text{ (where A=10, \dots, F=15)}$ & $(2\text{F}8\text{A}.\text{C})_{16}$ \\
+\bottomrule
+\end{tabularx}
+\caption{Primary positional number systems used in computing architecture.}
+\label{tab:number-systems}
+\end{table}
+
+\subsection{Multi-Base Conversion Algorithms}
+
+\subsubsection{1. Decimal to \texorpdfstring{Base-$r$}{Base-r} Conversion}
+\begin{itemize}
+    \item \textbf{Integer Part (Successive Division):} Divide the integer repeatedly by the destination radix $r$. Record the integer quotient and remainder at each step. Terminate when quotient reaches $0$. The base-$r$ integer is obtained by reading remainders from **bottom to top (MSB to LSB)**.
+    \item \textbf{Fractional Part (Successive Multiplication):} Multiply the fractional component repeatedly by $r$. Record the resulting integer digit and retain the fractional product. Terminate when fraction becomes zero or desired precision is achieved. The base-$r$ fraction is read from **top to bottom**.
+\end{itemize}
+
+\begin{example}[Decimal to Binary Conversion]
+Convert $(53.6875)_{10}$ into its binary equivalent.
+\tcblower
+\textbf{Integer Conversion (53 by 2):}
+\begin{align*}
+    53 \div 2 &= 26 \quad \text{rem } 1 \quad (\text{LSB}) \\
+    26 \div 2 &= 13 \quad \text{rem } 0 \\
+    13 \div 2 &= 6 \quad \text{rem } 1 \\
+    6 \div 2 &= 3 \quad \text{rem } 0 \\
+    3 \div 2 &= 1 \quad \text{rem } 1 \\
+    1 \div 2 &= 0 \quad \text{rem } 1 \quad (\text{MSB}) \implies (53)_{10} = (110101)_2
+\end{align*}
+
+\textbf{Fractional Conversion (0.6875 by 2):}
+\begin{align*}
+    0.6875 \times 2 &= 1.3750 \implies \text{Integer: } 1 \\
+    0.3750 \times 2 &= 0.7500 \implies \text{Integer: } 0 \\
+    0.7500 \times 2 &= 1.5000 \implies \text{Integer: } 1 \\
+    0.5000 \times 2 &= 1.0000 \implies \text{Integer: } 1 \implies (0.6875)_{10} = (.1011)_2
+\end{align*}
+
+\textbf{Final Answer:} $\mathbf{(53.6875)_{10} = (110101.1011)_2}$
+\end{example}
+
+\subsubsection{2. \texorpdfstring{Base-$r$}{Base-r} to Decimal Conversion}
+Evaluate the weighted polynomial sum $\sum d_i \cdot r^i$.
+
+\subsubsection{3. \texorpdfstring{Binary $\leftrightarrow$ Octal / Hexadecimal}{Binary to Octal and Hexadecimal} Conversions}
+Because $8 = 2^3$ and $16 = 2^4$, conversions between these bases do not require intermediate decimal arithmetic:
+\begin{itemize}
+    \item \textbf{Binary to Octal:} Partition bits into groups of \textbf{3 bits} starting from the radix point (leftward for integers, rightward for fractions, padding with zeros if needed).
+    \item \textbf{Binary to Hexadecimal:} Partition bits into groups of \textbf{4 bits} starting from the radix point.
+\end{itemize}
+
+---
+
+\section{Binary Codes}
+
+\subsection{Weighted vs. Non-Weighted Codes}
+\begin{itemize}
+    \item \textbf{Weighted Codes:} Each bit position has a strictly assigned numerical weight (e.g., Natural Binary, BCD 8421, 2421 code). The value is $\sum b_i W_i$.
+    \item \textbf{Non-Weighted Codes:} Bit positions do not have fixed weights; code assignment is based on specific mathematical properties (e.g., Excess-3, Gray code).
+\end{itemize}
+
+\subsection{Binary Coded Decimal (BCD / 8421 Code)}
+BCD represents each decimal digit ($0$ through $9$) individually using a 4-bit binary group ($8-4-2-1$ weighting).
+\begin{itemize}
+    \item \textbf{Valid BCD Codes:} $0000_2$ to $1001_2$ ($0$ to $9$).
+    \item \textbf{Invalid BCD States (6 forbidden states):} $1010_2, 1011_2, 1100_2, 1101_2, 1110_2, 1111_2$ ($10$ to $15$).
+    \item \textbf{BCD Addition Rule:} If binary sum of any digit group exceeds $9$ ($1001_2$) or produces an output carry, add $0110_2$ ($6_{10}$) to skip the six invalid states.
+\end{itemize}
+
+\subsection{Excess-3 Code (XS-3)}
+Excess-3 is an unweighted code obtained by adding $3$ ($0011_2$) to each BCD code group.
+
+\begin{definition}[Self-Complementing Property]
+A code is self-complementing if the 9's complement of a decimal digit is obtained directly by inverting all bits (1's complement) of its code word. Excess-3 is self-complementing.
+\end{definition}
+
+\noindent For example:
+\begin{itemize}
+    \item Decimal $2 \implies 2 + 3 = 5 \implies \text{XS-3: } 0101_2$.
+    \item 1's complement of $0101_2 = 1010_2 \implies 1010_2 \text{ in XS-3 is } 10 - 3 = 7_{10}$.
+    \item Note that $7_{10}$ is exactly the 9's complement of $2_{10}$ ($9 - 2 = 7$).
+\end{itemize}
+
+\subsection{Gray Code (Reflected Binary Code)}
+Gray Code is an unweighted **Unit-Distance Code**: exactly **one bit** changes between any two consecutive numbers.
+
+\begin{examtip}[Why Gray Code Matters in Engineering]
+When mechanical shaft encoders or asynchronous counters transition across states (e.g., $011_2 \rightarrow 100_2$), slight timing skews cause multiple bits to change at slightly different instants, creating temporary false intermediate glitch states ($011 \rightarrow 010 \rightarrow 000 \rightarrow 100$). Gray code guarantees that only one bit changes per step, eliminating switching glitches completely.
+\end{examtip}
+
+\begin{keyequation}[Binary $\longleftrightarrow$ Gray Code Conversion Algorithms]
+\textbf{Binary to Gray Code:}
+\begin{equation}
+    G_{n-1} = B_{n-1} \quad (\text{MSB}), \qquad G_i = B_{i+1} \oplus B_i \quad \text{for } i = n-2, \dots, 0
+\end{equation}
+\textbf{Gray Code to Binary:}
+\begin{equation}
+    B_{n-1} = G_{n-1} \quad (\text{MSB}), \qquad B_i = B_{i+1} \oplus G_i \quad \text{for } i = n-2, \dots, 0
+\end{equation}
+\end{keyequation}
+
+---
+
+\section{Complements \& Fixed-Point Binary Arithmetic}
+
+\subsection{Radix and Diminished Radix Complements}
+For a base-$r$ system with $n$ digits:
+\begin{itemize}
+    \item **Radix ($r$'s) Complement:** $r^n - N$
+    \item **Diminished Radix ($(r-1)$'s) Complement:** $(r^n - 1) - N$
+    \item **Relationship:** $r\text{'s complement} = (r-1)\text{'s complement} + 1$
+\end{itemize}
+
+\noindent In the Binary System ($r=2$):
+\begin{itemize}
+    \item \textbf{1's Complement:} Invert every bit individually ($0 \leftrightarrow 1$).
+    \item \textbf{2's Complement:} 1's Complement $+ 1$.
+\end{itemize}
+
+\subsection{2's Complement Subtraction \texorpdfstring{($A - B$)}{(A - B)}}
+Digital arithmetic logic units (ALUs) perform subtraction using addition hardware via 2's complement representation.
+
+\begin{keyequation}[2's Complement Subtraction Procedure]
+To compute $A - B$:
+\begin{enumerate}
+    \item Express both numbers using an identical bit-width $n$.
+    \item Find the 2's complement of subtrahend $B$: $B_{2\text{'s}} = \overline{B} + 1$.
+    \item Add: $Sum = A + B_{2\text{'s}}$.
+    \item \textbf{Case 1: End-Around Carry Generated ($C_{out} = 1$)}
+    \begin{itemize}
+        \item The result is \textbf{Positive}.
+        \item Discard the end-around carry. The remaining bits form the true binary magnitude.
+    \end{itemize}
+    \item \textbf{Case 2: No End-Around Carry ($C_{out} = 0$)}
+    \begin{itemize}
+        \item The result is \textbf{Negative}.
+        \item The magnitude is obtained by taking the 2's complement of the $Sum$, prefixed with a negative sign.
+    \end{itemize}
+\end{enumerate}
+\end{keyequation}
+
+\begin{example}[2's Complement Subtraction Calculations]
+Perform the following subtractions using 8-bit 2's complement arithmetic:
+\begin{enumerate}
+    \item $(78)_{10} - (35)_{10}$
+    \item $(35)_{10} - (78)_{10}$
+\end{enumerate}
+
+\tcblower
+\textbf{Binary Representations (8-bit):}
+\begin{itemize}
+    \item $(78)_{10} = 01001110_2$
+    \item $(35)_{10} = 00100011_2$
+\end{itemize}
+
+\textbf{Part 1: $(78)_{10} - (35)_{10}$}
+\begin{align*}
+    1\text{'s comp of } 35 &= 11011100_2 \\
+    2\text{'s comp of } 35 &= 11011100_2 + 1 = 11011101_2 \\
+    \text{Add: } 78 + (-35) &= 01001110_2 + 11011101_2 = \mathbf{1}\,00101011_2
+\end{align*}
+End-around carry is $1 \implies$ Result is Positive. Discard carry:
+\begin{equation*}
+    00101011_2 = 32 + 8 + 2 + 1 = (+43)_{10} \quad \checkmark
+\end{equation*}
+
+\textbf{Part 2: $(35)_{10} - (78)_{10}$}
+\begin{align*}
+    1\text{'s comp of } 78 &= 10110001_2 \\
+    2\text{'s comp of } 78 &= 10110001_2 + 1 = 10110010_2 \\
+    \text{Add: } 35 + (-78) &= 00100011_2 + 10110010_2 = 11010101_2
+\end{align*}
+No carry generated ($C_{out} = 0$) $\implies$ Result is Negative.
+\begin{align*}
+    \text{Magnitude} &= 2\text{'s comp of } 11010101_2 = \overline{11010101} + 1 = 00101010_2 + 1 = 00101011_2 = (43)_{10}
+\end{align*}
+Result $= -(43)_{10} \quad \checkmark$
+\end{example}
+
+---
+
+\section{Logic Gates \& Boolean Algebra}
+
+\subsection{Standard Logic Gates}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lclcX}
+\toprule
+\textbf{Gate Name} & \textbf{Symbol} & \textbf{Boolean Expression} & \textbf{Truth Table ($A, B \rightarrow Y$)} & \textbf{Summary Operation} \\
+\midrule
+\textbf{NOT (Inverter)} & Triangle+bubble & $Y = \overline{A}$ & $0\rightarrow 1, \; 1\rightarrow 0$ & Inverts binary state. \\
+\addlinespace
+\textbf{AND} & D-shape & $Y = A \cdot B$ & \makecell{00: 0, 01: 0\\10: 0, 11: 1} & Output 1 only if all inputs are 1. \\
+\addlinespace
+\textbf{OR} & Curved input & $Y = A + B$ & \makecell{00: 0, 01: 1\\10: 1, 11: 1} & Output 1 if any input is 1. \\
+\addlinespace
+\textbf{NAND} & AND+bubble & $Y = \overline{A \cdot B}$ & \makecell{00: 1, 01: 1\\10: 1, 11: 0} & Universal gate; inverted AND. \\
+\addlinespace
+\textbf{NOR} & OR+bubble & $Y = \overline{A + B}$ & \makecell{00: 1, 01: 0\\10: 0, 11: 0} & Universal gate; inverted OR. \\
+\addlinespace
+\textbf{XOR} & Double curve & $Y = A \oplus B = \overline{A}B + A\overline{B}$ & \makecell{00: 0, 01: 1\\10: 1, 11: 0} & Output 1 if inputs are unequal. \\
+\addlinespace
+\textbf{XNOR} & XOR+bubble & $Y = \overline{A \oplus B} = AB + \overline{A}\,\overline{B}$ & \makecell{00: 1, 01: 0\\10: 0, 11: 1} & Output 1 if inputs are identical. \\
+\bottomrule
+\end{tabularx}
+\caption{The seven primary digital logic gates.}
+\label{tab:logic-gates}
+\end{table}
+
+\subsection{Universality of NAND and NOR Gates}
+Any Boolean function can be implemented using exclusively NAND gates or exclusively NOR gates.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % NAND as NOT
+    \node (nand1) at (0,2) [nand gate US, draw, logic gate inputs=nn] {};
+    \draw (nand1.input 1) -- ++(-0.3,0) coordinate (in1);
+    \draw (nand1.input 2) -- ++(-0.3,0) coordinate (in2);
+    \draw (in1) -- (in2) -- ++(-0.4,0) node[left] {$A$};
+    \draw (nand1.output) -- ++(0.6,0) node[right] {$\overline{A}$};
+    \node at (0, 0.7) [font=\small\bfseries] {NOT via NAND};
+
+    % NAND as AND
+    \begin{scope}[xshift=4.5cm]
+        \node (n1) at (0,2) [nand gate US, draw, logic gate inputs=nn] {};
+        \node (n2) at (2.2,2) [nand gate US, draw, logic gate inputs=nn] {};
+        \draw (n1.input 1) -- ++(-0.5,0) node[left] {$A$};
+        \draw (n1.input 2) -- ++(-0.5,0) node[left] {$B$};
+        \draw (n1.output) -- (n2.input 1);
+        \draw (n1.output) -- (n2.input 2);
+        \draw (n2.output) -- ++(0.5,0) node[right] {$A \cdot B$};
+        \node at (1.1, 0.7) [font=\small\bfseries] {AND via NAND};
+    \end{scope}
+
+    % NAND as OR
+    \begin{scope}[xshift=9.5cm]
+        \node (na1) at (0,2.7) [nand gate US, draw, logic gate inputs=nn, scale=0.8] {};
+        \node (na2) at (0,1.3) [nand gate US, draw, logic gate inputs=nn, scale=0.8] {};
+        \node (na3) at (2.2,2.0) [nand gate US, draw, logic gate inputs=nn] {};
+        
+        \draw (na1.input 1) -- ++(-0.2,0) coordinate (c1);
+        \draw (na1.input 2) -- ++(-0.2,0) coordinate (c2);
+        \draw (c1) -- (c2) -- ++(-0.3,0) node[left] {$A$};
+        
+        \draw (na2.input 1) -- ++(-0.2,0) coordinate (c3);
+        \draw (na2.input 2) -- ++(-0.2,0) coordinate (c4);
+        \draw (c3) -- (c4) -- ++(-0.3,0) node[left] {$B$};
+        
+        \draw (na1.output) -- ++(0.3,0) |- (na3.input 1);
+        \draw (na2.output) -- ++(0.3,0) |- (na3.input 2);
+        \draw (na3.output) -- ++(0.5,0) node[right] {$A + B$};
+        \node at (1.1, 0.7) [font=\small\bfseries] {OR via NAND};
+    \end{scope}
+\end{tikzpicture}
+\caption{Realization of basic gates using exclusively universal NAND gates.}
+\label{fig:nand-universal}
+\end{figure}
+
+\subsection{Boolean Algebra Postulates, Laws, and De Morgan's Theorems}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Law / Property} & \textbf{OR Form (Dual 1)} & \textbf{AND Form (Dual 2)} \\
+\midrule
+\textbf{Identity Law} & $A + 0 = A$ & $A \cdot 1 = A$ \\
+\textbf{Null / Domination Law} & $A + 1 = 1$ & $A \cdot 0 = 0$ \\
+\textbf{Idempotent Law} & $A + A = A$ & $A \cdot A = A$ \\
+\textbf{Involution Law} & $\overline{\overline{A}} = A$ & $\overline{\overline{A}} = A$ \\
+\textbf{Complementarity Law} & $A + \overline{A} = 1$ & $A \cdot \overline{A} = 0$ \\
+\textbf{Commutative Law} & $A + B = B + A$ & $A \cdot B = B \cdot A$ \\
+\textbf{Associative Law} & $A + (B + C) = (A + B) + C$ & $A \cdot (B \cdot C) = (A \cdot B) \cdot C$ \\
+\textbf{Distributive Law} & $A \cdot (B + C) = AB + AC$ & $A + BC = (A + B)(A + C)$ \\
+\textbf{Absorption Law} & $A + AB = A$ & $A(A + B) = A$ \\
+\textbf{Redundant Literal Law} & $A + \overline{A}B = A + B$ & $A(\overline{A} + B) = AB$ \\
+\textbf{De Morgan's Theorem 1} & $\overline{A \cdot B} = \overline{A} + \overline{B}$ & $\overline{A_1 \cdot A_2 \cdots A_n} = \sum \overline{A_i}$ \\
+\textbf{De Morgan's Theorem 2} & $\overline{A + B} = \overline{A} \cdot \overline{B}$ & $\overline{A_1 + A_2 + \cdots + A_n} = \prod \overline{A_i}$ \\
+\bottomrule
+\end{tabularx}
+\caption{Complete Boolean algebra postulates, identities, and dual theorems.}
+\label{tab:boolean-laws}
+\end{table}
+
+---
+
+\section{Canonical Forms \& Karnaugh Maps (K-Maps)}
+
+\subsection{Canonical SOP (Minterms) vs. Canonical POS (Maxterms)}
+\begin{itemize}
+    \item \textbf{Minterm ($m_i$):} A standard product term containing all system variables in either true or complemented form. A minterm equals $1$ for exactly one input combination. In minterms, a variable is uncomplemented ($A$) if its value is $1$, and complemented ($\overline{A}$) if its value is $0$.
+    \item \textbf{Maxterm ($M_i$):} A standard sum term containing all system variables. A maxterm equals $0$ for exactly one input combination. In maxterms, a variable is uncomplemented ($A$) if its value is $0$, and complemented ($\overline{A}$) if its value is $1$.
+    \item \textbf{Duality Relationship:}
+    \begin{equation}
+        m_i = \overline{M_i} \iff M_i = \overline{m_i}
+    \end{equation}
+    \begin{equation}
+        F(A,B,C) = \sum m(1, 3, 5, 7) = \prod M(0, 2, 4, 6)
+    \end{equation}
+\end{itemize}
+
+\subsection{K-Map Structure and Cell Gray Code Adjacency}
+A Karnaugh Map arranges truth table outputs onto a multi-dimensional grid where adjacent cells differ by exactly **one binary variable** (Gray code ordering: $00, 01, 11, 10$).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % 4-Variable K-Map
+    \draw[thick] (0,0) grid (4,4);
+    \draw[thick] (0,4) -- (-1,5);
+    \node at (-0.7, 4.2) [font=\small\bfseries] {$AB$};
+    \node at (-0.2, 4.7) [font=\small\bfseries] {$CD$};
+
+    % Row Labels (AB)
+    \node at (-0.5, 3.5) [font=\small] {$00$};
+    \node at (-0.5, 2.5) [font=\small] {$01$};
+    \node at (-0.5, 1.5) [font=\small] {$11$};
+    \node at (-0.5, 0.5) [font=\small] {$10$};
+
+    % Col Labels (CD)
+    \node at (0.5, 4.4) [font=\small] {$00$};
+    \node at (1.5, 4.4) [font=\small] {$01$};
+    \node at (2.5, 4.4) [font=\small] {$11$};
+    \node at (3.5, 4.4) [font=\small] {$10$};
+
+    % Cell Indices
+    \node at (0.5, 3.5) [font=\footnotesize\color{brandslate}] {$m_0$};
+    \node at (1.5, 3.5) [font=\footnotesize\color{brandslate}] {$m_1$};
+    \node at (2.5, 3.5) [font=\footnotesize\color{brandslate}] {$m_3$};
+    \node at (3.5, 3.5) [font=\footnotesize\color{brandslate}] {$m_2$};
+
+    \node at (0.5, 2.5) [font=\footnotesize\color{brandslate}] {$m_4$};
+    \node at (1.5, 2.5) [font=\footnotesize\color{brandslate}] {$m_5$};
+    \node at (2.5, 2.5) [font=\footnotesize\color{brandslate}] {$m_7$};
+    \node at (3.5, 2.5) [font=\footnotesize\color{brandslate}] {$m_6$};
+
+    \node at (0.5, 1.5) [font=\footnotesize\color{brandslate}] {$m_{12}$};
+    \node at (1.5, 1.5) [font=\footnotesize\color{brandslate}] {$m_{13}$};
+    \node at (2.5, 1.5) [font=\footnotesize\color{brandslate}] {$m_{15}$};
+    \node at (3.5, 1.5) [font=\footnotesize\color{brandslate}] {$m_{14}$};
+
+    \node at (0.5, 0.5) [font=\footnotesize\color{brandslate}] {$m_8$};
+    \node at (1.5, 0.5) [font=\footnotesize\color{brandslate}] {$m_9$};
+    \node at (2.5, 0.5) [font=\footnotesize\color{brandslate}] {$m_{11}$};
+    \node at (3.5, 0.5) [font=\footnotesize\color{brandslate}] {$m_{10}$};
+\end{tikzpicture}
+\caption{Standard 4-variable Karnaugh Map cell coordinates and decimal minterm designations.}
+\label{fig:kmap-structure}
+\end{figure}
+
+\subsection{K-Map Minimization Rules}
+\begin{enumerate}
+    \item \textbf{Group Size:} Groups must contain $2^k$ adjacent cells ($1, 2, 4, 8, 16$).
+    \item \textbf{Variable Elimination Rule:}
+    \begin{itemize}
+        \item A group of $2$ cells (Pair) eliminates $1$ variable.
+        \item A group of $4$ cells (Quad) eliminates $2$ variables.
+        \item A group of $8$ cells (Octet) eliminates $3$ variables.
+        \item A group of $16$ cells eliminates all variables ($F = 1$).
+    \end{itemize}
+    \item \textbf{Toroidal Wrap-Around:} The top and bottom rows are adjacent; the leftmost and rightmost columns are adjacent.
+    \item \textbf{Corner Quad:} Cells $(m_0, m_2, m_8, m_{10})$ form a valid 4-cell quad minimizing to $\overline{B}\,\overline{D}$.
+    \item \textbf{Don't Care Conditions ($d$ or $X$):} Set to $1$ if they help form a larger prime implicant group; otherwise, set to $0$.
+\end{enumerate}
+
+\begin{example}[4-Variable K-Map Minimization with Don't Cares]
+Minimize the Boolean function:
+\begin{equation*}
+    F(A,B,C,D) = \sum m(0, 2, 5, 7, 8, 10, 14, 15) + d(3, 11)
+\end{equation*}
+
+\tcblower
+\textbf{Step 1: Plotting on the K-Map}
+\begin{itemize}
+    \item 1s at: $0, 2, 5, 7, 8, 10, 14, 15$
+    \item Xs at: $3, 11$
+\end{itemize}
+
+\textbf{Step 2: Grouping Strategy}
+\begin{enumerate}
+    \item \textbf{Corner Quad ($m_0, m_2, m_8, m_{10}$):}
+    \begin{itemize}
+        \item Rows $00$ and $10 \implies B$ changes ($0 \rightarrow 1$), $A=0$ and $A=1$, so $B=0$ is constant $\implies \overline{B}$.
+        \item Columns $00$ and $10 \implies C$ changes, $D=0$ is constant $\implies \overline{D}$.
+        \item \textbf{Term 1: $\overline{B}\,\overline{D}$}
+    \end{itemize}
+    \item \textbf{Center Quad ($m_5, m_7, m_{13}(\text{empty}), m_{15}$? No: $m_5, m_7$ with $d_3, m_1(\text{empty})$?)}:
+    Look at cells $m_5(0101), m_7(0111)$ along with $d_3(0011)$ and $m_2(0010)$?
+    Pair $m_5, m_7$: Row $01 \implies \overline{A}B$, Col $01, 11 \implies D$ constant. Term: $\overline{A}BD$.
+    Can we combine $m_5, m_7$ with $d_3, d_{11}$? No, $d_3, d_{11}$ are in col $11$.
+    Look at Quad in column $11$: $(d_3, m_7, m_{15}, d_{11})$!
+    \begin{itemize}
+        \item Covers $m_7, m_{15}$ along with don't cares $d_3, d_{11}$.
+        \item All 4 rows covered $\implies A, B$ eliminated.
+        \item Column $11 \implies CD$.
+        \item \textbf{Term 2: $CD$}
+    \end{itemize}
+    \item \textbf{Remaining 1s:}
+    \begin{itemize}
+        \item $m_5 (0101)$: Group with $m_7 (0111) \implies$ Pair $(m_5, m_7) \implies \overline{A}BD$.
+        \item $m_{14} (1110)$: Group with $m_{15} (1111) \implies$ Pair $(m_{14}, m_{15}) \implies AB C$.
+        \item Alternatively, check if $m_{14}$ can group with $m_{10} (1010)$: Pair $(m_{10}, m_{14}) \implies AC\overline{D}$.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Final Simplified Equation:}
+$$\mathbf{F(A,B,C,D) = \overline{B}\,\overline{D} + CD + \overline{A}BD + AB C}$$
+\end{example}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 3 Key Formula \& Takeaway Sheet]
+\begin{itemize}
+    \item \textbf{Base Conversion:} Successive division/multiplication for decimal $\leftrightarrow$ base $r$; 3-bit and 4-bit grouping for Octal/Hex $\leftrightarrow$ Binary.
+    \item \textbf{BCD:} 8421 code; values $>9$ invalid; add $0110_2$ to correct.
+    \item \textbf{Excess-3:} $\text{BCD} + 0011_2$; self-complementing.
+    \item \textbf{Gray Code:} $G_i = B_{i+1} \oplus B_i$; unit distance property eliminates glitches.
+    \item \textbf{2's Complement Subtraction:} $A - B = A + (\bar{B} + 1)$. Carry $= 1 \implies$ positive (discard carry); Carry $= 0 \implies$ negative (take 2's comp of sum).
+    \item \textbf{Universal Gates:} NAND and NOR can synthesize any logic network.
+    \item \textbf{De Morgan's Laws:} $\overline{A \cdot B} = \bar{A} + \bar{B}$; $\overline{A + B} = \bar{A} \cdot \bar{B}$.
+    \item \textbf{K-Map Simplification:} Gray code grid adjacency; Pair ($1$ var), Quad ($2$ vars), Octet ($3$ vars); Corners $(0,2,8,10) = \bar{B}\bar{D}$.
+\end{itemize}
+\end{quickrevision}

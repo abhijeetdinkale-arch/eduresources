@@ -1,0 +1,79 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/18 v1.0 PHY175 Revision Book Style System]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=20mm,
+    bottom=20mm,
+    left=20mm,
+    right=20mm,
+    headheight=14pt,
+    headsep=15pt,
+    footskip=10mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty = true}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{revprimary}{RGB}{142, 28, 0}
+\definecolor{revsecondary}{RGB}{204, 68, 0}
+\definecolor{revdark}{RGB}{30, 41, 59}
+\definecolor{revlight}{RGB}{255, 245, 238}
+
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+    boxrule=1pt,
+    arc=2pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    fonttitle=\bfseries\sffamily,
+    before skip=6pt,
+    after skip=6pt
+}
+
+\newtcolorbox{highyieldbox}[1][High-Yield Exam Core]{
+    enhanced, breakable, colback=revlight, colframe=revprimary,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+    boxed title style={colback=revprimary, arc=2pt}
+}
+
+\newtcolorbox{fastcheck}[1][Rapid Fact / Formula]{
+    enhanced, breakable, colback=white, colframe=revsecondary,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+    boxed title style={colback=revsecondary, arc=2pt}
+}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+\titleformat{\chapter}[display]
+{\normalfont\sffamily\LARGE\bfseries\color{revprimary}}
+{\flushright\fontsize{36}{40}\selectfont\color{revsecondary!30}Unit \thechapter}
+{-15pt}
+{\titlerule[1.5pt]\vspace{1ex}}
+[\vspace{1ex}\titlerule]
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\small\thepage}
+\fancyhead[RE]{\sffamily\small\nouppercase{\leftmark}}
+\fancyhead[LO]{\sffamily\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\sffamily\scriptsize LPU Engineering Open $\cdot$ PHY175 Revision Book}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=revprimary, citecolor=revsecondary}

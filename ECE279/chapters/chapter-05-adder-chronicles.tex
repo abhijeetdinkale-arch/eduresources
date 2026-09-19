@@ -1,0 +1,177 @@
+\chapter{Practical 5: Adder Chronicles}
+
+\section{Aim / Objective}
+To design, construct, and verify the combinational logic circuits for:
+\begin{enumerate}
+    \item A \textbf{Half Adder} using XOR and AND gates.
+    \item A \textbf{Full Adder} using two Half Adders and an OR gate.
+\end{enumerate}
+To verify the truth tables of both circuits by observing output logic states.
+
+\section{Apparatus / Components Required}
+\begin{itemize}
+    \item Digital IC Trainer Kit or Breadboard with $+5\text{V DC}$ Power Supply.
+    \item \textbf{Integrated Circuits (ICs):}
+    \begin{itemize}
+        \item \textbf{IC 7486:} Quad 2-input XOR gate
+        \item \textbf{IC 7408:} Quad 2-input AND gate
+        \item \textbf{IC 7432:} Quad 2-input OR gate
+    \end{itemize}
+    \item \textbf{LEDs:} Light Emitting Diodes -- 2 qty (for Output indication: Sum, Carry).
+    \item \textbf{Resistors:} $330\,\Omega$ or $220\,\Omega$ (for LED current limiting).
+    \item \textbf{Connecting Wires:} Single strand hook-up wire.
+    \item Logic Probes or Multimeter (optional, for debugging).
+\end{itemize}
+
+\section{Theory}
+
+\subsection{Half Adder}
+A Half Adder is a combinational circuit that performs addition of two single-bit binary numbers. It has two inputs, $A$ (Augend) and $B$ (Addend), and two outputs, $S$ (Sum) and $C$ (Carry).
+
+\begin{keyequation}[Half Adder Boolean Expressions]
+\begin{align}
+    \text{Sum } (S) &= A \oplus B \quad (\text{A XOR B}) \\
+    \text{Carry } (C) &= A \cdot B \quad (\text{A AND B})
+\end{align}
+\end{keyequation}
+
+\noindent \textbf{Limitation:} The half adder cannot accept a carry bit from a previous stage, making it insufficient for multi-bit addition on its own.
+
+\subsection{Full Adder}
+A Full Adder is a combinational circuit performing addition of three single-bit binary numbers ($A, B,$ and $C_{in}$). It has two outputs: $S$ (Sum) and $C_{out}$ (Carry output).
+
+\begin{keyequation}[Full Adder Boolean Expressions]
+\begin{align}
+    \text{Sum } (S) &= A \oplus B \oplus C_{in} \\
+    \text{Carry } (C_{out}) &= (A \cdot B) + (C_{in} \cdot (A \oplus B))
+\end{align}
+\end{keyequation}
+
+A Full Adder can be constructed using two Half Adders and one OR gate.
+
+\section{Pin Configurations}
+
+Before making connections, observe pinout diagrams for logic gates used. All ICs used here are 14-pin DIP packages:
+\begin{itemize}
+    \item \textbf{Pin 7:} Ground ($\text{GND}$)
+    \item \textbf{Pin 14:} Supply ($+5\text{V Vcc}$)
+    \item \textbf{IC 7486, IC 7408, IC 7432:} Standard pin configuration (Pins 1,2 Inputs $\to$ Pin 3 Output; Pins 4,5 Inputs $\to$ Pin 6 Output).
+\end{itemize}
+
+\section{Part A: Half Adder}
+
+\subsection{Procedure}
+\begin{enumerate}
+    \item Place IC 7486 (XOR) and IC 7408 (AND) on breadboard.
+    \item Connect Pin 7 of both ICs to Ground and Pin 14 of both ICs to $+5\text{V Vcc}$.
+    \item Connect Input A to Pin 1 of IC 7486 and Pin 1 of IC 7408.
+    \item Connect Input B to Pin 2 of IC 7486 and Pin 2 of IC 7408.
+    \item Connect Sum output (Pin 3 of IC 7486) to an LED via a series resistor.
+    \item Connect Carry output (Pin 3 of IC 7408) to a second LED via a series resistor.
+    \item Apply input combinations ($\text{Logic } 0 = \text{GND}, \text{Logic } 1 = +5\text{V}$) according to truth table.
+    \item Observe status of LEDs ($\text{ON} = \text{Logic } 1, \text{OFF} = \text{Logic } 0$).
+\end{enumerate}
+
+\section{Part B: Full Adder}
+
+\subsection{Procedure}
+\begin{enumerate}
+    \item Place IC 7486, IC 7408, and IC 7432 on breadboard.
+    \item Connect Pin 7 of all ICs to GND and Pin 14 of all ICs to $+5\text{V}$.
+    \item \textbf{First Half Adder Stage:} Connect Inputs A and B to pins 1 and 2 of first XOR gate (7486) and pins 1 and 2 of first AND gate (7408).
+    \item \textbf{Second Half Adder Stage:}
+    \begin{itemize}
+        \item Take output of first XOR (Pin 3) and connect to one input of second XOR (Pin 4 of 7486).
+        \item Connect third input $C_{in}$ to other input of second XOR (Pin 5 of 7486).
+        \item Output of second XOR (Pin 6 of 7486) is final \textbf{SUM}. Connect to LED.
+    \end{itemize}
+    \item \textbf{Carry Logic Generation:}
+    \begin{itemize}
+        \item Connect output of first XOR (Pin 3 of 7486) to an input of second AND gate (Pin 4 of 7408).
+        \item Connect $C_{in}$ to other input of that AND gate (Pin 5 of 7408).
+        \item Take output of first AND gate (Pin 3 of 7408) and output of second AND gate (Pin 6 of 7408).
+        \item Connect these two outputs to inputs of OR gate (Pins 1 and 2 of IC 7432).
+        \item Output of OR gate (Pin 3 of 7432) is final \textbf{CARRY ($C_{out}$)}. Connect to LED.
+    \end{itemize}
+    \item Verify all 8 input combinations as per truth table.
+\end{enumerate}
+
+\section{Observations and Truth Tables}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.75\textwidth}{c c c c}
+\toprule
+\textbf{INPUT A} & \textbf{INPUT B} & \textbf{SUM ($A \oplus B$)} & \textbf{CARRY ($A \cdot B$)} \\
+\midrule
+0 & 0 & 0 & 0 \\
+0 & 1 & 1 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 1 \\
+\bottomrule
+\end{tabularx}
+\caption{Half Adder Observation Truth Table.}
+\label{tab:half-adder-tt}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{0.85\textwidth}{c c c c c}
+\toprule
+\textbf{INPUT A} & \textbf{INPUT B} & \textbf{INPUT $C_{in}$} & \textbf{SUM ($S$)} & \textbf{CARRY ($C_{out}$)} \\
+\midrule
+0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 1 & 0 \\
+0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+1 & 1 & 0 & 0 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+\bottomrule
+\end{tabularx}
+\caption{Full Adder Observation Truth Table.}
+\label{tab:full-adder-tt}
+\end{table}
+
+\section{Result}
+Half Adder and Full Adder circuits were successfully designed and constructed on breadboard. Output logic states for Sum and Carry were observed for all input combinations, and truth tables matched theoretical predictions.
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[Half Adder Limitation]
+\textbf{Question:} What is the main limitation of a Half Adder?\\[4pt]
+\textbf{Answer:} A Half Adder cannot accept a Carry input ($C_{in}$) from a previous lower-significant bit addition, making it unsuitable for multi-bit cascading addition.
+\end{vivaqa}
+
+\begin{vivaqa}[NAND Realization of Half Adder]
+\textbf{Question:} How many NAND gates are required to implement a Half Adder?\\[4pt]
+\textbf{Answer:} It requires \textbf{5 NAND gates} to implement a Half Adder.
+\end{vivaqa}
+
+\begin{vivaqa}[XOR Gate Choice for Sum]
+\textbf{Question:} Why do we use the XOR gate for the Sum output?\\[4pt]
+\textbf{Answer:} Sum output in binary addition follows inequality logic (outputs 1 only when inputs are different, or odd number of 1s in Full Adder), corresponding exactly to the XOR operation.
+\end{vivaqa}
+
+\begin{vivaqa}[Full Adder Carry Minterm Expression]
+\textbf{Question:} Write the expression for the Carry of a Full Adder in terms of Minterms.\\[4pt]
+\textbf{Answer:} $C_{out} = \sum m(3, 5, 6, 7) = AB + BC_{in} + AC_{in}$.
+\end{vivaqa}
+
+\begin{vivaqa}[Full Adder from Two Half Adders]
+\textbf{Question:} Can we implement a Full Adder using two Half Adders?\\[4pt]
+\textbf{Answer:} Yes, a Full Adder consists of two Half Adders and one OR gate.
+\end{vivaqa}
+
+\begin{vivaqa}[Ripple Carry Adder Definition]
+\textbf{Question:} What is a Ripple Carry Adder?\\[4pt]
+\textbf{Answer:} It is a circuit where multiple Full Adders are cascaded in series, with Carry Output of one stage connected to Carry Input of the next stage.
+\end{vivaqa}
+
+\begin{vivaqa}[Propagation Delay in Adders]
+\textbf{Question:} What is propagation delay in an adder circuit?\\[4pt]
+\textbf{Answer:} It is the time taken for an input signal change to produce a stable output change. In ripple adders, this delay accumulates through each stage.
+\end{vivaqa}

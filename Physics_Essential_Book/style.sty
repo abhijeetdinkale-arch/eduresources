@@ -1,0 +1,106 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/16 v1.0 PHY110 Essential Physics Guide Style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=25pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,physics,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+% Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUOrange}{RGB}{232, 90, 16}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{ConceptBg}{RGB}{245, 248, 255}
+\definecolor{ConceptBorder}{RGB}{15, 44, 89}
+\definecolor{DerivBg}{RGB}{250, 252, 255}
+\definecolor{DerivBorder}{RGB}{70, 110, 160}
+\definecolor{ExampleBg}{RGB}{255, 252, 245}
+\definecolor{ExampleBorder}{RGB}{220, 120, 20}
+\definecolor{KeyTakeawayBg}{RGB}{240, 255, 245}
+\definecolor{KeyTakeawayBorder}{RGB}{20, 130, 60}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{LPUNavy}\textbf{PHY110: Engineering Physics --- Conceptual Foundation Guide}}
+\fancyhead[R]{\small\color{LPUOrange}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{LPUNavy}}{\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{LPUNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{LPUOrange}}{\thesubsection}{1em}{}
+
+% Custom callout boxes
+\newtcolorbox{conceptbox}[2][]{
+    enhanced,
+    breakable,
+    colback=ConceptBg,
+    colframe=ConceptBorder,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={#2},
+    boxrule=1pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3.5mm, right=3.5mm,
+    #1
+}
+
+\newtcolorbox{derivbox}[2][]{
+    enhanced,
+    breakable,
+    colback=DerivBg,
+    colframe=DerivBorder,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={#2},
+    boxrule=0.9pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcolorbox{examplebox}[2][]{
+    enhanced,
+    breakable,
+    colback=ExampleBg,
+    colframe=ExampleBorder,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={#2},
+    boxrule=0.9pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcolorbox{takeawaybox}[1][]{
+    enhanced,
+    breakable,
+    colback=KeyTakeawayBg,
+    colframe=KeyTakeawayBorder,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={\textbf{Fundamental Takeaway \& Engineering Insight}},
+    boxrule=1pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    #1
+}

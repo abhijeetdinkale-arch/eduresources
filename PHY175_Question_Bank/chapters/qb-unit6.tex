@@ -1,0 +1,144 @@
+\chapter{Unit 6: Introduction of Arduino and Sensors}
+
+\section{Section 1: Chapter-Wise Multiple-Choice Questions (60 MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 20)}
+\mcqitem{1}{Which statement best describes an analog signal?}{It varies continuously over a range}{It has only two fixed levels}{It always remains at zero}{It changes only once per second}
+\mcqitem{2}{A basic digital signal commonly uses which two logic levels?}{Slow and fast}{Positive and negative only}{Warm and cold}{Low and high}
+\mcqitem{3}{Which quantity is most naturally represented by an analog signal?}{Button state}{Room temperature}{LED state}{Switch position}
+\mcqitem{4}{Which device produces a digital input when pressed or released?}{Temperature probe}{Push button}{Volume knob}{Light sensor}
+\mcqitem{5}{Which pins on Arduino Uno read analog sensor values?}{Pins 8 to 13}{Pins 0 to 5}{Pins A0 to A5}{Pins GND to VIN}
+\mcqitem{6}{What is the purpose of a GND pin on an Arduino board?}{Stores program code}{Measures supply voltage}{Generates analog signal}{Provides a common ground}
+\mcqitem{7}{What is the main function of microcontroller on Arduino board?}{Executes uploaded program}{Physically moves sensors}{Displays sensor readings}{Supplies unlimited current}
+\mcqitem{8}{Which Arduino Uno pins can be configured as either inputs or outputs?}{Digital pins}{Ground pins}{Reset pins}{Power pins}
+\mcqitem{9}{What does the abbreviation IR stand for?}{Input response}{Internal resistance}{Instant reading}{Infrared}
+\mcqitem{10}{A basic reflective IR sensor detects an object mainly by sensing:}{Emitted ultrasonic waves}{Reflected infrared light}{Changes in air pressure}{Variations in humidity}
+\mcqitem{11}{Which application commonly uses an IR sensor?}{Voltage generation}{Obstacle detection}{Sound amplification}{Humidity measurement}
+\mcqitem{12}{What does the abbreviation LDR stand for?}{Low Density Receiver}{Linear Digital Regulator}{Light Detection Relay}{Light Dependent Resistor}
+\mcqitem{13}{What happens to resistance of an LDR when light intensity increases?}{Becomes infinite}{Remains constant}{It decreases}{It increases}
+\mcqitem{14}{Which project is a common application of an LDR?}{Ultrasonic rangefinder}{Automatic streetlight}{Digital thermometer}{Water-level alarm}
+\mcqitem{15}{Which type of wave is used by ultrasonic distance sensor?}{Visible light waves}{Infrared light waves}{High-frequency sound waves}{Low-frequency radio waves}
+\mcqitem{16}{What does an ultrasonic sensor measure to determine object distance?}{Air humidity level}{Object temperature}{Reflected light intensity}{Echo travel time}
+\mcqitem{17}{Formula representing distance measured using round-trip time $t$ and sound speed $v$:}{$d = v/t$}{$d = 2v/t$}{$d = vt$}{$d = vt/2$}
+\mcqitem{18}{Which two environmental quantities can both DHT11 and DHT22 measure?}{Light and sound}{Distance and speed}{Pressure and voltage}{Temperature and humidity}
+\mcqitem{19}{What type of output is provided by a DHT11 sensor?}{Infrared light}{Ultrasonic pulses}{Digital data}{Analog voltage only}
+\mcqitem{20}{Compared with DHT11, which sensor offers wider range and better accuracy?}{HC-SR04}{IR sensor}{DHT22}{LDR}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 21 to 40)}
+\mcqitem{21}{Arduino Uno uses 10-bit ADC with $5\,\text{V}$ reference. Expected ADC value for $2.5\,\text{V}$ input:}{Approximately 512}{Approximately 256}{Approximately 768}{Approximately 1023}
+\mcqitem{22}{Digital input reads LOW below $1.5\,\text{V}$ and HIGH above $3.0\,\text{V}$. Main problem if input remains near $2.2\,\text{V}$:}{State may be undefined}{State is always HIGH}{Pin becomes analog}{ADC stops}
+\mcqitem{23}{Sensor signal contains components up to $80\,\text{Hz}$. Sampling rate satisfying Nyquist criterion:}{$120\,\text{samples/s}$}{$200\,\text{samples/s}$}{$80\,\text{samples/s}$}{$160\,\text{samples/s}$}
+\mcqitem{24}{Arduino PWM pin outputs $5\,\text{V}$ pulse train with $40\%$ duty cycle. Filtered average voltage:}{Approximately $4\,\text{V}$}{Approximately $3\,\text{V}$}{Approximately $2\,\text{V}$}{Approximately $1\,\text{V}$}
+\mcqitem{25}{Which Arduino pins should be avoided for sensors if USB serial is used?}{Digital pins 2 and 3}{Power pins 5V and GND}{Analog pins A0 and A1}{Digital pins 0 and 1}
+\mcqitem{26}{Motor-speed control requires PWM from Arduino Uno. Suitable pin:}{Digital pin 12}{Digital pin 9}{Digital pin 2}{Digital pin 4}
+\mcqitem{27}{Sensor provides continuously varying voltage between $0\text{ and }5\,\text{V}$. Connect to:}{VIN pin}{An analog input pin}{AREF pin only}{RESET pin}
+\mcqitem{28}{Which pair of Arduino Uno pins carries I2C signals?}{A2 and A3}{A6 and A7}{A4 and A5}{A0 and A1}
+\mcqitem{29}{LED connected from pin 8 to GND with resistor. Which configuration turns it on?}{Set pin 8 as INPUT and write LOW}{Set pin 8 as OUTPUT and write LOW}{Set pin 8 as INPUT and write HIGH}{Set pin 8 as OUTPUT and write HIGH}
+\mcqitem{30}{IR obstacle sensor detects black surface less reliably than white at same distance. Likely reason:}{Black surface absorbs more IR}{Black surface emits more IR}{White surface blocks receiver}{White surface lowers voltage}
+\mcqitem{31}{Active-LOW IR module gives LOW when obstacle present. Program condition triggering alarm:}{PWM duty equals zero}{Sensor reading equals HIGH}{Sensor reading equals LOW}{Analog reading equals 1023}
+\mcqitem{32}{IR detector produces false detections in direct sunlight. Best explanation:}{Transmitter becomes receiver}{Sunlight contains infrared radiation}{Sunlight removes reflection}{Obstacle becomes charged}
+\mcqitem{33}{LDR is connected to $5\,\text{V}$, fixed resistor connected from output node to GND. Output voltage when light increases:}{Increases toward $5\,\text{V}$}{Remains at $2.5\,\text{V}$}{Alternates}{Decreases toward $0\,\text{V}$}
+\mcqitem{34}{LDR of $10\,\text{k}\Omega$ connected to $5\,\text{V}$ with $10\,\text{k}\Omega$ fixed resistor to GND. Output voltage:}{$5.00\,\text{V}$}{$3.75\,\text{V}$}{$1.25\,\text{V}$}{$2.50\,\text{V}$}
+\mcqitem{35}{Streetlight controlled by LDR switches rapidly near twilight. Modification reducing this:}{Connect LDR to GND}{Increase baud rate}{Add hysteresis to switching thresholds}{Remove fixed resistor}
+\mcqitem{36}{Ultrasonic sensor measures round-trip time of $2\,\text{ms}$. Speed of sound $340\,\text{m/s}$. Object distance:}{$0.68\,\text{m}$}{$1.36\,\text{m}$}{$0.34\,\text{m}$}{$0.17\,\text{m}$}
+\mcqitem{37}{Why is measured echo travel distance divided by two?}{Pulse travels to object and back}{Trigger has two waves}{Sensor has 2 timers}{Measures twice sound speed}
+\mcqitem{38}{Ultrasonic sensor gives unstable readings from smooth wall at steep angle. Cause:}{Wall increases sound speed}{Echo becomes light}{Echo reflects away from receiver}{Trigger becomes analog}
+\mcqitem{39}{Project must measure temperatures below $0^\circ\text{C}$ with high resolution. Suitable sensor:}{DHT11}{DHT22}{IR sensor}{LDR}
+\mcqitem{40}{DHT sensor returns invalid checksum errors when read in fast loop. Appropriate change:}{Apply PWM}{Increase interval between readings}{Reduce monitor width}{Replace GND}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 60)}
+\mcqitem{41}{Arduino Uno reads analog sensor (10-bit ADC, $5\,\text{V}$ ref). Input is $3.72\,\text{V}$. Digital value:}{931}{762}{819}{713}
+\mcqitem{42}{Signal sampled at $800\,\text{Hz}$ contains components at $120\,\text{Hz}$ and $510\,\text{Hz}$. Observed frequency without anti-aliasing:}{$510\,\text{Hz}$ component appears near $290\,\text{Hz}$}{$510\,\text{Hz}$ appears near $400\,\text{Hz}$}{Disappears}{$120\,\text{Hz}$ shifts}
+\mcqitem{43}{Arduino input HIGH threshold $\approx 3\,\text{V}$, LOW threshold $\approx 1.5\,\text{V}$. Sensor output is $2.2\,\text{V}$. Classification:}{Guaranteed HIGH}{Undefined because it lies between thresholds}{Guaranteed LOW}{Alternating}
+\mcqitem{44}{10-bit ADC uses $2.56\,\text{V}$ reference. Smallest voltage step (1 LSB):}{$25.6\,\text{mV}$}{$2.50\,\text{mV}$}{$0.25\,\text{mV}$}{$1.00\,\text{mV}$}
+\mcqitem{45}{Arduino sketch uses `	exttt{analogWrite(9, 128)}` on LED. Signal description:}{Variable frequency $2.5\,\text{V}$}{$2.5\,\text{V}$ constant DC}{$5\,\text{V}$ PWM waveform with $\approx 50\%$ duty cycle}{$128\,\text{Hz}$ digital}
+\mcqitem{46}{Arduino Uno hardware SPI interface pin assignment:}{MOSI 10, MISO 11, SCK 12, SS 13}{MOSI A0, MISO A1, SCK A2, SS A3}{MOSI 11, MISO 12, SCK 13, SS 10}{MOSI 0, MISO 1, SCK 2, SS 3}
+\mcqitem{47}{External $5\,\text{V}$ signal driven into pin 2 may exceed $5\,\text{V}$. Most important change:}{Enable internal pull-up}{Move to VIN}{Change to analog input}{Add level shifting or a suitable protection interface}
+\mcqitem{48}{Pushbutton connected between pin 7 and GND with `	exttt{INPUT\_PULLUP}`. Reading for pressed button:}{LOW in both states}{HIGH in both states}{HIGH when pressed, LOW released}{LOW when pressed and HIGH when released}
+\mcqitem{49}{Active-LOW IR module remains LOW when highly reflective white surface moved farther away:}{Detects distance independently}{Transmitter became analog}{Output forced by ADC}{The receiver is responding to stronger reflected IR}
+\mcqitem{50}{IR sensor works indoors but triggers in direct sunlight. Best remedy:}{Increase sampling rate}{Replace with red LED}{Connect to 5V}{Use modulation and optical filtering with threshold calibration}
+\mcqitem{51}{Reflective IR module produces unstable output near boundary. Change reducing rapid switching:}{Add hysteresis to threshold decision}{Faster clock}{Shorten ground}{Lower voltage}
+\mcqitem{52}{LDR: $10\,\text{k}\Omega$ (dark), $1\,\text{k}\Omega$ (light). Voltage divider with $10\,\text{k}\Omega$ fixed from $5\,\text{V}$ to GND with LDR on top. Voltage in bright light:}{Changes instantly to 0}{Remains $2.5\,\text{V}$}{Falls from $2.5\,\text{V}$ to $0.45\,\text{V}$}{Rises from $2.5\,\text{V}$ to about $4.55\,\text{V}$}
+\mcqitem{53}{LDR divider reading changes when motor starts despite constant illumination. Likely cause:}{Motor noise causes supply or ground fluctuations}{ADC increases light}{LDR becomes independent}{Produces ultrasonic pulses}
+\mcqitem{54}{Two identical LDR dividers detect light imbalance. Approach making differential reading insensitive to overall illumination:}{Use only darker sensor}{Compare normalized readings or use a differential ratio}{Use sum only}{Short outputs}
+\mcqitem{55}{Ultrasonic sensor measures round-trip time $8.0\,\text{ms}$ ($v=343\,\text{m/s}$). Target distance:}{$42.875\,\text{m}$}{$0.686\,\text{m}$}{$2.744\,\text{m}$}{$1.372\,\text{m}$}
+\mcqitem{56}{HC-SR04 mounted $1.2\,\text{m}$ above flat floor pointing down ($v=343\,\text{m/s}$). Expected echo duration:}{$3.5\,\text{ms}$}{$14.0\,\text{ms}$}{$7.0\,\text{ms}$}{$28.6\,\text{ms}$}
+\mcqitem{57}{Two ultrasonic sensors close together triggered simultaneously have erratic readings. Cause \& remedy:}{Quantization}{LDR saturation}{Cross-talk; trigger sensors at separated times}{PWM aliasing}
+\mcqitem{58}{Ultrasonic sensor reports unexpectedly long distance when aimed at smooth angled glass. Explanation:}{Angled surface reflects sound away from receiver}{Converts cm to voltage}{Glass absorbs energy}{Emits light}
+\mcqitem{59}{DHT22 connected via long cable stays HIGH or corrupts data. Hardware change:}{Connect data to analog}{Remove pull-up}{Use an appropriate pull-up and improve signal wiring}{Power through reset}
+\mcqitem{60}{Program requests DHT22 data every $20\,\text{ms}$ and gets invalid results. Primary reason:}{Output is PWM}{The sensor has a limited minimum sampling interval}{Uses SPI only}{Requires analog reference}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Technical Rationales}
+
+\subsection*{Part A: Questions 1 to 30}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 1 to 30)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{A} & Analog signals vary continuously across time and amplitude. & 16 & \textbf{D} & Time-of-flight (ToF) between pulse transmission and echo reception. \\
+2 & \textbf{D} & Digital logic represents information via discrete LOW (0) and HIGH (1) levels. & 17 & \textbf{D} & The acoustic wave travels to the target and back, so $d = vt/2$. \\
+3 & \textbf{B} & Physical ambient temperature varies continuously. & 18 & \textbf{D} & DHT sensors integrate an NTC thermistor and capacitive relative humidity sensor. \\
+4 & \textbf{B} & A pushbutton is a binary contact switch (open/closed). & 19 & \textbf{C} & Single-wire digital protocol sending a 40-bit serialized frame. \\
+5 & \textbf{C} & Pins A0 to A5 connect to the onboard 10-bit ADC multiplexer. & 20 & \textbf{C} & DHT22 (AM2302) provides $-40\text{ to }+80^\circ\text{C}$ sensing with higher resolution. \\
+6 & \textbf{D} & GND establishes a 0 V reference potential for all circuit loops. & 21 & \textbf{A} & $\text{ADC} = \frac{2.5}{5.0} \times 1023 \approx 511.5 \approx 512$. \\
+7 & \textbf{A} & The ATmega328P executes instructions programmed in flash memory. & 22 & \textbf{A} & Lies in the indeterminate logic threshold zone. \\
+8 & \textbf{A} & Digital pins D0-D13 are general purpose bidirectional I/O pins. & 23 & \textbf{B} & Nyquist requires $f_s > 2 f_{max} = 160\,\text{Hz}$. $200\,\text{samples/s}$ is strictly greater. \\
+9 & \textbf{D} & IR = Infrared electromagnetic radiation ($\lambda \approx 700\,\text{nm}-1\,\text{mm}$). & 24 & \textbf{C} & $V_{avg} = 0.40 \times 5.0\,\text{V} = 2.0\,\text{V}$. \\
+10 & \textbf{B} & Measures the intensity of emitted IR reflected back into a photodiode. & 25 & \textbf{D} & Pins 0 (RX) and 1 (TX) are directly wired to the USB-UART chip. \\
+11 & \textbf{B} & Line-following robots and proximity obstacle detection. & 26 & \textbf{B} & Pin 9 supports hardware PWM (marked $\sim 9$). \\
+12 & \textbf{D} & LDR = Light Dependent Resistor (Photoresistor). & 27 & \textbf{B} & Analog inputs (A0-A5) connect to ADC. \\
+13 & \textbf{C} & Photon absorption increases free carriers, decreasing electrical resistance. & 28 & \textbf{C} & A4 is SDA (data) and A5 is SCL (clock). \\
+14 & \textbf{B} & Automatic dusk-to-dawn streetlight controller. & 29 & \textbf{D} & Pin 8 must source current at logic HIGH ($5\,\text{V}$). \\
+15 & \textbf{C} & Acoustic compression sound waves ($40\,\text{kHz}$). & 30 & \textbf{A} & Black pigments absorb $940\,\text{nm}$ infrared, reducing reflected signal strength. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Part B: Questions 31 to 60}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 31 to 60)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+31 & \textbf{C} & Active-LOW implies alert state is logical LOW (0). & 46 & \textbf{C} & ATmega328P SPI pins: D11 (MOSI), D12 (MISO), D13 (SCK), D10 (SS). \\
+32 & \textbf{B} & Solar radiation contains broad-spectrum IR that saturates the photodiode. & 47 & \textbf{D} & Over-voltage exceeding $V_{CC}+0.5\,\text{V}$ damages input clamping diodes. \\
+33 & \textbf{A} & $R_{LDR}$ decreases, so voltage drop across fixed resistor increases toward $5\,\text{V}$. & 48 & \textbf{D} & Pull-up keeps pin HIGH when open; pressing shorts pin to ground (LOW). \\
+34 & \textbf{D} & Equal resistors divide $5\,\text{V}$ in half: $2.50\,\text{V}$. & 49 & \textbf{D} & High surface reflectivity maintains reflected intensity above comparator threshold even at greater distance. \\
+35 & \textbf{C} & Schmitt trigger hysteresis establishes separate turn-on and turn-off light thresholds. & 50 & \textbf{D} & Modulating IR carrier ($38\,\text{kHz}$) rejects continuous DC ambient solar radiation. \\
+36 & \textbf{C} & $d = \frac{(340)(2\times 10^{-3})}{2} = 0.34\,\text{m}$. & 51 & \textbf{A} & Hysteresis prevents high-frequency chattering on noisy threshold crossings. \\
+37 & \textbf{A} & The measured time accounts for the round-trip distance. & 52 & \textbf{D} & Dark: $V_{out} = 5\frac{10}{10+10} = 2.5\,\text{V}$. Bright: $V_{out} = 5\frac{10}{1+10} = \frac{50}{11} \approx 4.55\,\text{V}$. \\
+38 & \textbf{C} & Specular acoustic reflection deflects sound away at angle of incidence. & 53 & \textbf{A} & Inductive motor transient currents introduce ground bounce and supply ripple. \\
+39 & \textbf{B} & DHT22 measures down to $-40^\circ\text{C}$ ($0.1^\circ\text{C}$ resolution); DHT11 starts at $0^\circ\text{C}$. & 54 & \textbf{B} & Ratio $\frac{LDR_1 - LDR_2}{LDR_1 + LDR_2}$ cancels ambient illumination variations. \\
+40 & \textbf{B} & DHT sensors require minimum $1-2\,\text{s}$ sampling intervals to stabilize. & 55 & \textbf{D} & $d = \frac{(343)(8.0\times 10^{-3})}{2} = 1.372\,\text{m}$. \\
+41 & \textbf{B} & $\text{ADC} = \frac{3.72}{5.0} \times 1023 = 761.1 \approx 762$. & 56 & \textbf{C} & $t = \frac{2 d}{v} = \frac{2(1.2)}{343} = 6.997\,\text{ms} \approx 7.0\,\text{ms}$. \\
+42 & \textbf{A} & Nyquist limit is $400\,\text{Hz}$. Aliased frequency $= |510 - 800| = 290\,\text{Hz}$. & 57 & \textbf{C} & Acoustic cross-talk occurs when Sensor 1 detects the echo emitted by Sensor 2; resolve by time-multiplexing triggers. \\
+43 & \textbf{B} & Between $V_{IL}$ and $V_{IH}$, logic state is indeterminate and susceptible to noise. & 58 & \textbf{A} & Specular reflection bounces ultrasound beam away into background. \\
+44 & \textbf{B} & $\Delta V = \frac{2.56\,\text{V}}{1024} = 2.50\,\text{mV}$. & 59 & \textbf{C} & Long cable capacitance rounds off edges; lower pull-up resistance ($4.7\,\text{k}\Omega$) restores sharp digital edges. \\
+45 & \textbf{C} & Outputs $5\,\text{V}$ square wave with duty cycle $128/255 \approx 50.2\%$. & 60 & \textbf{B} & DHT22 requires minimum $2000\,\text{ms}$ ($2\,\text{s}$) between consecutive read requests. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{Section 3: Comprehensive Theory Questions \& Worked Solutions}
+\begin{theoryq}{6.1}
+Explain the working principle and timing diagram of the HC-SR04 ultrasonic distance sensor. Derive the formula used to calculate distance in centimeters from echo pulse duration in microseconds.
+\end{theoryq}
+
+\begin{theorysol}
+1. \textbf{Operating Principle:} Host sends a $10\,\mu\text{s}$ HIGH trigger pulse. The transmitter emits an 8-cycle sonic burst at $40\,\text{kHz}$. The ECHO pin goes HIGH and stays HIGH until the reflected echo is received by the receiver transducer.\\
+2. \textbf{Timing \& Distance Derivation:} Pulse width $t$ represents round-trip time. Speed of sound in dry air at $20^\circ\text{C}$ is $v = 340\,\text{m/s} = 0.034\,\text{cm}/\mu\text{s}$. Total distance travelled is $2d = v \cdot t \implies d = \frac{0.034 \times t}{2} = \frac{t}{58.82}\,\text{cm}$.
+\end{theorysol}
+
+\vspace{3mm}
+

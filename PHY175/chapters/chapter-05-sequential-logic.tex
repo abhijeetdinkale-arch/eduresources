@@ -1,0 +1,316 @@
+\chapter{Sequential Logic Circuits}
+\label{chap:sequential-logic}
+
+\section{Introduction and Theoretical Principles}
+Unlike combinational logic circuits where output depends solely on current inputs, \textbf{sequential logic circuits} incorporate memory elements and feedback loops. The output at any instant is a function of both the present external inputs and the present internal state (stored past history) of the system:
+\begin{equation}
+\mathbf{Y}(t) = f(\mathbf{X}(t), \mathbf{Q}(t)), \qquad \mathbf{Q}(t+\Delta t) = g(\mathbf{X}(t), \mathbf{Q}(t))
+\end{equation}
+where $\mathbf{X}(t)$ is the input vector, $\mathbf{Q}(t)$ is the present state vector, and $\mathbf{Y}(t)$ is the output vector.
+
+Sequential circuits are broadly classified into:
+\begin{itemize}
+    \item \textbf{Synchronous Sequential Circuits:} State transitions occur simultaneously across all storage elements, regulated by discrete pulses of a centralized periodic clock signal ($\text{CLK}$).
+    \item \textbf{Asynchronous Sequential Circuits:} State transitions occur whenever input signals change, without requiring a global clock signal, making them faster but prone to hazards and race conditions.
+\end{itemize}
+
+\section{Latches and Flip-Flops}
+The fundamental 1-bit bistable memory element is the latch and flip-flop. While a \textbf{latch} is level-sensitive (transparent while the enable/clock is active), a \textbf{flip-flop} is edge-triggered (samples inputs and changes state only during a discrete transition: positive rising edge $\uparrow$ or negative falling edge $\downarrow$).
+
+\subsection{SR Latch (NOR and NAND Implementations)}
+An SR (Set-Reset) latch consists of two cross-coupled logic gates:
+\begin{itemize}
+    \item \textbf{NOR-Based SR Latch (Active-High Inputs):}
+    \begin{align}
+    Q &= \overline{R + \overline{Q}} \\
+    \overline{Q} &= \overline{S + Q}
+    \end{align}
+    Applying $S=1, R=0 \implies Q=1$ (Set). Applying $S=0, R=1 \implies Q=0$ (Reset). Applying $S=0, R=0 \implies$ No Change ($Q_n$). Applying $S=1, R=1$ forces $Q = \overline{Q} = 0$, violating the complementary definition of the outputs; this is the \textbf{forbidden / invalid condition}.
+    \item \textbf{NAND-Based $\overline{\text{S}}$-$\overline{\text{R}}$ Latch (Active-Low Inputs):}
+    Quiescent state is $\overline{S} = 1, \overline{R} = 1$. The invalid state occurs when $\overline{S} = 0, \overline{R} = 0$.
+\end{itemize}
+
+\subsection{Clocked Flip-Flops: SR, D, JK, and T}
+Clocked flip-flops introduce gating logic such that input data is captured only during defined clocking events.
+
+\begin{table}[htbp]
+\centering
+\caption{Complete Characteristic Truth Tables of Fundamental Flip-Flops}
+\label{tab:ff-characteristic-tt}
+\begin{tabularx}{\textwidth}{c c c X l}
+\toprule
+\textbf{Type} & \textbf{Inputs} & \textbf{Present State ($Q_n$)} & \textbf{Next State ($Q_{n+1}$)} & \textbf{Operation / Mode} \\
+\midrule
+\textbf{SR FF} & $S=0, R=0$ & $Q_n$ & $Q_n$ & No Change (Hold) \\
+      & $S=0, R=1$ & $Q_n$ & 0 & Reset \\
+      & $S=1, R=0$ & $Q_n$ & 1 & Set \\
+      & $S=1, R=1$ & $Q_n$ & Indeterminate ($\times$) & Forbidden / Prohibited \\
+\midrule
+\textbf{D FF}  & $D=0$ & $Q_n$ & 0 & Reset \\
+      & $D=1$ & $Q_n$ & 1 & Set (Data Follower) \\
+\midrule
+\textbf{JK FF} & $J=0, K=0$ & $Q_n$ & $Q_n$ & No Change (Hold) \\
+      & $J=0, K=1$ & $Q_n$ & 0 & Reset \\
+      & $J=1, K=0$ & $Q_n$ & 1 & Set \\
+      & $J=1, K=1$ & $Q_n$ & $\overline{Q}_n$ & Toggle ($\text{Complement}$) \\
+\midrule
+\textbf{T FF}  & $T=0$ & $Q_n$ & $Q_n$ & No Change (Hold) \\
+      & $T=1$ & $Q_n$ & $\overline{Q}_n$ & Toggle \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{The Race-Around Condition and Master-Slave Flip-Flops}
+In a level-triggered JK flip-flop, when both inputs are held high ($J = K = 1$), the circuit operates in toggle mode ($Q_{n+1} = \overline{Q}_n$).
+
+\begin{pitfallbox}[The Race-Around Condition]
+Let $t_p$ be the duration (pulse width) of the active high clock pulse, and let $t_{pd}$ be the internal propagation delay of the flip-flop gates.
+If:
+\begin{equation}
+t_p \ge t_{pd}
+\end{equation}
+the output will toggle from $0 \to 1$, feed back to the inputs, and toggle back from $1 \to 0$ repeatedly during the same single clock pulse. At the end of the clock pulse, the final state of $Q$ is indeterminate and unpredictable. This phenomenon is called the \textbf{race-around condition}.
+\end{pitfallbox}
+
+\begin{derivationbox}[Resolution of Race-Around: Master-Slave JK Flip-Flop]
+To eliminate the race-around condition, a **Master-Slave JK Flip-Flop** cascades two latches controlled by complementary clocks:
+\begin{enumerate}
+    \item \textbf{Master Stage (Clock Active High, $\text{CLK} = 1$):} The master JK flip-flop is enabled and samples $J$ and $K$ inputs, updating intermediate outputs $Y$ and $\overline{Y}$. Meanwhile, the slave flip-flop is disabled because its clock is $\overline{\text{CLK}} = 0$. The primary outputs $Q$ and $\overline{Q}$ remain static.
+    \item \textbf{Slave Stage (Clock Trailing Edge, $\text{CLK} \downarrow$ from $1 \to 0$):} As $\text{CLK}$ drops to $0$, the master stage is instantly isolated and disabled. The slave stage receives $\overline{\text{CLK}} = 1$, copying the state of $Y$ to the final output $Q$.
+\end{enumerate}
+Because data is isolated between stages and output updates only on the clock edge, feedback cannot alter the master during the same cycle, completely eliminating race-around.
+\end{derivationbox}
+
+\section{Characteristic Equations and Excitation Tables}
+\subsection{Characteristic Equations}
+Applying K-maps to the characteristic truth tables yields the next-state Boolean functions:
+\begin{align}
+\text{SR Flip-Flop:} \quad Q_{n+1} &= S + \overline{R} Q_n \quad (\text{with constraint } S \cdot R = 0) \\
+\text{JK Flip-Flop:} \quad Q_{n+1} &= J \overline{Q}_n + \overline{K} Q_n \\
+\text{D Flip-Flop:} \quad Q_{n+1} &= D \\
+\text{T Flip-Flop:} \quad Q_{n+1} &= T \oplus Q_n = T \overline{Q}_n + \overline{T} Q_n
+\end{align}
+
+\subsection{Excitation Tables and Flip-Flop Conversions}
+An \textbf{excitation table} specifies the required input combinations to force a specific state transition ($Q_n \to Q_{n+1}$).
+
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive Excitation Tables for All Major Flip-Flop Types}
+\label{tab:excitation-tables}
+\begin{tabularx}{\textwidth}{c c | c c | c c | c | c}
+\toprule
+$Q_n$ & $Q_{n+1}$ & $S$ & $R$ & $J$ & $K$ & $D$ & $T$ \\
+\midrule
+0 & 0 & 0 & $\times$ & 0 & $\times$ & 0 & 0 \\
+0 & 1 & 1 & 0 & 1 & $\times$ & 1 & 1 \\
+1 & 0 & 0 & 1 & $\times$ & 1 & 0 & 1 \\
+1 & 1 & $\times$ & 0 & $\times$ & 0 & 1 & 0 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{conceptbox}[Flip-Flop Conversion Methodology]
+To convert an available flip-flop (Type A) into a target flip-flop (Type B):
+\begin{enumerate}
+    \item Write the characteristic truth table of target Flip-Flop B listing inputs, present state $Q_n$, and next state $Q_{n+1}$.
+    \item Append columns for the inputs of available Flip-Flop A using its excitation table for each transition $Q_n \to Q_{n+1}$.
+    \item Use K-maps with Flip-Flop B inputs and $Q_n$ as variables to derive minimized Boolean expressions driving Flip-Flop A inputs.
+\end{enumerate}
+\end{conceptbox}
+
+\section{Shift Registers}
+A register is a group of cascaded flip-flops used for binary data storage and bit-level manipulation. An $n$-bit shift register shifts its stored contents left or right on each clock edge.
+
+\begin{table}[htbp]
+\centering
+\caption{Classification and Characteristics of Shift Registers}
+\label{tab:shift-registers}
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{Configuration} & \textbf{Data In} & \textbf{Data Out} & \textbf{Clock Cycles for $n$-bit Transfer} \\
+\midrule
+SISO (Serial-In Serial-Out) & 1 pin & 1 pin & $n$ cycles to load, $n$ cycles to retrieve \\
+SIPO (Serial-In Parallel-Out) & 1 pin & $n$ pins & $n$ cycles to load, 0 cycles (instantaneous) readout \\
+PISO (Parallel-In Serial-Out) & $n$ pins & 1 pin & 1 cycle parallel load, $n-1$ cycles to read out \\
+PIPO (Parallel-In Parallel-Out) & $n$ pins & $n$ pins & 1 clock cycle to load, 1 clock cycle to read \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Universal Shift Register (IC 74194)}
+A Universal Shift Register is a multi-function 4-bit bidirectional shift register supporting four distinct operating modes selected by two mode-select control pins ($S_1, S_0$):
+\begin{itemize}
+    \item $S_1 S_0 = 00$: \textbf{Parallel Hold} (retains current register contents indefinitely).
+    \item $S_1 S_0 = 01$: \textbf{Shift Right} (shifts data towards LSB, serial input $D_{SR}$ shifted into MSB).
+    \item $S_1 S_0 = 10$: \textbf{Shift Left} (shifts data towards MSB, serial input $D_{SL}$ shifted into LSB).
+    \item $S_1 S_0 = 11$: \textbf{Parallel Load} (simultaneously loads 4 external bits $A, B, C, D$).
+\end{itemize}
+
+\section{Asynchronous and Synchronous Counters}
+Counters are sequential circuits that cycle through a predefined sequence of binary states upon receiving clock pulses. The \textbf{modulus} (or MOD number) defines the total count of discrete unique states in the cycle. To construct a counter of modulus $M$, the minimum number of flip-flops $N$ required satisfies:
+\begin{equation}
+2^{N-1} < M \le 2^N \implies N = \lceil \log_2 M \rceil
+\end{equation}
+
+\subsection{Asynchronous (Ripple) Counters}
+In a ripple counter, the external clock pulse drives only the first (LSB) flip-flop. The output of each flip-flop ($Q$ or $\overline{Q}$) serves as the clock input for the subsequent stage.
+\begin{itemize}
+    \item \textbf{Cumulative Propagation Delay:} For an $n$-bit counter where each flip-flop has delay $t_{pd}$, the total settling time is $t_{settle} = n \cdot t_{pd}$.
+    \item \textbf{Maximum Operating Frequency:} To ensure glitch-free decoding and reliable counting:
+    \begin{equation}
+    f_{max} \le \frac{1}{n \cdot t_{pd}}
+    \end{equation}
+\end{itemize}
+
+\subsection{Synchronous Counters and Lockout Avoidance}
+In synchronous counters, all flip-flops share a common clock line and trigger simultaneously.
+Design procedure:
+\begin{enumerate}
+    \item Create state transition diagram and table listing Present State $\to$ Next State.
+    \item Fill excitation values for each flip-flop using the appropriate excitation table.
+    \item Minimize input logic equations using K-maps.
+    \item \textbf{Lockout State Analysis:} If the counter enters an unused state (for $M < 2^N$), verify that subsequent clock pulses naturally steer the counter back into the main counting sequence. If an unused state becomes trapped in a closed loop of invalid states, modify the next-state logic to make the circuit \textbf{self-correcting}.
+\end{enumerate}
+
+\subsection{Ring and Johnson Counters}
+\begin{itemize}
+    \item \textbf{Ring Counter:} An $N$-bit shift register with the serial output of the last stage ($Q_N$) connected directly to the serial input of the first stage ($D_1$). Initialized with a single 1 ($1000 \to 0100 \to 0010 \to 0001$). Total distinct states $= N$.
+    \item \textbf{Johnson (Twisted Ring) Counter:} The inverted output of the last stage ($\overline{Q}_N$) is fed back to the serial input of the first stage. Starting from $0000$, the sequence is $0000 \to 1000 \to 1100 \to 1110 \to 1111 \to 0111 \to 0011 \to 0001 \to 0000$. Total distinct states $= 2N$.
+\end{itemize}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}[Example 5.1: JK Flip-Flop to D Flip-Flop Conversion]
+\textbf{Problem:} Design a conversion circuit to convert a hardware JK flip-flop into a D flip-flop.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Set up the conversion truth table with target input $D$, present state $Q_n$, and desired next state $Q_{n+1}$:
+    \begin{center}
+    \begin{tabular}{c c c | c c}
+    \toprule
+    $D$ & $Q_n$ & $Q_{n+1}$ & $J$ (Excitation) & $K$ (Excitation) \\
+    \midrule
+    0 & 0 & 0 & 0 & $\times$ \\
+    0 & 1 & 0 & $\times$ & 1 \\
+    1 & 0 & 1 & 1 & $\times$ \\
+    1 & 1 & 1 & $\times$ & 0 \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+    \item Derive K-maps for $J$ and $K$ as functions of $D$ and $Q_n$:
+    \begin{itemize}
+        \item For $J$: At $(D=0, Q=0) \implies 0$; at $(D=1, Q=0) \implies 1$; don\textquotesingle t cares at $Q=1$. Minimization yields $J = D$.
+        \item For $K$: At $(D=0, Q=1) \implies 1$; at $(D=1, Q=1) \implies 0$; don\textquotesingle t cares at $Q=0$. Minimization yields $K = \overline{D}$.
+    \end{itemize}
+    \item Circuit connection: Connect input $D$ directly to $J$, and pass $D$ through a NOT inverter to drive $K$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 5.2: Maximum Operating Frequency of a Ripple Counter]
+\textbf{Problem:} A 5-bit asynchronous binary ripple counter is constructed using flip-flops each having an internal propagation delay of $t_{pd} = \SI{12}{\nano\second}$. If an external strobe gate requires a settling stabilization window of $t_s = \SI{10}{\nano\second}$, determine the maximum permissible clock frequency $f_{max}$.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Total propagation delay across 5 cascaded ripple stages:
+    \begin{equation}
+    t_{ripple} = N \times t_{pd} = 5 \times \SI{12}{\nano\second} = \SI{60}{\nano\second}
+    \end{equation}
+    \item Total minimum clock period required:
+    \begin{equation}
+    T_{min} = t_{ripple} + t_s = \SI{60}{\nano\second} + \SI{10}{\nano\second} = \SI{70}{\nano\second}
+    \end{equation}
+    \item Maximum clock frequency:
+    \begin{equation}
+    f_{max} = \frac{1}{T_{min}} = \frac{1}{70 \times 10^{-9}\,\text{s}} \approx \SI{14.28}{\mega\hertz}
+    \end{equation}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 5.3: Design of Synchronous MOD-6 Counter using T Flip-Flops]
+\textbf{Problem:} Design a synchronous MOD-6 up-counter cycling through states $0 \to 1 \to 2 \to 3 \to 4 \to 5 \to 0$ using T flip-flops.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Number of flip-flops: $2^{N-1} < 6 \le 2^N \implies N = 3$ flip-flops ($Q_2, Q_1, Q_0$). Unused states: $6 (110)$ and $7 (111)$.
+    \item State transition and excitation table ($T = Q_n \oplus Q_{n+1}$):
+    \begin{center}
+    \begin{tabular}{c c c | c c c | c c c}
+    \toprule
+    $Q_2$ & $Q_1$ & $Q_0$ & $Q_2^+$ & $Q_1^+$ & $Q_0^+$ & $T_2$ & $T_1$ & $T_0$ \\
+    \midrule
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+    0 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+    1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 \\
+    1 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+    \item K-Map Minimization (with states 6 and 7 as Don\textquotesingle t Cares):
+    \begin{itemize}
+        \item $T_0 = 1$ (toggles every cycle).
+        \item $T_1 = \overline{Q}_2 Q_0$.
+        \item $T_2 = Q_1 Q_0 + Q_2 Q_0 = Q_0 (Q_1 + Q_2)$.
+    \end{itemize}
+    \item Unused State Verification:
+    \begin{itemize}
+        \item If $110_2$ occurs: $T_2 = 0, T_1 = 0, T_0 = 1 \implies 110 \to 111$.
+        \item If $111_2$ occurs: $T_2 = 1, T_1 = 0, T_0 = 1 \implies 111 \to 010$ (enters valid cycle at state 2).
+    \end{itemize}
+    The counter is completely self-correcting and lockout-free.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 5.4: Sequence Detector State Machine Design]
+\textbf{Problem:} Construct the state transition table and determine flip-flop requirements for an overlapping sequence detector detecting binary sequence \textbf{101}.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item State definitions:
+    \begin{itemize}
+        \item $S_0$: Reset / Initial state (no matching bits).
+        \item $S_1$: Received bit \textbf{1}.
+        \item $S_2$: Received sequence \textbf{10}.
+    \end{itemize}
+    \item State transitions:
+    \begin{itemize}
+        \item In $S_0$: Input $0 \to S_0 (Y=0)$, Input $1 \to S_1 (Y=0)$.
+        \item In $S_1$: Input $0 \to S_2 (Y=0)$, Input $1 \to S_1 (Y=0)$.
+        \item In $S_2$: Input $0 \to S_0 (Y=0)$, Input $1 \to S_1 (Y=1)$ (sequence \textbf{101} detected, overlapping with next sequence start).
+    \end{itemize}
+    \item Number of states $= 3 \implies N = \lceil \log_2 3 \rceil = 2$ flip-flops ($Q_1, Q_0$).
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 5.5: Johnson Counter State Analysis]
+\textbf{Problem:} For a 4-bit Johnson (twisted ring) counter:
+\begin{enumerate}
+    \item List the complete sequence of valid counting states starting from $0000_2$.
+    \item Determine the total number of unused states and calculate the count modulus.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Shift rule: $Q_3^+ = \overline{Q}_0, Q_2^+ = Q_3, Q_1^+ = Q_2, Q_0^+ = Q_1$.
+    State progression:
+    \begin{equation}
+    0000 \to 1000 \to 1100 \to 1110 \to 1111 \to 0111 \to 0011 \to 0001 \to 0000
+    \end{equation}
+    \item Total states in sequence: $M = 2 \times 4 = 8$ states.
+    \item A 4-bit register has $2^4 = 16$ total combinations.
+    Number of unused states $= 16 - 8 = 8$ states (e.g., $0101, 1010, 0010$).
+\end{enumerate}
+\end{examplebox}
+
+\begin{takeawaybox}[Chapter 5 Key Formulae \& Takeaways]
+\begin{itemize}
+    \item \textbf{JK Next-State Equation:} $Q_{next} = J\overline{Q} + \overline{K}Q$.
+    \item \textbf{T Next-State Equation:} $Q_{next} = T \oplus Q$.
+    \item \textbf{Race-Around Solution:} Master-Slave configuration with level isolation or edge-triggering.
+    \item \textbf{Ripple Counter Delay:} $t_{delay} = N \cdot t_{pd} \implies f_{max} = \frac{1}{N \cdot t_{pd}}$.
+    \item \textbf{Modulus Rule:} An $N$-stage Ring counter has MOD-$N$; an $N$-stage Johnson counter has MOD-$2N$.
+\end{itemize}
+\end{takeawaybox}

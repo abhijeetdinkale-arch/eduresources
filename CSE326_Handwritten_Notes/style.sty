@@ -1,0 +1,139 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/16 v1.0 CSE326 Handwritten Short Notes Style]
+
+% Core Packages
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=18mm,top=24mm,bottom=22mm,headheight=22pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage{listings}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=DeepNavy,urlcolor=TealBlue,citecolor=DeepNavy]{hyperref}
+
+% Color Palette - Clean, aesthetic notebook theme
+\definecolor{DeepNavy}{RGB}{18, 38, 74}
+\definecolor{TealBlue}{RGB}{0, 130, 155}
+\definecolor{WarmAmber}{RGB}{210, 110, 20}
+\definecolor{NoteYellow}{RGB}{254, 250, 235}
+\definecolor{NoteBorder}{RGB}{230, 205, 140}
+\definecolor{ConceptBlue}{RGB}{240, 247, 255}
+\definecolor{ConceptBorder}{RGB}{140, 185, 235}
+\definecolor{AlertRed}{RGB}{190, 45, 45}
+\definecolor{AlertBg}{RGB}{255, 242, 242}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{CodeBg}{RGB}{245, 247, 250}
+
+% Define JavaScript for listings
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, const, let, document, window, alert, confirm, prompt},
+  keywordstyle=\color{TealBlue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{DeepNavy}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{WarmAmber}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+% Code Listing Settings
+\lstset{
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{CodeBg},
+    frame=single,
+    rulecolor=\color{ConceptBorder},
+    keywordstyle=\color{TealBlue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{WarmAmber},
+    breaklines=true,
+    showstringspaces=false
+}
+
+% Page & Header Setup
+\color{DarkSlate}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{DeepNavy}\textbf{CSE326: Internet Programming} --- Short Notes \& 1-Shot Revision}
+\fancyhead[R]{\small\sffamily\color{TealBlue}\textbf{LPU Student Series}}
+\fancyfoot[C]{\small\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{DeepNavy}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% Section Titles
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{DeepNavy}}
+  {\thesection}{0.8em}{}
+  [{\color{TealBlue}\titlerule[1.2pt]}]
+
+\titleformat{\subsection}
+  {\normalfont\sffamily\large\bfseries\color{TealBlue}}
+  {\thesubsection}{0.6em}{}
+
+% Custom Notebook Callout Boxes
+\newtcolorbox{handwbox}[1][Quick Revision Note]{%
+  enhanced,
+  breakable,
+  colback=NoteYellow,
+  colframe=NoteBorder,
+  arc=2mm,
+  boxrule=0.9pt,
+  fonttitle=\bfseries\sffamily\color{DarkSlate},
+  colbacktitle=NoteBorder!60!NoteYellow,
+  title={#1},
+  top=2mm, bottom=2mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{conceptbox}[1][Key Concept]{%
+  enhanced,
+  breakable,
+  colback=ConceptBlue,
+  colframe=ConceptBorder,
+  arc=2mm,
+  boxrule=0.9pt,
+  fonttitle=\bfseries\sffamily\color{DeepNavy},
+  colbacktitle=ConceptBorder!50!ConceptBlue,
+  title={#1},
+  top=2mm, bottom=2mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{examalert}[1][Exam High-Yield Alert]{%
+  enhanced,
+  breakable,
+  colback=AlertBg,
+  colframe=AlertRed,
+  arc=2mm,
+  boxrule=0.9pt,
+  fonttitle=\bfseries\sffamily\color{white},
+  colbacktitle=AlertRed,
+  title={#1},
+  top=2mm, bottom=2mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{codebox}[1][Code Syntax Example]{%
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=DeepNavy,
+  arc=2mm,
+  boxrule=1pt,
+  fonttitle=\bfseries\sffamily\color{white},
+  colbacktitle=DeepNavy,
+  title={#1},
+  top=2.5mm, bottom=2.5mm, left=3.5mm, right=3.5mm
+}
+
+\endinput

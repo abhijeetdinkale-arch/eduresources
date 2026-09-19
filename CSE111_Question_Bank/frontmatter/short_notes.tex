@@ -1,0 +1,99 @@
+\chapter*{Handwritten-Style Short Notes}
+\addcontentsline{toc}{chapter}{Handwritten-Style Short Notes}
+\label{chap:short_notes}
+
+\section*{Unit 1: Computer Languages}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Language Categories}:
+    \begin{itemize}
+        \item \textit{Machine Language}: $0$s and $1$s only. Direct hardware execution. Highly processor-dependent.
+        \item \textit{Assembly Language}: Uses short mnemonic codes (\texttt{MOV}, \texttt{ADD}, \texttt{SUB}). Requires an \textbf{Assembler}. 1-to-1 instruction correspondence.
+        \item \textit{High-Level Language (HLL)}: English-like statements (\texttt{count = count + 1}). Portable across hardware architectures (C, Java, Python).
+    \end{itemize}
+    \item \textbf{Translators Comparison}:
+    \begin{itemize}
+        \item \textit{Compiler}: Converts the entire source program into machine/object code \textbf{before} execution. Reports all compile-time errors beforehand.
+        \item \textit{Interpreter}: Translates and executes instructions \textbf{line-by-line during runtime}. Offers immediate interactive feedback; executes slower.
+        \item \textit{Assembler}: Translates assembly source into machine code using a \textbf{2-pass process} (Pass 1: label addresses recorded; Pass 2: binary generated).
+    \end{itemize}
+    \item \textbf{Program Development Cycle}: Problem Definition $\rightarrow$ Problem Analysis $\rightarrow$ Algorithm/Flowchart Design $\rightarrow$ Coding $\rightarrow$ Translation $\rightarrow$ Testing \& Debugging $\rightarrow$ Documentation $\rightarrow$ Maintenance.
+    \item \textbf{Compilation \& Execution Process}: Source Code $\rightarrow$ Preprocessor $\rightarrow$ Compiler $\rightarrow$ Assembler $\rightarrow$ Linker $\rightarrow$ Loader $\rightarrow$ CPU Instruction Cycle.
+\end{itemize}
+
+\section*{Unit 2: Computer Fundamentals}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Von Neumann Architecture (1945)}: Built on the \textbf{stored-program principle} (instructions and data share the same unified memory space).
+    \item \textbf{CPU Sub-units}:
+    \begin{itemize}
+        \item \textit{ALU (Arithmetic Logic Unit)}: Performs calculations ($+, -, \times, \div$) and comparisons (\texttt{AND}, \texttt{OR}, \texttt{NOT}, $<$, $>$).
+        \item \textit{Control Unit (CU)}: Issues timing and control signals; directs the fetch-decode-execute cycle.
+        \item \textit{Registers}: Internal ultra-high-speed memory cells holding instructions, addresses, and operands.
+    \end{itemize}
+    \item \textbf{System Buses}:
+    \begin{itemize}
+        \item \textit{Data Bus}: Carries actual program instructions and data (bidirectional).
+        \item \textit{Address Bus}: Carries memory addresses and device ports (unidirectional from CPU).
+        \item \textit{Control Bus}: Carries control and timing signals like memory read/write and interrupt lines.
+    \end{itemize}
+    \item \textbf{Computer Types}: Supercomputers (scientific modeling), Mainframes (enterprise high-volume transactions), Servers (network services), Workstations (heavy graphics/CAD), Embedded Systems (single dedicated control function).
+\end{itemize}
+
+\section*{Unit 3: Computer Hardware}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{CPU vs. GPU}:
+    \begin{itemize}
+        \item \textit{CPU}: Few powerful, flexible cores. Optimized for low-latency sequential logic, branching, and OS tasks.
+        \item \textit{GPU}: Thousands of smaller parallel cores. Optimized for high-throughput parallel arithmetic (graphics rendering, image processing, deep learning). Uses high-bandwidth \textbf{VRAM}.
+    \end{itemize}
+    \item \textbf{Memory Devices}:
+    \begin{itemize}
+        \item \textit{RAM (Volatile)}: Loses data upon power removal.
+        \begin{itemize}
+            \item \textbf{DRAM}: Uses capacitors that leak charge; requires periodic electrical refresh; used for main system RAM.
+            \item \textbf{SRAM}: Uses flip-flops; faster, more expensive; used for CPU cache ($L_1, L_2, L_3$).
+        \end{itemize}
+        \item \textit{ROM (Non-volatile)}: Retains data permanently. Holds startup firmware (BIOS/UEFI).
+        \item \textit{SSD vs. HDD}: SSDs use flash memory (no moving parts, shock-resistant, fast). HDDs use spinning magnetic platters with moving read/write heads (mechanical, prone to shock).
+    \end{itemize}
+    \item \textbf{Key Registers}: Program Counter (PC) holds the address of the \textit{next} instruction; Instruction Register (IR) holds the instruction \textit{currently being executed}.
+\end{itemize}
+
+\section*{Unit 4: Number Systems}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Radix Basics}: Binary ($b=2$), Octal ($b=8$), Decimal ($b=10$), Hexadecimal ($b=16$).
+    \item \textbf{3-Bit \& 4-Bit Grouping Rules}:
+    \begin{itemize}
+        \item Octal to Binary: Replace each octal digit with its 3-bit binary equivalent ($7_8 = 111_2$).
+        \item Hexadecimal to Binary: Replace each hex digit with its 4-bit binary equivalent ($\text{F}_{16} = 1111_2$, $\text{A}_{16} = 1010_2$).
+    \end{itemize}
+    \item \textbf{Decimal Integer to Binary}: Repeated division by $2$, recording remainders from bottom (last) to top (first).
+    \item \textbf{Decimal Fraction to Binary}: Repeated multiplication by $2$, recording integer parts from top to bottom.
+\end{itemize}
+
+\section*{Unit 5: Version Control}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Git}: Distributed version control system created by Linus Torvalds in 2005. Operates locally; records project snapshots in hidden \texttt{.git} folder.
+    \item \textbf{GitHub}: Web-based hosting platform for remote Git repositories, facilitating team collaboration and backup.
+    \item \textbf{The 3-Tree Architecture}:
+    \[
+    \text{Working Directory} \xrightarrow{\texttt{git add}} \text{Staging Area} \xrightarrow{\texttt{git commit}} \text{Repository (.git)} \xrightarrow{\texttt{git push}} \text{GitHub Remote}
+    \]
+    \item \textbf{Branching}: An independent movable pointer to a commit. Allows developing features without affecting the \texttt{main} production branch.
+\end{itemize}
+
+\section*{Unit 6: Modern AI Trends and Tools}
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Foundations}: AI term coined at Dartmouth workshop (1956). Machine Learning (learns from data/patterns) $\supset$ Deep Learning (multi-layer neural networks).
+    \item \textbf{Narrow AI vs. General AI}: All current commercial tools are \textbf{Narrow AI} (specialized in specific domains).
+    \item \textbf{Key Generative AI Tools}:
+    \begin{itemize}
+        \item \textit{Text}: ChatGPT (OpenAI), Gemini (Google --- natively multimodal).
+        \item \textit{Images}: DALL-E, Midjourney, Adobe Firefly.
+        \item \textit{Video/Audio}: Runway, Synthesia.
+        \item \textit{Research Assistants}: Perplexity AI (search engine with cited web sources), NotebookLM (source-grounded notes), JenniAI (academic drafting).
+    \end{itemize}
+    \item \textbf{Hallucination}: When an AI model generates fluent and confident-sounding but factually false statements or invented citations.
+    \item \textbf{Prompt Engineering Structure}: Role + Context + Precise Task + Constraints + Format.
+\end{itemize}
+
+\newpage

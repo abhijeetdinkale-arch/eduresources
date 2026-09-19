@@ -1,0 +1,260 @@
+\chapter{University-Style Mock Examinations}
+\label{chap:mock-examinations}
+
+\section{Examination Strategy \& Time Management}
+University end-term examinations for ECE249 are typically structured for **100 Marks** over a **3-Hour (180 Minutes)** duration.
+
+\begin{examtip}[Optimal 180-Minute Exam Time Allocation]
+\begin{itemize}
+    \item \textbf{First 5 Minutes:} Question paper scan and selection of optimal optional questions.
+    \item \textbf{Section A (20 Marks):} 10 Short questions $\times$ 2.5 min = \textbf{25 Minutes}.
+    \item \textbf{Section B (30 Marks):} 6 Analytical problems $\times$ 9 min = \textbf{54 Minutes}.
+    \item \textbf{Section C (50 Marks):} 5 Comprehensive long questions $\times$ 18 min = \textbf{90 Minutes}.
+    \item \textbf{Final 10 Minutes:} Numerical verification, unit checking, circuit label inspection.
+\end{itemize}
+\end{examtip}
+
+---
+
+\section{Mock Examination Paper 1}
+\noindent\textbf{Course Code:} ECE249 \hfill \textbf{Maximum Marks:} 100 \\
+\textbf{Course Title:} Digital Electronics \& Microcontroller Interfacing \hfill \textbf{Time Allowed:} 3 Hours
+
+\vspace{0.4cm}
+\noindent\rule{\textwidth}{1.2pt}
+
+\subsection*{SECTION A: Short Conceptual Questions ($10 \times 2 = 20$ Marks)}
+\noindent\textit{Answer all questions. Each question carries 2 marks.}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em]
+    \item State Ohm's Law and name two non-ohmic devices where it fails.
+    \item State Kirchhoff's Current Law (KCL) and identify the fundamental physical conservation law upon which it is based.
+    \item Distinguish between Intrinsic and Extrinsic semiconductors with respect to charge carrier concentration.
+    \item Define the knee voltage of a PN junction diode. State its typical values for Silicon and Germanium.
+    \item Why does the Arduino UNO operate with an on-board crystal oscillator frequency of $\SI{16}{\mega\hertz}$?
+    \item Convert the binary number $(101101)_2$ into its corresponding Gray code.
+    \item State De Morgan's first and second theorems algebraically.
+    \item Why are NAND and NOR gates designated as ``Universal Gates''?
+    \item Define the Race-Around Condition in a level-triggered JK flip-flop.
+    \item Differentiate between a Ring Counter and a Johnson Counter in terms of their modulus for an $N$-flip-flop register.
+\end{enumerate}
+
+\subsection*{SECTION B: Analytical \& Numerical Problems ($6 \times 5 = 30$ Marks)}
+\noindent\textit{Answer any six questions. Each question carries 5 marks.}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em, start=11]
+    \item Use the Voltage Division and Current Division rules to find the voltage $V_x$ and current $I_x$ in the circuit containing a $\SI{48}{\volt}$ source with series resistors $\SI{12}{\ohm}$ and a parallel combination of $\SI{20}{\ohm}$ and $\SI{30}{\ohm}$.
+    \item A full-wave bridge rectifier with ideal diodes delivers power to a load resistance $R_L = \SI{1}{\kilo\ohm}$ from an AC source $v_s(t) = 120\sqrt{2}\sin(120\pi t)\,\si{\volt}$. Calculate: (a) $V_{dc}$, (b) $I_{dc}$, (c) Ripple voltage $V_{ac}$, and (d) Rectifier efficiency $\eta$.
+    \item An Arduino UNO ADC reads an analog voltage from an LDR connected in a pull-down voltage divider with a $\SI{10}{\kilo\ohm}$ fixed resistor. If the ADC registers a digital value of $750$ with $V_{ref} = \SI{5.0}{\volt}$, calculate the measured voltage and the instantaneous resistance of the LDR.
+    \item Perform the subtraction $(42)_{10} - (68)_{10}$ using 8-bit 2's complement arithmetic. Clearly state the carry status and final signed magnitude.
+    \item Minimize the 4-variable logic function using a K-Map:
+    $$F(A,B,C,D) = \sum m(1, 3, 7, 11, 15) + d(0, 2, 5)$$
+    \item Synthesize a Half Subtractor using only two-input NAND gates.
+    \item Convert an available D Flip-Flop into a T Flip-Flop. Show the complete conversion table, K-Map, and circuit diagram.
+\end{enumerate}
+
+\subsection*{SECTION C: Comprehensive Design Questions ($5 \times 10 = 50$ Marks)}
+\noindent\textit{Answer all five questions. Each question carries 10 marks.}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em, start=18]
+    \item \textbf{(a)} Explain the construction and operation of an NPN Bipolar Junction Transistor in Common Emitter (CE) configuration. \\
+    \textbf{(b)} Sketch and explain the input and output V-I characteristics, clearly demarcating the Cut-off, Active, and Saturation regions. \\
+    \textbf{(c)} Derive the mathematical relationship between $\alpha$ and $\beta$.
+    
+    \item \textbf{(a)} Draw the architectural block diagram of an Ultrasonic Distance Sensor (HC-SR04) and explain its operational timing protocol. \\
+    \textbf{(b)} Derive the exact distance formula and explain why division by 2 is required. \\
+    \textbf{(c)} If the echo pulse width measured by an Arduino microcontroller is $\SI{2500}{\micro\second}$, calculate the physical obstacle distance in centimeters (assuming $v = \SI{340}{\meter\per\second}$).
+    
+    \item \textbf{(a)} Design a 4:1 Multiplexer using basic logic gates and write its complete Boolean equation. \\
+    \textbf{(b)} Implement the 4-variable Boolean function $F(A,B,C,D) = \sum m(0, 1, 3, 4, 8, 9, 15)$ using an 8:1 Multiplexer with $A, B, C$ as select lines.
+    
+    \item \textbf{(a)} What is the Race-Around condition in JK flip-flops? Derive the mathematical inequality that causes it. \\
+    \textbf{(b)} Explain with a complete schematic and timing diagrams how a Master-Slave JK Flip-Flop permanently eliminates the race-around condition.
+    
+    \item Design a 3-bit Synchronous UP Counter using JK Flip-Flops. \\
+    \textbf{(a)} Draw the State Diagram and State Transition Table. \\
+    \textbf{(b)} Map the flip-flop excitations using the JK excitation table. \\
+    \textbf{(c)} Simplify all $J$ and $K$ input equations using K-Maps. \\
+    \textbf{(d)} Draw the final logic circuit schematic.
+\end{enumerate}
+
+\vspace{0.4cm}
+\noindent\rule{\textwidth}{1.2pt}
+
+---
+
+\section{Solutions for Mock Examination Paper 1}
+
+\subsection*{Solutions for Section A}
+\begin{solutionbox}[Solutions to Questions 1–10]
+\begin{enumerate}[label=\textbf{Ans Q\arabic*.}]
+    \item \textbf{Ohm's Law:} At constant temperature, current through a conductor is proportional to applied voltage ($V = IR$). Two non-ohmic devices: **PN Junction Diode** and **Bipolar Junction Transistor (BJT)**.
+    \item \textbf{KCL:} $\sum I_{\text{entering}} = \sum I_{\text{leaving}}$ at any node. It is based on the **Conservation of Electric Charge**.
+    \item \textbf{Semiconductors:} In Intrinsic semiconductors, $n = p = n_i$. In Extrinsic N-type, electrons dominate ($n \approx N_D \gg p$); in P-type, holes dominate ($p \approx N_A \gg n$).
+    \item \textbf{Knee Voltage ($V_k$):} The forward bias voltage at which diode current begins to increase exponentially. $\mathbf{V_k(\text{Si}) = 0.7\text{ V}}, \mathbf{V_k(\text{Ge}) = 0.3\text{ V}}$.
+    \item \textbf{16 MHz Clock:} Established by a quartz crystal oscillator to provide precise instruction cycle execution timing ($\SI{62.5}{\nano\second}$ per clock cycle) for the ATmega328P processor.
+    \item \textbf{Binary to Gray:} Binary $101101_2 \implies G_5=1, G_4=1\oplus 0=1, G_3=0\oplus 1=1, G_2=1\oplus 1=0, G_1=1\oplus 0=1, G_0=0\oplus 1=1 \implies \mathbf{111011_{\text{Gray}}}$.
+    \item \textbf{De Morgan's Theorems:} (1) $\mathbf{\overline{A \cdot B} = \overline{A} + \overline{B}}$, (2) $\mathbf{\overline{A + B} = \overline{A} \cdot \overline{B}}$.
+    \item \textbf{Universal Gates:} Because any Boolean logic function (AND, OR, NOT, XOR, XNOR) can be implemented using exclusively NAND gates or exclusively NOR gates without other gate types.
+    \item \textbf{Race-Around Condition:} In a level-triggered JK flip-flop, when $J=K=1$ and clock pulse width $t_p > t_{pd}$ (propagation delay), the output toggles repeatedly and unpredictably during a single clock pulse.
+    \item \textbf{Counter Modulus:} An $N$-flip-flop **Ring Counter** has modulus $\mathbf{\text{MOD-}N}$ ($N$ states), whereas an $N$-flip-flop **Johnson Counter** has modulus $\mathbf{\text{MOD-}2N}$ ($2N$ states).
+\end{enumerate}
+\end{solutionbox}
+
+\subsection*{Solutions for Section B}
+\begin{solutionbox}[Solution to Q11: DC Circuit Division]
+Parallel equivalent of $\SI{20}{\ohm}$ and $\SI{30}{\ohm}$:
+$$R_p = \frac{20 \times 30}{20 + 30} = \frac{600}{50} = \SI{12}{\ohm}$$
+Total circuit resistance $R_{total} = R_1 + R_p = 12 + 12 = \SI{24}{\ohm}$.
+Total source current $I_s = \frac{V_s}{R_{total}} = \frac{48}{24} = \SI{2.0}{\ampere}$.
+By Voltage Division Rule across parallel branch:
+$$V_x = V_s \left(\frac{R_p}{R_1 + R_p}\right) = 48 \left(\frac{12}{12 + 12}\right) = \mathbf{\SI{24}{\volt}}$$
+By Current Division Rule through the $\SI{20}{\ohm}$ resistor:
+$$I_x = I_s \left(\frac{30}{20 + 30}\right) = 2.0 \times \frac{30}{50} = \mathbf{\SI{1.2}{\ampere}}$$
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Q12: Bridge Rectifier Analysis]
+Peak secondary voltage $V_m = 120\sqrt{2} \approx \SI{169.7}{\volt}$.
+\begin{align*}
+    \text{(a) } V_{dc} &= \frac{2V_m}{\pi} = \frac{2 \times 169.7}{\pi} \approx \mathbf{\SI{108.04}{\volt}} \\
+    \text{(b) } I_{dc} &= \frac{V_{dc}}{R_L} = \frac{108.04}{\SI{1000}{\ohm}} = \mathbf{\SI{0.108}{\ampere} = \SI{108.04}{\milli\ampere}} \\
+    \text{(c) } V_{rms} &= \frac{V_m}{\sqrt{2}} = \SI{120}{\volt} \implies V_{ac} = \sqrt{V_{rms}^2 - V_{dc}^2} = \sqrt{120^2 - 108.04^2} = \mathbf{\SI{52.22}{\volt}} \\
+    \text{(d) } \eta &= \frac{8}{\pi^2} \approx \mathbf{81.2\%}
+\end{align*}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Q14: 2's Complement Subtraction]
+Compute $(42)_{10} - (68)_{10}$ in 8 bits:
+\begin{itemize}
+    \item $(42)_{10} = 00101010_2$, $(68)_{10} = 01000100_2$
+    \item 1's complement of $68 = 10111011_2 \implies$ 2's complement of $68 = 10111100_2$
+    \item Add: $00101010_2 + 10111100_2 = 11100110_2$
+    \item No end-around carry ($C_{out} = 0$) $\implies$ Result is Negative.
+    \item Magnitude $= 2\text{'s comp of } 11100110_2 = 00011001_2 + 1 = 00011010_2 = (26)_{10}$.
+    \item $\mathbf{\text{Result} = -(26)_{10} \quad (11100110_2)}$.
+\end{itemize}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Q15: K-Map Minimization]
+$F(A,B,C,D) = \sum m(1, 3, 7, 11, 15) + d(0, 2, 5)$.
+\begin{itemize}
+    \item Column $CD=11$ contains $m_3, m_7, m_{15}, m_{11} \implies$ forms an **Octet / Quad** $CD$.
+    \item Row $AB=00$ contains $d_0, m_1, m_3, d_2 \implies$ forms a **Quad** $\overline{A}\,\overline{B}$.
+    \item Remaining $m_5$ (with $m_1, m_3, m_7$) forms Quad $\overline{A}D$.
+    \item Minimal equation: $\mathbf{F = \overline{A}\,\overline{B} + CD}$ (or $\overline{A}D + CD$).
+\end{itemize}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Q17: D to T Flip-Flop Conversion]
+Target is T-FF ($T, Q_n \rightarrow Q_{n+1}$); Available is D-FF ($Q_{n+1} = D$).
+\begin{center}
+\small
+\begin{tabular}{cc|c|c}
+\toprule
+$T$ & $Q_n$ & $Q_{n+1}$ & $D$ \\
+\midrule
+0 & 0 & 0 & 0 \\
+0 & 1 & 1 & 1 \\
+1 & 0 & 1 & 1 \\
+1 & 1 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+From the table, $D = 1$ when $(T, Q_n) = (0,1)$ or $(1,0) \implies \mathbf{D = T \oplus Q_n}$.
+Realization: Connect an XOR gate with inputs $T$ and $Q_n$ to the $D$ input terminal.
+\end{solutionbox}
+
+---
+
+\section{Mock Examination Paper 2}
+\noindent\textbf{Course Code:} ECE249 \hfill \textbf{Maximum Marks:} 100 \\
+\textbf{Course Title:} Digital Electronics \& Microcontroller Interfacing \hfill \textbf{Time Allowed:} 3 Hours
+
+\vspace{0.4cm}
+\noindent\rule{\textwidth}{1.2pt}
+
+\subsection*{SECTION A: Short Conceptual Questions ($10 \times 2 = 20$ Marks)}
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em]
+    \item Why does a silicon PN diode require $\SI{0.7}{\volt}$ to turn ON, whereas Germanium requires only $\SI{0.3}{\volt}$?
+    \item State the relationship between collector current $I_C$, base current $I_B$, and current gain $\beta$ in a BJT operating in the active region.
+    \item What is the function of the `IOREF` and `AREF` pins on an Arduino UNO board?
+    \item Explain the photoconductive principle of a Cadmium Sulfide (CdS) LDR.
+    \item Express decimal $29_{10}$ in (a) Pure Binary, and (b) BCD (8421).
+    \item Why is Gray code called a ``reflected'' code?
+    \item Write the dual of the Boolean algebraic identity: $A + \overline{A}B = A + B$.
+    \item Draw the logic symbol and write the Boolean output equation for a 2-input XNOR gate.
+    \item What is the primary operational difference between a latch and an edge-triggered flip-flop?
+    \item Explain how an asynchronous counter can be truncated to count modulo-6.
+\end{enumerate}
+
+\subsection*{SECTION B: Analytical \& Numerical Problems ($6 \times 5 = 30$ Marks)}
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em, start=11]
+    \item In a common-emitter NPN transistor circuit, $V_{CC} = \SI{15}{\volt}, R_C = \SI{2.2}{\kilo\ohm}, \beta = 100$. If $I_B = \SI{50}{\micro\ampere}$, calculate $I_C, I_E$ and $V_{CE}$. Verify whether the transistor is in active or saturation mode.
+    \item An Arduino UNO ADC pin receives a signal from an ultrasonic sensor. If the measured voltage is $\SI{2.45}{\volt}$, calculate the 10-bit integer returned by `analogRead()`.
+    \item Convert Gray code $101101_{\text{Gray}}$ into its binary equivalent.
+    \item Using Boolean algebra laws, simplify the expression: $F = A\overline{B}C + \overline{A}\,\overline{B}C + ABC + AB\overline{C}$.
+    \item Design a 1-bit binary Half Adder using only 2-input NOR gates.
+    \item Implement a Full Subtractor using a 3-to-8 line decoder and external logic gates.
+    \item Convert a JK Flip-Flop into an SR Flip-Flop. Show the conversion table and K-Maps.
+\end{enumerate}
+
+\subsection*{SECTION C: Comprehensive Design Questions ($5 \times 10 = 50$ Marks)}
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=2em, start=18]
+    \item \textbf{(a)} Explain the working of a Full-Wave Center-Tapped Rectifier with a complete circuit diagram and waveforms. \\
+    \textbf{(b)} Derive expressions for its DC output voltage, RMS voltage, ripple factor, and rectification efficiency. \\
+    \textbf{(c)} Why is the PIV rating of diodes in a center-tapped rectifier twice that of a bridge rectifier?
+    
+    \item \textbf{(a)} Detail the pin configuration of the Arduino UNO board, grouping pins by power, analog, digital I/O, PWM, and communications. \\
+    \textbf{(b)} Explain how PWM approximates analog output voltages on pins ~3, 5, 6, 9, 10, 11. Calculate the average output voltage for an `analogWrite(6, 153)` command.
+    
+    \item \textbf{(a)} Minimize the Boolean function using a 4-variable K-Map:
+    $$F(A,B,C,D) = \prod M(0, 1, 4, 5, 8, 9, 12, 13) \cdot d(3, 11)$$
+    \textbf{(b)} Realize the minimal POS expression using only NOR gates.
+    
+    \item \textbf{(a)} Explain the architecture and operation of a 4-bit Serial-In Parallel-Out (SIPO) shift register. Draw its schematic and timing diagram. \\
+    \textbf{(b)} Explain the operational difference between SISO, SIPO, PISO, and PIPO shift registers.
+    
+    \item Design a Synchronous 3-bit DOWN Counter ($7 \rightarrow 6 \rightarrow 5 \rightarrow 4 \rightarrow 3 \rightarrow 2 \rightarrow 1 \rightarrow 0 \rightarrow 7$) using T Flip-Flops. \\
+    \textbf{(a)} Formulate the State Table and determine $T_2, T_1, T_0$ excitation inputs. \\
+    \textbf{(b)} Minimize input expressions using K-Maps. \\
+    \textbf{(c)} Draw the complete logic circuit diagram.
+\end{enumerate}
+
+\vspace{0.4cm}
+\noindent\rule{\textwidth}{1.2pt}
+
+---
+
+\section{Solutions for Mock Examination Paper 2}
+
+\begin{solutionbox}[Selected Solutions to Paper 2]
+\textbf{Q11 Solution (BJT Bias):}
+\begin{align*}
+    I_C &= \beta I_B = 100 \times \SI{50}{\micro\ampere} = \SI{5.0}{\milli\ampere} \\
+    I_E &= I_B + I_C = 0.05 + 5.0 = \SI{5.05}{\milli\ampere} \\
+    V_{CE} &= V_{CC} - I_C R_C = 15 - (5.0\text{ mA} \times 2.2\text{ k}\Omega) = 15 - 11.0 = \mathbf{\SI{4.0}{\volt}}
+\end{align*}
+Since $V_{CE} = \SI{4.0}{\volt} > V_{CE(sat)} \approx \SI{0.2}{\volt}$, the transistor is in **Active Mode**.
+
+\vspace{6pt}
+\textbf{Q13 Solution (Gray to Binary):}
+Gray $= 101101_2$:
+\begin{itemize}
+    \item $B_5 = G_5 = 1$
+    \item $B_4 = B_5 \oplus G_4 = 1 \oplus 0 = 1$
+    \item $B_3 = B_4 \oplus G_3 = 1 \oplus 1 = 0$
+    \item $B_2 = B_3 \oplus G_2 = 0 \oplus 1 = 1$
+    \item $B_1 = B_2 \oplus G_1 = 1 \oplus 0 = 1$
+    \item $B_0 = B_1 \oplus G_0 = 1 \oplus 1 = 0$
+\end{itemize}
+$\mathbf{\text{Binary} = 110110_2}$.
+
+\vspace{6pt}
+\textbf{Q19 (b) Solution (PWM Average Voltage):}
+$$\text{Duty Cycle} = \frac{153}{255} = 0.60 \implies V_{avg} = 5.0\text{ V} \times 0.60 = \mathbf{\SI{3.0}{\volt}}$$
+
+\vspace{6pt}
+\textbf{Q22 Solution (3-Bit Synchronous DOWN Counter):}
+Toggle logic for down counter: A flip-flop toggles when all lower-order bits are $0$ ($\overline{Q} = 1$):
+$$\mathbf{T_0 = 1, \qquad T_1 = \overline{Q}_0, \qquad T_2 = \overline{Q}_0 \cdot \overline{Q}_1}$$
+\end{solutionbox}

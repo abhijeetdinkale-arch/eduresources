@@ -1,0 +1,130 @@
+const API_BASE = '/api';
+
+export const api = {
+  // Auth endpoints
+  async getAuthConfig() {
+    try {
+      const res = await fetch(`${API_BASE}/auth/config`);
+      return await res.json();
+    } catch {
+      return { googleClientId: null };
+    }
+  },
+
+  async checkSubscription(email) {
+    try {
+      const res = await fetch(`${API_BASE}/subscription/status?email=${encodeURIComponent(email || '')}`);
+      if (res.ok) return await res.json();
+    } catch {}
+    return { isSubscribed: true }; // offline fallback
+  },
+
+  async loginWithGoogle(credential) {
+    const res = await fetch(`${API_BASE}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || 'Google login failed');
+    }
+    return await res.json();
+  },
+
+  async loginDemo(studentName, studentEmail) {
+    const res = await fetch(`${API_BASE}/auth/demo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: studentName, email: studentEmail }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || 'Demo login failed');
+    }
+    return await res.json();
+  },
+
+  async getCurrentUser() {
+    const res = await fetch(`${API_BASE}/auth/me`);
+    if (!res.ok) return null;
+    return await res.json();
+  },
+
+  async logout() {
+    await fetch(`${API_BASE}/auth/logout`, { method: 'POST' });
+  },
+
+  // Materials & Books
+  async getMaterials(params = {}) {
+    try {
+      const query = new URLSearchParams(params).toString();
+      const res = await fetch(`${API_BASE}/materials?${query}`);
+      if (res.ok) return await res.json();
+    } catch {}
+
+    // Offline / Bundled Local Fallback
+    try {
+      const localRes = await fetch('/books-manifest.json');
+      if (localRes.ok) {
+        const data = await localRes.json();
+        let filtered = data.materials || [];
+        if (params.course && params.course !== 'All') {
+          filtered = filtered.filter((m) => m.courseCode.toLowerCase() === params.course.toLowerCase());
+        }
+        if (params.category && params.category !== 'All') {
+          filtered = filtered.filter((m) => m.category.toLowerCase() === params.category.toLowerCase());
+        }
+        if (params.search) {
+          const q = params.search.toLowerCase();
+          filtered = filtered.filter(
+            (m) =>
+              m.title.toLowerCase().includes(q) ||
+              m.courseCode.toLowerCase().includes(q) ||
+              m.category.toLowerCase().includes(q)
+          );
+        }
+        return { total: filtered.length, materials: filtered };
+      }
+    } catch {}
+
+    throw new Error('Failed to fetch course materials');
+  },
+
+  async getMaterialById(id) {
+    try {
+      const res = await fetch(`${API_BASE}/materials/${encodeURIComponent(id)}`);
+      if (res.ok) return await res.json();
+    } catch {}
+
+    const all = await this.getMaterials();
+    const doc = all.materials.find((m) => m.id === id);
+    if (!doc) throw new Error('Material not found');
+    return doc;
+  },
+
+  // Secure Document Delivery
+  async getDocumentStreamToken(materialId) {
+    try {
+      const res = await fetch(`${API_BASE}/document/token/${encodeURIComponent(materialId)}`, {
+        method: 'POST',
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
+    // Standalone / Offline App Fallback
+    return {
+      token: `local_${materialId}`,
+      isLocal: true,
+      materialId,
+    };
+  },
+
+  getDocumentStreamUrl(streamToken, material) {
+    if (streamToken.startsWith('local_')) {
+      const docId = streamToken.replace('local_', '');
+      return `/books/${docId}.dat`;
+    }
+    return `${API_BASE}/document/stream/${streamToken}`;
+  },
+};

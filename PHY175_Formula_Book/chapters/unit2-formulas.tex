@@ -1,0 +1,32 @@
+\chapter{Electricity and Electronic Devices Formulas}
+
+\begin{formulabox}[Circuit Laws \& Network Theorems]
+\begin{align}
+\text{Ohm's Law:} \quad V &= I R, \quad P = V I = I^2 R = \frac{V^2}{R} \\
+\text{KCL (Node Rule):} \quad \sum I_{in} &= \sum I_{out} \\
+\text{KVL (Loop Rule):} \quad \sum V_{drops} &= \sum V_{sources} \\
+\text{Series Voltage Divider:} \quad V_{R2} &= V_S \frac{R_2}{R_1 + R_2} \\
+\text{Parallel Current Divider:} \quad I_1 &= I_{total} \frac{R_2}{R_1 + R_2}
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[Diodes, Rectifiers \& BJTs]
+\begin{align}
+\text{Shockley Diode Equation:} \quad I_D &= I_S \left[ \exp\left(\frac{V_D}{n V_T}\right) - 1 \right] \\
+\text{Thermal Voltage:} \quad V_T &= \frac{k_B T}{q} \approx 25.9\,\text{mV at } 300\,\text{K} \\
+\text{Bridge Rectifier Peak Voltage:} \quad V_{peak} &= V_m - 2 V_D \\
+\text{Bridge Ripple Frequency:} \quad f_r &= 2 f_{in} = 100\,\text{Hz (for } 50\,\text{Hz AC)} \\
+\text{Peak-to-Peak Ripple Voltage:} \quad V_{r(pp)} &= \frac{V_{peak}}{2 f C R_L} = \frac{I_{DC}}{2 f C} \\
+\text{BJT Currents:} \quad I_E &= I_B + I_C, \quad I_C = \beta I_B = \alpha I_E, \quad \alpha = \frac{\beta}{\beta + 1} \\
+\text{BJT Base Bias (Thevenin):} \quad I_B &= \frac{V_{TH} - V_{BE}}{R_{TH} + (\beta + 1)R_E}
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[CMOS, Memory \& Architectures]
+\begin{align}
+\text{CMOS Dynamic Power:} \quad P_{dyn} &= \alpha C V_{DD}^2 f \\
+\text{SSD Host Write Endurance:} \quad \text{Bytes} &= \frac{\text{Physical Flash Size} \times \text{P/E Cycles}}{\text{Write Amplification Factor}} \\
+\text{SECDED Parity Bits:} \quad 2^k &\ge m + k + 1 \quad (+1 \text{ overall parity bit}) \\
+\text{Roofline Model Bound:} \quad \text{Throughput} &= \min(\text{Peak TOPS}, \, \text{Intensity} \times \text{Bandwidth})
+\end{align}
+\end{formulabox}

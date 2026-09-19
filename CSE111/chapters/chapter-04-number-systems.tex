@@ -1,0 +1,162 @@
+\chapter{Number Systems}
+\label{chap:number_systems}
+
+\begin{tcolorbox}[enhanced, colback=boxnavybg, colframe=brandnavy, boxrule=1.2pt, arc=4pt, title={\Large\bfseries\sffamily Unit 4 Overview \& Learning Objectives}]
+\sffamily\normalsize
+This chapter establishes the mathematical principles of positional numeral systems used in computing. By the end of this unit, students will be able to:
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+    \item Understand the positional value formula and the role of the radix point, MSD, and LSD.
+    \item Master binary, octal, decimal, and hexadecimal representations.
+    \item Convert between any arbitrary base and the decimal number system.
+    \item Execute rapid direct conversions between binary, octal, and hexadecimal using 3-bit and 4-bit grouping rules.
+    \item Perform integer conversions via repeated division and fractional conversions via repeated multiplication.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Orientation: Positional Representation of Numbers}
+
+A \textbf{number system} is a formal method of representing quantities using an agreed-upon set of symbols called \textbf{digits}. Modern computing is founded entirely on \textbf{positional number systems}, where the value contributed by any digit depends both on the symbol itself and its specific position within the number string.
+
+\subsection{Base or Radix}
+The \textbf{base} (or \textbf{radix}), denoted by $b$, defines the total number of distinct allowable digit symbols in that system. A base-$b$ system uses digits strictly ranging from $0$ up to $b-1$.
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Binary (Base 2):} Uses two digits: $0, 1$.
+    \item \textbf{Octal (Base 8):} Uses eight digits: $0, 1, 2, 3, 4, 5, 6, 7$.
+    \item \textbf{Decimal (Base 10):} Uses ten digits: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$.
+    \item \textbf{Hexadecimal (Base 16):} Uses sixteen symbols: $0\text{--}9$ and $\text{A}\text{--}\text{F}$.
+\end{itemize}
+
+\subsection{The General Positional Evaluation Formula}
+Any real number represented in a base-$b$ positional system can be evaluated into its equivalent decimal magnitude using the sum of products of each digit multiplied by its integer positional power of the base:
+\begin{equation}
+(d_n d_{n-1} \dots d_1 d_0 \,.\, d_{-1} d_{-2} \dots)_b = \sum_{i=-\infty}^{n} d_i \times b^i
+\end{equation}
+\begin{itemize}[leftmargin=1.2em]
+    \item For integers, positional exponents increase positively from right to left starting at index $i = 0$ (the units position, with weight $b^0 = 1$).
+    \item After the \textbf{radix point}, fractional exponents decrease negatively from left to right ($b^{-1}, b^{-2}, b^{-3}, \dots$).
+    \item \textbf{MSD (Most Significant Digit):} The leftmost non-zero digit carrying the highest positional weight.
+    \item \textbf{LSD (Least Significant Digit):} The rightmost digit carrying the lowest positional weight.
+\end{itemize}
+
+\section{The Four Key Number Systems in Computing}
+
+\subsection{1. Binary (Base 2)}
+Binary is the fundamental language of digital electronic computers because two-state electrical switches (transistors operating in saturation or cutoff) are physically simple, highly reliable, and resistant to electrical noise.
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Symbols:} $0, 1$.
+    \item \textbf{Integer Weights:} $2^0 = 1, \; 2^1 = 2, \; 2^2 = 4, \; 2^3 = 8, \; 2^4 = 16, \; 2^5 = 32, \; 2^6 = 64, \; 2^7 = 128$.
+    \item \textbf{Fractional Weights:} $2^{-1} = 0.5, \; 2^{-2} = 0.25, \; 2^{-3} = 0.125, \; 2^{-4} = 0.0625$.
+\end{itemize}
+
+\begin{example}[Evaluating a Binary Positional Number]
+Convert $(1011.01)_2$ to its decimal equivalent:
+\begin{align*}
+(1011.01)_2 &= (1 \times 2^3) + (0 \times 2^2) + (1 \times 2^1) + (1 \times 2^0) + (0 \times 2^{-1}) + (1 \times 2^{-2}) \\
+&= 8 + 0 + 2 + 1 + 0 + 0.25 \\
+&= \mathbf{11.25_{10}}
+\end{align*}
+\end{example}
+
+\begin{definition}[Binary Arithmetic Addition Rules]
+\begin{align*}
+0 + 0 &= 0 \\
+0 + 1 &= 1 \\
+1 + 0 &= 1 \\
+1 + 1 &= 10_2 \quad (\text{Sum } 0 \text{ with a carry of } 1 \text{ to next column}) \\
+1 + 1 + 1 &= 11_2 \quad (\text{Sum } 1 \text{ with a carry of } 1 \text{ to next column})
+\end{align*}
+\end{definition}
+
+\subsection{2. Decimal (Base 10)}
+Decimal is the universal human counting system. In computing, decimal is used at user interfaces for inputs and displayed reports. However, internally, computers do not store numbers in decimal. 
+
+\begin{examalert}[Why Floating-Point Decimals Experience Rounding Errors]
+In decimal, fractions like $1/10 = 0.1_{10}$ terminate cleanly. But in binary, because $10$ is not a pure power of $2$, the fraction $0.1_{10}$ becomes an \textbf{infinitely repeating binary fraction}:
+\[
+0.1_{10} = (0.0001100110011\dots)_2
+\]
+When stored in finite registers, the number must be truncated, resulting in tiny mathematical rounding discrepancies across repeated calculations.
+\end{examalert}
+
+\subsection{3. Octal (Base 8)}
+Octal provides a convenient, human-friendly shorthand representation for binary strings. Because $8 = 2^3$, \textbf{exactly three binary bits correspond to one octal digit}.
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Digits Allowed:} $0, 1, 2, 3, 4, 5, 6, 7$ (the digits $8$ and $9$ are strictly illegal).
+    \item \textbf{Weights:} $8^0 = 1, \; 8^1 = 8, \; 8^2 = 64, \; 8^3 = 512$.
+    \item \textbf{Practical Application:} Traditional Unix/Linux file access permissions are expressed in octal (e.g., permission \texttt{755}, where octal digit $7_8 = 111_2$ represents read, write, and execute permissions).
+\end{itemize}
+
+\subsection{4. Hexadecimal (Base 16)}
+Hexadecimal is the primary compact notation used across modern software engineering, computer architecture, and networking. Because $16 = 2^4$, \textbf{exactly four binary bits map to one hexadecimal digit}.
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Digits Allowed:} $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ and the letters $\text{A}=10, \text{B}=11, \text{C}=12, \text{D}=13, \text{E}=14, \text{F}=15$.
+    \item \textbf{Weights:} $16^0 = 1, \; 16^1 = 16, \; 16^2 = 256, \; 16^3 = 4096$.
+    \item \textbf{Syntax Conventions:} Often prefixed with \texttt{0x} in C/C++/Python (e.g., \texttt{0x2AF}) or suffixed with \texttt{h} in assembly (e.g., \texttt{2AFh}).
+    \item \textbf{Applications:} Displaying memory addresses (e.g., \texttt{0x7FFF}), inspecting compiled machine code, defining MAC hardware addresses, and representing RGB colors in web design (e.g., \texttt{\#FF0000} represents pure red).
+\end{itemize}
+
+\section{Systematic Number Conversions}
+
+\subsection{1. Converting from Any Base $b$ to Decimal}
+Multiply each digit by its positional weight $b^i$ and compute the arithmetic sum:
+\begin{example}[Hexadecimal to Decimal]
+Convert $(2\text{AF})_{16}$ to decimal:
+\begin{align*}
+(2\text{AF})_{16} &= (2 \times 16^2) + (10 \times 16^1) + (15 \times 16^0) \\
+&= (2 \times 256) + (10 \times 16) + (15 \times 1) \\
+&= 512 + 160 + 15 = \mathbf{687_{10}}
+\end{align*}
+\end{example}
+
+\subsection{2. Converting Decimal Integers to Any Base $b$ (Repeated Division)}
+Divide the decimal integer repeatedly by the target base $b$, recording the integer quotient and the remainder at each step. Terminate when the quotient becomes $0$. The final answer is obtained by reading the remainders \textbf{from bottom (last remainder = MSD) to top (first remainder = LSD)}.
+
+\begin{example}[Decimal $156_{10}$ to Binary]
+\begin{align*}
+156 \div 2 &= 78 \quad \text{remainder } 0 \quad (\text{LSD}) \\
+78 \div 2  &= 39 \quad \text{remainder } 0 \\
+39 \div 2  &= 19 \quad \text{remainder } 1 \\
+19 \div 2  &= 9 \quad \text{remainder } 1 \\
+9 \div 2   &= 4 \quad \text{remainder } 1 \\
+4 \div 2   &= 2 \quad \text{remainder } 0 \\
+2 \div 2   &= 1 \quad \text{remainder } 0 \\
+1 \div 2   &= 0 \quad \text{remainder } 1 \quad (\text{MSD}) \quad \implies \mathbf{(10011100)_2}
+\end{align*}
+\end{example}
+
+\subsection{3. Converting Decimal Fractions to Any Base $b$ (Repeated Multiplication)}
+Multiply the fractional portion repeatedly by the target base $b$. Record the resulting integer part at each step and continue multiplying only the remaining fractional component. Read the integer parts \textbf{from top (first generated = MSD) to bottom (last generated = LSD)}.
+
+\subsection{4. Direct Grouping Conversions (Fast Method)}
+Because $8 = 2^3$ and $16 = 2^4$, conversions between binary, octal, and hexadecimal bypass decimal arithmetic entirely:
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Binary $\rightarrow$ Octal:} Partition bits into groups of \textbf{three} starting from the radix point (adding leading or trailing zeros if needed):
+    \[
+    \underbrace{010}_{2}\;\underbrace{011}_{3}\;\underbrace{100}_{4}\;_2 \;\implies\; \mathbf{(234)_8}
+    \]
+    \item \textbf{Binary $\rightarrow$ Hexadecimal:} Partition bits into groups of \textbf{four} starting from the radix point:
+    \[
+    \underbrace{1001}_{9}\;\underbrace{1100}_{12=\text{C}}\;_2 \;\implies\; \mathbf{(9\text{C})_{16}}
+    \]
+    \item \textbf{Octal $\leftrightarrow$ Hexadecimal:} Convert each octal digit to 3 binary bits, then regroup the binary sequence into 4-bit blocks to yield the hexadecimal equivalent.
+\end{itemize}
+
+\begin{example}[Integrated Equivalency Verification]
+Notice that:
+\[
+\mathbf{156_{10}} \;=\; \mathbf{(10011100)_2} \;=\; \mathbf{(234)_8} \;=\; \mathbf{(9\text{C})_{16}}
+\]
+All four representations denote the exact same mathematical quantity.
+\end{example}
+
+\section{Chapter Review \& Key Takeaways}
+\begin{tcolorbox}[enhanced, colback=boxgreenbg, colframe=boxgreenborder, boxrule=1pt, arc=4pt, title={\bfseries\sffamily Summary Checklist}]
+\sffamily\small
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item A positional number system evaluates value through $\sum (d_i \times b^i)$.
+    \item Binary is base 2 ($0,1$); Octal is base 8 ($0\text{--}7$); Decimal is base 10 ($0\text{--}9$); Hexadecimal is base 16 ($0\text{--}9, \text{A}\text{--}\text{F}$).
+    \item Octal digits map directly to 3 binary bits; Hexadecimal digits map directly to 4 binary bits.
+    \item Decimal integers convert via repeated division (read remainders bottom-to-top); fractions convert via repeated multiplication (read integers top-to-bottom).
+    \item An unsigned 8-bit byte can represent decimal values from $0$ up to $255$ ($11111111_2 = \text{FF}_{16}$).
+\end{itemize}
+\end{tcolorbox}

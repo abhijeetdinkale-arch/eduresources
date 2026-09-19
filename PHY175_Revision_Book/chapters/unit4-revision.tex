@@ -1,0 +1,15 @@
+\chapter{Combinational Logic Circuits: Rapid Revision}
+
+\begin{highyieldbox}[Combinational Circuit Design]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Half Adder:} $S = A \oplus B, \quad C = AB$.
+    \item \textbf{Full Adder:} $S = A \oplus B \oplus C_{in}, \quad C_{out} = AB + BC_{in} + AC_{in}$.
+    \item \textbf{Half Subtractor:} $D = A \oplus B, \quad B_{out} = \bar{A}B$.
+    \item \textbf{Full Subtractor:} $D = A \oplus B \oplus B_{in}, \quad B_{out} = \bar{A}B + \bar{A}B_{in} + BB_{in}$.
+    \item \textbf{Carry Lookahead Adder (CLA):} Generates carries in parallel via $G_i = A_i B_i$ and $P_i = A_i \oplus B_i$, eliminating ripple carry delays.
+    \item \textbf{Multiplexer (MUX):} $2^n$-to-1 MUX has $n$ select lines and 1 output. Can implement any $n$-variable logic function directly.
+    \item \textbf{Decoder:} $n$-to-$2^n$ decoder produces active minterms. 3-to-8 decoder can be constructed from two 2-to-4 decoders with complementary enables.
+    \item \textbf{Priority Encoder:} Outputs the binary index of highest active input line, with valid flag $V$.
+    \item \textbf{2-bit Comparator:} $(A=B) = (A_1 \odot B_1)(A_0 \odot B_0)$, $(A>B) = A_1\bar{B}_1 + (A_1 \odot B_1)A_0\bar{B}_0$.
+\end{itemize}
+\end{highyieldbox}

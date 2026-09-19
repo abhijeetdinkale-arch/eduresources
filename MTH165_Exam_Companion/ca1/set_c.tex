@@ -1,0 +1,314 @@
+\section{Continuous Assessment 1 (CA-1) --- Set C}
+\label{sec:ca1_set_c}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{C}{50 Minutes}{30 Marks}{CO1 (Matrices \& Systems of Linear Equations), CO2 (Higher-Order ODEs \& Calculus)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    Find the rank and nullity of the $3\times 3$ matrix:
+    \[
+    A = \begin{bmatrix} 2 & -4 & 6 \\ -1 & 2 & -3 \\ 3 & -6 & 9 \end{bmatrix}
+    \]
+    Verify the \textbf{Rank-Nullity Theorem}.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    Find the inverse of the matrix $B$ using the \textbf{Gauss-Jordan elimination method}:
+    \[
+    B = \begin{bmatrix} 2 & 4 & 2 \\ 6 & 4 & 6 \\ 2 & 4 & 4 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Solve the second-order differential equation with a resonance term:
+    \[
+    (D^2 + 4)y = \sin 2x
+    \]
+}{5}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Solve the \textbf{Cauchy-Euler homogeneous linear differential equation}:
+    \[
+    x^2 \frac{d^2 y}{dx^2} - 2x \frac{dy}{dx} + 2y = x^3
+    \]
+}{5}{CO2}{L3 Apply}
+
+\questionitem{5}{
+    Using the \textbf{Method of Variation of Parameters}, find the complete general solution of:
+    \[
+    \frac{d^2 y}{dx^2} + y = \sec x
+    \]
+}{5}{CO2}{L4 Analyze}
+
+\questionitem{6}{
+    Prove that all eigenvalues of a real \textbf{skew-symmetric matrix} are either zero or purely imaginary complex numbers.
+}{5}{CO1}{L4 Analyze}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-1 Set C)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Row Reduction to Echelon Form}
+Given:
+\[
+A = \begin{bmatrix} 2 & -4 & 6 \\ -1 & 2 & -3 \\ 3 & -6 & 9 \end{bmatrix}
+\]
+Divide Row 1 by 2:
+\[
+\begin{bmatrix} 1 & -2 & 3 \\ -1 & 2 & -3 \\ 3 & -6 & 9 \end{bmatrix}
+\]
+Apply $R_2 \to R_2 + R_1$ and $R_3 \to R_3 - 3R_1$:
+\[
+\begin{bmatrix} 1 & -2 & 3 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}
+\]
+\textbf{Step 2: Rank and Nullity}
+The echelon form contains exactly 1 non-zero row. Therefore:
+\[
+\mathbf{\text{rank}(A) = 1}
+\]
+The number of columns (dimension of domain) is $n = 3$.
+By the Rank-Nullity Theorem:
+\[
+\text{rank}(A) + \text{nullity}(A) = n \implies 1 + \text{nullity}(A) = 3 \implies \mathbf{\text{nullity}(A) = 2}
+\]
+\textbf{Step 3: Verification}
+$\text{rank}(A) + \text{nullity}(A) = 1 + 2 = 3 = \text{dimension of space}$. Hence verified.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Row reduction to echelon form: \textbf{2 Marks}\\
+$\bullet$ Correct rank $= 1$: \textbf{1 Mark}\\
+$\bullet$ Correct nullity $= 2$ and Rank-Nullity Theorem verification: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: Gauss-Jordan Augmented Matrix $[B|I]$}
+\[
+[B|I] = \left[\begin{array}{ccc|ccc}
+2 & 4 & 2 & 1 & 0 & 0 \\
+6 & 4 & 6 & 0 & 1 & 0 \\
+2 & 4 & 4 & 0 & 0 & 1
+\end{array}\right]
+\]
+\textbf{Step 2: Row Operations}
+$R_1 \to \frac{1}{2}R_1$:
+\[
+\left[\begin{array}{ccc|ccc}
+1 & 2 & 1 & 1/2 & 0 & 0 \\
+6 & 4 & 6 & 0 & 1 & 0 \\
+2 & 4 & 4 & 0 & 0 & 1
+\end{array}\right]
+\]
+$R_2 \to R_2 - 6R_1$ and $R_3 \to R_3 - 2R_1$:
+\[
+\left[\begin{array}{ccc|ccc}
+1 & 2 & 1 & 1/2 & 0 & 0 \\
+0 & -8 & 0 & -3 & 1 & 0 \\
+0 & 0 & 2 & -1 & 0 & 1
+\end{array}\right]
+\]
+$R_2 \to -\frac{1}{8}R_2$ and $R_3 \to \frac{1}{2}R_3$:
+\[
+\left[\begin{array}{ccc|ccc}
+1 & 2 & 1 & 1/2 & 0 & 0 \\
+0 & 1 & 0 & 3/8 & -1/8 & 0 \\
+0 & 0 & 1 & -1/2 & 0 & 1/2
+\end{array}\right]
+\]
+$R_1 \to R_1 - R_3$:
+\[
+\left[\begin{array}{ccc|ccc}
+1 & 2 & 0 & 1 & 0 & -1/2 \\
+0 & 1 & 0 & 3/8 & -1/8 & 0 \\
+0 & 0 & 1 & -1/2 & 0 & 1/2
+\end{array}\right]
+\]
+$R_1 \to R_1 - 2R_2$:
+\[
+\left[\begin{array}{ccc|ccc}
+1 & 0 & 0 & 1/4 & 1/4 & -1/2 \\
+0 & 1 & 0 & 3/8 & -1/8 & 0 \\
+0 & 0 & 1 & -1/2 & 0 & 1/2
+\end{array}\right]
+\]
+\textbf{Step 3: Result}
+\[
+\mathbf{B^{-1} = \begin{bmatrix} 1/4 & 1/4 & -1/2 \\ 3/8 & -1/8 & 0 \\ -1/2 & 0 & 1/2 \end{bmatrix} = \frac{1}{8}\begin{bmatrix} 2 & 2 & -4 \\ 3 & -1 & 0 \\ -4 & 0 & 4 \end{bmatrix}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Augmented matrix setup: \textbf{1 Mark}\\
+$\bullet$ Forward row reduction: \textbf{2 Marks}\\
+$\bullet$ Backward substitution to identity matrix: \textbf{1 Mark}\\
+$\bullet$ Correct $B^{-1}$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Complementary Function}
+$m^2 + 4 = 0 \implies m = \pm 2i$.
+\[
+\mathbf{y_c = c_1 \cos 2x + c_2 \sin 2x}
+\]
+\textbf{Step 2: Particular Integral ($y_p$) with Resonance}
+\[
+y_p = \frac{1}{D^2 + 4} \sin 2x
+\]
+Substituting $D^2 = -2^2 = -4$ gives a denominator of zero (Resonance/Failure case).
+Using the formula $\frac{1}{D^2 + a^2}\sin ax = -\frac{x}{2a}\cos ax$:
+With $a = 2$:
+\[
+\mathbf{y_p = -\frac{x}{2(2)}\cos 2x = -\frac{x}{4}\cos 2x}
+\]
+\textbf{Step 3: General Solution}
+\[
+\mathbf{y(x) = c_1 \cos 2x + c_2 \sin 2x - \frac{x}{4}\cos 2x}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function $y_c$: \textbf{1.5 Marks}\\
+$\bullet$ Detection of case of failure: \textbf{1.5 Marks}\\
+$\bullet$ Correct derivation of $y_p = -(x/4)\cos 2x$: \textbf{1.5 Marks}\\
+$\bullet$ Final general solution: \textbf{0.5 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Transformation to Constant Coefficient ODE}
+Let $x = e^z \implies z = \ln x$, and let $\theta = \frac{d}{dz}$.
+Then:
+\[
+x \frac{dy}{dx} = \theta y, \quad x^2 \frac{d^2 y}{dx^2} = \theta(\theta - 1)y
+\]
+Substituting into the equation:
+\[
+[\theta(\theta - 1) - 2\theta + 2]y = (e^z)^3
+\]
+\[
+(\theta^2 - 3\theta + 2)y = e^{3z}
+\]
+\textbf{Step 2: Solving the Transformed Equation}
+Auxiliary equation: $m^2 - 3m + 2 = 0 \implies (m - 1)(m - 2) = 0 \implies m = 1, 2$.
+\[
+y_c = c_1 e^z + c_2 e^{2z}
+\]
+Particular integral:
+\[
+y_p = \frac{1}{\theta^2 - 3\theta + 2} e^{3z} = \frac{e^{3z}}{3^2 - 3(3) + 2} = \frac{e^{3z}}{9 - 9 + 2} = \frac{1}{2} e^{3z}
+\]
+So $y(z) = c_1 e^z + c_2 e^{2z} + \frac{1}{2}e^{3z}$.
+\textbf{Step 3: Transforming back to $x$}
+Since $e^z = x$:
+\[
+\mathbf{y(x) = c_1 x + c_2 x^2 + \frac{1}{2} x^3}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Substitution $x = e^z$ and differential operator transformation: \textbf{1.5 Marks}\\
+$\bullet$ Solution of auxiliary equation: \textbf{1.5 Marks}\\
+$\bullet$ Particular integral calculation: \textbf{1 Mark}\\
+$\bullet$ Final solution in terms of $x$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Complementary Function \& Wronskian}
+For $y'' + y = 0$, $m^2 + 1 = 0 \implies m = \pm i$.
+\[
+y_1 = \cos x, \quad y_2 = \sin x \implies y_c = c_1 \cos x + c_2 \sin x
+\]
+The Wronskian $W(y_1, y_2)$ is:
+\[
+W = \begin{vmatrix} \cos x & \sin x \\ -\sin x & \cos x \end{vmatrix} = \cos^2 x + \sin^2 x = 1 \neq 0
+\]
+\textbf{Step 2: Variation of Parameters Formulas}
+Let $y_p = u(x)y_1 + v(x)y_2$, where $R(x) = \sec x$:
+\[
+u(x) = -\int \frac{y_2 R(x)}{W} dx = -\int \frac{\sin x \sec x}{1} dx = -\int \tan x \, dx = \ln |\cos x|
+\]
+\[
+v(x) = \int \frac{y_1 R(x)}{W} dx = \int \frac{\cos x \sec x}{1} dx = \int 1 \, dx = x
+\]
+\textbf{Step 3: Particular Integral and General Solution}
+\[
+y_p = (\ln |\cos x|)\cos x + x \sin x
+\]
+\[
+\mathbf{y(x) = c_1 \cos x + c_2 \sin x + \cos x \ln |\cos x| + x \sin x}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function and Wronskian $W=1$: \textbf{1.5 Marks}\\
+$\bullet$ Evaluation of integrals $u(x)$ and $v(x)$: \textbf{2 Marks}\\
+$\bullet$ Final general solution $y = y_c + y_p$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Mathematical Setup}
+Let $A \in \mathbb{R}^{n\times n}$ be a real skew-symmetric matrix, i.e., $A^T = -A$ and all entries of $A$ are real ($\bar{A} = A$).
+Let $\lambda \in \mathbb{C}$ be an eigenvalue of $A$ with associated non-zero eigenvector $X \in \mathbb{C}^n$:
+\[
+A X = \lambda X \label{eq:eigen}
+\]
+\textbf{Step 2: Conjugate Transpose Operations}
+Multiply on the left by the conjugate transpose $X^\dagger = (\bar{X})^T$:
+\[
+X^\dagger A X = \lambda X^\dagger X = \lambda \|X\|^2 \label{eq:lhs}
+\]
+Now take the conjugate transpose of both sides of \eqref{eq:lhs}:
+\[
+(X^\dagger A X)^\dagger = (\lambda X^\dagger X)^\dagger
+\]
+Using $(ABC)^\dagger = C^\dagger B^\dagger A^\dagger$:
+\[
+X^\dagger A^\dagger X = \bar{\lambda} X^\dagger X
+\]
+Since $A$ is real, $A^\dagger = (\bar{A})^T = A^T$. Because $A$ is skew-symmetric, $A^T = -A$:
+\[
+X^\dagger (-A) X = \bar{\lambda} X^\dagger X \implies - X^\dagger A X = \bar{\lambda} X^\dagger X
+\]
+\textbf{Step 3: Equating and Conclusion}
+Substitute $X^\dagger A X = \lambda X^\dagger X$:
+\[
+-\lambda X^\dagger X = \bar{\lambda} X^\dagger X \implies (\lambda + \bar{\lambda}) X^\dagger X = 0
+\]
+Since $X \neq \vec{0}$, $X^\dagger X = \|X\|^2 > 0$. Therefore:
+\[
+\lambda + \bar{\lambda} = 0 \implies 2 \text{Re}(\lambda) = 0 \implies \mathbf{\text{Re}(\lambda) = 0}
+\]
+Thus, the real part of $\lambda$ is strictly zero. Hence, $\lambda$ is either **zero** or **purely imaginary**.
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Definition of skew-symmetric and eigenvalue equation $AX = \lambda X$: \textbf{1.5 Marks}\\
+$\bullet$ Applying conjugate transpose and property $A^\dagger = -A$: \textbf{2 Marks}\\
+$\bullet$ Deducing $\lambda + \bar{\lambda} = 0 \implies \text{Re}(\lambda) = 0$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

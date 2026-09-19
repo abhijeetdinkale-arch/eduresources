@@ -1,0 +1,1035 @@
+\chapter{Full-Length University Mock Examinations}
+\label{chap:mock-examinations}
+
+% ==============================================================================
+% SECTION 9.1: EXAMINATION STRUCTURE
+% ==============================================================================
+\section{University Examination Structure \& Instructions}
+
+This chapter provides six complete, realistic 100-mark mock examinations modeled after the Lovely Professional University (LPU) Semester 1 final examination paper pattern. Each examination is followed by complete, step-by-step worked scoring solutions.
+
+\begin{conceptbox}[Standard Examination Instructions]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Duration}: 3 Hours $\cdot$ \textbf{Maximum Marks}: 100 per paper.
+    \item \textbf{Section A}: 10 Short Compulsory Questions ($10 \times 2 = 20$ Marks).
+    \item \textbf{Section B}: 6 Analytical Medium Problems ($6 \times 5 = 30$ Marks).
+    \item \textbf{Section C}: 5 Long Comprehensive Programming Problems ($5 \times 10 = 50$ Marks).
+\end{itemize}
+\end{conceptbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 1
+% ==============================================================================
+\section{University Mock Examination 1}
+
+\begin{mockexam}[INT108 Mock Examination 1 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the difference between integer division in Python 2 and Python 3.
+    \item What is the purpose of adding Python to the system PATH environment variable?
+    \item Differentiate between the \texttt{range(stop)} and \texttt{random.randint(a, b)} upper boundary rules.
+    \item Explain the output of \texttt{bool("")} and \texttt{bool("0")}.
+    \item What is a void function, and what value does it implicitly return in Python?
+    \item Explain the LEGB scope resolution rule.
+    \item Why cannot a list be used as a dictionary key?
+    \item Differentiate between \texttt{pop()} and \texttt{remove()} methods of a list.
+    \item What is Name Mangling in Python classes, and why is it used?
+    \item Differentiate between \texttt{re.match()} and \texttt{re.search()}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the exact output of:
+    \begin{lstlisting}[language=Python3]
+a = [1, 2, 3]
+b = a
+c = a[:]
+b[0] = 99
+c[1] = 88
+print(a, b, c)
+    \end{lstlisting}
+    \item Write a function \texttt{is\_prime(n)} that returns \texttt{True} if $n$ is prime, using a \texttt{for...else} loop construct.
+    \item Explain why Python does not support traditional method overloading and show how to simulate it using default arguments.
+    \item Write a Python function using \texttt{try-except-else-finally} to safely divide two input strings as floating-point numbers.
+    \item Explain the output of: \texttt{print(2 ** 3 ** 2, 16 // 5, -16 // 5)}.
+    \item Write a regular expression to extract all URLs starting with \texttt{http://} or \texttt{https://} from a text string.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Write a recursive function \texttt{fibonacci(n)} to return the $n$-th Fibonacci number, and trace the complete call stack for $n=4$. (10 Marks)
+    \item Design a complete \texttt{Matrix} class with methods to initialize an $N \times M$ matrix, add two matrices, and compute the transpose. (10 Marks)
+    \item Create an inheritance hierarchy: Base class \texttt{Account} with private \texttt{\_\_balance}, and derived class \texttt{SavingsAccount} with an added \texttt{interest\_rate} and \texttt{add\_interest()} method. (10 Marks)
+    \item Write a program that reads a text file named \texttt{source.txt}, counts the occurrences of every unique word using a dictionary, and writes the sorted word counts to \texttt{word\_summary.txt}. (10 Marks)
+    \item Write a Python script to validate user registration data using regular expressions:
+    \begin{enumerate}[label=(\alph*)]
+        \item Email address validation (e.g., \texttt{user@domain.com}). (5 Marks)
+        \item 10-digit mobile number starting with 6, 7, 8, or 9. (5 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 1}
+
+\begin{solutionbox}[Solutions to Mock Exam 1 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item In Python 2, \texttt{5 / 2} truncated to integer \texttt{2}. In Python 3, \texttt{5 / 2} returns float \texttt{2.5}. [2M]
+    \item Adding to PATH allows the CLI to recognize \texttt{python} from any directory. [2M]
+    \item \texttt{range(1, 5)} excludes 5; \texttt{randint(1, 5)} includes both 1 and 5. [2M]
+    \item \texttt{bool("")} is \texttt{False} (empty string); \texttt{bool("0")} is \texttt{True} (non-empty string). [2M]
+    \item A void function performs tasks without returning a value; it implicitly returns \texttt{None}. [2M]
+    \item LEGB: Local $\to$ Enclosing $\to$ Global $\to$ Built-in. [2M]
+    \item Lists are mutable and unhashable; dictionary keys must be hashable. [2M]
+    \item \texttt{pop(i)} removes by index and returns it; \texttt{remove(val)} removes first occurrence of value. [2M]
+    \item Double underscore attributes (\texttt{\_\_x}) are mangled to \texttt{\_Class\_\_x} to prevent accidental override. [2M]
+    \item \texttt{match()} checks strictly at start (index 0); \texttt{search()} scans entire string. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item \texttt{b=a} is an alias; \texttt{c=a[:]} is a shallow copy. Output: \texttt{[99, 2, 3] [99, 2, 3] [1, 88, 3]}. [5M]
+    \item Prime function using \texttt{for...else}:
+    \begin{lstlisting}[language=Python3]
+def is_prime(n):
+    if n <= 1: return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    else:
+        return True
+    \end{lstlisting} [5M]
+    \item Python is dynamically typed; subsequent definitions overwrite earlier ones. Simulated via default parameters (\texttt{def add(a, b=0): return a + b}). [5M]
+    \item Safe division:
+    \begin{lstlisting}[language=Python3]
+def safe_div(s1, s2):
+    try:
+        a, b = float(s1), float(s2)
+        res = a / b
+    except ZeroDivisionError: print("Division by Zero")
+    except ValueError: print("Invalid Number")
+    else: print(f"Result: {res}")
+    finally: print("Done")
+    \end{lstlisting} [5M]
+    \item $2^{(3^2)} = 2^9 = \mathbf{512}$, $16 // 5 = \mathbf{3}$, $-16 // 5 = \mathbf{-4}$. [5M]
+    \item URL regex: \texttt{r"https?://[\textbackslash w\textbackslash.-]+(?:/[\textbackslash w\textbackslash.-]*)*"}. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Fibonacci \& Stack}: $F(4) = F(3) + F(2) = (F(2)+F(1)) + (F(1)+F(0)) = (1+1) + (1+0) = \mathbf{3}$. Stack pushes $F(4) \to F(3) \to F(2) \to F(1) \to F(0)$ and unwinds sums. [10M]
+    \item \textbf{Matrix Class}:
+    \begin{lstlisting}[language=Python3]
+class Matrix:
+    def __init__(self, data):
+        self.data = data
+        self.rows = len(data)
+        self.cols = len(data[0])
+    def add(self, other):
+        return Matrix([[self.data[r][c] + other.data[r][c] 
+                        for c in range(self.cols)] for r in range(self.rows)])
+    def transpose(self):
+        return Matrix([[self.data[r][c] for r in range(self.rows)] 
+                        for c in range(self.cols)])
+    \end{lstlisting} [10M]
+    \item \textbf{Account Inheritance}:
+    \begin{lstlisting}[language=Python3]
+class Account:
+    def __init__(self, acc_id, balance):
+        self.acc_id = acc_id
+        self.__balance = float(balance)
+    def get_balance(self): return self.__balance
+    def deposit(self, amt): self.__balance += amt
+
+class SavingsAccount(Account):
+    def __init__(self, acc_id, balance, rate=0.04):
+        super().__init__(acc_id, balance)
+        self.rate = rate
+    def add_interest(self):
+        interest = self.get_balance() * self.rate
+        self.deposit(interest)
+    \end{lstlisting} [10M]
+    \item \textbf{Word Count File Processing}:
+    \begin{lstlisting}[language=Python3]
+freq = {}
+with open("source.txt", "r") as f:
+    for line in f:
+        for word in line.lower().split():
+            clean = word.strip(".,!?:;\"'")
+            freq[clean] = freq.get(clean, 0) + 1
+with open("word_summary.txt", "w") as out:
+    for w, c in sorted(freq.items()):
+        out.write(f"{w}: {c}\n")
+    \end{lstlisting} [10M]
+    \item \textbf{Regex Validator}:
+    \begin{lstlisting}[language=Python3]
+import re
+def validate_email(email):
+    return bool(re.match(r"^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$", email))
+
+def validate_phone(phone):
+    return bool(re.match(r"^[6-9]\d{9}$", phone))
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 2
+% ==============================================================================
+\section{University Mock Examination 2}
+
+\begin{mockexam}[INT108 Mock Examination 2 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the term Dynamic Typing in Python.
+    \item Write the output of \texttt{print("Spam" * 3 + "Eggs")}.
+    \item State the difference between \texttt{break} and \texttt{continue}.
+    \item What is the difference between shallow copy and deep copy?
+    \item State the purpose of the \texttt{math.ceil()} function.
+    \item Write the syntax for creating a single-element tuple containing the number 99.
+    \item What is the output of \texttt{dict.get("key", "default")} if \texttt{"key"} is present?
+    \item Differentiate between \texttt{class} attributes and \texttt{instance} attributes.
+    \item What does \texttt{pickle.dump()} do?
+    \item Explain the meaning of the regex metacharacter \texttt{+} vs \texttt{*}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the output:
+    \begin{lstlisting}[language=Python3]
+def func(x, l=[]):
+    l.append(x)
+    return l
+print(func(1))
+print(func(2))
+    \end{lstlisting}
+    \item Write a Python program to extract all prime numbers in a list using a list comprehension.
+    \item Implement a function \texttt{count\_vowels\_consonants(text)} that returns a tuple of counts.
+    \item Write a function to check if a matrix is symmetric ($A = A^T$).
+    \item Explain how the \texttt{with} context manager manages file closing under exceptions.
+    \item Write a regex expression to extract all hashtags (\texttt{\#topic}) from a social media post.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Write a recursive function to solve the Greatest Common Divisor ($\gcd$) of two numbers, tracing $\gcd(48, 18)$. (10 Marks)
+    \item Design a complete \texttt{ComplexNumber} class with \texttt{\_\_init\_\_}, \texttt{add()}, \texttt{multiply()}, and \texttt{\_\_str\_\_} methods. (10 Marks)
+    \item Implement a complete \texttt{SparseMatrix} representation using coordinate dictionaries with an \texttt{add()} method. (10 Marks)
+    \item Write a program that reads a CSV file containing sales data (\texttt{Item,Quantity,Price}), computes total revenue per item, and writes a summary report. (10 Marks)
+    \item Build a complete automated quiz engine: store questions, options, and correct answers in a list of dictionaries, shuffle using \texttt{random}, administer quiz, and report final percentage score. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 2}
+
+\begin{solutionbox}[Solutions to Mock Exam 2 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Dynamic typing means variable types are checked and bound at runtime without explicit type declarations. [2M]
+    \item \texttt{"SpamSpamSpamEggs"}. [2M]
+    \item \texttt{break} exits the loop immediately; \texttt{continue} skips to the next iteration. [2M]
+    \item Shallow copy clones outer container but references inner objects; deep copy clones all nested objects recursively. [2M]
+    \item \texttt{ceil(x)} returns the smallest integer $\ge x$. [2M]
+    \item \texttt{t = (99,)}. [2M]
+    \item Returns the stored value associated with \texttt{"key"}. [2M]
+    \item Class attributes are shared across all instances; instance attributes are unique to each object. [2M]
+    \item Serializes a Python object into a binary byte stream and writes to disk. [2M]
+    \item \texttt{+} matches 1 or more repetitions; \texttt{*} matches 0 or more repetitions. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Mutable default argument trap: list \texttt{l} persists across calls. Output: \texttt{[1]}, then \texttt{[1, 2]}. [5M]
+    \item Prime list: \texttt{[x for x in nums if x > 1 and all(x \% i != 0 for i in range(2, int(x**0.5)+1))]}. [5M]
+    \item Vowel counter:
+    \begin{lstlisting}[language=Python3]
+def count_vowels_consonants(text):
+    v = sum(1 for c in text.lower() if c in "aeiou")
+    c = sum(1 for c in text.lower() if c.isalpha() and c not in "aeiou")
+    return v, c
+    \end{lstlisting} [5M]
+    \item Symmetric matrix check: \texttt{all(matrix[r][c] == matrix[c][r] for r in range(n) for c in range(n))}. [5M]
+    \item \texttt{with} invokes \texttt{\_\_enter\_\_} on open and guarantees \texttt{\_\_exit\_\_} runs upon exiting the block, automatically calling \texttt{close()}. [5M]
+    \item Hashtag regex: \texttt{r"\#\textbackslash w+"}. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Recursive GCD}:
+    \begin{lstlisting}[language=Python3]
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+    \end{lstlisting}
+    Trace: $\gcd(48, 18) \to \gcd(18, 12) \to \gcd(12, 6) \to \gcd(6, 0) = \mathbf{6}$. [10M]
+    \item \textbf{ComplexNumber Class}:
+    \begin{lstlisting}[language=Python3]
+class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def add(self, o):
+        return ComplexNumber(self.real + o.real, self.imag + o.imag)
+    def multiply(self, o):
+        return ComplexNumber(self.real*o.real - self.imag*o.imag,
+                             self.real*o.imag + self.imag*o.real)
+    def __str__(self):
+        return f"{self.real} + {self.imag}j"
+    \end{lstlisting} [10M]
+    \item \textbf{Sparse Matrix Dictionary Class}:
+    \begin{lstlisting}[language=Python3]
+class SparseMatrix:
+    def __init__(self, rows, cols):
+        self.rows, self.cols = rows, cols
+        self.data = {}
+    def set(self, r, c, val):
+        if val != 0: self.data[(r, c)] = val
+    def get(self, r, c): return self.data.get((r, c), 0)
+    def add(self, o):
+        res = SparseMatrix(self.rows, self.cols)
+        all_keys = set(self.data.keys()).union(o.data.keys())
+        for k in all_keys:
+            res.set(k[0], k[1], self.get(k[0], k[1]) + o.get(k[0], k[1]))
+        return res
+    \end{lstlisting} [10M]
+    \item \textbf{Sales CSV Processor}:
+    \begin{lstlisting}[language=Python3]
+totals = {}
+with open("sales.csv", "r") as f:
+    for line in f:
+        parts = line.strip().split(",")
+        if len(parts) == 3 and parts[1].isdigit():
+            item, qty, price = parts[0], int(parts[1]), float(parts[2])
+            totals[item] = totals.get(item, 0.0) + (qty * price)
+with open("sales_summary.txt", "w") as out:
+    for item, rev in totals.items():
+        out.write(f"{item}: Rs. {rev:.2f}\n")
+    \end{lstlisting} [10M]
+    \item \textbf{Automated Quiz Engine}:
+    \begin{lstlisting}[language=Python3]
+import random
+quiz = [
+    {"q": "Keyword for function?", "opts": ["func", "def", "fn"], "ans": "def"},
+    {"q": "Type of 10/2 in Py3?", "opts": ["int", "float", "num"], "ans": "float"}
+]
+random.shuffle(quiz)
+score = 0
+for item in quiz:
+    print("\n" + item["q"])
+    for i, opt in enumerate(item["opts"], 1): print(f"{i}. {opt}")
+    choice = input("Your answer: ").strip()
+    if choice.lower() == item["ans"].lower():
+        score += 1
+print(f"\nFinal Score: {score}/{len(quiz)} ({score/len(quiz)*100:.1f}%)")
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 3
+% ==============================================================================
+\section{University Mock Examination 3}
+
+\begin{mockexam}[INT108 Mock Examination 3 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the difference between a syntax error and an exception?
+    \item Explain the output of \texttt{print(bool([]), bool([0]))}.
+    \item What is an accumulator variable in loop processing?
+    \item Write the output of \texttt{"Python"[1:5:2]}.
+    \item What is the purpose of the \texttt{nonlocal} keyword?
+    \item Why are dictionary keys required to be hashable?
+    \item What is the default file opening mode in Python?
+    \item Differentiate between \texttt{@classmethod} and \texttt{@staticmethod}.
+    \item What does \texttt{re.findall(r"\textbackslash S+", "Hi all")} return?
+    \item Explain the meaning of the \texttt{\_\_name\_\_ == "\_\_main\_\_"} idiom.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the output:
+    \begin{lstlisting}[language=Python3]
+s = "engineering"
+d = {c: s.count(c) for c in set(s) if s.count(c) > 1}
+print(sorted(d.items()))
+    \end{lstlisting}
+    \item Write a function to calculate the root-mean-square (RMS) of a numeric list.
+    \item Implement a custom exception class \texttt{InvalidAgeError} raised when an age is outside $0-120$.
+    \item Explain C3 Linearization and trace the MRO of multiple inheritance.
+    \item Write a program to merge two sorted lists into a single sorted list in $O(N+M)$ time.
+    \item Write a regex to validate an IPv4 address (e.g., \texttt{192.168.1.1}).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Implement a recursive function to compute the Tower of Hanoi for 4 disks, printing each step. (10 Marks)
+    \item Design a \texttt{Polynomial} class representing $a x^2 + b x + c$ with an \texttt{add()} and \texttt{\_\_str\_\_} method. (10 Marks)
+    \item Write a program to read a text file, count uppercase letters, lowercase letters, digits, and spaces, writing summary statistics to a new file. (10 Marks)
+    \item Create a bank ATM withdrawal simulator with PIN retry limits (max 3 attempts) and transaction logs. (10 Marks)
+    \item Write a function that uses regex to find and replace all phone numbers in a document with masked digits (\texttt{+91-XXXXX-XXXXX}). (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 3}
+
+\begin{solutionbox}[Solutions to Mock Exam 3 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Syntax errors prevent parsing before execution; exceptions are runtime errors during execution. [2M]
+    \item \texttt{bool([])} is \texttt{False} (empty); \texttt{bool([0])} is \texttt{True} (non-empty list). [2M]
+    \item An accumulator variable aggregates values across loop iterations (e.g., \texttt{total += x}). [2M]
+    \item \texttt{"yh"}. [2M]
+    \item \texttt{nonlocal} binds identifiers to variables in outer enclosing functions. [2M]
+    \item Dictionary keys use hash values for $O(1)$ table lookups; mutability would alter hash codes. [2M]
+    \item Default mode is read text: \texttt{'r'}. [2M]
+    \item \texttt{@classmethod} receives \texttt{cls}; \texttt{@staticmethod} receives neither \texttt{self} nor \texttt{cls}. [2M]
+    \item \texttt{['Hi', 'all']} (extracts non-whitespace words). [2M]
+    \item Ensures module code runs only when executed directly, not when imported. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Character frequency dictionary for letters appearing $>1$ time. Output: \texttt{[('e', 3), ('g', 2), ('i', 2), ('n', 3)]}. [5M]
+    \item RMS function:
+    \begin{lstlisting}[language=Python3]
+def rms(nums):
+    return (sum(x**2 for x in nums) / len(nums)) ** 0.5
+    \end{lstlisting} [5M]
+    \item Custom exception:
+    \begin{lstlisting}[language=Python3]
+class InvalidAgeError(Exception): pass
+def verify_age(age):
+    if not 0 <= age <= 120: raise InvalidAgeError(f"Age {age} out of bounds")
+    \end{lstlisting} [5M]
+    \item MRO determines method lookup order in multiple inheritance using C3 Linearization. [5M]
+    \item Linear Merge:
+    \begin{lstlisting}[language=Python3]
+def merge_sorted(l1, l2):
+    i, j, res = 0, 0, []
+    while i < len(l1) and j < len(l2):
+        if l1[i] < l2[j]: res.append(l1[i]); i += 1
+        else: res.append(l2[j]); j += 1
+    return res + l1[i:] + l2[j:]
+    \end{lstlisting}
+    \item IPv4 regex: [5M]
+    \begin{lstlisting}[language=Python3]
+r"^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$"
+    \end{lstlisting}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Hanoi 4 Disks}:
+    \begin{lstlisting}[language=Python3]
+def hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"Move disk 1 from {source} -> {target}")
+        return
+    hanoi(n - 1, source, auxiliary, target)
+    print(f"Move disk {n} from {source} -> {target}")
+    hanoi(n - 1, auxiliary, target, source)
+    \end{lstlisting}
+    Requires $2^4 - 1 = 15$ moves recursively transferring sub-towers. [10M]
+    \item \textbf{Polynomial Class}:
+    \begin{lstlisting}[language=Python3]
+class Polynomial:
+    def __init__(self, a, b, c): self.a, self.b, self.c = a, b, c
+    def add(self, o): return Polynomial(self.a+o.a, self.b+o.b, self.c+o.c)
+    def __str__(self): return f"{self.a}x^2 + {self.b}x + {self.c}"
+    \end{lstlisting} [10M]
+    \item \textbf{File Stats Parser}:
+    \begin{lstlisting}[language=Python3]
+u = l = d = s = 0
+with open("data.txt", "r") as f:
+    for char in f.read():
+        if char.isupper(): u += 1
+        elif char.islower(): l += 1
+        elif char.isdigit(): d += 1
+        elif char.isspace(): s += 1
+print(f"Upper: {u}, Lower: {l}, Digits: {d}, Spaces: {s}")
+    \end{lstlisting} [10M]
+    \item \textbf{ATM Simulator}:
+    \begin{lstlisting}[language=Python3]
+pin = "1234"; balance = 10000; attempts = 0
+while attempts < 3:
+    if input("Enter PIN: ") == pin:
+        amt = float(input("Amount to withdraw: "))
+        if amt <= balance: balance -= amt; print("Success! New Balance:", balance)
+        else: print("Insufficient funds")
+        break
+    attempts += 1
+    print(f"Wrong PIN! {3-attempts} attempts left.")
+    \end{lstlisting} [10M]
+    \item \textbf{Regex Masker}:
+    \begin{lstlisting}[language=Python3]
+import re
+def mask_phones(doc):
+    return re.sub(r"\+91-\d{5}-\d{5}", "+91-XXXXX-XXXXX", doc)
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 4
+% ==============================================================================
+\section{University Mock Examination 4}
+
+\begin{mockexam}[INT108 Mock Examination 4 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the difference between interactive mode and script mode in Python?
+    \item Evaluate: \texttt{print(10 > 5 and 3 < 1 or not 0)}.
+    \item What is integer pooling / small integer caching in CPython?
+    \item How do you create an empty set in Python?
+    \item Explain the return value of \texttt{string.split(",")}.
+    \item What is the purpose of the \texttt{\_\_str\_\_} dunder method?
+    \item Differentiate between \texttt{os.mkdir()} and \texttt{os.makedirs()}.
+    \item What is the difference between \texttt{pickle} and \texttt{json} modules?
+    \item Explain the regex metacharacter \texttt{?} and its dual meaning.
+    \item What is the output of \texttt{print(type(lambda x: x))}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the output of this dictionary comprehension:
+    \begin{lstlisting}[language=Python3]
+keys = ["a", "b", "c"]
+vals = [1, 2, 3]
+d = {k: v**2 for k, v in zip(keys, vals)}
+print(d)
+    \end{lstlisting}
+    \item Write a function to check whether two input strings are anagrams of each other.
+    \item Implement a generator function \texttt{even\_generator(limit)} using \texttt{yield}.
+    \item Design a class \texttt{Circle} with a property decorator for \texttt{radius} and calculated \texttt{area}.
+    \item Explain the execution behavior of \texttt{try-except-else-finally} when a return statement is inside \texttt{try}.
+    \item Write a regex to extract all HTML anchor tags (\texttt{<a href="...">text</a>}).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Implement a complete Binary Search Tree (BST) class with \texttt{insert()} and \texttt{inorder\_traversal()} methods. (10 Marks)
+    \item Write a Python program to perform Run-Length Encoding (RLE) string compression and decompression. (10 Marks)
+    \item Design a multi-level inheritance hierarchy: \texttt{Vehicle} $\to$ \texttt{Car} $\to$ \texttt{ElectricCar} with battery management and range calculation. (10 Marks)
+    \item Write a program to read a CSV gradebook file, compute course median and standard deviation, and write a summary report. (10 Marks)
+    \item Implement a complete student attendance tracker with daily marking, percentage computation, and attendance shortage alerts ($<75\%$). (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 4}
+
+\begin{solutionbox}[Solutions to Mock Exam 4 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Interactive mode evaluates expressions immediately line-by-line; script mode executes complete source files. [2M]
+    \item \texttt{10 > 5 and 3 < 1} is \texttt{False}; \texttt{not 0} is \texttt{True}; \texttt{False or True} is \texttt{True}. [2M]
+    \item CPython pre-caches integer objects in range $[-5, 256]$ to optimize memory allocation. [2M]
+    \item \texttt{s = set()} (since \texttt{\{\}} creates an empty dictionary). [2M]
+    \item Splits string by comma delimiter and returns a list of substring tokens. [2M]
+    \item Provides user-friendly string representation when object is passed to \texttt{print()} or \texttt{str()}. [2M]
+    \item \texttt{mkdir()} creates a single directory; \texttt{makedirs()} creates all intermediate parent directories recursively. [2M]
+    \item \texttt{json} produces human-readable text; \texttt{pickle} produces Python-specific binary bytecode. [2M]
+    \item \texttt{?} means 0 or 1 occurrences (optional), or makes quantifiers non-greedy. [2M]
+    \item \texttt{<class 'function'>}. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Dictionary comprehension with squared values: \texttt{\{'a': 1, 'b': 4, 'c': 9\}}. [5M]
+    \item Anagram checker: \texttt{sorted(s1.lower()) == sorted(s2.lower())}. [5M]
+    \item Generator:
+    \begin{lstlisting}[language=Python3]
+def even_gen(limit):
+    for i in range(0, limit + 1, 2): yield i
+    \end{lstlisting} [5M]
+    \item Circle Property:
+    \begin{lstlisting}[language=Python3]
+import math
+class Circle:
+    def __init__(self, r): self._r = r
+    @property
+    def radius(self): return self._r
+    @property
+    def area(self): return math.pi * (self._r ** 2)
+    \end{lstlisting} [5M]
+    \item \texttt{finally} executes before the function exits, even if \texttt{return} is in \texttt{try}. [5M]
+    \item Anchor regex: \lstinline|r'<a\s+href="[^"]*">(.*?)</a>'|. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{BST Implementation}:
+    \begin{lstlisting}[language=Python3]
+class Node:
+    def __init__(self, val): self.val = val; self.left = self.right = None
+
+class BST:
+    def __init__(self): self.root = None
+    def insert(self, val):
+        if not self.root: self.root = Node(val); return
+        curr = self.root
+        while True:
+            if val < curr.val:
+                if not curr.left: curr.left = Node(val); break
+                curr = curr.left
+            else:
+                if not curr.right: curr.right = Node(val); break
+                curr = curr.right
+    def inorder_traversal(self, node=None, is_root=True):
+        if is_root: node = self.root
+        if node:
+            self.inorder_traversal(node.left, False)
+            print(node.val, end=" ")
+            self.inorder_traversal(node.right, False)
+    \end{lstlisting} [10M]
+    \item \textbf{RLE Compression}:
+    \begin{lstlisting}[language=Python3]
+def rle_compress(text):
+    if not text: return ""
+    res, count = [], 1
+    for i in range(1, len(text)):
+        if text[i] == text[i-1]: count += 1
+        else: res.append(f"{text[i-1]}{count}"); count = 1
+    res.append(f"{text[-1]}{count}")
+    return "".join(res)
+# Tests: rle_compress("AABBB") -> "A2B3", rle_compress("X") -> "X1"
+    \end{lstlisting} [10M]
+    \item \textbf{Electric Car Hierarchy}:
+    \begin{lstlisting}[language=Python3]
+class Vehicle:
+    def __init__(self, brand): self.brand = brand
+class Car(Vehicle):
+    def __init__(self, brand, model):
+        super().__init__(brand); self.model = model
+class ElectricCar(Car):
+    def __init__(self, brand, model, battery, efficiency):
+        super().__init__(brand, model)
+        self.battery = battery
+        self.efficiency = efficiency
+    def range(self): return self.battery / self.efficiency
+# Test: ev = ElectricCar("Tesla", "M3", 75, 0.15); ev.range() -> 500.0
+    \end{lstlisting} [10M]
+    \item \textbf{CSV Statistics Processor}:
+    \begin{lstlisting}[language=Python3]
+import csv
+def process_scores(filename):
+    scores = []
+    with open(filename, "r") as f:
+        reader = csv.reader(f)
+        next(reader) # Skip header
+        for row in reader: scores.append(float(row[1]))
+    n = len(scores)
+    mean = sum(scores) / n
+    scores.sort()
+    med = scores[n//2] if n % 2 != 0 else (scores[n//2-1]+scores[n//2])/2
+    var = sum((x - mean)**2 for x in scores) / n
+    return mean, med, var
+    \end{lstlisting} [10M]
+    \item \textbf{Attendance Tracker}:
+    \begin{lstlisting}[language=Python3]
+class AttendanceTracker:
+    def __init__(self): self.records = {}
+    def mark(self, reg, present=True):
+        p, t = self.records.get(reg, (0, 0))
+        self.records[reg] = (p + (1 if present else 0), t + 1)
+    def check_shortages(self):
+        for reg, (p, t) in self.records.items():
+            pct = (p / t) * 100
+            if pct < 75.0: print(f"ALERT: {reg} has {pct:.1f}% attendance (Shortage!)")
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 5
+% ==============================================================================
+\section{University Mock Examination 5}
+
+\begin{mockexam}[INT108 Mock Examination 5 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the difference between mutable and immutable objects with two examples of each.
+    \item What is the output of \texttt{print("abc".center(10, "*"))}?
+    \item State the purpose of the \texttt{assert} statement in Python debugging.
+    \item What is the difference between \texttt{list.append(x)} and \texttt{list.insert(0, x)} in terms of time complexity?
+    \item How does Python resolve names in nested functions?
+    \item Explain the role of \texttt{\_\_del\_\_} destructor in Python.
+    \item What does \texttt{re.search(r"\textasciicircum\textbackslash d\{3\}-\textbackslash d\{3\}\$", "123-456")} return?
+    \item State the purpose of the \texttt{math.isclose()} function.
+    \item How can you open a file for both reading and writing without truncating its content?
+    \item What is the difference between \texttt{range(10)} and \texttt{list(range(10))} in memory?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the output of this inheritance and class variable tracing program:
+    \begin{lstlisting}[language=Python3]
+class Parent:
+    val = 10
+class Child1(Parent):
+    pass
+class Child2(Parent):
+    pass
+Child1.val = 20
+Parent.val = 30
+print(Parent.val, Child1.val, Child2.val)
+    \end{lstlisting}
+    \item Write a function to check if a matrix is an identity matrix ($I\_n$).
+    \item Implement a generator function \texttt{fibonacci\_gen(n)} that yields the first $n$ Fibonacci numbers.
+    \item Write a program to count vowels, consonants, digits, and special characters in an input string.
+    \item Explain how the \texttt{try-except-else-finally} block behaves when an uncaught exception is raised in \texttt{finally}.
+    \item Write a regular expression to validate a strong password (min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special symbol).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Implement a complete \texttt{Queue} data structure class using a Python list with \texttt{enqueue()}, \texttt{dequeue()}, \texttt{is\_empty()}, and \texttt{size()} methods, raising custom exceptions on underflow. (10 Marks)
+    \item Write a recursive function to compute the determinant of an $N \times N$ matrix. (10 Marks)
+    \item Design an employee management system with an abstract \texttt{Employee} base class and subclasses \texttt{Manager}, \texttt{Developer}, and \texttt{Intern} calculating bonus payouts polymorphically. (10 Marks)
+    \item Write a program to read a text file, find all palindromic words of length $\ge 3$, and write them in alphabetical order to \texttt{palindromes.txt}. (10 Marks)
+    \item Build an automated log analyzer parsing Apache access logs with regex to compute total bandwidth transferred and top 5 client IPs. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 5}
+
+\begin{solutionbox}[Solutions to Mock Exam 5 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Mutable objects can be modified in place (\texttt{list}, \texttt{dict}); immutable objects cannot be altered after creation (\texttt{int}, \texttt{str}, \texttt{tuple}). [2M]
+    \item \texttt{"***abc****"}. [2M]
+    \item \texttt{assert condition, message} tests internal invariants, raising \texttt{AssertionError} if false. [2M]
+    \item \texttt{append()} is $O(1)$ amortized; \texttt{insert(0, x)} is $O(n)$ due to shifting all existing elements. [2M]
+    \item Via the LEGB rule, searching Local, then Enclosing outer function frames, then Global, then Built-in. [2M]
+    \item \texttt{\_\_del\_\_} is called when an object's reference count drops to zero before garbage collection. [2M]
+    \item Returns a \texttt{re.Match} object spanning \texttt{(0, 7)}. [2M]
+    \item Tests whether two floating-point values are approximately equal within a relative tolerance to avoid float rounding errors. [2M]
+    \item Using mode \texttt{'r+'}. [2M]
+    \item \texttt{range(10)} is an $O(1)$ memory generator object; \texttt{list(range(10))} creates an $O(n)$ in-memory list containing 10 integers. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Class variable inheritance tracing: \texttt{Child1.val = 20} sets attribute on \texttt{Child1}; \texttt{Parent.val = 30} updates \texttt{Parent} and \texttt{Child2} (which inherits from \texttt{Parent}). Output: \texttt{30 20 30}. [5M]
+    \item Identity matrix check:
+    \begin{lstlisting}[language=Python3]
+def is_identity(m):
+    n = len(m)
+    return all(m[i][j] == (1 if i == j else 0) for i in range(n) for j in range(n))
+    \end{lstlisting} [5M]
+    \item Fibonacci generator:
+    \begin{lstlisting}[language=Python3]
+def fib_gen(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+    \end{lstlisting} [5M]
+    \item Character classification:
+    \begin{lstlisting}[language=Python3]
+def count_chars(text):
+    v = c = d = s = 0
+    for ch in text:
+        if ch.lower() in "aeiou": v += 1
+        elif ch.isalpha(): c += 1
+        elif ch.isdigit(): d += 1
+        else: s += 1
+    return v, c, d, s
+    \end{lstlisting} [5M]
+    \item An exception in \texttt{finally} supersedes any previous exceptions or return values, propagating immediately to the caller. [5M]
+    \item Password regex: \texttt{r"\textasciicircum(?=.*[A-Z])(?=.*[a-z])(?=.*\textbackslash d)(?=.*[!@\#\$\%\textasciicircum\&\*]).\{8,\}\$"}. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Queue Class with Custom Exception}:
+    \begin{lstlisting}[language=Python3]
+class QueueUnderflowError(Exception): pass
+class Queue:
+    def __init__(self): self.items = []
+    def enqueue(self, item): self.items.append(item)
+    def dequeue(self):
+        if not self.items: raise QueueUnderflowError("Queue is empty")
+        return self.items.pop(0)
+    def is_empty(self): return len(self.items) == 0
+    def size(self): return len(self.items)
+    \end{lstlisting} [10M]
+    \item \textbf{Recursive Determinant}:
+    \begin{lstlisting}[language=Python3]
+def det(m):
+    n = len(m)
+    if n == 1: return m[0][0]
+    if n == 2: return m[0][0]*m[1][1] - m[0][1]*m[1][0]
+    total = 0
+    for c in range(n):
+        sub = [row[:c] + row[c+1:] for row in m[1:]]
+        total += ((-1)**c) * m[0][c] * det(sub)
+    return total
+    \end{lstlisting} [10M]
+    \item \textbf{Polymorphic Employee Bonus System}:
+    \begin{lstlisting}[language=Python3]
+class Employee:
+    def __init__(self, name, salary):
+        self.name = name; self.salary = salary
+    def get_bonus(self): raise NotImplementedError
+
+class Manager(Employee):
+    def get_bonus(self): return self.salary * 0.20
+
+class Developer(Employee):
+    def get_bonus(self): return self.salary * 0.15
+
+class Intern(Employee):
+    def get_bonus(self): return self.salary * 0.05
+
+# Tests
+mgr = Manager("Alice", 100000)
+dev = Developer("Bob", 80000)
+print(mgr.get_bonus(), dev.get_bonus()) # 20000.0, 12000.0
+    \end{lstlisting} [10M]
+    \item \textbf{Palindromic Words Parser}:
+    \begin{lstlisting}[language=Python3]
+palindromes = set()
+with open("input.txt", "r") as f:
+    for word in f.read().lower().split():
+        clean = "".join(ch for ch in word if ch.isalnum())
+        if len(clean) >= 3 and clean == clean[::-1]:
+            palindromes.add(clean)
+with open("palindromes.txt", "w") as out:
+    for p in sorted(palindromes): out.write(p + "\n")
+    \end{lstlisting} [10M]
+    \item \textbf{Log Bandwidth \& Top IPs}:
+    \begin{lstlisting}[language=Python3]
+import re
+from collections import defaultdict
+
+def analyze_logs(logfile):
+    ip_bytes = defaultdict(int)
+    total_bandwidth = 0
+    pattern = r'(\d+\.\d+\.\d+\.\d+).*" \d+ (\d+)'
+    
+    with open(logfile, "r") as f:
+        for line in f:
+            match = re.search(pattern, line)
+            if match:
+                ip, bytes_sent = match.groups()
+                b = int(bytes_sent)
+                ip_bytes[ip] += b
+                total_bandwidth += b
+                
+    top_ips = sorted(ip_bytes.items(), key=lambda x: x[1], reverse=True)[:5]
+    print(f"Total Bandwidth: {total_bandwidth} bytes")
+    for ip, b in top_ips: print(f"{ip}: {b} bytes")
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 6
+% ==============================================================================
+\section{University Mock Examination 6}
+
+\begin{mockexam}[INT108 Mock Examination 6 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the difference between \texttt{break} in a \texttt{for} loop vs. \texttt{sys.exit()}.
+    \item What is the value of \texttt{3 << 3} and \texttt{24 >> 3}?
+    \item How do you check if a key exists in a dictionary without raising \texttt{KeyError}?
+    \item What is the output of \texttt{list("hello")} and \texttt{"".join(['h', 'i'])}?
+    \item Explain why \texttt{isinstance(True, int)} evaluates to \texttt{True}.
+    \item What is the difference between \texttt{f.seek(0)} and \texttt{f.seek(0, 2)}?
+    \item What is an anonymous lambda function and what are its syntax limits?
+    \item Differentiate between \texttt{re.findall()} and \texttt{re.finditer()}.
+    \item What does \texttt{round(2.5)} vs \texttt{round(3.5)} return under Python's bankers' rounding?
+    \item Explain the term duck typing in Python.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Predict the output:
+    \begin{lstlisting}[language=Python3]
+def outer():
+    x = 10
+    def inner():
+        nonlocal x
+        x += 5
+        return x
+    return inner
+
+f1 = outer()
+print(f1(), f1())
+    \end{lstlisting}
+    \item Write a function to check if a number is a Strong Number ($n = \sum \text{digit}!$).
+    \item Implement a matrix rotation algorithm that rotates an $N \times N$ matrix 90 degrees clockwise in-place.
+    \item Write a Python context manager class \texttt{Timer} that measures code execution time using \texttt{\_\_enter\_\_} and \texttt{\_\_exit\_\_}.
+    \item Explain the mutable default argument trap and write the standard idiom to prevent it.
+    \item Write a regex to extract all valid dates in format \texttt{DD-MM-YYYY} with day and month bounds checking.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Implement a complete \texttt{Stack} data structure with \texttt{push()}, \texttt{pop()}, \texttt{peek()}, and min-element retrieval in $O(1)$ time. (10 Marks)
+    \item Write a program to solve the Sudoku 1D row/column/box validation check for a $9 \times 9$ grid. (10 Marks)
+    \item Design a complete banking account hierarchy with savings accounts, current accounts, overdraft limits, and interest accrual. (10 Marks)
+    \item Write a program that compresses text using Run-Length Encoding and writes both compressed and decompressed verification files. (10 Marks)
+    \item Build a complete course grade management system that reads CSV records, calculates weighted averages (Assignments 30\%, Midterm 30\%, Final 40\%), and generates formatted letter grades. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 6}
+
+\begin{solutionbox}[Solutions to Mock Exam 6 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item \texttt{break} exits only the innermost loop; \texttt{sys.exit()} terminates the entire Python process. [2M]
+    \item $3 \times 2^3 = \mathbf{24}$; $24 // 2^3 = \mathbf{3}$. [2M]
+    \item Using \texttt{key in dict} or \texttt{dict.get(key, default)}. [2M]
+    \item \texttt{['h', 'e', 'l', 'l', 'o']} and \texttt{"hi"}. [2M]
+    \item \texttt{bool} is a subclass of \texttt{int} in Python (\texttt{True == 1}, \texttt{False == 0}). [2M]
+    \item \texttt{f.seek(0)} moves pointer to start; \texttt{f.seek(0, 2)} moves pointer to end of file. [2M]
+    \item A single-expression inline function; it cannot contain multiple statements, loops, or assignments. [2M]
+    \item \texttt{findall()} returns a list of strings; \texttt{finditer()} yields an iterator of \texttt{Match} objects with start/end indices. [2M]
+    \item Python uses round-to-even: \texttt{round(2.5) = 2} and \texttt{round(3.5) = 4}. [2M]
+    \item "If it walks like a duck and quacks like a duck, it's a duck" — object validity is determined by the presence of methods, not explicit inheritance. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Closure state persistence: first call returns $10+5 = 15$; second call returns $15+5 = 20$. Output: \texttt{15 20}. [5M]
+    \item Strong number checker:
+    \begin{lstlisting}[language=Python3]
+import math
+def is_strong(n):
+    return sum(math.factorial(int(d)) for d in str(n)) == n
+    \end{lstlisting} [5M]
+    \item 90-degree Matrix Rotation:
+    \begin{lstlisting}[language=Python3]
+def rotate_90(mat):
+    # Transpose then reverse rows
+    n = len(mat)
+    for i in range(n):
+        for j in range(i, n): mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+    for row in mat: row.reverse()
+    \end{lstlisting} [5M]
+    \item Timer Context Manager:
+    \begin{lstlisting}[language=Python3]
+import time
+class Timer:
+    def __enter__(self): self.start = time.time(); return self
+    def __exit__(self, *args): print(f"Elapsed: {time.time() - self.start:.4f}s")
+    \end{lstlisting} [5M]
+    \item Default evaluated once. Standard fix: \texttt{def func(val, item=None): if item is None: item = []}. [5M]
+    \item Date regex: \texttt{r"\textasciicircum(0[1-9]|[12]\textbackslash d|3[01])-(0[1-9]|1[0-2])-\textbackslash d\{4\}\$"}. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Min-Stack in O(1)}:
+    \begin{lstlisting}[language=Python3]
+class MinStack:
+    def __init__(self): self.stack = []; self.min_stack = []
+    def push(self, x):
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]: self.min_stack.append(x)
+    def pop(self):
+        val = self.stack.pop()
+        if val == self.min_stack[-1]: self.min_stack.pop()
+        return val
+    def get_min(self): return self.min_stack[-1]
+    \end{lstlisting} [10M]
+    \item \textbf{Sudoku Validation}:
+    \begin{lstlisting}[language=Python3]
+def is_valid_sudoku(board):
+    def is_valid(group):
+        nums = [n for n in group if n != '.']
+        return len(nums) == len(set(nums))
+    for row in board:
+        if not is_valid(row): return False
+    for col in zip(*board):
+        if not is_valid(col): return False
+    for i in (0, 3, 6):
+        for j in (0, 3, 6):
+            box = [board[x][y] for x in range(i, i+3) for y in range(j, j+3)]
+            if not is_valid(box): return False
+    return True
+# Test: pass a 9x9 list of lists of strings
+    \end{lstlisting} [10M]
+    \item \textbf{Banking Account Hierarchy}:
+    \begin{lstlisting}[language=Python3]
+class Account:
+    def __init__(self, acc_id, bal): self.acc_id, self.bal = acc_id, bal
+    def deposit(self, amt): self.bal += amt
+    def withdraw(self, amt):
+        if amt <= self.bal: self.bal -= amt; return True
+        return False
+class SavingsAccount(Account):
+    def __init__(self, acc_id, bal, rate=0.03):
+        super().__init__(acc_id, bal); self.rate = rate
+    def add_interest(self): self.deposit(self.bal * self.rate)
+class CurrentAccount(Account):
+    def __init__(self, acc_id, bal, limit=5000):
+        super().__init__(acc_id, bal); self.limit = limit
+    def withdraw(self, amt):
+        if self.bal + self.limit >= amt: self.bal -= amt; return True
+        return False
+    \end{lstlisting} [10M]
+    \item \textbf{RLE Compression \& Verification}:
+    \begin{lstlisting}[language=Python3]
+def rle_file_compress(infile, outfile):
+    with open(infile, "r") as f: data = f.read()
+    if not data: return
+    comp, count = [], 1
+    for i in range(1, len(data)):
+        if data[i] == data[i-1]: count += 1
+        else: comp.append(f"{data[i-1]}{count}"); count = 1
+    comp.append(f"{data[-1]}{count}")
+    with open(outfile, "w") as f: f.write("".join(comp))
+
+def rle_verify(infile, compfile):
+    with open(infile, "r") as f: orig = f.read()
+    with open(compfile, "r") as f: comp = f.read()
+    import re
+    decomp = "".join(char * int(num) for char, num in re.findall(r'(.)(\d+)', comp))
+    assert orig == decomp, "Mismatch!"
+    print("Verification Passed")
+    \end{lstlisting} [10M]
+    \item \textbf{Weighted Grade Calculator}:
+    \begin{lstlisting}[language=Python3]
+import csv
+def calculate_grades(infile, outfile):
+    with open(infile, "r") as fin, open(outfile, "w") as fout:
+        reader = csv.reader(fin); writer = csv.writer(fout)
+        header = next(reader); writer.writerow(header + ["Final", "Grade"])
+        for row in reader:
+            assign, mid, final = float(row[1]), float(row[2]), float(row[3])
+            score = 0.3*assign + 0.3*mid + 0.4*final
+            grade = "A" if score >= 90 else "B" if score >= 80 else "C" if score >= 70 else "F"
+            writer.writerow(row + [f"{score:.1f}", grade])
+# Test Data: Student1, 85, 90, 88 -> Score: 87.7, Grade: B
+    \end{lstlisting} [10M]
+\end{enumerate}
+\end{solutionbox}

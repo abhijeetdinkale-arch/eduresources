@@ -1,0 +1,73 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{formula_style}[2026/09/16 v1.0 MTH165 Formula Book Style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=18mm,top=22mm,bottom=22mm,headheight=20pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,physics,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+% Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUOrange}{RGB}{232, 90, 16}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{FormulaBg}{RGB}{245, 248, 255}
+\definecolor{FormulaBorder}{RGB}{15, 44, 89}
+\definecolor{TipBg}{RGB}{255, 250, 235}
+\definecolor{TipBorder}{RGB}{232, 90, 16}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{LPUNavy}\textbf{MTH165: Mathematics for Engineers --- Formula Handbook}}
+\fancyhead[R]{\small\color{LPUOrange}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{LPUNavy}}{\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{LPUNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{LPUOrange}}{\thesubsection}{1em}{}
+
+% Boxes
+\newtcolorbox{formulabox}[2][]{
+    enhanced,
+    breakable,
+    colback=FormulaBg,
+    colframe=FormulaBorder,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={#2},
+    boxrule=1pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcolorbox{memorytip}[1][]{
+    enhanced,
+    breakable,
+    colback=TipBg,
+    colframe=TipBorder,
+    fonttitle=\bfseries\color{TipBorder},
+    title={\textbf{High-Yield Memory Shortcut / Exam Trap:}},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    #1
+}

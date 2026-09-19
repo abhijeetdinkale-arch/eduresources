@@ -1,0 +1,683 @@
+\chapter{Operating System}
+\label{chap:operating-system}
+
+% ==============================================================================
+% SECTION 2.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+The Operating System (OS) is the foundational system software that manages computer hardware components, provides shared resource allocation, and presents an abstraction layer enabling user applications to execute reliably. Without an operating system, every individual software program would require custom, low-level machine routines to directly control physical disk arms, memory controllers, and peripheral buses.
+
+\begin{important}[Core Learning Objectives]
+After completing this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Define the Operating System} and describe its layered architecture spanning hardware, kernel space, system calls, and user space.
+    \item \textbf{Categorize Kernel Architectures}, rigorously contrasting Monolithic Kernels, Microkernels, Hybrid Kernels, and Exo-kernels.
+    \item \textbf{Trace the Step-by-Step Boot Process}, explaining the role of BIOS/UEFI, the POST sequence, MBR/GPT partitioning, bootloaders (GRUB), and kernel initialization.
+    \item \textbf{Analyze the Five Primary OS Functions}: Process Management, Memory Management (including Virtual Memory), File Management, Device/IO Management, and System Security.
+    \item \textbf{Differentiate Operating System Types}: Batch Systems, Time-Sharing/Multitasking Systems, Distributed Systems, Network Operating Systems (NOS), and Real-Time Operating Systems (Hard vs. Soft RTOS).
+    \item \textbf{Explain Directory Hierarchies} and master the distinction between absolute and relative file path resolutions.
+    \item \textbf{Compare Programming Languages and Translators}, examining Machine Code, Assembly Language, High-Level Languages, and contrasting Compilers versus Interpreters.
+    \item \textbf{Trace the 6-Stage Compilation and Execution Pipeline} of high-level programs from preprocessing through CPU execution.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 2.2: OS DEFINITION \& ARCHITECTURE
+% ==============================================================================
+\section{Operating System and its Architecture}
+
+\subsection{Definition \& Purpose}
+
+\begin{definition}[Operating System (OS)]
+An integrated suite of system software programs that manages computer hardware and software resources, provides common services for application programs, and acts as an intermediary interface between the human user (or application program) and the physical computer hardware.
+\end{definition}
+
+The two primary goals of an operating system are:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Convenience}: Making the computer system friendly, abstract, and convenient for users and developers to operate.
+    \item \textbf{Efficiency}: Managing and multiplexing hardware resources (CPU time, RAM capacity, I/O bandwidth, disk storage) in an optimal, secure, and equitable manner.
+\end{enumerate}
+
+\subsection{Layered Architecture of an Operating System}
+
+To prevent user software from directly manipulating physical hardware registers or corrupting other concurrent processes, modern operating systems enforce strict hierarchical isolation:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    layer/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=11.5cm, minimum height=0.9cm, align=center, font=\sffamily\bfseries\small},
+    arrow/.style={{Stealth[scale=1.0]}-{Stealth[scale=1.0]}, thick, draw=brandblue}
+]
+    \node[layer, fill=boxpurplebg, draw=boxpurpleborder] (user) at (0, 3.6) {User Space: Applications (Web Browsers, Editors, Compilers, User GUI)};
+    \node[layer, fill=boxskybg, draw=boxskyborder] (shell) at (0, 2.4) {System Call Interface / Shell / API Layer (POSIX, Win32 API)};
+    \node[layer, fill=boxamberbg, draw=boxamberborder] (kernel) at (0, 1.2) {Kernel Space: Core Subsystems (Scheduler, VFS, Memory Manager, Device Drivers)};
+    \node[layer, fill=boxnavybg, draw=brandnavy] (hw) at (0, 0.0) {Hardware Layer: Physical CPU, RAM, Disks, Network Interfaces, Timers};
+
+    \draw[arrow] (user) -- (shell);
+    \draw[arrow] (shell) -- (kernel);
+    \draw[arrow] (kernel) -- (hw);
+\end{tikzpicture}
+\caption{Layered Architecture of a Modern Operating System.}
+\label{fig:os-layered-architecture}
+\end{figure}
+
+\subsubsection{The Interaction Flow}
+When a user application requires access to a hardware resource (such as reading a file from an SSD or displaying text on a monitor), it cannot access the device directly. It must execute a \textbf{System Call} (e.g., \texttt{sys\_read} or \texttt{sys\_write}), triggering a software interrupt that switches CPU execution from unprivileged \textbf{User Mode (Ring 3)} to privileged \textbf{Kernel Mode (Ring 0)}:
+$$\text{User} \longrightarrow \text{Application} \longrightarrow \text{System Call} \longrightarrow \text{Kernel} \longrightarrow \text{Hardware}$$
+
+% ==============================================================================
+% SECTION 2.3: THE KERNEL \& TYPES OF KERNELS
+% ==============================================================================
+\section{The Kernel and Types of Kernels}
+
+\subsection{The Kernel}
+
+The \textbf{Kernel} is the central core of the operating system. It is the first program loaded into memory during system boot (immediately following the bootloader) and remains resident in physical RAM throughout the entire duration of operation. It maintains complete supervisory authority over CPU scheduling, physical memory allocation, hardware interrupts, and device drivers.
+
+\subsection{Classifications of Kernel Architectures}
+
+Operating system kernels are architecturally classified based on how their internal subsystems (memory managers, file systems, device drivers) are partitioned across execution spaces:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    kbox/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=5.5cm, minimum height=3.5cm, align=center},
+    sub/.style={rectangle, draw=brandblue, fill=boxskybg, rounded corners=2pt, font=\sffamily\scriptsize\bfseries, minimum width=4.8cm, minimum height=0.55cm, align=center}
+]
+    % Monolithic Kernel
+    \node[kbox, fill=boxrosebg, draw=brandaccent] (mono) at (0, 0) {};
+    \node[anchor=north, font=\sffamily\bfseries\color{brandaccent}] at (0, 1.6) {Monolithic Kernel (Ring 0)};
+    \node[sub, fill=boxgoldbg] at (0, 0.8) {VFS \& File System Management};
+    \node[sub, fill=boxgoldbg] at (0, 0.1) {Process Scheduling \& IPC};
+    \node[sub, fill=boxgoldbg] at (0, -0.6) {Virtual Memory Management};
+    \node[sub, fill=boxgoldbg] at (0, -1.3) {Device Drivers \& Network Stack};
+
+    % Microkernel
+    \node[kbox, fill=boxskybg, draw=boxskyborder] (micro) at (7.2, 0) {};
+    \node[anchor=north, font=\sffamily\bfseries\color{brandblue}] at (7.2, 1.6) {Microkernel Architecture};
+    \node[sub, fill=boxpurplebg, draw=boxpurpleborder] at (7.2, 0.9) {User Space (Ring 3): Drivers, File Systems};
+    \node[sub, fill=boxpurplebg, draw=boxpurpleborder] at (7.2, 0.2) {User Space (Ring 3): Network Server};
+    \draw[dashed, thick, brandslate] (4.6, -0.2) -- (9.8, -0.2);
+    \node[font=\tiny\sffamily\color{brandslate}] at (7.2, -0.35) {Kernel Space / User Space Boundary};
+    \node[sub, fill=boxamberbg, draw=brandgold] at (7.2, -0.75) {Microkernel (Ring 0): Basic IPC};
+    \node[sub, fill=boxamberbg, draw=brandgold] at (7.2, -1.35) {CPU Scheduling \& Memory Mapping};
+
+\end{tikzpicture}
+\caption{Architectural Comparison: Monolithic Kernel vs. Microkernel.}
+\label{fig:monolithic-vs-microkernel}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Monolithic Kernel}:
+    \begin{itemize}
+        \item \textbf{Architecture}: The entire operating system—including the process scheduler, virtual memory manager, file system drivers, networking stacks, and hardware device drivers—executes together inside a \textbf{single unified address space in privileged Kernel Mode (Ring 0)}.
+        \item \textbf{Advantages}: Immense performance and execution throughput because internal OS subsystems communicate directly via fast in-memory function calls without IPC message-passing overhead.
+        \item \textbf{Disadvantages}: Vulnerable to whole-system crashes. Because all subsystems share the same memory space, a bug, crash, or memory leak in a third-party peripheral driver can corrupt kernel memory and cause a fatal \textbf{Kernel Panic} or system-wide crash.
+        \item \textbf{Prominent Examples}: \textbf{Linux Kernel, Unix, MS-DOS}.
+    \end{itemize}
+
+    \item \textbf{Microkernel}:
+    \begin{itemize}
+        \item \textbf{Architecture}: Only the bare minimum, indispensable mechanisms are kept inside the kernel in Ring 0: low-level CPU thread scheduling, physical memory mapping, and basic Inter-Process Communication (IPC). All other services—including file system drivers, device drivers, and network protocols—are decoupled and run as modular, isolated server processes in \textbf{unprivileged User Space (Ring 3)}.
+        \item \textbf{Advantages}: Exceptional system stability, modularity, and security. If a device driver or file system server crashes, it does not compromise the kernel; the operating system simply restarts the user-space process. Highly extensible.
+        \item \textbf{Disadvantages}: Performance overhead caused by frequent Ring 3 $\leftrightarrow$ Ring 0 context switches and IPC message-passing latency between user-space servers and the microkernel.
+        \item \textbf{Prominent Examples}: \textbf{Minix, QNX Neutrino (automotive systems), L4 Microkernel Family}.
+    \end{itemize}
+
+    \item \textbf{Hybrid Kernel}:
+    \begin{itemize}
+        \item \textbf{Architecture}: A pragmatic engineering combination that retains the modular design of a microkernel while running performance-critical services (such as graphics engines and file systems) inside the kernel address space to eliminate IPC performance bottlenecks.
+        \item \textbf{Prominent Examples}: \textbf{Microsoft Windows NT Kernel (Windows 10, 11), Apple macOS XNU Kernel} (combining the Mach microkernel and BSD subsystems).
+    \end{itemize}
+
+    \item \textbf{Exo-Kernel}:
+    \begin{itemize}
+        \item \textbf{Architecture}: A minimalist research architecture that eliminates hardware abstractions entirely. It focuses solely on securely multiplexing physical hardware resources while delegating all operating system abstractions directly to application-specific libraries (LibOS).
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.4: THE BOOTLOADER \& BOOT PROCESS
+% ==============================================================================
+\section{The Bootloader and the Boot Process}
+
+\subsection{Definition of a Bootloader}
+
+\begin{definition}[Bootloader]
+A compact machine-code utility stored in non-volatile ROM/NVRAM firmware or on the initial sectors of a bootable storage disk responsible for initializing minimal hardware state and loading the operating system kernel into physical memory upon power-up.
+\end{definition}
+
+\subsection{The Step-by-Step Hardware Boot Sequence}
+
+When the power button of a computer is pressed, the system executes a precise four-stage hardware and software handoff:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    stepnode/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=11.5cm, minimum height=0.8cm, font=\sffamily\small, align=left},
+    arrow/.style={-{Stealth[scale=1.1]}, thick, draw=brandaccent}
+]
+    \node[stepnode, fill=boxgoldbg, draw=brandgold] (s1) at (0, 3.6) {\textbf{Step 1: Power-On Self-Test (POST)} --- BIOS/UEFI firmware initializes motherboard, tests RAM integrity.};
+    \node[stepnode, fill=boxamberbg, draw=boxamberborder] (s2) at (0, 2.4) {\textbf{Step 2: Locate Boot Device} --- Firmware scans MBR / EFI System Partition to find bootable media.};
+    \node[stepnode, fill=boxskybg, draw=boxskyborder] (s3) at (0, 1.2) {\textbf{Step 3: Load Bootloader into RAM} --- Master Boot Record / GRUB2 loaded into memory.};
+    \node[stepnode, fill=boxrosebg, draw=brandaccent] (s4) at (0, 0.0) {\textbf{Step 4: Load Kernel \& Handover Control} --- Kernel decompressed into RAM; CPU execution transferred to OS.};
+
+    \draw[arrow] (s1) -- (s2);
+    \draw[arrow] (s2) -- (s3);
+    \draw[arrow] (s3) -- (s4);
+\end{tikzpicture}
+\caption{The Four Stages of the Computer Boot Process.}
+\label{fig:boot-process-steps}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Stage 1: Power-On Self-Test (POST) via BIOS / UEFI}:
+    Upon receiving electrical power, the CPU resets its registers and executes firmware stored in non-volatile motherboard ROM:
+    \begin{itemize}
+        \item \textbf{Legacy BIOS (Basic Input/Output System)} or modern \textbf{UEFI (Unified Extensible Firmware Interface)} conducts the \textbf{POST}, verifying operational readiness of primary RAM, system clock, keyboard controller, and PCIe buses.
+    \end{itemize}
+
+    \item \textbf{Stage 2: Locate Boot Device}:
+    The BIOS/UEFI queries its configured boot priority order (NVMe SSD, SATA HDD, USB Flash Drive, Optical Disc) to detect bootable media.
+
+    \item \textbf{Stage 3: Load the Bootloader}:
+    The firmware reads the initial bootstrap code:
+    \begin{itemize}
+        \item On legacy BIOS disks, it reads Sector 0 (the \textbf{Master Boot Record, MBR}).
+        \item On modern UEFI disks, it reads the bootloader executable (e.g., \texttt{bootx64.efi}) from the dedicated \textbf{EFI System Partition (ESP)}.
+        \item The bootloader (e.g., \textbf{GRUB2 for Linux, Windows Boot Manager for Windows}) is loaded into primary RAM and executed.
+    \end{itemize}
+
+    \item \textbf{Stage 4: Load the Kernel and Transfer Control}:
+    The bootloader reads the compressed operating system kernel image (e.g., \texttt{vmlinuz} and \texttt{initramfs} in Linux) from the storage drive, decompresses it into RAM, initializes basic virtual memory page tables, and \textbf{transfers execution control of the CPU to the OS kernel entry point}. The kernel mounts the root filesystem \texttt{/}, spawns the first user-space system process (PID 1, such as \texttt{systemd}), and launches the login shell or GUI display manager.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.5: FUNCTIONS OF OPERATING SYSTEM
+% ==============================================================================
+\section{Functions of an Operating System}
+
+The operating system executes five essential resource management functions:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Process Management}:
+    A process is an active program in execution. The OS manages:
+    \begin{itemize}
+        \item Process creation, suspension, and termination.
+        \item Maintaining the \textbf{Process Control Block (PCB)} (tracking PID, registers, priority, state).
+        \item \textbf{CPU Scheduling}: Allocating CPU time slices among competing processes (Round Robin, Priority, FCFS).
+        \item Inter-Process Communication (IPC), process synchronization, and \textbf{Deadlock Handling} (detection, avoidance, and recovery).
+    \end{itemize}
+
+    \item \textbf{Memory Management}:
+    Main memory (RAM) is a central resource shared by all active processes. The OS coordinates:
+    \begin{itemize}
+        \item Tracking which bytes of memory are allocated and which are free.
+        \item Dynamic memory allocation and deallocation during program runtime.
+        \item Enforcing memory isolation to prevent one process from reading or overwriting another process's address space.
+        \item \textbf{Virtual Memory}: Utilizing secondary storage space (swap space or pagefile) to simulate additional RAM, allowing the system to run programs larger than physical memory capacity.
+    \end{itemize}
+
+    \item \textbf{File Management}:
+    Storage disks are physically organized as raw blocks and sectors. The OS provides a structured abstraction:
+    \begin{itemize}
+        \item Organizing data into logical files and hierarchical directories.
+        \item Implementing file operations: creation, deletion, reading, writing, seeking, and appending.
+        \item Managing file metadata (ownership, timestamps, permissions, access control lists).
+        \item Mapping logical files onto physical disk sectors via the file allocation table or inode tables.
+    \end{itemize}
+
+    \item \textbf{Device Management (I/O Management)}:
+    Managing heterogeneous external hardware devices (printers, keyboards, network cards, graphics adapters):
+    \begin{itemize}
+        \item Providing hardware abstraction through standardized \textbf{Device Drivers}.
+        \item Managing I/O buffering, asynchronous interrupt handling, and direct memory access (DMA).
+        \item Implementing \textbf{Spooling} (Simultaneous Peripheral Operations On-Line), such as queuing print jobs.
+    \end{itemize}
+
+    \item \textbf{Security and Protection}:
+    Safeguarding internal computing resources and user data from unauthorized access, malware, and interference:
+    \begin{itemize}
+        \item \textbf{Authentication}: Verifying user identity via credentials (passwords, PINs, biometrics).
+        \item \textbf{Authorization}: Enforcing access permissions (Read/Write/Execute) to files and devices.
+        \item Hardware-level process isolation via CPU execution privilege rings.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.6: TYPES OF OPERATING SYSTEMS
+% ==============================================================================
+\section{Types of Operating Systems}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Batch Operating System}:
+    \begin{itemize}
+        \item \textbf{Concept}: Users do not interact directly with the computer. Jobs are prepared offline (historically on punch cards) and submitted to an operator. The OS groups similar jobs with comparable requirements into \textbf{batches} to maximize CPU utilization.
+        \item \textbf{Example}: IBM OS/360, early mainframe systems.
+    \end{itemize}
+
+    \item \textbf{Time-Sharing / Multitasking Operating System}:
+    \begin{itemize}
+        \item \textbf{Concept}: Allows multiple interactive users or programs to share the computer system concurrently. The CPU switches rapidly between processes via high-frequency timer interrupts (\textbf{Context Switching}), providing each user with the perception of dedicated processing.
+        \item \textbf{Examples}: Microsoft Windows, Linux, Apple macOS.
+    \end{itemize}
+
+    \item \textbf{Distributed Operating System}:
+    \begin{itemize}
+        \item \textbf{Concept}: Manages a collection of independent, networked computers and presents them to the end user as a single unified computing system. Computational tasks and data storage are distributed across multiple physical processors.
+        \item \textbf{Example}: LOCUS, Amoeba.
+    \end{itemize}
+
+    \item \textbf{Network Operating System (NOS)}:
+    \begin{itemize}
+        \item \textbf{Concept}: Operating system running on dedicated server hardware optimized to provide shared file storage, printer management, database hosting, user security administration, and network routing to client workstations.
+        \item \textbf{Examples}: Windows Server 2022, Red Hat Enterprise Linux (RHEL).
+    \end{itemize}
+
+    \item \textbf{Real-Time Operating System (RTOS)}:
+    \begin{itemize}
+        \item \textbf{Concept}: An operating system engineered for environments where computational correctness depends not only on the logical output but on the \textbf{exact temporal deadline} at which the output is delivered.
+        \item \textbf{Hard RTOS}: Missing a single deadline is considered a \textbf{catastrophic system failure}. Examples include automotive anti-lock braking systems (ABS), airbag deployment sensors, pacemaker controllers, and avionics flight control.
+        \item \textbf{Soft RTOS}: Missing a deadline results in a degradation of quality-of-service but does not cause complete system failure. Examples include multimedia video streaming, digital cameras, and mobile phones.
+        \item \textbf{Implementations}: \textbf{VxWorks, FreeRTOS, RTLinux}.
+    \end{itemize}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 2.7: DIRECTORY HIERARCHY
+% ==============================================================================
+\section{Directory Hierarchy and Path Navigation}
+
+Operating systems organize millions of storage blocks using a hierarchical tree structure:
+
+\subsection{Topological Differences: Windows vs. Unix/Linux}
+\begin{itemize}
+    \item \textbf{Windows Hierarchy}: Multi-rooted hierarchy where each physical or logical partition is assigned an independent drive letter (\texttt{C:\textbackslash{}}, \texttt{D:\textbackslash{}}, \texttt{E:\textbackslash{}}). Path components are separated by backslashes (\texttt{\textbackslash{}}).
+    \item \textbf{Unix / Linux Hierarchy (FHS)}: Single unified inverted tree rooted at the \textbf{Root Directory (\texttt{/})}. All physical hard drives, partitions, and external USB devices are mounted onto directories under this single root tree. Path components are separated by forward slashes (\texttt{/}).
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    dnode/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=2pt, thick, font=\sffamily\bfseries\scriptsize, align=center},
+    edge from parent/.style={draw=brandblue, thick, -{Stealth[scale=0.8]}}
+]
+    \node[dnode, fill=boxamberbg, draw=brandgold] {/ (Root Directory)}
+        child { node[dnode] {bin\\{\tiny (Binaries)}} }
+        child { node[dnode] {etc\\{\tiny (Configuration)}} }
+        child { node[dnode] {home\\{\tiny (User Folders)}} 
+            child { node[dnode, fill=boxskybg] {User1} 
+                child { node[dnode] {Docs} }
+                child { node[dnode] {Pics} }
+            }
+            child { node[dnode, fill=boxskybg] {User2} }
+        }
+        child { node[dnode] {var\\{\tiny (Logs/Spool)}} };
+\end{tikzpicture}
+\caption{The Hierarchical Directory Tree Structure in Unix/Linux.}
+\label{fig:directory-tree-structure}
+\end{figure}
+
+\subsection{Path Resolution: Absolute vs. Relative Paths}
+\begin{itemize}
+    \item \textbf{Absolute Path}: The complete, unambiguous address of a file or folder starting from the topmost root directory:
+    \begin{itemize}
+        \item Linux Example: \texttt{/home/User1/Docs/assignment.pdf}
+        \item Windows Example: \texttt{C:\textbackslash{}Users\textbackslash{}User1\textbackslash{}Documents\textbackslash{}assignment.pdf}
+    \end{itemize}
+    \item \textbf{Relative Path}: The address of a file or folder resolved relative to the user's \textbf{Current Working Directory (CWD)}:
+    \begin{itemize}
+        \item If CWD is \texttt{/home/User1}, the relative path to the assignment is \texttt{Docs/assignment.pdf}.
+        \item Using \texttt{.} (current directory) and \texttt{..} (parent directory): \texttt{../User2/file.txt} accesses a sibling user's directory.
+    \end{itemize}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 2.8: COMPUTER LANGUAGES \& TRANSLATORS
+% ==============================================================================
+\section{Computer Languages and Language Translators}
+
+\subsection{Generations of Programming Languages}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Machine Language (1st Generation - Low-Level)}:
+    \begin{itemize}
+        \item The native binary language of the CPU, consisting entirely of binary digits ($0\text{s}$ and $1\text{s}$).
+        \item \textbf{Characteristics}: Directly executed by the CPU instruction decoder; entirely hardware-dependent (Intel x86 machine code cannot execute on an ARM processor); extremely error-prone and difficult for humans to write or maintain.
+    \end{itemize}
+
+    \item \textbf{Assembly Language (2nd Generation - Low-Level)}:
+    \begin{itemize}
+        \item Replaces raw binary opcodes with human-readable symbolic \textbf{Mnemonics} (e.g., \texttt{MOV AL, 61h}, \texttt{ADD BX, CX}, \texttt{JMP 0x4000}).
+        \item \textbf{Characteristics}: Maintains a direct 1-to-1 correspondence with machine code; requires an \textbf{Assembler} to translate mnemonics into binary object code; still hardware-dependent.
+    \end{itemize}
+
+    \item \textbf{High-Level Language (3rd/4th Generation - HLL)}:
+    \begin{itemize}
+        \item Uses English-like statements, mathematical expressions, and structural abstractions (variables, loops, functions, classes).
+        \item \textbf{Characteristics}: \textbf{Machine-independent (portable)}; requires a \textbf{Compiler} or \textbf{Interpreter} to translate into machine code; allows software engineers to focus on business logic rather than CPU register allocation. Examples include C, C++, Java, Python, and C\#.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Language Translators}
+
+Because computer hardware can only execute binary machine code, all programs written in assembly or high-level languages must be translated by specialized system software:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Assembler}: System software that translates Assembly Language mnemonic source code into binary Machine Code (Object Code).
+    \item \textbf{Compiler}: System software that reads, analyzes, and translates the \textbf{entire high-level source code file at once}, producing an optimized, standalone binary executable file (\texttt{.exe} or \texttt{.out}).
+    \item \textbf{Interpreter}: System software that reads, translates, and executes high-level source code instructions \textbf{sequentially line-by-line} at runtime without generating an intermediate standalone executable file.
+\end{itemize}
+
+\subsection{Comparative Analysis: Compiler vs. Interpreter}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Evaluation Parameter} & \textbf{Compiler} & \textbf{Interpreter} \\
+\midrule
+\textbf{Translation Method} & Scans and translates the \textbf{entire program at once} before any execution occurs. & Translates and executes the program \textbf{line-by-line} dynamically at runtime. \\
+\textbf{Error Reporting} & Scans full source and produces a consolidated diagnostic list of all syntax errors. & Halts execution immediately upon encountering the very first syntax error. \\
+\textbf{Execution Speed} & \textbf{Fast runtime execution}; machine code is pre-compiled and optimized. & \textbf{Slower execution}; translation overhead is incurred during every run. \\
+\textbf{Output Artifact} & Generates a permanent standalone binary executable file (e.g., \texttt{.exe}, \texttt{.out}). & Produces no standalone binary; source code must be interpreted on every run. \\
+\textbf{Memory Requirement} & Low runtime memory overhead (compiler is not needed to run the executable). & Higher runtime memory overhead (interpreter must remain resident in RAM). \\
+\textbf{Debugging Experience} & Slower iteration cycle (must re-compile after every code modification). & Fast interactive debugging and rapid prototyping. \\
+\textbf{Example Languages} & C, C++, Rust, Go, Swift. & Python, JavaScript, PHP, Ruby. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison between Compilers and Interpreters.}
+\label{tab:compiler-vs-interpreter}
+\end{table}
+
+% ==============================================================================
+% SECTION 2.9: PROGRAM DEVELOPMENT STEPS
+% ==============================================================================
+\section{Steps in the Development of a Program}
+
+Developing reliable software requires a systematic seven-stage engineering lifecycle:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Problem Definition}: Identifying user requirements, defining system inputs, expected outputs, operational constraints, and boundary edge cases.
+    \item \textbf{Algorithm \& Flowchart Design}: Developing logical step-by-step pseudo-code algorithms and graphical flowchart diagrams prior to coding.
+    \item \textbf{Coding}: Writing clean, documented source code in a high-level programming language following syntax rules and design patterns.
+    \item \textbf{Compilation / Interpretation}: Translating source code into binary machine code using a compiler or interpreter, resolving syntax errors.
+    \item \textbf{Testing \& Debugging}: Executing test suites with varied datasets to discover, isolate, and fix runtime exceptions and logical calculation errors.
+    \item \textbf{Documentation}: Creating user operating manuals, API documentation, and inline technical source code comments.
+    \item \textbf{Maintenance}: Providing periodic software updates, security patches, performance optimizations, and feature enhancements post-deployment.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.10: 6-STAGE COMPILATION PIPELINE
+% ==============================================================================
+\section{The 6-Stage Compilation and Execution Pipeline}
+
+When a developer clicks "Run" on a C or C++ program, the toolchain executes six sequential transformation stages (Figure~\ref{fig:compilation-pipeline}):
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    stepnode/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=11.5cm, minimum height=0.75cm, font=\sffamily\small, align=left},
+    arrow/.style={-{Stealth[scale=1.0]}, thick, draw=brandaccent}
+]
+    \node[stepnode, fill=boxpurplebg, draw=boxpurpleborder] (p1) at (0, 4.5) {\textbf{1. Preprocessing (\texttt{cpp})}: Handles \texttt{\#include} / \texttt{\#define}, expands macros $\rightarrow$ \texttt{.i} file.};
+    \node[stepnode, fill=boxskybg, draw=boxskyborder] (p2) at (0, 3.6) {\textbf{2. Compilation (\texttt{gcc/cc1})}: Translates C to architecture-specific Assembly $\rightarrow$ \texttt{.s} file.};
+    \node[stepnode, fill=boxgoldbg, draw=brandgold] (p3) at (0, 2.7) {\textbf{3. Assembly (\texttt{as})}: Translates assembly mnemonics to Object Machine Code $\rightarrow$ \texttt{.o} / \texttt{.obj} file.};
+    \node[stepnode, fill=boxamberbg, draw=boxamberborder] (p4) at (0, 1.8) {\textbf{4. Linking (\texttt{ld})}: Combines object files with system libraries (e.g., \texttt{libc}) $\rightarrow$ \texttt{.exe} / \texttt{a.out}.};
+    \node[stepnode, fill=boxrosebg, draw=boxroseborder] (p5) at (0, 0.9) {\textbf{5. Loading (OS Loader)}: Allocates RAM segments and copies binary code from disk to memory.};
+    \node[stepnode, fill=boxgreenbg, draw=boxgreenborder] (p6) at (0, 0.0) {\textbf{6. Execution (CPU)}: CPU fetches machine instructions from RAM and executes \texttt{main()}.};
+
+    \draw[arrow] (p1) -- (p2);
+    \draw[arrow] (p2) -- (p3);
+    \draw[arrow] (p3) -- (p4);
+    \draw[arrow] (p4) -- (p5);
+    \draw[arrow] (p5) -- (p6);
+\end{tikzpicture}
+\caption{The Complete 6-Stage Compilation and Execution Pipeline for C/C++ Programs.}
+\label{fig:compilation-pipeline}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Stage 1: Preprocessing}: The preprocessor evaluates all lines starting with a hash symbol (\texttt{\#}). It strips comments, expands macros defined by \texttt{\#define}, evaluates conditional compilation blocks (\texttt{\#ifdef}), and textually copies the contents of header files (\texttt{\#include <stdio.h>}) into an expanded intermediate source file (\texttt{.i}).
+    \item \textbf{Stage 2: Compilation}: The core compiler analyzes the preprocessed code, performs lexical, syntactic, and semantic parsing, and translates the high-level logic into target-specific \textbf{Assembly Language source code} (\texttt{.s}).
+    \item \textbf{Stage 3: Assembly}: The assembler translates the assembly mnemonics into raw binary machine instructions, generating a \textbf{Relocatable Object File} (\texttt{.o} or \texttt{.obj}). This file contains machine code, but external library function addresses (e.g., \texttt{printf}) remain unlinked.
+    \item \textbf{Stage 4: Linking}: The Linker resolves external symbol references, stitching together multiple compiled object modules with static and dynamic system runtime libraries (e.g., standard C runtime \texttt{libc.so} or \texttt{msvcrt.dll}), generating the final \textbf{Standalone Executable Binary} (\texttt{.exe} or \texttt{a.out}).
+    \item \textbf{Stage 5: Loading}: When the user launches the program, the OS \textbf{Loader} allocates a virtual memory space (partitioned into Text, Data, BSS, Heap, and Stack segments) and copies the binary machine code from storage disk into physical RAM.
+    \item \textbf{Stage 6: Execution}: The CPU sets its Program Counter (PC) to the program's initial entry point (the \texttt{main()} function) and begins executing instructions via the hardware Fetch-Decode-Execute instruction cycle.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.11: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Exam Points]
+\begin{itemize}
+    \item \textbf{Kernel Privilege}: In exam questions regarding kernel security, remember that the kernel executes in \textbf{Ring 0 (Kernel Mode / Privileged Mode)}, while user programs execute in \textbf{Ring 3 (User Mode / Unprivileged Mode)}.
+    \item \textbf{Compiler vs. Interpreter}: In short-answer questions, the single most critical distinction is: \textbf{Compiler translates the ENTIRE file into a standalone executable; Interpreter translates and executes LINE-BY-LINE with no standalone binary}.
+    \item \textbf{Boot Process Sequence}: Memorize the exact sequence: \textbf{POST $\rightarrow$ Locate Boot Device $\rightarrow$ Load Bootloader $\rightarrow$ Load Kernel $\rightarrow$ Spawns PID 1}.
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Concept Confusions]
+\begin{itemize}
+    \item \textbf{Confusing Microkernel and Monolithic}: A Monolithic kernel is \textbf{faster} because everything is in the same address space. A Microkernel is \textbf{more stable and secure} but slower due to IPC message passing.
+    \item \textbf{Confusing Linker and Loader}: The \textbf{Linker} combines object files into an executable file on disk. The \textbf{Loader} copies that executable file from disk into RAM for execution.
+    \item \textbf{Hard vs. Soft RTOS}: A Hard RTOS is not defined by raw execution speed, but by \textbf{strict deadline guarantees} where a late result equals system failure.
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 2.12: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 2 Key Takeaways]
+\begin{itemize}
+    \item \textbf{OS Definition}: Intermediary software between user applications and hardware managing resources.
+    \item \textbf{Kernel Architectures}:
+    \begin{itemize}
+        \item *Monolithic*: All services in Ring 0 kernel space; fast, but driver crash crashes OS (Linux, Unix).
+        \item *Microkernel*: Minimal kernel; drivers and filesystems in User Space Ring 3; stable, modular, but slower (Minix, QNX).
+        \item *Hybrid*: Combines monolithic speed with microkernel structure (Windows NT, macOS XNU).
+    \end{itemize}
+    \item \textbf{Bootloader}: Program in ROM/MBR/ESP that loads kernel into RAM (GRUB, Windows Boot Manager).
+    \item \textbf{5 OS Functions}: Process Management, Memory Management (Virtual Memory), File Management, Device Management (Drivers/Spooling), Security (Authentication/Authorization).
+    \item \textbf{OS Types}: Batch (non-interactive batches), Time-Sharing (multitasking via context switches), Distributed (multiple networked PCs as one), NOS (server administration), RTOS (Hard = fatal deadline failure; Soft = degraded quality).
+    \item \textbf{Path Resolution}: Absolute (from root \texttt{/} or \texttt{C:\textbackslash{}}) vs. Relative (from CWD).
+    \item \textbf{Translators}: Assembler (Assembly $\rightarrow$ Object Code), Compiler (Whole HLL source $\rightarrow$ Executable), Interpreter (HLL source $\rightarrow$ Line-by-line execution).
+    \item \textbf{6-Stage Pipeline}: Preprocessing (\texttt{\#} expanded $\rightarrow$ \texttt{.i}) $\rightarrow$ Compilation (C $\rightarrow$ Assembly \texttt{.s}) $\rightarrow$ Assembly (Assembly $\rightarrow$ Object \texttt{.o}) $\rightarrow$ Linking (Objects + Libraries $\rightarrow$ \texttt{.exe}) $\rightarrow$ Loading (Disk $\rightarrow$ RAM) $\rightarrow$ Execution (CPU runs \texttt{main()}).
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 2.13: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual, Descriptive \& Workflow Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Short Answer}: State the primary role of a System Call in an operating system.
+    \item \textbf{Short Answer}: Differentiate between the functions of the Linker and the Loader in the compilation lifecycle.
+    \item \textbf{Conceptual}: Why does a Monolithic kernel offer higher execution speed than a Microkernel, and what is its primary operational vulnerability?
+    \item \textbf{Descriptive}: Explain the step-by-step sequence of events that occur from the moment a user presses the computer power button until the operating system login prompt appears.
+    \item \textbf{Technical Comparison}: Compare Hard Real-Time Systems with Soft Real-Time Systems, giving two real-world industry examples of each.
+    \item \textbf{Path Problem}: If a user's current working directory is \texttt{/home/student/projects}, write both the absolute and relative paths to a file named \texttt{report.pdf} located in \texttt{/home/student/documents}.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 2.14: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which layer of the operating system architecture interacts directly with physical hardware components?
+    \begin{enumerate}[label=(\alph*)]
+        \item User Space Application
+        \item Shell Interface
+        \item Operating System Kernel
+        \item System Call API
+    \end{enumerate}
+
+    \item In a Microkernel architecture, where do file systems and hardware device drivers execute?
+    \begin{enumerate}[label=(\alph*)]
+        \item Privileged Kernel Space (Ring 0)
+        \item Unprivileged User Space (Ring 3)
+        \item Motherboard Firmware ROM
+        \item Master Boot Record (MBR)
+    \end{enumerate}
+
+    \item Which of the following operating systems utilizes a Monolithic Kernel design?
+    \begin{enumerate}[label=(\alph*)]
+        \item Linux
+        \item QNX
+        \item Minix
+        \item Windows 11
+    \end{enumerate}
+
+    \item During system boot, which firmware program executes the Power-On Self-Test (POST)?
+    \begin{enumerate}[label=(\alph*)]
+        \item GRUB2
+        \item BIOS / UEFI
+        \item Systemd
+        \item Windows Boot Manager
+    \end{enumerate}
+
+    \item An automotive airbag deployment sensor system is an example of which operating system class?
+    \begin{enumerate}[label=(\alph*)]
+        \item Batch Operating System
+        \item Soft Real-Time Operating System
+        \item Hard Real-Time Operating System
+        \item Network Operating System
+    \end{enumerate}
+
+    \item Which language translator translates and executes high-level source code line-by-line at runtime?
+    \begin{enumerate}[label=(\alph*)]
+        \item Compiler
+        \item Assembler
+        \item Interpreter
+        \item Linker
+    \end{enumerate}
+
+    \item In the C compilation pipeline, which stage is responsible for expanding \texttt{\#include} and \texttt{\#define} directives?
+    \begin{enumerate}[label=(\alph*)]
+        \item Preprocessing
+        \item Assembly
+        \item Linking
+        \item Loading
+    \end{enumerate}
+
+    \item Which utility is responsible for loading the executable binary program from secondary storage into physical RAM for execution?
+    \begin{enumerate}[label=(\alph*)]
+        \item Compiler
+        \item Linker
+        \item Loader
+        \item Assembler
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(c) Operating System Kernel} --- The kernel is the core layer executing in Ring 0 that directly interfaces with hardware.
+    \item \textbf{(b) Unprivileged User Space (Ring 3)} --- Microkernels decouple non-essential services (drivers, file systems) into isolated user-space processes.
+    \item \textbf{(a) Linux} --- Linux is a monolithic kernel; QNX and Minix are microkernels; Windows 11 is a hybrid kernel.
+    \item \textbf{(b) BIOS / UEFI} --- Motherboard firmware executes POST to verify hardware before locating the bootloader.
+    \item \textbf{(c) Hard Real-Time Operating System} --- An airbag system must meet strict microsecond deadlines; a missed deadline causes catastrophic failure.
+    \item \textbf{(c) Interpreter} --- Interpreters execute code line-by-line without pre-compiling a standalone binary.
+    \item \textbf{(a) Preprocessing} --- The preprocessor (\texttt{cpp}) handles \texttt{\#} directives before actual compilation occurs.
+    \item \textbf{(c) Loader} --- The OS loader transfers compiled machine code from disk into memory and allocates execution segments.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.15: UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 2: Operating System (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the execution privilege ring associated with Kernel Mode versus User Mode.
+    \item What is the function of the Master Boot Record (MBR) in legacy boot systems?
+    \item Give one key difference between a Hard RTOS and a Soft RTOS.
+    \item Name the translation tool that converts assembly language mnemonics into object machine code.
+    \item Define \textit{Virtual Memory} and state its primary benefit.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical \& Technical Explanations ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Compare Monolithic Kernels and Microkernels across five parameters: address space architecture, performance, fault isolation/stability, extensibility, and real-world examples.
+    \item Describe the five core resource management functions of a modern Operating System.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Pipeline \& Lifecycle ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item An application developer writes a C program in a file named \texttt{program.c}.
+    \begin{enumerate}[label=(\alph*)]
+        \item Explain in detail the complete \textbf{6-stage compilation and execution lifecycle} that transforms \texttt{program.c} into an active executing process in RAM. (6 Marks)
+        \item Contrast the error reporting and execution performance of this compiled program against a Python script running through an interpreter. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item \textbf{Privilege Rings}: Kernel Mode executes in \textbf{Ring 0} (privileged); User Mode executes in \textbf{Ring 3} (unprivileged). [1 Mark]
+    \item \textbf{Function of MBR}: Located on Sector 0 of a disk, it holds the primary partition table and initial stage-1 bootloader code. [1 Mark]
+    \item \textbf{Hard vs. Soft RTOS}: In Hard RTOS, missing a deadline causes total system failure; in Soft RTOS, missing a deadline degrades quality without failure. [1 Mark]
+    \item \textbf{Assembler}: The system utility that translates assembly mnemonics into object machine code. [1 Mark]
+    \item \textbf{Virtual Memory}: An OS memory management technique that uses secondary storage (swap/pagefile) to simulate additional RAM, allowing systems to run programs larger than physical memory. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Monolithic vs. Microkernel Comparison Table} (1 Mark per parameter):
+    \begin{itemize}
+        \item \textit{Address Space}: Monolithic runs all services in Ring 0; Microkernel runs only basic IPC/scheduling in Ring 0, drivers/filesystems in Ring 3 User Space.
+        \item \textit{Performance}: Monolithic is faster (direct function calls); Microkernel has IPC message-passing overhead.
+        \item \textit{Fault Isolation}: Monolithic is fragile (driver crash crashes OS); Microkernel has high fault isolation (crashed driver process is restarted).
+        \item \textit{Extensibility}: Monolithic is harder to modify; Microkernel is highly modular and easy to extend.
+        \item \textit{Examples}: Monolithic = Linux, Unix; Microkernel = Minix, QNX.
+    \end{itemize}
+
+    \item \textbf{Five Core OS Functions} (1 Mark each):
+    \begin{itemize}
+        \item \textit{Process Management}: Creation, scheduling, synchronization, deadlock handling.
+        \item \textit{Memory Management}: Tracking, allocating, deallocating RAM, virtual memory.
+        \item \textit{File Management}: Abstracting storage into files/directories, metadata, mapping.
+        \item \textit{Device Management}: Device drivers, buffering, caching, spooling.
+        \item \textit{Security \& Protection}: User authentication, access control permissions, privilege rings.
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Compilation Pipeline \& Comparison}:
+    \begin{enumerate}[label=(\alph*)]
+        \item \textit{6-Stage Pipeline} (1 Mark per stage):
+        \begin{enumerate}
+            \item \textbf{Preprocessing (\texttt{cpp})}: Expands \texttt{\#include}, \texttt{\#define}, strips comments $\rightarrow$ \texttt{.i} file.
+            \item \textbf{Compilation (\texttt{gcc})}: Translates C source to architecture-specific Assembly code $\rightarrow$ \texttt{.s} file.
+            \item \textbf{Assembly (\texttt{as})}: Translates assembly mnemonics to machine code object file $\rightarrow$ \texttt{.o} file.
+            \item \textbf{Linking (\texttt{ld})}: Combines object modules with libraries (e.g., \texttt{libc}) to produce executable binary $\rightarrow$ \texttt{.exe} / \texttt{a.out}.
+            \item \textbf{Loading (Loader)}: Allocates virtual memory segments (Text, Data, Heap, Stack) in RAM and transfers binary from disk.
+            \item \textbf{Execution (CPU)}: CPU fetches instructions starting at \texttt{main()} and executes them.
+        \end{enumerate}
+
+        \item \textit{Compiler vs. Interpreter Comparison} (2 Marks each):
+        \begin{itemize}
+            \item \textbf{Error Reporting}: The C compiler scans the entire source code at once and provides a consolidated diagnostic error list. The Python interpreter evaluates line-by-line and halts immediately upon encountering the first syntax error.
+            \item \textbf{Execution Performance}: The compiled C binary executes natively on the CPU with maximum runtime performance and optimization. The Python script incurs translation and interpretation overhead on every line during execution, resulting in slower execution speed.
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

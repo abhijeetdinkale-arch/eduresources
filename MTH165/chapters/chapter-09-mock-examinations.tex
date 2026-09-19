@@ -1,0 +1,194 @@
+\chapter{Full-Length University Mock Examinations}
+\label{chap:mock-examinations}
+
+% ==============================================================================
+% SECTION 9.1: OVERVIEW \& INSTRUCTIONS
+% ==============================================================================
+\section{University Examination Structure \& Instructions}
+
+This chapter provides two complete, realistic 100-mark mock examinations modeled after the Lovely Professional University (LPU) Semester 1 final examination paper pattern. Each examination is followed by complete, step-by-step worked scoring solutions.
+
+\begin{important}[Standard Examination Instructions]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Duration}: 3 Hours $\cdot$ \textbf{Maximum Marks}: 100.
+    \item \textbf{Section A}: 10 Short Compulsory Questions ($10 \times 2 = 20$ Marks).
+    \item \textbf{Section B}: 6 Analytical Medium Problems ($6 \times 5 = 30$ Marks).
+    \item \textbf{Section C}: 5 Long Comprehensive Verification / Proof Problems ($5 \times 10 = 50$ Marks).
+\end{itemize}
+\end{important}
+
+% ==============================================================================
+% MOCK EXAMINATION 1
+% ==============================================================================
+\section{University Mock Examination 1}
+
+\begin{mockexam}[MTH165 Mock Examination 1 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the $n$-th derivative formula for $y = \cos(3x+1)$.
+    \item State the conditions for Lagrange's Mean Value Theorem.
+    \item Evaluate $\Gamma(7/2)$ in terms of $\pi$.
+    \item State the value of the Beta function $B(1/2, 1/2)$.
+    \item State D'Alembert's Ratio Test for positive-term series.
+    \item Define a Homogeneous function of degree $n$ and state Euler's Theorem.
+    \item Write the condition for two functions $u(x,y)$ and $v(x,y)$ to be functionally dependent.
+    \item State the Jacobian transformation factor when converting Cartesian $dx dy$ to Polar $dr d\theta$.
+    \item Define a Solenoidal vector field and state its divergence.
+    \item State Green's Theorem in the plane.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item If $y = \sin(m\sin^{-1}x)$, prove that $(1-x^2)y_2 - x y_1 + m^2 y = 0$.
+    \item Evaluate $\int_0^{\pi/2} \sin^6\theta \cos^4\theta\,d\theta$ using Beta and Gamma functions.
+    \item Test the convergence of the series $\sum_{n=1}^\infty \frac{n^3 + 1}{3^n + n}$.
+    \item Find the equations of the tangent plane and normal line to $x^2 + y^2 + z^2 = 9$ at $(1, 2, 2)$.
+    \item Change the order of integration and evaluate $\int_0^1 \int_{y^2}^1 y e^{x^2}\,dx dy$.
+    \item Find the directional derivative of $\phi = x^2 y + y z^2$ at $(1, 2, -1)$ in the direction of $2\hat{i} - 2\hat{j} + \hat{k}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Proof \& Verification Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item If $y = (x + \sqrt{1+x^2})^m$:
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $(1+x^2)y_{n+2} + (2n+1)xy_{n+1} + (n^2-m^2)y_n = 0$. (6 Marks)
+        \item Evaluate $y_n(0)$ for $n$ odd and $n$ even. (4 Marks)
+    \end{enumerate}
+    \item Find the complete interval of convergence of the power series $\sum_{n=1}^\infty \frac{(x-2)^n}{n \cdot 3^n}$, testing both boundary endpoints. (10 Marks)
+    \item Find all local maxima, local minima, and saddle points of $f(x,y) = x^3 + y^3 - 3xy$ using the Hessian discriminant test. (10 Marks)
+    \item Find the volume of the solid enclosed between the paraboloid $z = x^2+y^2$ and the plane $z = 4$ using cylindrical coordinates. (10 Marks)
+    \item Verify Gauss's Divergence Theorem for $\vec{F} = 4x\hat{i} - 2y^2\hat{j} + z^2\hat{k}$ over the cylinder $x^2+y^2 \le 4, 0 \le z \le 3$. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+% ==============================================================================
+% MOCK EXAMINATION 1 SOLUTIONS
+% ==============================================================================
+\subsection{Complete Worked Solutions for Mock Examination 1}
+
+\begin{solutionbox}[Solutions to Mock Exam 1 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item $y_n = 3^n \cos\left(3x + 1 + \frac{n\pi}{2}\right)$. [2 Marks]
+    \item (1) $f$ is continuous on ${[a,b]}$; (2) $f$ is differentiable on $(a,b)$. [2 Marks]
+    \item $\Gamma(7/2) = \frac{5}{2} \cdot \frac{3}{2} \cdot \frac{1}{2}\Gamma(1/2) = \mathbf{\frac{15\sqrt{\pi}}{8}}$. [2 Marks]
+    \item $B(1/2, 1/2) = \frac{\Gamma(1/2)\Gamma(1/2)}{\Gamma(1)} = (\sqrt{\pi})(\sqrt{\pi}) = \mathbf{\pi}$. [2 Marks]
+    \item $L = \lim \frac{a_{n+1}}{a_n}$. Converges if $L < 1$, diverges if $L > 1$, fails if $L = 1$. [2 Marks]
+    \item $f(tx,ty) = t^n f(x,y)$; Euler's Theorem: $x u_x + y u_y = n u$. [2 Marks]
+    \item $\frac{\partial(u,v)}{\partial(x,y)} = 0$ (Jacobian equals zero). [2 Marks]
+    \item $dx dy = \mathbf{r\,dr\,d\theta}$ (Scale factor is $r$). [2 Marks]
+    \item A vector field with zero divergence everywhere: $\mathbf{\nabla\cdot\vec{F} = 0}$. [2 Marks]
+    \item $\oint_C (P dx + Q dy) = \iint_R (Q_x - P_y) dx dy$. [2 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item $y_1 = \cos(m\sin^{-1}x)\frac{m}{\sqrt{1-x^2}} \implies (1-x^2)y_1^2 = m^2(1-y^2)$. Differentiating gives $(1-x^2)2y_1 y_2 - 2x y_1^2 = -2m^2 y y_1 \implies \mathbf{(1-x^2)y_2 - xy_1 + m^2 y = 0}$. [5 Marks]
+    \item $I = \frac{1}{2}B(7/2, 5/2) = \frac{1}{2}\frac{\Gamma(7/2)\Gamma(5/2)}{\Gamma(6)} = \frac{1}{2}\frac{(15/8\sqrt{\pi})(3/4\sqrt{\pi})}{120} = \mathbf{\frac{3\pi}{512}}$. [5 Marks]
+    \item $a_n = \frac{n^3+1}{3^n+n} \implies \lim \frac{a_{n+1}}{a_n} = \lim \frac{(n+1)^3+1}{3^{n+1}+n+1}\frac{3^n+n}{n^3+1} = \frac{1}{3} < 1 \implies \mathbf{\text{Convergent}}$. [5 Marks]
+    \item $\nabla F = 2x\hat{i} + 2y\hat{j} + 2z\hat{k} = 2\hat{i} + 4\hat{j} + 4\hat{k}$ at $(1,2,2)$. Tangent plane: $2(x-1) + 4(y-2) + 4(z-2) = 0 \implies \mathbf{x + 2y + 2z = 9}$. Normal line: $\mathbf{\frac{x-1}{1} = \frac{y-2}{2} = \frac{z-2}{2}}$. [5 Marks]
+    \item Reversing order: $I = \int_0^1 dx \int_0^{\sqrt{x}} y e^{x^2} dy = \frac{1}{2}\int_0^1 x e^{x^2} dx = \mathbf{\frac{e-1}{4}}$. [5 Marks]
+    \item $\nabla\phi = 2xy\hat{i} + (x^2+z^2)\hat{j} + 2yz\hat{k} = 4\hat{i} + 2\hat{j} - 4\hat{k}$ at $(1,2,-1)$. Unit vector $\hat{u} = \frac{2\hat{i}-2\hat{j}+\hat{k}}{3}$. $D_{\hat{u}}\phi = \frac{4(2) + 2(-2) + (-4)(1)}{3} = \mathbf{0}$. [5 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Leibniz Recurrence}:
+    \begin{enumerate}[label=(\alph*)]
+        \item From Chapter 1: $(1+x^2)y_2 + xy_1 - m^2 y = 0$. Applying Leibniz $n$ times gives $(1+x^2)y_{n+2} + (2n+1)xy_{n+1} + (n^2-m^2)y_n = 0$. [6 Marks]
+        \item At $x=0$, $y_{n+2}(0) = (m^2-n^2)y_n(0)$. Odd: $y_{2k+1}(0) = m(m^2-1^2)\cdots(m^2-(2k-1)^2)$; Even: $y_{2k}(0) = m^2(m^2-2^2)\cdots(m^2-(2k-2)^2)$. [4 Marks]
+    \end{enumerate}
+    \item \textbf{Power Series Interval}: $R = \lim \frac{(n+1)3^{n+1}}{n 3^n} = 3$. Center $c = 2 \implies x \in (-1, 5)$. At $x = -1$: $\sum \frac{(-1)^n}{n}$ conv (Leibniz); at $x = 5$: $\sum \frac{1}{n}$ div. Interval is $\mathbf{[-1, 5)}$. [10 Marks]
+    \item \textbf{Extrema Classification}: Critical points $(0,0)$ and $(1,1)$. At $(0,0)$: $D = -9 < 0 \implies \mathbf{\text{Saddle Point}}$. At $(1,1)$: $D = 27 > 0, r = 6 > 0 \implies \mathbf{\text{Local Minimum}}$ with $f(1,1) = -1$. [10 Marks]
+    \item \textbf{Volume of Paraboloid}: $V = \int_0^{2\pi} d\theta \int_0^2 r dr \int_{r^2}^4 dz = 2\pi \int_0^2 r(4-r^2)dr = 2\pi [2r^2 - r^4/4]_0^2 = \mathbf{8\pi}$. [10 Marks]
+    \item \textbf{Gauss Divergence Theorem}: $\nabla\cdot\vec{F} = 4 - 4y + 2z$. Volume integral over cylinder: $\iiint (4 - 4y + 2z) dV = 4(\pi \cdot 2^2 \cdot 3) - 0 + 2(\pi \cdot 2^2)(\frac{3^2}{2}) = 48\pi + 36\pi = \mathbf{84\pi}$. Surface flux sum over 3 surfaces equals $84\pi$, verifying the theorem. [10 Marks]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 2
+% ==============================================================================
+\section{University Mock Examination 2}
+
+\begin{mockexam}[MTH165 Mock Examination 2 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Write the statement of Rolle's Theorem.
+    \item State the value of $\int_0^{\pi/2} \sin^7 x\,dx$ using Walli's formula.
+    \item State the $p$-series test for convergence.
+    \item Write the formula for the radius of curvature in Cartesian coordinates.
+    \item State the second-order extension of Euler's Theorem on homogeneous functions.
+    \item Write the Hessian discriminant formula for two-variable extrema.
+    \item State the condition for two vector fields to be orthogonal.
+    \item State Stokes' Theorem.
+    \item State Gauss's Divergence Theorem.
+    \item Write the volume element $dV$ in spherical polar coordinates.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Evaluate $\lim_{x\to 0} \left(\frac{\tan x}{x}\right)^{1/x^2}$.
+    \item Prove that $\int_0^{\pi/2} \sqrt{\tan\theta}\,d\theta = \frac{\pi}{\sqrt{2}}$.
+    \item Test the convergence of the series $\sum_{n=1}^\infty \left(1 + \frac{1}{\sqrt{n}}\right)^{-n^{3/2}}$ using Cauchy's Root Test.
+    \item If $u = \ln\left(\frac{x^4+y^4}{x+y}\right)$, prove that $x u_x + y u_y = 3$.
+    \item Evaluate $\iint_R xy\,dx dy$ over the positive quadrant of the circle $x^2+y^2 \le a^2$.
+    \item Determine constants $a, b, c$ such that $\vec{F} = (x+2y+az)\hat{i} + (bx-3y-z)\hat{j} + (4x+cy+2z)\hat{k}$ is irrotational.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Verification Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item If $y = \cos(m\sin^{-1}x)$, prove that $(1-x^2)y_{n+2} - (2n+1)xy_{n+1} + (m^2-n^2)y_n = 0$, and find $y_n(0)$. (10 Marks)
+    \item Test the series for all $x > 0$: $\sum_{n=1}^\infty \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{2 \cdot 4 \cdot 6 \cdots (2n)} x^n$. (10 Marks)
+    \item Find the dimensions of a rectangular box open at the top of maximum volume that can be made from $48\text{ m}^2$ of cardboard using Lagrange Multipliers. (10 Marks)
+    \item Change the order of integration and evaluate $\int_0^a \int_{\sqrt{ax}}^a \frac{y^2}{\sqrt{y^4-a^2 x^2}}\,dy dx$. (10 Marks)
+    \item Verify Stokes' Theorem for $\vec{F} = (2x-y)\hat{i} - yz^2\hat{j} - y^2 z\hat{k}$ over the upper hemisphere $x^2+y^2+z^2 = 1, z \ge 0$. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+% ==============================================================================
+% MOCK EXAMINATION 2 SOLUTIONS
+% ==============================================================================
+\subsection{Complete Worked Solutions for Mock Examination 2}
+
+\begin{solutionbox}[Solutions to Mock Exam 2 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item If $f$ is continuous on ${[a,b]}$, differentiable on $(a,b)$, and $f(a)=f(b)$, then $\exists c \in (a,b)$ with $f'(c)=0$. [2 Marks]
+    \item $\frac{6}{7} \cdot \frac{4}{5} \cdot \frac{2}{3} \cdot 1 = \mathbf{\frac{16}{35}}$. [2 Marks]
+    \item $\sum \frac{1}{n^p}$ converges if $p > 1$, diverges if $p \le 1$. [2 Marks]
+    \item $\rho = \frac{[1+(y')^2]^{3/2}}{|y''|}$. [2 Marks]
+    \item $x^2 u_{xx} + 2xy u_{xy} + y^2 u_{yy} = n(n-1) u$. [2 Marks]
+    \item $D = rt - s^2$ where $r = f_{xx}, s = f_{xy}, t = f_{yy}$. [2 Marks]
+    \item $\vec{u} \cdot \vec{v} = 0$. [2 Marks]
+    \item $\oint_C \vec{F}\cdot d\vec{r} = \iint_S (\nabla\times\vec{F})\cdot\hat{n}\,dS$. [2 Marks]
+    \item $\iint_S \vec{F}\cdot\hat{n}\,dS = \iiint_V (\nabla\cdot\vec{F})\,dV$. [2 Marks]
+    \item $dV = \mathbf{\rho^2 \sin\phi\,d\rho\,d\phi\,d\theta}$. [2 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item $\ln y = \frac{\ln(\tan x/x)}{x^2} \to \frac{1}{3} \implies \lim = \mathbf{e^{1/3}}$. [5 Marks]
+    \item $\int_0^{\pi/2}\sin^{1/2}\theta\cos^{-1/2}\theta d\theta = \frac{1}{2}B(3/4, 1/4) = \frac{1}{2}\frac{\pi}{\sin(\pi/4)} = \mathbf{\frac{\pi}{\sqrt{2}}}$. [5 Marks]
+    \item $L = \lim (a_n)^{1/n} = \lim (1 + 1/\sqrt{n})^{-\sqrt{n}} = e^{-1} = 1/e < 1 \implies \mathbf{\text{Convergent}}$. [5 Marks]
+    \item $e^u = \frac{x^4+y^4}{x+y}$ is homogeneous of degree $3$. Euler gives $x(e^u u_x) + y(e^u u_y) = 3e^u \implies \mathbf{x u_x + y u_y = 3}$. [5 Marks]
+    \item In polar: $\int_0^{\pi/2} \int_0^a (r\cos\theta)(r\sin\theta)(r dr d\theta) = (\int_0^{\pi/2}\frac{\sin 2\theta}{2}d\theta)(\int_0^a r^3 dr) = (1/2)(a^4/4) = \mathbf{\frac{a^4}{8}}$. [5 Marks]
+    \item $\nabla\times\vec{F} = \vec{0} \implies \mathbf{a = 4, b = 2, c = -1}$. [5 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Leibniz \& Recurrence}: $(1-x^2)y_2 - xy_1 + m^2 y = 0$. Applying Leibniz $n$ times gives $(1-x^2)y_{n+2} - (2n+1)xy_{n+1} + (m^2-n^2)y_n = 0$. At $x=0$, $y_{n+2}(0) = (n^2-m^2)y_n(0)$. Odd: $y_{2k+1}(0) = 0$ since $y_1(0) = 0$; Even: $y_{2k}(0) = (-1)^k m^2(m^2-2^2)\cdots(m^2-(2k-2)^2)$. [10 Marks]
+    \item \textbf{Raabe's Series Test}: $\lim \frac{a_{n+1}}{a_n} = x$. If $x < 1 \implies$ Conv; if $x > 1 \implies$ Div. At $x = 1$, $R = \lim n(\frac{2n+2}{2n+1}-1) = 1/2 < 1 \implies$ Diverges. Converges for $x < 1$, diverges for $x \ge 1$. [10 Marks]
+    \item \textbf{Lagrange Open Box}: Maximize $V = xyz$ subject to $xy + 2yz + 2xz = 48$. $\nabla V = \lambda \nabla g \implies yz = \lambda(y+2z), xz = \lambda(x+2z), xy = \lambda(2y+2x) \implies x = y = 2z$. Substituting: $x^2 + x^2 + x^2 = 48 \implies 3x^2 = 48 \implies x = 4, y = 4, z = 2$. Maximum volume $\mathbf{V = 32\text{ m}^3}$. [10 Marks]
+    \item \textbf{Change of Order}: $I = \int_0^a \int_0^{y^2/a}\frac{y^2}{\sqrt{y^4-a^2 x^2}}dx dy = \frac{1}{a}\int_0^a y^2 (\pi/2) dy = \mathbf{\frac{\pi a^2}{6}}$. [10 Marks]
+    \item \textbf{Stokes' Theorem Verification}: $\nabla\times\vec{F} = \hat{k}$. Line integral around unit circle in $xy$-plane: $\oint_C (2x-y)dx = \int_0^{2\pi}(2\cos t - \sin t)(-\sin t)dt = \pi$. Surface integral $\iint_S (\nabla\times\vec{F})\cdot\hat{k} dS = \iint_R 1 dA = \pi(1)^2 = \pi$. Both sides equal $\pi$, verifying the theorem. [10 Marks]
+\end{enumerate}
+\end{solutionbox}

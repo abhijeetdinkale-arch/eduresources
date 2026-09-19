@@ -1,0 +1,190 @@
+\chapter{Practical 6: Flip-Flop Warriors: NAND Edition}
+
+\section{Aim / Objective}
+To design, construct, and validate the logic and operation of a JK Flip-Flop using discrete NAND gates (Universal Logic Gates).
+
+\section{Apparatus / Components Required}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X c}
+\toprule
+\textbf{Component} & \textbf{Specification / Type} & \textbf{Quantity} \\
+\midrule
+IC 7400 & Quad 2-Input NAND Gate & 1 \\
+IC 7410 & Triple 3-Input NAND Gate & 1 \\
+Breadboard & Standard & 1 \\
+DC Power Supply & $+5\text{V}$ Regulated & 1 \\
+LEDs & Red (Output $Q$), Green (Output $\bar{Q}$) & 2 \\
+Resistors & $220\,\Omega$ or $330\,\Omega$ & 2 \\
+Connecting Wires & Single strand / jumper wires & As req. \\
+Logic Inputs & Toggle switches or DIP switches & 3 ($J, K, Clk$) \\
+\bottomrule
+\end{tabularx}
+\caption{Apparatus and Components for Discrete JK Flip-Flop.}
+\label{tab:ff-apparatus}
+\end{table}
+
+\section{Theory}
+
+\subsection{The JK Flip-Flop}
+The JK Flip-Flop is considered the "universal" flip-flop because it eliminates the invalid state found in SR flip-flops. It has two data inputs ($J$ and $K$) and a Clock input ($Clk$).
+\begin{itemize}
+    \item \textbf{$J$ (Jack):} Acts like the Set input.
+    \item \textbf{$K$ (King):} Acts like the Reset input.
+    \item \textbf{Feedback:} Outputs $Q$ and $\bar{Q}$ are fed back to inputs to enable toggling action.
+\end{itemize}
+
+\subsection{Logic Construction with NAND Gates}
+To construct a JK Flip-Flop using discrete NAND gates, we require:
+\begin{enumerate}
+    \item \textbf{A Memory Cell (Latch):} Formed by two cross-coupled 2-input NAND gates (using IC 7400).
+    \item \textbf{Steering / Input Logic:} Formed by two 3-input NAND gates (using IC 7410).
+\end{enumerate}
+
+\subsection{The Operation States}
+\begin{enumerate}
+    \item \textbf{Hold State ($J = 0, K = 0$):} No change in output ($Q_{n+1} = Q_n$).
+    \item \textbf{Reset State ($J = 0, K = 1$):} Flip-flop resets ($Q = 0, \bar{Q} = 1$).
+    \item \textbf{Set State ($J = 1, K = 0$):} Flip-flop sets ($Q = 1, \bar{Q} = 0$).
+    \item \textbf{Toggle State ($J = 1, K = 1$):} Output switches to its complement ($Q_{n+1} = \bar{Q}_n$).
+\end{enumerate}
+
+\begin{commonmistake}[Race-Around Condition in Level-Triggered Setup]
+In a basic level-triggered circuit constructed on a breadboard, the Toggle state ($J=1, K=1$) may result in a \textbf{Race-Around Condition} where the output oscillates rapidly while the clock is high. This confirms logic, though practical applications use Master-Slave configurations.
+\end{commonmistake}
+
+\section{Pin Diagrams and Connections}
+
+\subsection{IC 7410 (Triple 3-Input NAND Gate)}
+\begin{itemize}
+    \item \textbf{Gate 1:} Inputs (Pins 1, 2, 13), Output (Pin 12)
+    \item \textbf{Gate 2:} Inputs (Pins 3, 4, 5), Output (Pin 6)
+    \item \textbf{Pin 7:} Ground ($\text{GND}$), \textbf{Pin 14:} Supply ($+5\text{V Vcc}$)
+\end{itemize}
+
+\section{Circuit Diagram / Setup}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.9, transform shape]
+    % Steering NAND 1 (3-input)
+    \node (nand3_1) at (0,2) [nand gate US, draw, logic gate inputs=nnn] {};
+    % Steering NAND 2 (3-input)
+    \node (nand3_2) at (0,-2) [nand gate US, draw, logic gate inputs=nnn] {};
+    % Latch NAND 3 (2-input)
+    \node (nand2_1) at (3.5,1.5) [nand gate US, draw, logic gate inputs=nn] {};
+    % Latch NAND 4 (2-input)
+    \node (nand2_2) at (3.5,-1.5) [nand gate US, draw, logic gate inputs=nn] {};
+    
+    % Connections
+    \draw (nand3_1.output) -- (nand2_1.input 1);
+    \draw (nand3_2.output) -- (nand2_2.input 2);
+    
+    \draw (nand2_1.output) -- ++(0.5,0) coordinate (q_out) -- ++(1,0) node[right] {$Q$};
+    \draw (nand2_2.output) -- ++(0.5,0) coordinate (qbar_out) -- ++(1,0) node[right] {$\bar{Q}$};
+    
+    % Cross-coupling
+    \draw (q_out) -- ++(0,-0.8) -- ($(nand2_2.input 1)+(-0.3,0)$) -- (nand2_2.input 1);
+    \draw (qbar_out) -- ++(0,0.8) -- ($(nand2_1.input 2)+(-0.3,0)$) -- (nand2_1.input 2);
+    
+    % Inputs
+    \draw (nand3_1.input 1) -- ++(-1,0) node[left] {$J$};
+    \draw (nand3_1.input 2) -- ++(-1,0) node[left] {$Clk$};
+    \draw (nand3_2.input 2) -- ++(-1,0) node[left] {$Clk$};
+    \draw (nand3_2.input 3) -- ++(-1,0) node[left] {$K$};
+    
+    % Feedbacks
+    \draw (qbar_out) -- ++(0,2.3) -- ($(nand3_1.input 3)+(-0.5,2.7)$) -- ($(nand3_1.input 3)+(-0.5,0)$) -- (nand3_1.input 3);
+    \draw (q_out) -- ++(0,-2.3) -- ($(nand3_2.input 1)+(-0.5,-2.7)$) -- ($(nand3_2.input 1)+(-0.5,0)$) -- (nand3_2.input 1);
+\end{circuitikz}
+\caption{Discrete JK Flip-Flop Circuit Schematic using 2-Input and 3-Input NAND Gates.}
+\label{fig:jk-flipflop-schematic}
+\end{figure}
+
+\section{Step-by-Step Procedure}
+
+\begin{enumerate}
+    \item \textbf{Placement:} Insert IC 7400 and IC 7410 into breadboard groove firmly.
+    \item \textbf{Power:} Connect Pin 14 of both ICs to $+5\text{V (Vcc)}$ and Pin 7 of both ICs to Ground ($\text{GND}$).
+    \item \textbf{Latch Construction (Using IC 7400):}
+    \begin{itemize}
+        \item Connect Output Pin 3 to Input Pin 5.
+        \item Connect Output Pin 6 to Input Pin 2.
+        \item Connect Pin 1 to output of J-steering gate.
+        \item Connect Pin 4 to output of K-steering gate.
+    \end{itemize}
+    \item \textbf{Steering Logic (Using IC 7410):}
+    \begin{itemize}
+        \item J-Gate: Use pins 1, 2, 13 (Inputs) and 12 (Output). Connect Pin 12 to Pin 1 of 7400.
+        \item K-Gate: Use pins 3, 4, 5 (Inputs) and 6 (Output). Connect Pin 6 to Pin 4 of 7400.
+    \end{itemize}
+    \item \textbf{Feedback Connections:}
+    \begin{itemize}
+        \item Connect Output $Q$ (Pin 3 of 7400) back to input of K-Gate (Pin 5 of 7410).
+        \item Connect Output $\bar{Q}$ (Pin 6 of 7400) back to input of J-Gate (Pin 13 of 7410).
+    \end{itemize}
+    \item \textbf{Inputs:} Connect switches to J (Pin 1 of 7410), K (Pin 3 of 7410), and Clock (Pin 2 and Pin 4 of 7410 tied together).
+    \item \textbf{Outputs:} Connect LED (via $330\,\Omega$ resistor) to Pin 3 of 7400 ($Q$) and Pin 6 of 7400 ($\bar{Q}$).
+    \item \textbf{Validation:} Apply logic combinations as per observation table and record LED status.
+\end{enumerate}
+
+\section{Observations and Truth Table}
+
+\noindent \textbf{Notation:} $Q_n$: Current State $\quad \bullet \quad$ $Q_{n+1}$: Next State $\quad \bullet \quad$ Logic $0$ = OFF ($0\text{V}$), Logic $1$ = ON ($+5\text{V}$)
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c c c c c X}
+\toprule
+\textbf{CLOCK ($CLK$)} & \textbf{INPUT $J$} & \textbf{INPUT $K$} & \textbf{PRESENT ($Q_N$)} & \textbf{NEXT ($Q_{N+1}$)} & \textbf{ACTION / MODE} \\
+\midrule
+0 & X & X & 0 & 0 & No Change \\
+0 & X & X & 1 & 1 & No Change \\
+$\uparrow (1)$ & 0 & 0 & 0 & 0 & \textbf{Hold} \\
+$\uparrow (1)$ & 0 & 0 & 1 & 1 & \textbf{Hold} \\
+$\uparrow (1)$ & 0 & 1 & 0 & 0 & \textbf{Reset} \\
+$\uparrow (1)$ & 0 & 1 & 1 & 0 & \textbf{Reset} \\
+$\uparrow (1)$ & 1 & 0 & 0 & 1 & \textbf{Set} \\
+$\uparrow (1)$ & 1 & 0 & 1 & 1 & \textbf{Set} \\
+$\uparrow (1)$ & 1 & 1 & 0 & 1 & \textbf{Toggle} \\
+$\uparrow (1)$ & 1 & 1 & 1 & 0 & \textbf{Toggle} \\
+\bottomrule
+\end{tabularx}
+\caption{JK Flip-Flop State Transition Truth Table.}
+\label{tab:jk-truth-table}
+\end{table}
+
+\section{Result}
+The JK Flip-Flop was successfully designed using NAND gates (IC 7400 and IC 7410). Logic states (Hold, Set, Reset, Toggle) were verified against the truth table.
+
+\textbf{Conclusion on Toggle State:} When $J=1$ and $K=1$, output toggles. However, due to continuous clock pulse in this discrete setup, a "Race-Around" condition may be observed (LEDs appearing dim or flickering) indicating output is oscillating while clock is high.
+
+\section{Viva Questions \& Answers}
+
+\begin{vivaqa}[JK Flip-Flop Universality]
+\textbf{Question:} Why is the JK Flip-Flop called a "Universal" Flip-Flop?\\[4pt]
+\textbf{Answer:} It is versatile and solves the indeterminate/invalid state problem of the SR flip-flop. It can also be configured to act as a D flip-flop or T flip-flop.
+\end{vivaqa}
+
+\begin{vivaqa}[Race-Around Condition Definition]
+\textbf{Question:} What is the "Race-Around Condition"?\\[4pt]
+\textbf{Answer:} In a level-triggered JK flip-flop, if $J=1, K=1$ and the clock pulse width ($t_p$) is greater than gate propagation delay, the output toggles multiple times within a single clock pulse (unwanted oscillation).
+\end{vivaqa}
+
+\begin{vivaqa}[Eliminating Race-Around Condition]
+\textbf{Question:} How do we eliminate the Race-Around Condition?\\[4pt]
+\textbf{Answer:} By using a \textbf{Master-Slave JK Flip-Flop} configuration or by using edge-triggered flip-flops where pulse width is effectively negligible.
+\end{vivaqa}
+
+\begin{vivaqa}[Preset and Clear Pins]
+\textbf{Question:} What is the function of Clear ($\text{CLR}$) and Preset ($\text{PRE}$) pins found on standard ICs (like 7476)?\\[4pt]
+\textbf{Answer:} These are asynchronous inputs. $\text{PRE}$ sets $Q=1$ immediately irrespective of Clock; $\text{CLR}$ resets $Q=0$ immediately irrespective of Clock.
+\end{vivaqa}
+
+\begin{vivaqa}[2-Input NAND Realization]
+\textbf{Question:} Can we realize this circuit using only IC 7400 (2-input NANDs)?\\[4pt]
+\textbf{Answer:} Yes, but it is more complex. You would need to construct 3-input NAND functions by cascading two 2-input NAND gates, requiring more gates and wiring.
+\end{vivaqa}

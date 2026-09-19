@@ -1,0 +1,138 @@
+\chapter{Unit 4: JavaScript Fundamentals, Scoping \& Control Flow}
+
+\section{Section 1: 50 Chapter-Wise Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25 --- 50\% Easy)}
+\mcqitem{1}{[Easy] Which programming paradigm best describes JavaScript?}{Single-paradigm purely compiled}{Multi-paradigm, interpreted, dynamic, event-driven}{Purely functional without objects}{Low-level assembly language}
+\mcqitem{2}{[Easy] Which keyword declares a function-scoped variable that can be re-declared?}{let}{const}{var}{def}
+\mcqitem{3}{[Easy] Which keyword declares a block-scoped variable that can be re-assigned?}{let}{const}{var}{immutable}
+\mcqitem{4}{[Easy] Which keyword declares a block-scoped variable whose reference cannot be re-assigned?}{let}{const}{var}{final}
+\mcqitem{5}{[Easy] What does 'typeof 42' return in JavaScript?}{"number"}{"int"}{"float"}{"double"}
+\mcqitem{6}{[Easy] What does 'typeof "Hello"' return?}{"string"}{"char"}{"text"}{"object"}
+\mcqitem{7}{[Easy] What does 'typeof true' return?}{"boolean"}{"bool"}{"binary"}{"number"}
+\mcqitem{8}{[Easy] What does 'typeof undefined' return?}{"undefined"}{"null"}{"empty"}{"void"}
+\mcqitem{9}{[Easy] What is the output of 'typeof null' due to a historical engine bug?}{"null"}{"undefined"}{"object"}{"void"}
+\mcqitem{10}{[Easy] Which operator performs numeric addition or string concatenation?}{+}{-}{*}{\&}
+\mcqitem{11}{[Easy] What is the output of '"5" + 3' in JavaScript?}{8}{"53"}{NaN}{TypeError}
+\mcqitem{12}{[Easy] What is the output of '"10" - 4' in JavaScript?}{6}{"104"}{NaN}{"6"}
+\mcqitem{13}{[Easy] Which operator is the strictly equal operator checking both value and type?}{==}{===}{=}{!=}
+\mcqitem{14}{[Easy] Which operator is the loose equality operator performing type coercion?}{==}{===}{=}{!==}
+\mcqitem{15}{[Easy] What is the logical AND operator in JavaScript?}{\&}{\&\&}{and}{AND}
+\mcqitem{16}{[Easy] What is the logical OR operator in JavaScript?}{|}{||}{or}{OR}
+\mcqitem{17}{[Easy] What is the logical NOT operator in JavaScript?}{!}{\textasciitilde\{\}}{not}{NOT}
+\mcqitem{18}{[Easy] Which popup displays a simple message and an OK button, returning 'undefined'?}{alert()}{confirm()}{prompt()}{modal()}
+\mcqitem{19}{[Easy] Which popup displays an OK and Cancel button, returning a boolean?}{alert()}{confirm()}{prompt()}{ask()}
+\mcqitem{20}{[Easy] Which popup prompts user text input and returns a string or null?}{alert()}{confirm()}{prompt()}{input()}
+\mcqitem{21}{[Easy] Which statement exits a loop immediately?}{continue}{break}{return}{exit}
+\mcqitem{22}{[Easy] Which statement skips the rest of the current loop iteration and moves to the next?}{continue}{break}{pass}{skip}
+\mcqitem{23}{[Easy] Which loop checks its condition at the end and is guaranteed to run at least once?}{for}{while}{do...while}{for...of}
+\mcqitem{24}{[Easy] How do you write a single-line comment in JavaScript?}{$<$!-- comment --$>$}{// comment}{/* comment */}{\# comment}
+\mcqitem{25}{[Easy] What is the index of the first element in a JavaScript array?}{0}{1}{-1}{None}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 26 to 40 --- 30\% Medium)}
+\mcqitem{26}{[Medium] What will be printed by 'let x = 10; if(true)\{ let x = 20; console.log(x); \} console.log(x);'?}{20 20}{10 10}{20 10}{10 20}
+\mcqitem{27}{[Medium] What happens when executing 'const person = \{ name: "John" \}; person.name = "Alex";'?}{TypeError: Assignment to constant variable}{Property 'name' updates to "Alex" successfully}{person becomes undefined}{SyntaxError}
+\mcqitem{28}{[Medium] What is the output of 'let a = 2; switch(a)\{ case 1: console.log(1); case 2: console.log(2); case 3: console.log(3); \}'?}{2}{2 3}{1 2 3}{undefined}
+\mcqitem{29}{[Medium] What will 'console.log(0 == false, 0 === false);' output?}{true true}{false false}{true false}{false true}
+\mcqitem{30}{[Medium] What will 'console.log(null == undefined, null === undefined);' output?}{true true}{false false}{true false}{false true}
+\mcqitem{31}{[Medium] What does 'Number("123abc")' evaluate to?}{123}{NaN}{TypeError}{0}
+\mcqitem{32}{[Medium] What does 'parseInt("123abc", 10)' evaluate to?}{123}{NaN}{TypeError}{123abc}
+\mcqitem{33}{[Medium] What is the output of '"Hello World".slice(0, 5)'?}{"Hello"}{"World"}{"Hello "}{"ello"}
+\mcqitem{34}{[Medium] What is the output of '"apple,banana,grape".split(",")'?}{["apple", "banana", "grape"]}{"apple banana grape"}{TypeError}{3}
+\mcqitem{35}{[Medium] What does template literal '`Sum is: \$\{5 + 10\}`' evaluate to?}{"Sum is: \$\{5 + 10\}"}{"Sum is: 15"}{"Sum is: 510"}{NaN}
+\mcqitem{36}{[Medium] What will 'let i=0; while(i$<$5)\{ if(i===3) break; i++; \} console.log(i);' log?}{0}{3}{5}{4}
+\mcqitem{37}{[Medium] What is the result of '10 \% 3' in JavaScript?}{3}{1}{0}{3.33}
+\mcqitem{38}{[Medium] What is the result of '2 ** 3'?}{6}{8}{9}{5}
+\mcqitem{39}{[Medium] What is the output of 'Boolean("")' vs 'Boolean("0")'?}{false false}{false true}{true true}{true false}
+\mcqitem{40}{[Medium] What does nullish coalescing '0 ?? 50' return?}{50}{0}{null}{undefined}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 50 --- 20\% Hard)}
+\mcqitem{41}{[Hard] What is the Temporal Dead Zone (TDZ) in JavaScript?}{A memory leak issue}{The state between entering scope and the let/const variable declaration where accessing it throws ReferenceError}{The time taken to download scripts}{The lifetime of sessionStorage}
+\mcqitem{42}{[Hard] What is the output of 'console.log(typeof NaN, NaN === NaN);'?}{"number" true}{"number" false}{"nan" false}{"undefined" false}
+\mcqitem{43}{[Hard] What will be printed by 'for (var i = 0; i $<$ 3; i++) \{ setTimeout(() =$>$ console.log(i), 50); \}'?}{0 1 2}{3 3 3}{0 0 0}{undefined}
+\mcqitem{44}{[Hard] How do you fix the loop closure bug so it logs '0 1 2'?}{Use 'let i = 0' instead of 'var i = 0'}{Use setTimeout delay 0}{Use const i = 0}{Add break statement}
+\mcqitem{45}{[Hard] What will be logged by 'let a = [1, 2]; let b = a; b.push(3); console.log(a.length);'?}{2}{3}{4}{TypeError}
+\mcqitem{46}{[Hard] What is the output of 'console.log([] == ![]);'?}{false}{true}{TypeError}{NaN}
+\mcqitem{47}{[Hard] What is the result of '"5" - - "5"' in JavaScript?}{"5-5"}{0}{10}{NaN}
+\mcqitem{48}{[Hard] What will 'function foo()\{ return \{ bar: "hello" \}; \}' return vs placing '\{' on a new line?}{Both return object}{Second returns undefined due to Automatic Semicolon Insertion (ASI)}{Second throws SyntaxError}{Both return undefined}
+\mcqitem{49}{[Hard] What is the output of 'let x = 1; (function()\{ console.log(x); var x = 2; \})();'?}{1}{2}{undefined}{ReferenceError}
+\mcqitem{50}{[Hard] What will 'console.log(0.1 + 0.2 === 0.3);' evaluate to?}{true}{false}{NaN}{TypeError}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Explanations}
+
+\begin{answerkeytable}{Unit 4: 50 Questions Answer Key}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{B} & JavaScript is multi-paradigm, dynamic, and interpreted/JIT. & 26 & \textbf{C} & Inner let shadows outer x; outer x remains 10. \\
+2 & \textbf{C} & var is function-scoped and re-declarable. & 27 & \textbf{B} & Mutating properties on a const object is valid. \\
+3 & \textbf{A} & let is block-scoped and re-assignable. & 28 & \textbf{B} & Without break;, execution falls through case 2 and case 3. \\
+4 & \textbf{B} & const prohibits re-assignment. & 29 & \textbf{C} & 0 == false is true (coercion); 0 === false is false (different types). \\
+5 & \textbf{A} & All numbers in JS are of type 'number'. & 30 & \textbf{C} & null == undefined is true; strict === is false. \\
+6 & \textbf{A} & Text values return 'string'. & 31 & \textbf{B} & Number() returns NaN if string contains non-numeric characters. \\
+7 & \textbf{A} & Booleans return 'boolean'. & 32 & \textbf{A} & parseInt parses leading valid digits (123). \\
+8 & \textbf{A} & Unassigned variables return 'undefined'. & 33 & \textbf{A} & slice(0, 5) extracts indices 0 through 4. \\
+9 & \textbf{C} & typeof null returns 'object'. & 34 & \textbf{A} & split(',') divides string into an array of substrings. \\
+10 & \textbf{A} & + performs addition or string concatenation. & 35 & \textbf{B} & \$\{...\} interpolates expressions. \\
+11 & \textbf{B} & String concatenation results in "53". & 36 & \textbf{B} & Loop breaks when i reaches 3. \\
+12 & \textbf{A} & - forces numeric subtraction (10 - 4 = 6). & 37 & \textbf{B} & Modulus \% returns remainder of division (1). \\
+13 & \textbf{B} & === checks value and type strictly without coercion. & 38 & \textbf{B} & ** is power (2\^\{\}3 = 8). \\
+14 & \textbf{A} & == performs type coercion before comparison. & 39 & \textbf{B} & Empty string is falsy; non-empty string "0" is truthy. \\
+15 & \textbf{B} & \&\& represents logical AND. & 40 & \textbf{B} & ?? returns right side only for null/undefined; 0 is preserved. \\
+16 & \textbf{B} & || represents logical OR. & 41 & \textbf{B} & Accessing uninitialized let/const in TDZ throws ReferenceError. \\
+17 & \textbf{A} & ! negates truthiness. & 42 & \textbf{B} & NaN is numeric type, but IEEE-754 defines NaN !== NaN. \\
+18 & \textbf{A} & alert() displays a message box. & 43 & \textbf{B} & var is function-scoped; all timeout callbacks share the final value i=3. \\
+19 & \textbf{B} & confirm() returns true on OK, false on Cancel. & 44 & \textbf{A} & let creates a fresh binding per iteration in for loops. \\
+20 & \textbf{C} & prompt() returns entered string or null. & 45 & \textbf{B} & Arrays are assigned by reference pointer; mutating b mutates a. \\
+21 & \textbf{B} & break immediately terminates loop execution. & 46 & \textbf{B} & ![] is false. [] == false coerces [] to '' -$>$ 0 == 0 -$>$ true. \\
+22 & \textbf{A} & continue jumps to the next loop cycle. & 47 & \textbf{C} & - - forces double unary negation to numeric +5 (5 + 5 = 10). \\
+23 & \textbf{C} & do...while checks condition after execution. & 48 & \textbf{B} & ASI inserts a semicolon after return if newline follows. \\
+24 & \textbf{B} & // denotes single-line JS comment. & 49 & \textbf{C} & Inner var x is hoisted and initialized to undefined in function scope. \\
+25 & \textbf{A} & JavaScript arrays are zero-indexed. & 50 & \textbf{B} & Binary floating point precision yields 0.30000000000000004 !== 0.3. \\
+\bottomrule
+\end{tabularx}
+\end{answerkeytable}
+
+\section{Section 3: Conceptual Theory \& Coding Questions}
+\noindent\textbf{Q.51 [Theory --- 5 Marks]} Differentiate between \texttt{var}, \texttt{let}, and \texttt{const} with respect to Scope, Hoisting, Re-declaration, and Re-assignment.
+
+\begin{qbsolutionbox}[Answer to Q.51]
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X X}
+\toprule
+\textbf{Feature} & \textbf{\texttt{var}} & \textbf{\texttt{let}} & \textbf{\texttt{const}} \\
+\midrule
+\textbf{Scope} & Function scope & Block scope \texttt{\{\}} & Block scope \texttt{\{\}} \\
+\textbf{Re-declaration} & Permitted in same scope & Prohibited (SyntaxError) & Prohibited (SyntaxError) \\
+\textbf{Re-assignment} & Permitted & Permitted & Prohibited (TypeError) \\
+\textbf{Hoisting} & Hoisted (\texttt{undefined}) & Hoisted in TDZ (ReferenceError) & Hoisted in TDZ (ReferenceError) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{qbsolutionbox}
+
+\noindent\textbf{Q.52 [Coding --- 5 Marks]} Write a JavaScript function that uses a switch statement with breaks to convert a day number (1 to 7) into its corresponding weekday name.
+
+\begin{qbsolutionbox}[Answer to Q.52]
+\begin{lstlisting}[language=JavaScript]
+function getDayName(dayNumber) {
+  let dayName;
+  switch(dayNumber) {
+    case 1: dayName = "Monday"; break;
+    case 2: dayName = "Tuesday"; break;
+    case 3: dayName = "Wednesday"; break;
+    case 4: dayName = "Thursday"; break;
+    case 5: dayName = "Friday"; break;
+    case 6: dayName = "Saturday"; break;
+    case 7: dayName = "Sunday"; break;
+    default: dayName = "Invalid Day"; break;
+  }
+  return dayName;
+}
+console.log(getDayName(1)); // "Monday"
+console.log(getDayName(5)); // "Friday"
+\end{lstlisting}
+\end{qbsolutionbox}
+

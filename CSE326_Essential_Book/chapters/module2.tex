@@ -1,0 +1,94 @@
+\chapter{Expanding HTML Knowledge: Lists, Media, Tables \& Forms}
+
+\section{2.1 Lists in HTML}
+HTML provides three main types of lists:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Unordered List (\texttt{<ul>})}: Displays items with bullet markers where order does not matter.\\
+    \texttt{<ul style="list-style-type: disc | circle | square;"> <li>Apple</li> </ul>}
+    \item \textbf{Ordered List (\texttt{<ol>)}}: Displays items in sequence where order has significance.\\
+    \texttt{<ol type="1 | A | a | I | i"> <li>Step 1</li> </ol>}
+    \item \textbf{Description / Definition List (\texttt{<dl>)}}: Represents data in name-value form.\\
+    \texttt{<dl> <dt>HTML</dt> <dd>HyperText Markup Language</dd> </dl>}
+\end{enumerate}
+
+\section{2.2 Hyperlinks \& Images}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Anchor Tag}: \texttt{<a href="URL">Click here</a>} connects one page to another.
+    \item \textbf{Open in New Tab}: \texttt{<a href="https://wikipedia.org" target="\_blank">Open</a>}
+    \item \textbf{Email Link}: \texttt{<a href="mailto:someone@example.com">Send Email</a>}
+    \item \textbf{Phone Link}: \texttt{<a href="tel:+1234567890">Call Us</a>} (Works on mobile phones and desktops with dialers).
+    \item \textbf{Internal Bookmark Jump}: \texttt{<a href="\#about">Go to About</a>} $\to$ \texttt{<h2 id="about">About Us</h2>}.
+    \item \textbf{Clickable Image Link}: Wrap \texttt{<img>} inside \texttt{<a>}:\\
+    \texttt{<a href="https://google.com"><img src="logo.png" alt="Google Logo" width="150"></a>}
+    \item \textbf{Figure \& Caption}: \texttt{<figure> <img src="pic.jpg" alt="..."> <figcaption>Fig. 1</figcaption> </figure>}
+    \item \textbf{HTML Favicon}: Small icon in browser tab: \texttt{<link rel="icon" type="image/x-icon" href="favicon.ico">}.
+\end{itemize}
+
+\section{2.3 HTML Div \& Span}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{\texttt{<div>} (Division)}: Block-level container used to group elements for layouts and CSS. It adds no visual styling on its own.
+    \item \textbf{\texttt{<span>}}: Inline container used to highlight or style small words within text.
+    \item \textbf{Padding vs. Margin}:
+    \begin{itemize}
+        \item \textbf{Padding}: Space \textbf{inside} the element between content and border.
+        \item \textbf{Margin}: Space \textbf{outside} the element separating it from neighbors.
+        \item \textbf{Center-Aligning a Div}: Set \texttt{margin: auto;} on a fixed-width \texttt{<div>}.
+    \end{itemize}
+\end{itemize}
+
+\section{2.4 Tables in HTML}
+\begin{codeexample}[HTML Table with Colspan \& Rowspan]
+\begin{lstlisting}[language=HTML]
+<table border="1" cellpadding="10" style="border-collapse: collapse;">
+  <tr>
+    <th colspan="3">Student Information</th> <!-- Merges 3 columns -->
+  </tr>
+  <tr>
+    <th>Name</th>
+    <th rowspan="2">Age</th> <!-- Merges 2 rows vertically -->
+    <th>City</th>
+  </tr>
+  <tr>
+    <td>Rahul</td>
+    <td>Delhi</td>
+  </tr>
+</table>
+\end{lstlisting}
+\end{codeexample}
+
+\begin{notebox}[Table Borders in CSS]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Single Line Border}: Set \texttt{border-collapse: collapse;} to avoid double borders.
+    \item \textbf{Rounded Table Corners}: Set \texttt{border-radius: 10px;}.
+    \item \textbf{Border Styles}: \texttt{solid}, \texttt{dotted}, \texttt{dashed}, \texttt{double}.
+\end{itemize}
+\end{notebox}
+
+\section{2.5 HTML Forms \& Input Controls}
+An HTML form collects user input and transmits it to a server endpoint.
+
+\begin{summarybox}[Form Attributes \& Methods Comparison]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{\texttt{action}}: URL of server script (e.g. \texttt{submit.php}). Empty action submits to the same page.
+    \item \textbf{\texttt{name}}: The key/label for the input. \textbf{Without \texttt{name}, input data will NOT be submitted!}
+    \item \textbf{\texttt{value}}: The data stored inside the input.
+    \item \textbf{GET vs. POST}:
+    \begin{itemize}
+        \item \textbf{GET}: Data visible in URL query string, limited length, non-sensitive searches.
+        \item \textbf{POST}: Data sent inside HTTP request body, unlimited size, secure for logins \& sensitive data.
+    \end{itemize}
+\end{itemize}
+\end{summarybox}
+
+\begin{notebox}[Common Form Elements]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Text / Password}: \texttt{<input type="text" placeholder="Hint" maxlength="50">}, \texttt{<input type="password">}
+    \item \textbf{Radio Button}: \texttt{<input type="radio" name="gender" value="Male"> Male}
+    \item \textbf{Checkbox}: \texttt{<input type="checkbox" name="subscribe"> Subscribe}
+    \item \textbf{Textarea}: \texttt{<textarea name="msg" rows="4" cols="50">Default</textarea>}
+    \item \textbf{Dropdown Box}: \texttt{<select name="fruit"> <option value="a" selected>Apple</option> </select>}
+    \item \textbf{Multi-select Dropdown}: \texttt{<select name="skills" multiple size="4"> ... </select>}
+    \item \textbf{File Select}: \texttt{<input type="file" accept=".jpg,.png,.pdf" multiple>}
+    \item \textbf{Buttons}: \texttt{<input type="submit">}, \texttt{<input type="reset">}, or flexible \texttt{<button type="submit">Text</button>}.
+\end{itemize}
+\end{notebox}

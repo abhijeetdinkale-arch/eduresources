@@ -1,0 +1,26 @@
+\chapter{Solid State Physics Formulas}
+
+\begin{formulabox}[Free Electron Theory \& Quantum Statistics]
+\begin{align}
+\text{Drude Conductivity:} \quad \sigma &= \frac{n e^2 \tau}{m} = n e \mu_e \\
+\text{Electron Mobility:} \quad \mu_e &= \frac{e \tau}{m} \\
+\text{Fermi-Dirac Distribution:} \quad f(E) &= \frac{1}{1 + \exp\left(\frac{E - E_F}{k_B T}\right)} \\
+\text{Fermi Energy (3D Gas):} \quad E_F &= \frac{\hbar^2}{2m}\left(3\pi^2 n\right)^{2/3} \implies E_F \propto n^{2/3} \\
+\text{Effective Mass Tensor:} \quad m^* &= \frac{\hbar^2}{\frac{d^2E}{dk^2}} \\
+\text{Hall Coefficient (Single Carrier):} \quad R_H &= \frac{1}{n q} = \begin{cases} -\frac{1}{n e} & \text{(electrons)} \\ +\frac{1}{p e} & \text{(holes)} \end{cases} \\
+\text{Hall Voltage:} \quad V_H &= \frac{R_H I B}{t} = \frac{I B}{n q t} \\
+\text{Two-Carrier Hall Coefficient:} \quad R_H &= \frac{p \mu_h^2 - n \mu_e^2}{q (p \mu_h + n \mu_e)^2}
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[Semiconductor Physics \& Solar Cells]
+\begin{align}
+\text{Intrinsic Carrier Concentration:} \quad n_i &= \sqrt{N_C N_V} \exp\left(-\frac{E_g}{2 k_B T}\right) \\
+\text{Mass Action Law:} \quad n \cdot p &= n_i^2 \\
+\text{Intrinsic Fermi Level:} \quad E_i &= \frac{E_C + E_V}{2} + \frac{1}{2} k_B T \ln\left(\frac{N_V}{N_C}\right) = \frac{E_C + E_V}{2} + \frac{3}{4} k_B T \ln\left(\frac{m_h^*}{m_e^*}\right) \\
+\text{Extrinsic Fermi Shifts:} \quad E_F - E_i &= k_B T \ln\left(\frac{N_D}{n_i}\right) \quad (\text{n-type}), \quad E_i - E_F = k_B T \ln\left(\frac{N_A}{n_i}\right) \quad (\text{p-type}) \\
+\text{Einstein Relation:} \quad \frac{D_n}{\mu_n} &= \frac{D_p}{\mu_p} = \frac{k_B T}{q} = V_T \\
+\text{Solar Cell Open-Circuit Voltage:} \quad V_{oc} &\approx \frac{n k_B T}{q}\ln\left(\frac{I_{sc}}{I_0}\right) \\
+\text{Fill Factor \& Efficiency:} \quad FF &= \frac{V_m I_m}{V_{oc} I_{sc}}, \quad \eta = \frac{V_m I_m}{P_{in}}
+\end{align}
+\end{formulabox}

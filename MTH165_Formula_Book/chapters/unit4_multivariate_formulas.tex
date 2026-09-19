@@ -1,0 +1,23 @@
+\chapter{Unit 4: Multivariate Differentiation}
+
+\begin{formulabox}{Euler's Theorem on Homogeneous Functions}
+If $u(x,y)$ is homogeneous of degree $n$:
+\begin{align}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} &= n u \\
+x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} &= n(n-1)u
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}{2D Extrema \& Lagrange Multipliers}
+\begin{itemize}[leftmargin=1.5em]
+    \item Critical points: $f_x = 0, \; f_y = 0$.
+    \item Discriminant $D = r t - s^2 = f_{xx} f_{yy} - (f_{xy})^2$:
+    \begin{itemize}
+        \item $D > 0, r > 0 \implies$ \textbf{Local Minimum}
+        \item $D > 0, r < 0 \implies$ \textbf{Local Maximum}
+        \item $D < 0 \implies$ \textbf{Saddle Point}
+        \item $D = 0 \implies$ \textbf{Inconclusive}
+    \end{itemize}
+    \item \textbf{Lagrange Multipliers}: $\nabla f = \lambda \nabla g$.
+\end{itemize}
+\end{formulabox}

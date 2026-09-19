@@ -1,0 +1,71 @@
+\chapter{Mid-Term Examination (MTE) Model Paper}
+\section*{Course: PHY175 $\cdot$ Max Marks: 50 $\cdot$ Time: 120 Minutes}
+
+\subsection*{Part A: Short Answer Questions (10 Marks, 2 Marks Each)}
+\begin{enumerate}[leftmargin=*]
+    \item Define Fermi energy at absolute zero.
+    \item State the difference between direct and indirect band gap semiconductors.
+    \item Explain the physical significance of the Hall coefficient sign.
+    \item State De Morgan's laws of Boolean algebra.
+    \item Write the 2's complement representation of decimal $-25$ in 8 bits.
+\end{enumerate}
+
+\subsection*{Part B: Medium Analytical Questions (20 Marks, 5 Marks Each)}
+
+\begin{examqbox}{1 [5 Marks]}
+A 3D free electron gas at $0\,\text{K}$ has electron density $n_1$. If the density is increased to $8n_1$, prove that the Fermi energy quadruples ($E_{F2} = 4E_{F1}$).
+\end{examqbox}
+
+\begin{solbox}
+Density of states integration yields $E_F = \frac{\hbar^2}{2m}(3\pi^2 n)^{2/3}$. Therefore, $\frac{E_{F2}}{E_{F1}} = \left(\frac{n_2}{n_1}\right)^{2/3} = (8)^{2/3} = (2^3)^{2/3} = 4$.
+\end{solbox}
+
+\begin{examqbox}{2 [5 Marks]}
+In an intrinsic semiconductor, electron mobility is 3 times hole mobility ($\mu_e = 3\mu_h$). Calculate the percentage of total electrical conductivity contributed by electrons.
+\end{examqbox}
+
+\begin{solbox}
+Total conductivity $\sigma = n_i e(\mu_e + \mu_h)$. Fractional electron conductivity is $\frac{\sigma_e}{\sigma} = \frac{n_i e \mu_e}{n_i e(\mu_e + \mu_h)} = \frac{3\mu_h}{3\mu_h + \mu_h} = \frac{3}{4} = 75\%$.
+\end{solbox}
+
+\begin{examqbox}{3 [5 Marks]}
+A full-wave bridge rectifier is supplied with a $15\,\text{V}$ peak, $50\,\text{Hz}$ sinusoidal input. Diodes have $V_D = 0.7\,\text{V}$. A $1000\,\mu\text{F}$ capacitor filter and $1\,\text{k}\Omega$ load are connected. Compute peak DC voltage, ripple frequency, and peak-to-peak ripple voltage.
+\end{examqbox}
+
+\begin{solbox}
+1. $V_{peak} = 15 - 2(0.7) = 13.6\,\text{V}$.\\
+2. $f_{ripple} = 2 \times 50 = 100\,\text{Hz}$.\\
+3. $V_{r(pp)} = \frac{V_{peak}}{2 f C R_L} = \frac{13.6}{2(50)(1000 \times 10^{-6})(1000)} = \frac{13.6}{100} = 0.136\,\text{V}$.
+\end{solbox}
+
+\begin{examqbox}{4 [5 Marks]}
+Convert hexadecimal $(3\text{A}7.\text{C})_{16}$ into binary, octal, and decimal representations.
+\end{examqbox}
+
+\begin{solbox}
+1. Binary: $0011\,1010\,0111.1100_2$.\\
+2. Octal: $(1647.6)_8$.\\
+3. Decimal: $3(256) + 10(16) + 7 + 12/16 = 768 + 160 + 7 + 0.75 = 935.75_{10}$.
+\end{solbox}
+
+\subsection*{Part C: Comprehensive Long Questions (20 Marks, 10 Marks Each)}
+
+\begin{examqbox}{5 [10 Marks]}
+(a) Derive the expression for the Hall voltage $V_H = \frac{IB}{nqt}$ and Hall coefficient $R_H$.\\
+(b) A rectangular copper strip of thickness $t = 0.1\,\text{mm}$ carries $I = 10\,\text{A}$ in $B = 1.2\,\text{T}$. If $n = 8.5 \times 10^{28}\,\text{m}^{-3}$, find $V_H$.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) Derivation:} Balancing magnetic Lorentz force $F_B = q v_d B$ with electrostatic Hall force $F_E = q E_H$ gives $E_H = v_d B$. With $v_d = \frac{I}{n q w t}$, $V_H = E_H w = \frac{I B}{n q t}$.\\
+\textbf{(b) Calculation:} $V_H = \frac{(10)(1.2)}{(8.5 \times 10^{28})(1.6 \times 10^{-19})(0.1 \times 10^{-3})} = \frac{12}{1.36 \times 10^6} = 8.82\,\mu\text{V}$.
+\end{solbox}
+
+\begin{examqbox}{6 [10 Marks]}
+(a) Minimize $F(A,B,C,D) = \sum m(0, 2, 5, 7, 8, 10, 13, 15)$ using a K-map.\\
+(b) Explain static-1 hazards and write the hazard-free SOP expression.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) K-Map Reduction:} Corner group $\{0, 2, 8, 10\} \implies \bar{B}\bar{D}$; Central group $\{5, 7, 13, 15\} \implies BD$. Minimized: $F = \bar{B}\bar{D} + BD$.\\
+\textbf{(b) Hazard Analysis:} Since the groups are non-overlapping, input switching transitions between $B=0$ and $B=1$ can glitch. Adding consensus term $\bar{D}D=0$ is not needed here as variables are distinct, but for adjacent SOP terms, consensus loops eliminate hazards.
+\end{solbox}

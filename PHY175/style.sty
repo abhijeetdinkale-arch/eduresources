@@ -1,0 +1,149 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/18 v1.0 PHY175 Modern Physics & Electronics Style System]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=22mm,
+    right=22mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty = true, inter-unit-product = \ensuremath{{}\cdot{}}}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{brandnavy}{RGB}{15, 44, 89}
+\definecolor{brandblue}{RGB}{30, 86, 160}
+\definecolor{brandslate}{RGB}{71, 85, 105}
+\definecolor{branddark}{RGB}{15, 23, 42}
+\definecolor{brandaccent}{RGB}{217, 4, 41}
+\definecolor{brandgold}{RGB}{217, 119, 6}
+
+\definecolor{boxnavyborder}{RGB}{15, 44, 89}
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+\definecolor{boxamberborder}{RGB}{217, 119, 6}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+\definecolor{boxgreenborder}{RGB}{13, 148, 136}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+\definecolor{boxpurpleborder}{RGB}{126, 34, 206}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+
+\RequirePackage[most]{tcolorbox}
+\tcbset{
+    boxrule=1pt,
+    arc=3pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    fonttitle=\bfseries\sffamily,
+    before skip=10pt,
+    after skip=10pt
+}
+
+\newtcolorbox{definitionbox}[1][Definition]{
+    enhanced, breakable, colback=boxnavybg, colframe=boxnavyborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxnavyborder, arc=2pt}
+}
+
+\newtcolorbox{conceptbox}[1][Key Concept]{
+    enhanced, breakable, colback=boxskybg, colframe=boxskyborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxskyborder, arc=2pt}
+}
+
+\newtcolorbox{derivationbox}[1][Mathematical Derivation]{
+    enhanced, breakable, colback=boxpurplebg, colframe=boxpurpleborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxpurpleborder, arc=2pt}
+}
+
+\newtcolorbox{examplebox}[1][Worked Example]{
+    enhanced, breakable, colback=boxgreenbg, colframe=boxgreenborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxgreenborder, arc=2pt}
+}
+
+\newtcolorbox{pitfallbox}[1][Common Exam Pitfall]{
+    enhanced, breakable, colback=boxrosebg, colframe=boxroseborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxroseborder, arc=2pt}
+}
+
+\newtcolorbox{takeawaybox}[1][Chapter Summary \& Key Takeaways]{
+    enhanced, breakable, colback=boxamberbg, colframe=boxamberborder,
+    coltitle=white, title={\textbf{#1}}, attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=boxamberborder, arc=2pt}
+}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{listings}
+
+\lstset{
+    basicstyle=\small\ttfamily,
+    keywordstyle=\color{brandnavy}\bfseries,
+    commentstyle=\color{brandslate}\itshape,
+    stringstyle=\color{brandaccent},
+    backgroundcolor=\color{boxnavybg},
+    frame=single,
+    rulecolor=\color{boxnavyborder},
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{brandslate}
+}
+
+\titleformat{\chapter}[display]
+{\normalfont\sffamily\huge\bfseries\color{brandnavy}}
+{\flushright\fontsize{50}{60}\selectfont\color{brandblue!30}\thechapter}
+{-20pt}
+{\titlerule[2pt]\vspace{1ex}}
+[\vspace{1ex}\titlerule]
+
+\titleformat{\section}
+{\normalfont\sffamily\Large\bfseries\color{brandnavy}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\large\bfseries\color{brandblue}}
+{\thesubsection}{1em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\small\thepage}
+\fancyhead[RE]{\sffamily\small\nouppercase{\leftmark}}
+\fancyhead[LO]{\sffamily\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\sffamily\scriptsize LPU Engineering Open $\cdot$ PHY175: Modern Physics \& Electronics}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=brandnavy,
+    urlcolor=brandaccent,
+    bookmarksnumbered=true,
+    pdfstartview={FitH}
+}

@@ -1,0 +1,305 @@
+\chapter{Master Web Cheatsheet \& Top 50 Technical Viva-Voce Questions}
+\label{chap:master-web-cheatsheet}
+
+% ==============================================================================
+% SECTION 7.1: HTML SYNTAX MATRIX
+% ==============================================================================
+\section{Master HTML5 Syntax \& Semantic Tag Matrix}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{HTML Tag} & \textbf{Type} & \textbf{Structural \& Semantic Purpose} & \textbf{Key Attributes} \\
+\midrule
+\texttt{<!DOCTYPE html>} & DTD & Declares document type as standard HTML5 compliance mode & None \\
+\texttt{<html lang="en">} & Container & Root container enclosing entire web document & \texttt{lang} \\
+\texttt{<head>} & Container & Metadata container (non-visible configuration) & None \\
+\texttt{<meta>} & Void & Encodes charset, viewport scaling, page descriptions & \texttt{charset}, \texttt{name}, \texttt{content} \\
+\texttt{<title>} & Container & Defines browser tab title and search engine headline & None \\
+\texttt{<link>} & Void & Links external CSS stylesheets and site favicons & \texttt{rel}, \texttt{href}, \texttt{type} \\
+\texttt{<body>} & Container & Visible page content container & None \\
+\texttt{<h1>}--\texttt{<h6>} & Block & Sectional headings in descending semantic hierarchy & None \\
+\texttt{<p>} & Block & Paragraph flow of prose text (collapses whitespace) & None \\
+\texttt{<br>} & Void & Inserts an inline line break & None \\
+\texttt{<hr>} & Void & Inserts a thematic horizontal dividing rule & None \\
+\texttt{<strong>} & Inline & Marks text of serious importance / urgency (semantic bold) & None \\
+\texttt{<em>} & Inline & Applies stress emphasis (semantic italic) & None \\
+\texttt{<mark>} & Inline & Highlights text with yellow background notation & None \\
+\texttt{<small>} & Inline & Side comments, copyright notices, and legal disclaimers & None \\
+\texttt{<abbr>} & Inline & Acronym/abbreviation with tooltip expansion & \texttt{title} \\
+\texttt{<cite>} & Inline & References the title of a creative work & None \\
+\texttt{<dfn>} & Inline & Indicates defining instance of a technical term & None \\
+\texttt{<blockquote>} & Block & Indented multi-line quotation block & \texttt{cite} (Source URL) \\
+\texttt{<q>} & Inline & Inline quotation with automatic quotation marks & None \\
+\texttt{<!-- ... -->} & Comment & Developer comments ignored by browser layout engine & None \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive HTML5 Syntax and Tag Reference Matrix.}
+\label{tab:master-html-tags}
+\end{table}
+
+% ==============================================================================
+% SECTION 7.2: HTML5 FORMS \& MEDIA CHEATSHEET
+% ==============================================================================
+\section{HTML5 Form Controls \& Multimedia Cheatsheet}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Form Element / Type} & \textbf{Tag Structure} & \textbf{Interaction \& Data Processing Behavior} & \textbf{Required Form Encoding} \\
+\midrule
+\texttt{<form>} & Container & Defines submission endpoint and HTTP transfer protocol & \texttt{action}, \texttt{method} (GET/POST) \\
+\texttt{type="text"} & \texttt{<input>} & Single-line alphanumeric text field & \texttt{name}, \texttt{placeholder}, \texttt{required} \\
+\texttt{type="password"} & \texttt{<input>} & Character-masked password entry field & \texttt{name}, \texttt{required} \\
+\texttt{type="email"} & \texttt{<input>} & Pattern-validated email entry field & \texttt{name}, \texttt{required} \\
+\texttt{type="radio"} & \texttt{<input>} & Mutually exclusive single selection among shared \texttt{name} & Shared \texttt{name}, \texttt{value}, \texttt{checked} \\
+\texttt{type="checkbox"} & \texttt{<input>} & Independent multi-selection toggling & \texttt{name}, \texttt{value}, \texttt{checked} \\
+\texttt{type="file"} & \texttt{<input>} & File system upload selector & \texttt{enctype="multipart/form-data"} \\
+\texttt{<textarea>} & Container & Multiline expandable text box & \texttt{rows}, \texttt{cols}, \texttt{name} \\
+\texttt{<select>} & Container & Dropdown select menu populated by \texttt{<option>} & \texttt{name}, \texttt{multiple}, \texttt{selected} \\
+\texttt{type="submit"} & \texttt{<input>} & Triggers form validation and transmission to server & \texttt{value} \\
+\texttt{type="reset"} & \texttt{<input>} & Restores all form controls to default initial states & \texttt{value} \\
+\midrule
+\texttt{<audio>} & Container & Native HTML5 audio playback player & \texttt{controls}, \texttt{autoplay}, \texttt{loop}, \texttt{muted} \\
+\texttt{<video>} & Container & Native HTML5 video player with poster frame & \texttt{controls}, \texttt{width}, \texttt{height}, \texttt{poster} \\
+\bottomrule
+\end{tabularx}
+\caption{HTML5 Form Controls and Multimedia Cheatsheet.}
+\label{tab:master-forms-media}
+\end{table}
+
+% ==============================================================================
+% SECTION 7.3: CSS SELECTORS \& SPECIFICITY
+% ==============================================================================
+\section{CSS Selectors, Specificity \& Box Model Matrix}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{llcl}
+\toprule
+\textbf{Selector Category} & \textbf{Syntax Pattern} & \textbf{Specificity Weight} & \textbf{Matching Scope} \\
+\midrule
+\textbf{Inline Style} & \texttt{style="..."} & $(1, 0, 0, 0) = 1000$ & Directly overrides internal/external styles \\
+\textbf{ID Selector} & \texttt{\#main-header} & $(0, 1, 0, 0) = 100$ & Exactly one unique element per page \\
+\textbf{Class Selector} & \texttt{.highlight} & $(0, 0, 1, 0) = 10$ & All elements bearing class attribute \\
+\textbf{Pseudo-class} & \texttt{:hover}, \texttt{:focus} & $(0, 0, 1, 0) = 10$ & Dynamic user interaction states \\
+\textbf{Type (Element) Selector} & \texttt{p}, \texttt{h1}, \texttt{div} & $(0, 0, 0, 1) = 1$ & All elements matching the tag name \\
+\textbf{Universal Selector} & \texttt{*} & $(0, 0, 0, 0) = 0$ & Matches every element on the page \\
+\bottomrule
+\end{tabularx}
+\caption{CSS Selector Specificity Hierarchy and Weighting.}
+\label{tab:master-specificity}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Box Model Property} & \textbf{Shorthand Syntax} & \textbf{Geometric Calculation Rule} \\
+\midrule
+\texttt{margin} & \texttt{margin: T R B L;} & Transparent space outside border. Auto margins (\texttt{0 auto}) center block elements. \\
+\texttt{border} & \texttt{border: 2px solid \#000;} & Visible boundary stroke around padding. Sets width, style, and color. \\
+\texttt{padding} & \texttt{padding: 10px 20px;} & Inner transparent clearance between content and border. \\
+\texttt{box-sizing: content-box} & Default model & $\text{Rendered Width} = \text{width} + 2(\text{padding}) + 2(\text{border})$ \\
+\texttt{box-sizing: border-box} & Modern standard & $\text{Rendered Width} = \text{width}$ (Padding and border absorbed within width) \\
+\bottomrule
+\end{tabularx}
+\caption{CSS Box Model Dimensions and Shorthand Reference.}
+\label{tab:master-box-model}
+\end{table}
+
+% ==============================================================================
+% SECTION 7.4: JAVASCRIPT OPERATORS \& DOM MATRIX
+% ==============================================================================
+\section{JavaScript Operators, DOM Methods \& Events Synthesis}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{DOM API Method} & \textbf{Return Value} & \textbf{Functional Description} \\
+\midrule
+\texttt{document.getElementById(id)} & Single Element / \texttt{null} & Fast lookup by unique ID string. \\
+\texttt{document.getElementsByClassName(cls)} & \texttt{HTMLCollection} (Live) & Matches all elements by class name. \\
+\texttt{document.querySelector(selector)} & Single Element / \texttt{null} & Returns first element matching CSS selector. \\
+\texttt{document.querySelectorAll(selector)} & \texttt{NodeList} (Static) & Returns all matching elements; supports \texttt{.forEach()}. \\
+\texttt{document.createElement(tagName)} & New Element Node & Instantiates a new unattached element node in memory. \\
+\texttt{element.appendChild(childNode)} & Appended Node & Appends node as the last child of the parent element. \\
+\texttt{element.remove()} & \texttt{void} & Removes element directly from the DOM tree. \\
+\texttt{element.classList.add(cls)} & \texttt{void} & Adds CSS class to element's class collection. \\
+\texttt{element.classList.toggle(cls)} & \texttt{Boolean} & Toggles CSS class presence dynamically. \\
+\texttt{element.addEventListener(evt, fn)} & \texttt{void} & Attaches non-destructive event listener callback. \\
+\bottomrule
+\end{tabularx}
+\caption{Master JavaScript DOM Methods Reference.}
+\label{tab:master-dom-methods}
+\end{table}
+
+% ==============================================================================
+% SECTION 7.5: TOP 50 VIVA-VOCE QUESTIONS \& MODEL ANSWERS
+% ==============================================================================
+\section{Top 50 Technical Viva-Voce \& Examination Questions}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{What is the primary role of HTML in web architecture?}\\
+    \textbf{Answer}: HTML provides the structural and semantic foundation of a webpage, organizing text, multimedia, and data into a hierarchical Document Object Model (DOM).
+
+    \item \textbf{What is the purpose of the \texttt{<!DOCTYPE html>} declaration?}\\
+    \textbf{Answer}: It informs the web browser that the document complies with the HTML5 standard, ensuring standard rendering mode rather than legacy quirks mode.
+
+    \item \textbf{Differentiate between \texttt{<head>} and \texttt{<body>}.}\\
+    \textbf{Answer}: \texttt{<head>} contains non-visible metadata, title, character encoding, and links to stylesheets/scripts. \texttt{<body>} contains all visible UI elements rendered in the viewport.
+
+    \item \textbf{What is the difference between \texttt{<strong>} and \texttt{<b>}?}\\
+    \textbf{Answer}: \texttt{<b>} applies visual bold styling without semantic weight; \texttt{<strong>} conveys semantic importance and urgency to search engines and assistive screen readers.
+
+    \item \textbf{What is an unpaired or void tag in HTML?}\\
+    \textbf{Answer}: A self-contained tag that cannot enclose text or child elements, possessing no closing tag (e.g., \texttt{<br>}, \texttt{<hr>}, \texttt{<img>}, \texttt{<input>}, \texttt{<meta>}).
+
+    \item \textbf{How do block-level and inline elements differ in default width?}\\
+    \textbf{Answer}: Block-level elements expand to 100\% of the parent container's width; inline elements occupy only the exact width necessary to wrap their content.
+
+    \item \textbf{Why is the \texttt{alt} attribute mandatory for \texttt{<img>} tags?}\\
+    \textbf{Answer}: It provides alternative text for visually impaired screen-reader users, acts as network fallback text, and aids search engine indexing.
+
+    \item \textbf{What is the difference between \texttt{<ul>} and \texttt{<ol>}?}\\
+    \textbf{Answer}: \texttt{<ul>} creates unordered bulleted lists where sequence is arbitrary; \texttt{<ol>} creates ordered sequential lists with numerical or alphabetical indices.
+
+    \item \textbf{How do you open an anchor link in a new browser tab?}\\
+    \textbf{Answer}: By setting the target attribute: \texttt{<a href="url" target="\_blank">}.
+
+    \item \textbf{What are the tags used in a definition list?}\\
+    \textbf{Answer}: \texttt{<dl>} (definition list wrapper), \texttt{<dt>} (definition term), and \texttt{<dd>} (definition description).
+
+    \item \textbf{Explain the difference between \texttt{colspan} and \texttt{rowspan}.}\\
+    \textbf{Answer}: \texttt{colspan} merges table cells horizontally across adjacent columns; \texttt{rowspan} merges cells vertically across adjacent rows.
+
+    \item \textbf{Differentiate between HTTP \texttt{GET} and \texttt{POST} form submission methods.}\\
+    \textbf{Answer}: \texttt{GET} appends form data to the URL query string (insecure, length-limited, bookmarkable); \texttt{POST} transmits data in the HTTP request body (secure, unlimited payload, supports file uploads).
+
+    \item \textbf{What is required in a form tag to support file uploads?}\\
+    \textbf{Answer}: \texttt{method="POST"} and \texttt{enctype="multipart/form-data"}.
+
+    \item \textbf{What is the purpose of the \texttt{poster} attribute in \texttt{<video>}?}\\
+    \textbf{Answer}: Specifies a placeholder thumbnail image displayed before video playback begins.
+
+    \item \textbf{How do you link an external CSS stylesheet into an HTML page?}\\
+    \textbf{Answer}: Inside \texttt{<head>} using: \texttt{<link rel="stylesheet" type="text/css" href="style.css">}.
+
+    \item \textbf{What are the three types of CSS insertion?}\\
+    \textbf{Answer}: Inline CSS (\texttt{style} attribute), Internal CSS (\texttt{<style>} tag in \texttt{<head>}), and External CSS (separate \texttt{.css} file).
+
+    \item \textbf{Which CSS selector has higher specificity: \texttt{\#header} or \texttt{.header}?}\\
+    \textbf{Answer}: The ID selector \texttt{\#header} (weight 100) has higher specificity than the class selector \texttt{.header} (weight 10).
+
+    \item \textbf{Name the four concentric layers of the CSS Box Model from inside out.}\\
+    \textbf{Answer}: Content Box $\to$ Padding $\to$ Border $\to$ Margin.
+
+    \item \textbf{What is the difference between \texttt{box-sizing: content-box} and \texttt{border-box}?}\\
+    \textbf{Answer}: In \texttt{content-box}, padding and border add to the element's specified width. In \texttt{border-box}, padding and border are absorbed within the specified width.
+
+    \item \textbf{How do you eliminate double borders between table cells in CSS?}\\
+    \textbf{Answer}: Using \texttt{border-collapse: collapse;}.
+
+    \item \textbf{What does \texttt{text-decoration: none;} do on anchor tags?}\\
+    \textbf{Answer}: Removes the default browser underline styling from hyperlinks.
+
+    \item \textbf{How do you center a block-level container horizontally using CSS?}\\
+    \textbf{Answer}: Set a fixed width and assign automatic horizontal margins: \texttt{margin: 0 auto;}.
+
+    \item \textbf{What is the difference between \texttt{background-size: cover} and \texttt{contain}?}\\
+    \textbf{Answer}: \texttt{cover} scales the image to completely fill the container (may clip); \texttt{contain} scales the image to fit entirely within the container without clipping.
+
+    \item \textbf{Explain the difference between \texttt{<div>} and \texttt{<span>}.}\\
+    \textbf{Answer}: \texttt{<div>} is a generic block-level container starting on a new line; \texttt{<span>} is an inline phrasing container flowing with surrounding text.
+
+    \item \textbf{Why is placing JavaScript at the bottom of \texttt{<body>} recommended?}\\
+    \textbf{Answer}: It prevents script parsing from blocking HTML rendering, improving perceived page load speeds and ensuring DOM elements exist before scripts execute.
+
+    \item \textbf{Differentiate between \texttt{var}, \texttt{let}, and \texttt{const}.}\\
+    \textbf{Answer}: \texttt{var} is function-scoped and hoisted with \texttt{undefined}; \texttt{let} is block-scoped and mutable; \texttt{const} is block-scoped with immutable identifier binding.
+
+    \item \textbf{What is the Temporal Dead Zone (TDZ)?}\\
+    \textbf{Answer}: The period between the start of a block scope and the variable declaration line where accessing a \texttt{let} or \texttt{const} variable throws a \texttt{ReferenceError}.
+
+    \item \textbf{What is the difference between \texttt{==} and \texttt{===}?}\\
+    \textbf{Answer}: \texttt{==} performs type coercion before comparison; \texttt{===} strictly evaluates both value and data type without coercion.
+
+    \item \textbf{What does \texttt{"5" + 3} and \texttt{"5" - 3} evaluate to in JavaScript?}\\
+    \textbf{Answer}: \texttt{"5" + 3 = "53"} (string concatenation); \texttt{"5" - 3 = 2} (numeric coercion subtraction).
+
+    \item \textbf{What is the return value of \texttt{typeof null}?}\\
+    \textbf{Answer}: \texttt{"object"} (a historical JavaScript implementation artifact).
+
+    \item \textbf{How does a \texttt{do...while} loop differ from a \texttt{while} loop?}\\
+    \textbf{Answer}: A \texttt{do...while} loop evaluates its condition after executing the body, guaranteeing at least one execution.
+
+    \item \textbf{What does \texttt{confirm("Save?")} return when the user clicks Cancel?}\\
+    \textbf{Answer}: Boolean \texttt{false}.
+
+    \item \textbf{What does \texttt{prompt()} return if the user cancels the dialog?}\\
+    \textbf{Answer}: \texttt{null}.
+
+    \item \textbf{How do you access object properties in JavaScript?}\\
+    \textbf{Answer}: Via dot notation (\texttt{obj.prop}) or bracket notation (\texttt{obj["prop"]}).
+
+    \item \textbf{What does the \texttt{this} keyword reference inside an object method?}\\
+    \textbf{Answer}: The host object instance that invoked the method.
+
+    \item \textbf{Differentiate between Pass-by-Value and Pass-by-Reference.}\\
+    \textbf{Answer}: Primitives pass isolated copies (mutations do not affect caller); objects and arrays pass memory reference pointers (mutations directly alter caller object).
+
+    \item \textbf{What is the purpose of the \texttt{arguments} object in functions?}\\
+    \textbf{Answer}: An array-like object containing all arguments passed to the function during invocation.
+
+    \item \textbf{Why is \texttt{addEventListener()} preferred over \texttt{onclick}?}\\
+    \textbf{Answer}: \texttt{addEventListener()} supports multiple non-destructive event handlers on the same element; \texttt{onclick} overwrites previous handler assignments.
+
+    \item \textbf{What is the role of \texttt{event.preventDefault()} in form validation?}\\
+    \textbf{Answer}: It halts the default browser form submission, preventing HTTP navigation when validation fails.
+
+    \item \textbf{What is the difference between \texttt{keydown} and \texttt{keyup} events?}\\
+    \textbf{Answer}: \texttt{keydown} triggers when a key is first pressed; \texttt{keyup} triggers when the key is released.
+
+    \item \textbf{What does \texttt{isNaN("LPU")} vs \texttt{isNaN("100")} return?}\\
+    \textbf{Answer}: \texttt{isNaN("LPU")} is \texttt{true}; \texttt{isNaN("100")} is \texttt{false} (coerces to number 100).
+
+    \item \textbf{What is the Document Object Model (DOM)?}\\
+    \textbf{Answer}: A W3C standard object-oriented programming interface representing an HTML document as a tree of mutable nodes.
+
+    \item \textbf{Differentiate between \texttt{querySelector()} and \texttt{querySelectorAll()}.}\\
+    \textbf{Answer}: \texttt{querySelector()} returns the first matching element node; \texttt{querySelectorAll()} returns a static \texttt{NodeList} of all matching elements.
+
+    \item \textbf{Why is \texttt{textContent} safer than \texttt{innerHTML}?}\\
+    \textbf{Answer}: \texttt{textContent} treats input strictly as literal text, preventing Cross-Site Scripting (XSS) script injections; \texttt{innerHTML} parses HTML tags.
+
+    \item \textbf{How do you create and insert a new \texttt{<p>} element into the DOM?}\\
+    \textbf{Answer}: \texttt{const p = document.createElement("p"); p.textContent = "Text"; document.body.appendChild(p);}.
+
+    \item \textbf{How do you remove an element from the DOM?}\\
+    \textbf{Answer}: Using \texttt{element.remove()} or \texttt{parent.removeChild(child)}.
+
+    \item \textbf{What is the purpose of the \texttt{classList} API?}\\
+    \textbf{Answer}: Provides methods (\texttt{add}, \texttt{remove}, \texttt{toggle}, \texttt{contains}) to manipulate CSS classes cleanly on an element.
+
+    \item \textbf{What is Event Bubbling?}\\
+    \textbf{Answer}: The default event propagation mechanism where an event triggers on the innermost child element first, then bubbles upward through parent ancestor nodes.
+
+    \item \textbf{What does \texttt{event.target} represent?}\\
+    \textbf{Answer}: The exact innermost DOM element that originated the event.
+
+    \item \textbf{How do you change the background color of an element dynamically in JavaScript?}\\
+    \textbf{Answer}: Using the style object with camelCase: \texttt{element.style.backgroundColor = "blue";}.
+\end{enumerate}

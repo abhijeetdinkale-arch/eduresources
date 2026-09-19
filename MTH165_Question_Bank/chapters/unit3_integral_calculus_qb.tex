@@ -1,0 +1,49 @@
+\chapter{Unit 3: Fundamentals of Integral Calculus}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{3.1}
+Evaluate the definite integral:
+\begin{equation}
+I = \int_0^\pi \frac{x \sin x}{1 + \cos^2 x}\,dx
+\end{equation}
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Apply King's Property} $\int_0^a f(x)\,dx = \int_0^a f(a-x)\,dx$:
+\begin{equation}
+I = \int_0^\pi \frac{(\pi - x) \sin(\pi - x)}{1 + \cos^2(\pi - x)}\,dx = \int_0^\pi \frac{(\pi - x)\sin x}{1 + \cos^2 x}\,dx \quad \text{--- (2)}
+\end{equation}
+2. \textbf{Add (1) and (2)}:
+\begin{align}
+2I &= \int_0^\pi \frac{[x + (\pi - x)]\sin x}{1 + \cos^2 x}\,dx = \pi \int_0^\pi \frac{\sin x}{1 + \cos^2 x}\,dx
+\end{align}
+3. \textbf{Substitution}:
+Let $u = \cos x \implies du = -\sin x\,dx$.
+When $x = 0$, $u = 1$; when $x = \pi$, $u = -1$:
+\begin{align}
+2I &= \pi \int_1^{-1} \frac{-du}{1 + u^2} = \pi \int_{-1}^1 \frac{du}{1 + u^2} = \pi \Big[ \tan^{-1}u \Big]_{-1}^1 \\
+&= \pi \left( \frac{\pi}{4} - \left(-\frac{\pi}{4}\right) \right) = \pi \left( \frac{\pi}{2} \right) = \frac{\pi^2}{2}
+\end{align}
+Therefore, $I = \frac{\pi^2}{4}$.
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+\mcqitem{1}{The value of $\int_0^{\pi/2} \frac{\sin x}{\sin x + \cos x}\,dx$ is:}{$\pi$}{$\pi/2$}{$\pi/4$}{$0$}
+\mcqitem{2}{If $f(x)$ is an odd function, then $\int_{-a}^a f(x)\,dx$ equals:}{$2\int_0^a f(x)dx$}{$0$}{$a$}{$-a$}
+\mcqitem{3}{The value of $\int \ln x\,dx$ is:}{$1/x + C$}{$x\ln x - x + C$}{$x\ln x + x + C$}{$\ln x + C$}
+
+\section{Section 3: Answer Key \& Technical Rationales}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 3: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(c)} & By King's property $2I = \int_0^{\pi/2} 1\,dx = \pi/2 \implies I = \pi/4$ & 3 & \textbf{(b)} & Integration by parts $\int 1 \cdot \ln x dx = x\ln x - x + C$ \\
+2 & \textbf{(b)} & Odd symmetry over $[-a, a]$ integrates identically to zero & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}

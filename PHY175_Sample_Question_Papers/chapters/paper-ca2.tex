@@ -1,0 +1,66 @@
+\chapter{Continuous Assessment 2 (CA-2) Model Paper}
+\section*{Course: PHY175 $\cdot$ Max Marks: 30 $\cdot$ Time: 60 Minutes}
+
+\subsection*{Section A: Multiple-Choice Questions (10 Marks, 1 Mark Each)}
+\begin{enumerate}[leftmargin=*]
+    \item The 2's complement of 4-bit binary $0101_2$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $1110_2$ \item $1011_2$ \item $1100_2$ \item $1010_2$
+    \end{enumerate}
+    \item Gray code for binary $1011_2$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $1110$ \item $1010$ \item $1001$ \item $1101$
+    \end{enumerate}
+    \item The Sum output $S$ of a full adder with inputs $A, B, C_{in}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $A + B + C_{in}$ \item $A \oplus B \oplus C_{in}$ \item $AB + BC_{in}$ \item $A \odot B \odot C_{in}$
+    \end{enumerate}
+    \item How many select lines are required for an 8-to-1 multiplexer?
+    \begin{enumerate}[label=(\alph*)]
+        \item 2 \item 3 \item 4 \item 8
+    \end{enumerate}
+    \item A 2-to-4 decoder with active-high outputs activates how many lines for input $10_2$?
+    \begin{enumerate}[label=(\alph*)]
+        \item Only $Y_0$ \item Only $Y_1$ \item Only $Y_2$ \item Only $Y_3$
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Section B: Design \& Synthesis Problems (20 Marks)}
+
+\begin{examqbox}{1 [5 Marks]}
+Minimize the Boolean function $F(A,B,C,D) = \sum m(1,3,9,11,12,14) + d(0,2,8,10)$ using a 4-variable Karnaugh Map.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{K-Map Analysis:}\\
+1. Group octet of cells $\{0, 1, 2, 3, 8, 9, 10, 11\}$ (rows $00, 10$) $\implies \bar{B}$.\\
+2. Group quad of cells $\{8, 10, 12, 14\}$ (row $10, 11$ columns $00, 10$) $\implies A\bar{D}$.\\
+\textbf{Minimized SOP Expression:} $F = \bar{B} + A\bar{D}$.
+\end{solbox}
+
+\begin{examqbox}{2 [5 Marks]}
+Design a Full Subtractor using two Half Subtractors and an OR gate. Write the complete truth table and Boolean expressions for Difference ($D$) and Borrow-out ($B_{out}$).
+\end{examqbox}
+
+\begin{solbox}
+1. First Half Subtractor: $D_1 = A \oplus B, \quad B_1 = \bar{A}B$.\\
+2. Second Half Subtractor: $D = D_1 \oplus B_{in} = A \oplus B \oplus B_{in}, \quad B_2 = \bar{D}_1 B_{in} = \overline{(A \oplus B)} B_{in}$.\\
+3. Final Borrow: $B_{out} = B_1 + B_2 = \bar{A}B + \bar{A}B_{in} + BB_{in}$.
+\end{solbox}
+
+\begin{examqbox}{3 [10 Marks]}
+Implement the Boolean logic function $F(A,B,C) = \sum m(1,2,5,7)$ using:\\
+(a) A 4-to-1 Multiplexer with select lines connected to $B$ and $C$.\\
+(b) A 3-to-8 Decoder with active-high outputs.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) 4:1 MUX Implementation ($S_1=B, S_0=C$):}\\
+- $BC = 00$: $F(0,0,0)=0, F(1,0,0)=0 \implies I_0 = 0$.\\
+- $BC = 01$: $F(0,0,1)=1, F(1,0,1)=1 \implies I_1 = 1$.\\
+- $BC = 10$: $F(0,1,0)=1, F(1,1,0)=0 \implies I_2 = \bar{A}$.\\
+- $BC = 11$: $F(0,1,1)=0, F(1,1,1)=1 \implies I_3 = A$.\\
+Input vector: $(I_0, I_1, I_2, I_3) = (0, 1, \bar{A}, A)$.\\
+\textbf{(b) 3-to-8 Decoder Implementation:}\\
+Connect $A,B,C$ to decoder inputs. Connect outputs $Y_1, Y_2, Y_5, Y_7$ to a 4-input OR gate: $F = Y_1 + Y_2 + Y_5 + Y_7$.
+\end{solbox}

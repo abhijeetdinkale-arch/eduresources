@@ -1,0 +1,41 @@
+\chapter{Unit 1: Matrix Methods and Linear Systems}
+
+\begin{formulabox}{Matrix Rank \& Determinantal Minor Laws}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Rank Definition}: $\operatorname{rank}(A) = \rho(A) = $ Number of non-zero rows in Row Echelon Form (REF).
+    \item If $A$ is $m \times n$, then $\rho(A) \le \min(m, n)$.
+    \item $\rho(AB) \le \min(\rho(A), \rho(B))$.
+    \item $\rho(A + B) \le \rho(A) + \rho(B)$.
+    \item $\rho(A^T) = \rho(A) = \rho(A^T A) = \rho(A A^T)$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Linear Systems Solvability ($Ax=b$)}
+Let $\tilde{A} = [A | b]$ be the augmented matrix for an $m \times n$ system:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Inconsistent (No Solution)}: $\rho(A) < \rho([A|b])$.
+    \item \textbf{Consistent (Unique Solution)}: $\rho(A) = \rho([A|b]) = n$ (number of unknowns).
+    \item \textbf{Consistent (Infinite Solutions)}: $\rho(A) = \rho([A|b]) = r < n$, with $(n - r)$ free independent parameters.
+\end{enumerate}
+For homogeneous systems $Ax = 0$:
+\begin{itemize}
+    \item Non-trivial solutions exist $\iff \rho(A) < n \iff \det(A) = 0$ (for square matrix).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Eigenvalues \& Cayley--Hamilton Formulae}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Characteristic Equation} ($3 \times 3$):
+    \begin{equation}
+    \lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0
+    \end{equation}
+    where $S_1 = \operatorname{tr}(A)$, $S_2 = M_{11}+M_{22}+M_{33}$, and $S_3 = \det(A)$.
+    \item \textbf{Sum of Eigenvalues}: $\sum \lambda_i = \operatorname{tr}(A) = a_{11}+a_{22}+a_{33}$.
+    \item \textbf{Product of Eigenvalues}: $\prod \lambda_i = \det(A)$.
+    \item \textbf{Cayley--Hamilton Theorem}: Every square matrix satisfies its characteristic polynomial:
+    \begin{equation}
+    A^3 - S_1 A^2 + S_2 A - S_3 I = O
+    \end{equation}
+    \item \textbf{Matrix Inverse}: $A^{-1} = \frac{1}{S_3}(A^2 - S_1 A + S_2 I)$.
+\end{itemize}
+\end{formulabox}

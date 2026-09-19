@@ -1,0 +1,130 @@
+\chapter{End-Term Examination (ETE) Full Syllabus Model Paper}
+\section*{Course: PHY175 $\cdot$ Max Marks: 100 $\cdot$ Time: 180 Minutes}
+
+\subsection*{Section A: 20 Objective MCQs (20 Marks)}
+\begin{enumerate}[leftmargin=*]
+    \item Electrical conductivity in Drude model is $\sigma = \frac{ne^2\tau}{m}$.
+    \item At $T > 0\,\text{K}$, Fermi-Dirac occupancy probability at $E = E_F$ is $50\%$.
+    \item Direct band gap semiconductor recombination conserves crystal momentum without phonons.
+    \item CMOS dynamic power scales with $V_{DD}^2$.
+    \item In a 4-to-1 MUX, the number of select lines is 2.
+    \item Master-Slave JK flip-flop eliminates the race-around condition.
+    \item Arduino Uno 10-bit ADC provides 1024 quantization levels.
+    \item Ultrasonic HC-SR04 distance formula is $d = \frac{v \cdot t}{2}$.
+    \item BCD addition requires adding $+6$ ($0110_2$) when digit sum exceeds 9.
+    \item Optical fiber signal confinement relies on Total Internal Reflection (TIR).
+\end{enumerate}
+
+\subsection*{Section B: Analytical Problems (40 Marks, 8 Marks Each)}
+
+\begin{examqbox}{1 [8 Marks]}
+Derive the expression for the maximum operating clock frequency $f_{max} = \frac{1}{N \cdot t_{pd} + t_s}$ of an $N$-bit asynchronous ripple counter. If $N=4, t_{pd}=25\,\text{ns}, t_s=10\,\text{ns}$, calculate $f_{max}$.
+\end{examqbox}
+
+\begin{solbox}
+In an $N$-bit ripple counter, the clock ripples through all $N$ stages serially. Total propagation delay before output stabilizes is $T_{ripple} = N \cdot t_{pd}$. Adding setup time $t_s$ for downstream logic gives minimum clock period $T_{min} = N \cdot t_{pd} + t_s$. Hence $f_{max} = \frac{1}{T_{min}} = \frac{1}{4(25\,\text{ns}) + 10\,\text{ns}} = \frac{1}{110\,\text{ns}} \approx 9.09\,\text{MHz}$.
+\end{solbox}
+
+\begin{examqbox}{2 [8 Marks]}
+Convert a JK Flip-Flop into a D Flip-Flop. Show the complete conversion table, K-maps, and logic gate schematic.
+\end{examqbox}
+
+\begin{solbox}
+Excitation requirements for D flip-flop ($Q_{n+1} = D$):
+- When $D=0$: $Q_n=0 \to Q_{n+1}=0 \implies J=0, K=X$; $Q_n=1 \to Q_{n+1}=0 \implies J=X, K=1$.
+- When $D=1$: $Q_n=0 \to Q_{n+1}=1 \implies J=1, K=X$; $Q_n=1 \to Q_{n+1}=1 \implies J=X, K=0$.
+From K-maps: $J = D, \quad K = \bar{D}$. Connect $D$ to $J$ and $\bar{D}$ (via NOT gate) to $K$.
+\end{solbox}
+
+\begin{examqbox}{3 [8 Marks]}
+Explain the interfacing and operating principle of an LDR sensor in an automated streetlight circuit. Explain why software hysteresis is required.
+\end{examqbox}
+
+\begin{solbox}
+1. \textbf{Circuit:} LDR and fixed $10\,\text{k}\Omega$ resistor form a voltage divider connected to Arduino analog pin A0. $V_{out} = 5.0\frac{R_{fixed}}{R_{LDR} + R_{fixed}}$. As light increases, $R_{LDR}$ falls, increasing $V_{out}$.\\
+2. \textbf{Hysteresis:} At twilight, slow light fluctuations and noise cause the reading to oscillate around a single threshold, causing the streetlight relay to rapidly chatter ON and OFF. Implementing two separate thresholds (e.g. Turn ON at $\text{ADC} < 300$, Turn OFF at $\text{ADC} > 450$) creates a hysteresis band that eliminates flickering.
+\end{solbox}
+
+\begin{examqbox}{4 [8 Marks]}
+Design a 4-bit 2's complement adder-subtractor circuit using four Full Adders and XOR gates. Explain how the mode control line $M$ selects addition vs subtraction and how signed overflow is detected.
+\end{examqbox}
+
+\begin{solbox}
+1. Connect inputs $A_i$ directly to FA inputs. Connect $B_i$ to one input of an XOR gate with mode line $M$ connected to the second input.\\
+2. Mode $M=0$: XOR outputs $B_i \oplus 0 = B_i$, and $C_0 = 0 \implies$ computes $A + B$.\\
+3. Mode $M=1$: XOR outputs $B_i \oplus 1 = \bar{B}_i$, and $C_0 = 1 \implies$ computes $A + \bar{B} + 1 = A - B$.\\
+4. Signed Overflow Flag: $V = C_4 \oplus C_3$.
+\end{solbox}
+
+\begin{examqbox}{5 [8 Marks]}
+Compare DHT11 and DHT22 temperature and humidity sensors in terms of measurement ranges, precision, sampling rate, and interface protocol.
+\end{examqbox}
+
+\begin{solbox}
+\begin{itemize}
+    \item \textbf{DHT11:} Range $0-50^\circ\text{C}$ ($\pm 2^\circ\text{C}$), $20-90\%\,\text{RH}$ ($\pm 5\%$), max $1\,\text{Hz}$ sampling.
+    \item \textbf{DHT22:} Range $-40-80^\circ\text{C}$ ($\pm 0.5^\circ\text{C}$), $0-100\%\,\text{RH}$ ($\pm 2\%$), max $0.5\,\text{Hz}$ sampling ($2\,\text{s}$ interval).
+    \item Both use a single-wire digital bus requiring an external $4.7-10\,\text{k}\Omega$ pull-up resistor.
+\end{itemize}
+\end{solbox}
+
+\subsection*{Section C: Comprehensive Design Problems (40 Marks, 20 Marks Each)}
+
+\begin{examqbox}{6 [20 Marks]}
+(a) Derive the open-circuit voltage $V_{oc}$ and fill factor $FF$ of a p-n junction solar cell.\\
+(b) A solar cell has $V_{oc} = 0.65\,\text{V}, I_{sc} = 40\,\text{mA}, V_m = 0.52\,\text{V}, I_m = 35\,\text{mA}$. Calculate its fill factor and maximum output power.\\
+(c) If incident optical power is $200\,\text{mW}$, compute the power conversion efficiency $\eta$.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) Derivation:} Under illumination, diode current is $I = I_{sc} - I_0(e^{qV/nkT} - 1)$. Setting $I=0$ at open-circuit gives $V_{oc} = \frac{nkT}{q}\ln\left(\frac{I_{sc}}{I_0} + 1\right)$. Fill factor is defined as $FF = \frac{P_{max}}{V_{oc} I_{sc}} = \frac{V_m I_m}{V_{oc} I_{sc}}$.\\
+\textbf{(b) Calculations:}\\
+- $P_{max} = V_m I_m = (0.52\,\text{V})(35 \times 10^{-3}\,\text{A}) = 18.2\,\text{mW}$.\\
+- $FF = \frac{18.2\,\text{mW}}{(0.65\,\text{V})(40\,\text{mA})} = \frac{18.2}{26.0} = 0.70$ ($70\%$).\\
+\textbf{(c) Efficiency:} $\eta = \frac{P_{max}}{P_{in}} \times 100\% = \frac{18.2\,\text{mW}}{200\,\text{mW}} \times 100\% = 9.1\%$.
+\end{solbox}
+
+\begin{examqbox}{7 [20 Marks]}
+Design an autonomous obstacle-avoiding robotic subsystem with an Arduino Uno, HC-SR04 Ultrasonic sensor, and reflective IR sensors:\\
+(a) Draw the complete hardware wiring diagram listing pin assignments.\\
+(b) Write a complete, well-commented Arduino C++ program implementing obstacle detection within $20\,\text{cm}$.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) Pin Assignments:}\\
+- HC-SR04: \texttt{VCC} $\to 5\,\text{V}$, \texttt{GND} $\to \text{GND}$, \texttt{TRIG} $\to \text{Pin 9}$, \texttt{ECHO} $\to \text{Pin 10}$.\\
+- Left IR Sensor: \texttt{OUT} $\to \text{Pin 2}$. Right IR Sensor: \texttt{OUT} $\to \text{Pin 3}$.\\
+- Status Alert LED: \texttt{Anode} $\to \text{Pin 13}$ (through $220\,\Omega$ resistor).\\
+\textbf{(b) Arduino Sketch:}
+\begin{verbatim}
+const int trigPin = 9;
+const int echoPin = 10;
+const int alertLED = 13;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(alertLED, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  float distanceCm = duration * 0.034 / 2.0;
+
+  if (distanceCm < 20.0 && distanceCm > 0) {
+    digitalWrite(alertLED, HIGH);
+    Serial.println("Obstacle Detected!");
+  } else {
+    digitalWrite(alertLED, LOW);
+  }
+  delay(100);
+}
+\end{verbatim}
+\end{solbox}

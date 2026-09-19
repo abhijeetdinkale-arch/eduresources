@@ -1,0 +1,208 @@
+\chapter{Fiber Optics \& Optical Waveguides}
+
+\section{Introduction and Advantages of Optical Fibers}
+Optical fiber communications revolutionized modern telecommunications by replacing copper coaxial cables with ultrathin strands of high-purity fused silica glass ($\text{SiO}_2$). Compared to conventional electrical cables, optical fibers offer:
+\begin{itemize}[itemsep=2pt]
+    \item \textbf{Immense Bandwidth:} Optical carrier frequencies ($\sim 193\text{ THz}$) allow data transmission speeds exceeding terabits per second per fiber.
+    \item \textbf{Ultra-Low Attenuation:} Signal losses as low as $0.18\text{ dB/km}$ enable repeaterless transmission spans over $100\text{ km}$.
+    \item \textbf{Electromagnetic Immunity (EMI):} Dielectric glass is completely immune to radio-frequency interference, electromagnetic pulses (EMP), lightning, and high-voltage power line crosstalk.
+    \item \textbf{Lightweight and Compact:} A single multi-fiber cable replaces thousands of heavy copper twisted pairs.
+\end{itemize}
+
+\section{Optical Fiber Structure and Waveguide Geometry}
+An optical fiber is a multi-layered dielectric cylinder:
+\begin{enumerate}[itemsep=2pt]
+    \item \textbf{Core:} The central light-guiding region of refractive index $n_1$ and radius $a$ ($d = 2a$).
+    \item \textbf{Cladding:} The surrounding glass sheath of lower refractive index $n_2 < n_1$ and outer diameter typically $125\text{ }\mu\text{m}$.
+    \item \textbf{Primary Polymer Coating:} Acrylate buffer layer ($250\text{ }\mu\text{m}$ diameter) protecting against microbending losses and chemical corrosion.
+\end{enumerate}
+
+\section{Total Internal Reflection and Ray Guidance Principles}
+Light propagation inside the core is governed by Snell's Law at the core-cladding interface:
+\begin{equation}
+n_1 \sin\phi_1 = n_2 \sin\phi_2
+\end{equation}
+When a light ray traveling in the denser core ($n_1$) strikes the cladding ($n_2 < n_1$), it undergoes total internal reflection (TIR) provided the angle of incidence $\phi_1$ exceeds the \textbf{critical angle} $\phi_c$:
+\begin{equation}
+\sin\phi_c = \frac{n_2}{n_1} \implies \phi_c = \arcsin\left(\frac{n_2}{n_1}\right)
+\end{equation}
+
+\section{Acceptance Angle and Numerical Aperture Derivation}
+Consider a light ray entering the fiber core from an external launching medium of refractive index $n_0$ (typically air, $n_0 \approx 1.0$) at an incident angle $\theta_0$ to the fiber axis:
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+    \item Refraction at the air-core entrance facet:
+    \begin{equation}
+    n_0 \sin\theta_0 = n_1 \sin\theta_r
+    \end{equation}
+    \item From right-triangle geometry inside the core: $\theta_r = 90^\circ - \phi$, where $\phi$ is the angle of incidence on the core-cladding boundary:
+    \begin{equation}
+    n_0 \sin\theta_0 = n_1 \sin(90^\circ - \phi) = n_1 \cos\phi
+    \end{equation}
+    \item For total internal reflection along the core wall, $\phi \ge \phi_c \implies \sin\phi \ge \sin\phi_c = \frac{n_2}{n_1}$.
+    \item Using $\cos\phi = \sqrt{1 - \sin^2\phi}$:
+    \begin{equation}
+    \cos\phi \le \sqrt{1 - \left(\frac{n_2}{n_1}\right)^2} = \frac{\sqrt{n_1^2 - n_2^2}}{n_1}
+    \end{equation}
+    \item Substituting into the entrance equation gives the \textbf{Maximum Acceptance Angle} $\theta_a$:
+    \begin{equation}
+    n_0 \sin\theta_a = \sqrt{n_1^2 - n_2^2} \implies \theta_a = \arcsin\left(\frac{\sqrt{n_1^2 - n_2^2}}{n_0}\right)
+    \end{equation}
+\end{enumerate}
+
+\begin{derivbox}{Numerical Aperture ($\text{NA}$) Formula}
+The \textbf{Numerical Aperture (NA)} is a fundamental figure of merit defining the light-gathering capacity of the fiber:
+\begin{equation}
+\text{NA} \equiv n_0 \sin\theta_a = \sqrt{n_1^2 - n_2^2}
+\end{equation}
+Defining the \textbf{fractional refractive index change} $\Delta$:
+\begin{equation}
+\Delta \equiv \frac{n_1 - n_2}{n_1} \approx \frac{n_1^2 - n_2^2}{2n_1^2} \implies n_1^2 - n_2^2 \approx 2 n_1^2 \Delta
+\end{equation}
+We obtain the standard compact relation:
+\begin{equation}
+\text{NA} = n_1 \sqrt{2\Delta}
+\end{equation}
+The solid angle of the acceptance cone is $\Omega = \pi \theta_a^2 \approx \pi (\text{NA})^2$. Notice that $\text{NA}$ depends solely on refractive indices and is completely independent of the physical fiber core dimensions.
+\end{derivbox}
+
+\section{Waveguide Modes and Normalized Frequency (V-Number)}
+In electromagnetic wave theory, boundary conditions inside the dielectric cylinder allow only discrete spatial electromagnetic field configurations called \textbf{modes}. The parameter governing mode propagation is the \textbf{Normalized Frequency (V-Number)}:
+\begin{equation}
+V \equiv \frac{2\pi a}{\lambda_0} \text{NA} = \frac{\pi d}{\lambda_0}\sqrt{n_1^2 - n_2^2}
+\end{equation}
+where $a$ is the core radius, $d$ is the core diameter, and $\lambda_0$ is the free-space wavelength.
+
+\subsection{Classification of Optical Fibers by Index Profile and Mode Structure}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item \textbf{Single-Mode Step-Index Fiber (SMF):}
+    \begin{itemize}
+        \item Cutoff condition: $V < 2.4048$ (first zero of Bessel function $J_0$).
+        \item Core diameter is ultra-small ($d \approx 8\text{--}10\text{ }\mu\text{m}$). Only the fundamental $\text{HE}_{11}$ mode propagates.
+        \item Intermodal dispersion is physically zero, enabling long-haul telecommunications at multi-gigabit/terabit rates.
+    \end{itemize}
+    \item \textbf{Multimode Step-Index Fiber (MM-SIF):}
+    \begin{itemize}
+        \item $V \gg 2.405$ with large core diameter ($d \approx 50\text{--}100\text{ }\mu\text{m}$).
+        \item Total number of bound guided modes:
+        \begin{equation}
+        M_{\text{SIF}} \approx \frac{V^2}{2}
+        \end{equation}
+        \item Suffers from significant intermodal dispersion.
+    \end{itemize}
+    \item \textbf{Multimode Graded-Index Fiber (MM-GRIN):}
+    \begin{itemize}
+        \item Core refractive index decreases smoothly as a function of radial distance $r$:
+        \begin{equation}
+        n(r) = \begin{cases} n_1 \sqrt{1 - 2\Delta\left(\frac{r}{a}\right)^\alpha} & r \le a \\ n_2 = n_1\sqrt{1 - 2\Delta} & r > a \end{cases}
+        \end{equation}
+        For optimal parabolic profile ($\alpha \approx 2$), the total mode count is:
+        \begin{equation}
+        M_{\text{GRIN}} \approx \frac{V^2}{4} = \frac{1}{2} M_{\text{SIF}}
+        \end{equation}
+    \end{itemize}
+\end{enumerate}
+
+\section{Signal Distortion: Dispersion and Pulse Broadening}
+As optical digital pulses propagate down a fiber, different frequency components and modes travel at different velocities, causing temporal pulse spreading ($\Delta t$). When pulses broaden excessively, adjacent bits overlap, causing \textbf{Intersymbol Interference (ISI)} and limiting transmission bitrate.
+
+\subsection{1. Intermodal Dispersion}
+Occurs in multimode fibers because axial rays travel a straight distance $L$ at velocity $v = c/n_1$, while extreme zigzag rays incident at critical angle $\phi_c$ travel a longer helical distance $L_{\text{max}} = L/\sin\phi_c = L(n_1/n_2)$.
+The pulse broadening over length $L$ in a step-index fiber is:
+\begin{equation}
+\Delta \tau_{\text{modal}} = t_{\text{max}} - t_{\text{min}} = \frac{L}{c}\left(\frac{n_1^2 - n_1 n_2}{n_2}\right) \approx \frac{L n_1 \Delta}{c} = \frac{L (\text{NA})^2}{2 n_1 c}
+\end{equation}
+In parabolic graded-index fibers ($\alpha \approx 2$), outer rays travel through lower-index glass at higher phase speeds, equalizing transit times:
+\begin{equation}
+\Delta \tau_{\text{GRIN}} \approx \frac{L n_1 \Delta^2}{8 c}
+\end{equation}
+Intermodal dispersion in GRIN fibers is roughly $100\times$ to $1000\times$ lower than in step-index fibers.
+
+\subsection{2. Intramodal (Chromatic) Dispersion}
+Occurs within every single mode because light sources (even lasers) have finite spectral width $\Delta\lambda$:
+\begin{itemize}[itemsep=2pt]
+    \item \textbf{Material Dispersion ($D_{\text{mat}}$):} The glass refractive index $n(\lambda)$ varies non-linearly with wavelength. Pulse delay spread is:
+    \begin{equation}
+    \Delta \tau_{\text{mat}} = -\frac{L \lambda}{c}\left(\frac{d^2 n}{d\lambda^2}\right)\Delta\lambda = D_{\text{mat}} \cdot L \cdot \Delta\lambda
+    \end{equation}
+    Material dispersion drops to zero in fused silica at $\lambda \approx 1270\text{--}1310\text{ nm}$.
+    \item \textbf{Waveguide Dispersion ($D_{\text{wg}}$):} Results from light power distributing between core and cladding.
+\end{itemize}
+
+\section{Optical Fiber Attenuation and Communication Windows}
+Attenuation measures signal power loss over distance $L$:
+\begin{equation}
+\alpha_{\text{dB/km}} = \frac{10}{L\text{ (km)}} \log_{10}\left(\frac{P_{\text{in}}}{P_{\text{out}}}\right) \iff P_{\text{out}} = P_{\text{in}} \cdot 10^{-\alpha L / 10}
+\end{equation}
+\subsection{Physical Loss Mechanisms}
+\begin{enumerate}[itemsep=2pt]
+    \item \textbf{Rayleigh Scattering:} Inelastic scattering from microscopic compositional and density fluctuations frozen into the silica matrix during fiber drawing. Follows $\alpha_{\text{Rayleigh}} \propto \lambda^{-4}$.
+    \item \textbf{Infrared Vibrational Absorption:} Intrinsic $\text{Si-O}$ bond lattice vibrations absorb heavily at $\lambda > 1.6\text{ }\mu\text{m}$.
+    \item \textbf{Impurity Absorption ($\text{OH}^-$ ions):} Residual water vapor absorption peaks at $950\text{ nm}$, $1240\text{ nm}$, and $1383\text{ nm}$.
+\end{enumerate}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{l l l X}
+\toprule
+\textbf{Optical Window} & \textbf{Center $\lambda$} & \textbf{Attenuation} & \textbf{Dominant Engineering Role} \\
+\midrule
+\textbf{1st Window} & $850\text{ nm}$ & $\approx 2.5\text{ dB/km}$ & Low-cost LANs, short-reach VCSEL multimode links. \\
+\textbf{2nd Window} & $1310\text{ nm}$ & $\approx 0.35\text{ dB/km}$ & Zero chromatic dispersion; high-speed metro telecommunications. \\
+\textbf{3rd Window (C-Band)} & $1550\text{ nm}$ & $\approx 0.18\text{--}0.20\text{ dB/km}$ & Global minimum loss; Transoceanic submarine cables + EDFA DWDM networks. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}{Worked Example 3.1: Acceptance Angle, NA, and V-Number}
+\textbf{Problem:} A step-index silica fiber has core refractive index $n_1 = 1.480$, cladding index $n_2 = 1.460$, and core radius $a = 25\text{ }\mu\text{m}$. For light of wavelength $\lambda_0 = 1310\text{ nm}$: (a) Calculate the critical angle $\phi_c$, numerical aperture $\text{NA}$, and acceptance angle $\theta_a$. (b) Find the V-number and total number of guided modes.\\
+\textbf{Solution:}\\
+(a) Critical angle at core-cladding boundary:
+\[
+\phi_c = \arcsin\left(\frac{n_2}{n_1}\right) = \arcsin\left(\frac{1.460}{1.480}\right) = \arcsin(0.9865) = 80.57^\circ
+\]
+Numerical Aperture:
+\[
+\text{NA} = \sqrt{n_1^2 - n_2^2} = \sqrt{(1.480)^2 - (1.460)^2} = \sqrt{2.1904 - 2.1316} = \sqrt{0.0588} \approx 0.2425
+\]
+Acceptance angle in air ($n_0 = 1$):
+\[
+\theta_a = \arcsin(\text{NA}) = \arcsin(0.2425) \approx 14.03^\circ
+\]
+(b) V-number:
+\[
+V = \frac{2\pi a}{\lambda_0}\text{NA} = \frac{2\pi \times (25 \times 10^{-6}\text{ m})}{1.310 \times 10^{-6}\text{ m}} \times 0.2425 = 119.9 \times 0.2425 \approx 29.08
+\]
+Total number of guided modes in step-index fiber:
+\[
+M \approx \frac{V^2}{2} = \frac{(29.08)^2}{2} = \frac{845.65}{2} \approx 423\text{ modes}
+\]
+\end{examplebox}
+
+\begin{examplebox}{Worked Example 3.2: Fiber Link Budget and Power Attenuation}
+\textbf{Problem:} An optical communication link of length $L = 40\text{ km}$ operates at $1550\text{ nm}$ with fiber loss $\alpha = 0.22\text{ dB/km}$. If optical input power is $P_{\text{in}} = 5\text{ mW}$, find: (a) The total attenuation in dB, and (b) The received output power $P_{\text{out}}$ in $\mu\text{W}$ and $\text{dBm}$.\\
+\textbf{Solution:}\\
+(a) Total link attenuation:
+\[
+\text{Loss (dB)} = \alpha \times L = (0.22\text{ dB/km}) \times 40\text{ km} = 8.8\text{ dB}
+\]
+(b) Output power:
+\[
+P_{\text{out}} = P_{\text{in}} \times 10^{-\text{Loss}/10} = (5\text{ mW}) \times 10^{-0.88} = 5 \times 0.1318 = 0.659\text{ mW} = 659\text{ }\mu\text{W}
+\]
+In $\text{dBm}$:
+\[
+P_{\text{in(dBm)}} = 10\log_{10}(5\text{ mW} / 1\text{ mW}) = +6.99\text{ dBm}
+\]
+\[
+P_{\text{out(dBm)}} = +6.99\text{ dBm} - 8.8\text{ dB} = -1.81\text{ dBm}
+\]
+\end{examplebox}
+
+\section{Review Questions}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+    \item Derive the expression for numerical aperture and acceptance angle in an optical fiber from first principles.
+    \item Explain the physical differences between step-index and graded-index fibers. Why do graded-index fibers exhibit vastly lower modal dispersion?
+    \item Define normalized frequency ($V$). What is the condition for single-mode propagation?
+    \item Describe the three optical transmission windows and explain the physical mechanisms of attenuation in silica glass.
+\end{enumerate}

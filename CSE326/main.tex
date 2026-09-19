@@ -1,0 +1,62 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Web Development}
+\author{LPU Engineering Open}
+\date{Semester 1 \& 2 Study Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+
+\chapter*{Course Overview \& Pedagogical Roadmap}
+\addcontentsline{toc}{chapter}{Course Overview \& Pedagogical Roadmap}
+
+Welcome to \textbf{CSE326: Web Development}, the foundational internet technologies course designed for undergraduate engineering students. This textbook synthesizes the complete 6-unit academic curriculum into a rigorous, example-driven, and examination-oriented master study guide.
+
+\section*{Pedagogical Learning Progression}
+Every core web development concept throughout this book is taught using a 12-step engineering framework:
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Concept Definition}: What is the tag, property, function, or DOM method?
+    \item \textbf{Engineering Rationale}: Why is it used in web standards?
+    \item \textbf{Syntax Specification}: Formal syntax and attribute/parameter reference.
+    \item \textbf{Concrete Code Example}: Runnable, semantic HTML/CSS/JavaScript.
+    \item \textbf{Rendered Browser Output}: Exact terminal/browser rendering behavior.
+    \item \textbf{Line-by-Line Breakdown}: Granular analysis of every statement.
+    \item \textbf{Browser \& DOM Mental Model}: Visual tree structures and execution cycles.
+    \item \textbf{Practical Application}: Real-world engineering implementations.
+    \item \textbf{Common Student Mistakes}: Traps that cause silent rendering bugs or runtime exceptions.
+    \item \textbf{High-Yield Exam Traps}: University examination trick questions.
+    \item \textbf{Graded Practice Problems}: Multi-tier problem sets (Levels 1 to 4).
+    \item \textbf{Complete Worked Solutions}: Full scoring solutions with marking schemes.
+\end{enumerate}
+
+\cleardoublepage
+\tableofcontents
+
+% ==============================================================================
+% MAIN MATTER
+% ==============================================================================
+\mainmatter
+
+\include{chapters/chapter-01-fundamentals-of-html}
+\include{chapters/chapter-02-expanding-html-knowledge}
+\include{chapters/chapter-03-cascading-style-sheets}
+\include{chapters/chapter-04-javascript-application-development}
+\include{chapters/chapter-05-javascript-functions-events-validation}
+\include{chapters/chapter-06-javascript-dom}
+\include{chapters/chapter-07-master-web-cheatsheet}
+\include{chapters/chapter-08-practical-web-projects}
+\include{chapters/chapter-09-mock-examinations}
+
+\end{document}

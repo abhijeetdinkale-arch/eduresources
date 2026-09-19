@@ -1,0 +1,295 @@
+\chapter{Applications of Sequential Circuits: Registers \& Counters}
+\label{chap:sequential-applications}
+
+\section{Introduction}
+Registers and counters constitute the computational core of digital systems. While registers store and spatially/temporally transform binary words, counters generate deterministic numerical sequences, divide clock frequencies, and orchestrate microprocessor instruction cycles.
+
+---
+
+\section{Shift Registers}
+An $N$-bit register consists of $N$ cascaded flip-flops capable of storing an $N$-bit binary word. A **Shift Register** is capable of shifting binary data laterally (left or right) upon successive clock pulses.
+
+\subsection{The Four Primary Shift Register Topologies}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % 4 D-FFs for SISO
+    \foreach \x in {0, 2.8, 5.6, 8.4} {
+        \draw[fill=boxnavybg, draw=brandnavy, line width=1.2pt, rounded corners=3pt] (\x, 0) rectangle (\x+1.8, 2.2);
+        \node at (\x+0.9, 1.1) [font=\footnotesize\bfseries\color{brandnavy}] {D-FF};
+        \node at (\x+0.3, 1.7) [font=\tiny] {D};
+        \node at (\x+1.5, 1.7) [font=\tiny] {Q};
+        \node at (\x+0.3, 0.4) [font=\tiny] {$>$};
+    }
+    % Interconnections
+    \draw[->, >=Stealth, thick] (-1.0, 1.7) node[left, font=\small\bfseries] {Serial Data In} -- (0, 1.7);
+    \draw[->, >=Stealth, thick] (1.8, 1.7) -- (2.8, 1.7);
+    \draw[->, >=Stealth, thick] (4.6, 1.7) -- (5.6, 1.7);
+    \draw[->, >=Stealth, thick] (7.4, 1.7) -- (8.4, 1.7);
+    \draw[->, >=Stealth, thick] (10.2, 1.7) -- ++(1.0,0) node[right, font=\small\bfseries] {Serial Data Out};
+
+    % Common Clock
+    \draw[->, >=Stealth, line width=1.2pt, brandpurple] (-0.8, -0.6) node[left] {$CLK$} -- (9.0, -0.6);
+    \foreach \x in {0.3, 3.1, 5.9, 8.7} {
+        \draw[line width=1.2pt, brandpurple] (\x, -0.6) -- (\x, 0.4);
+    }
+\end{tikzpicture}
+\caption{4-bit Serial-In Serial-Out (SISO) Shift Register schematic using D Flip-Flops.}
+\label{fig:siso-register}
+\end{figure}
+
+\subsubsection{1. Serial-In Serial-Out (SISO)}
+\begin{itemize}
+    \item \textbf{Data Entry:} Single bit per clock cycle via a single input line.
+    \item \textbf{Data Retrieval:} Single bit per clock cycle via the last flip-flop's output.
+    \item \textbf{Timing Overhead:} For an $N$-bit word, it requires **$N$ clock pulses to fully load** and an additional **$N$ clock pulses to shift out**.
+\end{itemize}
+
+\subsubsection{2. Serial-In Parallel-Out (SIPO)}
+\begin{itemize}
+    \item \textbf{Data Entry:} Serial bit stream into the first stage.
+    \item \textbf{Data Retrieval:} All $N$ bits are accessed simultaneously across parallel output pins ($Q_0, Q_1, \dots, Q_{N-1}$).
+    \item \textbf{Application:} Serial-to-Parallel digital communications (e.g., UART receiver, SPI slave shift registers).
+\end{itemize}
+
+\subsubsection{3. Parallel-In Serial-Out (PISO)}
+\begin{itemize}
+    \item \textbf{Data Entry:} Loaded simultaneously onto all flip-flops using combinational steering gates controlled by a **Shift/$\overline{\text{Load}}$** signal.
+    \item \textbf{Data Retrieval:} Shifted out serially one bit per clock cycle.
+    \item \textbf{Application:} Parallel-to-Serial conversion (e.g., converting microprocessor data bus bytes into serial USB/UART transmissions).
+\end{itemize}
+
+\subsubsection{4. Parallel-In Parallel-Out (PIPO)}
+\begin{itemize}
+    \item \textbf{Data Entry \& Retrieval:} All bits are loaded in parallel and read out in parallel.
+    \item \textbf{Timing Overhead:} Requires only **1 clock pulse** to store and update the entire $N$-bit register word.
+    \item \textbf{Application:} General-purpose CPU data buffer registers and memory latch stages.
+\end{itemize}
+
+---
+
+\section{Binary Counters}
+A counter is a sequential state machine that transitions through a predefined sequence of binary states upon receiving clock pulses.
+
+\begin{definition}[Counter Modulus (MOD-N)]
+The modulus of a counter is the total number of unique states it cycles through before repeating its sequence. An $n$-flip-flop counter has a maximum modulus of $\text{MOD-}2^n$.
+\end{definition}
+
+\subsection{Asynchronous (Ripple) Counters}
+In an Asynchronous Counter, the external clock signal is applied **only to the first (LSB) flip-flop**. Each subsequent flip-flop is clocked by the output transition of the preceding stage.
+
+\subsubsection{1. 3-Bit Asynchronous Ripple UP Counter}
+\begin{itemize}
+    \item \textbf{Construction:} 3 JK (or T) flip-flops with $J = K = 1$ (toggle mode).
+    \item \textbf{Clocking Rule:} Negative-edge-triggered ($\downarrow$) flip-flops clocked from the **True Output ($Q$)** of the preceding stage count in **UP mode** ($0 \rightarrow 1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5 \rightarrow 6 \rightarrow 7 \rightarrow 0$).
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % FF0
+    \draw (0,0) node[flipflop JK, scale=0.8] (ff0) {$\text{FF}_0$};
+    \node at (ff0.bpin 1) [font=\tiny] {J};
+    \node at (ff0.bpin 3) [font=\tiny] {K};
+    \node at (ff0.bpin 2) [font=\tiny] {$>$};
+    
+    % FF1
+    \draw (4,0) node[flipflop JK, scale=0.8] (ff1) {$\text{FF}_1$};
+    
+    % FF2
+    \draw (8,0) node[flipflop JK, scale=0.8] (ff2) {$\text{FF}_2$};
+    
+    % Logic 1 tied to all J, K
+    \draw (-1.5, 1.2) node[above] {$V_{CC} (\mathbf{1})$} -- (0.8, 1.2);
+    
+    % External Clock
+    \draw (-1.5, 0) node[left] {$CLK$} -- (ff0.bpin 2);
+    
+    % Ripple clock connections
+    \draw (ff0.bpin 6) -- ++(0.5,0) -- ++(0,-1.0) -| (ff1.bpin 2) node[pos=0.2, above, font=\scriptsize] {$Q_0$};
+    \draw (ff1.bpin 6) -- ++(0.5,0) -- ++(0,-1.0) -| (ff2.bpin 2) node[pos=0.2, above, font=\scriptsize] {$Q_1$};
+    
+    % Outputs
+    \draw (ff0.bpin 6) -- ++(0.5,0) -- ++(0,1.2) node[above, font=\bfseries] {$Q_0\text{ (LSB)}$};
+    \draw (ff1.bpin 6) -- ++(0.5,0) -- ++(0,1.2) node[above, font=\bfseries] {$Q_1$};
+    \draw (ff2.bpin 6) -- ++(0.8,0) node[right, font=\bfseries] {$Q_2\text{ (MSB)}$};
+\end{circuitikz}
+\caption{Logic circuit of a 3-Bit Asynchronous (Ripple) UP Counter.}
+\label{fig:async-up-counter}
+\end{figure}
+
+\subsubsection{2. Asynchronous DOWN Counter}
+\begin{itemize}
+    \item Clocking negative-edge-triggered flip-flops from the **Inverted Output ($\overline{Q}$)** of the preceding stage results in a **DOWN Counter** ($7 \rightarrow 6 \rightarrow 5 \rightarrow 4 \rightarrow 3 \rightarrow 2 \rightarrow 1 \rightarrow 0 \rightarrow 7$).
+\end{itemize}
+
+\subsubsection{3. Truncated Modulo-$N$ Asynchronous Counters}
+To design a counter with modulus $N < 2^n$ (such as a **MOD-10 Decade / BCD Counter**):
+\begin{enumerate}
+    \item Determine required flip-flops: $2^n \ge N \implies 2^4 \ge 10 \implies n = 4$.
+    \item Identify the binary state $N$ where the counter must reset: $10_{10} = 1010_2$ ($Q_3 = 1, Q_2 = 0, Q_1 = 1, Q_0 = 0$).
+    \item Connect $Q_3$ and $Q_1$ to a **2-input NAND gate**, and feed its output to the active-low **$\overline{\text{CLR}}$ (Clear)** inputs of all four flip-flops.
+    \item When count reaches $1010_2$, the NAND output goes LOW, immediately forcing all flip-flops back to $0000_2$.
+\end{enumerate}
+
+\begin{commonmistake}[Cumulative Propagation Delay in Ripple Counters]
+In an $N$-bit ripple counter, each flip-flop introduces a propagation delay $t_{pd}$. The total time required for all bits to settle is $T_{total} = N \cdot t_{pd}$. To ensure correct counting without spurious output glitches:
+\begin{equation}
+    T_{clock} \ge N \cdot t_{pd} \implies f_{max} \le \frac{1}{N \cdot t_{pd}}
+\end{equation}
+For high-frequency counting, **Synchronous Counters** must be used instead.
+\end{commonmistake}
+
+---
+
+\section{Synchronous Counters}
+In a **Synchronous Counter**, the master clock pulse is applied simultaneously to the clock inputs of all flip-flops, eliminating cumulative ripple delay.
+
+\subsection{3-Bit Synchronous UP Counter}
+\begin{itemize}
+    \item \textbf{Toggle Logic:} A stage toggles on clock pulse only if **all previous lower-order bits are $1$**.
+    \begin{align*}
+        T_0 &= 1 \quad (\text{FF}_0 \text{ toggles on every clock cycle}) \\
+        T_1 &= Q_0 \quad (\text{FF}_1 \text{ toggles when } Q_0 = 1) \\
+        T_2 &= Q_0 \cdot Q_1 \quad (\text{FF}_2 \text{ toggles when both } Q_0 = 1 \text{ and } Q_1 = 1)
+    \end{align*}
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.85, transform shape]
+    % FFs
+    \draw (0,0) node[flipflop T, scale=0.8] (t0) {$\text{FF}_0$};
+    \draw (4,0) node[flipflop T, scale=0.8] (t1) {$\text{FF}_1$};
+    \draw (8,0) node[flipflop T, scale=0.8] (t2) {$\text{FF}_2$};
+    
+    % T inputs
+    \draw (t0.bpin 1) -- ++(-0.5,0) node[left] {$\mathbf{1}\text{ (5V)}$};
+    \draw (t0.bpin 6) -- (t1.bpin 1) node[midway, above, font=\scriptsize] {$Q_0$};
+    
+    % AND gate for T2
+    \node (and1) at (6.5, 0.8) [and gate US, draw, logic gate inputs=nn, scale=0.8] {};
+    \draw (t0.bpin 6) ++(0.5,0) node[circ] {} |- (and1.input 1);
+    \draw (t1.bpin 6) ++(0.5,0) node[circ] {} |- (and1.input 2);
+    \draw (and1.output) -- (t2.bpin 1);
+    
+    % Common Clock Line
+    \draw[line width=1.2pt, brandpurple] (-1,-1.5) node[left] {$CLK$} -- (8.3,-1.5);
+    \draw[->, >=Stealth, line width=1.2pt, brandpurple] (0.3,-1.5) -- (t0.bpin 2);
+    \draw[->, >=Stealth, line width=1.2pt, brandpurple] (4.3,-1.5) -- (t1.bpin 2);
+    \draw[->, >=Stealth, line width=1.2pt, brandpurple] (8.3,-1.5) -- (t2.bpin 2);
+\end{circuitikz}
+\caption{Complete circuit schematic of a 3-Bit Synchronous Parallel UP Counter.}
+\label{fig:sync-up-counter}
+\end{figure}
+
+\begin{example}[Design of a Synchronous Mod-6 Counter using JK Flip-Flops]
+Design a Synchronous Counter that counts through the sequence: $0 \rightarrow 1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5 \rightarrow 0$ using JK Flip-Flops.
+
+\tcblower
+\textbf{Step 1: Determine Number of Flip-Flops}
+Number of states $N = 6 \implies 2^n \ge 6 \implies n = 3$ Flip-Flops ($Q_2, Q_1, Q_0$).
+Unused states: $6 (110_2)$ and $7 (111_2)$.
+
+\textbf{Step 2: State Table and JK Excitation Mapping}
+\begin{center}
+\small
+\begin{tabular}{ccc|ccc|cc|cc|cc}
+\toprule
+\multicolumn{3}{c|}{\textbf{Present State}} & \multicolumn{3}{c|}{\textbf{Next State}} & \multicolumn{2}{c|}{\textbf{$\text{FF}_2$}} & \multicolumn{2}{c|}{\textbf{$\text{FF}_1$}} & \multicolumn{2}{c}{\textbf{$\text{FF}_0$}} \\
+$Q_2$ & $Q_1$ & $Q_0$ & $Q_2^+$ & $Q_1^+$ & $Q_0^+$ & $J_2$ & $K_2$ & $J_1$ & $K_1$ & $J_0$ & $K_0$ \\
+\midrule
+0 & 0 & 0 & 0 & 0 & 1 & 0 & X & 0 & X & 1 & X \\
+0 & 0 & 1 & 0 & 1 & 0 & 0 & X & 1 & X & X & 1 \\
+0 & 1 & 0 & 0 & 1 & 1 & 0 & X & X & 0 & 1 & X \\
+0 & 1 & 1 & 1 & 0 & 0 & 1 & X & X & 1 & X & 1 \\
+1 & 0 & 0 & 1 & 0 & 1 & X & 0 & 0 & X & 1 & X \\
+1 & 0 & 1 & 0 & 0 & 0 & X & 1 & 0 & X & X & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 3: K-Map Simplifications (with Don't Cares at 6 and 7):}
+\begin{itemize}
+    \item For $\text{FF}_2$: $\mathbf{J_2 = Q_1 Q_0}, \quad \mathbf{K_2 = Q_0}$
+    \item For $\text{FF}_1$: $\mathbf{J_1 = \overline{Q}_2 Q_0}, \quad \mathbf{K_1 = Q_0}$
+    \item For $\text{FF}_0$: $\mathbf{J_0 = 1}, \quad \mathbf{K_0 = 1}$
+\end{itemize}
+
+\textbf{Step 4: Lock-Out / Self-Starting Verification}
+\begin{itemize}
+    \item \textbf{From Unused State $6 (110_2)$:}
+    \begin{align*}
+        J_2=0, K_2=0 &\implies Q_2^+ = 1 \\
+        J_1=0, K_1=0 &\implies Q_1^+ = 1 \\
+        J_0=1, K_0=1 &\implies Q_0^+ = 1 \implies \text{Next State is } \mathbf{7 \, (111_2)}
+    \end{align*}
+    \item \textbf{From Unused State $7 (111_2)$:}
+    \begin{align*}
+        J_2=1, K_2=1 &\implies Q_2^+ = 0 \\
+        J_1=0, K_1=1 &\implies Q_1^+ = 0 \\
+        J_0=1, K_0=1 &\implies Q_0^+ = 0 \implies \text{Next State is } \mathbf{0 \, (000_2)}
+    \end{align*}
+\end{itemize}
+The counter automatically recovers to the valid counting cycle within 2 clock pulses $\implies$ **Self-Starting Counter**.
+\end{example}
+
+---
+
+\section{Shift Register Counters (Ring \& Johnson Counters)}
+
+\subsection{Ring Counter}
+A Ring Counter is a circular shift register where the output of the final stage is fed directly to the input of the first stage ($Q_{\text{last}} \rightarrow D_{\text{first}}$).
+\begin{itemize}
+    \item **Modulus:** $\text{MOD-}N$ ($N$ total states for $N$ flip-flops).
+    \item **Initialization:** Must be preset with a single $\mathbf{1}$ (e.g., $1000_2$).
+    \item **Counting Cycle (4-bit):**
+    \begin{equation}
+        1000 \longrightarrow 0100 \longrightarrow 0010 \longrightarrow 0001 \longrightarrow 1000 \longrightarrow \cdots
+    \end{equation}
+    \item **Decoding:** Inherent (each flip-flop output directly indicates a specific sequence state without external decoding gates).
+\end{itemize}
+
+\subsection{Johnson (Twisted Ring) Counter}
+A Johnson Counter connects the **inverted output** of the final stage to the input of the first stage ($\overline{Q}_{\text{last}} \rightarrow D_{\text{first}}$).
+\begin{itemize}
+    \item **Modulus:** $\text{MOD-}2N$ ($2N$ total states for $N$ flip-flops).
+    \item **Initialization:** Typically cleared to all zeros ($0000_2$).
+    \item **Counting Cycle (4-bit, 8 States):**
+    \begin{equation}
+        0000 \rightarrow 1000 \rightarrow 1100 \rightarrow 1110 \rightarrow 1111 \rightarrow 0111 \rightarrow 0011 \rightarrow 0001 \rightarrow 0000
+    \end{equation}
+    \item **Decoding:** Decoded using simple 2-input AND gates ($S_0 = \bar{Q}_3\bar{Q}_0, S_1 = Q_0\bar{Q}_1, \dots$).
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Counter Feature} & \textbf{Standard Binary Counter} & \textbf{Ring Counter} & \textbf{Johnson Counter} \\
+\midrule
+\textbf{Number of States} & $2^N$ & $N$ & $2N$ \\
+\textbf{Clock Synchronization} & Asynchronous or Synchronous & Synchronous & Synchronous \\
+\textbf{Decoding Logic} & $N$-input AND gates & None (Direct outputs) & 2-input AND gates \\
+\textbf{Unused States (4-bit)} & 0 & 12 unused states & 8 unused states \\
+\textbf{Primary Applications} & Arithmetic counting, timebases & Multiphase clocking, stepper motors & Frequency synthesis, timing generators \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison of Counter Architectures.}
+\label{tab:counter-comparison}
+\end{table}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 6 Takeaways]
+\begin{itemize}
+    \item \textbf{Shift Register Topologies:} SISO ($N$ in, $N$ out), SIPO (serial to parallel), PISO (parallel to serial), PIPO (instantaneous 1-clock buffer).
+    \item \textbf{Ripple Counters:} Asynchronous clocking; simple hardware but limited by cumulative propagation delay ($f_{max} \le \frac{1}{N \cdot t_{pd}}$).
+    \item \textbf{Synchronous Counters:} Clock connected to all flip-flops simultaneously; high operating speed.
+    \item \textbf{Ring Counter:} $N$ flip-flops $\implies N$ states; circular shift of a single bit $\mathbf{1}$.
+    \item \textbf{Johnson Counter:} $N$ flip-flops $\implies 2N$ states; inverted feedback from $\bar{Q}_{last}$ to $D_{first}$.
+\end{itemize}
+\end{quickrevision}

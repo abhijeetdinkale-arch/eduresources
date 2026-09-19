@@ -1,0 +1,985 @@
+\chapter{File Handling, Exception Handling \& Regular Expressions}
+\label{chap:files-exceptions-regex}
+
+% ==============================================================================
+% SECTION 6.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 6 Academic Scope \lpuBadge]
+Building robust software requires persistent data storage, graceful error recovery, and advanced text pattern analysis. This unit covers file input/output streams, the \texttt{with} context manager, CSV data manipulation using the standard \texttt{csv} library, directory operations via \texttt{os}, binary serialization via \texttt{pickle}, defensive exception architectures with custom user exceptions, and regular expressions pattern extraction and substitution (\texttt{re}).
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{File I/O Mechanics}: Read, write, and append text streams, manage file pointers with \texttt{tell()} and \texttt{seek()}, and ensure safe automatic closure.
+    \item \textbf{OS Directory Operations}: Interact with the operating system to create, list, and remove directories and files using the \texttt{os} module.
+    \item \textbf{CSV Processing \& Serialization}: Parse tabular data using \texttt{csv.reader}/\texttt{csv.DictWriter} and serialize Python objects with \texttt{pickle}.
+    \item \textbf{Exception Architecture}: Catch runtime errors with standard exceptions, utilize \texttt{else} and \texttt{finally} blocks, and raise custom user-defined exceptions.
+    \item \textbf{Regular Expressions}: Master regex metacharacters, capturing groups, lazy vs. greedy matching, compilation flags, and \texttt{re.sub()} replacement.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 6.2: FILE HANDLING
+% ==============================================================================
+\section{File Handling, OS Operations \& Serialization}
+
+Persistent data storage is essential for modern software. Programs must be able to write output that outlives the process itself, and read configuration files or datasets created previously. Python treats files as file objects (or streams) and provides built-in mechanisms to safely handle them.
+
+\subsection{File Modes, Encodings, and the \texttt{with} Context Manager}
+
+Before a file can be read or written, it must be opened using the built-in \texttt{open(filename, mode, encoding)} function. Python explicitly distinguishes between text files (which encode characters using formats like UTF-8) and binary files (which contain raw bytes like images or serialized objects). 
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{cl>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Mode Flag} & \textbf{Mode Name} & \textbf{Operational Behavior \& File Pointer Position} \\
+\midrule
+\texttt{'r'} & Read (Default) & Opens for reading; pointer at start; raises \texttt{FileNotFoundError} if missing. \\
+\texttt{'w'} & Write & Opens for writing; \textbf{truncates existing content} or creates new file. \\
+\texttt{'a'} & Append & Opens for writing; pointer at \textbf{end of file}; preserves existing data. \\
+\texttt{'r+'} & Read \& Write & Opens for both reading and writing; pointer at start. \\
+\texttt{'w+'} & Write \& Read & Opens for reading/writing; \textbf{truncates} file or creates a new one. \\
+\texttt{'a+'} & Append \& Read & Opens for reading/writing; pointer at end of file. \\
+\texttt{'wb'} / \texttt{'rb'} & Binary I/O & Raw byte stream mode used for images, compiled files, and \texttt{pickle} data. \\
+\bottomrule
+\end{tabularx}
+\caption{Standard Python File Access Modes.}
+\label{tab:file-modes}
+\end{table}
+
+The explicit \texttt{encoding='utf-8'} parameter ensures your files correctly handle special characters and international text regardless of the operating system's default encoding. 
+
+To prevent memory leaks and file lock issues, we use the \texttt{with} statement, known as a \textbf{context manager}. It guarantees that the file is closed automatically as soon as the block of code finishes execution, even if an error occurs.
+
+\begin{pythoncode}{Writing and Appending to Files with Context Manager}
+# Using 'with' ensures the file is closed automatically
+# Using encoding='utf-8' is a best practice for text files
+with open("students.txt", "w", encoding="utf-8") as f:
+    f.write("Registration Number,Name,Marks\n")
+    f.write("123001,Ananya,92\n")
+    f.write("123002,Karan,88\n")
+
+# Appending a new record without destroying previous data
+with open("students.txt", "a", encoding="utf-8") as f:
+    f.write("123003,Deepika,95\n")
+
+print("File written and closed successfully.")
+\end{pythoncode}
+\begin{outputbox}
+File written and closed successfully.
+\end{outputbox}
+
+\subsection{Reading Techniques from Files}
+
+Once a file contains data, we can read it back into Python variables. Python offers several reading mechanisms depending on the file's size and memory constraints. 
+
+Using \texttt{read()} loads the entire file at once, which is fine for small configuration files but disastrous for multi-gigabyte log files. \texttt{readlines()} loads everything into a list of strings. The most robust approach is \textbf{line-by-line iteration}, which fetches only one line into memory at a time.
+
+\begin{pythoncode}{Three Methods to Read File Content}
+# Method 1: read() -> Reads entire file into a single string
+with open("students.txt", "r", encoding="utf-8") as f:
+    full_text = f.read()
+    print("--- full read() ---\n" + full_text)
+
+# Method 2: readlines() -> Reads into a list of line strings
+with open("students.txt", "r", encoding="utf-8") as f:
+    lines_list = f.readlines()
+    print("--- readlines() List ---")
+    print(lines_list)
+    print()
+
+# Method 3: Line-by-Line Iteration (Memory Efficient)
+with open("students.txt", "r", encoding="utf-8") as f:
+    print("--- Line Iteration ---")
+    for line_num, line in enumerate(f, start=1):
+        print(f"Line {line_num}: {line.strip()}")
+\end{pythoncode}
+\begin{outputbox}
+--- full read() ---
+Registration Number,Name,Marks
+123001,Ananya,92
+123002,Karan,88
+123003,Deepika,95
+
+--- readlines() List ---
+['Registration Number,Name,Marks\n', '123001,Ananya,92\n', '123002,Karan,88\n', '123003,Deepika,95\n']
+
+--- Line Iteration ---
+Line 1: Registration Number,Name,Marks
+Line 2: 123001,Ananya,92
+Line 3: 123002,Karan,88
+Line 4: 123003,Deepika,95
+\end{outputbox}
+
+\subsection{File Pointer Mechanics: \texttt{seek()} and \texttt{tell()}}
+
+When a file is opened, the operating system maintains a \textbf{file pointer} (or cursor) indicating the current byte position. \texttt{tell()} returns the current position, while \texttt{seek(offset, whence)} moves the pointer to a specific location.
+
+The \texttt{whence} argument determines the reference point:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{0} (default): Absolute file positioning (start of file).
+    \item \texttt{1}: Relative to current position (only supported for binary mode).
+    \item \texttt{2}: Relative to end of file (only supported for binary mode).
+\end{itemize}
+
+\begin{pythoncode}{Manipulating the File Pointer}
+# Create a dummy file
+with open("seek_demo.txt", "w") as f:
+    f.write("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+with open("seek_demo.txt", "r") as f:
+    print(f"Initial position: {f.tell()}")
+    first_char = f.read(1)
+    print(f"Read character: '{first_char}'")
+    print(f"Position after reading 1 byte: {f.tell()}")
+    
+    # Jump to the 5th byte (index 5 -> 'F')
+    f.seek(5)
+    print(f"\nJumped to position: {f.tell()}")
+    print(f"Read from index 5: '{f.read(3)}'")
+    
+    # Reset to start
+    f.seek(0)
+    print(f"\nReset to start: {f.tell()}")
+    print(f"Read: '{f.read(4)}'")
+\end{pythoncode}
+\begin{outputbox}
+Initial position: 0
+Read character: 'A'
+Position after reading 1 byte: 1
+
+Jumped to position: 5
+Read from index 5: 'FGH'
+
+Reset to start: 0
+Read: 'ABCD'
+\end{outputbox}
+
+\subsection{Directory and Path Operations (\texttt{os} Module)}
+
+Interacting with the file system requires navigating directories, checking for file existence, and cleaning up old files. The built-in \texttt{os} module provides platform-independent ways to interact with the underlying operating system.
+
+It is critical to use \texttt{os.path.join()} rather than manually concatenating paths with slashes (\texttt{/}), as Windows uses backslashes (\texttt{\textbackslash}) while macOS/Linux use forward slashes.
+
+\begin{pythoncode}{Using the OS Module for Directory Management}
+import os
+
+print("1. Current Directory:", os.getcwd())
+
+# Creating a new directory
+dir_name = "test_workspace"
+if not os.path.exists(dir_name):
+    os.mkdir(dir_name)
+    print(f"2. Created directory '{dir_name}'")
+
+# Joining paths safely across operating systems
+file_path = os.path.join(dir_name, "temp.txt")
+print("3. Safely joined path:", file_path)
+
+# Write a dummy file to the directory
+with open(file_path, "w") as f:
+    f.write("Temporary content")
+
+# Listing directory contents
+print("4. Directory contents:", os.listdir(dir_name))
+
+# Clean up files and directories
+os.remove(file_path)
+os.rmdir(dir_name)
+print("5. Cleaned up workspace.")
+\end{pythoncode}
+\begin{outputbox}
+1. Current Directory: /Users/abhidinkale/workspace
+2. Created directory 'test_workspace'
+3. Safely joined path: test_workspace/temp.txt
+4. Directory contents: ['temp.txt']
+5. Cleaned up workspace.
+\end{outputbox}
+
+\subsection{Tabular CSV File Processing}
+
+Comma-Separated Values (CSV) files are the universal format for simple tabular data. The \texttt{csv} module handles the complex parsing rules around delimiters and embedded quotes. Using \texttt{csv.DictReader} maps each row to a dictionary, allowing access via header names instead of integer indexes.
+
+\begin{pythoncode}{Reading and Writing CSV Files}
+import csv
+
+records = [
+    {"roll": 101, "name": "Aarav", "gpa": 9.2},
+    {"roll": 102, "name": "Sneha", "gpa": 8.8}
+]
+
+# Write records as CSV
+with open("academic.csv", "w", newline="", encoding="utf-8") as csvfile:
+    fieldnames = ["roll", "name", "gpa"]
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(records)
+
+# Read and display CSV
+with open("academic.csv", "r", encoding="utf-8") as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        print(f"Student: {row['name']} | GPA: {row['gpa']}")
+\end{pythoncode}
+\begin{outputbox}
+Student: Aarav | GPA: 9.2
+Student: Sneha | GPA: 8.8
+\end{outputbox}
+
+\subsection{Binary Object Serialization (\texttt{pickle} Module)}
+
+Sometimes we need to save complex Python data structures (like dictionaries containing lists) precisely as they are, without converting them to text. \textbf{Serialization} transforms a Python object into a binary byte stream that can be stored on disk. \textbf{Deserialization} recreates the object in memory.
+
+\begin{commonmistake}[The Pickle Security Vulnerability]
+Never unpickle data received from an untrusted or unauthenticated source! The \texttt{pickle} format can execute arbitrary malicious code during the deserialization phase. If you need to accept data across a network, use \texttt{json} instead.
+\end{commonmistake}
+
+\begin{pythoncode}{Pickling and Unpickling Complex Objects}
+import pickle
+
+student_records = {
+    101: {"name": "Siddharth", "courses": ["INT108", "MTH165", "CSE111"]},
+    102: {"name": "Meera", "courses": ["INT108", "PHY101"]}
+}
+
+# 1. Pickling (Serialization) -> Requires 'wb' mode
+with open("student_db.pkl", "wb") as file:
+    pickle.dump(student_records, file)
+print("Data serialized to student_db.pkl")
+
+# 2. Unpickling (Deserialization) -> Requires 'rb' mode
+with open("student_db.pkl", "rb") as file:
+    loaded_data = pickle.load(file)
+
+print("Loaded Student 101 Courses:", loaded_data[101]["courses"])
+\end{pythoncode}
+\begin{outputbox}
+Data serialized to student_db.pkl
+Loaded Student 101 Courses: ['INT108', 'MTH165', 'CSE111']
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 6.3: EXCEPTION HANDLING
+% ==============================================================================
+\section{Exception Handling Architecture}
+
+Even perfectly logic-tested code encounters errors: missing files, network drops, or users entering text when asked for a number. If unhandled, these \textbf{Exceptions} crash the program. Exception handling allows the program to intercept these runtime errors and execute recovery strategies.
+
+\subsection{Standard Built-In Exceptions \& The Exception Hierarchy}
+
+Python organizes exceptions in a class hierarchy. Catching a parent exception catches all its children.
+
+\begin{conceptbox}[Python Core Exception Hierarchy]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{BaseException}}: Root of all exceptions.
+    \begin{itemize}
+        \item \textbf{\texttt{Exception}}: Base class for all non-exit, regular exceptions.
+        \begin{itemize}
+            \item \textbf{\texttt{ArithmeticError}}: Math-related errors.
+            \begin{itemize}
+                \item \textbf{\texttt{ZeroDivisionError}}: Attempted division by zero.
+            \end{itemize}
+            \item \textbf{\texttt{LookupError}}: Invalid indexing/keys.
+            \begin{itemize}
+                \item \textbf{\texttt{IndexError}}: Sequence index out of range.
+                \item \textbf{\texttt{KeyError}}: Dictionary key missing.
+            \end{itemize}
+            \item \textbf{\texttt{OSError}}: Operating system level errors.
+            \begin{itemize}
+                \item \textbf{\texttt{FileNotFoundError}}: File or directory not found.
+            \end{itemize}
+            \item \textbf{\texttt{ValueError}}: Right type, but inappropriate value (e.g., \texttt{int('A')}).
+            \item \textbf{\texttt{TypeError}}: Operation applied to incorrect type (e.g., \texttt{1 + '1'}).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{conceptbox}
+
+\subsection{Basic Try-Except and Multiple Except Clauses}
+
+The most fundamental structure is the \texttt{try-except} block. The code inside \texttt{try} is monitored. If it fails, execution jumps to the \texttt{except} block. It's best practice to handle different exceptions explicitly using multiple \texttt{except} blocks and capture the error message using the \texttt{as e} alias.
+
+\begin{pythoncode}{Handling Input Errors and Multiple Exceptions}
+def get_user_data():
+    try:
+        user_input = "25a" # Simulated bad user input
+        print(f"Trying to convert '{user_input}' to integer...")
+        age = int(user_input)
+        
+        # This will not execute if the line above fails
+        calculation = 100 / age
+        
+    except ValueError as e:
+        print(f"ValueError Caught! You must enter a number. Details: {e}")
+    except ZeroDivisionError as e:
+        print(f"ZeroDivisionError Caught! Age cannot be zero. Details: {e}")
+    except Exception as e:
+        # A catch-all for any other unanticipated exception
+        print(f"An unexpected error occurred: {e}")
+
+get_user_data()
+\end{pythoncode}
+\begin{outputbox}
+Trying to convert '25a' to integer...
+ValueError Caught! You must enter a number. Details: invalid literal for int() with base 10: '25a'
+\end{outputbox}
+
+\subsection{The Complete \texttt{try-except-else-finally} Architecture}
+
+A professional exception handling architecture often requires \texttt{else} and \texttt{finally} blocks.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, auto, >=Stealth]
+    \node [draw=pyblue, fill=pyblue!10, rectangle, rounded corners, minimum width=4cm, minimum height=0.9cm, font=\small\bfseries] (try) {\texttt{try} block};
+    \node [draw=pyred, fill=red!10, rectangle, rounded corners, minimum width=3.5cm, minimum height=0.9cm, below left=1.2cm and 0.5cm of try, font=\small\bfseries] (except) {\texttt{except} block};
+    \node [draw=pygreen, fill=green!10, rectangle, rounded corners, minimum width=3.5cm, minimum height=0.9cm, below right=1.2cm and 0.5cm of try, font=\small\bfseries] (else) {\texttt{else} block};
+    \node [draw=pypurple, fill=purple!10, rectangle, rounded corners, minimum width=5cm, minimum height=0.9cm, below=3.2cm of try, font=\small\bfseries] (finally) {\texttt{finally} block (Always Runs)};
+
+    \draw [->, thick, pyred] (try) -| node[left, font=\footnotesize] {Exception Raised} (except);
+    \draw [->, thick, pygreen] (try) -| node[right, font=\footnotesize] {No Exception} (else);
+    \draw [->, thick, pypurple] (except) |- (finally);
+    \draw [->, thick, pypurple] (else) |- (finally);
+\end{tikzpicture}
+\caption{Execution Routing in \texttt{try-except-else-finally} Blocks.}
+\label{fig:exception-flow}
+\end{figure}
+
+The \texttt{else} block strictly executes only if \textbf{no exception} occurred in the \texttt{try} block. It keeps the \texttt{try} block minimal, holding only the specific line prone to error. The \texttt{finally} block is for guaranteed execution—used primarily to release resources (like closing network sockets).
+
+\begin{pythoncode}{Complete Exception Flow with File Parsing}
+def process_data_file(filename):
+    f = None
+    try:
+        print("1. Opening file...")
+        f = open(filename, "r")
+        data = f.read()
+    except FileNotFoundError:
+        print("2. Exception: The file was not found on the disk!")
+    else:
+        print("3. Else: Read successful! Processing data:", len(data), "bytes.")
+    finally:
+        print("4. Finally: Executing cleanup tasks...")
+        if f is not None and not f.closed:
+            f.close()
+            print("   -> File stream closed safely.")
+
+# Testing with a non-existent file
+process_data_file("missing_data.txt")
+\end{pythoncode}
+\begin{outputbox}
+1. Opening file...
+2. Exception: The file was not found on the disk!
+4. Finally: Executing cleanup tasks...
+\end{outputbox}
+
+\subsection{Custom User-Defined Exceptions and Propagation}
+
+Sometimes standard exceptions like \texttt{ValueError} are too generic. We can create \textbf{User-Defined Exceptions} by inheriting from the base \texttt{Exception} class. The \texttt{raise} keyword is used to actively trigger these errors when business logic rules are violated.
+
+When an exception is raised inside a function, it \textbf{propagates} up the call stack to the caller. If the caller doesn't catch it, it propagates higher until it crashes the program.
+
+\begin{pythoncode}{Custom Exceptions and Call Stack Propagation}
+class NegativeAgeError(Exception):
+    """Raised when a biologically impossible age is provided."""
+    def __init__(self, age, message="Age cannot be negative"):
+        self.age = age
+        self.message = message
+        super().__init__(f"{message}: {age}")
+
+def validate_voter_age(age):
+    if age < 0:
+        raise NegativeAgeError(age)
+    elif age < 18:
+        print("Ineligible to vote.")
+    else:
+        print("Eligible to vote.")
+
+try:
+    print("Initiating voter check...")
+    validate_voter_age(-5)
+    print("This line will not print.")
+except NegativeAgeError as err:
+    print(f"Validation Failed! Caught Custom Exception: {err}")
+\end{pythoncode}
+\begin{outputbox}
+Initiating voter check...
+Validation Failed! Caught Custom Exception: Age cannot be negative: -5
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 6.4: REGULAR EXPRESSIONS
+% ==============================================================================
+\section{Regular Expressions (Pattern Matching with \texttt{re})}
+
+A \textbf{Regular Expression (RegEx)} is a declarative sequence of characters that defines a search pattern. Instead of writing dozens of \texttt{if} statements to check if a string "looks like" a phone number, you define a regex blueprint. 
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{cl>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Symbol} & \textbf{Classification} & \textbf{Matching Rule} & \textbf{Example} \\
+\midrule
+\texttt{.} & Metacharacter & Matches any single character except newline & \texttt{h.t} matches \texttt{hat}, \texttt{hot} \\
+\texttt{\textasciicircum} & Metacharacter & Matches start of string & \texttt{\textasciicircum Python} \\
+\texttt{\$} & Metacharacter & Matches end of string & \texttt{end\$} \\
+\texttt{*} & Quantifier & Zero or more repetitions of preceding item & \texttt{ab*c} matches \texttt{ac}, \texttt{abc}, \texttt{abbbc} \\
+\texttt{+} & Quantifier & One or more repetitions of preceding item & \texttt{ab+c} matches \texttt{abc}, \texttt{abbbc} \\
+\texttt{?} & Quantifier & Zero or one repetition (optional item) & \texttt{colou?r} matches \texttt{color}, \texttt{colour} \\
+\texttt{[a-z]} & Character Set & Matches any character within range & \texttt{[0-9]} matches any single digit \\
+\texttt{\textbackslash d} & Special Seq. & Matches any decimal digit ($[0-9]$) & \texttt{\textbackslash d\{3\}} matches 3 digits \\
+\texttt{\textbackslash w} & Special Seq. & Matches any word character ($[a-zA-Z0-9\_]$) & \texttt{\textbackslash w+} \\
+\texttt{\textbackslash s} & Special Seq. & Matches whitespace (space, tab, newline) & \texttt{\textbackslash s+} \\
+\bottomrule
+\end{tabularx}
+\caption{Regular Expression Metacharacters and Special Sequences.}
+\label{tab:regex-symbols}
+\end{table}
+
+\subsection{Core Functions: Match, Search, and Findall}
+
+Python's \texttt{re} module drives the regex engine. 
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{re.match()}: Looks for a match \textbf{only at the exact beginning} (index 0) of the string.
+    \item \texttt{re.search()}: Scans through the string to find the \textbf{first occurrence} anywhere.
+    \item \texttt{re.findall()}: Returns a \textbf{list of all non-overlapping matches}.
+\end{itemize}
+
+\begin{pythoncode}{Applying Core RegEx Functions}
+import re
+
+text = "The error 404 means the file was not found. Code 500 means server error."
+
+# re.match checks index 0 only
+match_obj = re.match(r"\d+", text)
+print("1. match() for digits at start:", match_obj)
+
+# re.search scans the whole string for the first match
+search_obj = re.search(r"\d+", text)
+print("2. search() for first digits:", search_obj.group() if search_obj else None)
+
+# re.findall extracts all occurrences
+all_digits = re.findall(r"\d+", text)
+print("3. findall() for all digits:", all_digits)
+\end{pythoncode}
+\begin{outputbox}
+1. match() for digits at start: None
+2. search() for first digits: 404
+3. findall() for all digits: ['404', '500']
+\end{outputbox}
+
+\subsection{RegEx Compilation Flags}
+
+Flags modify how the pattern engine interprets characters. \texttt{re.IGNORECASE} makes matching case-insensitive. \texttt{re.MULTILINE} causes \texttt{\textasciicircum} and \texttt{\$} to match the start/end of \textit{each line} rather than the whole string. \texttt{re.DOTALL} allows the \texttt{.} wildcard to match newline characters (\texttt{\textbackslash n}).
+
+\begin{pythoncode}{Using RegEx Flags}
+import re
+
+text = "PYTHON is fun.\npython is powerful."
+
+# Without flag, case matters
+matches1 = re.findall(r"python", text)
+print("Strict Match:", matches1)
+
+# With IGNORECASE flag
+matches2 = re.findall(r"python", text, re.IGNORECASE)
+print("Case-Insensitive Match:", matches2)
+\end{pythoncode}
+\begin{outputbox}
+Strict Match: ['python']
+Case-Insensitive Match: ['PYTHON', 'python']
+\end{outputbox}
+
+\subsection{Capturing Groups and Named Groups}
+
+Parentheses \texttt{()} define \textbf{Capturing Groups}. They allow us to extract specific subsets of a matched pattern. \textbf{Named Groups} \texttt{(?P<name>pattern)} assign a dictionary-like key to the capture, enhancing readability. \textbf{Non-capturing groups} \texttt{(?:...)} group elements for operators like \texttt{|} but omit them from the output list.
+
+\begin{pythoncode}{Capturing Sub-Patterns with Groups}
+import re
+
+log_entry = "User: alice | IP: 192.168.1.1"
+
+# Standard Groups
+pattern1 = r"User: (\w+) \| IP: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
+match1 = re.search(pattern1, log_entry)
+
+print("Full Match:", match1.group(0))
+print("Group 1 (Username):", match1.group(1))
+print("Group 2 (IP):", match1.group(2))
+
+# Named Groups
+pattern2 = r"User: (?P<username>\w+) \| IP: (?P<ipaddress>\S+)"
+match2 = re.search(pattern2, log_entry)
+print("\nNamed Group Dictionary:", match2.groupdict())
+\end{pythoncode}
+\begin{outputbox}
+Full Match: User: alice | IP: 192.168.1.1
+Group 1 (Username): alice
+Group 2 (IP): 192.168.1.1
+
+Named Group Dictionary: {'username': 'alice', 'ipaddress': '192.168.1.1'}
+\end{outputbox}
+
+\subsection{Greedy vs. Non-Greedy (Lazy) Quantifiers}
+
+By default, Python's regex quantifiers like \texttt{*} and \texttt{+} are \textbf{greedy}: they consume as much text as possible. Appending a question mark makes them \textbf{non-greedy (lazy)}: \texttt{*?}, \texttt{+?}, or \texttt{??}. This is critical when scraping HTML tags.
+
+\begin{pythoncode}{Greedy vs. Non-Greedy HTML Scraping}
+import re
+
+html_string = "<div>Hello</div> <div>World</div>"
+
+# Greedy match (matches from first <div to the LAST div>)
+greedy_match = re.findall(r"<div>.*</div>", html_string)
+print("Greedy Output:", greedy_match)
+
+# Non-Greedy/Lazy match (stops at the FIRST closing tag)
+lazy_match = re.findall(r"<div>.*?</div>", html_string)
+print("Lazy Output:", lazy_match)
+\end{pythoncode}
+\begin{outputbox}
+Greedy Output: ['<div>Hello</div> <div>World</div>']
+Lazy Output: ['<div>Hello</div>', '<div>World</div>']
+\end{outputbox}
+
+\subsection{\texttt{re.sub()} Pattern Replacement and Web Scraping}
+
+Regex isn't just for searching; it is a powerful tool for cleaning data. \texttt{re.sub(pattern, replacement, string)} replaces every occurrence of the pattern with the specified replacement text.
+
+\begin{pythoncode}{Pattern Substitution and Email Scraping}
+import re
+
+# 1. Pattern substitution: Masking sensitive credit card numbers
+card_text = "Transaction from Card: 4532-1234-5678-9012"
+masked_text = re.sub(r"\d{4}-\d{4}-\d{4}", "****-****-****", card_text)
+print("Masked Output:", masked_text)
+
+# 2. Extracting Emails from HTML
+html_sample = """
+<div>
+    <p>Contact admissions at admissions@lpu.co.in</p>
+    <p>Technical support: tech-help@lpuverto.xyz</p>
+</div>
+"""
+email_regex = r"[\w\.-]+@[\w\.-]+\.[a-zA-Z]+"
+emails = re.findall(email_regex, html_sample)
+print("Scraped Emails:", emails)
+\end{pythoncode}
+\begin{outputbox}
+Masked Output: Transaction from Card: ****-****-****-9012
+Scraped Emails: ['admissions@lpu.co.in', 'tech-help@lpuverto.xyz']
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 6.5: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 6 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Writing Non-Strings to Files}: \texttt{f.write(42)} raises a \texttt{TypeError}. You must convert values first: \texttt{f.write(str(42))}.
+    \item \textbf{Binary Mode for Pickling}: Pickling with \texttt{'w'} or \texttt{'r'} instead of \texttt{'wb'} or \texttt{'rb'} raises a runtime \texttt{TypeError}.
+    \item \textbf{\texttt{re.match} vs \texttt{re.search}}: \texttt{re.match} only looks at character index 0. If the pattern is at index 1, \texttt{match()} returns \texttt{None}.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 6.6: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Exception Flow and Finally Block Execution]
+\textbf{Question}: Predict the exact output:
+\begin{lstlisting}[language=Python3]
+def test_flow(x):
+    try:
+        val = 10 // x
+    except ZeroDivisionError:
+        print("Zero", end=" ")
+        return 0
+    else:
+        print("Success", end=" ")
+        return val
+    finally:
+        print("Finally", end=" ")
+
+print("| Call 1:", test_flow(2))
+print("| Call 2:", test_flow(0))
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{test\_flow(2)}: \texttt{try} succeeds $\to$ \texttt{else} prints \texttt{Success } $\to$ \texttt{finally} prints \texttt{Finally } $\to$ returns \texttt{5}. Printed: \texttt{Success Finally | Call 1: 5}
+    \item \texttt{test\_flow(0)}: \texttt{try} fails $\to$ \texttt{except} prints \texttt{Zero } $\to$ \texttt{finally} prints \texttt{Finally } $\to$ returns \texttt{0}. Printed: \texttt{Zero Finally | Call 2: 0}
+\end{itemize}
+\end{outputprediction}
+
+\begin{outputprediction}[Lazy vs Greedy Quantifier Output]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+import re
+text = "The code is <b>bold</b> and <i>italic</i>."
+res = re.findall(r"<.*>", text)
+print(res)
+\end{lstlisting}
+\textbf{Answer}: \texttt{['<b>bold</b> and <i>italic</i>']} because \texttt{.*} is greedy and eats from the first \texttt{<} to the absolute last \texttt{>}.
+\end{outputprediction}
+
+\begin{outputprediction}[Multiple Except Cascade]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+try:
+    data = {"key": "value"}
+    print(data["missing"])
+except Exception:
+    print("General Exception")
+except KeyError:
+    print("Key Error")
+\end{lstlisting}
+\textbf{Answer}: \texttt{General Exception}. Python checks \texttt{except} blocks top-to-bottom. Since \texttt{KeyError} is a subclass of \texttt{Exception}, the first catch-all block traps it!
+\end{outputprediction}
+
+\begin{outputprediction}[File Mode Behaviors]
+\textbf{Question}: What are the contents of \texttt{test.txt} after this runs?
+\begin{lstlisting}[language=Python3]
+with open("test.txt", "w") as f:
+    f.write("Alpha\n")
+with open("test.txt", "w") as f:
+    f.write("Beta\n")
+\end{lstlisting}
+\textbf{Answer}: Just \texttt{Beta\textbackslash n}. Mode \texttt{'w'} truncates the file every time it is opened.
+\end{outputprediction}
+
+\begin{outputprediction}[Regex Match Return]
+\textbf{Question}: Predict the output:
+\begin{lstlisting}[language=Python3]
+import re
+if re.match(r"World", "Hello World"):
+    print("Found")
+else:
+    print("Lost")
+\end{lstlisting}
+\textbf{Answer}: \texttt{Lost}. \texttt{re.match} strictly checks index 0. The word "World" starts at index 6.
+\end{outputprediction}
+
+
+\begin{debuggingbox}[Fixing File Pointer Overwrite in 'w' Mode]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+# Attempting to add a new score without losing past data
+f = open("scores.txt", "w")
+f.write("New Score: 95\n")
+f.close()
+\end{lstlisting}
+\textbf{Correction}: Mode \texttt{'w'} truncates and wipes previous data. Use append mode \texttt{'a'} and the \texttt{with} manager:
+\begin{lstlisting}[language=Python3]
+with open("scores.txt", "a") as f:
+    f.write("New Score: 95\n")
+\end{lstlisting}
+\end{debuggingbox}
+
+\begin{debuggingbox}[Fixing Missing Binary Mode for Pickle]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+import pickle
+data = [1, 2, 3]
+with open("data.pkl", "w") as f:
+    pickle.dump(data, f)
+\end{lstlisting}
+\textbf{Correction}: Pickling requires binary writing mode. Change \texttt{"w"} to \texttt{"wb"}.
+\end{debuggingbox}
+
+\begin{debuggingbox}[Fixing Uncaught Exceptions Breaking Loop]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=Python3]
+inputs = ["10", "A", "20"]
+for i in inputs:
+    print(int(i) * 2)
+print("Done")
+\end{lstlisting}
+\textbf{Correction}: The \texttt{ValueError} on "A" crashes the program before processing "20" or printing "Done". Wrap the conversion in a \texttt{try-except}.
+\begin{lstlisting}[language=Python3]
+for i in inputs:
+    try:
+        print(int(i) * 2)
+    except ValueError:
+        print("Invalid number")
+print("Done")
+\end{lstlisting}
+\end{debuggingbox}
+
+
+% ==============================================================================
+% SECTION 6.7: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 6 Practice Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a Python program that reads a text file and counts the total number of lines, words, and characters.
+    \item \textbf{Level 1 (Foundation)}: Write a function that safely converts user input to an integer using \texttt{try-except}, prompting again on invalid input until success.
+    \item \textbf{Level 2 (Standard)}: Write a Python script to copy the contents of one file to another, converting all lowercase letters to uppercase.
+    \item \textbf{Level 2 (Standard)}: Use \texttt{pickle} to store a list of bank account dictionary objects to a file and reload them, verifying object state restoration.
+    \item \textbf{Level 3 (Exam Tier)}: Write a program that scans a source file for Python comments (lines starting with \texttt{\#}) using regex and writes them to a summary file.
+    \item \textbf{Level 3 (Exam Tier)}: Write a password strength validator using regular expressions checking: minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special symbol.
+    \item \textbf{Level 4 (Challenge)}: Build an automated log file analyzer that parses an Apache web server access log using regex, extracting IP addresses, HTTP status codes, and returning a dictionary of status frequencies.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 6 Practice Problems]
+\noindent\textbf{Solution to Problem 1 (File Line/Word/Char Counter)}:
+\begin{lstlisting}[language=Python3]
+def count_file_stats(filename):
+    try:
+        lines = words = chars = 0
+        with open(filename, "r", encoding="utf-8") as f:
+            for line in f:
+                lines += 1
+                words += len(line.split())
+                chars += len(line)
+        return lines, words, chars
+    except FileNotFoundError:
+        return 0, 0, 0
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 2 (Safe Integer Input)}:
+\begin{lstlisting}[language=Python3]
+def get_safe_int(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Error: Please enter a valid integer.")
+\end{lstlisting}
+\textbf{Test Cases:} Input: \texttt{abc} $\to$ Error loop. Input: \texttt{10.5} $\to$ Error loop. Input: \texttt{42} $\to$ Returns 42.
+
+\noindent\textbf{Solution to Problem 3 (Uppercase File Copier)}:
+\begin{lstlisting}[language=Python3]
+def copy_upper(src, dest):
+    try:
+        with open(src, "r") as f_in, open(dest, "w") as f_out:
+            for line in f_in:
+                f_out.write(line.upper())
+    except FileNotFoundError:
+        print("Source file missing!")
+\end{lstlisting}
+\textbf{Test Cases:} Input file: \texttt{"hello world\textbackslash n"} $\to$ Output file: \texttt{"HELLO WORLD\textbackslash n"}. Boundary: Empty file $\to$ Empty file.
+
+\noindent\textbf{Solution to Problem 4 (Pickle State Restoration)}:
+\begin{lstlisting}[language=Python3]
+import pickle
+
+accounts = [{"acc": 1, "bal": 500}, {"acc": 2, "bal": 1500}]
+with open("bank.pkl", "wb") as f:
+    pickle.dump(accounts, f)
+
+with open("bank.pkl", "rb") as f:
+    restored = pickle.load(f)
+print("Restored:", restored)
+\end{lstlisting}
+\textbf{Test Cases:} Saving dictionaries and asserting \texttt{accounts == restored} evaluates to \texttt{True}.
+
+\noindent\textbf{Solution to Problem 5 (Regex Comment Extractor)}:
+\begin{lstlisting}[language=Python3]
+import re
+
+def extract_comments(src, dest):
+    pattern = r"^\s*#.*$"
+    with open(src, "r") as f_in, open(dest, "w") as f_out:
+        for line in f_in:
+            if re.match(pattern, line):
+                f_out.write(line.strip() + "\n")
+\end{lstlisting}
+\textbf{Test Cases:} Code line \texttt{x = 5} is ignored. \texttt{\# Fix this!} is extracted and written.
+
+\noindent\textbf{Solution to Problem 6 (Regex Password Validator)}:
+\begin{lstlisting}[language=Python3]
+import re
+
+def validate_password(password):
+    if len(password) < 8: return False
+    if not re.search(r"[A-Z]", password): return False
+    if not re.search(r"[a-z]", password): return False
+    if not re.search(r"\d", password): return False
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password): return False
+    return True
+\end{lstlisting}
+\textbf{Test Cases:} \texttt{P@ssw0rd123} $\to$ \texttt{True}. \texttt{simplepass} $\to$ \texttt{False} (no upper/digit/symbol).
+
+\noindent\textbf{Solution to Problem 7 (Log File Regex Parser)}:
+\begin{lstlisting}[language=Python3]
+import re
+from collections import defaultdict
+
+def parse_logs(log_file):
+    freq = defaultdict(int)
+    pattern = r'(?P<ip>\d{1,3}(?:\.\d{1,3}){3}).*HTTP/1.\d"\s+(?P<status>\d{3})'
+    with open(log_file, "r") as f:
+        for line in f:
+            match = re.search(pattern, line)
+            if match:
+                freq[match.group('status')] += 1
+    return dict(freq)
+\end{lstlisting}
+\textbf{Test Cases:} Input: \texttt{192.168.1.1 - "GET / HTTP/1.1" 200} $\to$ Returns \texttt{\{'200': 1\}}.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.8: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which file mode opens an existing file for writing while preserving its contents?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{'w'} \quad (b) \texttt{'r'} \quad (c) \texttt{'a'} \quad (d) \texttt{'w+'}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Append mode \texttt{'a'} writes data at the end of the file.}
+
+    \item What is the main benefit of using the \texttt{with open(...) as f:} statement?
+    \begin{enumerate}[label=(\alph*)]
+        \item Faster execution \quad (b) Automatically closes the file \quad (c) Prevents syntax errors \quad (d) Encrypts data
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Context managers guarantee automatic file closure even on exceptions.}
+
+    \item Which module is used to serialize Python objects into binary streams?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{os} \quad (b) \texttt{sys} \quad (c) \texttt{pickle} \quad (d) \texttt{binary}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{The \texttt{pickle} module serializes and deserializes Python objects.}
+
+    \item When does the \texttt{finally} block execute in an exception handling construct?
+    \begin{enumerate}[label=(\alph*)]
+        \item Only if exception occurs \quad (b) Only if no exception occurs \quad (c) Always \quad (d) Never
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{The \texttt{finally} block executes unconditionally.}
+
+    \item What is the return value of \texttt{re.match(r"World", "Hello World")}?
+    \begin{enumerate}[label=(\alph*)]
+        \item Match Object \quad (b) \texttt{None} \quad (c) \texttt{"World"} \quad (d) \texttt{True}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{re.match()} searches strictly at the start (index 0), returning \texttt{None}.}
+
+    \item Which regex metacharacter matches one or more repetitions of the preceding element?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{*} \quad (b) \texttt{+} \quad (c) \texttt{?} \quad (d) \texttt{\$}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{+} represents one or more occurrences.}
+
+    \item Which special sequence matches any decimal digit in Python regular expressions?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{\textbackslash d} \quad (b) \texttt{\textbackslash D} \quad (c) \texttt{\textbackslash w} \quad (d) \texttt{\textbackslash s}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{\textbackslash d} matches digits $[0-9]$.}
+
+    \item Which exception is raised when attempting to open a non-existent file in \texttt{'r'} mode?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{IOError} \quad (b) \texttt{FileNotFoundError} \quad (c) \texttt{FileExistsError} \quad (d) \texttt{MissingFileError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Opening a missing file for reading raises \texttt{FileNotFoundError}.}
+
+    \item What does \texttt{re.findall(r"\textbackslash d+", "Exam score: 95 out of 100")} return?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{['95', '100']} \quad (b) \texttt{['95']} \quad (c) \texttt{'95'} \quad (d) \texttt{Match Object}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{findall()} extracts all matching sequences into a list.}
+
+    \item What is the purpose of the \texttt{tell()} method on a file object?
+    \begin{enumerate}[label=(\alph*)]
+        \item Prints file content \quad (b) Returns current byte position \quad (c) Closes file \quad (d) Changes file name
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{tell()} returns the file pointer's current byte offset.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.9: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 6 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the role of the \texttt{else} block in Python's \texttt{try-except} statement.
+    \item Differentiate between \texttt{re.match()} and \texttt{re.search()} with examples.
+    \item Why must files be opened in \texttt{'wb'} mode when using \texttt{pickle.dump()}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this regex snippet:
+    \begin{lstlisting}[language=Python3]
+import re
+text = "The price is $45 and $120."
+matches = re.findall(r"\$\d+", text)
+print("Matches:", matches)
+    \end{lstlisting}
+    \item What happens when reading from an empty file with \texttt{f.readline()}?
+    \item Write a regex pattern that matches a valid 10-digit mobile number starting with 6, 7, 8, or 9.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete Python program that reads a text file named \texttt{input.txt}, uses regular expressions to find all email addresses, handles \texttt{FileNotFoundError} gracefully if the file is missing, and saves all extracted unique email addresses to a new file named \texttt{extracted\_emails.txt}.
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 6 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{Try-Else Block} [2 Marks]: The \texttt{else} block runs only if the \texttt{try} block finishes without raising any exceptions, keeping error-free logic distinct from the protected code.
+    \item \textbf{Match vs. Search} [2 Marks]: \texttt{re.match()} searches only at the beginning of the string (index 0). \texttt{re.search()} scans the entire string and returns the first match found anywhere.
+    \item \textbf{Pickle Binary Mode} [2 Marks]: \texttt{pickle} serializes Python object hierarchies into raw byte streams (not text strings), requiring binary write mode (\texttt{'wb'}).
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Regex Output} [3 Marks]: \texttt{\textbackslash\$} matches literal dollar sign, \texttt{\textbackslash d+} matches digits. Output: \texttt{Matches: ['\$45', '\$120']}.
+    \item \textbf{Empty File Read} [3 Marks]: \texttt{readline()} returns an empty string (\texttt{""}) when reaching the End-of-File (EOF).
+    \item \textbf{Mobile Regex} [3 Marks]: \texttt{r"\textasciicircum[6-9]\textbackslash d\{9\}\$"}.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{File Email Scraper Program} [10 Marks]:
+\begin{lstlisting}[language=Python3]
+import re
+
+def extract_emails(input_filename, output_filename):
+    try:
+        # Step 1: Read source file
+        with open(input_filename, "r", encoding="utf-8") as infile:
+            content = infile.read()
+            
+        # Step 2: Extract all emails via regex
+        email_pattern = r"[\w\.-]+@[\w\.-]+\.[a-zA-Z]+"
+        emails = re.findall(email_pattern, content)
+        unique_emails = sorted(set(emails))
+        
+        # Step 3: Write extracted emails to output file
+        with open(output_filename, "w", encoding="utf-8") as outfile:
+            for email in unique_emails:
+                outfile.write(email + "\n")
+                
+        print(f"Extracted {len(unique_emails)} unique emails to '{output_filename}'.")
+        
+    except FileNotFoundError:
+        print(f"Error: Source file '{input_filename}' not found!")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+# Run extraction
+extract_emails("input.txt", "extracted_emails.txt")
+\end{lstlisting}
+\textbf{Marking Scheme}: File reading with context manager: 2M; \texttt{FileNotFoundError} exception handling: 2M; Regex pattern and extraction: 4M; Unique sorting and output writing: 2M.
+\end{enumerate}
+\end{solutionbox}

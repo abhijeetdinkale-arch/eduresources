@@ -1,0 +1,38 @@
+\chapter{Sequential Logic \& Arduino Sensor Interfacing}
+
+\section{Sequential Circuits \& Flip-Flops}
+\begin{notebox}[Flip-Flop Behavior Summary]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{SR Flip-Flop:} $S=1 \implies \text{Set}, R=1 \implies \text{Reset}, S=R=1 \implies \text{FORBIDDEN}$.
+    \item \textbf{JK Flip-Flop:} Like SR, but $J=K=1 \implies \text{TOGGLE}$ (inverts state).
+    \item \textbf{D Flip-Flop:} Data follower: $Q_{next} = D$.
+    \item \textbf{T Flip-Flop:} Toggle toggle: $T=0 \implies \text{Hold}, T=1 \implies \text{Toggle}$.
+\end{itemize}
+\end{notebox}
+
+\begin{trickbox}[Master-Slave Operation]
+\begin{itemize}[leftmargin=*]
+    \item Master takes notes while teacher talks ($\text{CLK}=1$).
+    \item Slave writes exam on the board after class ends ($\text{CLK}=0$).
+    \item Race-around is impossible because master and slave never listen/write at the same time!
+\end{itemize}
+\end{trickbox}
+
+\section{Arduino \& Sensor Interfacing}
+\begin{notebox}[Arduino Uno Essential Pinout]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Digital I/O:} 0 to 13 ($0=\text{RX}, 1=\text{TX}$; avoid for sensors if using USB serial).
+    \item \textbf{PWM Pins:} 3, 5, 6, 9, 10, 11 (marked with $\sim$).
+    \item \textbf{I2C Bus:} A4 = SDA, A5 = SCL.
+    \item \textbf{SPI Bus:} 10 = SS, 11 = MOSI, 12 = MISO, 13 = SCK.
+    \item \textbf{10-bit ADC:} $0-5\,\text{V} \implies 0-1023$. Voltage $= \text{analogRead}(\text{pin}) \times \frac{5.0}{1023}$.
+\end{itemize}
+\end{notebox}
+
+\begin{trickbox}[Sensor Interfacing Rules]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{LDR in Voltage Divider:} LDR on top, fixed resistor on bottom $\implies$ More light $=$ Lower LDR resistance $=$ Higher $V_{out}$.
+    \item \textbf{HC-SR04 Ultrasonic:} Send $10\,\mu\text{s}$ HIGH to TRIG. Measure ECHO duration $t$. Distance $= \frac{340 \times t}{2}$. Divide by 2 because the wave goes there and back!
+    \item \textbf{DHT11 / DHT22:} Single wire data line needs $10\,\text{k}\Omega$ pull-up. DHT11 wait $\ge 1\,\text{s}$ between reads; DHT22 wait $\ge 2\,\text{s}$.
+\end{itemize}
+\end{trickbox}

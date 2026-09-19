@@ -1,0 +1,38 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Engineering Mathematics}
+\author{LPU Engineering Open}
+\date{Semester 1 Study Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer, and Table of Contents
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+
+\tableofcontents
+\newpage
+
+\mainmatter
+
+% ==============================================================================
+% CHAPTER INPUTS (UNITS 1 TO 6 + FORMULA & REVISION HANDBOOK)
+% ==============================================================================
+\input{chapters/chapter-01-matrix-methods}
+\input{chapters/chapter-02-differential-calculus}
+\input{chapters/chapter-03-integral-calculus}
+\input{chapters/chapter-04-multivariate-differentiation}
+\input{chapters/chapter-05-multivariable-integration}
+\input{chapters/chapter-06-fourier-series}
+\input{chapters/chapter-07-formula-and-methods-sheet}
+
+\end{document}

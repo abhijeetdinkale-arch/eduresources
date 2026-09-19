@@ -1,0 +1,112 @@
+\section{Continuous Assessment 2 --- Set D}
+\label{sec:ca2_set_d}
+
+\LPUCSHeader{Continuous Assessment 2 (Objective MCQ)}{D}{50 Minutes}{30 Marks}{CO4 \& CO5 (Unit 4: Cohorts \& Skill Sets, Unit 5: Networks \& Security)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 4: COHORTS AND TECHNICAL SKILL SETS (Q1 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{In modern web engineering, Progressive Web Apps (PWAs) leverage Service Workers primarily to:}{Intercept network requests and cache application assets locally for instant offline execution}{Overclock the client computer's CPU}{Format the local hard drive}{Bypass operating system permissions entirely}{1}
+
+\mcqitem{2}{To accelerate backend API response times and protect primary relational databases from read query exhaustion, architects deploy in-memory caching using:}{Redis / Memcached}{Apache Kafka}{Elasticsearch}{Hadoop HDFS}{1}
+
+\mcqitem{3}{In cloud-native serverless architectures (e.g., AWS Lambda), a 'Cold Start' refers to:}{The initialization latency incurred when launching a new container instance to serve an incoming invocation after idle time}{The time required to cool down physical server racks in winter}{A compilation error in Python code}{A hardware restart of the cloud data center}{1}
+
+\mcqitem{4}{The modern DevOps operational framework where the entire desired state of cloud infrastructure and Kubernetes applications is declared declaratively in a Git repository is:}{GitOps}{Waterfall Engineering}{Manual Sysadmin Provisioning}{Ad-hoc Shell Scripting}{1}
+
+\mcqitem{5}{Compared to traditional RESTful APIs transmitting JSON over HTTP/1.1, Google's gRPC framework offers superior microservice throughput by using:}{HTTP/2 transport and Protocol Buffers (Protobuf) binary serialization}{Plain text CSV files over UDP}{HTML web scraping}{Flash animations}{1}
+
+\mcqitem{6}{In Machine Learning, a model that performs exceptionally well on the training dataset but fails to generalize accurately to unseen test data is suffering from:}{Overfitting}{Underfitting}{Perfect Generalization}{Data Preprocessing Error}{1}
+
+\mcqitem{7}{The breakthrough deep learning architecture introduced in the 2017 seminal paper 'Attention Is All You Need' that forms the backbone of modern Large Language Models is the:}{Transformer}{Recurrent Neural Network (RNN)}{Convolutional Neural Network (CNN)}{Radial Basis Function Network}{1}
+
+\mcqitem{8}{The modern corporate cybersecurity paradigm whose guiding principle is 'Never trust, always verify', requiring continuous authentication regardless of network location, is:}{Zero Trust Architecture}{Perimeter-Only Defense}{Open Guest Network}{Static Password Policy}{1}
+
+\mcqitem{9}{A Cross-Site Request Forgery (CSRF) attack occurs when:}{An unauthorized command is transmitted from a trusted user's authenticated web browser to a vulnerable web application without their knowledge}{A database server is physically stolen}{A computer monitor resolution is altered}{A program runs out of stack memory}{1}
+
+\mcqitem{10}{In graph algorithms, Topological Sorting of vertices is mathematically possible if and only if the graph is a:}{Directed Acyclic Graph (DAG)}{Undirected Complete Graph}{Cyclic Bipartite Graph}{Binary Tree with weighted leaves}{1}
+
+\mcqitem{11}{In competitive programming, the Disjoint Set Union (DSU / Union-Find) data structure with path compression and union by rank operates in near-constant time:}{$O(\alpha(N))$ where $\alpha$ is the extremely slow-growing inverse Ackermann function}{$O(N^2)$}{$O(N \log N)$}{$O(2^N)$}{1}
+
+\mcqitem{12}{In high-level System Design interviews, 'Horizontal Scaling' (Scaling Out) means:}{Adding more server machines to an existing pool to distribute traffic load across a cluster}{Upgrading a single server with a faster CPU and more RAM (Vertical Scaling)}{Deleting historical database records}{Switching from C++ to Python}{1}
+
+\mcqitem{13}{When conducting peer code reviews on a GitHub Pull Request (PR), software engineering best practices recommend:}{Reviewing small, atomic pull requests with automated CI test passes and providing constructive, actionable feedback}{Approving 5000-line changes without reading code}{Demanding that all code be rewritten from scratch}{Insisting on personal aesthetic choices unrelated to team style guides}{1}
+
+\mcqitem{14}{A beginner developer seeking to make meaningful first-time contributions to open-source software on GitHub should filter repository issues using the label:}{\texttt{good first issue} / \texttt{beginner friendly}}{\texttt{wontfix}}{\texttt{critical security exploit}}{\texttt{duplicate}}{1}
+
+\mcqitem{15}{In competitive programming, resolving the 'Integer Overflow' bug in C/C++ when computing combinations or modulo arithmetic requires using:}{\texttt{long long} (64-bit integer) and taking modulo $10^9+7$ at intermediate arithmetic steps}{\texttt{short int}}{\texttt{float}}{\texttt{char}}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 5: COMPUTER NETWORKS AND COMMUNICATION (Q16 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{In computer networking, 'Throughput' is defined as:}{The actual rate of successful data delivery over a communication link per unit time (measured in bps)}{The theoretical maximum data capacity of the link}{The round-trip transit delay of a packet}{The physical length of the fiber optic cable}{1}
+
+\mcqitem{17}{Single-Mode Fiber (SMF) differs from Multi-Mode Fiber (MMF) because Single-Mode Fiber:}{Features a tiny core diameter ($\approx 9\,\mu\text{m}$) that allows only one light mode to propagate, eliminating modal dispersion over long distances}{Uses plastic cores and ordinary LEDs for short home connections}{Cannot transmit data over $100\text{ meters}$}{Operates only on electrical voltage pulses}{1}
+
+\mcqitem{18}{In legacy half-duplex Ethernet networks, CSMA/CD uses which mechanism when a data collision is detected?}{Both transmitting stations jam the line, abort transmission, and wait for a randomized exponential backoff time before retrying}{Both computers are immediately removed from the network}{The network switch is rebooted}{All packets are discarded and never retransmitted}{1}
+
+\mcqitem{19}{In the Transmission Control Protocol (TCP), the Sliding Window flow control mechanism prevents:}{A fast sender from overwhelming a slower receiver's buffer with more data than it can process}{Network cables from overheating}{Malware from infecting the client}{IP addresses from changing dynamically}{1}
+
+\mcqitem{20}{During TCP congestion control, upon detecting network packet loss via a retransmission timeout, the 'Slow Start' algorithm:}{Reduces the Congestion Window (CWND) to 1 Maximum Segment Size (MSS) and begins exponential window growth}{Doubles the transmission rate immediately}{Switches the transport protocol to UDP}{Closes all open sockets}{1}
+
+\mcqitem{21}{An IPv4 subnet has the CIDR prefix \texttt{/28} (subnet mask \texttt{255.255.255.240}). How many usable host addresses can be assigned to devices in this subnet?}{14 usable hosts ($2^4 - 2$)}{16 usable hosts}{30 usable hosts}{62 usable hosts}{1}
+
+\mcqitem{22}{Which of the following IPv4 address ranges is designated as Class B private address space under RFC 1918?}{\texttt{172.16.0.0} to \texttt{172.31.255.255} (\texttt{172.16.0.0/12})}{\texttt{10.0.0.0} to \texttt{10.255.255.255}}{\texttt{192.168.0.0} to \texttt{192.168.255.255}}{\texttt{169.254.0.0} to \texttt{169.254.255.255}}{1}
+
+\mcqitem{23}{The fixed base header of an IPv6 packet has a standardized length of:}{40 bytes (with no header checksum field to speed up router forwarding)}{20 bytes}{64 bytes}{128 bytes}{1}
+
+\mcqitem{24}{The Diffie-Hellman cryptographic protocol is used in network communications to:}{Allow two communicating parties to securely establish a shared secret session key over an insecure public channel}{Digitally sign email messages}{Encrypt hard drives with a password}{Compress video streams}{1}
+
+\mcqitem{25}{A SYN Flood denial-of-service attack exploits which phase of the TCP connection lifecycle?}{Floods the server with initial \texttt{SYN} packets and never completes the 3-way handshake with an \texttt{ACK}, exhausting the server's connection backlog queue}{Sends corrupted \texttt{FIN} packets during connection termination}{Modifies the client DNS cache}{Injects SQL queries into HTTP headers}{1}
+
+\mcqitem{26}{A Next-Generation Firewall (NGFW) differs from a traditional stateful firewall because an NGFW:}{Performs Deep Packet Inspection (DPI) up to Application Layer 7 to identify specific applications, malware, and intrusion patterns}{Only checks MAC addresses at Layer 2}{Cannot inspect TCP traffic}{Operates without software rules}{1}
+
+\mcqitem{27}{The Domain Name System (DNS) protocol typically uses which transport protocol and port for standard client domain name resolution queries?}{UDP Port 53 (switching to TCP Port 53 for large responses $>512\text{ bytes}$ or zone transfers)}{TCP Port 80}{UDP Port 67}{TCP Port 443}{1}
+
+\mcqitem{28}{In enterprise network switching, Virtual Local Area Networks (VLANs, IEEE 802.1Q) are configured to:}{Logically partition a single physical network switch into multiple isolated broadcast domains}{Increase physical cable bandwidth to 100 Gbps}{Replace all routers with hubs}{Convert Wi-Fi to Bluetooth}{1}
+
+\mcqitem{29}{Which network device regenerates and amplifies attenuated electrical signals at the Physical Layer (Layer 1) to extend the maximum physical transmission distance of a cable run?}{Repeater}{Router}{Gateway}{Firewall}{1}
+
+\mcqitem{30}{The cryptographic protocol that encrypts and authenticates Internet communications at the Network Layer (Layer 3) to build secure VPNs is:}{IPsec (Internet Protocol Security)}{SSL / TLS}{SSH}{HTTPS}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (CA-2 Set D)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Cohorts \& Networking Explanations]
+\textbf{Q.11 (Ans: A)} The Disjoint Set Union (DSU) structure maintains a collection of disjoint sets. Using \textit{Path Compression} in the \texttt{find} operation and \textit{Union by Rank/Size}, any sequence of $M$ operations on $N$ elements takes $O(M \cdot \alpha(N))$ time, where $\alpha$ is the inverse Ackermann function ($\alpha(N) \le 4$ for all practical values in the universe, effectively constant time).\\[2mm]
+\textbf{Q.17 (Ans: A)} Single-Mode Fiber uses an extremely narrow core ($\approx 8 - 10\,\mu\text{m}$) matching the wavelength of infrared laser light ($1310\text{ nm}$ or $1550\text{ nm}$). Light travels along a single axial path without reflecting off cladding walls at multiple angles, eliminating intermodal dispersion and enabling transmission distances of dozens of kilometers.\\[2mm]
+\textbf{Q.21 (Ans: A)} A \texttt{/28} CIDR prefix has $32 - 28 = 4$ host bits. The total number of IP addresses in the block is $2^4 = 16$. Subtracting the network ID and the broadcast address leaves $16 - 2 = 14$ usable host IPs.\\[2mm]
+\textbf{Q.23 (Ans: A)} To simplify router processing and speed up packet forwarding across the Internet backbone, the IPv6 specification established a fixed 40-byte base header (compared to IPv4's variable 20-60 byte header with options) and eliminated the header checksum field (relying on Layer 2 and Layer 4 checksums).\\[2mm]
+\textbf{Q.25 (Ans: A)} In a SYN Flood attack, the attacker sends spoofed \texttt{SYN} requests. The server allocates a Transmission Control Block (TCB) in memory and responds with \texttt{SYN-ACK}. Because the attacker never replies with the final \texttt{ACK}, half-open sockets accumulate until the server's SYN backlog is completely exhausted, denying service to legitimate clients. Modern servers mitigate this using SYN Cookies.
+\end{solutionbox}
+
+\newpage

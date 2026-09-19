@@ -1,0 +1,230 @@
+\chapter{Slide Quiz Questions \& Detailed Step-by-Step Code Traces}
+
+\noindent
+This section contains all sample quiz questions presented in the official lecture slides (Slides 86 to 105), complete with code analysis and exact step-by-step traces.
+
+\begin{quizbox}[Quiz 1: Inline vs. Internal CSS (Slide 86)]
+\textbf{Code}:
+\begin{lstlisting}[language=HTML]
+<p style="color: red;">Hello CSS!</p>
+\end{lstlisting}
+\textbf{Question}: Which type of CSS is used in the code above?\\
+\textbf{Answer}: \textbf{Inline CSS}\\
+\textbf{Explanation}: The \texttt{style} attribute is applied directly inside the HTML opening tag.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 2: Internal CSS Location (Slide 87)]
+\textbf{Question}: Where should the \texttt{<style>} tag be placed in an HTML document?\\
+\textbf{Answer}: \textbf{Inside <head>}\\
+\textbf{Explanation}: Internal stylesheets belong in the document head metadata.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 3: External CSS Linking (Slide 88)]
+\textbf{Code}: \texttt{<link rel="stylesheet" href="style.css">}\\
+\textbf{Question}: What does this line do?\\
+\textbf{Answer}: \textbf{Imports a CSS file into HTML}
+\end{quizbox}
+
+\begin{quizbox}[Quiz 4: CSS Selectors (Slide 89)]
+\textbf{Code}:
+\begin{lstlisting}[language=HTML]
+<p id="demo">Hello World</p>
+#demo { color: green; }
+\end{lstlisting}
+\textbf{Question}: What selector is used here?\\
+\textbf{Answer}: \textbf{ID selector} (Identified by the \texttt{\#} prefix).
+\end{quizbox}
+
+\begin{quizbox}[Quiz 5: Box Model Outer Spacing (Slide 90)]
+\textbf{Code}:
+\begin{lstlisting}[language=HTML]
+div { margin: 20px; padding: 10px; border: 2px solid black; }
+\end{lstlisting}
+\textbf{Question}: What is the total outer spacing between the element and its neighbor?\\
+\textbf{Answer}: \textbf{20px (margin)}\\
+\textbf{Explanation}: Margin defines outer spacing; padding is inner spacing.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 6: Background Image Cover (Slide 91)]
+\textbf{Code}: \texttt{background-size: cover;}\\
+\textbf{Question}: What does \texttt{background-size: cover;} do?\\
+\textbf{Answer}: \textbf{Stretches and scales the image to fill the screen/element}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 7: Font Properties (Slide 92)]
+\textbf{Code}: \texttt{p \{ font-family: Arial; font-size: 20px; text-align: center; font-weight: bold; \}}\\
+\textbf{Question}: What will the paragraph text look like?\\
+\textbf{Answer}: \textbf{20px centered bold Arial}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 8: Table Row Hover Effect (Slide 93)]
+\textbf{Code}: \texttt{table tr:hover \{ background-color: yellow; \}}\\
+\textbf{Question}: What happens when the mouse moves over a table row?\\
+\textbf{Answer}: \textbf{The row background turns yellow}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 9: Styling Form Controls (Slide 94)]
+\textbf{Code}: \texttt{input, select, textarea \{ border: 2px solid blue; padding: 5px; \}}\\
+\textbf{Question}: What will this CSS apply to?\\
+\textbf{Answer}: \textbf{All form controls} (\texttt{input}, \texttt{select}, and \texttt{textarea}).
+\end{quizbox}
+
+\begin{quizbox}[Quiz 10: Div and Span Cascading (Slide 95)]
+\textbf{Code}:
+\begin{lstlisting}[language=HTML]
+<div style="color: blue;">
+  This is a <span style="color: red;">highlighted</span> word.
+</div>
+\end{lstlisting}
+\textbf{Question}: What will be the color of the text ``highlighted''?\\
+\textbf{Answer}: \textbf{Red}\\
+\textbf{Explanation}: The inline style on \texttt{<span>} directly overrides the inherited color from \texttt{<div>}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 11: Variables and Scope (Slide 96)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+function test() {
+  var x = 10;
+  if (true) {
+    let x = 20;
+    console.log(x);
+  }
+  console.log(x);
+}
+test();
+\end{lstlisting}
+\textbf{Question}: What will be the output?\\
+\textbf{Answer}: \textbf{20 10}\\
+\textbf{Explanation}: \texttt{let x = 20} is scoped strictly to the \texttt{if} block. Outside the block, \texttt{var x = 10} is intact.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 12: Using const with Arrays (Slide 97)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+const arr = [1, 2, 3];
+arr.push(4);
+console.log(arr);
+\end{lstlisting}
+\textbf{Question}: What is the output?\\
+\textbf{Answer}: \textbf{[1, 2, 3, 4]}\\
+\textbf{Explanation}: Mutating the contents of a \texttt{const} array is valid; only reassigning the variable reference is forbidden.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 13: External vs. Internal Script Execution (Slide 98)]
+\textbf{Code}:
+\begin{lstlisting}[language=HTML]
+<script src="script.js"></script> <!-- contains console.log("External") -->
+<script>
+  console.log("Internal");
+</script>
+\end{lstlisting}
+\textbf{Question}: What will be printed?\\
+\textbf{Answer}: \textbf{``External'' then ``Internal''} (Executed sequentially in order of appearance).
+\end{quizbox}
+
+\begin{quizbox}[Quiz 14: Switch Statement Fall-Through (Slide 99)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let a = 2;
+switch(a) {
+  case 1: console.log("One");
+  case 2: console.log("Two");
+  case 3: console.log("Three");
+  default: console.log("Default");
+}
+\end{lstlisting}
+\textbf{Question}: What will be the output?\\
+\textbf{Answer}: \textbf{Two Three Default}\\
+\textbf{Explanation}: Without \texttt{break;} statements, execution falls through \texttt{case 2}, \texttt{case 3}, and \texttt{default}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 15: Loop Logic with Break (Slide 100)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let i = 0;
+while (i < 3) {
+  console.log(i);
+  i++;
+  if (i === 2) break;
+}
+\end{lstlisting}
+\textbf{Question}: What will be printed?\\
+\textbf{Answer}: \textbf{0 1}\\
+\textbf{Explanation}: Iteration 1 prints 0, increments to 1. Iteration 2 prints 1, increments to 2 $\to$ breaks immediately.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 16: Popup Boxes Execution Order (Slide 101)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let name = prompt("Enter your name:");
+if (confirm("Are you sure?")) {
+  alert("Welcome, " + name);
+} else {
+  alert("Action cancelled");
+}
+\end{lstlisting}
+\textbf{Question}: Which popup boxes appear in order?\\
+\textbf{Answer}: \textbf{Prompt $\to$ Confirm $\to$ Alert}.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 17: For Loop with Continue (Slide 102)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+for (let i = 1; i <= 5; i++) {
+  if (i === 3) continue;
+  console.log(i);
+}
+\end{lstlisting}
+\textbf{Question}: What numbers will be printed?\\
+\textbf{Answer}: \textbf{1 2 4 5} (Number 3 is skipped).
+\end{quizbox}
+
+\begin{quizbox}[Quiz 18: Object Property Access \& Unbound this (Slide 103)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let student = {
+  name: "Alice",
+  age: 21,
+  details: function() {
+    return this.name + " is " + this.age + " years old.";
+  }
+};
+let f = student.details;
+console.log(f());
+\end{lstlisting}
+\textbf{Question}: What will be the output?\\
+\textbf{Answer}: \textbf{``undefined is undefined years old.''}\\
+\textbf{Explanation}: When \texttt{student.details} is stored in \texttt{f} and called unbound, \texttt{this} loses context and refers to the global object/window.
+\end{quizbox}
+
+\begin{quizbox}[Quiz 19: do...while Loop Guaranteed Execution (Slide 104)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let count = 5;
+do {
+  console.log(count);
+  count++;
+} while (count < 5);
+\end{lstlisting}
+\textbf{Question}: What will be the output?\\
+\textbf{Answer}: \textbf{5}\\
+\textbf{Explanation}: \texttt{do...while} always runs the code block at least once before testing the condition ($6 < 5$ is false).
+\end{quizbox}
+
+\begin{quizbox}[Quiz 20: Nested if...else Logic (Slide 105)]
+\textbf{Code}:
+\begin{lstlisting}[language=JavaScript]
+let x = 10, y = 20, z = 30;
+if (x > y) {
+  if (x > z) console.log("x");
+  else console.log("z");
+} else {
+  if (y > z) console.log("y");
+  else console.log("z");
+}
+\end{lstlisting}
+\textbf{Question}: What will be printed?\\
+\textbf{Answer}: \textbf{z}\\
+\textbf{Explanation}: $x > y$ ($10 > 20$) is false $\to$ jumps to \texttt{else}. $y > z$ ($20 > 30$) is false $\to$ logs ``z''.
+\end{quizbox}

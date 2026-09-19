@@ -1,0 +1,89 @@
+\section{Continuous Assessment 2 --- Set B}
+\label{sec:ca2_set_b}
+
+\ExamHeader{Continuous Assessment 2}{B}{45 Minutes}{25 Marks}{Unit 4 (Number Systems) \& Unit 5 (Version Control)}
+
+\noindent
+\textbf{Instructions:} All 25 questions are compulsory. Each question carries 1 mark. Select the single best answer.
+
+\vspace{3mm}
+
+\mcqitem{1}{Which digits are valid in the Binary number system?}{0 and 1 only}{0 through 7}{0 through 9}{0 through 9 and A through F}
+
+\mcqitem{2}{In the hexadecimal number system, what decimal value does the letter 'C' represent?}{10}{11}{12}{13}
+
+\mcqitem{3}{In the hexadecimal number system, what decimal value does the letter 'E' represent?}{12}{13}{14}{15}
+
+\mcqitem{4}{What is the decimal equivalent of the binary number $(1111)_2$?}{14}{15}{16}{17}
+
+\mcqitem{5}{What is the decimal equivalent of the binary number $(1001)_2$?}{7}{8}{9}{10}
+
+\mcqitem{6}{What is the binary representation of the decimal integer $13_{10}$?}{$(1101)_2$}{$(1011)_2$}{$(1110)_2$}{$(1001)_2$}
+
+\mcqitem{7}{What is the binary equivalent of the octal number $(73)_8$?}{$(111011)_2$}{$(110011)_2$}{$(111010)_2$}{$(101011)_2$}
+
+\mcqitem{8}{What is the hexadecimal equivalent of the binary number $(11001010)_2$?}{$(\text{CA})_{16}$}{$(\text{AC})_{16}$}{$(\text{BA})_{16}$}{$(\text{C}9)_{16}$}
+
+\mcqitem{9}{In binary addition, what is the result of $1 + 1$?}{$0$ with carry $1$ ($10_2$)}{$1$ with no carry}{$11_2$}{$0$ with no carry}
+
+\mcqitem{10}{What is the decimal value of the binary fraction $(0.01)_2$?}{0.5}{0.25}{0.125}{0.01}
+
+\mcqitem{11}{In positional notation, what is the separator between the integer and fractional parts?}{Radix point}{Hyphen}{Modulo}{Colon}
+
+\mcqitem{12}{What is the decimal equivalent of the octal number $(25)_8$?}{17}{21}{25}{29}
+
+\mcqitem{13}{What is the decimal equivalent of the hexadecimal number $(1\text{A})_{16}$?}{24}{26}{28}{30}
+
+\mcqitem{14}{Which command stages all modified and untracked files in the current folder?}{\texttt{git add .}}{\texttt{git commit -a}}{\texttt{git push --all}}{\texttt{git save .}}
+
+\mcqitem{15}{What does the \texttt{-m} flag stand for in \texttt{git commit -m "msg"}?}{Message}{Module}{Modify}{Merge}
+
+\mcqitem{16}{A file that has been added to the staging area is in which Git state?}{Untracked}{Staged}{Pushed}{Ignored}
+
+\mcqitem{17}{Which command displays the past commits condensed into a single line per commit?}{\texttt{git log --oneline}}{\texttt{git history --short}}{\texttt{git log --brief}}{\texttt{git summary}}
+
+\mcqitem{18}{What is the default name for the primary initial branch in modern Git repositories?}{\texttt{root}}{\texttt{main} or \texttt{master}}{\texttt{origin}}{\texttt{head}}
+
+\mcqitem{19}{Which command creates a new branch named \texttt{feature-nav} and switches to it?}{\texttt{git switch -c feature-nav}}{\texttt{git branch feature-nav}}{\texttt{git make feature-nav}}{\texttt{git checkout feature-nav}}
+
+\mcqitem{20}{Which command sets your global author name in Git configuration?}{\texttt{git config --global user.name "Your Name"}}{\texttt{git set name "Your Name"}}{\texttt{git user.name = "Your Name"}}{\texttt{git init --name "Your Name"}}
+
+\mcqitem{21}{Which command downloads changes from a remote repository and immediately merges them into the current branch?}{\texttt{git fetch}}{\texttt{git pull}}{\texttt{git push}}{\texttt{git clone}}
+
+\mcqitem{22}{Which command creates an identical local copy of a remote GitHub repository?}{\texttt{git copy URL}}{\texttt{git clone URL}}{\texttt{git download URL}}{\texttt{git import URL}}
+
+\mcqitem{23}{Does saving a file inside an editor like VS Code automatically create a Git commit?}{Yes, always}{No, saving on disk does not stage or commit in Git}{Only on macOS}{Only for HTML files}
+
+\mcqitem{24}{On GitHub, what feature allows developers to propose changes from their branch and request code review?}{Issue tracker}{Pull Request (PR)}{Git bash}{Fork bomb}
+
+\mcqitem{25}{Can Git be used to track changes locally on a laptop without an active internet connection?}{No, internet is required}{Yes, all core Git operations work offline locally}{Only for Python files}{Only on Linux}
+
+\newpage
+\subsection*{Answer Key \& Explanations --- CA-2 (Set B)}
+
+\begin{answerkeytable}{CA-2 Set B --- Answer Key}
+\begin{tabular}{*{10}{c}}
+\toprule
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\midrule
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{B} & 21 & \textbf{B} \\
+2 & \textbf{C} & 7 & \textbf{A} & 12 & \textbf{B} & 17 & \textbf{A} & 22 & \textbf{B} \\
+3 & \textbf{C} & 8 & \textbf{A} & 13 & \textbf{B} & 18 & \textbf{B} & 23 & \textbf{B} \\
+4 & \textbf{B} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{B} \\
+5 & \textbf{C} & 10 & \textbf{B} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{B} \\
+\bottomrule
+\end{tabular}
+\end{answerkeytable}
+
+\begin{expbox}[Technical Solutions --- CA-2 Set B]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Q.2 (C):} In Hexadecimal, $\text{A}=10, \text{B}=11, \text{C}=12$.
+    \item \textbf{Q.6 (A):} $13_{10} = 8 + 4 + 0 + 1 = 1101_2$.
+    \item \textbf{Q.10 (B):} $0.01_2 = 0 \times 2^{-1} + 1 \times 2^{-2} = 0.25_{10}$.
+    \item \textbf{Q.13 (B):} $(1\text{A})_{16} = 1(16) + 10 = 26_{10}$.
+    \item \textbf{Q.21 (B):} \texttt{git pull} fetches remote commits and merges them into the working branch.
+    \item \textbf{Q.25 (B):} Git is a distributed VCS and stores history locally in the \texttt{.git} folder, working completely offline.
+\end{itemize}
+\end{expbox}
+
+\newpage

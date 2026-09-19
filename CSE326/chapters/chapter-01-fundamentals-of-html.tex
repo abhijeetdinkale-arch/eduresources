@@ -1,0 +1,576 @@
+\chapter{Fundamentals of HTML (Structure, Elements \& Text Formatting)}
+\label{chap:fundamentals-of-html}
+
+% ==============================================================================
+% SECTION 1.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 1 Academic Scope \lpuBadge]
+HyperText Markup Language (HTML) is the universal structural foundation of the World Wide Web. This unit introduces web architecture, the Client-Server model, HTML5 document boilerplate structure, root and metadata elements, basic content tags, semantic text formatting, quotations, comments, paired versus unpaired (void) tags, and the fundamental behavioral dichotomy between block-level and inline elements.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Web Architecture Foundations}: Understand client-side browser rendering, web server hosting, and HTTP/HTTPS client-server request-response cycles.
+    \item \textbf{HTML5 Document Anatomy}: Master the standard HTML5 boilerplate, distinguishing metadata declarations in \texttt{<head>} from visible user content in \texttt{<body>}.
+    \item \textbf{Metadata Management}: Configure character encodings (\texttt{UTF-8}), mobile viewport scalings, external stylesheet links, and document titles for SEO.
+    \item \textbf{Structural \& Content Markup}: Construct hierarchical documents using semantic headings (\texttt{<h1>}--\texttt{<h6>}), paragraph flows (\texttt{<p>}), line breaks (\texttt{<br>}), and thematic dividers (\texttt{<hr>}).
+    \item \textbf{Semantic Formatting}: Contrast stylistic formatting with semantic tags (\texttt{<strong>}, \texttt{<em>}, \texttt{<mark>}, \texttt{<small>}, \texttt{<abbr>}, \texttt{<cite>}, \texttt{<dfn>}).
+    \item \textbf{Element Display Categories}: Differentiate the layout behaviors, margin models, and containment rules of block-level versus inline elements.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.2: WEB TECHNOLOGIES \& CLIENT-SERVER MODEL
+% ==============================================================================
+\section{Introduction to Web Technologies and HTML}
+
+\subsection{The Client-Server Architecture of the Web}
+
+The World Wide Web operates upon a distributed **Client-Server Architecture**:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, auto, >=Stealth]
+    % Client Block
+    \node [draw=webblue, fill=webblue!10, rectangle, rounded corners, minimum width=3.5cm, minimum height=1.5cm, font=\small\bfseries, align=center] (client) at (0, 0) {Client (Browser)\\Chrome, Firefox, Safari\\Renders HTML/CSS/JS};
+    
+    % Server Block
+    \node [draw=webgreen, fill=webgreen!10, rectangle, rounded corners, minimum width=3.5cm, minimum height=1.5cm, font=\small\bfseries, align=center] (server) at (8, 0) {Web Server\\Apache, Nginx, Node.js\\Stores \& Serves Files};
+
+    % Arrows
+    \draw [->, line width=1.2pt, webblue] (client.north east) -- node[above, font=\footnotesize\bfseries] {1. HTTP/HTTPS GET Request} (server.north west);
+    \draw [->, line width=1.2pt, webgreen] (server.south west) -- node[below, font=\footnotesize\bfseries] {2. HTTP 200 OK (HTML/CSS/JS Payload)} (client.south east);
+\end{tikzpicture}
+\caption{The Client-Server HTTP Request-Response Interaction.}
+\label{fig:client-server}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{The Client (Browser)}: A client software program (e.g., Google Chrome, Mozilla Firefox, Apple Safari) that initiates requests for web resources. The browser's layout engine parses HTML, constructs the Document Object Model (DOM), computes CSS styles, executes JavaScript, and renders visual pixels onto the screen.
+    \item \textbf{The Web Server}: A remote computer running web server software (e.g., Nginx, Apache) listening on network ports (Port 80 for HTTP, Port 443 for HTTPS) that locates requested files on disk and transmits them back to the client.
+    \item \textbf{HTTP / HTTPS}: \textbf{HyperText Transfer Protocol} (and its TLS-encrypted variant, \textbf{HTTPS}) is the application-layer communication protocol governing the transmission of web resources across TCP/IP networks.
+\end{enumerate}
+
+\subsection{Defining HTML (HyperText Markup Language)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{HyperText}: Text containing embedded interactive links (\textbf{hyperlinks}) that enable non-linear navigation between documents across the web.
+    \item \textbf{Markup Language}: A system of annotating text using syntactic \textbf{tags} (e.g., \texttt{<p>}, \texttt{<h1>}) to describe the structural purpose, formatting, and semantic role of content to the rendering engine.
+    \item \textbf{HTML5 Standards}: Standardized by the W3C and WHATWG, HTML5 introduced native multimedia elements (\texttt{<audio>}, \texttt{<video>}), semantic layout landmarks (\texttt{<header>}, \texttt{<nav>}, \texttt{<article>}, \texttt{<section>}, \texttt{<footer>}), dynamic vector canvases (\texttt{<canvas>}), and client-side storage APIs.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.3: STRUCTURE OF AN HTML DOCUMENT
+% ==============================================================================
+\section{Structure of an HTML Document \& The HTML5 Boilerplate}
+
+Every valid HTML5 document follows a strict tree hierarchy representing the Document Object Model (DOM).
+
+\subsection{Standard HTML5 Boilerplate}
+\begin{htmlcode}{Standard HTML5 Document Template}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE326: University Portal</title>
+</head>
+<body>
+    <!-- Visible page content begins here -->
+    <h1>Welcome to Web Development</h1>
+    <p>This is a foundational HTML5 engineering document.</p>
+</body>
+</html>
+\end{htmlcode}
+
+\begin{outputbox}
+[Browser Viewport Window]
+Heading 1: Welcome to Web Development
+Paragraph: This is a foundational HTML5 engineering document.
+\end{outputbox}
+
+\subsection{Anatomical Breakdown of the Structural Layers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{\texttt{<!DOCTYPE html>}}: This is a document type declaration (DTD), \textbf{not an HTML tag}. It instructs modern web browsers to parse the page in standard compliance mode rather than legacy "quirks mode".
+    \item \textbf{\texttt{<html lang="en">}}: The top-level **root element** enclosing all other tags. The \texttt{lang} attribute specifies the primary natural language (e.g., \texttt{"en"} for English), aiding screen readers and search engines.
+    \item \textbf{\texttt{<head>}}: The non-visible **metadata container** holding document configuration, character sets, viewport scaling rules, external CSS stylesheets, and page titles.
+    \item \textbf{\texttt{<body>}}: The **visible content container** containing all markup rendered within the browser's viewport (headings, paragraphs, tables, images, scripts).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.4: ROOT AND METADATA ELEMENTS
+% ==============================================================================
+\section{Root and Metadata Elements}
+
+Metadata elements reside strictly inside the \texttt{<head>} section to provide machine-readable metadata about the HTML document:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Metadata Tag} & \textbf{Engineering Purpose \& Functionality} & \textbf{Example Code} \\
+\midrule
+\texttt{<title>} & Defines text displayed in browser tab and search engine results & \texttt{<title>Home</title>} \\
+\texttt{<meta charset>} & Specifies character encoding supporting global multilingual characters & \texttt{<meta charset="UTF-8">} \\
+\texttt{<meta viewport>} & Configures responsive mobile scaling to match device screen width & \texttt{<meta name="viewport" ...>} \\
+\texttt{<meta description>} & Summary text indexable by search engine web crawlers & \texttt{<meta name="description" ...>} \\
+\texttt{<link>} & Links external resources (external CSS stylesheets, favicons) & \texttt{<link rel="stylesheet" ...>} \\
+\texttt{<style>} & Encloses internal cascading style sheet (CSS) declarations & \texttt{<style> p \{ color: red; \} </style>} \\
+\texttt{<script>} & Embeds or imports external JavaScript executable logic & \texttt{<script src="app.js"></script>} \\
+\bottomrule
+\end{tabularx}
+\caption{Core Metadata Elements within the HTML Head Section.}
+\label{tab:metadata-tags}
+\end{table}
+
+\begin{conceptbox}[The Critical Role of the Viewport Meta Tag]
+The viewport tag \texttt{<meta name="viewport" content="width=device-width, initial-scale=1.0">} is essential for **Responsive Web Design (RWD)**. \texttt{width=device-width} instructs the browser to set the page width equal to the physical screen width of the device in device-independent pixels, while \texttt{initial-scale=1.0} establishes a 1:1 zoom ratio upon initial page load, preventing mobile browsers from rendering desktop-width layouts zoomed out.
+\end{conceptbox}
+
+% ==============================================================================
+% SECTION 1.5: BASIC CONTENT TAGS
+% ==============================================================================
+\section{Basic Structural Tags: Headings, Paragraphs, Breaks \& Rules}
+
+\subsection{Heading Hierarchy (\texttt{<h1>} through \texttt{<h6>})}
+HTML provides six levels of sectional headings. Headings are **block-level elements** rendered with bold font weights and descending font sizes:
+
+\begin{htmlcode}{Heading Levels Demonstration}
+<h1>Level 1: Main Document Subject</h1>
+<h2>Level 2: Major Section Heading</h2>
+<h3>Level 3: Subsection Heading</h3>
+<h4>Level 4: Sub-subsection Heading</h4>
+<h5>Level 5: Minor Topic Title</h5>
+<h6>Level 6: Lowest Level Heading</h6>
+\end{htmlcode}
+
+\begin{examtip}[Heading Best Practices]
+\begin{itemize}[leftmargin=1.5em]
+    \item Use \textbf{exactly one} \texttt{<h1>} tag per webpage representing the primary page topic for search engine optimization (SEO) and accessibility.
+    \item Do NOT skip heading levels (e.g., going directly from \texttt{<h1>} to \texttt{<h3>}) as this breaks screen-reader outline hierarchies.
+    \item Never use heading tags purely to make text bold or large; use CSS styling for visual adjustments.
+\end{itemize}
+\end{examtip}
+
+\subsection{Paragraphs (\texttt{<p>}) and Whitespace Collapsing}
+The \texttt{<p>} tag encapsulates a block of running prose. 
+\begin{conceptbox}[Browser Whitespace Collapsing]
+By default, web browsers automatically collapse consecutive whitespace characters (spaces, tabs, newlines) within standard HTML tags into a **single space character**. To preserve literal whitespace and line formatting exactly as written, use the preformatted text tag \texttt{<pre>...</pre>}.
+\end{conceptbox}
+
+\subsection{Line Breaks (\texttt{<br>}) and Thematic Horizontal Rules (\texttt{<hr>})}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{<br>}}: Inserts an inline line break (carriage return) without starting a new paragraph block. It is a void/unpaired element.
+    \item \textbf{\texttt{<hr>}}: Inserts a thematic break, visually rendered as a horizontal dividing line separating distinct content sections.
+\end{itemize}
+
+\begin{htmlcode}{Paragraphs, Line Breaks, and Horizontal Rules}
+<p>
+    Lovely Professional University<br>
+    Jalandhar - Delhi G.T. Road, Phagwara<br>
+    Punjab, India - 144411
+</p>
+<hr>
+<p>Department of Computer Science and Engineering.</p>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 1.6: TEXT FORMATTING
+% ==============================================================================
+\section{Text Formatting: Semantic vs. Physical Tags}
+
+Modern HTML strictly distinguishes **Semantic Tags** (which convey meaning to assistive technologies and parsers) from **Physical/Presentational Tags** (which only dictate visual styles):
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Semantic Tag} & \textbf{Visual Default} & \textbf{Semantic Meaning / Accessibility Role} & \textbf{Contrast with Physical Tag} \\
+\midrule
+\texttt{<strong>} & \textbf{Bold} & Serious importance, urgency, or critical alert & \texttt{<b>} (Bold without importance) \\
+\texttt{<em>} & \textit{Italic} & Stress emphasis that alters vocal nuance & \texttt{<i>} (Italic alternate voice / technical term) \\
+\texttt{<mark>} & Highlighted & Text marked/highlighted for reference & Yellow highlight \\
+\texttt{<small>} & Smaller font & Fine print, legal disclaimers, copyrights & Structural side comments \\
+\texttt{<abbr>} & Normal text & Abbreviation/acronym; full term in \texttt{title} & Tooltip expansion upon hover \\
+\texttt{<cite>} & \textit{Italic} & Title of a creative work (book, paper, movie) & Citation reference \\
+\texttt{<dfn>} & \textit{Italic} & Defining instance of a technical term & Term being defined in surrounding text \\
+\texttt{<del>} & Strikethrough & Deleted / superseded content & Historical change tracking \\
+\texttt{<sub>} & Subscript & Inferior subscript positioning ($H_2O$) & Baseline offset \\
+\texttt{<sup>} & Superscript & Superior superscript positioning ($X^2$) & Mathematical exponent / footnote \\
+\bottomrule
+\end{tabularx}
+\caption{Semantic and Presentational Text Formatting Tags in HTML5.}
+\label{tab:formatting-tags}
+\end{table}
+
+\begin{htmlcode}{Semantic Text Formatting in Action}
+<p>
+    The <dfn><abbr title="World Wide Web Consortium">W3C</abbr></dfn> is the 
+    <strong>primary international standards organization</strong> for the web.
+</p>
+<p>
+    Einstein formulated the mass-energy equivalence: <em>E = mc<sup>2</sup></em>.
+</p>
+<p>
+    Chemical formula for glucose: C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>.
+</p>
+<p>
+    Registration Fee: <del>Rs. 1000</del> <mark>Rs. 500 (Discounted)</mark>.
+</p>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 1.7: QUOTATIONS AND COMMENTS
+% ==============================================================================
+\section{Quotations and Comments}
+
+\subsection{Block Quotations vs. Inline Quotations}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Block Quotations (\texttt{<blockquote>})}: Used for extended multi-line quotations. Browsers typically render \texttt{<blockquote>} as an indented block with top and bottom margins. The optional \texttt{cite} attribute supplies the source URL.
+    \item \textbf{Inline Quotations (\texttt{<q>})}: Used for brief, inline quotations within a paragraph. Browsers automatically wrap the enclosed text with language-appropriate quotation marks.
+\end{enumerate}
+
+\begin{htmlcode}{Quotations Demonstration}
+<!-- Multi-line Blockquote -->
+<blockquote cite="https://www.w3.org">
+    The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect.
+</blockquote>
+
+<!-- Inline Quote -->
+<p>Tim Berners-Lee stated, <q>The Web does not just connect machines, it connects people.</q></p>
+\end{htmlcode}
+
+\subsection{HTML Comments}
+Comments are ignored by the browser's rendering engine but remain visible in page source inspection:
+\begin{syntaxbox}[HTML Comment Syntax]
+<!-- This is an HTML comment that will not render on screen -->
+\end{syntaxbox}
+
+% ==============================================================================
+% SECTION 1.8: PAIRED VS UNPAIRED TAGS
+% ==============================================================================
+\section{Types of HTML Tags: Paired vs. Unpaired (Void) Tags}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Category} & \textbf{Definition \& Syntactic Rules} & \textbf{Tag Examples} \\
+\midrule
+\textbf{Paired Tags} & Require both an opening tag \texttt{<tag>} and a closing tag \texttt{</tag>} to enclose content. & \texttt{<html>}, \texttt{<body>}, \texttt{<p>}, \texttt{<h1>}, \texttt{<div>}, \texttt{<span>}, \texttt{<strong>} \\
+\textbf{Unpaired (Void) Tags} & Self-contained elements that \textbf{cannot contain inner text or children}; no closing tag permitted. & \texttt{<br>}, \texttt{<hr>}, \texttt{<img>}, \texttt{<input>}, \texttt{<meta>}, \texttt{<link>} \\
+\bottomrule
+\end{tabularx}
+\caption{Paired Container Elements versus Unpaired Void Elements.}
+\label{tab:paired-vs-unpaired}
+\end{table}
+
+% ==============================================================================
+% SECTION 1.9: BLOCK-LEVEL VS INLINE ELEMENTS
+% ==============================================================================
+\section{Block-Level vs. Inline Elements}
+
+Understanding element display classification is essential for mastering page layout geometry:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Architectural Feature} & \textbf{Block-Level Elements} & \textbf{Inline Elements} \\
+\midrule
+\textbf{Line Break Behavior} & \textbf{Always starts on a new line} & Stays inline; flows with surrounding text \\
+\textbf{Default Width} & Expands to \textbf{100\% width} of parent container & Width wraps tightly around its content \\
+\textbf{Vertical Margins \& Padding} & Fully respects top/bottom margins and padding & Top/bottom margins do not alter line layout \\
+\textbf{Containment Rules} & Can contain other block and inline elements & Can only contain data and other inline elements \\
+\textbf{Core Examples} & \texttt{<div>}, \texttt{<p>}, \texttt{<h1>}--\texttt{<h6>}, \texttt{<ul>}, \texttt{<ol>}, \texttt{<li>}, \texttt{<section>} & \texttt{<span>}, \texttt{<a>}, \texttt{<img>}, \texttt{<strong>}, \texttt{<em>}, \texttt{<mark>}, \texttt{<abbr>} \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison of Block-Level vs. Inline Elements.}
+\label{tab:block-vs-inline}
+\end{table}
+
+\begin{htmlcode}{Visualizing Block vs Inline Layout Behavior}
+<!-- Block elements: Each renders on a distinct vertical line spanning full width -->
+<div style="background-color: lightblue;">Block Container 1</div>
+<div style="background-color: lightcoral;">Block Container 2</div>
+
+<!-- Inline elements: Render side-by-side on the same horizontal line -->
+<span style="background-color: yellow;">Inline Span 1</span>
+<span style="background-color: lightgreen;">Inline Span 2</span>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 1.10: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 1 University Exam Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Void Tag Closing}: Writing \texttt{<br></br>} or \texttt{<hr></hr>} is invalid HTML5 syntax. Void tags have no closing tags.
+    \item \textbf{Block Elements inside Inline Elements}: Placing a \texttt{<div>} or \texttt{<p>} inside a \texttt{<span>} or \texttt{<strong>} violates HTML nesting rules and breaks layout trees.
+    \item \textbf{\texttt{<strong>} vs \texttt{<b>}}: \texttt{<b>} changes only visual appearance; \texttt{<strong>} represents importance for screen readers and SEO algorithms.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 1.11: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Whitespace Collapsing and Text Formatting]
+\textbf{Question}: Predict the exact visual layout rendered by the browser:
+\begin{lstlisting}[language=HTML5]
+<p>First     Line   of
+Text.<br>Second Line: <strong>Bold <em>and Emphasized</em></strong>.</p>
+\end{lstlisting}
+\textbf{Answer \& Layout Tracing}:
+\begin{itemize}
+    \item The spaces between \texttt{First}, \texttt{Line}, \texttt{of}, and \texttt{Text.} collapse into single spaces: \texttt{"First Line of Text."}
+    \item The \texttt{<br>} forces a line break.
+    \item Line 2 renders \texttt{"Second Line: "} followed by \texttt{"Bold "} in bold, and \texttt{"and Emphasized"} in \textbf{\textit{bold italic}}.
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing Structural Nesting and Void Tag Errors]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=HTML5]
+<span>
+    <h1>Chapter 1</h1>
+    <p>Welcome to CSE326.<br></br></p>
+</span>
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: Block-level elements (\texttt{<h1>}, \texttt{<p>}) are illegally nested inside an inline \texttt{<span>}. Replace \texttt{<span>} with a block \texttt{<div>}.
+    \item \textbf{Bug 2}: \texttt{<br></br>} contains an illegal closing tag. Use \texttt{<br>} as a void element.
+\end{enumerate}
+\textbf{Corrected Code}:
+\begin{lstlisting}[language=HTML5]
+<div>
+    <h1>Chapter 1</h1>
+    <p>Welcome to CSE326.<br></p>
+</div>
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 1.12: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 1 Practice Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a complete HTML5 document structure containing a page title, an \texttt{<h1>} heading with your university name, and a paragraph describing your degree program.
+    \item \textbf{Level 1 (Foundation)}: Construct a poem formatting snippet using paragraphs and line breaks (\texttt{<br>}) that prevents whitespace collapsing.
+    \item \textbf{Level 2 (Standard)}: Create an academic profile card containing an abbreviation with expansion (\texttt{<abbr>}), highlighted GPA score (\texttt{<mark>}), and deleted previous course code (\texttt{<del>}).
+    \item \textbf{Level 2 (Standard)}: Write HTML code demonstrating the chemical equation for water synthesis ($2H\_2 + O\_2 \to 2H\_2O$) and the quadratic formula ($ax^2 + bx + c = 0$) using \texttt{<sub>} and \texttt{<sup>}.
+    \item \textbf{Level 3 (Exam Tier)}: Create a structured news article layout containing a main heading, a publication date in \texttt{<small>}, an introductory paragraph, a multi-line quotation with source attribution (\texttt{<blockquote>}), and an inline quote (\texttt{<q>}).
+    \item \textbf{Level 3 (Exam Tier)}: Construct an HTML snippet illustrating the layout difference between three colored block-level \texttt{<div>} containers and three colored inline \texttt{<span>} phrasing tags.
+    \item \textbf{Level 4 (Challenge)}: Build a standards-compliant HTML5 technical terms glossary using \texttt{<dfn>}, \texttt{<abbr>}, \texttt{<strong>}, and comments explaining each section.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 1 Practice Problems]
+\noindent\textbf{Solution to Problem 4 (Subscript and Superscript Equations)}:
+\begin{lstlisting}[language=HTML5]
+<p>
+    <strong>Chemical Reaction:</strong><br>
+    2H<sub>2</sub> + O<sub>2</sub> &rarr; 2H<sub>2</sub>O
+</p>
+<p>
+    <strong>Quadratic Polynomial Equation:</strong><br>
+    <em>f(x) = ax<sup>2</sup> + bx + c</em>
+</p>
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 5 (Structured News Article with Quotes)}:
+\begin{lstlisting}[language=HTML5]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Tech News</title>
+</head>
+<body>
+    <h1>Quantum Computing Breakthrough Announced</h1>
+    <p><small>Published: August 29, 2026 | Technology Desk</small></p>
+    <p>Researchers have achieved quantum advantage in complex optimization.</p>
+    <blockquote cite="https://science.org/quantum">
+        This computational leap enables simulations of molecular dynamics previously considered impossible in classical computing architectures.
+    </blockquote>
+    <p>The lead scientist noted, <q>We are entering a new era of physical computing.</q></p>
+</body>
+</html>
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.13: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the correct HTML5 document type declaration?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<!DOCTYPE html>} \quad (b) \texttt{<DOCTYPE html5>} \quad (c) \texttt{<html doctype="5">} \quad (d) \texttt{<?xml html>}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{<!DOCTYPE html>} is the standard case-insensitive HTML5 DTD.}
+
+    \item Which HTML element contains metadata not displayed directly within the browser viewport?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<body>} \quad (b) \texttt{<head>} \quad (c) \texttt{<section>} \quad (d) \texttt{<footer>}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Metadata tags reside inside \texttt{<head>}.}
+
+    \item Which tag is an example of an unpaired (void) element in HTML5?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<p>} \quad (b) \texttt{<strong>} \quad (c) \texttt{<hr>} \quad (d) \texttt{<div>}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{<hr>} is a void element without a closing tag.}
+
+    \item How do modern browsers handle consecutive spaces and newlines in HTML source?
+    \begin{enumerate}[label=(\alph*)]
+        \item Preserves all spaces \quad (b) Collapses into a single space \quad (c) Raises error \quad (d) Deletes all spaces
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Browsers collapse consecutive whitespace characters into one space.}
+
+    \item Which tag defines the title of a creative work such as a book or painting?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<cite>} \quad (b) \texttt{<q>} \quad (c) \texttt{<dfn>} \quad (d) \texttt{<abbr>}
+    \end{enumerate}
+    \textbf{Answer}: (a) --- \textit{\texttt{<cite>} defines the title of a creative work.}
+
+    \item What is the default display width of a block-level element?
+    \begin{enumerate}[label=(\alph*)]
+        \item 0\% \quad (b) Width of its text content \quad (c) 100\% of parent width \quad (d) 50\% of screen
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Block elements stretch to 100\% width of their parent container.}
+
+    \item Which tag is semantically appropriate for marking text with strong importance?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<b>} \quad (b) \texttt{<strong>} \quad (c) \texttt{<bold>} \quad (d) \texttt{<heavy>}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{<strong>} conveys semantic importance for accessibility.}
+
+    \item Which attribute in the \texttt{<abbr>} tag provides the expanded description?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{alt} \quad (b) \texttt{src} \quad (c) \texttt{title} \quad (d) \texttt{name}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{The \texttt{title} attribute specifies the abbreviation tooltip.}
+
+    \item What is the correct syntax for an HTML comment?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{// Comment} \quad (b) \texttt{/* Comment */} \quad (c) \texttt{<!-- Comment -->} \quad (d) \texttt{\# Comment}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{HTML comments use \texttt{<!-- ... -->}.}
+
+    \item Which tag creates an inline quotation with automatic quotation punctuation?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{<blockquote>} \quad (b) \texttt{<q>} \quad (c) \texttt{<quote>} \quad (d) \texttt{<cite>}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{<q>} inserts inline quotation marks.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.14: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 1 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the significance of the \texttt{<!DOCTYPE html>} declaration.
+    \item Differentiate between \texttt{<strong>} and \texttt{<b>} with respect to web accessibility.
+    \item State three differences between block-level and inline elements.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this HTML snippet:
+    \begin{lstlisting}[language=HTML5]
+<p>Water: H<sub>2</sub>O | Energy: E = mc<sup>2</sup></p>
+    \end{lstlisting}
+    \item Identify the errors in the following code:
+    \begin{lstlisting}[language=HTML5]
+<head>
+    <title>My Portal</title>
+    <p>Welcome to the portal.</p>
+</head>
+    \end{lstlisting}
+    \item What is the difference between \texttt{<blockquote>} and \texttt{<q>}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete, standards-compliant HTML5 document for a University Course Information page:
+    \begin{enumerate}[label=(\alph*)]
+        \item Include proper metadata tags (UTF-8, responsive viewport, page title). (3 Marks)
+        \item Structure the document with \texttt{<h1>}, \texttt{<h2>}, paragraphs, and an address using \texttt{<br>}. (3 Marks)
+        \item Use semantic formatting tags (\texttt{<strong>}, \texttt{<em>}, \texttt{<mark>}, \texttt{<abbr>}, \texttt{<hr>}). (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 1 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{DOCTYPE Declaration} [2 Marks]: Instructs browsers to render pages in HTML5 standard mode rather than quirks mode.
+    \item \textbf{Strong vs. Bold} [2 Marks]: \texttt{<b>} provides visual bolding without semantic weight; \texttt{<strong>} adds semantic importance, causing screen readers to emphasize the text vocally.
+    \item \textbf{Block vs. Inline} [2 Marks]: Block elements start on a new line, expand to 100\% width, and support vertical margins. Inline elements flow horizontally, take only content width, and do not disrupt line height with top/bottom margins.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Sub/Sup Output} [3 Marks]: Renders \texttt{"Water: H"} with subscript \texttt{"2"} and \texttt{"O"}, followed by \texttt{" | Energy: E = mc"} with superscript \texttt{"2"}.
+    \item \textbf{Head Element Error} [3 Marks]: \texttt{<p>} is a visible content element and cannot reside inside \texttt{<head>}. It must be moved inside the \texttt{<body>} container.
+    \item \textbf{Quote Tags} [3 Marks]: \texttt{<blockquote>} is a block-level container for long indented excerpts; \texttt{<q>} is an inline phrasing element with automatic quotation marks.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Complete HTML5 Document} [10 Marks]:
+\begin{lstlisting}[language=HTML5]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE326 - Course Information</title>
+</head>
+<body>
+    <h1>Department of Computer Science & IT</h1>
+    <h2>CSE326: Web Development</h2>
+    <hr>
+    <p>
+        Welcome to <strong>CSE326</strong>. This course covers 
+        <abbr title="HyperText Markup Language">HTML5</abbr>, 
+        <abbr title="Cascading Style Sheets">CSS3</abbr>, and 
+        <em>JavaScript</em>.
+    </p>
+    <p>
+        <mark>Prerequisite:</mark> Basic programming fundamentals.
+    </p>
+    <p>
+        <strong>Academic Office:</strong><br>
+        Room 34-201, Innovation Block<br>
+        Lovely Professional University
+    </p>
+</body>
+</html>
+\end{lstlisting}
+\textbf{Marking Scheme}: DOCTYPE \& metadata: 3M; Hierarchy \& paragraphs: 3M; Semantic tags: 4M.
+\end{enumerate}
+\end{solutionbox}

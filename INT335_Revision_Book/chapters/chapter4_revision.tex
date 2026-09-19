@@ -1,0 +1,69 @@
+\chapter{Unit 4: Product Design and Prototyping}
+\label{chap:unit4_rev}
+
+\begin{revbox}[Unit 4 Essential Summary]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{Prototyping Philosophy:} *``Build to think, test to learn''*. Fail early and cheaply to reduce risk.
+    \item \textbf{Riskiest Assumptions First:} Always test whether users need and trust the core value before polishing UI colors.
+    \item \textbf{Traceability:} Connect every wireframe element directly back to a validated user requirement.
+\end{itemize}
+\end{revbox}
+
+\section{Fidelity Comparison \& Paper Prototyping}
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{p{2.8cm}X X}
+\toprule
+\textbf{Dimension} & \textbf{Low-Fidelity (Lo-Fi)} & \textbf{High-Fidelity (Hi-Fi)} \\
+\midrule
+\textbf{Materials} & Paper, cardboard, sticky notes, sketches. & Clickable Figma mockups, coded frontend. \\
+\textbf{Time \& Cost} & Minutes to hours; zero monetary cost. & Days to weeks; requires technical tools. \\
+\textbf{Testing Focus} & Information architecture, layout, user flows. & Visual hierarchy, micro-interactions, metrics. \\
+\textbf{Feedback} & Honest, conceptual, structural critique. & Detailed aesthetic and UI styling comments. \\
+\bottomrule
+\end{tabularx}
+\caption{Lo-Fi vs. Hi-Fi Prototype Trade-Offs.}
+\end{table}
+
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Paper Prototyping Roles:}
+    \begin{itemize}
+        \item *User:* Interacts by pointing, tapping, and typing with a pen.
+        \item *``Computer'' (Facilitator):* Silently swaps paper screens and popups.
+        \item *Observer:* Silently records task time, hesitation, and errors.
+    \end{itemize}
+    \item \textbf{Storyboarding:} 4-frame comic-strip narrative showing user problem trigger $\rightarrow$ discovery $\rightarrow$ interaction $\rightarrow$ emotional resolution in context.
+\end{itemize}
+
+\section{Wireframing Conventions \& User Flows}
+
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Grayscale Restraint:} Use only shades of gray to focus on structure, layout, and hierarchy without color distraction.
+    \item \textbf{UI Control Rules:}
+    \begin{itemize}
+        \item \textbf{Radio Buttons ($\odot$):} Exactly ONE selection from a mutually exclusive list.
+        \item \textbf{Checkboxes ($\boxtimes$):} Zero, one, or MULTIPLE independent selections.
+        \item \textbf{Toggle Switch:} Immediate on/off binary setting.
+        \item \textbf{Image Placeholder:} Crossed rectangle ($[\boxtimes]$).
+    \end{itemize}
+    \item \textbf{User Flowchart Symbols:}
+    \begin{itemize}
+        \item *Oval (Terminator):* Start / End of task.
+        \item *Rectangle:* Screen, Step, or System Action.
+        \item *Diamond:* Conditional decision point with branching logic (Yes/No).
+    \end{itemize}
+\end{itemize}
+
+\section{Minimum Viable Product (MVP)}
+
+\begin{formulabox}[MVP Core Definition \& Forms]
+An MVP is the smallest coherent release that delivers \textbf{complete end-to-end value} and enables maximum validated learning.
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{Landing Page MVP:} Web page measuring click-through demand before writing code.
+    \item \textbf{Concierge MVP:} Delivering service manually behind the scenes to study user behavior.
+    \item \textbf{Wizard of Oz MVP:} Appears automated on front-end, but operated manually by humans in backend.
+\end{itemize}
+\end{formulabox}

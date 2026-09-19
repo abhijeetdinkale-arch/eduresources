@@ -1,0 +1,74 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+\LPUCSHeader{OBJECTIVE MULTIPLE-CHOICE QUESTION PAPER}{A}{50 Minutes}{30 Marks}{Units 4 \& 5 (JavaScript Core, Scopes, DOM, Events, Regex Validation)}
+
+\vspace{3mm}
+\noindent\textbf{Marking Scheme:} 30 Questions $\times$ 1 Mark = 30 Marks. Negative Marking: $-0.25$ marks for each incorrect response.
+
+\vspace{4mm}
+\subsection*{Part I: Foundational Level (Questions 1 to 15 --- 50\% Easy)}
+
+\mcqitem{1}{What is the data type returned by \texttt{typeof NaN}?}{"nan"}{"undefined"}{"number"}{"object"}
+\mcqitem{2}{Which variable declaration keyword creates a block-scoped binding that cannot be re-assigned?}{var}{let}{const}{static}
+\mcqitem{3}{What does the browser popup method \texttt{confirm()} return when the user clicks Cancel?}{null}{undefined}{false}{0}
+\mcqitem{4}{Which W3C standard DOM method attaches an event listener function to an element?}{element.attachEvent()}{element.addEventListener()}{element.setListener()}{element.bindEvent()}
+\mcqitem{5}{What will be the output of \texttt{"10" + 20} in JavaScript?}{30}{"1020"}{NaN}{TypeError}
+\mcqitem{6}{What is the output of \texttt{"20" - 5} in JavaScript?}{15}{"205"}{NaN}{"15"}
+\mcqitem{7}{Which array method appends one or more elements to the \textbf{end} of an array?}{unshift()}{shift()}{push()}{pop()}
+\mcqitem{8}{How do you access the \texttt{age} property of \texttt{let student = \{ name: "Raj", age: 21 \};}?}{student(age)}{student.age or student["age"]}{student->age}{student::age}
+\mcqitem{9}{Which JavaScript loop is guaranteed to execute its block \textbf{at least once}?}{for loop}{while loop}{do...while loop}{for...in loop}
+\mcqitem{10}{What does \texttt{document.getElementById("demo").textContent = "Hello";} do?}{Changes CSS color}{Updates raw text content without parsing HTML}{Removes element}{Creates popup}
+\mcqitem{11}{Which event fires immediately when a user releases a key on the keyboard?}{onkeydown}{onkeypress}{onkeyup}{onchange}
+\mcqitem{12}{What does \texttt{arr.length} return for \texttt{let arr = [10, 20, 30, 40];}?}{3}{4}{5}{undefined}
+\mcqitem{13}{Which operator represents exponentiation (power) in modern JavaScript?}{\textasciicircum}{**}{\textasciicircum\textasciicircum}{pow}
+\mcqitem{14}{How is an external JavaScript file \texttt{script.js} linked in HTML?}{<link rel="script" href="script.js">}{<script src="script.js"></script>}{<javascript src="script.js">}{<script href="script.js">}
+\mcqitem{15}{What will \texttt{prompt("Enter Name:")} return if the user clicks "Cancel"?}{"" (empty string)}{null}{undefined}{false}
+
+\vspace{4mm}
+\subsection*{Part II: Intermediate Analytical Level (Questions 16 to 24 --- 30\% Medium)}
+
+\mcqitem{16}{What will be printed by \texttt{function test() \{ var x = 10; if(true)\{ let x = 20; console.log(x); \} console.log(x); \} test();}?}{20 20}{10 10}{20 10}{10 20}
+\mcqitem{17}{What will be logged by \texttt{const arr = [1, 2, 3]; arr.push(4); console.log(arr);}?}{TypeError: Assignment to constant variable}{[1, 2, 3]}{[1, 2, 3, 4]}{undefined}
+\mcqitem{18}{What will be the output of \texttt{let a = 2; switch(a) \{ case 1: console.log("A"); case 2: console.log("B"); case 3: console.log("C"); default: console.log("D"); \}}?}{B}{B C D}{D}{A B C D}
+\mcqitem{19}{What will the loop print: \texttt{let i=0; while(i<3)\{ console.log(i); i++; if(i===2) break; \}}?}{0 1 2}{0 1}{1 2}{0}
+\mcqitem{20}{What is the output of \texttt{let obj = \{ name: "Alice", get: function() \{ return this.name; \} \}; let f = obj.get; console.log(f());}?}{"Alice"}{undefined (or window name)}{Error}{"obj"}
+\mcqitem{21}{What will be printed by \texttt{let x=10, y=20, z=30; if(x>y)\{ console.log("1"); \} else \{ if(y>z) console.log("2"); else console.log("3"); \}}?}{1}{2}{3}{Error}
+\mcqitem{22}{What does the regular expression test \texttt{/\textasciicircum[a-z]\{3,5\}\$/.test("code")} return?}{true}{false}{null}{TypeError}
+\mcqitem{23}{Which array method transforms every element and returns a new array of the same length?}{forEach()}{map()}{filter()}{reduce()}
+\mcqitem{24}{What will be the output of \texttt{console.log(5 == "5", 5 === "5");}?}{true true}{false false}{true false}{false true}
+
+\vspace{4mm}
+\subsection*{Part III: Advanced Mastery Level (Questions 25 to 30 --- 20\% Hard)}
+
+\mcqitem{25}{What will be logged by \texttt{for(var k=0; k<3; k++)\{ setTimeout(() => console.log(k), 100); \}}?}{0 1 2}{3 3 3}{0 0 0}{undefined undefined undefined}
+\mcqitem{26}{What is the result of \texttt{[10, 20, 30].reduce((acc, curr) => acc + curr, 5)}?}{60}{65}{55}{NaN}
+\mcqitem{27}{Which of the following email strings will be \textbf{rejected} by \texttt{/\textasciicircum[\textasciicircum\ ]+@[\textasciicircum\ ]+\textbackslash.[a-z]\{2,3\}\$/}?}{user@domain.com}{user.name@sub.org}{user @domain.com}{hello@test.in}
+\mcqitem{28}{Examine: \texttt{let obj = \{ m: \{ val: 90 \} \}; let copy = \{ ...obj \}; copy.m.val = 100; console.log(obj.m.val);}. What is logged?}{90}{100}{undefined}{TypeError}
+\mcqitem{29}{What does \texttt{event.preventDefault()} do when called inside a form's \texttt{submit} handler?}{Clears text inputs}{Prevents browser from submitting HTTP request and reloading page}{Stops event bubbling}{Deletes form from DOM}
+\mcqitem{30}{What will be logged by \texttt{function make() \{ let c=0; return () => ++c; \} const a=make(); const b=make(); console.log(a(), a(), b());}?}{1 2 3}{1 2 1}{1 1 1}{0 1 0}
+
+\newpage
+\subsection*{Answer Key \& Explanations --- CA-2 Set A}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{C} & \texttt{NaN} is a special numeric IEEE-754 value. & 16 & \textbf{C} & Block-scoped \texttt{let} shadows \texttt{var} inside \texttt{if}. \\
+2 & \textbf{C} & \texttt{const} creates immutable block bindings. & 17 & \textbf{C} & Mutating array elements via push is valid. \\
+3 & \textbf{C} & \texttt{confirm()} returns \texttt{false} on Cancel. & 18 & \textbf{B} & Fall-through occurs without \texttt{break;}. \\
+4 & \textbf{B} & \texttt{addEventListener} is standard W3C method. & 19 & \textbf{B} & Prints 0, 1 then breaks at $i=2$. \\
+5 & \textbf{B} & String concatenation converts 20 to string. & 20 & \textbf{B} & Unbound method call loses \texttt{this} context. \\
+6 & \textbf{A} & \texttt{-} operator forces numeric subtraction. & 21 & \textbf{C} & $10>20$ is false; $20>30$ is false $\to$ logs "3". \\
+7 & \textbf{C} & \texttt{push()} appends to end of array. & 22 & \textbf{A} & "code" matches 4 lowercase chars ($3 \le 4 \le 5$). \\
+8 & \textbf{B} & Dot notation and bracket notation. & 23 & \textbf{B} & \texttt{map()} returns new transformed array. \\
+9 & \textbf{C} & \texttt{do...while} checks condition at the end. & 24 & \textbf{C} & \texttt{==} coerces (\texttt{true}), \texttt{===} strict (\texttt{false}). \\
+10 & \textbf{B} & \texttt{textContent} sets safe raw text. & 25 & \textbf{B} & \texttt{var} closure captures shared reference ($k=3$). \\
+11 & \textbf{C} & \texttt{onkeyup} triggers on key release. & 26 & \textbf{B} & Initial $5 + 10 + 20 + 30 = 65$. \\
+12 & \textbf{B} & Array length equals 4 items. & 27 & \textbf{C} & Contains forbidden space before \texttt{@}. \\
+13 & \textbf{B} & \texttt{**} is exponentiation operator. & 28 & \textbf{B} & Spread creates shallow copy; object pointer shared. \\
+14 & \textbf{B} & \texttt{<script src="script.js"></script>}. & 29 & \textbf{B} & Halts default form submit reload. \\
+15 & \textbf{B} & \texttt{prompt()} returns \texttt{null} on Cancel. & 30 & \textbf{B} & Independent closure scopes: $a=1,2$ and $b=1$. \\
+\bottomrule
+\end{tabularx}
+\end{center}

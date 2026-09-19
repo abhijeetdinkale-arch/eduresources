@@ -1,0 +1,103 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{paper_style}[2026/09/16 v1.0 MTH165 Sample Question Papers Style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=16pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,physics,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+% Color Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUOrange}{RGB}{232, 90, 16}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{LightBg}{RGB}{246, 248, 252}
+\definecolor{BorderGray}{RGB}{205, 215, 225}
+\definecolor{AlertRed}{RGB}{180, 40, 40}
+\definecolor{SuccessGreen}{RGB}{24, 134, 75}
+\definecolor{TipBg}{RGB}{255, 250, 235}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{LPUNavy}\textbf{MTH165: Mathematics for Engineers} --- Sample Question Papers}
+\fancyhead[R]{\small\sffamily\color{LPUOrange}\textbf{16-Paper University Exam Suite}}
+\fancyfoot[C]{\small\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{LPUNavy}}
+  {\Large\color{LPUOrange}\chaptertitlename\ \thechapter}{8pt}
+  {\titlerule[1.5pt]\vspace{4pt}}
+
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{LPUNavy}}
+  {\thesection}{1em}{}
+
+\newcommand{\ExamHeader}[5]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=LPUNavy,
+    arc=2mm,
+    boxrule=1.2pt,
+    top=3mm, bottom=3mm, left=4mm, right=4mm
+  ]
+    \begin{center}
+      {\large\bfseries\color{LPUNavy} LOVELY PROFESSIONAL UNIVERSITY}\\[1mm]
+      {\normalsize\bfseries Department of Mathematics | School of Chemical Engineering and Physical Sciences}\\[2mm]
+      {\large\bfseries\color{LPUOrange} #1 --- #2}\\[1mm]
+      {\small\bfseries Course Code: MTH165 \quad|\quad Course Title: Mathematics for Engineers}\\[2mm]
+      \rule{0.9\linewidth}{0.5pt}\\[1.5mm]
+      {\small \textbf{Time Allowed:} #3 \hfill \textbf{Maximum Marks:} #4 \hfill \textbf{Negative Marking:} #5}
+    \end{center}
+  \end{tcolorbox}
+  \vspace{3mm}
+}
+
+\newtcolorbox{solbox}[1][]{
+    enhanced,
+    breakable,
+    colback=LightBg,
+    colframe=BorderGray,
+    boxrule=0.8pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    title={\textbf{\color{LPUNavy}Step-by-Step Analytical Solution:}},
+    #1
+}
+
+\newtcolorbox{examinertip}[1][]{
+    enhanced,
+    breakable,
+    colback=TipBg,
+    colframe=LPUOrange,
+    fonttitle=\bfseries\color{LPUOrange},
+    title={\textbf{Examiner's Grading \& Method Tip}},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    #1
+}
+
+\newcommand{\mcqitem}[6]{
+    \noindent\textbf{Q#1. #2}
+    \begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+        \item #3
+        \item #4
+        \item #5
+        \item #6
+    \end{enumerate}
+    \vspace{2mm}
+}

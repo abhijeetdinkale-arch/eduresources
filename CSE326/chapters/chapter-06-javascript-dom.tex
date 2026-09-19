@@ -1,0 +1,613 @@
+\chapter{JavaScript Document Object Model (DOM)}
+\label{chap:javascript-dom}
+
+% ==============================================================================
+% SECTION 6.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 6 Academic Scope \lpuBadge]
+The Document Object Model (DOM) is the language-neutral W3C standard application programming interface that represents HTML documents as hierarchical trees of objects. This unit covers the DOM tree architecture, the root \texttt{document} object, element selection methods (traditional versus modern CSS selectors), dynamic node creation, insertion, removal, tree traversal, content and attribute mutation (\texttt{innerHTML} vs. \texttt{textContent}), dynamic CSS manipulation via \texttt{style} and \texttt{classList}, the event object, and event propagation mechanisms (Bubbling vs. Capturing).
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{DOM Tree Modeling}: Understand the document node hierarchy, visualizing parent-child and sibling relationships.
+    \item \textbf{Element Selection}: Contrast traditional DOM methods with modern \texttt{querySelector()} and \texttt{querySelectorAll()} selector queries.
+    \item \textbf{Dynamic Node Mutation}: Create, append, insert, and remove DOM nodes dynamically without refreshing the webpage.
+    \item \textbf{Content \& Security}: Understand the critical security difference between \texttt{innerHTML} (HTML parsing, XSS vulnerability) and \texttt{textContent} (safe text insertion).
+    \item \textbf{Dynamic CSS Styling}: Apply inline styles using camelCase and toggle multi-class state machines using the \texttt{classList} API.
+    \item \textbf{Event Flow}: Master event delegation and distinguish Event Bubbling from Event Capturing.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 6.2: DOM INTRODUCTION
+% ==============================================================================
+\section{DOM Architecture \& The Document Tree}
+
+The **Document Object Model (DOM)** is a programming interface for web documents. It translates static HTML markup into a live, structured tree of JavaScript objects in memory:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    level 1/.style={sibling distance=5cm, level distance=1.2cm},
+    level 2/.style={sibling distance=2.5cm, level distance=1.2cm},
+    level 3/.style={sibling distance=2.2cm, level distance=1.2cm},
+    every node/.style={draw=webnavy, fill=webbg, rounded corners, font=\footnotesize\bfseries, inner sep=4pt, text centered}
+]
+\node [fill=webblue!20] {Document}
+    child { node [fill=webblue!15] {html (Root)}
+        child { node [fill=webpurple!15] {head}
+            child { node {title}
+                child { node [draw=none, fill=none, font=\tiny\ttfamily] {"My Portal"} }
+            }
+        }
+        child { node [fill=webgreen!15] {body}
+            child { node {h1}
+                child { node [draw=none, fill=none, font=\tiny\ttfamily] {"Hello World"} }
+            }
+            child { node {p}
+                child { node [draw=none, fill=none, font=\tiny\ttfamily] {"Intro text"} }
+            }
+            child { node {a (href)} }
+        }
+    };
+\end{tikzpicture}
+\caption{Hierarchical Document Object Model (DOM) Tree Representation.}
+\label{fig:dom-tree}
+\end{figure}
+
+\begin{conceptbox}[Key Architectural Concepts of the DOM]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Tree Structure}: Every element, attribute, and text snippet is represented as a **Node** in the tree.
+    \item \textbf{Object-Oriented Interface}: Nodes expose properties (data states) and methods (callable actions).
+    \item \textbf{Platform-Independent Standard}: Standardized by the W3C and WHATWG, ensuring cross-browser consistency.
+    \item \textbf{Dynamic HTML (DHTML)}: Enables scripts to add, modify, or delete elements instantaneously without triggering full page reloads.
+\end{itemize}
+\end{conceptbox}
+
+% ==============================================================================
+% SECTION 6.3: THE DOCUMENT OBJECT
+% ==============================================================================
+\section{The \texttt{document} Root Object}
+
+The global \textbf{\texttt{document}} object represents the loaded web page and serves as the primary entry point for all DOM operations:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Document Property} & \textbf{Data Type} & \textbf{Description / Return Value} \\
+\midrule
+\texttt{document.title} & \texttt{String} & Gets or sets the document title displayed in the browser tab \\
+\texttt{document.URL} & \texttt{String} & Returns the complete URL address of the loaded document \\
+\texttt{document.body} & \texttt{Element} & Direct reference to the \texttt{<body>} container node \\
+\texttt{document.head} & \texttt{Element} & Direct reference to the \texttt{<head>} metadata container node \\
+\texttt{document.domain} & \texttt{String} & Returns the domain name of the hosting server \\
+\texttt{document.cookie} & \texttt{String} & Gets or sets HTTP cookies associated with the current document \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Properties of the \texttt{document} Object.}
+\label{tab:document-props}
+\end{table}
+
+\begin{commonmistake}[The Danger of document.write()]
+While \texttt{document.write("text")} writes directly to the initial HTML parse stream, invoking \texttt{document.write()} **after the document has finished loading completely overwrites and destroys the entire existing webpage**. Avoid \texttt{document.write()} in modern web engineering.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 6.4: DOM SELECTION METHODS
+% ==============================================================================
+\section{DOM Element Selection Methods}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Method} & \textbf{Return Type} & \textbf{Matching Rule} & \textbf{Live Collection?} \\
+\midrule
+\texttt{getElementById(id)} & Single \texttt{Element} / \texttt{null} & Matches element by unique ID string & N/A \\
+\texttt{getElementsByClassName(name)} & \texttt{HTMLCollection} & Matches all elements with class name & **Yes** (Live) \\
+\texttt{getElementsByTagName(tag)} & \texttt{HTMLCollection} & Matches all elements with tag name & **Yes** (Live) \\
+\texttt{querySelector(selector)} & Single \texttt{Element} / \texttt{null} & Matches **first element** satisfying CSS selector & Static \\
+\texttt{querySelectorAll(selector)} & \texttt{NodeList} & Matches **all elements** satisfying CSS selector & **Static** (Supports \texttt{.forEach()}) \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Traditional vs. Modern DOM Selection Methods.}
+\label{tab:dom-selectors}
+\end{table}
+
+\begin{jscode}{DOM Element Selection in Practice}
+// 1. Traditional ID selection
+const header = document.getElementById("main-header");
+
+// 2. Traditional Class Name collection (HTMLCollection)
+const activeItems = document.getElementsByClassName("nav-item");
+console.log("First Nav Item:", activeItems[0]);
+
+// 3. Modern CSS Selector (First match)
+const primaryBtn = document.querySelector("button.btn-primary");
+
+// 4. Modern All CSS Selectors (NodeList)
+const allCards = document.querySelectorAll(".card-container .card");
+allCards.forEach((card, index) => {
+    console.log(`Card ${index + 1}:`, card);
+});
+\end{jscode}
+
+% ==============================================================================
+% SECTION 6.5: NODE CREATION, MUTATION \& TRAVERSAL
+% ==============================================================================
+\section{DOM Elements: Creation, Deletion, and Tree Traversal}
+
+\subsection{Creating and Appending Nodes}
+\begin{jscode}{Dynamically Constructing and Inserting Elements}
+// Step 1: Create new <li> element node
+const newListItem = document.createElement("li");
+
+// Step 2: Set content and attributes
+newListItem.textContent = "Unit 6: JavaScript DOM";
+newListItem.className = "completed-module";
+
+// Step 3: Locate target parent node
+const moduleList = document.getElementById("courseModules");
+
+// Step 4: Append child to parent
+moduleList.appendChild(newListItem);
+
+// Step 5: Removing a node
+const obsoleteItem = document.getElementById("tempItem");
+if (obsoleteItem) {
+    obsoleteItem.remove(); // Removes node directly from DOM
+}
+\end{jscode}
+
+\subsection{DOM Tree Traversal Properties}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{element.parentNode}: References the direct parent element node.
+    \item \texttt{element.children}: Returns a collection of child **element nodes only** (ignores whitespace text nodes).
+    \item \texttt{element.nextElementSibling}: References the immediate next sibling element.
+    \item \texttt{element.previousElementSibling}: References the immediate previous sibling element.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 6.6: DOM CONTENT \& ATTRIBUTES
+% ==============================================================================
+\section{DOM HTML: Manipulating Content and Attributes}
+
+\subsection{Content Manipulation: \texttt{innerHTML} vs. \texttt{textContent}}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Property} & \textbf{HTML Parsing Behavior} & \textbf{Security \& Performance} \\
+\midrule
+\textbf{\texttt{innerHTML}} & **Parses HTML tags** inside the assigned string, creating real DOM child nodes. & **Security Risk**: Susceptible to Cross-Site Scripting (XSS) attacks if rendering unsanitized user inputs. \\
+\textbf{\texttt{textContent}} & Treats the assigned string as **pure literal text** (does NOT parse tags). & **Safe**: Immune to XSS injection; higher performance. \\
+\textbf{\texttt{innerText}} & Renders text respecting computed CSS styling (ignores hidden elements). & Slower (triggers browser reflow calculation). \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of \texttt{innerHTML}, \texttt{textContent}, and \texttt{innerText}.}
+\label{tab:content-properties}
+\end{table}
+
+\begin{jscode}{Content and Attribute Modification}
+const displayBox = document.getElementById("statusBox");
+
+// textContent renders tags as literal characters: "<strong>Active</strong>"
+displayBox.textContent = "<strong>Active</strong>";
+
+// innerHTML parses tags into bold element
+displayBox.innerHTML = "<strong>Active</strong>";
+
+// Attribute Modification Methods
+const userImage = document.getElementById("profilePic");
+userImage.setAttribute("src", "avatar2.png");
+console.log("Image source:", userImage.getAttribute("src"));
+userImage.removeAttribute("alt");
+\end{jscode}
+
+% ==============================================================================
+% SECTION 6.7: DOM CSS MANIPULATION
+% ==============================================================================
+\section{DOM CSS: Dynamic Styling \& The \texttt{classList} API}
+
+\subsection{1. The \texttt{style} Property (Inline Styling)}
+Sets inline styles on an element. CSS property names with hyphens are translated to **camelCase**:
+\begin{jscode}{Manipulating Inline Styles}
+const modal = document.getElementById("popupModal");
+
+// CSS: background-color -> JS: backgroundColor
+modal.style.backgroundColor = "#0f172a";
+modal.style.fontSize = "18px";
+modal.style.display = "block"; // Make visible
+\end{jscode}
+
+\subsection{2. The \texttt{classList} API (Best Practice)}
+Instead of managing individual style strings, modern web architecture toggles CSS classes:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Method Call} & \textbf{Behavior} & \textbf{Return Value} \\
+\midrule
+\texttt{element.classList.add("active")} & Adds the specified class if absent & \texttt{void} \\
+\texttt{element.classList.remove("active")} & Removes the class if present & \texttt{void} \\
+\texttt{element.classList.toggle("active")} & Adds if absent; removes if present & \texttt{Boolean} \\
+\texttt{element.classList.contains("active")} & Checks if class is present & \texttt{Boolean} (\texttt{true}/\texttt{false}) \\
+\bottomrule
+\end{tabularx}
+\caption{Methods of the \texttt{DOMTokenList} (\texttt{classList}) Interface.}
+\label{tab:classlist-methods}
+\end{table}
+
+\begin{jscode}{ClassList State Machine Toggling}
+const themeBtn = document.getElementById("btnToggleTheme");
+
+themeBtn.addEventListener("click", function() {
+    // Toggles 'dark-mode' class on the <body> tag
+    document.body.classList.toggle("dark-mode");
+    
+    if (document.body.classList.contains("dark-mode")) {
+        themeBtn.innerText = "Switch to Light Mode";
+    } else {
+        themeBtn.innerText = "Switch to Dark Mode";
+    }
+});
+\end{jscode}
+
+% ==============================================================================
+% SECTION 6.8: DOM EVENTS \& EVENT PROPAGATION
+% ==============================================================================
+\section{DOM Events, The Event Object \& Event Propagation}
+
+\subsection{The \texttt{Event} Object}
+When an event listener fires, the browser automatically passes an **\texttt{Event} object** containing context data:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{event.target}: References the exact innermost HTML element that originated the event.
+    \item \texttt{event.preventDefault()}: Cancels default browser behavior.
+    \item \texttt{event.clientX}, \texttt{event.clientY}: Horizontal and vertical coordinates of the mouse pointer.
+\end{itemize}
+
+\subsection{Event Propagation: Bubbling vs. Capturing}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, auto, >=Stealth]
+    % Outer Box
+    \draw[draw=webnavy, fill=webblue!10, rounded corners, line width=1pt] (0,0) rectangle (10, 4);
+    \node[font=\footnotesize\bfseries\color{webnavy}] at (1.5, 3.6) {<div id="parent">};
+
+    % Inner Button
+    \draw[draw=webgreen!80!black, fill=webgreen!20, rounded corners, line width=1pt] (3, 1) rectangle (7, 2.5);
+    \node[font=\small\bfseries\color{webgreen!80!black}] at (5, 1.75) {<button id="child">};
+
+    % Bubbling Arrow (Up)
+    \draw[->, line width=1.5pt, webred] (7.5, 1.75) -- node[right, font=\footnotesize\bfseries\color{webred}] {1. Event Bubbling (Default: Child -> Parent -> Window)} (7.5, 3.6);
+\end{tikzpicture}
+\caption{Event Bubbling Flow from Target Element Upwards to Ancestors.}
+\label{fig:event-bubbling}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Event Bubbling (Default)}: The event triggers on the innermost target element first, then bubbles upward through parent containers to \texttt{document} and \texttt{window}.
+    \item \textbf{Event Capturing}: The event trickles downward from \texttt{window} through ancestor containers down to the target element (enabled by passing \texttt{true} as 3rd parameter in \texttt{addEventListener}).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.9: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 6 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{querySelector} Prefix Requirement}: When selecting by class, \texttt{querySelector("active")} fails! You MUST include the period: \texttt{querySelector(".active")}.
+    \item \textbf{\texttt{NodeList} vs \texttt{HTMLCollection}}: \texttt{querySelectorAll()} returns a static \texttt{NodeList} with \texttt{.forEach()}; \texttt{getElementsByClassName()} returns a live \texttt{HTMLCollection} lacking \texttt{.forEach()} on older engines.
+    \item \textbf{CSS Property Names in JS}: Writing \texttt{el.style.background-color = "red"} causes a JavaScript \texttt{SyntaxError} (subtraction operator). Always use camelCase: \texttt{el.style.backgroundColor = "red"}.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 6.10: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[innerHTML vs textContent Output]
+\textbf{Question}: What will be rendered inside \texttt{\#box1} and \texttt{\#box2}?
+\begin{lstlisting}[language=HTML5]
+<div id="box1"></div>
+<div id="box2"></div>
+<script>
+    document.getElementById("box1").textContent = "<em>Hello</em>";
+    document.getElementById("box2").innerHTML = "<em>Hello</em>";
+</script>
+\end{lstlisting}
+\textbf{Answer \& Layout Tracing}:
+\begin{itemize}
+    \item \texttt{\#box1} renders the literal characters: \texttt{<em>Hello</em>}
+    \item \texttt{\#box2} parses the tag and renders in italics: \textit{Hello}
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing DOM Selector and Style Property Errors]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=JavaScript]
+const item = document.querySelector("my-card"); // Missing # or .
+item.style.font-size = "20px";                   // SyntaxError!
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: Selector string \texttt{"my-card"} looks for an element with tag name \texttt{<my-card>}. Add class dot \texttt{".my-card"}.
+    \item \textbf{Bug 2}: \texttt{font-size} must be written in camelCase \texttt{fontSize}.
+\end{enumerate}
+\textbf{Corrected Code}:
+\begin{lstlisting}[language=JavaScript]
+const item = document.querySelector(".my-card");
+item.style.fontSize = "20px";
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 6.11: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 6 Practice Exercises]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write JavaScript code to change the text content of a heading with \texttt{id="title"} to "Welcome to LPU".
+    \item \textbf{Level 1 (Foundation)}: Select all paragraphs on a page and change their text color to dark blue using \texttt{querySelectorAll()} and \texttt{.forEach()}.
+    \item \textbf{Level 2 (Standard)}: Write a function that creates a new button labeled "Delete", appends it to a card \texttt{<div>}, and adds a click event listener that removes the card from the DOM.
+    \item \textbf{Level 2 (Standard)}: Implement a dark mode toggler using \texttt{classList.toggle("dark-theme")} and update the button label.
+    \item \textbf{Level 3 (Exam Tier)}: Build an interactive shopping cart item counter with Increment (\texttt{+}) and Decrement (\texttt{-}) buttons updating a quantity label in the DOM.
+    \item \textbf{Level 3 (Exam Tier)}: Create an image carousel script that changes the \texttt{src} attribute of an \texttt{<img>} tag sequentially across an array of image URLs upon clicking a "Next" button.
+    \item \textbf{Level 4 (Challenge)}: Design a complete interactive To-Do List application supporting adding items from an input field, marking items complete via class toggling, and deleting individual tasks.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 6 Practice Problems]
+\noindent\textbf{Solution to Problem 3 (Dynamic Card Removal)}:
+\begin{lstlisting}[language=JavaScript]
+const card = document.getElementById("studentCard");
+const delBtn = document.createElement("button");
+delBtn.textContent = "Delete Card";
+delBtn.className = "btn-danger";
+
+delBtn.addEventListener("click", function() {
+    card.remove(); // Removes parent card element completely
+});
+
+card.appendChild(delBtn);
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 7 (Interactive To-Do List)}:
+\begin{lstlisting}[language=JavaScript]
+const addBtn = document.getElementById("btnAdd");
+const taskInput = document.getElementById("txtTask");
+const taskList = document.getElementById("taskList");
+
+addBtn.addEventListener("click", function() {
+    const text = taskInput.value.trim();
+    if (text === "") return;
+
+    // 1. Create list item
+    const li = document.createElement("li");
+    li.textContent = text;
+
+    // 2. Toggle completion on click
+    li.addEventListener("click", function() {
+        li.classList.toggle("completed");
+    });
+
+    // 3. Add delete action
+    const btnRemove = document.createElement("button");
+    btnRemove.textContent = " [X]";
+    btnRemove.addEventListener("click", function(e) {
+        e.stopPropagation(); // Stop click from toggling completion
+        li.remove();
+    });
+
+    li.appendChild(btnRemove);
+    taskList.appendChild(li);
+    taskInput.value = ""; // Reset input
+});
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.12: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which DOM method returns the FIRST element matching a specified CSS selector?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{querySelectorAll()} \quad (b) \texttt{querySelector()} \quad (c) \texttt{getElement()} \quad (d) \texttt{find()}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{querySelector()} returns the first matching element node.}
+
+    \item Which property safely inserts text content without parsing HTML tags or risking XSS?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{innerHTML} \quad (b) \texttt{textContent} \quad (c) \texttt{outerHTML} \quad (d) \texttt{document.write()}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{textContent} treats input as pure literal text.}
+
+    \item How is the CSS property \texttt{font-size} accessed via the DOM \texttt{style} object?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{el.style.font-size} \quad (b) \texttt{el.style.fontSize} \quad (c) \texttt{el.style["font-size"]} \quad (d) Both (b) and (c)
+    \end{enumerate}
+    \textbf{Answer}: (d) --- \textit{Accessed either via camelCase property \texttt{fontSize} or bracket string \texttt{["font-size"]}.}
+
+    \item Which \texttt{classList} method adds a class if absent and removes it if present?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{add()} \quad (b) \texttt{remove()} \quad (c) \texttt{toggle()} \quad (d) \texttt{replace()}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{classList.toggle()} handles two-way state switching.}
+
+    \item What is the default event propagation direction in JavaScript?
+    \begin{enumerate}[label=(\alph*)]
+        \item Event Capturing \quad (b) Event Bubbling \quad (c) Event Broadcasting \quad (d) Static Dispatch
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Events bubble upwards from child target to ancestors by default.}
+
+    \item Which method creates a new HTML element node in memory?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{document.makeElement()} \quad (b) \texttt{document.createElement()} \quad (c) \texttt{document.newNode()} \quad (d) \texttt{new Element()}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{document.createElement(tagName)} instantiates a new element.}
+
+    \item What does \texttt{event.target} reference inside an event handler?
+    \begin{enumerate}[label=(\alph*)]
+        \item The \texttt{window} object \quad (b) The element that originated the event \quad (c) The event name \quad (d) Previous sibling
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{event.target} points to the actual originating element.}
+
+    \item Which property returns only child ELEMENT nodes, excluding whitespace text nodes?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{childNodes} \quad (b) \texttt{children} \quad (c) \texttt{allNodes} \quad (d) \texttt{elements}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{children} filters out non-element nodes.}
+
+    \item What is the effect of calling \texttt{document.write()} after the page has fully loaded?
+    \begin{enumerate}[label=(\alph*)]
+        \item Appends to bottom \quad (b) Overwrites entire document \quad (c) Raises error \quad (d) Ignored
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Calling \texttt{document.write()} post-load overwrites the DOM.}
+
+    \item Which method checks if an element contains a specific class without altering it?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{classList.has()} \quad (b) \texttt{classList.contains()} \quad (c) \texttt{classList.check()} \quad (d) \texttt{classList.is()}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{classList.contains("class")} returns boolean true/false.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.13: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 6 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the difference between \texttt{innerHTML} and \texttt{textContent} with respect to security.
+    \item Differentiate between Event Bubbling and Event Capturing.
+    \item State two advantages of using \texttt{classList} over direct \texttt{style} property assignments.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Analysis ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output when the button is clicked twice:
+    \begin{lstlisting}[language=HTML5]
+<button id="btn">Click</button>
+<script>
+    const b = document.getElementById("btn");
+    b.addEventListener("click", () => {
+        b.classList.toggle("active");
+        console.log(b.classList.contains("active"));
+    });
+</script>
+    \end{lstlisting}
+    \item Explain how to dynamically create an image element and append it to \texttt{document.body}.
+    \item Differentiate between \texttt{querySelector()} and \texttt{querySelectorAll()}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete JavaScript program that dynamically generates a Product Inventory Table:
+    \begin{enumerate}[label=(\alph*)]
+        \item Given an array of product objects \texttt{[{id: 1, name: "Laptop", price: 50000}, ...]}, dynamically create a \texttt{<table>} with headers and rows. (4 Marks)
+        \item Append an "Action" column containing a "Remove" button in each row. (3 Marks)
+        \item Add click event listeners to the remove buttons that delete the corresponding row from the table dynamically. (3 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 6 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{innerHTML vs textContent Security} [2 Marks]: \texttt{innerHTML} parses HTML tags and executable scripts, making it vulnerable to XSS injection when displaying unsanitized user inputs. \texttt{textContent} treats all inputs as literal text, providing built-in injection immunity.
+    \item \textbf{Bubbling vs. Capturing} [2 Marks]: Bubbling propagates events upwards from the target child to ancestors. Capturing trickles events downwards from the window to the target child.
+    \item \textbf{ClassList Advantages} [2 Marks]: (1) Preserves clean separation of concerns by referencing pre-compiled CSS classes; (2) Enables easy multi-state toggling without overwriting other active classes.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Toggle Tracing} [3 Marks]: Click 1 adds \texttt{"active"} $\to$ logs \texttt{true}. Click 2 removes \texttt{"active"} $\to$ logs \texttt{false}.
+    \item \textbf{Dynamic Image} [3 Marks]:
+\begin{lstlisting}[language=JavaScript]
+const img = document.createElement("img");
+img.src = "logo.png";
+img.alt = "Portal Logo";
+document.body.appendChild(img);
+\end{lstlisting}
+    \item \textbf{QuerySelector vs All} [3 Marks]: \texttt{querySelector} returns only the first matching single Element; \texttt{querySelectorAll} returns a static \texttt{NodeList} containing all matching elements.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Dynamic Inventory Table Implementation} [10 Marks]:
+\begin{lstlisting}[language=JavaScript]
+const products = [
+    { id: 101, name: "Mechanical Keyboard", price: 3500 },
+    { id: 102, name: "Gaming Mouse", price: 1800 },
+    { id: 103, name: "FHD Monitor", price: 12000 }
+];
+
+function buildInventoryTable() {
+    const table = document.createElement("table");
+    table.border = "1";
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+
+    // Header Row
+    const thead = document.createElement("thead");
+    thead.innerHTML = `<tr><th>ID</th><th>Product Name</th><th>Price (Rs.)</th><th>Action</th></tr>`;
+    table.appendChild(thead);
+
+    // Body Rows
+    const tbody = document.createElement("tbody");
+    products.forEach(p => {
+        const tr = document.createElement("tr");
+
+        const tdId = document.createElement("td");
+        tdId.textContent = p.id;
+
+        const tdName = document.createElement("td");
+        tdName.textContent = p.name;
+
+        const tdPrice = document.createElement("td");
+        tdPrice.textContent = p.price;
+
+        const tdAction = document.createElement("td");
+        const btnDelete = document.createElement("button");
+        btnDelete.textContent = "Remove";
+        btnDelete.addEventListener("click", () => tr.remove());
+        tdAction.appendChild(btnDelete);
+
+        tr.append(tdId, tdName, tdPrice, tdAction);
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    document.getElementById("inventoryContainer").appendChild(table);
+}
+
+buildInventoryTable();
+\end{lstlisting}
+\textbf{Marking Scheme}: Table \& header generation: 4M; Row \& data binding: 3M; Dynamic row deletion event listener: 3M.
+\end{enumerate}
+\end{solutionbox}

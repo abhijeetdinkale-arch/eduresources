@@ -1,0 +1,318 @@
+\chapter{Unit 2: Projection of Points \& Lines}
+
+\section{A. What You'll Learn}
+Projection is the representation of a 3D physical object onto a 2D plane surface. In this unit, you will master:
+\begin{itemize}
+    \item Principal Planes of Projection ($VP, HP, PP$) and the $XY$ Reference Line.
+    \item Principles of Quadrants and comparison of **First Angle Projection** vs. **Third Angle Projection**.
+    \item Standard point notation and rules for projecting points across all 4 quadrants.
+    \item Projection of straight lines across 6 fundamental orientation cases.
+    \item Finding True Length ($TL$) and true inclinations ($\theta, \phi$) using the **Rotating Line Method**.
+    \item Locating Horizontal Trace ($HT$) and Vertical Trace ($VT$) of a line.
+    \item AutoCAD commands for point and line drawing (\texttt{LINE}, \texttt{CIRCLE}, \texttt{ARC}, \texttt{PLINE}, \texttt{DIMALIGNED}).
+\end{itemize}
+
+---
+
+\section{B. Introduction to Orthographic Projections}
+
+\begin{definition}[Orthographic Projection]
+A technical drawing method in which parallel projectors extending from an observer at infinity intersect the plane of projection at right angles ($90^\circ$), forming a 2D image of a 3D object.
+\end{definition}
+
+\subsection{Principal Planes and Reference Line}
+\begin{itemize}
+    \item \textbf{Vertical Plane (VP):} Placed vertically in front of the observer. The view obtained on the VP is called the \textbf{Front View (FV)} or \textbf{Elevation}.
+    \item \textbf{Horizontal Plane (HP):} Placed horizontally. The view obtained on the HP is called the \textbf{Top View (TV)} or \textbf{Plan}.
+    \item \textbf{Reference Line ($XY$ Line):} The line of intersection between the HP and VP.
+    \item \textbf{Profile Plane (PP):} Auxiliary plane placed perpendicular to both HP and VP, used for \textbf{Side Views}.
+\end{itemize}
+
+\subsection{Principles of Quadrants and Projection Systems}
+
+The intersection of VP and HP creates four quadrants ($1^{\text{st}}, 2^{\text{nd}}, 3^{\text{rd}}, 4^{\text{th}}$).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Feature} & \textbf{First Angle Projection (ISO)} & \textbf{Third Angle Projection (ANSI)} \\
+\midrule
+\textbf{Object Position} & $1^{\text{st}}$ Quadrant (Above HP, In front of VP) & $3^{\text{rd}}$ Quadrant (Below HP, Behind VP) \\
+\textbf{Observer Logic} & Observer $\longrightarrow$ Object $\longrightarrow$ Plane & Observer $\longrightarrow$ Plane $\longrightarrow$ Object \\
+\textbf{View Position} & Front View is \textbf{above} $XY$; Top View is \textbf{below} $XY$. & Top View is \textbf{above} $XY$; Front View is \textbf{below} $XY$. \\
+\textbf{Side View} & Left Side View drawn to \textbf{right} of FV. & Right Side View drawn to \textbf{right} of FV. \\
+\textbf{Usage} & Standard in India, Europe, Asia (ISO) & Standard in USA, Canada (ANSI) \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of First Angle and Third Angle Projection Systems.}
+\label{tab:1st-3rd-angle}
+\end{table}
+
+---
+
+\section{C. Orthographic Projection of Points}
+
+A point has position in space but no length, width, or thickness.
+
+\begin{importantrule}[Standard Point Notation]
+\begin{itemize}
+    \item \textbf{Actual Point in Space:} Capital Letter ($A, B, C$).
+    \item \textbf{Front View (on VP):} Lowercase letter with a dash ($a', b', c'$).
+    \item \textbf{Top View (on HP):} Lowercase letter without a dash ($a, b, c$).
+    \item \textbf{Side View (on PP):} Lowercase letter with double dash ($a'', b'', c''$).
+\end{itemize}
+\end{importantrule}
+
+\subsection{Rules for Projection of Points Across 4 Quadrants}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c l l l}
+\toprule
+\textbf{Quadrant} & \textbf{Spatial Position} & \textbf{Front View ($a'$)} & \textbf{Top View ($a$)} \\
+\midrule
+$1^{\text{st}}$ & Above HP, In front of VP & \textbf{Above} $XY$ line & \textbf{Below} $XY$ line \\
+$2^{\text{nd}}$ & Above HP, Behind VP & \textbf{Above} $XY$ line & \textbf{Above} $XY$ line (Overlapping) \\
+$3^{\text{rd}}$ & Below HP, Behind VP & \textbf{Below} $XY$ line & \textbf{Above} $XY$ line \\
+$4^{\text{th}}$ & Below HP, In front of VP & \textbf{Below} $XY$ line & \textbf{Below} $XY$ line (Overlapping) \\
+\bottomrule
+\end{tabularx}
+\caption{Point Projection Rules across Quadrants.}
+\label{tab:point-rules}
+\end{table}
+
+\begin{example}[Point Projection Problem]
+\textbf{Problem:} Draw the projections of the following points on a common reference line $XY$:
+1. Point $A$ is $20\text{ mm}$ above HP and $30\text{ mm}$ in front of VP.
+2. Point $B$ is $25\text{ mm}$ below HP and $40\text{ mm}$ behind VP.
+3. Point $C$ is in the HP and $35\text{ mm}$ behind VP.\\[4pt]
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Point $A$ ($1^{\text{st}}$ Quadrant):} Draw projector line perpendicular to $XY$. Mark $a'$ $20\text{ mm}$ above $XY$ and $a$ $30\text{ mm}$ below $XY$.
+    \item **Point $B$ ($3^{\text{rd}}$ Quadrant):** Mark $b'$ $25\text{ mm}$ below $XY$ and $b$ $40\text{ mm}$ above $XY$.
+    \item **Point $C$ (In HP, Behind VP):** $c'$ lies on $XY$ line; $c$ is $35\text{ mm}$ above $XY$.
+\end{enumerate}
+\end{example}
+
+---
+
+\section{D. Projection of Straight Lines}
+
+A line is the shortest path connecting two points. Projection of a line depends on its orientation relative to HP and VP.
+
+\subsection{Fundamental Orientation Cases}
+
+\begin{enumerate}
+    \item \textbf{Line Parallel to Both HP and VP:}
+    \begin{itemize}
+        \item Front View: Horizontal line parallel to $XY$ showing True Length ($TL$).
+        \item Top View: Horizontal line parallel to $XY$ showing True Length ($TL$).
+    \end{itemize}
+    \item \textbf{Line Perpendicular to HP and Parallel to VP:}
+    \begin{itemize}
+        \item Front View: Vertical line perpendicular to $XY$ showing True Length ($TL$).
+        \item Top View: A point ($a \equiv b$).
+    \end{itemize}
+    \item \textbf{Line Perpendicular to VP and Parallel to HP:}
+    \begin{itemize}
+        \item Front View: A point ($a' \equiv b'$).
+        \item Top View: Vertical line perpendicular to $XY$ showing True Length ($TL$).
+    \end{itemize}
+    \item \textbf{Line Inclined to HP ($\theta$) and Parallel to VP:}
+    \begin{itemize}
+        \item Front View: Inclined line showing True Length ($TL$) and true angle $\theta$.
+        \item Top View: Horizontal line parallel to $XY$ showing apparent shorter length ($ab = TL \cos \theta$).
+    \end{itemize}
+    \item \textbf{Line Inclined to VP ($\phi$) and Parallel to HP:}
+    \begin{itemize}
+        \item Front View: Horizontal line parallel to $XY$ showing apparent shorter length ($a'b' = TL \cos \phi$).
+        \item Top View: Inclined line showing True Length ($TL$) and true angle $\phi$.
+    \end{itemize}
+    \item \textbf{Line Inclined to Both HP ($\theta$) and VP ($\phi$):}
+    \begin{itemize}
+        \item Neither view shows True Length directly.
+        \item Front View shows apparent length and apparent inclination angle $\alpha$.
+        \item Top View shows apparent length and apparent inclination angle $\beta$.
+        \item Requires the \textbf{Rotating Line Method}.
+    \end{itemize}
+\end{enumerate}
+
+---
+
+\section{E. The Rotating Line Method for Lines Inclined to Both Planes}
+
+\begin{keyequation}[Governing Relationships for Oblique Lines]
+\begin{equation}
+    \text{Front View Apparent Length } (a'b') = TL \cos \phi
+\end{equation}
+\begin{equation}
+    \text{Top View Apparent Length } (ab) = TL \cos \theta
+\end{equation}
+$$\text{Height Difference } (\Delta h) = TL \sin \theta, \quad \text{Depth Difference } (\Delta d) = TL \sin \phi$$
+\end{keyequation}
+
+\subsection{Step-by-Step Construction Procedure}
+
+\begin{enumerate}
+    \item \textbf{Reference Line \& End A:} Draw $XY$ line. Plot locus of $A$: front view $a'$ above $XY$ and top view $a$ below $XY$.
+    \item **True Length Inclination Lines:**
+    \begin{itemize}
+        \item From $a'$, draw line $a'b_1'$ equal to $TL$ at true angle $\theta$ to horizontal.
+        \item From $a$, draw line $ab_2$ equal to $TL$ at true angle $\phi$ to horizontal.
+    \end{itemize}
+    \item **Locus Lines:** Draw horizontal locus lines through $b_1'$ (Locus of $B$ in FV) and through $b_2$ (Locus of $B$ in TV).
+    \item **Apparent Front View Construction:**
+    \begin{itemize}
+        \item Project $b_2$ vertically up to meet horizontal line from $a'$ at point $b_2'$.
+        \item With center $a'$ and radius $a'b_2'$, draw an arc to intersect locus of $B$ in FV at point $b'$.
+        \item Join $a'b'$ to get final **Front View** (apparent angle $\alpha$).
+    \end{itemize}
+    \item **Apparent Top View Construction:**
+    \begin{itemize}
+        \item Project $b_1'$ vertically down to meet horizontal line from $a$ at point $b_1$.
+        \item With center $a$ and radius $ab_1$, draw an arc to intersect locus of $B$ in TV at point $b$.
+        \item Join $ab$ to get final **Top View** (apparent angle $\beta$).
+    \end{itemize}
+    \item **Check:** Points $b'$ and $b$ MUST lie on the same vertical projector line!
+\end{enumerate}
+
+\begin{example}[Line Inclined to Both Planes]
+\textbf{Problem:} A line $AB$, $75\text{ mm}$ long, has its end $A$ $15\text{ mm}$ above HP and $20\text{ mm}$ in front of VP. The line is inclined at $45^\circ$ to HP and $30^\circ$ to VP. Draw its projections.\\[4pt]
+\textbf{Solution Step 1: Given Data}
+$$TL = 75\text{ mm}, \quad \text{End } A: a' = 15\text{ mm above } XY, \quad a = 20\text{ mm below } XY, \quad \theta = 45^\circ, \quad \phi = 30^\circ$$
+
+\noindent \textbf{Solution Step 2: Calculate Apparent Lengths}
+$$\text{Top View Length } (ab_1) = TL \cos \theta = 75 \cos 45^\circ = 75 \times 0.707 = \mathbf{53.03\text{ mm}}$$
+$$\text{Front View Length } (a'b_2') = TL \cos \phi = 75 \cos 30^\circ = 75 \times 0.866 = \mathbf{64.95\text{ mm}}$$
+
+\noindent \textbf{Solution Step 3: Draw Projections}
+Follow 6-step Rotating Line construction procedure to plot $a'b'$ and $ab$.
+\end{example}
+
+---
+
+\section{F. Concept of Traces}
+
+Traces are the points where a line (extended if necessary) intersects the reference planes.
+
+\begin{definition}[Horizontal Trace (HT)]
+The point of intersection of the line with the Horizontal Plane (HP).
+\begin{itemize}
+    \item To locate $\text{HT}$: Extend Front View $a'b'$ to meet $XY$ at point $h$. From $h$, erect a perpendicular to intersect the extended Top View $ab$ at point $\mathbf{\text{HT}}$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Vertical Trace (VT)]
+The point of intersection of the line with the Vertical Plane (VP).
+\begin{itemize}
+    \item To locate $\text{VT}$: Extend Top View $ab$ to meet $XY$ at point $v$. From $v$, erect a perpendicular to intersect the extended Front View $a'b'$ at point $\mathbf{\text{VT}}$.
+\end{itemize}
+\end{definition}
+
+---
+
+\section{G. AutoCAD Commands for Points and Lines}
+
+\begin{autocadcmd}[LINE]
+Creates straight line segments.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{LINE} or \texttt{L}
+    \item \textbf{Absolute Coordinates:} Type \texttt{L} $\to$ \texttt{Enter} $\to$ Type \texttt{X,Y} (e.g., \texttt{10,20}).
+    \item \textbf{Polar Coordinates:} Type \texttt{@length<angle} (e.g., \texttt{@75<45}).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[PLINE]
+Creates 2D polylines (connected sequence of line/arc segments forming a single object).
+\begin{itemize}
+    \item \textbf{Command:} \texttt{PLINE} or \texttt{PL}
+    \item \textbf{Difference from Line:} A rectangle drawn with \texttt{LINE} consists of 4 separate objects; drawn with \texttt{PLINE} it is 1 unified object.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[DIMALIGNED]
+Measures true length of inclined lines.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{DIMALIGNED} or \texttt{DAL}
+    \item \textbf{Usage:} Click start endpoint $\to$ Click end endpoint $\to$ Drag dimension position.
+\end{itemize}
+\end{autocadcmd}
+
+---
+
+\section{H. Chapter 2 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+If a point lies in the $3^{\text{rd}}$ quadrant, state the position of its Front View and Top View relative to the $XY$ line.\\[4pt]
+\textbf{Answer:} Front View ($a'$) is **below** $XY$ line; Top View ($a$) is **above** $XY$ line.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+What is a Horizontal Trace ($\text{HT}$)? Describe the procedure to locate $\text{HT}$.\\[4pt]
+\textbf{Answer:} $\text{HT}$ is the point where a line intersects the Horizontal Plane. To locate $\text{HT}$, extend Front View $a'b'$ to intersect $XY$ at $h$, then project vertically to meet the extended Top View $ab$ at $\text{HT}$.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+A line $PQ$ $80\text{ mm}$ long is inclined at $30^\circ$ to HP and $45^\circ$ to VP. End $P$ is $20\text{ mm}$ above HP and $25\text{ mm}$ in front of VP. Calculate the apparent lengths of Front View and Top View.\\[4pt]
+\textbf{Answer:}  
+$$\text{Front View Apparent Length} = TL \cos \phi = 80 \cos 45^\circ = 80 \times 0.707 = \mathbf{56.57\text{ mm}}$$
+$$\text{Top View Apparent Length} = TL \cos \theta = 80 \cos 30^\circ = 80 \times 0.866 = \mathbf{69.28\text{ mm}}$$
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. In First Angle Projection, where is the Top View drawn?  
+   A. Above Front View  
+   B. Below Front View  
+   C. To the left of Front View  
+   D. On the $XY$ line  
+   \textbf{Answer: B} — Top View is drawn below Front View in First Angle Projection.
+
+2. If a line is parallel to VP and perpendicular to HP, its Top View will be a:  
+   A. Line showing True Length  
+   B. Line parallel to $XY$  
+   C. Point  
+   D. Inclined line  
+   \textbf{Answer: C} — Top view of a line perpendicular to HP is a point.
+
+3. The point where the extended front view of a line meets the $XY$ reference line is called:  
+   A. Horizontal Trace ($\text{HT}$)  
+   B. Vertical Trace ($\text{VT}$)  
+   C. Point $h$  
+   D. Point $v$  
+   \textbf{Answer: C} — Meeting point of FV on $XY$ is $h$; projecting vertically to TV gives $\text{HT}$.
+
+4. Which AutoCAD command measures the exact length of an inclined line?  
+   A. \texttt{DIMLINEAR}  
+   B. \texttt{DIMALIGNED}  
+   C. \texttt{DIMANGULAR}  
+   D. \texttt{DIST}  
+   \textbf{Answer: B} — \texttt{DIMALIGNED} measures true length of inclined lines.
+
+5. What is the relation between true length ($TL$) and apparent front view length ($FVL$) when a line is inclined to VP at angle $\phi$?  
+   A. $FVL = TL \sin \phi$  
+   B. $FVL = TL \cos \phi$  
+   C. $FVL = TL \tan \phi$  
+   D. $FVL = TL$  
+   \textbf{Answer: B} — $FVL = TL \cos \phi$.
+
+---
+
+\section{I. Unit 2 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $1^{\text{st}}\text{ Angle: } \text{FV above } XY, \text{ TV below } XY$; $3^{\text{rd}}\text{ Angle: } \text{TV above } XY, \text{ FV below } XY$.
+    \item $\text{Point Notation: } \text{Capital } A = \text{Space}, \quad a' = \text{FV (on VP)}, \quad a = \text{TV (on HP)}$.
+    \item $\text{Line } \parallel \text{ to plane } \to \text{Shows True Length } TL$; $\text{Line } \perp \text{ to plane } \to \text{Appears as a Point}$.
+    \item $\text{Front View Apparent Length } = TL \cos \phi$; $\text{Top View Apparent Length } = TL \cos \theta$.
+    \item $\text{Rotating Line Method: } \text{Projectors } b' \text{ and } b \text{ must align vertically}$.
+    \item $\text{HT location: } \text{Extend FV } \to h \text{ on } XY \to \text{project to extended TV } \to \text{HT}$.
+    \item $\text{VT location: } \text{Extend TV } \to v \text{ on } XY \to \text{project to extended FV } \to \text{VT}$.
+    \item $\text{AutoCAD: } \texttt{LINE (@length<angle)}, \quad \texttt{DIMALIGNED} \text{ for inclined lengths}$.
+\end{itemize}
+\end{revisionchecklist}

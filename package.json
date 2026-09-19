@@ -1,0 +1,15 @@
+{
+  "name": "edu-network-platform",
+  "version": "1.0.0",
+  "description": "Edu network Academic Material & Book Platform",
+  "main": "viewer-platform/server/index.js",
+  "scripts": {
+    "postinstall": "cd viewer-platform && npm install && cd client && npm install",
+    "build": "cd viewer-platform/client && npm install && npm run build && cd ../server && npm install",
+    "start": "node viewer-platform/server/index.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

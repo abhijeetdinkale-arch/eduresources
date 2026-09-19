@@ -1,0 +1,415 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{style}
+
+\title{\textbf{\LARGE CSE326: Internet Programming \& Web Technologies}\\[3mm]
+\Large\textbf{Master Handwritten-Style 1-Shot Revision Notes}\\[2mm]
+\large\textit{Comprehensive Unit 1 to Unit 6 Quick Review, Syntaxes, Tables \& High-Yield Alerts}}
+\author{\textbf{School of Computer Science \& Engineering} \\ Lovely Professional University}
+\date{Academic Year 2024--2025 / 2025--2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% UNIT 1: HTML5 FUNDAMENTALS, DOCUMENT STRUCTURE & PROTOCOLS
+% ==============================================================================
+\section{Unit 1: HTML5 Fundamentals, Document Architecture \& Protocols}
+
+\begin{conceptbox}[Core Concept 1.1: Web vs. Internet \& TCP/IP Stack]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Internet (1983, TCP/IP)}: Global interconnected network of hardware and networks.
+    \item \textbf{World Wide Web (1989/1990, Tim Berners-Lee)}: Application-layer service using HTTP to transfer hypertext documents.
+    \item \textbf{TCP/IP 4-Layer Architecture}:
+    \begin{enumerate}
+        \item \textbf{Application}: HTTP (Port 80), HTTPS (Port 443), DNS (Port 53), SMTP (Port 25).
+        \item \textbf{Transport}: TCP (Connection-oriented, 3-way handshake: SYN $\to$ SYN-ACK $\to$ ACK, reliable), UDP (Connectionless, fast).
+        \item \textbf{Internet}: IP (IPv4: 32-bit dotted-decimal, IPv6: 128-bit hex), Routing.
+        \item \textbf{Link}: Ethernet, Wi-Fi (802.11), MAC addressing.
+    \end{enumerate}
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[URL Anatomy \& DNS Resolution]
+\textbf{URL Structure}: \texttt{https://www.example.com:443/courses/web.html?id=101\#unit1}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Scheme}: \texttt{https://} | \textbf{Host}: \texttt{www.example.com} | \textbf{Port}: \texttt{443} | \textbf{Path}: \texttt{/courses/web.html} | \textbf{Query}: \texttt{?id=101} | \textbf{Fragment}: \texttt{\#unit1}
+    \item \textbf{DNS}: Resolves human-readable domain names (\texttt{example.com}) to IP addresses (\texttt{93.184.216.34}).
+\end{itemize}
+\end{handwbox}
+
+\begin{examalert}[Essential HTML5 Document Template]
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html> <!-- Standards Mode Trigger -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding: supports symbols e.g. INR, EUR, Emojis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile responsiveness -->
+  <meta name="description" content="SEO snippet">
+  <title>Document Title</title>
+</head>
+<body>
+  <!-- Visible Page Content -->
+</body>
+</html>
+\end{lstlisting}
+\end{examalert}
+
+\begin{conceptbox}[Core Concept 1.2: Semantic vs. Presentational Elements]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Headings}: \texttt{<h1>} (Largest, single primary title) down to \texttt{<h6>} (Smallest sub-heading).
+    \item \textbf{Strong vs. Bold}: \texttt{<strong>} = Semantic importance/urgency (vocalized with stress by screen readers); \texttt{<b>} = Stylistic bold font only.
+    \item \textbf{Emphasize vs. Italic}: \texttt{<em>} = Semantic emphasis; \texttt{<i>} = Stylistic italic/alternate voice.
+    \item \textbf{Definitions vs. Citations}: \texttt{<dfn>} = Defining instance of a term; \texttt{<cite>} = Title of a creative work (book, film, paper, song).
+    \item \textbf{Sub/Superscript}: \texttt{<sub>} (Subscript: $\text{H}_2\text{O}$) vs. \texttt{<sup>} (Superscript: $2^5=32$).
+    \item \textbf{Special Formatting}: \texttt{<mark>} (Yellow highlight), \texttt{<small>} (Fine print), \texttt{<abbr title="World Health Organization">WHO</abbr>}, \texttt{<hr>} (Thematic divider, void tag), \texttt{<br>} (Line break, void tag).
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[Block-level vs. Inline Elements]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Block-level}: Starts on a new line, takes 100\% available width (\texttt{<div>}, \texttt{<p>}, \texttt{<h1>-<h6>}, \texttt{<ul>}, \texttt{<ol>}, \texttt{<section>}, \texttt{<article>}, \texttt{<header>}, \texttt{<footer>}, \texttt{<main>}).
+    \item \textbf{Inline}: Flows inside text line, takes only required width (\texttt{<span>}, \texttt{<a>}, \texttt{<img>}, \texttt{<strong>}, \texttt{<em>}, \texttt{<b>}, \texttt{<i>}, \texttt{<label>}).
+\end{itemize}
+\end{handwbox}
+
+\newpage
+% ==============================================================================
+% UNIT 2: SEMANTIC HTML5, TABLES, FORMS & MEDIA
+% ==============================================================================
+\section{Unit 2: Semantic HTML5, Tables, Multimedia \& Forms Architecture}
+
+\begin{conceptbox}[Core Concept 2.1: Semantic Structural Landmarks]
+\begin{itemize}[leftmargin=*]
+    \item \texttt{<header>}: Introductory content and navigation for page or \texttt{<article>}.
+    \item \texttt{<nav>}: Container for major navigation links.
+    \item \texttt{<main>}: Dominant central content of document (strictly \textbf{one} per page).
+    \item \texttt{<article>}: Self-contained, independently distributable syndication content (e.g. blog post, product card).
+    \item \texttt{<section>}: Thematic grouping of content, typically with its own heading.
+    \item \texttt{<aside>}: Tangential sidebars, quotes, or adverts.
+    \item \texttt{<footer>}: Author, copyright (\texttt{\&copy;}), and legal links.
+    \item \texttt{<figure>} \& \texttt{<figcaption>}: Media container with caption binding.
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[HTML Lists \& Hyperlinks]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Unordered List}: \texttt{<ul style="list-style-type: disc|circle|square|none;"> <li>...</li> </ul>}
+    \item \textbf{Ordered List}: \texttt{<ol type="1|a|A|i|I" start="3" reversed> <li>...</li> </ol>}
+    \item \textbf{Description List}: \texttt{<dl> <dt>Term</dt> <dd>Definition</dd> </dl>}
+    \item \textbf{Anchor Tag}: \texttt{<a href="URL" target="\_blank" rel="noopener noreferrer">Text</a>}
+    \begin{itemize}
+        \item \texttt{mailto:user@domain.com} (Email link) | \texttt{tel:+919876543210} (Phone call link)
+        \item \texttt{\#sectionID} (Internal page fragment bookmark jump)
+    \end{itemize}
+    \item \textbf{Image Tag}: \texttt{<img src="img.jpg" alt="Description" width="200" height="150" loading="lazy">}
+\end{itemize}
+\end{handwbox}
+
+\begin{conceptbox}[Core Concept 2.2: Tables \& Spanning]
+\begin{lstlisting}[language=HTML]
+<table border="1" style="border-collapse: collapse;">
+  <caption>Student Fee Matrix</caption>
+  <thead>
+    <tr>
+      <th scope="col" rowspan="2">Roll No</th>
+      <th scope="col" colspan="2">Fees (INR)</th>
+    </tr>
+    <tr>
+      <th scope="col">Tuition</th>
+      <th scope="col">Hostel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>101</td>
+      <td>80,000</td>
+      <td>45,000</td>
+    </tr>
+  </tbody>
+</table>
+\end{lstlisting}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{colspan="N"}: Merges $N$ columns horizontally.
+    \item \texttt{rowspan="N"}: Merges $N$ rows vertically.
+    \item \texttt{scope="col|row"}: Screen reader accessible column/row association.
+\end{itemize}
+\end{conceptbox}
+
+\begin{examalert}[Core Concept 2.3: Forms Architecture \& Input Controls]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Form Attributes}: \texttt{action="submit.php"} | \texttt{method="GET"} (URL query string, non-sensitive) vs. \texttt{method="POST"} (HTTP body, secure, file uploads) | \texttt{enctype="multipart/form-data"} (Mandatory for file uploads).
+    \item \textbf{Form Controls}:
+    \begin{itemize}
+        \item Text: \texttt{type="text"}, \texttt{type="password"}, \texttt{type="email"}, \texttt{type="number" (min, max, step)}, \texttt{type="tel" (pattern)}.
+        \item Selection: \texttt{type="radio"} (Grouped via identical \texttt{name}), \texttt{type="checkbox"}.
+        \item Dropdown: \texttt{<select name="city" id="c" multiple size="4"> <option value="del" selected>Delhi</option> </select>}
+        \item Multi-line: \texttt{<textarea name="msg" rows="4" cols="50" placeholder="..."></textarea>}
+        \item File Upload: \texttt{<input type="file" accept=".pdf,.png" multiple>}
+    \end{itemize}
+    \item \textbf{Accessibility Rule}: Every control must bind to an explicit \texttt{<label for="id">}.
+\end{itemize}
+\end{examalert}
+
+\newpage
+% ==============================================================================
+% UNIT 3: CSS3 MASTERY, SELECTORS & THE BOX MODEL
+% ==============================================================================
+\section{Unit 3: CSS3 Mastery, Selectors, Typography \& The Box Model}
+
+\begin{conceptbox}[Core Concept 3.1: CSS Inclusion \& The Cascade]
+\begin{enumerate}
+    \item \textbf{Inline CSS}: \texttt{<h1 style="color: blue; text-align: center;">}
+    \item \textbf{Internal CSS}: \texttt{<style> h1 { color: blue; } </style>} inside \texttt{<head>}.
+    \item \textbf{External CSS}: \texttt{<link rel="stylesheet" type="text/css" href="style.css">}
+    \item \textbf{The Cascade Algorithm}: Importance (\texttt{!important}) $\to$ Specificity $\to$ Source Order (Last rule wins in a tie).
+\end{enumerate}
+\end{conceptbox}
+
+\begin{handwbox}[CSS Selectors \& Specificity Calculation]
+\textbf{Specificity Weight Triple $(a, b, c)$}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{a (IDs)}: \texttt{\#main-title} $\to (1, 0, 0)$
+    \item \textbf{b (Classes, Attributes, Pseudo-classes)}: \texttt{.card}, \texttt{[type="text"]}, \texttt{:hover}, \texttt{:nth-child()} $\to (0, 1, 0)$
+    \item \textbf{c (Type/Element, Pseudo-elements)}: \texttt{div}, \texttt{p}, \texttt{::before}, \texttt{::after} $\to (0, 0, 1)$
+    \item Universal selector \texttt{*}, combinators (\texttt{+}, \texttt{>}, \texttt{\~{}}, space) contribute $(0, 0, 0)$.
+\end{itemize}
+\textbf{Combinators}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Descendant} (\texttt{div p}): Any \texttt{<p>} inside \texttt{<div>}.
+    \item \textbf{Child} (\texttt{div > p}): Direct child \texttt{<p>} only.
+    \item \textbf{Adjacent Sibling} (\texttt{h2 + p}): First \texttt{<p>} immediately following \texttt{<h2>}.
+    \item \textbf{General Sibling} (\texttt{h2 \~{} p}): All sibling \texttt{<p>} elements following \texttt{<h2>}.
+\end{itemize}
+\end{handwbox}
+
+\begin{conceptbox}[Core Concept 3.2: The CSS Box Model]
+\begin{center}
+\begin{tabular}{|c|}
+\hline
+\textbf{MARGIN} (Transparent space outside the border) \\
+\hline
+\textbf{BORDER} (Stroke line surrounding padding: width, style, color) \\
+\hline
+\textbf{PADDING} (Clear space inside border around content) \\
+\hline
+\textbf{CONTENT} (Dimensions: \texttt{width} $\times$ \texttt{height}) \\
+\hline
+\end{tabular}
+\end{center}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Default} \texttt{box-sizing: content-box}:
+    $$\text{Rendered Box Width} = \text{width} + \text{padding-left/right} + \text{border-left/right}$$
+    \item \textbf{Universal Reset} \texttt{box-sizing: border-box}:
+    $$\text{Rendered Box Width} = \text{width (padding and border are absorbed inside width)}$$
+    \item \textbf{Margin Collapsing}: Adjoining vertical margins in normal flow collapse to the larger single margin value.
+\end{itemize}
+\end{conceptbox}
+
+\begin{examalert}[Backgrounds \& Typography Properties]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Shorthand Background}: \texttt{background: url("bg.jpg") no-repeat center center / cover fixed \#f0f0f0;}
+    \begin{itemize}
+        \item \texttt{background-size: cover} (Fills container, crops excess) vs. \texttt{contain} (Full image visible).
+        \item \texttt{background-attachment: fixed} (Parallax viewport-pinned effect).
+    \end{itemize}
+    \item \textbf{Text Properties}: \texttt{color}, \texttt{text-align: center|justify}, \texttt{text-decoration: none|underline}, \texttt{text-transform: uppercase|capitalize}, \texttt{letter-spacing: 2px}, \texttt{word-spacing: 5px}, \texttt{line-height: 1.6}.
+\end{itemize}
+\end{examalert}
+
+\newpage
+% ==============================================================================
+% UNIT 4: JAVASCRIPT CORE MECHANICS, DATA TYPES & CONTROL FLOW
+% ==============================================================================
+\section{Unit 4: JavaScript Core Mechanics, Variables, Data Types \& Control Flow}
+
+\begin{conceptbox}[Core Concept 4.1: Variables \& Scoping Comparison]
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X X}
+\toprule
+\textbf{Keyword} & \textbf{Scope} & \textbf{Re-declare} & \textbf{Re-assign} & \textbf{Hoisted / TDZ} \\
+\midrule
+\texttt{var} & Function & \checkmark Yes & \checkmark Yes & Hoisted (\texttt{undefined}), No TDZ \\
+\texttt{let} & Block \texttt{\{\}} & $\times$ No & \checkmark Yes & Hoisted (Uninitialized), TDZ \\
+\texttt{const} & Block \texttt{\{\}} & $\times$ No & $\times$ No & Hoisted (Uninitialized), TDZ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Note}: \texttt{const arr = [1, 2]; arr.push(3);} is \textbf{valid} because the object reference is constant, while contents remain mutable.
+\end{conceptbox}
+
+\begin{handwbox}[Data Types \& Equality Rules]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{7 Primitive Types} (Passed by value, immutable): \texttt{number}, \texttt{string}, \texttt{boolean}, \texttt{undefined}, \texttt{null}, \texttt{symbol}, \texttt{bigint}.
+    \item \textbf{Reference Types} (Passed by pointer, mutable): \texttt{Object}, \texttt{Array}, \texttt{Function}.
+    \item \texttt{typeof null === "object"} (Legacy engine bug).
+    \item \texttt{typeof [] === "object"} $\to$ Use \texttt{Array.isArray([])} (returns \texttt{true}).
+    \item \textbf{Equality}: \texttt{5 == "5"} is \texttt{true} (Coercion) vs. \texttt{5 === "5"} is \texttt{false} (Strict).
+\end{itemize}
+\end{handwbox}
+
+\begin{conceptbox}[Core Concept 4.2: Operators \& Expressions]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Arithmetic}: \texttt{+} (Addition / String concat), \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%} (Modulus remainder), \texttt{**} (Power).
+    \item \textbf{String Concatenation}: \texttt{"10" + 20} $\to$ \texttt{"1020"} | \texttt{"20" - 5} $\to$ \texttt{15}.
+    \item \textbf{Logical Operators}: \texttt{\&\&} (AND), \texttt{||} (OR), \texttt{!} (NOT).
+    \item \textbf{Nullish Coalescing (\texttt{??})}: Returns right operand only if left is \texttt{null} or \texttt{undefined}.
+\end{itemize}
+\end{conceptbox}
+
+\begin{examalert}[Core Concept 4.3: Control Flow, Loops \& Popups]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Switch Statement}: Uses strict equality (\texttt{===}). Without \texttt{break;}, execution \textbf{falls through} all subsequent cases.
+    \item \textbf{Loop Types}:
+    \begin{itemize}
+        \item \texttt{while (condition)}: Pre-tested (0 or more executions).
+        \item \texttt{do \{ ... \} while (condition)}: Post-tested (\textbf{Guaranteed at least 1 execution}).
+        \item \texttt{for (let i=0; i<N; i++)}: Counted loop.
+        \item \texttt{break} (Terminates loop immediately) vs. \texttt{continue} (Skips current iteration).
+    \end{itemize}
+    \item \textbf{Browser Popups}:
+    \begin{itemize}
+        \item \texttt{alert("msg")}: Informational modal (returns \texttt{undefined}).
+        \item \texttt{confirm("Are you sure?")}: Yes/No prompt (returns \texttt{true} / \texttt{false}).
+        \item \texttt{prompt("Enter Name:", "Default")}: Input prompt (returns \texttt{string} or \texttt{null}).
+    \end{itemize}
+\end{itemize}
+\end{examalert}
+
+\newpage
+% ==============================================================================
+% UNIT 5: JAVASCRIPT FUNCTIONS, DOM, EVENTS & FORM VALIDATION
+% ==============================================================================
+\section{Unit 5: JavaScript Functions, DOM, Events \& Regex Form Validation}
+
+\begin{conceptbox}[Core Concept 5.1: Functions \& Methods]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Named Function (Hoisted)}: \texttt{function add(a, b) \{ return a + b; \}}
+    \item \textbf{Function Expression (Not Hoisted)}: \texttt{const add = function(a, b) \{ return a + b; \};}
+    \item \textbf{Arrow Function (ES6)}: \texttt{const square = x => x * x;} (Lexical \texttt{this}, no \texttt{arguments}).
+    \item \textbf{Default Parameter}: \texttt{function greet(name = "Guest") \{ return `Hello \$\{name\}`; \}}
+    \item \textbf{Object Methods \& \texttt{this}}:
+    \begin{lstlisting}[language=JavaScript]
+    let student = {
+      name: "Alice",
+      age: 21,
+      details: function() { return `${this.name} is ${this.age}`; }
+    };
+    \end{lstlisting}
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[DOM Tree Selection \& Manipulation]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Selectors}:
+    \begin{itemize}
+        \item \texttt{document.getElementById("id")} $\to$ Single Node.
+        \item \texttt{document.getElementsByClassName("cls")} $\to$ Live HTMLCollection.
+        \item \texttt{document.querySelector(".box > p")} $\to$ First matching Node.
+        \item \texttt{document.querySelectorAll(".box > p")} $\to$ Static NodeList.
+    \end{itemize}
+    \item \textbf{Modifying Content \& Styles}:
+    \begin{itemize}
+        \item \texttt{el.innerHTML = "<b>Bold</b>"} (Parses markup) vs. \texttt{el.textContent = "Text"} (Safe text).
+        \item \texttt{el.style.color = "red"} | \texttt{el.style.backgroundColor = "yellow"}
+        \item \texttt{el.classList.add("active")} | \texttt{el.classList.remove("active")} | \texttt{toggle()}
+        \item \texttt{el.setAttribute("src", "new.jpg")} | \texttt{el.getAttribute("src")}
+    \end{itemize}
+    \item \textbf{Node Creation}: \texttt{let p = document.createElement("p"); p.textContent = "New"; document.body.appendChild(p);}
+\end{itemize}
+\end{handwbox}
+
+\begin{conceptbox}[Core Concept 5.2: Event Handling]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Standard Listener}: \texttt{btn.addEventListener("click", function(event) \{ ... \});}
+    \item \textbf{Common Events}:
+    \begin{itemize}
+        \item \textbf{Mouse}: \texttt{click}, \texttt{dblclick}, \texttt{mouseover}, \texttt{mouseout}.
+        \item \textbf{Keyboard}: \texttt{keydown}, \texttt{keyup} (Inspect \texttt{event.key}).
+        \item \textbf{Form}: \texttt{submit}, \texttt{change}, \texttt{focus}, \texttt{blur}, \texttt{input}.
+    \end{itemize}
+    \item \texttt{event.preventDefault()}: Halts native browser actions (e.g. cancels invalid form submission).
+    \item \texttt{event.stopPropagation()}: Stops event from bubbling up parent nodes.
+\end{itemize}
+\end{conceptbox}
+
+\begin{examalert}[Core Concept 5.3: Form Validation \& Regular Expressions (RegEx)]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Form Submission Hook}: \texttt{<form onsubmit="return validateForm()">} (Returning \texttt{false} aborts submission).
+    \item \textbf{Regex Pattern Anatomy}:
+    $$\mathbf{/\text{\textasciicircum}[ \text{\textasciicircum} ]+@[ \text{\textasciicircum} ]+\backslash.[a-z]\{2,3\}\$/}$$
+    \begin{itemize}
+        \item \texttt{\textasciicircum} : Start of string anchor.
+        \item \texttt{[\textasciicircum\ ]+} : 1 or more non-space characters.
+        \item \texttt{@} : Literal @ symbol.
+        \item \texttt{\textbackslash.} : Literal dot character (escaped).
+        \item \texttt{[a-z]\{2,3\}} : 2 to 3 lowercase alphabets (\texttt{.com}, \texttt{.in}, \texttt{.org}).
+        \item \texttt{\$} : End of string anchor.
+    \end{itemize}
+    \item \textbf{Test Method}: \texttt{pattern.test(emailString)} $\to$ Returns boolean \texttt{true}/\texttt{false}.
+\end{itemize}
+\end{examalert}
+
+\newpage
+% ==============================================================================
+% UNIT 6: APPLICATION ARCHITECTURE, DEVTOOLS, STORAGE & DEPLOYMENT
+% ==============================================================================
+\section{Unit 6: Web Application Architecture, Debugging, Web Storage \& Deployment}
+
+\begin{conceptbox}[Core Concept 6.1: Browser Developer Tools (F12)]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Elements Tab}: Live DOM inspection, on-the-fly CSS editing, Box Model metrics verification.
+    \item \textbf{Console Tab}: JavaScript REPL, logging (\texttt{console.log}, \texttt{console.table}, \texttt{console.error}).
+    \item \textbf{Sources Tab}: Set breakpoints, step over (\texttt{F10}), step into (\texttt{F11}), call stack inspection, \texttt{debugger;} statement.
+    \item \textbf{Network Tab}: Inspect HTTP requests, asset waterfall timing, status codes (\texttt{200}, \texttt{404}), Slow 3G throttling.
+    \item \textbf{Application Tab}: Inspect \texttt{localStorage}, \texttt{sessionStorage}, cookies, and cache.
+\end{itemize}
+\end{conceptbox}
+
+\begin{handwbox}[Core Concept 6.2: Web Storage API (Local vs. Session Storage vs. Cookies)]
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Property} & \textbf{localStorage} & \textbf{sessionStorage} & \textbf{Cookies} \\
+\midrule
+\textbf{Capacity} & $\sim 5\text{ MB} - 10\text{ MB}$ & $\sim 5\text{ MB}$ & $\sim 4\text{ KB}$ \\
+\textbf{Lifespan} & Persistent until cleared & Tab/Session lifetime & Expiration date set \\
+\textbf{Server Sent} & Never sent with HTTP & Never sent with HTTP & Sent on every request \\
+\textbf{Syntax} & \texttt{localStorage.setItem("k","v")} & \texttt{sessionStorage.setItem("k","v")} & \texttt{document.cookie="..."} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Object Storage}: Always serialize before storing: \texttt{localStorage.setItem("user", JSON.stringify(obj));} and parse on retrieval: \texttt{JSON.parse(localStorage.getItem("user"));}.
+\end{handwbox}
+
+\begin{conceptbox}[Core Concept 6.3: Version Control (Git) \& GitHub Pages Deployment]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Core Git Commands}:
+    \begin{lstlisting}[language=bash]
+    git init                               # Initialize local git repository
+    git add .                              # Stage all modified files
+    git commit -m "feat: initial commit"   # Create immutable snapshot commit
+    git remote add origin <URL>            # Link remote GitHub repo
+    git push -u origin main                # Push to remote branch
+    \end{lstlisting}
+    \item \textbf{GitHub Pages Static Hosting}:
+    \begin{itemize}
+        \item Free static hosting served directly over HTTPS from repository branch \texttt{main} (root or \texttt{/docs}).
+        \item Serves \texttt{index.html} by default.
+        \item Must use \textbf{relative asset paths} (\texttt{./css/style.css} instead of \texttt{/css/style.css}).
+    \end{itemize}
+\end{itemize}
+\end{conceptbox}
+
+\begin{examalert}[Performance Best Practices \& Core Web Vitals]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Critical Rendering Path}: HTML $\to$ DOM, CSS $\to$ CSSOM $\to$ Render Tree $\to$ Layout $\to$ Paint $\to$ Composite.
+    \item \textbf{Script Loading}: Use \texttt{<script src="..." defer>} to prevent blocking HTML parser.
+    \item \textbf{Image Optimization}: Use modern formats (WebP), specify \texttt{width}/\texttt{height} to prevent Cumulative Layout Shift (CLS), add \texttt{loading="lazy"}.
+    \item \textbf{Core Web Vitals}: LCP (Largest Contentful Paint $\le 2.5\text{s}$), INP (Interaction to Next Paint $\le 200\text{ms}$), CLS (Cumulative Layout Shift $\le 0.1$).
+\end{itemize}
+\end{examalert}
+
+\end{document}

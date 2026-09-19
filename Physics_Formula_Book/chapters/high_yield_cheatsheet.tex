@@ -1,0 +1,32 @@
+\chapter{Rapid Exam Revision: 1-Page Summary Cheatsheet}
+
+\begin{formulabox}{Rapid Formula Matrix for PHY110}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Topic / Area} & \textbf{Key Master Equation} & \textbf{Exam Tip / Core Takeaway} \\
+\midrule
+\textbf{Maxwell 4} & $\nabla \times \vec{H} = \vec{J}_c + \frac{\partial \vec{D}}{\partial t}$ & Maxwell added $\frac{\partial \vec{D}}{\partial t}$ to satisfy continuity $\nabla\cdot\vec{J} + \dot{\rho}=0$. \\
+\textbf{Poynting Flux} & $\vec{S} = \vec{E} \times \vec{H}, \quad \langle S \rangle = \frac{E_0^2}{2\eta_0}$ & $\eta_0 = \sqrt{\mu_0/\epsilon_0} = 377\,\Omega$. Poynting is in $\text{W/m}^2$. \\
+\textbf{Skin Depth} & $\delta = \sqrt{2/(\omega\mu\sigma)} = 1/\sqrt{\pi f \mu \sigma}$ & High frequency RF current flows only on the outer conductor sheath. \\
+\midrule
+\textbf{Einstein Laser} & $\frac{A_{21}}{B_{21}} = \frac{8\pi h \nu^3}{c^3}, \quad B_{12} = B_{21}$ & $A_{21}$ is spontaneous emission; $B_{21}$ is stimulated emission. \\
+\textbf{Laser Cavity} & $\gamma_{\text{th}} = \alpha_s + \frac{1}{2L}\ln\left(\frac{1}{R_1 R_2}\right)$ & Population inversion $N_2 > N_1$ requires negative temperature analog. \\
+\textbf{He-Ne Laser} & $\lambda = 632.8\text{ nm}$ (Red), He:Ne = 10:1 & He absorbs discharge energy and transfers to Ne via resonant collision. \\
+\midrule
+\textbf{Numerical Aperture} & $\text{NA} = \sin\theta_a = \sqrt{n_1^2 - n_2^2} = n_1\sqrt{2\Delta}$ & Measures fiber light collection capability. Independent of fiber diameter! \\
+\textbf{V-Number} & $V = \frac{\pi d}{\lambda}\text{NA}, \quad V < 2.405$ for Single Mode & Total modes in step-index $M \approx V^2/2$, in GRIN $M \approx V^2/4$. \\
+\textbf{Optical Windows} & $850\text{ nm}, 1310\text{ nm}, 1550\text{ nm}$ & Lowest loss at $1550\text{ nm}$ ($0.2\text{ dB/km}$); Zero dispersion at $1310\text{ nm}$. \\
+\midrule
+\textbf{de Broglie} & $\lambda = \frac{h}{p} = \frac{h}{\sqrt{2mE}} = \frac{1.227}{\sqrt{V}}\text{ nm}$ & Verified by Davisson-Germer electron nickel crystal scattering. \\
+\textbf{1D Box Energy} & $E_n = \frac{n^2 h^2}{8mL^2}, \quad \psi_n = \sqrt{\frac{2}{L}}\sin(\frac{n\pi x}{L})$ & Ground state energy $E_1 > 0$ due to Heisenberg uncertainty $\Delta x \Delta p \ge \hbar/2$. \\
+\midrule
+\textbf{Fermi-Dirac} & $f(E) = \frac{1}{1 + e^{(E-E_F)/k_B T}}$ & At $T=0\text{ K}$, $f(E<E_F)=1$ and $f(E>E_F)=0$. At $E=E_F$, $f=0.5$. \\
+\textbf{Hall Effect} & $R_H = \frac{1}{n q} = \frac{V_H w}{B I}$ & $R_H < 0 \implies$ N-type (electrons); $R_H > 0 \implies$ P-type (holes). \\
+\textbf{Mass Action} & $n \cdot p = n_i^2 = N_c N_v e^{-E_g/k_B T}$ & Holds for both intrinsic and extrinsic semiconductors in thermal equilibrium. \\
+\midrule
+\textbf{Clausius-Mossotti} & $\frac{\epsilon_r - 1}{\epsilon_r + 2} = \frac{N\alpha}{3\epsilon_0}$ & Connects microscopic polarizability $\alpha$ with macroscopic dielectric constant $\epsilon_r$. \\
+\textbf{Meissner Effect} & $\vec{B} = 0 \implies \chi_m = -1$ & Superconductors are ideal diamagnets below $T_c$. \\
+\textbf{Critical Field} & $H_c(T) = H_c(0)[1 - (T/T_c)^2]$ & Parabolic decrease of critical field with increasing temperature. \\
+\bottomrule
+\end{tabularx}
+\end{formulabox}

@@ -1,0 +1,303 @@
+\section{Continuous Assessment 2 (CA-2) --- Set D}
+\label{sec:ca2_set_d}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{D}{50 Minutes}{30 Marks}{CO4 (Multivariable Limits, Continuity, Partial Derivatives \& Optimization), CO5 (Multiple Integrals \& Transformations)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    Expand $f(x,y) = e^x \cos y$ in powers of $x$ and $y$ up to terms of degree 3 using \textbf{Taylor's Theorem for two variables} about the origin $(0,0)$.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{2}{
+    Find and classify all the \textbf{critical points} (local maxima, local minima, and saddle points) of the function:
+    \[
+    f(x,y) = x^3 + y^3 - 3xy
+    \]
+}{5}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    If $z = f(x,y)$ where $x = u^2 - v^2$ and $y = 2uv$, prove using the \textbf{multivariable chain rule} that:
+    \[
+    \left(\frac{\partial z}{\partial u}\right)^2 + \left(\frac{\partial z}{\partial v}\right)^2 = 4(u^2 + v^2)\left[ \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2 \right]
+    \]
+}{5}{CO4}{L3 Apply}
+
+\questionitem{4}{
+    Using \textbf{cylindrical polar coordinates}, evaluate the total volume of the solid enclosed between the paraboloid $z = x^2 + y^2$ and the horizontal plane $z = 4$.
+}{5}{CO5}{L3 Apply}
+
+\questionitem{5}{
+    Change the order of integration and evaluate:
+    \[
+    \int_0^a \int_0^{\sqrt{a^2 - y^2}} \sqrt{a^2 - x^2 - y^2} \, dx \, dy
+    \]
+}{5}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    Evaluate the volume of the tetrahedron in the first octant bounded by the coordinate planes and the plane:
+    \[
+    \frac{x}{a} + \frac{y}{b} + \frac{z}{c} = 1 \quad (a, b, c > 0)
+    \]
+    using triple integration.
+}{5}{CO5}{L3 Apply}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-2 Set D)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Taylor's Expansion Formula at $(0,0)$}
+\[
+f(x,y) = f(0,0) + [x f_x + y f_y] + \frac{1}{2!}[x^2 f_{xx} + 2xy f_{xy} + y^2 f_{yy}] + \frac{1}{3!}[x^3 f_{xxx} + 3x^2 y f_{xxy} + 3x y^2 f_{xyy} + y^3 f_{yyy}] + \dots
+\]
+\textbf{Step 2: Evaluating Derivatives at $(0,0)$}
+For $f(x,y) = e^x \cos y$:
+\begin{itemize}[leftmargin=6mm]
+    \item $f(0,0) = e^0 \cos 0 = 1$.
+    \item $f_x = e^x \cos y \implies f_x(0,0) = 1$.
+    \item $f_y = -e^x \sin y \implies f_y(0,0) = 0$.
+    \item $f_{xx} = e^x \cos y \implies f_{xx}(0,0) = 1$.
+    \item $f_{xy} = -e^x \sin y \implies f_{xy}(0,0) = 0$.
+    \item $f_{yy} = -e^x \cos y \implies f_{yy}(0,0) = -1$.
+    \item $f_{xxx} = e^x \cos y \implies f_{xxx}(0,0) = 1$.
+    \item $f_{xxy} = -e^x \sin y \implies f_{xxy}(0,0) = 0$.
+    \item $f_{xyy} = -e^x \cos y \implies f_{xyy}(0,0) = -1$.
+    \item $f_{yyy} = e^x \sin y \implies f_{yyy}(0,0) = 0$.
+\end{itemize}
+\textbf{Step 3: Assembling the Series}
+\[
+f(x,y) = 1 + x + \frac{1}{2}(x^2 - y^2) + \frac{1}{6}(x^3 - 3x y^2) + \dots
+\]
+\[
+\mathbf{f(x,y) = 1 + x + \frac{x^2}{2} - \frac{y^2}{2} + \frac{x^3}{6} - \frac{x y^2}{2} + \dots}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Statement of Taylor's two-variable expansion formula: \textbf{1.5 Marks}\\
+$\bullet$ Correct evaluation of all partial derivatives up to order 3 at $(0,0)$: \textbf{2 Marks}\\
+$\bullet$ Assembled series expression: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: First Partial Derivatives}
+\[
+f_x = 3x^2 - 3y = 0 \implies y = x^2 \label{eq:ext1}
+\]
+\[
+f_y = 3y^2 - 3x = 0 \implies x = y^2 \label{eq:ext2}
+\]
+Substitute \eqref{eq:ext1} into \eqref{eq:ext2}:
+\[
+x = (x^2)^2 = x^4 \implies x(x^3 - 1) = 0 \implies x = 0 \quad \text{or} \quad x = 1
+\]
+For $x = 0 \implies y = 0^2 = 0 \implies \mathbf{P_1(0,0)}$.\\
+For $x = 1 \implies y = 1^2 = 1 \implies \mathbf{P_2(1,1)}$.
+
+\textbf{Step 2: Second Partial Derivatives \& Discriminant}
+\[
+r = f_{xx} = 6x, \quad s = f_{xy} = -3, \quad t = f_{yy} = 6y
+\]
+\[
+D = rt - s^2 = (6x)(6y) - (-3)^2 = 36xy - 9
+\]
+
+\textbf{Step 3: Classification}
+\begin{itemize}[leftmargin=6mm]
+    \item At point $P_1(0,0)$:
+    \[
+    D = 36(0)(0) - 9 = -9 < 0
+    \]
+    Since $D < 0$, $\mathbf{(0,0)}$ is a \textbf{Saddle Point}.
+    \item At point $P_2(1,1)$:
+    \[
+    D = 36(1)(1) - 9 = 27 > 0 \quad \text{and} \quad r = 6(1) = 6 > 0
+    \]
+    Since $D > 0$ and $r > 0$, $\mathbf{(1,1)}$ is a point of \textbf{Local Minimum}.
+    The local minimum value is:
+    \[
+    f(1,1) = 1^3 + 1^3 - 3(1)(1) = 1 + 1 - 3 = \mathbf{-1}
+    \]
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ First partial derivatives and finding points $(0,0)$ and $(1,1)$: \textbf{2 Marks}\\
+$\bullet$ Computing $r, s, t$ and discriminant formula $D = rt - s^2$: \textbf{1.5 Marks}\\
+$\bullet$ Classifying $(0,0)$ as saddle and $(1,1)$ as minimum with value $-1$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Chain Rule Expressions}
+By the multivariable chain rule:
+\[
+\frac{\partial z}{\partial u} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial u} + \frac{\partial z}{\partial y} \frac{\partial y}{\partial u}
+\]
+\[
+\frac{\partial z}{\partial v} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial v} + \frac{\partial z}{\partial y} \frac{\partial y}{\partial v}
+\]
+Given $x = u^2 - v^2$ and $y = 2uv$:
+\[
+\frac{\partial x}{\partial u} = 2u, \quad \frac{\partial x}{\partial v} = -2v, \quad \frac{\partial y}{\partial u} = 2v, \quad \frac{\partial y}{\partial v} = 2u
+\]
+Substitute these into the chain rule:
+\[
+\frac{\partial z}{\partial u} = 2u \frac{\partial z}{\partial x} + 2v \frac{\partial z}{\partial y}
+\]
+\[
+\frac{\partial z}{\partial v} = -2v \frac{\partial z}{\partial x} + 2u \frac{\partial z}{\partial y}
+\]
+\textbf{Step 2: Squaring and Adding}
+\[
+\left(\frac{\partial z}{\partial u}\right)^2 = 4\left[ u^2 \left(\frac{\partial z}{\partial x}\right)^2 + v^2 \left(\frac{\partial z}{\partial y}\right)^2 + 2uv \frac{\partial z}{\partial x}\frac{\partial z}{\partial y} \right]
+\]
+\[
+\left(\frac{\partial z}{\partial v}\right)^2 = 4\left[ v^2 \left(\frac{\partial z}{\partial x}\right)^2 + u^2 \left(\frac{\partial z}{\partial y}\right)^2 - 2uv \frac{\partial z}{\partial x}\frac{\partial z}{\partial y} \right]
+\]
+Adding the two equations, the cross terms cancel:
+\[
+\left(\frac{\partial z}{\partial u}\right)^2 + \left(\frac{\partial z}{\partial v}\right)^2 = 4\left[ (u^2 + v^2)\left(\frac{\partial z}{\partial x}\right)^2 + (u^2 + v^2)\left(\frac{\partial z}{\partial y}\right)^2 \right]
+\]
+Factor out $(u^2 + v^2)$:
+\[
+\mathbf{\left(\frac{\partial z}{\partial u}\right)^2 + \left(\frac{\partial z}{\partial v}\right)^2 = 4(u^2 + v^2)\left[ \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2 \right]} \quad \text{(Hence Proved!)}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Stating chain rule and partial derivatives of $x$ and $y$: \textbf{2 Marks}\\
+$\bullet$ Setting up algebraic expressions for squared derivatives: \textbf{1.5 Marks}\\
+$\bullet$ Cancellation of cross-product terms and factorization: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Cylindrical Coordinates Formulation}
+In cylindrical coordinates: $x = r\cos\theta, y = r\sin\theta, z = z$, with $dV = r \, dz \, dr \, d\theta$.
+The bounding surfaces are:
+\begin{itemize}[leftmargin=6mm]
+    \item Bottom surface: Paraboloid $z = r^2$.
+    \item Top surface: Horizontal plane $z = 4$.
+\end{itemize}
+Intersection of the surfaces occurs when $r^2 = 4 \implies r = 2$.
+\textbf{Step 2: Integration Limits}
+\[
+\theta \in [0, 2\pi], \quad r \in [0, 2], \quad z \in [r^2, 4]
+\]
+\textbf{Step 3: Volume Evaluation}
+\[
+V = \int_0^{2\pi} \int_0^2 \int_{r^2}^4 r \, dz \, dr \, d\theta = \left(\int_0^{2\pi} d\theta\right) \int_0^2 r [z]_{r^2}^4 \, dr
+\]
+\[
+= 2\pi \int_0^2 r (4 - r^2) \, dr = 2\pi \int_0^2 (4r - r^3) \, dr = 2\pi \left[ 2r^2 - \frac{r^4}{4} \right]_0^2
+\]
+\[
+= 2\pi \left[ 2(4) - \frac{16}{4} \right] = 2\pi [8 - 4] = 2\pi(4) = \mathbf{8\pi}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Setting up cylindrical coordinates and intersection radius $r = 2$: \textbf{1.5 Marks}\\
+$\bullet$ Correct bounds for $z, r, \theta$: \textbf{1.5 Marks}\\
+$\bullet$ Integration yielding $8\pi$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Geometry of the Region}
+Original limits:
+\[
+y \in [0, a], \quad x \in [0, \sqrt{a^2 - y^2}]
+\]
+Since $x^2 = a^2 - y^2 \implies x^2 + y^2 = a^2$, this is the first quadrant of the circle of radius $a$.
+Converting directly to polar coordinates:
+\[
+x = r\cos\theta, \quad y = r\sin\theta, \quad dx \, dy = r \, dr \, d\theta
+\]
+\[
+r \in [0, a], \quad \theta \in \left[0, \frac{\pi}{2}\right]
+\]
+\textbf{Step 2: Transforming the Integrand}
+$\sqrt{a^2 - x^2 - y^2} = \sqrt{a^2 - r^2}$.
+\textbf{Step 3: Evaluating the Integral}
+\[
+I = \int_0^{\pi/2} d\theta \cdot \int_0^a \sqrt{a^2 - r^2} \cdot r \, dr
+\]
+\[
+\int_0^{\pi/2} d\theta = \frac{\pi}{2}
+\]
+For the radial integral, let $u = a^2 - r^2 \implies du = -2r \, dr \implies r \, dr = -\frac{du}{2}$:
+\[
+\int_0^a r\sqrt{a^2 - r^2} \, dr = \int_{a^2}^0 u^{1/2} \left(-\frac{du}{2}\right) = \frac{1}{2} \int_0^{a^2} u^{1/2} \, du = \frac{1}{2} \left[ \frac{u^{3/2}}{3/2} \right]_0^{a^2} = \frac{1}{3} a^3
+\]
+Multiply the results:
+\[
+I = \left(\frac{\pi}{2}\right) \left(\frac{1}{3} a^3\right) = \mathbf{\frac{\pi a^3}{6}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Identifying circular region in first quadrant: \textbf{1.5 Marks}\\
+$\bullet$ Polar coordinate conversion with Jacobian: \textbf{1.5 Marks}\\
+$\bullet$ Integration steps yielding $\pi a^3/6$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Region of the Tetrahedron}
+Bounded by $x \ge 0, y \ge 0, z \ge 0$ and $\frac{x}{a} + \frac{y}{b} + \frac{z}{c} \le 1$.
+The limits of integration are:
+\[
+z \in \left[0, c\left(1 - \frac{x}{a} - \frac{y}{b}\right)\right]
+\]
+\[
+y \in \left[0, b\left(1 - \frac{x}{a}\right)\right]
+\]
+\[
+x \in [0, a]
+\]
+\textbf{Step 2: Integration with respect to $z$}
+\[
+\int_0^{c(1 - x/a - y/b)} dz = c\left(1 - \frac{x}{a} - \frac{y}{b}\right)
+\]
+\textbf{Step 3: Integration with respect to $y$}
+\[
+c \int_0^{b(1 - x/a)} \left(1 - \frac{x}{a} - \frac{y}{b}\right) dy = c \left[ \left(1 - \frac{x}{a}\right)y - \frac{y^2}{2b} \right]_0^{b(1 - x/a)}
+\]
+\[
+= c \left[ b\left(1 - \frac{x}{a}\right)^2 - \frac{b^2(1 - x/a)^2}{2b} \right] = \frac{bc}{2}\left(1 - \frac{x}{a}\right)^2
+\]
+\textbf{Step 4: Integration with respect to $x$}
+\[
+V = \frac{bc}{2} \int_0^a \left(1 - \frac{x}{a}\right)^2 dx = \frac{bc}{2} \left[ -\frac{a}{3}\left(1 - \frac{x}{a}\right)^3 \right]_0^a = \frac{bc}{2}\left(0 - \left(-\frac{a}{3}\right)\right) = \mathbf{\frac{abc}{6}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Correct bounds for $x, y, z$: \textbf{1.5 Marks}\\
+$\bullet$ Sequential integration with respect to $z$ and $y$: \textbf{2 Marks}\\
+$\bullet$ Final integral evaluation giving $V = abc/6$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

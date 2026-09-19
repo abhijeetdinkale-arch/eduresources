@@ -1,0 +1,520 @@
+\chapter{JavaScript Functions, Events and Validation}
+\label{chap:javascript-functions-events-validation}
+
+% ==============================================================================
+% SECTION 5.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 5 Academic Scope \lpuBadge]
+Building interactive client-side web applications requires modular function design, responsive event-driven architectures, and defensive form validation. This unit covers function declarations, argument semantics (Pass-by-Value vs. Pass-by-Reference), the variable-length \texttt{arguments} object, event handling mechanisms (Inline, DOM Property, and \texttt{addEventListener}), mouse, keyboard, and form event lifecycles, and client-side data validation using conditional verification and regular expressions.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Function Architecture}: Design reusable functions, understand parameter passing modalities, and leverage the \texttt{arguments} object.
+    \item \textbf{Event-Driven Paradigms}: Master event binding mechanisms, comparing inline handlers with modern \texttt{addEventListener()} registration.
+    \item \textbf{Mouse, Keyboard \& Form Events}: Capture user interactions across UI elements, handling \texttt{click}, \texttt{mouseover}, \texttt{keydown}, \texttt{focus}, and \texttt{input} events.
+    \item \textbf{Validation Architectures}: Intercept form submission using \texttt{event.preventDefault()} to validate required fields, numeric boundaries via \texttt{isNaN()}, and pattern formats via regular expressions.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.2: WORKING WITH FUNCTIONS
+% ==============================================================================
+\section{Working with Functions}
+
+A **function** is a self-contained block of reusable code designed to perform a specific computational task.
+
+\subsection{Syntax and Declaration}
+\begin{syntaxbox}[Function Declaration]
+function functionName(parameter1, parameter2, ...) {
+    // Function body logic
+    return calculatedResult; // Optional return statement
+}
+\end{syntaxbox}
+
+\subsection{Pass-by-Value vs. Pass-by-Reference}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Data Type Category} & \textbf{Passing Mechanism} & \textbf{Mutation Impact on Original Caller Variable} \\
+\midrule
+\textbf{Primitive Types} (\texttt{number}, \texttt{string}, \texttt{boolean}) & \textbf{Pass-by-Value}: A distinct copy of the data value is passed into the function stack frame. & Modifying the parameter inside the function \textbf{does NOT affect} the caller's variable. \\
+\textbf{Compound Types} (\texttt{Object}, \texttt{Array}) & \textbf{Pass-by-Reference}: A copy of the memory reference pointer is passed. & Mutating object properties or array elements inside the function \textbf{directly alters} the original object in memory! \\
+\bottomrule
+\end{tabularx}
+\caption{Parameter Passing Modalities in JavaScript.}
+\label{tab:pass-by-value-ref}
+\end{table}
+
+\begin{jscode}{Pass-by-Value vs Pass-by-Reference in Action}
+// 1. Pass-by-Value (Primitive)
+let score = 50;
+function updateScore(val) {
+    val = 100; // Local copy modified
+}
+updateScore(score);
+console.log("Score after function call:", score); // 50 (Unchanged!)
+
+// 2. Pass-by-Reference (Object)
+let student = { name: "Ananya", marks: 80 };
+function updateMarks(obj) {
+    obj.marks = 95; // Mutates original memory object
+}
+updateMarks(student);
+console.log("Student marks after function call:", student.marks); // 95 (Mutated!)
+\end{jscode}
+
+\subsection{The \texttt{arguments} Object}
+JavaScript functions contain a built-in array-like object named \textbf{\texttt{arguments}} containing all values passed into the function:
+
+\begin{jscode}{Variable-Length Function Arguments}
+function sumAllNumbers() {
+    let total = 0;
+    // Iterate through all passed arguments dynamically
+    for (let i = 0; i < arguments.length; i++) {
+        total += arguments[i];
+    }
+    return total;
+}
+
+console.log("Sum (3 args):", sumAllNumbers(10, 20, 30));       // 60
+console.log("Sum (5 args):", sumAllNumbers(5, 10, 15, 20, 25)); // 75
+\end{jscode}
+
+% ==============================================================================
+% SECTION 5.3: JAVASCRIPT EVENTS
+% ==============================================================================
+\section{Working with JavaScript Events}
+
+An **event** represents an action or occurrence recognized by software (such as mouse clicks, keyboard presses, or page loading).
+
+\subsection{The Three Event Handling Mechanisms}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Inline HTML Attributes} (Discouraged): \texttt{<button onclick="handleClick()">}. Violates separation of concerns.
+    \item \textbf{DOM Object Property Binding}: \texttt{element.onclick = handleClick;}. Can only bind a single handler per event (subsequent bindings overwrite earlier ones).
+    \item \textbf{Event Listeners (\texttt{addEventListener()})} (**Modern Best Practice**): \texttt{element.addEventListener('click', handleClick);}. Supports multiple independent handlers on a single element without overwriting.
+\end{enumerate}
+
+\subsection{Catalog of Core Web Events}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Category} & \textbf{Event Name} & \textbf{Trigger Condition} & \textbf{Common Use Case} \\
+\midrule
+\textbf{Mouse} & \texttt{click} & User presses and releases mouse button & Button action, link override \\
+& \texttt{dblclick} & User rapidly clicks element twice & Zooming, modal editing \\
+& \texttt{mouseover} & Mouse cursor enters element boundary & Hover highlights, tooltip display \\
+& \texttt{mouseout} & Mouse cursor leaves element boundary & Revert hover highlight \\
+& \texttt{mousemove} & Mouse moves over element & Canvas drawing, coordinate tracking \\
+\midrule
+\textbf{Keyboard} & \texttt{keydown} & User presses down any keyboard key & Game controls, keyboard shortcuts \\
+& \texttt{keyup} & User releases keyboard key & Live character counting, search filter \\
+\midrule
+\textbf{Form} & \texttt{submit} & User submits form & Client-side validation \\
+& \texttt{focus} & Form input receives focus/cursor & Displaying active focus rings \\
+& \texttt{blur} & Form input loses focus & Immediate single-field validation \\
+& \texttt{change} & Input value committed (on blur/select) & Dropdown selection updates \\
+& \texttt{input} & Value altered instantaneously & Real-time text search \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Classification of Core JavaScript Events.}
+\label{tab:events-catalog}
+\end{table}
+
+\begin{jscode}{Mouse and Keyboard Event Listeners}
+const box = document.getElementById("interactiveBox");
+const inputField = document.getElementById("txtMessage");
+const charCounter = document.getElementById("lblCount");
+
+// Mouse Events
+box.addEventListener("mouseover", function() {
+    box.style.backgroundColor = "#0284c7"; // Blue on hover
+});
+
+box.addEventListener("mouseout", function() {
+    box.style.backgroundColor = "#slate";   // Revert color
+});
+
+// Keyboard Event: Real-time Character Counter
+inputField.addEventListener("keyup", function() {
+    charCounter.innerText = `Characters typed: ${inputField.value.length}`;
+});
+\end{jscode}
+
+% ==============================================================================
+% SECTION 5.4: FORM VALIDATION
+% ==============================================================================
+\section{Client-Side JavaScript Form Validation}
+
+\subsection{The Validation Strategy}
+Client-side form validation prevents invalid or malicious data from reaching the server, providing instant feedback to users:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Intercept the form's **\texttt{submit}** event.
+    \item Read values of input controls using DOM properties (\texttt{element.value}).
+    \item Execute validation logic (empty checks, length checks, numeric bounds, regular expressions).
+    \item If any check fails, invoke **\texttt{event.preventDefault()}** to halt form transmission and display error messages in the DOM.
+\end{enumerate}
+
+\subsection{Essential Validation Techniques}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Empty Field Check}: \texttt{if (username.trim() === "") \{ ... \}}
+    \item \textbf{Numeric Validation}: \texttt{isNaN(val)} returns \texttt{true} if value cannot be parsed as a number.
+    \item \textbf{Regular Expression Matching}: \texttt{regexPattern.test(string)} evaluates to \texttt{true} if pattern matches:
+    \begin{itemize}
+        \item Email Pattern: \texttt{/\textasciicircum[\textbackslash w\textbackslash.-]+@[\textbackslash w\textbackslash.-]+\textbackslash.[a-zA-Z]\{2,\}\$/}
+        \item 10-Digit Phone Pattern: \texttt{/\textasciicircum\textbackslash d\{10\}\$/}
+    \end{itemize}
+\end{itemize}
+
+\begin{htmlcode}{HTML Form Markup for Validation}
+<form id="admissionForm" action="/submit" method="POST">
+    <label for="uname">Student Name (Min 4 chars):</label><br>
+    <input type="text" id="uname" name="username"><br><br>
+
+    <label for="uemail">Email Address:</label><br>
+    <input type="text" id="uemail" name="email"><br><br>
+
+    <label for="uage">Age (17 to 30):</label><br>
+    <input type="text" id="uage" name="age"><br><br>
+
+    <button type="submit">Submit Application</button>
+    <p id="errorBox" style="color: red; font-weight: bold;"></p>
+</form>
+\end{htmlcode}
+
+\begin{jscode}{Complete Client-Side Form Validation Logic}
+document.getElementById("admissionForm").addEventListener("submit", function(event) {
+    const nameVal = document.getElementById("uname").value.trim();
+    const emailVal = document.getElementById("uemail").value.trim();
+    const ageVal = document.getElementById("uage").value.trim();
+    const errorBox = document.getElementById("errorBox");
+
+    let isValid = true;
+    let errorMessage = "";
+
+    // 1. Name Validation
+    if (nameVal === "") {
+        errorMessage = "Student Name is required.";
+        isValid = false;
+    } else if (nameVal.length < 4) {
+        errorMessage = "Student Name must be at least 4 characters.";
+        isValid = false;
+    }
+
+    // 2. Email Validation via Regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isValid && !emailRegex.test(emailVal)) {
+        errorMessage = "Please enter a valid email address.";
+        isValid = false;
+    }
+
+    // 3. Numeric Age Validation
+    const ageNum = parseInt(ageVal, 10);
+    if (isValid && (isNaN(ageNum) || ageNum < 17 || ageNum > 30)) {
+        errorMessage = "Age must be a valid number between 17 and 30.";
+        isValid = false;
+    }
+
+    // Decision: Block submission or allow
+    if (!isValid) {
+        event.preventDefault(); // Stop form from submitting!
+        errorBox.innerText = errorMessage;
+    } else {
+        errorBox.innerText = "";
+        alert("Validation Successful! Transmitting application...");
+    }
+});
+\end{jscode}
+
+% ==============================================================================
+% SECTION 5.5: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 5 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Forgetting \texttt{event.preventDefault()}}: In form validation, if you fail to call \texttt{event.preventDefault()}, the browser will proceed with page submission and reload even if validation failed!
+    \item \textbf{Event Name Prefix}: In \texttt{addEventListener("click", fn)}, NEVER include the \texttt{"on"} prefix. Use \texttt{"click"}, not \texttt{"onclick"}.
+    \item \textbf{\texttt{isNaN()} String Trap}: \texttt{isNaN("123")} returns \texttt{false} (because the string coerces to number $123$). \texttt{isNaN("abc")} returns \texttt{true}.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 5.6: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Arguments Object and Pass-by-Reference]
+\textbf{Question}: What will be logged to the console?
+\begin{lstlisting}[language=JavaScript]
+function modify(a, arr) {
+    a = a * 2;
+    arr.push(99);
+}
+let num = 10;
+let list = [1, 2];
+modify(num, list);
+console.log(num, list);
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{num} is primitive (pass-by-value); local modification does not affect outer variable $\to \mathbf{10}$.
+    \item \texttt{list} is an array (pass-by-reference); pushing \texttt{99} mutates the original object in memory $\to \mathbf{[1, 2, 99]}$.
+    \item Output: \texttt{10 [1, 2, 99]}
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing Event Listener Syntax and Missing PreventDefault]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=JavaScript]
+form.addEventListener("onsubmit", function() {
+    if (input.value == "") {
+        alert("Empty field!");
+        // Form submits anyway and page reloads!
+    }
+});
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}:
+\begin{enumerate}
+    \item \textbf{Bug 1}: Event name has \texttt{"on"} prefix. Change \texttt{"onsubmit"} to \texttt{"submit"}.
+    \item \textbf{Bug 2}: Missing \texttt{event.preventDefault()} allows form submission.
+\end{enumerate}
+\textbf{Corrected Code}:
+\begin{lstlisting}[language=JavaScript]
+form.addEventListener("submit", function(event) {
+    if (input.value.trim() === "") {
+        event.preventDefault();
+        alert("Empty field!");
+    }
+});
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 5.7: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 5 Practice Exercises]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a JavaScript function that takes a temperature in Celsius and returns its Fahrenheit equivalent ($F = \frac{9}{5}C + 32$).
+    \item \textbf{Level 1 (Foundation)}: Attach a click event listener to a button that toggles page background color between white and dark slate.
+    \item \textbf{Level 2 (Standard)}: Write a function utilizing the \texttt{arguments} object to compute the mathematical average of an arbitrary number of inputs.
+    \item \textbf{Level 2 (Standard)}: Create a live password character counter that turns red when password length is under 8 characters using \texttt{keyup}.
+    \item \textbf{Level 3 (Exam Tier)}: Write a complete form validation script checking that passwords match in a "Confirm Password" registration field.
+    \item \textbf{Level 3 (Exam Tier)}: Implement a telephone number validator that verifies 10-digit Indian mobile numbers starting with 6, 7, 8, or 9 using regex.
+    \item \textbf{Level 4 (Challenge)}: Build an interactive registration form with real-time field-by-field blur validation and error visual indicators.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 5 Practice Problems]
+\noindent\textbf{Solution to Problem 3 (Average with arguments Object)}:
+\begin{lstlisting}[language=JavaScript]
+function calculateAverage() {
+    if (arguments.length === 0) return 0;
+    let sum = 0;
+    for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+    }
+    return sum / arguments.length;
+}
+
+console.log("Average:", calculateAverage(10, 20, 30, 40)); // 25
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 5 (Password Match Validation)}:
+\begin{lstlisting}[language=JavaScript]
+document.getElementById("signupForm").addEventListener("submit", function(e) {
+    const p1 = document.getElementById("pass1").value;
+    const p2 = document.getElementById("pass2").value;
+    const err = document.getElementById("passError");
+
+    if (p1.length < 8) {
+        e.preventDefault();
+        err.innerText = "Password must be at least 8 characters.";
+        return;
+    }
+
+    if (p1 !== p2) {
+        e.preventDefault();
+        err.innerText = "Passwords do not match!";
+        return;
+    }
+    err.innerText = "";
+});
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.8: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item How are primitive data types passed into JavaScript functions?
+    \begin{enumerate}[label=(\alph*)]
+        \item Pass-by-Reference \quad (b) Pass-by-Value \quad (c) Pass-by-Pointer \quad (d) Pass-by-Name
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Primitives are passed by value (isolated copies).}
+
+    \item Which method is used to cancel the default browser action of an event?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{event.stop()} \quad (b) \texttt{event.preventDefault()} \quad (c) \texttt{event.cancel()} \quad (d) \texttt{return null}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{event.preventDefault()} cancels standard browser behavior.}
+
+    \item Which built-in object contains all arguments passed to a JavaScript function?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{params} \quad (b) \texttt{arguments} \quad (c) \texttt{argsList} \quad (d) \texttt{inputs}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{The \texttt{arguments} object holds all invocation arguments.}
+
+    \item What is the correct syntax to attach a click listener using \texttt{addEventListener}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{el.addEventListener("onclick", fn)} \quad (b) \texttt{el.addEventListener("click", fn)} \quad (c) \texttt{el.attach("click", fn)} \quad (d) \texttt{el.listen("click", fn)}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{addEventListener} takes event names without the "on" prefix.}
+
+    \item What does \texttt{isNaN("100")} return in JavaScript?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{true} \quad (b) \texttt{false} \quad (c) \texttt{NaN} \quad (d) \texttt{TypeError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{"100"} coerces to number 100, so it is NOT Not-a-Number (\texttt{false}).}
+
+    \item Which event triggers immediately when a form input element loses focus?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{focus} \quad (b) \texttt{blur} \quad (c) \texttt{change} \quad (d) \texttt{mouseout}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{blur} triggers when an element loses active focus.}
+
+    \item What is the return value of a function that lacks an explicit \texttt{return} statement?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{0} \quad (b) \texttt{null} \quad (c) \texttt{undefined} \quad (d) \texttt{false}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Functions without return statements return \texttt{undefined}.}
+
+    \item Which regex method checks if a string matches a regular expression pattern?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{regex.match(str)} \quad (b) \texttt{regex.test(str)} \quad (c) \texttt{regex.search(str)} \quad (d) \texttt{regex.check(str)}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{RegExp.prototype.test()} returns boolean \texttt{true}/\texttt{false}.}
+
+    \item Which event fires on each keystroke when a user releases a keyboard key?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{keydown} \quad (b) \texttt{keyup} \quad (c) \texttt{keypress} \quad (d) \texttt{keyrelease}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{keyup} fires upon key release.}
+
+    \item When an object is passed into a function, how are property mutations reflected?
+    \begin{enumerate}[label=(\alph*)]
+        \item Ignored \quad (b) Mutates original object in memory \quad (c) Raises error \quad (d) Duplicates object
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Objects are passed by reference, mutating original heap memory.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 5.9: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 5 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Explain the role of \texttt{event.preventDefault()} in form validation.
+    \item Differentiate between Pass-by-Value and Pass-by-Reference in JavaScript.
+    \item Why is \texttt{addEventListener()} preferred over DOM property event binding?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Analysis ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output:
+    \begin{lstlisting}[language=JavaScript]
+function test(a, b) {
+    console.log(arguments.length, a + b);
+}
+test(5, 10, 15, 20);
+    \end{lstlisting}
+    \item Write a regular expression that validates a 10-digit mobile number starting with 7, 8, or 9.
+    \item Explain the difference between \texttt{input} and \texttt{change} events.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Write a complete JavaScript form validation script for a User Registration Portal:
+    \begin{enumerate}[label=(\alph*)]
+        \item Validate that username is non-empty and contains between 5 and 15 alphanumeric characters. (3 Marks)
+        \item Validate email address format using regular expressions. (3 Marks)
+        \item Validate that password is at least 8 characters long and matches the confirmation password field, displaying error messages in a dedicated \texttt{<div>}. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 5 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{PreventDefault} [2 Marks]: Halts the default browser behavior of form submission, preventing HTTP page navigation when client validation fails.
+    \item \textbf{Pass-by-Value vs. Reference} [2 Marks]: Primitives pass isolated copies of data values; objects and arrays pass memory reference pointers, allowing in-place property mutations.
+    \item \textbf{AddEventListener Benefits} [2 Marks]: Allows attaching multiple independent listener functions to a single event without overwriting existing handlers.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Arguments Tracing} [3 Marks]: \texttt{arguments.length} is 4; $a+b = 5+10 = 15$. Output: \texttt{4 15}.
+    \item \textbf{Mobile Regex} [3 Marks]: \texttt{/\textasciicircum[7-9]\textbackslash d\{9\}\$/}.
+    \item \textbf{Input vs. Change} [3 Marks]: \texttt{input} fires synchronously on every single character change; \texttt{change} fires only when the user commits the value (e.g., clicking away/blur).
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Registration Form Validation Implementation} [10 Marks]:
+\begin{lstlisting}[language=JavaScript]
+document.getElementById("regForm").addEventListener("submit", function(e) {
+    const user = document.getElementById("txtUser").value.trim();
+    const email = document.getElementById("txtEmail").value.trim();
+    const pass1 = document.getElementById("txtPass1").value;
+    const pass2 = document.getElementById("txtPass2").value;
+    const errBox = document.getElementById("errDisplay");
+
+    let err = "";
+
+    // 1. Username Check (5-15 Alphanumeric)
+    const userRegex = /^[a-zA-Z0-9]{5,15}$/;
+    if (!userRegex.test(user)) {
+        err = "Username must be 5-15 alphanumeric characters.";
+    }
+    // 2. Email Check
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        err = "Please enter a valid email address.";
+    }
+    // 3. Password Length & Match
+    else if (pass1.length < 8) {
+        err = "Password must be at least 8 characters long.";
+    } else if (pass1 !== pass2) {
+        err = "Passwords do not match.";
+    }
+
+    if (err !== "") {
+        e.preventDefault(); // Stop submission
+        errBox.innerText = err;
+    } else {
+        errBox.innerText = "";
+        alert("Registration successfully validated!");
+    }
+});
+\end{lstlisting}
+\textbf{Marking Scheme}: Username validation: 3M; Email regex validation: 3M; Password match \& error display logic: 4M.
+\end{enumerate}
+\end{solutionbox}

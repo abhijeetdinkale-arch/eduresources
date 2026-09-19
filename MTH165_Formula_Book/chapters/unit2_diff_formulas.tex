@@ -1,0 +1,28 @@
+\chapter{Unit 2: Differential Calculus and Applications}
+
+\begin{formulabox}{Standard $n$-th Derivatives}
+\begin{itemize}[leftmargin=1.5em]
+    \item $\frac{d^n}{dx^n}[e^{ax}] = a^n e^{ax}$
+    \item $\frac{d^n}{dx^n}[(ax+b)^m] = \frac{m!}{(m-n)!} a^n (ax+b)^{m-n}$
+    \item $\frac{d^n}{dx^n}\left[\frac{1}{ax+b}\right] = \frac{(-1)^n n! a^n}{(ax+b)^{n+1}}$
+    \item $\frac{d^n}{dx^n}[\ln(ax+b)] = \frac{(-1)^{n-1} (n-1)! a^n}{(ax+b)^n}$
+    \item $\frac{d^n}{dx^n}[\sin(ax+b)] = a^n \sin\left(ax+b + \frac{n\pi}{2}\right)$
+    \item $\frac{d^n}{dx^n}[\cos(ax+b)] = a^n \cos\left(ax+b + \frac{n\pi}{2}\right)$
+    \item $\frac{d^n}{dx^n}[e^{ax}\sin(bx+c)] = (a^2+b^2)^{n/2} e^{ax}\sin\left(bx+c + n\tan^{-1}\frac{b}{a}\right)$
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Leibniz's Product Rule}
+\begin{equation}
+(uv)_n = \sum_{k=0}^n \binom{n}{k} u_{n-k} v_k = u_n v + \binom{n}{1} u_{n-1} v_1 + \binom{n}{2} u_{n-2} v_2 + \cdots + u v_n
+\end{equation}
+\end{formulabox}
+
+\begin{formulabox}{Mean Value Theorems \& Series Expansions}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Rolle's}: $f(a)=f(b) \implies f'(c) = 0$ for some $c \in (a,b)$.
+    \item \textbf{LMVT}: $f'(c) = \frac{f(b)-f(a)}{b-a}$ for some $c \in (a,b)$.
+    \item \textbf{CMVT}: $\frac{f'(c)}{g'(c)} = \frac{f(b)-f(a)}{g(b)-g(a)}$ for some $c \in (a,b)$.
+    \item \textbf{Taylor's Series}: $f(a+h) = \sum_{k=0}^n \frac{h^k}{k!} f^{(k)}(a) + \frac{h^{n+1}}{(n+1)!} f^{(n+1)}(a+\theta h)$.
+\end{itemize}
+\end{formulabox}

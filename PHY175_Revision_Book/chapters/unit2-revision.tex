@@ -1,0 +1,15 @@
+\chapter{Fundamentals of Electricity and Devices: Rapid Revision}
+
+\begin{highyieldbox}[Key Electronic Devices Summary]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{KCL \& KVL:} Sum of currents at a node is zero ($\sum I = 0$); Sum of voltages around a closed loop is zero ($\sum V = 0$).
+    \item \textbf{Voltage Division:} $V_{R2} = V_{in}\frac{R_2}{R_1+R_2}$. Loading $R_2$ with $R_L$ always reduces $V_{out}$.
+    \item \textbf{Current Division:} $I_1 = I_{total}\frac{R_2}{R_1+R_2}$.
+    \item \textbf{PN Diode:} Shockley equation $I_D = I_S(e^{V_D/n V_T} - 1)$. $V_T = \frac{k_B T}{q} \approx 25.9\,\text{mV}$ at $300\,\text{K}$. Forward bias narrows depletion region; reverse bias widens it.
+    \item \textbf{Bridge Rectifier:} Ripple frequency $f_r = 2 f_{in} = 100\,\text{Hz}$ (for $50\,\text{Hz}$ AC). Peak voltage $V_{peak} = V_m - 2V_D$. Ripple $V_{r(pp)} = \frac{I_{DC}}{2 f C}$.
+    \item \textbf{BJT Operating Regions:} Active ($V_{BE}\approx 0.7\,\text{V}, V_{CB}$ reverse, $I_C = \beta I_B$), Saturation ($V_{BE}\approx 0.7\,\text{V}, V_{CE}\approx 0.2\,\text{V}$), Cutoff ($I_B=0, I_C=0$).
+    \item \textbf{CMOS Inverter:} Pull-up PMOS, pull-down NMOS. Ideal static power $\approx 0$. Dynamic power $P = \alpha C V_{DD}^2 f$.
+    \item \textbf{Semiconductor Memory:} SRAM is fast 6T latch; DRAM is 1T-1C requiring refresh; SSD uses non-volatile NAND Flash with finite P/E cycles and wear leveling.
+    \item \textbf{Computer Networking \& Fiber:} /27 subnet mask has block size $32$ ($30$ usable hosts). Optical fiber operates on Total Internal Reflection (TIR).
+\end{itemize}
+\end{highyieldbox}

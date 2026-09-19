@@ -1,0 +1,26 @@
+\chapter{Number Systems and Logic Gates Formulas}
+
+\begin{formulabox}[Radix Conversion, Codes \& Complements]
+\begin{align}
+\text{Radix Expansion:} \quad N_r &= \sum_{i=-m}^{n-1} d_i \cdot r^i \\
+\text{Binary to Gray:} \quad G_{MSB} &= B_{MSB}, \quad G_i = B_{i+1} \oplus B_i \\
+\text{Gray to Binary:} \quad B_{MSB} &= G_{MSB}, \quad B_i = B_{i+1} \oplus G_i \\
+\text{Excess-3 Code:} \quad \text{XS-3} &= \text{BCD} + 0011_2 \\
+\text{1's Complement:} \quad (N)' &= (2^n - 1) - N \quad (\text{bitwise NOT}) \\
+\text{2's Complement:} \quad (N)'' &= 2^n - N = \text{1's Comp} + 1 \\
+\text{Signed Overflow Flag:} \quad V &= C_{in} \oplus C_{out} \quad \text{at MSB}
+\end{align}
+\end{formulabox}
+
+\begin{formulabox}[Boolean Algebra Laws \& Theorems]
+\begin{align}
+\text{Identity Laws:} \quad A + 0 &= A, \quad A \cdot 1 = A \\
+\text{Null / Annihilation:} \quad A + 1 &= 1, \quad A \cdot 0 = 0 \\
+\text{Idempotent Laws:} \quad A + A &= A, \quad A \cdot A = A \\
+\text{Complementarity:} \quad A + \bar{A} &= 1, \quad A \cdot \bar{A} = 0 \\
+\text{Involution:} \quad \overline{\overline{A}} &= A \\
+\text{De Morgan's Laws:} \quad \overline{A + B} &= \bar{A} \cdot \bar{B}, \quad \overline{A \cdot B} = \bar{A} + \bar{B} \\
+\text{Absorption Laws:} \quad A + AB &= A, \quad A(A + B) = A \\
+\text{Consensus Theorem:} \quad AB + \bar{A}C + BC &= AB + \bar{A}C
+\end{align}
+\end{formulabox}

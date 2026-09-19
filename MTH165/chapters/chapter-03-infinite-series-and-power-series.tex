@@ -1,0 +1,516 @@
+\chapter{Infinite Sequences, Series \& Convergence Tests}
+\label{chap:infinite-series-and-power-series}
+
+% ==============================================================================
+% SECTION 3.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Infinite sequences and series form the analytical foundation for representing transcendental functions, performing numerical computations, approximating physical fields, and solving ordinary differential equations. This unit establishes rigorous criteria for testing the convergence, divergence, and oscillation of infinite series of real constants and power series of variables.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze Sequences} for monotonicity, boundedness, and establish convergence via the \textbf{Monotone Convergence Theorem}.
+    \item \textbf{Execute Positive Term Convergence Tests}: Direct Comparison, Limit Comparison, \textbf{D'Alembert's Ratio Test}, \textbf{Cauchy's Root Test}, \textbf{Raabe's Test}, and \textbf{Cauchy's Integral Test}.
+    \item \textbf{Distinguish Absolute and Conditional Convergence} of alternating series using \textbf{Leibniz's Test}.
+    \item \textbf{Evaluate Power Series} to determine the exact \textbf{Radius of Convergence ($R$)} and the \textbf{Interval of Convergence}, including rigorous endpoint boundary testing.
+    \item \textbf{Select the Optimal Convergence Test} algorithmically based on functional patterns (factorials, powers, logarithms, rational expressions).
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 3.2: SEQUENCES \& INFINITE SERIES FOUNDATIONS
+% ==============================================================================
+\section{Sequences and Infinite Series Foundations}
+
+\subsection{Sequences and Monotone Convergence}
+
+\begin{definition}[Sequence of Real Numbers]
+A sequence $\{a_n\}_{n=1}^\infty$ is a function $f: \mathbb{N} \to \mathbb{R}$ whose domain is the set of positive integers. We write $\lim_{n\to\infty} a_n = L$ if for every $\epsilon > 0$, there exists an integer $N$ such that $|a_n - L| < \epsilon$ for all $n > N$.
+\end{definition}
+
+\begin{theorem}[Monotone Convergence Theorem]
+Every sequence $\{a_n\}$ that is both \textbf{monotonic} (either non-decreasing or non-increasing) and \textbf{bounded} is convergent.
+\begin{itemize}[leftmargin=1.5em]
+    \item A bounded above, non-decreasing sequence converges to its least upper bound ($\sup$).
+    \item A bounded below, non-increasing sequence converges to its greatest lower bound ($\inf$).
+\end{itemize}
+\end{theorem}
+
+\subsection{Infinite Series and Sequence of Partial Sums}
+
+\begin{definition}[Infinite Series]
+Given an infinite sequence $\{a_n\}$, the formal sum $\sum_{n=1}^\infty a_n = a_1 + a_2 + a_3 + \cdots$ is called an \textbf{Infinite Series}. The $n$-th partial sum is:
+\begin{equation}
+    S_n = \sum_{k=1}^n a_k = a_1 + a_2 + \cdots + a_n
+\end{equation}
+The series $\sum a_n$ converges to sum $S$ if $\lim_{n\to\infty} S_n = S$ exists as a finite number.
+\end{definition}
+
+\subsection{Fundamental Preliminary Tests}
+
+\begin{theorem}[$n$-th Term Test for Divergence]
+If $\lim_{n\to\infty} a_n \ne 0$ (or the limit does not exist), the series $\sum a_n$ \textbf{diverges}.
+\end{theorem}
+
+\begin{commonmistake}[The Harmonic Series Fallacy]
+The condition $\lim_{n\to\infty} a_n = 0$ is a \textbf{necessary condition} for convergence, but \textbf{NOT a sufficient condition}!
+For example, the Harmonic Series $\sum_{n=1}^\infty \frac{1}{n}$ has $\lim_{n\to\infty} \frac{1}{n} = 0$, yet it \textbf{diverges} ($p$-series with $p=1$).
+\end{commonmistake}
+
+\begin{theorem}[Geometric Series Test]
+The geometric series $\sum_{n=0}^\infty a r^n = a + ar + ar^2 + \cdots$ ($a \ne 0$):
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Converges} if $|r| < 1$, with sum $S = \frac{a}{1-r}$.
+    \item \textbf{Diverges} if $|r| \ge 1$.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[$p$-Series (Hyper-Harmonic) Test]
+The infinite series $\sum_{n=1}^\infty \frac{1}{n^p} = \frac{1}{1^p} + \frac{1}{2^p} + \frac{1}{3^p} + \cdots$:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Converges} if $p > 1$.
+    \item \textbf{Diverges} if $p \le 1$.
+\end{itemize}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 3.3: CONVERGENCE TESTS FOR POSITIVE TERMS
+% ==============================================================================
+\section{Tests for Convergence of Positive Term Series}
+
+\subsection{Comparison Tests}
+
+\begin{theorem}[Limit Comparison Test]
+Let $\sum a_n$ and $\sum b_n$ be positive-term series. If $\lim_{n\to\infty} \frac{a_n}{b_n} = L$, where $0 < L < \infty$ (a finite non-zero constant), then both $\sum a_n$ and $\sum b_n$ either converge together or diverge together.
+\end{theorem}
+
+\subsection{D'Alembert's Ratio Test}
+
+\begin{theorem}[D'Alembert's Ratio Test]
+Let $\sum a_n$ be a positive-term series, and let:
+\begin{equation}
+    L = \lim_{n\to\infty} \frac{a_{n+1}}{a_n}
+\end{equation}
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $L < 1$, the series $\sum a_n$ is \textbf{Convergent}.
+    \item If $L > 1$ (or $L = \infty$), the series $\sum a_n$ is \textbf{Divergent}.
+    \item If $L = 1$, the test is \textbf{Inconclusive / Fails}. (Escalate to Raabe's or Logarithmic Test).
+\end{enumerate}
+\end{theorem}
+
+\subsection{Cauchy's Root Test}
+
+\begin{theorem}[Cauchy's $n$-th Root Test]
+Let $\sum a_n$ be a positive-term series, and let:
+\begin{equation}
+    L = \lim_{n\to\infty} (a_n)^{1/n} = \lim_{n\to\infty} \sqrt[n]{a_n}
+\end{equation}
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $L < 1$, the series is \textbf{Convergent}.
+    \item If $L > 1$, the series is \textbf{Divergent}.
+    \item If $L = 1$, the test is \textbf{Inconclusive}.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Raabe's Test (Higher Ratio Test)}
+
+\begin{theorem}[Raabe's Test]
+When D'Alembert's ratio test fails ($L = 1$), compute the limit:
+\begin{equation}
+    R = \lim_{n\to\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right)
+\end{equation}
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $R > 1$, the series $\sum a_n$ is \textbf{Convergent}.
+    \item If $R < 1$, the series $\sum a_n$ is \textbf{Divergent}.
+    \item If $R = 1$, the test is \textbf{Inconclusive}.
+\end{enumerate}
+\end{theorem}
+
+\begin{commonmistake}[Inequality Flip between Ratio and Raabe's Test]
+Notice the crucial inversion!
+\begin{itemize}
+    \item In Ratio Test $\left(\frac{a_{n+1}}{a_n}\right)$: \textbf{Converges if $L < 1$}.
+    \item In Raabe's Test $\left[n\left(\frac{a_n}{a_{n+1}}-1\right)\right]$: \textbf{Converges if $R > 1$}.
+\end{itemize}
+\end{commonmistake}
+
+\subsection{Cauchy's Integral Test}
+
+\begin{theorem}[Cauchy's Integral Test]
+Let $f(x)$ be a positive, continuous, and monotonically decreasing function for $x \ge 1$ such that $f(n) = a_n$. Then the series $\sum_{n=1}^\infty a_n$ and the improper integral $\int_1^\infty f(x)\,dx$ converge or diverge together.
+\end{theorem}
+
+\begin{example}[Ratio Test Escalating to Raabe's Test]
+Test the convergence of the series:
+\begin{equation*}
+    \sum_{n=1}^\infty \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{2 \cdot 4 \cdot 6 \cdots (2n)} \frac{x^n}{2n+1} \quad (x > 0)
+\end{equation*}
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+Let $a_n = \frac{1 \cdot 3 \cdots (2n-1)}{2 \cdot 4 \cdots (2n)} \frac{x^n}{2n+1}$. Then:
+\begin{equation*}
+    a_{n+1} = \frac{1 \cdot 3 \cdots (2n-1)(2n+1)}{2 \cdot 4 \cdots (2n)(2n+2)} \frac{x^{n+1}}{2n+3}
+\end{equation*}
+Forming the ratio $\frac{a_{n+1}}{a_n}$:
+\begin{equation*}
+    \frac{a_{n+1}}{a_n} = \frac{2n+1}{2n+2} \cdot \frac{2n+1}{2n+3} \cdot x = \frac{(2n+1)^2}{(2n+2)(2n+3)} x = \frac{4n^2 + 4n + 1}{4n^2 + 10n + 6} x
+\end{equation*}
+Evaluating limit:
+\begin{equation*}
+    L = \lim_{n\to\infty} \frac{a_{n+1}}{a_n} = \lim_{n\to\infty} \left(\frac{4 + 4/n + 1/n^2}{4 + 10/n + 6/n^2}\right) x = 1 \cdot x = x
+\end{equation*}
+By D'Alembert's Ratio Test:
+\begin{itemize}
+    \item If $x < 1$, the series \textbf{Converges}.
+    \item If $x > 1$, the series \textbf{Diverges}.
+    \item If $x = 1$, the ratio test \textbf{Fails} ($L = 1$).
+\end{itemize}
+
+\textbf{Testing at $x = 1$ via Raabe's Test}:
+\begin{align*}
+    \frac{a_n}{a_{n+1}} &= \frac{4n^2 + 10n + 6}{4n^2 + 4n + 1} \\
+    \frac{a_n}{a_{n+1}} - 1 &= \frac{(4n^2 + 10n + 6) - (4n^2 + 4n + 1)}{4n^2 + 4n + 1} = \frac{6n + 5}{4n^2 + 4n + 1} \\
+    R &= \lim_{n\to\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) = \lim_{n\to\infty} \frac{6n^2 + 5n}{4n^2 + 4n + 1} = \lim_{n\to\infty} \frac{6 + 5/n}{4 + 4/n + 1/n^2} = \mathbf{\frac{6}{4} = \frac{3}{2}}
+\end{align*}
+Since $R = \frac{3}{2} > 1$, by Raabe's Test, the series \textbf{Converges} at $x = 1$.
+
+\textbf{Final Conclusion}: The series converges for $x \le 1$ and diverges for $x > 1$.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.4: ALTERNATING SERIES \& ABSOLUTE CONVERGENCE
+% ==============================================================================
+\section{Alternating Series \& Absolute Convergence}
+
+\subsection{Leibniz's Test for Alternating Series}
+
+\begin{theorem}[Leibniz's Alternating Series Test]
+An alternating series $\sum_{n=1}^\infty (-1)^{n-1} a_n = a_1 - a_2 + a_3 - a_4 + \cdots$ (where each $a_n > 0$) converges if:
+\begin{enumerate}[leftmargin=1.5em]
+    \item $a_{n+1} \le a_n$ for all $n$ (the terms are monotonically decreasing in magnitude).
+    \item $\lim_{n\to\infty} a_n = 0$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Absolute vs. Conditional Convergence}
+
+\begin{definition}[Absolute and Conditional Convergence]
+\begin{itemize}[leftmargin=1.5em]
+    \item A series $\sum a_n$ is \textbf{Absolutely Convergent} if the series of absolute values $\sum |a_n|$ converges. Every absolutely convergent series is convergent.
+    \item A series $\sum a_n$ is \textbf{Conditionally Convergent} if $\sum a_n$ converges (e.g., via Leibniz's test) but $\sum |a_n|$ diverges.
+\end{itemize}
+\end{definition}
+
+\begin{example}[Classifying Absolute vs. Conditional Convergence]
+Test the series $\sum_{n=1}^\infty \frac{(-1)^{n-1}}{\sqrt{n}}$ for absolute and conditional convergence.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+\begin{enumerate}
+    \item \textbf{Leibniz Test on $\sum \frac{(-1)^{n-1}}{\sqrt{n}}$}:
+    Here $a_n = \frac{1}{\sqrt{n}} > 0$.
+    \begin{itemize}
+        \item Since $n+1 > n \implies \sqrt{n+1} > \sqrt{n} \implies \frac{1}{\sqrt{n+1}} < \frac{1}{\sqrt{n}} \implies a_{n+1} < a_n$ (strictly decreasing).
+        \item $\lim_{n\to\infty} a_n = \lim_{n\to\infty} \frac{1}{\sqrt{n}} = 0$.
+    \end{itemize}
+    Both conditions of Leibniz's Test are satisfied. Hence $\sum \frac{(-1)^{n-1}}{\sqrt{n}}$ \textbf{Converges}.
+
+    \item \textbf{Testing Absolute Series $\sum |a_n|$}:
+    $\sum_{n=1}^\infty \left| \frac{(-1)^{n-1}}{\sqrt{n}} \right| = \sum_{n=1}^\infty \frac{1}{n^{1/2}}$.
+    This is a $p$-series with $p = 1/2 \le 1$, which \textbf{Diverges}.
+\end{enumerate}
+Since the series converges, but not absolutely, it is \textbf{Conditionally Convergent}.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.5: POWER SERIES \& INTERVAL OF CONVERGENCE
+% ==============================================================================
+\section{Power Series \& Interval of Convergence}
+
+\begin{definition}[Power Series]
+A power series centered at $x = c$ is an infinite series of the form:
+\begin{equation}
+    \sum_{n=0}^\infty a_n (x - c)^n = a_0 + a_1(x-c) + a_2(x-c)^2 + \cdots
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Radius and Interval of Convergence]
+The \textbf{Radius of Convergence} $R$ is given by:
+\begin{equation}
+    R = \lim_{n\to\infty} \left| \frac{a_n}{a_{n+1}} \right| \quad \text{or} \quad R = \frac{1}{\lim_{n\to\infty} \sqrt[n]{|a_n|}}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item The series converges absolutely for $|x - c| < R$, i.e., $x \in (c - R, c + R)$.
+    \item The series diverges for $|x - c| > R$.
+    \item At the endpoints $x = c - R$ and $x = c + R$, the series must be tested individually using standard constant series tests.
+\end{itemize}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 3.6: METHOD SELECTION GUIDE
+% ==============================================================================
+\section{Method Selection Guide for Series Testing}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Pattern in $n$-th Term $a_n$} & \textbf{Recommended Test} & \textbf{Action if Test Fails / Inconclusive} \\
+\midrule
+Factorials ($n!$) or Exponentials ($c^n$) & \textbf{D'Alembert's Ratio Test} & If $L=1$, escalate to Raabe's Test \\
+Whole power of $n$: $(u_n)^n$ & \textbf{Cauchy's Root Test} & If $L=1$, test with Limit Comparison \\
+Rational polynomials $\frac{P(n)}{Q(n)}$ & \textbf{Limit Comparison Test} ($b_n = 1/n^{d_Q - d_P}$) & Compare directly with $p$-series \\
+$\frac{1}{n (\ln n)^p}$ or logarithmic factors & \textbf{Cauchy's Integral Test} & Integrate $\int \frac{dx}{x(\ln x)^p}$ \\
+Alternating signs $(-1)^n$ & \textbf{Leibniz's Test} & Check absolute series $\sum |a_n|$ \\
+\bottomrule
+\end{tabularx}
+\caption{Algorithmic Series Test Selection Guide.}
+\label{tab:series-selection-guide}
+\end{table}
+
+% ==============================================================================
+% SECTION 3.7: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Testing Power Series Endpoints]
+Finding $R$ gives an open interval $(c-R, c+R)$. You \textbf{must} substitute the exact endpoint values $x = c-R$ and $x = c+R$ back into the original power series to test whether brackets are open $( \ )$ or closed $[ \ ]$. Leaving out endpoint analysis loses 40\% of the marks on power series questions!
+\end{examtip}
+
+% ==============================================================================
+% SECTION 3.8: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 3 Key Takeaways]
+\begin{itemize}
+    \item \textbf{$p$-Series}: $\sum \frac{1}{n^p}$ converges for $p > 1$; diverges for $p \le 1$.
+    \item \textbf{Ratio Test}: $\lim \frac{a_{n+1}}{a_n} = L$. $L < 1$ conv; $L > 1$ div; $L = 1$ fails.
+    \item \textbf{Root Test}: $\lim \sqrt[n]{a_n} = L$. $L < 1$ conv; $L > 1$ div; $L = 1$ fails.
+    \item \textbf{Raabe's Test}: $\lim n\left(\frac{a_n}{a_{n+1}}-1\right) = R$. $R > 1$ conv; $R < 1$ div; $R = 1$ fails.
+    \item \textbf{Leibniz Test}: Alternating series converges if $a_{n+1} \le a_n$ and $\lim a_n = 0$.
+    \item \textbf{Absolute vs Conditional}: $\sum |a_n|$ conv $\implies$ Absolute; $\sum a_n$ conv but $\sum |a_n|$ div $\implies$ Conditional.
+    \item \textbf{Radius of Convergence}: $R = \lim |\frac{a_n}{a_{n+1}}| = \frac{1}{\lim |a_n|^{1/n}}$.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 3.9: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Test the convergence of $\sum_{n=1}^\infty \frac{n^2 + 1}{2n^3 - n + 4}$ using Limit Comparison.
+    \item Test the convergence of $\sum_{n=1}^\infty \frac{3^n}{n!}$ using the Ratio Test.
+    \item Test the convergence of $\sum_{n=1}^\infty \left(\frac{n}{2n+1}\right)^n$ using the Root Test.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item Test the series $\sum_{n=1}^\infty \frac{\sqrt{n+1}-\sqrt{n}}{n^p}$ for all values of $p$.
+    \item Test the alternating series $\sum_{n=1}^\infty \frac{(-1)^{n-1} n}{n^2 + 1}$ for absolute and conditional convergence.
+    \item Find the radius and interval of convergence of $\sum_{n=1}^\infty \frac{(x-2)^n}{n \cdot 4^n}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item Test the convergence of $\sum_{n=1}^\infty \frac{1 \cdot 2 \cdot 3 \cdots n}{1 \cdot 3 \cdot 5 \cdots (2n-1)} x^n$ ($x > 0$).
+    \item Test the series $\sum_{n=2}^\infty \frac{1}{n (\ln n)(\ln \ln n)^p}$ using the Integral Test.
+    \item Find the complete interval of convergence of the power series $\sum_{n=1}^\infty \frac{(-1)^n (x+1)^n}{n^2 \cdot 2^n}$, testing both endpoints.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Test the convergence of $\sum_{n=1}^\infty \left[ \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{2 \cdot 4 \cdot 6 \cdots (2n)} \right]^p$ for all real $p > 0$ using Raabe's Test.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 3.10: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item The series $\sum_{n=1}^\infty \frac{1}{n^2}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item Divergent
+        \item Convergent with sum $\frac{\pi^2}{6}$
+        \item Oscillating
+        \item Conditionally convergent
+    \end{enumerate}
+
+    \item If $\lim_{n\to\infty} \frac{a_{n+1}}{a_n} = 1$, then D'Alembert's ratio test:
+    \begin{enumerate}[label=(\alph*)]
+        \item Asserts convergence
+        \item Asserts divergence
+        \item Fails (gives no information)
+        \item Proves absolute convergence
+    \end{enumerate}
+
+    \item In Raabe's test, the series converges if the limit $R = \lim n\left(\frac{a_n}{a_{n+1}}-1\right)$ satisfies:
+    \begin{enumerate}[label=(\alph*)]
+        \item $R < 1$
+        \item $R > 1$
+        \item $R = 1$
+        \item $R = 0$
+    \end{enumerate}
+
+    \item The alternating harmonic series $\sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item Absolutely convergent
+        \item Divergent
+        \item Conditionally convergent
+        \item Oscillating
+    \end{enumerate}
+
+    \item What is the radius of convergence of $\sum_{n=0}^\infty \frac{x^n}{n!}$?
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item 1
+        \item $\infty$
+        \item $e$
+    \end{enumerate}
+
+    \item What is the radius of convergence of $\sum_{n=1}^\infty n! x^n$?
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item 1
+        \item $\infty$
+        \item $1/2$
+    \end{enumerate}
+
+    \item The series $\sum_{n=1}^\infty \frac{1}{n \ln n}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item Convergent by Integral Test
+        \item Divergent by Integral Test
+        \item Convergent by Ratio Test
+        \item Oscillating
+    \end{enumerate}
+
+    \item The necessary condition for convergence of $\sum a_n$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\lim a_n = 1$
+        \item $\lim a_n = 0$
+        \item $\lim a_n = \infty$
+        \item $a_n > 0$
+    \end{enumerate}
+
+    \item The series $\sum_{n=1}^\infty (-1)^n \frac{n}{2n+1}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item Convergent by Leibniz Test
+        \item Divergent by $n$-th Term Test
+        \item Conditionally convergent
+        \item Absolutely convergent
+    \end{enumerate}
+
+    \item What is the interval of convergence of $\sum_{n=1}^\infty \frac{x^n}{n}$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $(-1, 1)$
+        \item $[-1, 1]$
+        \item ${[-1, 1)}$
+        \item $(-1, 1]$
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) Convergent} --- $p$-series with $p=2 > 1$.
+    \item \textbf{(c) Fails} --- Ratio test is inconclusive at $L=1$.
+    \item \textbf{(b) $R > 1$} --- Raabe's criterion for convergence is $R > 1$.
+    \item \textbf{(c) Conditionally convergent} --- Converges by Leibniz, but $\sum 1/n$ diverges.
+    \item \textbf{(c) $\infty$} --- $R = \lim \frac{(n+1)!}{n!} = \lim (n+1) = \infty$.
+    \item \textbf{(a) 0} --- $R = \lim \frac{n!}{(n+1)!} = \lim \frac{1}{n+1} = 0$.
+    \item \textbf{(b) Divergent by Integral Test} --- $\int_2^\infty \frac{dx}{x\ln x} = [\ln(\ln x)]_2^\infty = \infty$.
+    \item \textbf{(b) $\lim a_n = 0$} --- $n$-th term divergence theorem.
+    \item \textbf{(b) Divergent by $n$-th Term Test} --- $\lim a_n = 1/2 \ne 0$, terms oscillate without approaching 0.
+    \item \textbf{(c) ${[-1, 1)}$} --- At $x=-1$: $\sum \frac{(-1)^n}{n}$ conv (Leibniz); at $x=1$: $\sum \frac{1}{n}$ div.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.11: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 3: Infinite Sequences \& Series (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the $p$-series test condition for convergence.
+    \item State the formula for Raabe's test.
+    \item Define conditional convergence of an alternating series.
+    \item Write the expression for the radius of convergence $R$ in terms of coefficients $a_n$.
+    \item State whether the series $\sum_{n=1}^\infty \sin(1/n)$ converges or diverges.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Test the convergence of the series $\sum_{n=1}^\infty \frac{n^2}{(n+1)!}$.
+    \item Find the radius and complete interval of convergence of the power series $\sum_{n=1}^\infty \frac{(x-3)^n}{n \cdot 2^n}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Series Test ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item Test the convergence of the series for all $x > 0$:
+    \begin{equation*}
+        \sum_{n=1}^\infty \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{2 \cdot 4 \cdot 6 \cdots (2n)} x^n
+    \end{equation*}
+    (Must include D'Alembert's Ratio Test for $x \ne 1$ and Raabe's Test for $x = 1$).
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item $\sum \frac{1}{n^p}$ converges if $p > 1$ and diverges if $p \le 1$. [1 Mark]
+    \item $R = \lim_{n\to\infty} n\left(\frac{a_n}{a_{n+1}}-1\right)$; converges if $R > 1$, diverges if $R < 1$. [1 Mark]
+    \item A series $\sum a_n$ where $\sum a_n$ converges but $\sum |a_n|$ diverges. [1 Mark]
+    \item $R = \lim_{n\to\infty} \left|\frac{a_n}{a_{n+1}}\right| = \frac{1}{\lim \sqrt[n]{|a_n|}}$. [1 Mark]
+    \item Diverges (Limit comparison with $b_n = 1/n$: $\lim \frac{\sin(1/n)}{1/n} = 1$). [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item $a_n = \frac{n^2}{(n+1)!} \implies a_{n+1} = \frac{(n+1)^2}{(n+2)!}$. [1.5 Marks]
+    $\lim \frac{a_{n+1}}{a_n} = \lim \frac{(n+1)^2}{(n+2)!} \cdot \frac{(n+1)!}{n^2} = \lim \frac{(n+1)^2}{n^2 (n+2)} = \lim \frac{n^2+2n+1}{n^3+2n^2} = 0$. [2.5 Marks]
+    Since $L = 0 < 1$, by D'Alembert's Ratio Test, the series is \textbf{Convergent}. [1 Mark]
+
+    \item $a_n = \frac{1}{n \cdot 2^n} \implies a_{n+1} = \frac{1}{(n+1)2^{n+1}}$. [1 Mark]
+    $R = \lim \left|\frac{a_n}{a_{n+1}}\right| = \lim \frac{(n+1)2^{n+1}}{n 2^n} = 2 \lim \frac{n+1}{n} = \mathbf{2}$. [1.5 Marks]
+    Interval is $|x-3| < 2 \implies 1 < x < 5$.
+    At $x = 1$: $\sum \frac{(-2)^n}{n \cdot 2^n} = \sum \frac{(-1)^n}{n}$ $\implies$ Converges by Leibniz's Test. [1 Mark]
+    At $x = 5$: $\sum \frac{2^n}{n \cdot 2^n} = \sum \frac{1}{n}$ $\implies$ Diverges (Harmonic series). [1 Mark]
+    \textbf{Complete Interval of Convergence}: $\mathbf{[1, 5)}$. [0.5 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item $a_n = \frac{1 \cdot 3 \cdots (2n-1)}{2 \cdot 4 \cdots (2n)} x^n \implies a_{n+1} = \frac{1 \cdot 3 \cdots (2n-1)(2n+1)}{2 \cdot 4 \cdots (2n)(2n+2)} x^{n+1}$. [2 Marks]
+    $\frac{a_{n+1}}{a_n} = \frac{2n+1}{2n+2} x$. [1.5 Marks]
+    $\lim_{n\to\infty} \frac{a_{n+1}}{a_n} = \lim \frac{2 + 1/n}{2 + 2/n} x = x$. [1.5 Marks]
+    By D'Alembert's Ratio Test:
+    \begin{itemize}
+        \item If $x < 1 \implies$ \textbf{Convergent}. [1 Mark]
+        \item If $x > 1 \implies$ \textbf{Divergent}. [1 Mark]
+        \item If $x = 1 \implies$ Ratio test fails ($L=1$). [0.5 Marks]
+    \end{itemize}
+    Applying Raabe's Test at $x = 1$:
+    $\frac{a_n}{a_{n+1}} = \frac{2n+2}{2n+1} \implies \frac{a_n}{a_{n+1}} - 1 = \frac{2n+2 - 2n - 1}{2n+1} = \frac{1}{2n+1}$. [1 Mark]
+    $R = \lim_{n\to\infty} n\left(\frac{1}{2n+1}\right) = \lim \frac{n}{2n+1} = \mathbf{\frac{1}{2}}$. [1 Mark]
+    Since $R = 1/2 < 1$, by Raabe's Test, the series \textbf{Diverges} at $x = 1$. [0.5 Marks]
+    \textbf{Conclusion}: Converges for $x < 1$, Diverges for $x \ge 1$.
+\end{enumerate}
+\end{solutionbox}

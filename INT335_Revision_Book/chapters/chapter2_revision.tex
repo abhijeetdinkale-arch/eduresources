@@ -1,0 +1,73 @@
+\chapter{Unit 2: Empathy, Observation and Problem Identification}
+\label{chap:unit2_rev}
+
+\begin{revbox}[Unit 2 Essential Summary]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{User Empathy:} Stepping into the user's lived experience to discover motivations, emotions, and hidden needs.
+    \item \textbf{Computational Empathy:} Designing software that adapts to human context, cognitive limits, emotional distress, and accessibility.
+    \item \textbf{Need vs. Solution:} Needs are functional/emotional outcomes (e.g., ``timely arrival updates''); solutions are specific technical implementations (e.g., ``mobile GPS tracker'').
+\end{itemize}
+\end{revbox}
+
+\section{Research Methods \& The AEIOU Framework}
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{p{2.8cm}X X}
+\toprule
+\textbf{Dimension} & \textbf{Qualitative Research} & \textbf{Quantitative Research} \\
+\midrule
+\textbf{Focus} & Deep ``Why'' and ``How'' behind behaviors. & Measurable ``How many'' and ``How much''. \\
+\textbf{Methods} & Semi-structured interviews, diary logs, observation. & Surveys ($N \ge 100$), clickstream telemetry, A/B tests. \\
+\textbf{Sample} & Small, purposive sample ($N = 5 \text{ to } 15$). & Large, statistically representative sample. \\
+\bottomrule
+\end{tabularx}
+\caption{Qualitative vs. Quantitative Research Comparison.}
+\end{table}
+
+\begin{formulabox}[The 5 AEIOU Field Observation Lenses]
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item \textbf{A --- Activities:} Purposeful actions and workflows people perform.
+    \item \textbf{E --- Environments:} Physical/digital context (lighting, noise, clutter, connectivity).
+    \item \textbf{I --- Interactions:} Exchanges between person-person, person-device, or person-system.
+    \item \textbf{O --- Objects:} Physical/digital tools, improvised cheat-sheets, sticky notes, keycards.
+    \item \textbf{U --- Users:} The individuals observed, their roles, behaviors, and relationships.
+\end{itemize}
+\end{formulabox}
+
+\section{Inquiry Tactics, Needs, and Personas}
+
+\begin{itemize}[leftmargin=1.2em, itemsep=3pt]
+    \item \textbf{Interviewing Rules:} Use open-ended narrative questions (*``Tell me about the last time you...''*); avoid leading bias (*avoid ``Don't you love our fast app?''*); use Critical Incidents (extreme stories of success/failure); apply Laddering (5 Whys) to uncover root emotional drivers.
+    \item \textbf{Explicit vs. Implicit Needs:}
+    \begin{itemize}
+        \item *Explicit Needs:* Directly stated requirements (e.g., ``I need an export button'').
+        \item *Implicit (Latent) Needs:* Unspoken desires inferred through workarounds and hesitation (e.g., need for audit reassurance and data security).
+    \end{itemize}
+    \item \textbf{Pain Point Classes:} Time Pain (delays), Process Pain (fragmented apps), Financial Pain (hidden fees), Emotional Pain (anxiety/confusion).
+    \item \textbf{User Personas:} Research-grounded archetypes representing goals, behaviors, frustrations, and context.
+\end{itemize}
+
+\section{Empathy Mapping, POV, and HMW}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|X|X|}
+\hline
+\textbf{SAYS} (Direct Quotes) & \textbf{THINKS} (Inferred Beliefs \& Doubts) \\
+\textit{``I never know if the form was received.''} & \textit{``Will I be billed twice if I click submit again?''} \\
+\hline
+\textbf{DOES} (Observable Workarounds) & \textbf{FEELS} (Emotions) \\
+\textit{Takes screenshots, calls customer support.} & \textit{Anxious, confused, hesitant.} \\
+\hline
+\multicolumn{2}{|c|}{\textbf{PAINS:} Financial uncertainty \quad\textbar\quad \textbf{GAINS:} Clear confirmation} \\
+\hline
+\end{tabularx}
+\end{center}
+
+\begin{formulabox}[POV and HMW Formulation]
+$$\text{\textbf{POV}} = [\;\text{User Profile}\;] \;+\; [\;\text{Core Need}\;] \;+\; [\;\text{Surprising Insight}\;]$$
+$$\text{\textbf{HMW Question}} = \text{``How might we [actionable challenge] without [prescribing exact solution]?''}$$
+\end{formulabox}

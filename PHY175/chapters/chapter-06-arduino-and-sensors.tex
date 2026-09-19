@@ -1,0 +1,336 @@
+\chapter{Introduction to Arduino and Sensors}
+\label{chap:arduino-sensors}
+
+\section{Microcontroller Architecture and Embedded Systems}
+An \textbf{embedded system} is a specialized computing system composed of a microcontroller, dedicated firmware, sensory inputs, and actuation outputs designed to execute deterministic real-time control functions.
+
+\subsection{Architectural Classifications: Von Neumann vs Harvard}
+\begin{itemize}
+    \item \textbf{Von Neumann Architecture:} Employs a unified memory space and shared system bus for both program instructions and runtime data. Instruction fetch and data operand read/write operations must be executed sequentially in separate machine cycles, resulting in the \textbf{Von Neumann bus bottleneck}.
+    \item \textbf{Harvard Architecture:} Employs physically separate memory spaces and independent instruction and data buses. This allows simultaneous instruction fetching and data reading/writing, significantly enhancing pipelining efficiency and instruction throughput.
+\end{itemize}
+
+\subsection{The ATmega328P Microcontroller Core}
+The standard Arduino Uno development platform is built around the Microchip/Atmel **ATmega328P**, an 8-bit AVR enhanced RISC microcontroller.
+
+\begin{table}[htbp]
+\centering
+\caption{Key Hardware Specifications of the ATmega328P}
+\label{tab:atmega328p-specs}
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Parameter / Subsystem} & \textbf{Specification / Characteristics} \\
+\midrule
+CPU Architecture & 8-bit AVR RISC (131 instructions, most single clock cycle execution) \\
+Operating Frequency ($f_{osc}$) & $\SI{16}{\mega\hertz}$ (provides execution throughput of 16 MIPS) \\
+Operating Voltage ($V_{cc}$) & $\SI{1.8}{\volt}$ to $\SI{5.5}{\volt}$ (configured at $\SI{5.0}{\volt}$ on Arduino Uno) \\
+Flash Program Memory & $\SI{32}{\kibi\byte}$ In-System Programmable Flash ($\SI{0.5}{\kibi\byte}$ bootloader) \\
+SRAM (Static RAM) & $\SI{2}{\kibi\byte}$ internal volatile data memory \\
+EEPROM & $\SI{1}{\kibi\byte}$ non-volatile byte-addressable parameter memory \\
+General Purpose Registers & 32 $\times$ 8-bit general-purpose working registers ($R_0 \dots R_{31}$) \\
+GPIO Ports & Port B (PB0--PB5), Port C (PC0--PC5), Port D (PD0--PD7) \\
+Analog ADC Channels & 6 multiplexed 10-bit Successive Approximation (SAR) channels \\
+Timer/Counter Modules & Two 8-bit timers (Timer0, Timer2) and one 16-bit timer (Timer1) \\
+Hardware PWM Channels & 6 channels ($\text{D3}, \text{D5}, \text{D6}, \text{D9}, \text{D10}, \text{D11}$) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Low-Level GPIO Register Architecture}
+Each physical 8-bit I/O port (Port B, Port C, Port D) is controlled by three dedicated memory-mapped control registers:
+\begin{enumerate}
+    \item \textbf{Data Direction Register (\texttt{DDRx}):} Configures pin directions ($0 = \text{Input}, 1 = \text{Output}$).
+    \item \textbf{Port Output Data Register (\texttt{PORTx}):} Sets output voltage level when configured as output ($0 = \text{LOW}, 1 = \text{HIGH}$) or enables internal $\SI{20}{\kilo\ohm}\text{--}\SI{50}{\kilo\ohm}$ pull-up resistors when configured as input.
+    \item \textbf{Port Input Pins Address (\texttt{PINx}):} Read-only register reflecting the immediate physical electrical logic levels present at the port pins.
+\end{enumerate}
+
+\section{Analog-to-Digital Conversion (ADC)}
+The ATmega328P incorporates an internal 10-bit Successive Approximation Register (SAR) ADC.
+
+\subsection{Mathematical Principles and Quantization}
+A 10-bit ADC quantizes a continuous analog input voltage $V_{in}$ into one of $2^{10} = 1024$ discrete digital levels ($0 \dots 1023$).
+
+\begin{derivationbox}[ADC Resolution and Voltage Calculation]
+The voltage resolution (Least Significant Bit step size $\Delta V$) is defined by:
+\begin{equation}
+\Delta V = \frac{V_{ref}}{2^n} = \frac{V_{ref}}{1024}
+\end{equation}
+When using the default internal $\SI{5.0}{\volt}$ supply reference:
+\begin{equation}
+\Delta V = \frac{\SI{5.0}{\volt}}{1024} = \SI{4.8828}{\milli\volt}/\text{LSB}
+\end{equation}
+The digital integer output code $D_{out} \in [0, 1023]$ is given by:
+\begin{equation}
+D_{out} = \left\lfloor \frac{V_{in}}{V_{ref}} \times 1024 \right\rfloor \implies V_{in} = \frac{D_{out} \times V_{ref}}{1023}
+\end{equation}
+\end{derivationbox}
+
+The ADC conversion circuitry requires an input clock between $\SI{50}{\kilo\hertz}$ and $\SI{200}{\kilo\hertz}$. For a $\SI{16}{\mega\hertz}$ system clock, an internal prescaler of 128 yields an ADC clock of $\SI{125}{\kilo\hertz}$, resulting in a total conversion time of 13 ADC clock cycles ($\approx \SI{104}{\micro\second}$ per sample).
+
+\section{Pulse Width Modulation (PWM)}
+Pulse Width Modulation is a technique for generating pseudo-analog effective output voltages from digital switching pins by varying the duty cycle of a fixed-frequency rectangular pulse train.
+
+\subsection{Mathematical Foundations of PWM}
+\begin{itemize}
+    \item \textbf{Duty Cycle ($D$):} The ratio of active-high on-time ($t_{on}$) to total switching period ($T$):
+    \begin{equation}
+    D = \frac{t_{on}}{T} \times 100\% = \frac{t_{on}}{t_{on} + t_{off}} \times 100\%
+    \end{equation}
+    \item \textbf{Average DC Voltage ($V_{avg}$):}
+    \begin{equation}
+    V_{avg} = \frac{1}{T} \int_0^T v(t)\,dt = D \times V_{cc} = \left( \frac{\text{OCR}}{255} \right) \times V_{cc}
+    \end{equation}
+    where $\text{OCR}$ is the 8-bit Output Compare Register value ($0 \le \text{OCR} \le 255$).
+\end{itemize}
+
+On Arduino Uno, pins 3, 5, 6, 9, 10, and 11 support hardware PWM. Pins 5 and 6 operate at a base frequency of $\SI{980}{\hertz}$ (driven by Timer0), while pins 3, 9, 10, and 11 operate at $\SI{490}{\hertz}$ (driven by Timer1 and Timer2).
+
+\section{Hardware Interrupts and Real-Time Event Handling}
+\subsection{Polling vs Interrupts}
+\begin{itemize}
+    \item \textbf{Polling:} The CPU continuously executes software loops to test I/O pin states. Polling wastes processor cycles and introduces variable latency depending on loop execution depth.
+    \item \textbf{Hardware Interrupts:} An asynchronous electrical edge at an external pin immediately suspends normal CPU execution, preserves program counter context on the stack, and branches directly to a dedicated \textbf{Interrupt Service Routine (ISR)}.
+\end{itemize}
+
+\subsection{Interrupt Architecture on ATmega328P}
+Arduino Uno provides two external hardware interrupt pins:
+\begin{itemize}
+    \item \textbf{INT0} mapped to Digital Pin 2.
+    \item \textbf{INT1} mapped to Digital Pin 3.
+\end{itemize}
+Interrupt triggers can be configured for four distinct hardware modes: \texttt{LOW} (pin is low), \texttt{CHANGE} (any logic transition), \texttt{RISING} ($0 \to 1$ edge), or \texttt{FALLING} ($1 \to 0$ edge).
+
+\begin{pitfallbox}[ISR Design Rules and the \texttt{volatile} Keyword]
+\begin{enumerate}
+    \item ISR execution must be kept extremely brief (e.g., updating a flag or incrementing a counter).
+    \item Do \textbf{not} invoke blocking delays (\texttt{delay()}) or complex serial transmissions (\texttt{Serial.print()}) inside an ISR, as hardware interrupts are globally disabled during ISR execution.
+    \item Any global variable modified inside an ISR and read in the main loop \textbf{must} be qualified with the \texttt{volatile} keyword to instruct the compiler optimizer not to cache the variable in CPU registers:
+    \begin{lstlisting}[language=C++]
+    volatile unsigned long pulseCount = 0;
+    \end{lstlisting}
+\end{enumerate}
+\end{pitfallbox}
+
+\section{Sensors, Transducers, and Actuators}
+\subsection{Light Dependent Resistor (LDR)}
+An LDR (cadmium sulfide photoresistor) exhibits photoconductivity: photon absorption excites valence electrons into the conduction band, decreasing electrical resistance ($R_{LDR} \approx \SI{1}{\mega\ohm}$ in total darkness down to $R_{LDR} \approx \SI{500}{\ohm}$ in bright sunlight).
+
+\begin{derivationbox}[LDR Voltage Divider Analysis]
+Connecting the LDR in series with a fixed pull-down resistor $R_{fixed} = \SI{10}{\kilo\ohm}$ forms a voltage divider:
+\begin{equation}
+V_{out} = V_{cc} \left( \frac{R_{fixed}}{R_{fixed} + R_{LDR}} \right)
+\end{equation}
+As ambient illumination increases, $R_{LDR}$ decreases, causing $V_{out}$ to rise monotonically towards $V_{cc}$.
+\end{derivationbox}
+
+\subsection{Infrared (IR) Obstacle Sensor}
+An active reflective IR sensor comprises an infrared emitting diode (wavelength $\lambda \approx \SI{940}{\nano\second}$) and an IR photodiode receiver coupled to an on-board LM393 voltage comparator.
+When an obstacle enters the detection field, reflected IR energy increases reverse photodiode current, causing the non-inverting comparator terminal to cross the reference threshold set by a precision potentiometer, driving the digital output (\texttt{OUT}) active \textbf{LOW}.
+
+\subsection{Ultrasonic Distance Sensor (HC-SR04)}
+The HC-SR04 measures physical distance using non-contact acoustic echo-ranging.
+
+\begin{derivationbox}[Ultrasonic Range Derivation]
+The measurement sequence:
+\begin{enumerate}
+    \item A $\SI{10}{\micro\second}$ active-HIGH pulse is applied to the \texttt{Trig} pin.
+    \item The module generates an 8-cycle ultrasonic acoustic burst at $\SI{40}{\kilo\hertz}$.
+    \item The \texttt{Echo} pin goes HIGH and remains HIGH for the duration $t_{echo}$ taken by the acoustic wave to travel to the target and reflect back.
+    \item Given the acoustic velocity in air at $\SI{20}{\celsius}$ is $v_{sound} \approx \SI{343}{\meter\per\second} = \SI{0.0343}{\centi\meter\per\micro\second}$:
+    \begin{equation}
+    d = \frac{v_{sound} \times t_{echo}}{2} = \frac{t_{echo} \text{ (\SI{}{\micro\second})}}{58.3} \text{ \SI{}{\centi\meter}}
+    \end{equation}
+\end{enumerate}
+\end{derivationbox}
+
+\subsection{Digital Temperature and Humidity Sensor (DHT11/DHT22)}
+The DHT11 integrates a capacitive relative humidity sensor, an NTC thermistor, and an internal 8-bit microcontroller that outputs data over a single-wire bi-directional serial bus.
+\begin{itemize}
+    \item \textbf{Data Framing (40 Bits):} Transmits 16 bits integral/decimal relative humidity, 16 bits integral/decimal temperature, and an 8-bit checksum:
+    \begin{equation}
+    \text{Checksum} = (\text{Byte}_1 + \text{Byte}_2 + \text{Byte}_3 + \text{Byte}_4) \ \& \ \text{0xFF}
+    \end{equation}
+\end{itemize}
+
+\subsection{Motor Actuators and Driver Interfaces}
+\begin{itemize}
+    \item \textbf{DC Motor Control via L293D H-Bridge:} Direct connection of DC motors to microcontroller GPIO pins will destroy the chip due to excessive current draw and inductive flyback voltages. The L293D quadruple high-current H-bridge IC provides bidirectional drive up to $\SI{600}{\milli\ampere}$ per channel with internal clamp diodes.
+    \item \textbf{Servo Motor Control:} Standard hobby servomotors employ PWM pulse-width positioning operating at a frame frequency of $\SI{50}{\hertz}$ ($T = \SI{20}{\milli\second}$):
+    \begin{itemize}
+        \item $\SI{1.0}{\milli\second}$ high pulse $\implies 0^\circ$ shaft position.
+        \item $\SI{1.5}{\milli\second}$ high pulse $\implies 90^\circ$ neutral position.
+        \item $\SI{2.0}{\milli\second}$ high pulse $\implies 180^\circ$ maximum position.
+    \end{itemize}
+\end{itemize}
+
+\section{Complete Production Arduino Firmware Implementations}
+
+\subsection{Multi-Sensor Acquisition and Display Firmware}
+\begin{lstlisting}[language=C++]
+// Complete Production-Grade Arduino Multi-Sensor Firmware
+#include <Arduino.h>
+
+const uint8_t PIN_LDR = A0;
+const uint8_t PIN_TRIG = 9;
+const uint8_t PIN_ECHO = 10;
+const uint8_t PIN_LED_PWM = 6;
+const uint8_t PIN_INTERRUPT = 2;
+
+volatile unsigned long tachPulseCount = 0;
+const float V_REF = 5.0;
+
+void isrTachometer() {
+    tachPulseCount++;
+}
+
+float measureDistanceCm() {
+    digitalWrite(PIN_TRIG, LOW);
+    delayMicroseconds(2);
+    digitalWrite(PIN_TRIG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(PIN_TRIG, LOW);
+    
+    unsigned long duration = pulseIn(PIN_ECHO, HIGH, 30000); // 30ms timeout
+    if (duration == 0) return -1.0; // Out of range
+    return (duration * 0.0343) / 2.0;
+}
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(PIN_TRIG, OUTPUT);
+    pinMode(PIN_ECHO, INPUT);
+    pinMode(PIN_LED_PWM, OUTPUT);
+    pinMode(PIN_INTERRUPT, INPUT_PULLUP);
+    
+    attachInterrupt(digitalPinToInterrupt(PIN_INTERRUPT), isrTachometer, FALLING);
+    Serial.println(F("System Initialized Successfully."));
+}
+
+void loop() {
+    // 1. Read Analog Light Level
+    int rawADC = analogRead(PIN_LDR);
+    float vSensor = (rawADC * V_REF) / 1023.0;
+    
+    // 2. Adjust PWM brightness proportionally (inverted: darker = brighter LED)
+    uint8_t pwmValue = map(rawADC, 0, 1023, 255, 0);
+    analogWrite(PIN_LED_PWM, pwmValue);
+    
+    // 3. Ultrasonic Distance
+    float dist = measureDistanceCm();
+    
+    // 4. Safely read volatile interrupt counter
+    noInterrupts();
+    unsigned long currentPulses = tachPulseCount;
+    interrupts();
+    
+    // 5. Formatted Telemetry Output
+    Serial.print(F("ADC: ")); Serial.print(rawADC);
+    Serial.print(F(" | V: ")); Serial.print(vSensor, 2);
+    Serial.print(F("V | Dist: ")); Serial.print(dist, 1);
+    Serial.print(F("cm | Pulses: ")); Serial.println(currentPulses);
+    
+    delay(500);
+}
+\end{lstlisting}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}[Example 6.1: Precision ADC Voltage Calculation]
+\textbf{Problem:} An ATmega328P ADC powered at $V_{ref} = \SI{5.00}{\volt}$ returns an integer readout of 682 from an analog sensor. Determine:
+\begin{enumerate}
+    \item The exact measured analog input voltage $V_{in}$.
+    \item The quantization error bound.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Input Voltage Calculation:}
+    \begin{equation}
+    V_{in} = \frac{D_{out} \times V_{ref}}{1023} = \frac{682 \times \SI{5.00}{\volt}}{1023} \approx \SI{3.333}{\volt}
+    \end{equation}
+    \item \textbf{Quantization Error:}
+    The step size $\Delta V = \frac{\SI{5.00}{\volt}}{1024} = \SI{4.883}{\milli\volt}$.
+    The maximum quantization uncertainty is $\pm \frac{1}{2} \Delta V = \pm \SI{2.441}{\milli\volt}$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 6.2: PWM Duty Cycle and Equivalent DC Level]
+\textbf{Problem:} An 8-bit Arduino PWM timer is configured with an Output Compare value of $\text{OCR} = 178$ operating from a $\SI{5.0}{\volt}$ logic supply. Calculate the duty cycle percentage $D$ and the equivalent average DC output voltage $V_{avg}$.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Duty Cycle Calculation:}
+    \begin{equation}
+    D = \left( \frac{\text{OCR}}{255} \right) \times 100\% = \left( \frac{178}{255} \right) \times 100\% \approx 69.80\%
+    \end{equation}
+    \item \textbf{Average DC Voltage Calculation:}
+    \begin{equation}
+    V_{avg} = D \times V_{cc} = 0.6980 \times \SI{5.0}{\volt} = \SI{3.490}{\volt}
+    \end{equation}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 6.3: HC-SR04 Ultrasonic Timing and Distance]
+\textbf{Problem:} An HC-SR04 ultrasonic sensor measures an echo pulse width of $t_{echo} = \SI{1458}{\micro\second}$. If the ambient temperature is $\SI{20}{\celsius}$ ($v_{sound} = \SI{343}{\meter\per\second}$), determine the physical distance to the object in centimeters.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Acoustic speed in air: $v_{sound} = \SI{343}{\meter\per\second} = \SI{0.0343}{\centi\meter\per\micro\second}$.
+    \item Two-way travel distance $2d = v_{sound} \times t_{echo}$.
+    \item One-way distance to target:
+    \begin{equation}
+    d = \frac{0.0343\,\text{cm}/\mu\text{s} \times \SI{1458}{\micro\second}}{2} = \frac{\SI{50.009}{\centi\meter}}{2} \approx \SI{25.00}{\centi\meter}
+    \end{equation}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 6.4: LDR Voltage Divider Analysis]
+\textbf{Problem:} An LDR is connected in a voltage divider with a fixed resistor $R_{fixed} = \SI{10}{\kilo\ohm}$ tied to ground, powered from $V_{cc} = \SI{5.0}{\volt}$. Under ambient room lighting, the LDR exhibits a resistance of $R_{LDR} = \SI{2.5}{\kilo\ohm}$. Under direct sunlight, $R_{LDR}$ drops to $\SI{400}{\ohm}$. Calculate the voltage divider output $V_{out}$ and the corresponding 10-bit ADC integer readings for both conditions.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Room Light Condition ($R_{LDR} = \SI{2.5}{\kilo\ohm}$):}
+    \begin{align*}
+    V_{out, room} &= V_{cc} \left( \frac{R_{fixed}}{R_{fixed} + R_{LDR}} \right) = \SI{5.0}{\volt} \times \left( \frac{\SI{10}{\kilo\ohm}}{\SI{10}{\kilo\ohm} + \SI{2.5}{\kilo\ohm}} \right) = \SI{5.0}{\volt} \times 0.80 = \SI{4.00}{\volt} \\
+    \text{ADC reading} &= \left\lfloor \frac{4.00}{5.00} \times 1023 \right\rfloor = 818
+    \end{align*}
+    \item \textbf{Direct Sunlight Condition ($R_{LDR} = \SI{400}{\ohm} = \SI{0.4}{\kilo\ohm}$):}
+    \begin{align*}
+    V_{out, sun} &= \SI{5.0}{\volt} \times \left( \frac{\SI{10}{\kilo\ohm}}{\SI{10}{\kilo\ohm} + \SI{0.4}{\kilo\ohm}} \right) = \SI{5.0}{\volt} \times \frac{10}{10.4} \approx \SI{4.808}{\volt} \\
+    \text{ADC reading} &= \left\lfloor \frac{4.808}{5.00} \times 1023 \right\rfloor = 983
+    \end{align*}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 6.5: DHT11 Checksum Verification]
+\textbf{Problem:} A DHT11 sensor transmits the following 5 raw data bytes:
+\begin{itemize}
+    \item $\text{Byte}_1$ (Integral RH): $00110101_2$ ($53_{10}$)
+    \item $\text{Byte}_2$ (Decimal RH): $00000000_2$ ($0_{10}$)
+    \item $\text{Byte}_3$ (Integral Temp): $00011000_2$ ($24_{10}$)
+    \item $\text{Byte}_4$ (Decimal Temp): $00000000_2$ ($0_{10}$)
+    \item $\text{Byte}_5$ (Checksum received): $01001101_2$ ($77_{10}$)
+\end{itemize}
+Validate if the transmission is error-free and state the measured temperature and humidity.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Calculate expected checksum:
+    \begin{equation}
+    \text{Sum} = 53 + 0 + 24 + 0 = 77_{10} = 01001101_2
+    \end{equation}
+    \item Compare with received $\text{Byte}_5$:
+    $\text{Calculated Checksum } (77) == \text{Received Checksum } (77)$.
+    The transmission is valid and error-free.
+    \item Physical readings: Relative Humidity $= 53\%$, Temperature $= \SI{24}{\celsius}$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{takeawaybox}[Chapter 6 Key Formulae \& Takeaways]
+\begin{itemize}
+    \item \textbf{10-bit ADC Formula:} $V_{in} = \frac{\text{ADC\_val} \times V_{ref}}{1023}$.
+    \item \textbf{PWM Average Voltage:} $V_{avg} = \left( \frac{\text{OCR}}{255} \right) V_{cc}$.
+    \item \textbf{Ultrasonic Distance:} $d = \frac{t_{echo} \times 0.0343}{2}$ (\SI{}{\centi\meter}).
+    \item \textbf{Interrupt Best Practices:} Keep ISRs non-blocking, qualify shared variables as \texttt{volatile}.
+\end{itemize}
+\end{takeawaybox}

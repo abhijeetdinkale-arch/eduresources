@@ -1,0 +1,569 @@
+\chapter{Comprehensive Practical Web Projects}
+\label{chap:practical-web-projects}
+
+% ==============================================================================
+% PROJECT 1: DEVELOPER PROFILE PAGE
+% ==============================================================================
+\section{Project 1: Developer Portfolio Profile Page}
+
+\begin{practiceset}[Project 1 Specification]
+Build a personal developer portfolio profile page using HTML5 semantic elements (\texttt{<header>}, \texttt{<section>}, \texttt{<footer>}), typography hierarchy, profile image with fallback, skills list, and CSS styling.
+\end{practiceset}
+
+\begin{htmlcode}{Developer Portfolio (index.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarav Sharma - Web Developer</title>
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+    <header class="profile-header">
+        <img src="avatar.png" alt="Aarav Sharma Portrait" class="avatar">
+        <h1>Aarav Sharma</h1>
+        <p class="tagline">Undergraduate Computer Science Engineer | Web Developer</p>
+    </header>
+
+    <main class="container">
+        <section class="bio-section">
+            <h2>About Me</h2>
+            <p>
+                Specializing in <strong>Full-Stack Web Development</strong>, focusing on 
+                standards-compliant <abbr title="HyperText Markup Language">HTML5</abbr>, 
+                <abbr title="Cascading Style Sheets">CSS3</abbr>, and modern JavaScript.
+            </p>
+        </section>
+
+        <section class="skills-section">
+            <h2>Core Competencies</h2>
+            <ul class="skills-list">
+                <li>Responsive Web Design & CSS Grid/Flexbox</li>
+                <li>Client-Side Form Validation & Regular Expressions</li>
+                <li>Dynamic DOM Tree Manipulation & Event Architecture</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="profile-footer">
+        <p>&copy; 2026 Aarav Sharma. Built for Lovely Professional University.</p>
+    </footer>
+</body>
+</html>
+\end{htmlcode}
+
+\begin{csscode}{Portfolio Stylesheet (portfolio.css)}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+.profile-header {
+    background-color: #0f172a;
+    color: #ffffff;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #0284c7;
+}
+
+.tagline {
+    color: #94a3b8;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.skills-list li {
+    background: #ffffff;
+    margin: 8px 0;
+    padding: 12px 16px;
+    border-left: 4px solid #0284c7;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.profile-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+}
+\end{csscode}
+
+% ==============================================================================
+% PROJECT 2: ACADEMIC TIMETABLE \& ENROLLMENT TABLE
+% ==============================================================================
+\section{Project 2: Academic Timetable \& Course Portal}
+
+\begin{practiceset}[Project 2 Specification]
+Design an academic lecture schedule utilizing complex table structures, \texttt{colspan} lunch breaks, \texttt{rowspan} laboratory slots, and CSS hover highlights.
+\end{practiceset}
+
+\begin{htmlcode}{Academic Timetable (timetable.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSE Semester Schedule</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #0284c7;
+            color: #ffffff;
+        }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        tr:hover { background-color: #e0f2fe; }
+        .break { background-color: #fee2e2; font-weight: bold; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <h2>B.Tech CSE - Semester 1 Schedule</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>09:00 - 10:00</th>
+                <th>10:00 - 11:00</th>
+                <th>11:00 - 12:00</th>
+                <th>12:00 - 01:00</th>
+                <th>01:00 - 03:00</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Monday</td>
+                <td>CSE326 (Web)</td>
+                <td>MTH165 (Math)</td>
+                <td>PHY101 (Physics)</td>
+                <td rowspan="5" class="break">LUNCH BREAK</td>
+                <td>INT108 Lab (Python)</td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td>CSE111 (IT)</td>
+                <td>CSE326 (Web)</td>
+                <td>MTH165 (Math)</td>
+                <td>PHY101 Lab (Physics)</td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>INT108 (Python)</td>
+                <td>PHY101 (Physics)</td>
+                <td>CSE326 (Web)</td>
+                <td>CSE326 Web Dev Lab</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 3: INTERACTIVE CGPA CALCULATOR
+% ==============================================================================
+\section{Project 3: Interactive Semester CGPA Calculator}
+
+\begin{practiceset}[Project 3 Specification]
+Implement an interactive CGPA calculator using JavaScript functions, array parsing, grade-point mapping, and dynamic DOM output updates.
+\end{practiceset}
+
+\begin{htmlcode}{CGPA Calculator (cgpa.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CGPA Calculator</title>
+    <style>
+        .calc-card {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #16a34a; color: white; border: none; font-weight: bold; cursor: pointer; }
+        .result-box { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: center; color: #0f172a; }
+    </style>
+</head>
+<body>
+    <div class="calc-card">
+        <h2>Semester CGPA Calculator</h2>
+        <div class="form-group">
+            <label>CSE326 (Web Dev - 3 Cr):</label>
+            <input type="number" id="g1" placeholder="Grade Point (0-10)">
+        </div>
+        <div class="form-group">
+            <label>MTH165 (Math - 4 Cr):</label>
+            <input type="number" id="g2" placeholder="Grade Point (0-10)">
+        </div>
+        <div class="form-group">
+            <label>INT108 (Python - 3 Cr):</label>
+            <input type="number" id="g3" placeholder="Grade Point (0-10)">
+        </div>
+        <button id="btnCompute">Calculate CGPA</button>
+        <div class="result-box" id="displayCGPA"></div>
+    </div>
+
+    <script>
+        document.getElementById("btnCompute").addEventListener("click", function() {
+            const v1 = parseFloat(document.getElementById("g1").value) || 0;
+            const v2 = parseFloat(document.getElementById("g2").value) || 0;
+            const v3 = parseFloat(document.getElementById("g3").value) || 0;
+
+            const totalPoints = (v1 * 3) + (v2 * 4) + (v3 * 3);
+            const totalCredits = 3 + 4 + 3; // 10 Credits
+            const cgpa = totalPoints / totalCredits;
+
+            document.getElementById("displayCGPA").innerText = `Calculated CGPA: ${cgpa.toFixed(2)} / 10.0`;
+        });
+    </script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 4: REGISTRATION FORM VALIDATOR
+% ==============================================================================
+\section{Project 4: Comprehensive Registration Form Validator}
+
+\begin{practiceset}[Project 4 Specification]
+Construct an industrial-grade form validation engine checking name lengths, email regex patterns, password confirmation matches, and phone number structures.
+\end{practiceset}
+
+\begin{htmlcode}{Form Validation Engine (validator.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Validator</title>
+    <style>
+        .form-container { max-width: 450px; margin: 30px auto; padding: 25px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: Arial; }
+        .input-control { width: 100%; padding: 10px; margin: 6px 0 16px; border: 1px solid #94a3b8; border-radius: 4px; box-sizing: border-box; }
+        .error-msg { color: #dc2626; font-size: 13px; font-weight: bold; margin-bottom: 12px; }
+        .btn-submit { width: 100%; padding: 12px; background: #0284c7; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>University Registration</h2>
+        <form id="regForm">
+            <label for="txtName">Full Name:</label>
+            <input type="text" id="txtName" class="input-control">
+
+            <label for="txtEmail">Email Address:</label>
+            <input type="text" id="txtEmail" class="input-control">
+
+            <label for="txtPhone">Mobile Number (10 digits):</label>
+            <input type="text" id="txtPhone" class="input-control">
+
+            <label for="txtPass">Password (Min 8 chars):</label>
+            <input type="password" id="txtPass" class="input-control">
+
+            <div id="errorAlert" class="error-msg"></div>
+            <button type="submit" class="btn-submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("regForm").addEventListener("submit", function(e) {
+            const name = document.getElementById("txtName").value.trim();
+            const email = document.getElementById("txtEmail").value.trim();
+            const phone = document.getElementById("txtPhone").value.trim();
+            const pass = document.getElementById("txtPass").value;
+            const errBox = document.getElementById("errorAlert");
+
+            let err = "";
+
+            if (name.length < 3) {
+                err = "Name must be at least 3 characters.";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                err = "Please enter a valid email address.";
+            } else if (!/^\d{10}$/.test(phone)) {
+                err = "Mobile number must be exactly 10 digits.";
+            } else if (pass.length < 8) {
+                err = "Password must be at least 8 characters.";
+            }
+
+            if (err !== "") {
+                e.preventDefault();
+                errBox.innerText = err;
+            } else {
+                errBox.innerText = "";
+                alert("Form submitted successfully!");
+            }
+        });
+    </script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 5: INTERACTIVE TO-DO LIST APPLICATION
+% ==============================================================================
+\section{Project 5: Interactive Dynamic To-Do List Application}
+
+\begin{practiceset}[Project 5 Specification]
+Design an interactive To-Do application utilizing dynamic node creation (\texttt{createElement}), node removal (\texttt{remove}), event delegation, and \texttt{classList} toggling.
+\end{practiceset}
+
+\begin{htmlcode}{Interactive To-Do List (todo.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Task Manager</title>
+    <style>
+        .todo-card { max-width: 400px; margin: 40px auto; padding: 25px; border-radius: 8px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: Arial; }
+        .input-row { display: flex; gap: 8px; margin-bottom: 15px; }
+        .input-row input { flex: 1; padding: 8px; }
+        .input-row button { padding: 8px 16px; background: #0284c7; color: white; border: none; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        li { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #e2e8f0; cursor: pointer; }
+        li.done { text-decoration: line-through; color: #94a3b8; }
+        .btn-del { color: #dc2626; border: none; background: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="todo-card">
+        <h2>CSE326 Task Manager</h2>
+        <div class="input-row">
+            <input type="text" id="taskInput" placeholder="Add new learning task...">
+            <button id="btnAddTask">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const input = document.getElementById("taskInput");
+        const addBtn = document.getElementById("btnAddTask");
+        const list = document.getElementById("taskList");
+
+        addBtn.addEventListener("click", function() {
+            const taskText = input.value.trim();
+            if (taskText === "") return;
+
+            const li = document.createElement("li");
+            li.textContent = taskText;
+
+            // Toggle Done State
+            li.addEventListener("click", function() {
+                li.classList.toggle("done");
+            });
+
+            // Delete Button
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "X";
+            delBtn.className = "btn-del";
+            delBtn.addEventListener("click", function(e) {
+                e.stopPropagation(); // Prevent toggling done class
+                li.remove();
+            });
+
+            li.appendChild(delBtn);
+            list.appendChild(li);
+            input.value = "";
+        });
+    </script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 6: DYNAMIC FILTERABLE SEARCH DIRECTORY
+% ==============================================================================
+\section{Project 6: Real-time Filterable Student Directory}
+
+\begin{practiceset}[Project 6 Specification]
+Build a real-time filterable student directory where typing into an input field instantly filters a table of student records using JavaScript \texttt{input} events and \texttt{textContent.toLowerCase().includes()}.
+\end{practiceset}
+
+\begin{htmlcode}{Filterable Directory (search.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Search Directory</title>
+    <style>
+        .search-container { max-width: 600px; margin: 30px auto; font-family: Arial; }
+        .search-box { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #94a3b8; border-radius: 4px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+        th { background: #0284c7; color: white; }
+        tr:nth-child(even) { background: #f8fafc; }
+        .no-match { display: none; }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h2>CSE Student Search Directory</h2>
+        <input type="text" id="txtSearch" class="search-box" placeholder="Search by name or department...">
+
+        <table id="studentTable">
+            <thead>
+                <tr><th>Registration ID</th><th>Student Name</th><th>Department</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>12601001</td><td>Aarav Sharma</td><td>Computer Science</td></tr>
+                <tr><td>12601002</td><td>Bhavna Patel</td><td>Information Technology</td></tr>
+                <tr><td>12601003</td><td>Chirag Verma</td><td>Computer Science</td></tr>
+                <tr><td>12601004</td><td>Divya Reddy</td><td>AI & Data Science</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById("txtSearch");
+        const tableRows = document.querySelectorAll("#studentTable tbody tr");
+
+        searchInput.addEventListener("input", function() {
+            const query = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = ""; // Show row
+                } else {
+                    row.style.display = "none"; // Hide row
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 7: ACCORDION FAQ COMPONENT
+% ==============================================================================
+\section{Project 7: Interactive Accordion FAQ Component}
+
+\begin{practiceset}[Project 7 Specification]
+Construct an accessible FAQ accordion component that expands and collapses content panels upon clicking question headers using \texttt{classList.toggle()} and CSS transitions.
+\end{practiceset}
+
+\begin{htmlcode}{Accordion Component (accordion.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course FAQ Accordion</title>
+    <style>
+        .accordion-container { max-width: 550px; margin: 30px auto; font-family: Arial; }
+        .accordion-item { border: 1px solid #cbd5e1; margin-bottom: 8px; border-radius: 4px; overflow: hidden; }
+        .accordion-header { background: #0f172a; color: white; padding: 12px 16px; cursor: pointer; font-weight: bold; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: #ffffff; padding: 0 16px; }
+        .accordion-item.active .accordion-content { max-height: 150px; padding: 12px 16px; }
+    </style>
+</head>
+<body>
+    <div class="accordion-container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">What are the prerequisites for CSE326?</div>
+            <div class="accordion-content">Basic algorithmic logic and fundamental programming syntax.</div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">Is JavaScript required for the final examination?</div>
+            <div class="accordion-content">Yes, Units 4, 5, and 6 heavily focus on JavaScript syntax, events, and DOM manipulation.</div>
+        </div>
+    </div>
+
+    <script>
+        const headers = document.querySelectorAll(".accordion-header");
+
+        headers.forEach(header => {
+            header.addEventListener("click", function() {
+                const item = header.parentElement;
+                item.classList.toggle("active");
+            });
+        });
+    </script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% PROJECT 8: INTERACTIVE LIGHTBOX IMAGE GALLERY
+% ==============================================================================
+\section{Project 8: Interactive Lightbox Image Gallery}
+
+\begin{practiceset}[Project 8 Specification]
+Design an interactive image thumbnail gallery where clicking any thumbnail displays a high-resolution modal overlay with animated backdrop and close button.
+\end{practiceset}
+
+\begin{htmlcode}{Modal Image Gallery (lightbox.html)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus Gallery</title>
+    <style>
+        .gallery { display: flex; gap: 15px; justify-content: center; margin-top: 40px; }
+        .thumbnail { width: 120px; height: 80px; object-fit: cover; cursor: pointer; border-radius: 4px; border: 2px solid #0284c7; }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .lightbox img { max-width: 80%; max-height: 80%; border-radius: 6px; }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 30px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <img src="img1_thumb.jpg" data-full="img1_full.jpg" class="thumbnail" alt="Block 34">
+        <img src="img2_thumb.jpg" data-full="img2_full.jpg" class="thumbnail" alt="Central Library">
+    </div>
+
+    <div class="lightbox" id="modalBox">
+        <span class="close-btn" id="btnClose">&times;</span>
+        <img id="modalImg" src="" alt="Full view">
+    </div>
+
+    <script>
+        const modal = document.getElementById("modalBox");
+        const modalImg = document.getElementById("modalImg");
+        const thumbs = document.querySelectorAll(".thumbnail");
+        const btnClose = document.getElementById("btnClose");
+
+        thumbs.forEach(thumb => {
+            thumb.addEventListener("click", () => {
+                modalImg.src = thumb.getAttribute("data-full");
+                modal.style.display = "flex";
+            });
+        });
+
+        btnClose.addEventListener("click", () => { modal.style.display = "none"; });
+        modal.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
+    </script>
+</body>
+</html>
+\end{htmlcode}

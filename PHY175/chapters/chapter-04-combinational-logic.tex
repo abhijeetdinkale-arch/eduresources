@@ -1,0 +1,329 @@
+\chapter{Combinational Logic Circuits}
+\label{chap:combinational-logic}
+
+\section{Introduction to Combinational Logic}
+Combinational logic circuits are digital networks whose output at any given instant in time is purely a function of the present combination of input logic states. Combinational circuits contain no memory elements (such as latches or flip-flops), no internal state feedback loops, and no dependency on past input sequences.
+
+The systematic design procedure for combinational logic circuits consists of:
+\begin{enumerate}
+    \item Formal problem specification and input/output variable definition.
+    \item Construction of the complete Truth Table enumerating all $2^n$ input combinations.
+    \item Derivation of algebraic expressions in canonical Sum-of-Products (SOP) or Product-of-Sums (POS) form.
+    \item Boolean function minimization using algebraic theorems or Karnaugh Maps (K-Maps) to eliminate redundant terms and minimize literal count.
+    \item Physical circuit realization using logic gate networks (e.g., AND-OR, NAND-NAND, or NOR-NOR topologies) or MSI/LSI building blocks (multiplexers, decoders, PLDs).
+\end{enumerate}
+
+\section{Canonical Forms: Minterms and Maxterms}
+A Boolean function of $n$ variables can be uniquely and canonically described using minterms or maxterms.
+
+\subsection{Minterms (Standard Product Terms)}
+A \textbf{minterm} is a product (AND) of all $n$ variables, with each variable appearing exactly once in either its uncomplemented ($X$) or complemented ($\overline{X}$) form.
+For $n$ variables, there exist $2^n$ distinct minterms, denoted by $m_i$, where the index $i$ corresponds to the decimal equivalent of the binary combination for which the minterm evaluates to 1.
+
+The canonical \textbf{Sum of Products (SOP)} is the logical OR ($\sum$) of all minterms for which the output is logic 1:
+\begin{equation}
+F(A, B, C) = \sum m(1, 4, 6, 7) = \overline{A}\,\overline{B}C + A\overline{B}\,\overline{C} + AB\overline{C} + ABC
+\end{equation}
+
+\subsection{Maxterms (Standard Sum Terms)}
+A \textbf{maxterm} is a sum (OR) of all $n$ variables, with each variable appearing in uncomplemented or complemented form. A maxterm evaluates to 0 for exactly one input combination.
+For $n$ variables, there are $2^n$ maxterms, denoted by $M_i$.
+
+The canonical \textbf{Product of Sums (POS)} is the logical AND ($\prod$) of all maxterms for which the output is logic 0:
+\begin{equation}
+F(A, B, C) = \prod M(0, 2, 3, 5) = (A+B+C)(A+\overline{B}+C)(A+\overline{B}+\overline{C})(\overline{A}+B+\overline{C})
+\end{equation}
+
+\begin{conceptbox}[Duality and Complementation of Minterms and Maxterms]
+For any Boolean function $F$ of $n$ variables:
+\begin{align}
+m_i &= \overline{M_i} \\
+F = \sum m(\text{indices with 1s}) &\iff F = \prod M(\text{indices with 0s}) \\
+\overline{F} = \sum m(\text{indices with 0s}) &\iff \overline{F} = \prod M(\text{indices with 1s})
+\end{align}
+\end{conceptbox}
+
+\section{Karnaugh Map (K-Map) Optimization}
+A Karnaugh Map (K-Map) is a pictorial method of representing Boolean functions where adjacent cells differ by exactly one binary variable (Gray code ordering). This geometric adjacency allows immediate visual application of the adjacency theorem $x y + x \overline{y} = x(y+\overline{y}) = x$.
+
+\subsection{Grouping Rules and Terminology}
+\begin{itemize}
+    \item \textbf{Adjacency and Group Sizes:} Cells can only be grouped in powers of 2 ($2^k \in \{1, 2, 4, 8, 16\}$). A group of 2 cells eliminates 1 variable; a quad (4 cells) eliminates 2 variables; an octet (8 cells) eliminates 3 variables.
+    \item \textbf{Wrap-Around Adjacency:} Cells on the extreme left column are adjacent to cells on the extreme right column; cells on the top row are adjacent to cells on the bottom row (toroidal topology).
+    \item \textbf{Implicant:} Any single minterm or valid group of $1$s.
+    \item \textbf{Prime Implicant (PI):} A rectangular group of $2^k$ 1s that cannot be combined with any adjacent cells to form a larger group.
+    \item \textbf{Essential Prime Implicant (EPI):} A prime implicant that contains at least one minterm $1$ that is not covered by any other prime implicant. All EPIs \textbf{must} be included in the minimal Boolean expression.
+    \item \textbf{Don\textquotesingle t-Care Conditions ($d$ or $\times$):} Input combinations that never occur in practice or whose output value is irrelevant. Don\textquotesingle t-cares may be treated as 1 to form larger groups (yielding fewer literals) or treated as 0 if they do not aid in expansion.
+\end{itemize}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{c | c c c c}
+\toprule
+\multicolumn{5}{c}{\textbf{4-Variable K-Map Structure ($AB \setminus CD$ in Gray Code)}} \\
+\midrule
+$AB \setminus CD$ & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10} \\
+\midrule
+\textbf{00} & $m_0$ ($\overline{A}\,\overline{B}\,\overline{C}\,\overline{D}$) & $m_1$ ($\overline{A}\,\overline{B}\,\overline{C}D$) & $m_3$ ($\overline{A}\,\overline{B}CD$) & $m_2$ ($\overline{A}\,\overline{B}C\overline{D}$) \\
+\textbf{01} & $m_4$ ($\overline{A}B\overline{C}\,\overline{D}$) & $m_5$ ($\overline{A}B\overline{C}D$) & $m_7$ ($\overline{A}BCD$) & $m_6$ ($\overline{A}BC\overline{D}$) \\
+\textbf{11} & $m_{12}$ ($AB\overline{C}\,\overline{D}$) & $m_{13}$ ($AB\overline{C}D$) & $m_{15}$ ($ABCD$) & $m_{14}$ ($ABC\overline{D}$) \\
+\textbf{10} & $m_8$ ($A\overline{B}\,\overline{C}\,\overline{D}$) & $m_9$ ($A\overline{B}\,\overline{C}D$) & $m_{11}$ ($A\overline{B}CD$) & $m_{10}$ ($A\overline{B}C\overline{D}$) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Arithmetic Combinational Circuits}
+Arithmetic logic units (ALUs) utilize dedicated combinational building blocks for addition and subtraction.
+
+\subsection{Half Adder and Full Adder}
+\begin{itemize}
+    \item \textbf{Half Adder (HA):} Adds two single-bit binary inputs $A$ and $B$, generating a Sum ($S$) and Carry ($C$):
+    \begin{align}
+    S &= A \oplus B = \overline{A}B + A\overline{B} \\
+    C &= A \cdot B
+    \end{align}
+    \item \textbf{Full Adder (FA):} Adds three single-bit inputs: two operands $A$ and $B$, and an incoming carry $C_{in}$:
+    \begin{align}
+    S &= A \oplus B \oplus C_{in} \\
+    C_{out} &= AB + B C_{in} + A C_{in} = AB + C_{in}(A \oplus B)
+    \end{align}
+\end{itemize}
+
+\begin{derivationbox}[Full Adder Implementation Using Two Half Adders]
+A Full Adder can be constructed from two Half Adders and an OR gate:
+\begin{enumerate}
+    \item $\text{HA}_1$: Inputs $A, B \implies S_1 = A \oplus B$, $C_1 = AB$.
+    \item $\text{HA}_2$: Inputs $S_1, C_{in} \implies S = S_1 \oplus C_{in} = (A \oplus B) \oplus C_{in}$, $C_2 = S_1 \cdot C_{in} = (A \oplus B) C_{in}$.
+    \item Carry-out $C_{out} = C_1 + C_2 = AB + (A \oplus B) C_{in}$.
+\end{enumerate}
+This yields total propagation delay: $t_{FA} = 2 t_{XOR}$ for Sum, and $t_{XOR} + t_{AND} + t_{OR}$ for Carry.
+\end{derivationbox}
+
+\subsection{Half Subtractor and Full Subtractor}
+\begin{itemize}
+    \item \textbf{Half Subtractor:} Subtracts $B$ from $A$, generating Difference ($D$) and Borrow ($B_{out}$):
+    \begin{align}
+    D &= A \oplus B \\
+    B_{out} &= \overline{A} \cdot B
+    \end{align}
+    \item \textbf{Full Subtractor:} Subtracts $B$ and incoming borrow $B_{in}$ from $A$:
+    \begin{align}
+    D &= A \oplus B \oplus B_{in} \\
+    B_{out} &= \overline{A}B + \overline{A}B_{in} + B B_{in} = \overline{A}B + B_{in}(\overline{A \oplus B})
+    \end{align}
+\end{itemize}
+
+\subsection{4-Bit Parallel Adder and Carry Look-Ahead Adder}
+\begin{itemize}
+    \item \textbf{Ripple Carry Adder (RCA):} Cascades $n$ full adders where $C_{out, i}$ connects to $C_{in, i+1}$. For an $n$-bit adder, carry propagation delay is $t_{total} = n \cdot t_{carry}$. For large bit widths (32 or 64 bits), this ripple delay creates an arithmetic throughput bottleneck.
+    \item \textbf{Carry Look-Ahead Adder (CLA):} Eliminates ripple delay by calculating carry bits in parallel using two auxiliary functions:
+    \begin{align}
+    \text{Generate: } G_i &= A_i \cdot B_i \\
+    \text{Propagate: } P_i &= A_i \oplus B_i
+    \end{align}
+    The carry output expressions are expanded directly as functions of input operands and $C_0$:
+    \begin{align}
+    C_1 &= G_0 + P_0 C_0 \\
+    C_2 &= G_1 + P_1 C_1 = G_1 + P_1 G_0 + P_1 P_0 C_0 \\
+    C_3 &= G_2 + P_2 C_2 = G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 C_0 \\
+    C_4 &= G_3 + P_3 C_3 = G_3 + P_3 G_2 + P_3 P_2 G_1 + P_3 P_2 P_1 G_0 + P_3 P_2 P_1 P_0 C_0
+    \end{align}
+    All carries $C_1, C_2, C_3, C_4$ are generated simultaneously in 2 gate delays (one AND level, one OR level).
+\end{itemize}
+
+\section{Multiplexers (Data Selectors) and Demultiplexers}
+\subsection{Multiplexers (MUX)}
+A multiplexer is a combinational circuit that selects binary information from one of $2^n$ data input lines and directs it to a single output line, controlled by $n$ selection lines.
+
+\begin{table}[htbp]
+\centering
+\caption{Multiplexer Types, Select Lines, and Characteristic Equations}
+\label{tab:mux-types}
+\begin{tabularx}{\textwidth}{l c c X}
+\toprule
+\textbf{MUX Type} & \textbf{Data Inputs ($2^n$)} & \textbf{Select Lines ($n$)} & \textbf{Output Boolean Equation} \\
+\midrule
+2:1 MUX & $I_0, I_1$ & $S_0$ & $Y = \overline{S}_0 I_0 + S_0 I_1$ \\
+4:1 MUX & $I_0, I_1, I_2, I_3$ & $S_1, S_0$ & $Y = \overline{S}_1\overline{S}_0 I_0 + \overline{S}_1 S_0 I_1 + S_1\overline{S}_0 I_2 + S_1 S_0 I_3$ \\
+8:1 MUX & $I_0 \dots I_7$ & $S_2, S_1, S_0$ & $Y = \sum_{k=0}^7 m_k(\text{Select}) \cdot I_k$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{conceptbox}[Logic Function Implementation Using MUX]
+Any Boolean function of $n$ variables can be implemented using:
+\begin{enumerate}
+    \item A $2^n : 1$ MUX: Connect all $n$ variables to the select lines. Connect logic 1 to inputs corresponding to minterms present in $F$, and logic 0 to remaining inputs.
+    \item A $2^{n-1} : 1$ MUX: Connect $n-1$ variables to select lines. The remaining variable is applied to data inputs as $0, 1, V,$ or $\overline{V}$ based on a tabular decomposition table.
+\end{enumerate}
+\end{conceptbox}
+
+\subsection{Demultiplexers (DEMUX) and Decoders}
+\begin{itemize}
+    \item \textbf{Demultiplexer:} Receives information on a single input line and transmits it to one of $2^n$ possible output lines based on $n$ select lines.
+    \item \textbf{Decoders:} A decoder is a combinational circuit that converts binary information from $n$ input lines to a maximum of $2^n$ unique output lines. A decoder with an enable line ($E$) operates identically to a demultiplexer (with $E$ serving as data input).
+    \item \textbf{Standard IC 74138 (3-to-8 Line Decoder):} Features 3 select inputs ($A, B, C$), 8 active-low outputs ($\overline{Y}_0 \dots \overline{Y}_7$), and 3 enable lines ($G_1, \overline{G}_{2A}, \overline{G}_{2B}$).
+\end{itemize}
+
+\section{Encoders, Priority Encoders, and Code Converters}
+\subsection{Encoders and Priority Encoders}
+An encoder performs the inverse operation of a decoder, converting $2^n$ (or fewer) input lines into an $n$-bit binary code.
+In standard encoders, if more than one input is active simultaneously, the output becomes ambiguous.
+\textbf{Priority Encoders} resolve this by assigning distinct priorities to inputs; if multiple inputs are high, the output code reflects only the input with the highest designated priority.
+
+\begin{table}[htbp]
+\centering
+\caption{Truth Table for 4-to-2 Active-High Priority Encoder ($D_3$ highest priority)}
+\label{tab:priority-encoder-tt}
+\begin{tabularx}{\textwidth}{c c c c c c c}
+\toprule
+$D_3$ & $D_2$ & $D_1$ & $D_0$ & $Y_1$ & $Y_0$ & \textbf{Valid Output ($V$)} \\
+\midrule
+0 & 0 & 0 & 0 & $\times$ & $\times$ & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 1 \\
+0 & 0 & 1 & $\times$ & 0 & 1 & 1 \\
+0 & 1 & $\times$ & $\times$ & 1 & 0 & 1 \\
+1 & $\times$ & $\times$ & $\times$ & 1 & 1 & 1 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{BCD to Seven-Segment Decoders}
+BCD-to-7-segment decoders convert 4-bit BCD data ($0000_2 \dots 1001_2$) to drive display segments labeled $a, b, c, d, e, f, g$.
+\begin{itemize}
+    \item \textbf{Common Anode Displays:} All LED anodes are tied to $+V_{cc}$; segments illuminate when driven with logic low ($0$). Drivers (e.g., IC 7447) provide active-low outputs.
+    \item \textbf{Common Cathode Displays:} All LED cathodes are tied to Ground; segments illuminate when driven with logic high ($1$). Drivers (e.g., IC 7448) provide active-high outputs.
+\end{itemize}
+
+\section{Worked Numerical Examples}
+
+\begin{examplebox}[Example 4.1: 4-Variable K-Map Minimization with Don\textquotesingle t-Cares]
+\textbf{Problem:} Minimize the following Boolean switching function using a 4-variable K-map:
+\begin{equation}
+F(A, B, C, D) = \sum m(1, 3, 7, 11, 15) + d(0, 2, 5)
+\end{equation}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Plot 1s at minterm locations $1, 3, 7, 11, 15$ and $\times$ at $0, 2, 5$.
+    \item \textbf{Grouping Analysis:}
+    \begin{itemize}
+        \item Column $CD = 11$ contains minterms $m_3, m_7, m_{15}, m_{11}$ (all 1s). Grouping these 4 cells forms an essential quad: $\text{Term}_1 = C D$.
+        \item The top row ($AB = 00$) contains cells $m_0(\times), m_1(1), m_3(1), m_2(\times)$. Grouping the entire top row of 4 cells forms a quad: $\text{Term}_2 = \overline{A}\,\overline{B}$.
+    \end{itemize}
+    \item All minterm 1s are completely covered by these two quads without needing any isolated minterms.
+    \item \textbf{Minimal Simplified Expression:}
+    \begin{equation}
+    F(A, B, C, D) = C D + \overline{A}\,\overline{B}
+    \end{equation}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 4.2: Implementation of Logic Function Using 4:1 Multiplexer]
+\textbf{Problem:} Implement the logic function $F(A, B, C) = \sum m(1, 3, 4, 6)$ using a single 4:1 Multiplexer with $A$ and $B$ connected to select lines $S_1$ and $S_0$.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Select lines: $S_1 = A$, $S_0 = B$. The remaining variable is $C$.
+    \item Construct the multiplexer implementation table:
+    \begin{center}
+    \begin{tabular}{c c c c c}
+    \toprule
+    \textbf{Select ($AB$)} & \textbf{MUX Line} & $C=0$ & $C=1$ & \textbf{Data Input ($I_k$)} \\
+    \midrule
+    $00$ & $I_0$ & $m_0$ & $m_1^*$ & $I_0 = C$ \\
+    $01$ & $I_1$ & $m_2$ & $m_3^*$ & $I_1 = C$ \\
+    $10$ & $I_2$ & $m_4^*$ & $m_5$ & $I_2 = \overline{C}$ \\
+    $11$ & $I_3$ & $m_6^*$ & $m_7$ & $I_3 = \overline{C}$ \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+    \item Applying inputs:
+    \begin{itemize}
+        \item For $AB = 00$: $F = 1$ only when $C = 1 \implies I_0 = C$.
+        \item For $AB = 01$: $F = 1$ only when $C = 1 \implies I_1 = C$.
+        \item For $AB = 10$: $F = 1$ only when $C = 0 \implies I_2 = \overline{C}$.
+        \item For $AB = 11$: $F = 1$ only when $C = 0 \implies I_3 = \overline{C}$.
+    \end{itemize}
+    \item Final Configuration: $S_1 = A$, $S_0 = B$, $I_0 = C$, $I_1 = C$, $I_2 = \overline{C}$, $I_3 = \overline{C}$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 4.3: Half Subtractor Construction and Logic Equations]
+\textbf{Problem:} Derive the truth table, Boolean expressions, and NAND-only realization for a Half Subtractor.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Truth Table for inputs $A$ (minuend) and $B$ (subtrahend):
+    \begin{center}
+    \begin{tabular}{c c c c}
+    \toprule
+    $A$ & $B$ & \textbf{Difference ($D = A - B$)} & \textbf{Borrow Out ($B_{out}$)} \\
+    \midrule
+    0 & 0 & 0 & 0 \\
+    0 & 1 & 1 & 1 \\
+    1 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 0 \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+    \item Boolean equations:
+    \begin{equation}
+    D = \overline{A}B + A\overline{B} = A \oplus B, \qquad B_{out} = \overline{A} \cdot B
+    \end{equation}
+    \item NAND-only implementation requires 5 NAND gates identical to the XOR synthesis network with the borrow taken directly from the intermediate $\overline{A}B$ generation stage.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 4.4: 3-to-8 Decoder Logic Function Realization]
+\textbf{Problem:} Implement a Full Adder (Sum and Carry) using a standard 3-to-8 line active-low decoder (such as 74138) and NAND gates.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Full Adder minterm expressions:
+    \begin{align}
+    S(A, B, C_{in}) &= \sum m(1, 2, 4, 7) \\
+    C_{out}(A, B, C_{in}) &= \sum m(3, 5, 6, 7)
+    \end{align}
+    \item A 3-to-8 active-low decoder produces outputs $\overline{Y}_k = \overline{m_k}$.
+    \item By De Morgan\textquotesingle s Theorem:
+    \begin{equation}
+    S = \sum m_k = \overline{\prod \overline{m_k}} = \overline{\overline{Y}_1 \cdot \overline{Y}_2 \cdot \overline{Y}_4 \cdot \overline{Y}_7}
+    \end{equation}
+    \begin{equation}
+    C_{out} = \sum m_k = \overline{\prod \overline{m_k}} = \overline{\overline{Y}_3 \cdot \overline{Y}_5 \cdot \overline{Y}_6 \cdot \overline{Y}_7}
+    \end{equation}
+    \item Thus, connect decoder outputs $\overline{Y}_1, \overline{Y}_2, \overline{Y}_4, \overline{Y}_7$ into a 4-input NAND gate for $S$, and $\overline{Y}_3, \overline{Y}_5, \overline{Y}_6, \overline{Y}_7$ into a 4-input NAND gate for $C_{out}$.
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 4.5: Carry Look-Ahead Delay Calculation]
+\textbf{Problem:} Compare the total propagation delay of a 16-bit Ripple Carry Adder vs a 16-bit Carry Look-Ahead Adder if each gate (AND, OR, XOR) has a propagation delay of $t_g = \SI{1.5}{\nano\second}$.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Ripple Carry Adder (16-bit):}
+    Each full adder stage has a carry propagation delay of $2 t_g = \SI{3.0}{\nano\second}$.
+    For 16 cascaded stages:
+    \begin{equation}
+    t_{total, RCA} = 16 \times 2 t_g = 16 \times \SI{3.0}{\nano\second} = \SI{48.0}{\nano\second}
+    \end{equation}
+    \item \textbf{Carry Look-Ahead Adder (16-bit 2-level hierarchical block):}
+    Generate and Propagate signals are formed in 1 gate delay: $t_{P, G} = \SI{1.5}{\nano\second}$.
+    Carries are generated across the look-ahead generator in 2 gate delays: $t_{carry} = 2 t_g = \SI{3.0}{\nano\second}$.
+    Final sum generation via XOR takes 1 gate delay: $t_{sum} = \SI{1.5}{\nano\second}$.
+    Total delay:
+    \begin{equation}
+    t_{total, CLA} = t_{P,G} + 2 t_g (\text{block carry}) + t_{sum} = 1.5 + 3.0 + 1.5 = \SI{6.0}{\nano\second}
+    \end{equation}
+    The CLA achieves an $8\times$ throughput speedup over the RCA.
+\end{enumerate}
+\end{examplebox}
+
+\begin{takeawaybox}[Chapter 4 Key Formulae \& Takeaways]
+\begin{itemize}
+    \item \textbf{Full Adder Equations:} $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$.
+    \item \textbf{Full Subtractor Equations:} $D = A \oplus B \oplus B_{in}$, $B_{out} = \overline{A}B + B_{in}(\overline{A \oplus B})$.
+    \item \textbf{CLA Carry Generation:} $G_i = A_i B_i$, $P_i = A_i \oplus B_i$, independent of previous full additions.
+    \item \textbf{Universal Multiplexer Property:} An $n$-variable function can be realized using a $2^{n-1} : 1$ MUX with one variable fed to inputs.
+\end{itemize}
+\end{takeawaybox}

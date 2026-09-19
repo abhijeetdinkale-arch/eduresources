@@ -1,0 +1,819 @@
+\chapter{Fundamentals of Electrical Laws, Semiconductor Devices and its Applications}
+\label{chap:electrical-laws-semiconductors}
+
+\section{Introduction \& Chapter Overview}
+Electrical and electronics engineering rests upon two foundational pillars:
+\begin{enumerate}
+    \item \textbf{Macroscopic Network Laws:} The fundamental mathematical and physical principles governing how charge, potential, and current distribute through electrical networks (Ohm's Law, Kirchhoff's Laws, and Division Rules).
+    \item \textbf{Microscopic Solid-State Physics:} The quantum and crystalline properties of semiconductor materials that enable controlled rectification, switching, and amplification (Diodes and Bipolar Junction Transistors).
+\end{enumerate}
+
+\noindent This chapter develops both domains rigorously from first principles, establishing the circuit analysis techniques and semiconductor device physics essential for digital logic and embedded electronics.
+
+---
+
+\section{DC Circuit Analysis Fundamentals}
+
+\subsection{Fundamental Quantities: Charge, Current, Voltage, and Power}
+An electric circuit is an interconnection of electrical elements forming a closed conducting path.
+\begin{itemize}
+    \item \textbf{Electric Charge ($Q$):} The intrinsic property of subatomic particles, measured in Coulombs ($\si{\coulomb}$). The charge of a single electron is $e = \SI{-1.602e-19}{\coulomb}$.
+    \item \textbf{Electric Current ($I$):} The time rate of flow of electric charge past a specified cross-section:
+    \begin{equation}
+        I(t) = \frac{dQ(t)}{dt} \quad [\si{\ampere} = \si{\coulomb\per\second}]
+    \end{equation}
+    Conventional current flows in the direction of positive charge motion (from higher potential to lower potential), opposite to the physical drift of electrons.
+    \item \textbf{Voltage / Potential Difference ($V$):} The energy ($W$) required to move a unit charge through an element:
+    \begin{equation}
+        V = \frac{dW}{dQ} \quad [\si{\volt} = \si{\joule\per\coulomb}]
+    \end{equation}
+    \item \textbf{Electrical Power ($P$):} The rate at which energy is delivered or absorbed by an element:
+    \begin{equation}
+        P = \frac{dW}{dt} = \frac{dW}{dQ} \cdot \frac{dQ}{dt} = V \cdot I \quad [\si{\watt} = \si{\joule\per\second}]
+    \end{equation}
+\end{itemize}
+
+\subsection{Ohm's Law}
+Discovered experimentally by Georg Simon Ohm in 1827, Ohm's Law relates potential difference, current, and resistance in a conducting medium.
+
+\begin{definition}[Ohm's Law]
+At constant physical temperature and environmental conditions, the current ($I$) flowing through a linear conducting element is directly proportional to the potential difference ($V$) applied across its terminals.
+\end{definition}
+
+\begin{keyequation}[Ohm's Law Mathematical Formulation]
+\begin{equation}
+    V = I \cdot R \iff I = \frac{V}{R} \iff R = \frac{V}{I}
+\end{equation}
+Where $V$ is potential difference in Volts ($\si{\volt}$), $I$ is electric current in Amperes ($\si{\ampere}$), and $R$ is resistance in Ohms ($\si{\ohm}$).
+\end{keyequation}
+
+\noindent On a microscopic scale, resistance is determined by material resistivity ($\rho$), length ($L$), and cross-sectional area ($A$):
+\begin{equation}
+    R = \rho \frac{L}{A} = \frac{L}{\sigma A}
+\end{equation}
+where $\sigma = \frac{1}{\rho}$ is the electrical conductivity of the conductor ($\si{\siemens\per\meter}$).
+
+\begin{commonmistake}[Limits of Ohm's Law]
+Ohm's Law is \textbf{not} a universal law of nature like Newton's laws. It applies strictly to **ohmic (linear)** conductors. It **fails** for:
+\begin{itemize}
+    \item \textbf{Non-linear devices:} Diodes, transistors, and vacuum tubes where the V-I curve is exponential or logarithmic.
+    \item \textbf{Thermal variations:} Conductors whose resistance changes as Joule heating ($I^2R$) alters temperature.
+    \item \textbf{Non-metallic conductors:} Electrolytes, ionized gases, and super-conductors.
+\end{itemize}
+\end{commonmistake}
+
+\subsection{Kirchhoff's Laws}
+When circuits contain multiple branches, loops, and energy sources, Ohm's law alone is insufficient. Gustav Kirchhoff formulated two fundamental laws rooted in the fundamental conservation laws of physics.
+
+\subsubsection{Kirchhoff's Current Law (KCL)}
+KCL is the direct consequence of the **Law of Conservation of Electric Charge**. Since electric charge cannot accumulate indefinitely at a junction (node) in steady-state conduction, the rate of charge entering must equal the rate of charge leaving.
+
+\begin{definition}[Kirchhoff's Current Law (KCL)]
+The algebraic sum of currents entering any electrical node (junction) is identically equal to the algebraic sum of currents exiting that node. Alternatively, the algebraic sum of all currents at any node equals zero.
+\end{definition}
+
+\begin{keyequation}[KCL Mathematical Formulation]
+\begin{equation}
+    \sum_{k=1}^{n} I_{k,\text{entering}} = \sum_{j=1}^{m} I_{j,\text{leaving}} \iff \sum_{k=1}^{N} I_k = 0
+\end{equation}
+\end{keyequation}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, transform shape]
+    \coordinate (O) at (0,0);
+    \draw[fill=branddark] (O) circle (3pt) node[below=4pt, font=\bfseries\sffamily] {Node A};
+    
+    % Entering currents
+    \draw[->, >=Stealth, brandblue, line width=1.5pt] (-2.5, 1.5) -- (-0.3, 0.2) node[midway, above, font=\small\bfseries] {$I_1$};
+    \draw[->, >=Stealth, brandblue, line width=1.5pt] (-2.5, -1.5) -- (-0.3, -0.2) node[midway, below, font=\small\bfseries] {$I_2$};
+    \draw[->, >=Stealth, brandblue, line width=1.5pt] (0, 2.5) -- (0, 0.3) node[midway, right, font=\small\bfseries] {$I_3$};
+    
+    % Leaving currents
+    \draw[->, >=Stealth, brandaccent, line width=1.5pt] (0.3, 0.2) -- (2.5, 1.5) node[midway, above, font=\small\bfseries] {$I_4$};
+    \draw[->, >=Stealth, brandaccent, line width=1.5pt] (0.3, -0.2) -- (2.5, -1.5) node[midway, below, font=\small\bfseries] {$I_5$};
+    
+    \node at (0, -2.2) [font=\bfseries\sffamily\color{brandnavy}] {$\text{KCL at Node A: } I_1 + I_2 + I_3 = I_4 + I_5 \implies I_1 + I_2 + I_3 - I_4 - I_5 = 0$};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Kirchhoff's Voltage Law (KVL)}
+KVL is the direct consequence of the **Law of Conservation of Energy**. Moving a unit test charge around any closed path and returning to the starting point results in zero net change in electrical potential energy.
+
+\begin{definition}[Kirchhoff's Voltage Law (KVL)]
+The algebraic sum of all branch voltages (potential rises and potential drops) around any closed loop or mesh in an electric circuit is identically zero.
+\end{definition}
+
+\begin{keyequation}[KVL Mathematical Formulation]
+\begin{equation}
+    \sum_{k=1}^{N} V_{k,\text{rise}} = \sum_{j=1}^{M} V_{j,\text{drop}} \iff \sum_{k=1}^{\text{Total}} V_k = 0
+\end{equation}
+\end{keyequation}
+
+\begin{examtip}[Standard Sign Convention for Loop Analysis]
+When traversing a closed circuit loop in a chosen direction (clockwise or counter-clockwise):
+\begin{itemize}
+    \item Traversing from a \textbf{negative ($-$) to positive ($+$)} terminal across a source or element represents a \textbf{Voltage Rise} ($+V$).
+    \item Traversing from a \textbf{positive ($+$) to negative ($-$)}) terminal represents a \textbf{Voltage Drop} ($-V$).
+    \item For a resistor carrying current $I$ in the direction of traversal, the voltage drop is $-I \cdot R$. If traversing against the current, it is $+I \cdot R$.
+\end{itemize}
+\end{examtip}
+
+\subsection{Circuit Division Rules}
+
+\subsubsection{Voltage Division Rule (VDR)}
+The Voltage Division Rule applies exclusively to **series-connected circuits**. In a series circuit, the identical current $I$ passes through all elements, but the total supply voltage $V_s$ divides across individual resistors proportional to their resistance values.
+
+\begin{center}
+\begin{circuitikz}[scale=1.0, transform shape]
+    \draw (0,0) to[V, v=$V_s$, invert] (0,3)
+          to[R, l=$R_1$, v=$V_1$] (3.5,3)
+          to[R, l=$R_2$, v=$V_2$] (3.5,0)
+          to[short] (0,0);
+    \draw[->, >=Stealth, brandblue, line width=1.2pt] (1.5, 3.4) -- (2.2, 3.4) node[above, font=\small\bfseries] {$I = \frac{V_s}{R_1+R_2}$};
+\end{circuitikz}
+\end{center}
+
+\begin{keyequation}[Voltage Division Rule Formula]
+For two resistors $R_1$ and $R_2$ in series with a source $V_s$:
+\begin{equation}
+    V_1 = V_s \left( \frac{R_1}{R_1 + R_2} \right), \qquad V_2 = V_s \left( \frac{R_2}{R_1 + R_2} \right)
+\end{equation}
+Generalizing for $N$ resistors in series:
+\begin{equation}
+    V_k = V_s \left( \frac{R_k}{\sum_{i=1}^N R_i} \right)
+\end{equation}
+\end{keyequation}
+
+\subsubsection{Current Division Rule (CDR)}
+The Current Division Rule applies exclusively to **parallel-connected circuits**. In a parallel circuit, the voltage across each parallel branch is identical ($V_p$), but the total entering current $I_s$ divides among the parallel branches inversely proportional to their branch resistances.
+
+\begin{center}
+\begin{circuitikz}[scale=1.0, transform shape]
+    \draw (0,0) to[I, l=$I_s$] (0,3)
+          to[short, -*] (2,3)
+          to[R, l=$R_1$, i>^=$I_1$] (2,0)
+          to[short, -*] (0,0);
+    \draw (2,3) to[short] (4,3)
+          to[R, l=$R_2$, i>^=$I_2$] (4,0)
+          to[short] (2,0);
+\end{circuitikz}
+\end{center}
+
+\begin{keyequation}[Current Division Rule Formula]
+For two resistors $R_1$ and $R_2$ connected in parallel with total current $I_s$:
+\begin{equation}
+    I_1 = I_s \left( \frac{R_2}{R_1 + R_2} \right), \qquad I_2 = I_s \left( \frac{R_1}{R_1 + R_2} \right)
+\end{equation}
+\end{keyequation}
+
+\begin{commonmistake}[Current Division with Three or More Branches]
+The formula $I_1 = I_s \frac{R_2}{R_1+R_2}$ is valid **only for exactly two parallel branches**. For three or more branches ($R_1, R_2, R_3$), the branch current must be evaluated using branch conductance:
+\begin{equation}
+    I_k = I_s \left( \frac{G_k}{\sum G_i} \right) = I_s \left( \frac{\frac{1}{R_k}}{\frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}} \right)
+\end{equation}
+Attempting to use $I_1 = I_s \frac{R_2+R_3}{R_1+R_2+R_3}$ is a severe mathematical error.
+\end{commonmistake}
+
+\subsection{Worked Examples: DC Circuit Analysis}
+
+\begin{example}[Multi-Loop DC Circuit Analysis using KVL \& KCL]
+Consider the two-mesh DC network shown below. Find the branch currents $I_1, I_2, I_3$ and the voltage across the $\SI{6}{\ohm}$ resistor.
+\begin{center}
+\begin{circuitikz}[scale=1.0, transform shape]
+    \draw (0,0) to[V, v=$V_1{=}\SI{24}{\volt}$, invert] (0,3)
+          to[R, l=$R_1{=}\SI{4}{\ohm}$, i>^=$I_1$] (3,3)
+          to[R, l=$R_3{=}\SI{6}{\ohm}$, i>^=$I_3$, -*] (3,0)
+          to[short] (0,0);
+    \draw (3,3) to[R, l=$R_2{=}\SI{2}{\ohm}$, i>^=$I_2$] (6,3)
+          to[V, v=$V_2{=}\SI{12}{\volt}$] (6,0)
+          to[short] (3,0);
+    \node at (1.5, 1.5) [font=\small] {Mesh 1 ($\circlearrowright$)};
+    \node at (4.5, 1.5) [font=\small] {Mesh 2 ($\circlearrowright$)};
+\end{circuitikz}
+\end{center}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item Sources: $V_1 = \SI{24}{\volt}$, $V_2 = \SI{12}{\volt}$
+    \item Resistors: $R_1 = \SI{4}{\ohm}$, $R_2 = \SI{2}{\ohm}$, $R_3 = \SI{6}{\ohm}$
+\end{itemize}
+
+\textbf{Step 2: Formulate KCL at Central Node}
+At the top central node:
+\begin{equation}
+    I_1 = I_2 + I_3 \implies I_3 = I_1 - I_2
+\end{equation}
+
+\textbf{Step 3: Apply KVL around Mesh 1 (Clockwise)}
+\begin{align*}
+    +V_1 - I_1 R_1 - I_3 R_3 &= 0 \\
+    24 - 4I_1 - 6(I_1 - I_2) &= 0 \\
+    24 - 10I_1 + 6I_2 &= 0 \implies 10I_1 - 6I_2 = 24 \quad \text{--- (Equation 1)}
+\end{align*}
+
+\textbf{Step 4: Apply KVL around Mesh 2 (Clockwise)}
+\begin{align*}
+    +I_3 R_3 - I_2 R_2 - V_2 &= 0 \\
+    6(I_1 - I_2) - 2I_2 - 12 &= 0 \\
+    6I_1 - 8I_2 = 12 \implies 3I_1 - 4I_2 &= 6 \quad \text{--- (Equation 2)}
+\end{align*}
+
+\textbf{Step 5: Solve System of Linear Equations}
+From Equation 1: $5I_1 - 3I_2 = 12 \implies I_1 = \frac{12 + 3I_2}{5}$.
+Substitute into Equation 2:
+\begin{align*}
+    3\left(\frac{12 + 3I_2}{5}\right) - 4I_2 &= 6 \\
+    \frac{36 + 9I_2 - 20I_2}{5} &= 6 \\
+    36 - 11I_2 &= 30 \implies 11I_2 = 6 \implies I_2 = \frac{6}{11} \approx \SI{0.545}{\ampere}
+\end{align*}
+Back-substituting for $I_1$:
+\begin{equation*}
+    I_1 = \frac{12 + 3(0.5455)}{5} = \frac{13.636}{5} \approx \SI{2.727}{\ampere}
+\end{equation*}
+Current through $R_3$:
+\begin{equation*}
+    I_3 = I_1 - I_2 = 2.7273 - 0.5455 = \SI{2.182}{\ampere}
+\end{equation*}
+Voltage across $R_3$:
+\begin{equation*}
+    V_{R_3} = I_3 \cdot R_3 = 2.1818 \times 6 = \SI{13.09}{\volt}
+\end{equation*}
+
+\textbf{Final Answers:}
+$$\mathbf{I_1 = \SI{2.73}{\ampere}, \quad I_2 = \SI{0.55}{\ampere}, \quad I_3 = \SI{2.18}{\ampere}, \quad V_{R_3} = \SI{13.09}{\volt}}$$
+\end{example}
+
+---
+
+\section{Basics of Semiconductor Physics}
+
+\subsection{Energy Band Theory of Solids}
+In an isolated atom, electron energy levels are discrete and sharply quantized. When atoms condense to form a periodic crystalline solid (such as Silicon or Germanium), their atomic wavefunctions overlap. By the **Pauli Exclusion Principle**, each degenerate energy level splits into a band of closely spaced quantum energy states.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Insulator
+    \begin{scope}[xshift=0cm]
+        \fill[brandblue!20] (0,0) rectangle (2.5, 1.2);
+        \draw[thick, brandnavy] (0,0) rectangle (2.5, 1.2) node[midway, font=\small\bfseries] {Valence Band};
+        \fill[brandaccent!20] (0,3.2) rectangle (2.5, 4.4);
+        \draw[thick, brandnavy] (0,3.2) rectangle (2.5, 4.4) node[midway, font=\small\bfseries] {Conduction Band};
+        \draw[<->, >=Stealth, thick, brandaccent] (1.25, 1.3) -- (1.25, 3.1) node[midway, right, font=\footnotesize\bfseries] {$E_g > \SI{5}{\electronvolt}$};
+        \node at (1.25, -0.6) [font=\bfseries\sffamily] {Insulator};
+    \end{scope}
+
+    % Semiconductor
+    \begin{scope}[xshift=4.5cm]
+        \fill[brandblue!20] (0,0) rectangle (2.5, 1.2);
+        \draw[thick, brandnavy] (0,0) rectangle (2.5, 1.2) node[midway, font=\small\bfseries] {Valence Band};
+        \fill[brandaccent!20] (0,2.3) rectangle (2.5, 3.5);
+        \draw[thick, brandnavy] (0,2.3) rectangle (2.5, 3.5) node[midway, font=\small\bfseries] {Conduction Band};
+        \draw[<->, >=Stealth, thick, brandamber] (1.25, 1.3) -- (1.25, 2.2) node[midway, right, font=\footnotesize\bfseries] {$E_g \approx \SI{1.1}{\electronvolt}$};
+        \node at (1.25, -0.6) [font=\bfseries\sffamily] {Semiconductor};
+    \end{scope}
+
+    % Conductor
+    \begin{scope}[xshift=9cm]
+        \fill[brandblue!20] (0,0) rectangle (2.5, 1.8);
+        \fill[brandaccent!20] (0,1.2) rectangle (2.5, 3.0);
+        \fill[pattern=north east lines, pattern color=brandpurple] (0,1.2) rectangle (2.5, 1.8);
+        \draw[thick, brandnavy] (0,0) rectangle (2.5, 1.8);
+        \draw[thick, brandnavy] (0,1.2) rectangle (2.5, 3.0);
+        \node at (1.25, 2.4) [font=\footnotesize\bfseries] {Conduction};
+        \node at (1.25, 0.6) [font=\footnotesize\bfseries] {Valence};
+        \node at (1.25, 1.5) [font=\tiny\bfseries\color{brandnavy}] {Overlap};
+        \node at (1.25, -0.6) [font=\bfseries\sffamily] {Conductor ($E_g = 0$)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Energy band classification of materials based on the forbidden band gap $E_g$.}
+\label{fig:energy-bands}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Valence Band (VB):} The highest range of electron energies in which electrons are normally present at absolute zero ($T = \SI{0}{\kelvin}$).
+    \item \textbf{Conduction Band (CB):} The lowest unoccupied band above the valence band. Electrons excited into this band are free to drift under an electric field.
+    \item \textbf{Forbidden Energy Gap ($E_g$):} The energy gap between the top of the valence band ($E_v$) and the bottom of the conduction band ($E_c$). No stable quantum states exist in this region.
+    \begin{itemize}
+        \item \textbf{Insulators:} Large gap ($E_g > \SI{5}{\electronvolt}$); thermal energy cannot excite electrons across the gap.
+        \item \textbf{Semiconductors:} Moderate gap ($E_g(\text{Si}) = \SI{1.12}{\electronvolt}$, $E_g(\text{Ge}) = \SI{0.72}{\electronvolt}$ at $T = \SI{300}{\kelvin}$).
+        \item \textbf{Conductors:} Overlapping bands ($E_g = 0$); abundant free electrons available even at $\SI{0}{\kelvin}$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Intrinsic Semiconductors}
+An intrinsic semiconductor is chemically pure with zero significant crystal lattice defects or foreign impurity atoms.
+
+\begin{itemize}
+    \item \textbf{Crystal Structure:} Group IV elements (Silicon, Germanium) have 4 valence electrons. In a diamond cubic crystal, each atom forms four shared covalent bonds with four neighboring atoms.
+    \item \textbf{Behavior at $\SI{0}{\kelvin}$:} All covalent bonds are intact. The valence band is completely full, the conduction band is completely empty, and the crystal acts as a perfect **electrical insulator**.
+    \item \textbf{Thermal Generation at $T > \SI{0}{\kelvin}$:} Ambient thermal energy breaks covalent bonds, exciting electrons into the conduction band and leaving behind vacant covalent positions called **Holes**.
+    \item \textbf{Concept of the Hole:} A hole behaves as an effective mobile charge carrier with positive elementary charge ($+q = \SI{+1.602e-19}{\coulomb}$) and its own effective mass and mobility ($\mu_p$).
+    \item \textbf{Carrier Equality:} In an intrinsic semiconductor, electrons and holes are generated in pairs:
+    \begin{equation}
+        n = p = n_i
+    \end{equation}
+    where $n_i$ is the intrinsic carrier concentration ($n_i \approx \SI{1.5e10}{\per\centi\meter\cubed}$ for Silicon at $\SI{300}{\kelvin}$).
+\end{itemize}
+
+\subsection{Extrinsic Semiconductors \& Doping}
+Because intrinsic semiconductors have low conductivity at room temperature, controlled amounts of specific impurity atoms are added via **Doping** (typically 1 impurity atom per $10^6$ to $10^8$ host atoms).
+
+\subsubsection{N-Type Semiconductors (Donor Doping)}
+\begin{itemize}
+    \item \textbf{Dopants:} Pentavalent atoms from Group V (Phosphorus $\text{P}$, Arsenic $\text{As}$, Antimony $\text{Sb}$) possessing 5 valence electrons.
+    \item \textbf{Lattice Incorporation:} Four valence electrons form covalent bonds with adjacent Silicon atoms; the fifth electron is loosely bound ($E_d \approx \SI{0.05}{\electronvolt}$ below $E_c$) and easily ionizes at room temperature to enter the conduction band.
+    \item \textbf{Charge Carriers:}
+    \begin{itemize}
+        \item \textbf{Majority Carriers:} Free electrons ($n_n \approx N_D$, where $N_D$ is donor concentration).
+        \item \textbf{Minority Carriers:} Thermally generated holes ($p_n = \frac{n_i^2}{N_D}$).
+    \end{itemize}
+    \item \textbf{Space Charge:} Doped atoms become fixed, immobile positive ions ($\text{P}^+$). The overall material remains **electrically neutral**.
+\end{itemize}
+
+\subsubsection{P-Type Semiconductors (Acceptor Doping)}
+\begin{itemize}
+    \item \textbf{Dopants:} Trivalent atoms from Group III (Boron $\text{B}$, Gallium $\text{Ga}$, Indium $\text{In}$) possessing 3 valence electrons.
+    \item \textbf{Lattice Incorporation:} Three valence electrons form bonds with neighboring Silicon atoms, leaving a missing electron (vacancy / hole). This vacancy accepts an electron from an adjacent bond ($E_a \approx \SI{0.05}{\electronvolt}$ above $E_v$), creating a free hole in the valence band.
+    \item \textbf{Charge Carriers:}
+    \begin{itemize}
+        \item \textbf{Majority Carriers:} Holes ($p_p \approx N_A$, where $N_A$ is acceptor concentration).
+        \item \textbf{Minority Carriers:} Thermally generated electrons ($n_p = \frac{n_i^2}{N_A}$).
+    \end{itemize}
+    \item \textbf{Space Charge:} Doped atoms become fixed, immobile negative ions ($\text{B}^-$). The overall material remains **electrically neutral**.
+\end{itemize}
+
+\begin{keyequation}[Mass-Action Law]
+Under thermal equilibrium conditions, the product of electron and hole concentrations in any semiconductor (intrinsic or extrinsic) is constant:
+\begin{equation}
+    n \cdot p = n_i^2
+\end{equation}
+\end{keyequation}
+
+---
+
+\section{PN Junction Diode}
+
+\subsection{PN Junction Formation and Depletion Region}
+When P-type and N-type semiconductor regions are joined in a continuous crystal lattice:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % P-region
+    \fill[brandblue!15] (0,0) rectangle (4,3);
+    \draw[thick, brandnavy] (0,0) rectangle (4,3);
+    \node at (2, 2.6) [font=\bfseries\sffamily\color{brandnavy}] {P-Type Region};
+    \node at (1.2, 1.5) [font=\small\color{brandslate}] {Holes ($h^+$ Majority)};
+    \node at (1.2, 0.8) [font=\small\color{brandslate}] {Immobile Acceptor $\text{B}^-$};
+
+    % Depletion Region
+    \fill[brandamber!25] (3.2,0) rectangle (4.8,3);
+    \draw[dashed, thick, brandamber] (3.2,0) -- (3.2,3);
+    \draw[dashed, thick, brandamber] (4.8,0) -- (4.8,3);
+    \node at (4, 3.4) [font=\bfseries\sffamily\color{brandamber}] {Depletion Region};
+
+    % Ions in depletion
+    \node at (3.6, 2.0) [circle, draw=brandaccent, fill=white, inner sep=1pt, font=\tiny\bfseries] {$-$};
+    \node at (3.6, 1.4) [circle, draw=brandaccent, fill=white, inner sep=1pt, font=\tiny\bfseries] {$-$};
+    \node at (3.6, 0.8) [circle, draw=brandaccent, fill=white, inner sep=1pt, font=\tiny\bfseries] {$-$};
+
+    \node at (4.4, 2.0) [circle, draw=brandblue, fill=white, inner sep=1pt, font=\tiny\bfseries] {$+$};
+    \node at (4.4, 1.4) [circle, draw=brandblue, fill=white, inner sep=1pt, font=\tiny\bfseries] {$+$};
+    \node at (4.4, 0.8) [circle, draw=brandblue, fill=white, inner sep=1pt, font=\tiny\bfseries] {$+$};
+
+    % Built-in field
+    \draw[->, >=Stealth, line width=1.5pt, brandaccent] (4.6, 0.3) -- (3.4, 0.3) node[midway, below=2pt, font=\footnotesize\bfseries] {$\vec{\mathcal{E}}_{\text{internal}}$};
+
+    % N-region
+    \fill[brandteal!15] (4,0) rectangle (8,3);
+    \draw[thick, brandnavy] (4,0) rectangle (8,3);
+    \node at (6, 2.6) [font=\bfseries\sffamily\color{brandnavy}] {N-Type Region};
+    \node at (6.8, 1.5) [font=\small\color{brandslate}] {Electrons ($e^-$ Majority)};
+    \node at (6.8, 0.8) [font=\small\color{brandslate}] {Immobile Donor $\text{P}^+$};
+\end{tikzpicture}
+\caption{Cross-section of an open-circuit PN junction in thermal equilibrium showing the space-charge depletion layer.}
+\label{fig:pn-junction}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Diffusion Process:} Due to the large carrier concentration gradient, majority holes from the P-side diffuse across the junction into the N-side, while majority electrons from the N-side diffuse into the P-side.
+    \item \textbf{Recombination \& Space Charge Formation:} When diffusing electrons and holes cross the junction, they recombine near the interface. This uncovers the fixed, ionized dopant atoms: immobile negative acceptor ions ($\text{B}^-$) on the P-side, and immobile positive donor ions ($\text{P}^+$) on the N-side.
+    \item \textbf{Built-in Potential Barrier ($V_b$):} The layer of uncovered ions forms the **Depletion Region** (depleted of mobile carriers). The resulting internal electric field $\vec{\mathcal{E}}$ points from N to P, opposing further diffusion until equilibrium is reached:
+    \begin{equation}
+        V_b = V_T \ln \left( \frac{N_A N_D}{n_i^2} \right)
+    \end{equation}
+    where $V_T = \frac{k_B T}{q} \approx \SI{25.9}{\milli\volt}$ at $\SI{300}{\kelvin}$.
+    \begin{itemize}
+        \item Silicon Barrier Potential: $V_b \approx \SI{0.7}{\volt}$
+        \item Germanium Barrier Potential: $V_b \approx \SI{0.3}{\volt}$
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Biasing Modes of the PN Junction}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+\textbf{Biasing Mode} & \textbf{Forward Bias ($V_D > 0$)} & \textbf{Reverse Bias ($V_D < 0$)} \\
+\midrule
+\textbf{External Connection} & P-terminal connected to ($+$), N-terminal to ($-$). & P-terminal connected to ($-$), N-terminal to ($+$). \\
+\textbf{Internal Field Effect} & Opposes built-in barrier field $\mathcal{E}$. & Reinforces built-in barrier field $\mathcal{E}$. \\
+\textbf{Depletion Layer Width} & Significantly \textbf{decreases / narrows}. & Significantly \textbf{increases / widens}. \\
+\textbf{Potential Barrier} & Reduces to $(V_b - V_D)$. & Increases to $(V_b + |V_D|)$. \\
+\textbf{Conduction Mechanism} & Exponential diffusion of majority carriers. & Negligible drift of minority carriers ($I_0$). \\
+\textbf{Equivalent Circuit} & Low forward resistance ($r_f \approx \SI{10}{\ohm}$) in series with $V_k$. & High resistance ($R_r > \SI{1}{\mega\ohm}$) or open circuit. \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Forward and Reverse Biasing in a PN Junction Diode.}
+\label{tab:diode-biasing}
+\end{table}
+
+\subsection{V-I Characteristics \& Shockley Diode Equation}
+The relationship between diode terminal current ($I$) and applied voltage ($V$) is described by the **Shockley Equation**:
+
+\begin{keyequation}[Shockley Ideal Diode Equation]
+\begin{equation}
+    I = I_0 \left( e^{\frac{V}{\eta V_T}} - 1 \right)
+\end{equation}
+Where:
+\begin{itemize}
+    \item $I_0$ = Reverse saturation current ($\SI{e-12}{\ampere}$ for Si, $\SI{e-6}{\ampere}$ for Ge)
+    \item $V$ = Applied terminal voltage across diode
+    \item $\eta$ = Ideality factor ($\eta = 1$ for Ge, $\eta \approx 1\text{--}2$ for Si)
+    \item $V_T = \frac{k_B T}{q}$ = Thermal voltage ($\approx \SI{26}{\milli\volt}$ at $\SI{300}{\kelvin}$)
+\end{itemize}
+\end{keyequation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Axes
+    \draw[->, >=Stealth, thick] (-6,0) -- (4,0) node[right, font=\bfseries] {$V_D\text{ (V)}$};
+    \draw[->, >=Stealth, thick] (0,-4) -- (0,4.5) node[above, font=\bfseries] {$I_D\text{ (mA)}$};
+
+    % Forward Curve
+    \draw[line width=1.5pt, brandblue] (0,0) -- (0.5,0.05) .. controls (0.65,0.2) and (0.7,1.0) .. (0.8,4.2);
+    \node at (2.2, 3.2) [font=\small\bfseries\color{brandblue}] {Forward Conduction};
+    \draw[dashed, brandslate] (0.7,0) -- (0.7,1.5);
+    \node at (0.7, -0.4) [font=\footnotesize\bfseries\color{brandaccent}] {$V_k = \SI{0.7}{\volt}$ (Si)};
+
+    % Reverse Curve
+    \draw[line width=1.5pt, brandaccent] (0,0) -- (-4.5,-0.15) -- (-4.8,-3.8);
+    \draw[dashed, brandslate] (-4.8,0) -- (-4.8,-3.8);
+    \node at (-4.8, 0.4) [font=\footnotesize\bfseries\color{brandaccent}] {$V_Z$ (Breakdown)};
+    \node at (-2.5, -0.6) [font=\footnotesize\color{brandslate}] {$I_0\text{ (Leakage)}$};
+    \node at (-3.5, -3.2) [font=\small\bfseries\color{brandaccent}, align=right] {Zener/Avalanche\\Breakdown};
+\end{tikzpicture}
+\caption{Complete V-I characteristics curve of a Silicon PN junction diode.}
+\label{fig:diode-vi}
+\end{figure}
+
+\noindent **Key Characteristic Parameters:**
+\begin{itemize}
+    \item \textbf{Knee Voltage / Cut-in Voltage ($V_k$):} Forward voltage at which current begins to increase exponentially ($0.7\text{ V}$ for Si, $0.3\text{ V}$ for Ge).
+    \item \textbf{Static (DC) Resistance ($R_D$):} The ratio of DC voltage to DC current at a fixed Q-point: $R_D = \frac{V_Q}{I_Q}$.
+    \item \textbf{Dynamic (AC) Resistance ($r_d$):} The reciprocal of the slope of the V-I curve at the operating point:
+    \begin{equation}
+        r_d = \frac{dV}{dI} = \frac{\eta V_T}{I_D}
+    \end{equation}
+    \item \textbf{Breakdown Voltage ($V_{BR}$):} Critical reverse voltage where large reverse currents flow via **Zener Breakdown** (quantum mechanical tunneling in heavily doped diodes, $< \SI{6}{\volt}$) or **Avalanche Breakdown** (carrier impact ionization in lightly doped diodes, $> \SI{6}{\volt}$).
+\end{itemize}
+
+---
+
+\section{Diode Applications: Rectifier Circuits}
+Rectification is the conversion of alternating current (AC) into unidirectional direct current (DC).
+
+\subsection{Half-Wave Rectifier (HWR)}
+A Half-Wave Rectifier utilizes a single diode to conduct only during the positive half-cycle of the input AC voltage.
+
+\begin{center}
+\begin{circuitikz}[scale=0.9, transform shape]
+    \draw (0,0) to[sinusoidal voltage source, l=$v_s(t){=}V_m\sin\omega t$] (0,2.5)
+          to[diode, l=$D$, -*] (3.5,2.5)
+          to[R, l=$R_L$, v=$v_o(t)$] (3.5,0)
+          to[short] (0,0);
+\end{circuitikz}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Positive Half-Cycle ($0 \le \omega t \le \pi$):} Anode is positive; diode is forward-biased (ON). Current flows through $R_L$, yielding $v_o(t) = V_m\sin\omega t$.
+    \item \textbf{Negative Half-Cycle ($\pi \le \omega t \le 2\pi$):} Anode is negative; diode is reverse-biased (OFF). Current is zero, yielding $v_o(t) = 0$.
+\end{itemize}
+
+\begin{keyequation}[Half-Wave Rectifier Performance Parameters]
+\begin{align}
+    V_{dc} &= \frac{1}{2\pi} \int_0^\pi V_m\sin\omega t \, d(\omega t) = \frac{V_m}{\pi} \approx 0.318 V_m \\
+    I_{dc} &= \frac{I_m}{\pi} \\
+    V_{rms} &= \sqrt{\frac{1}{2\pi} \int_0^\pi (V_m\sin\omega t)^2 \, d(\omega t)} = \frac{V_m}{2} = 0.5 V_m \\
+    \text{Ripple Factor } \gamma &= \sqrt{\left(\frac{V_{rms}}{V_{dc}}\right)^2 - 1} = \sqrt{\left(\frac{V_m/2}{V_m/\pi}\right)^2 - 1} = \sqrt{\frac{\pi^2}{4} - 1} \approx 1.21 \\
+    \text{Max Efficiency } \eta_{max} &= \frac{P_{dc}}{P_{ac}} = \frac{I_{dc}^2 R_L}{I_{rms}^2 (r_f + R_L)} \approx \frac{4}{\pi^2} \approx 40.6\% \\
+    \text{Peak Inverse Voltage (PIV)} &= V_m
+\end{align}
+\end{keyequation}
+
+\subsection{Full-Wave Bridge Rectifier}
+The Bridge Rectifier uses four diodes arranged in a bridge loop to conduct current through the load in the same direction during both AC half-cycles, without requiring a center-tapped transformer.
+
+\begin{center}
+\begin{circuitikz}[scale=0.9, transform shape]
+    % AC Source
+    \draw (0,1.5) to[sinusoidal voltage source, l=$v_s(t)$] (0,3.5)
+          to[short] (1.5,3.5) to[short] (1.5,2.5);
+    \draw (0,1.5) to[short] (1.5,1.5) to[short] (1.5,0.5);
+
+    % Bridge Diodes
+    \draw (1.5,2.5) to[diode, l=$D_1$, -*] (3.5,4)
+          to[diode, l=$D_2$] (5.5,2.5);
+    \draw (1.5,0.5) to[diode, l=$D_4$, -*] (3.5, -1)
+          to[diode, l=$D_3$] (5.5,0.5);
+
+    \draw (1.5,2.5) -- (1.5,0.5);
+    \draw (5.5,2.5) -- (5.5,0.5);
+
+    % Load Resistor
+    \draw (3.5,4) to[short] (6.5,4)
+          to[R, l=$R_L$, v=$v_o(t)$, -*] (6.5,-1)
+          to[short] (3.5,-1);
+\end{circuitikz}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Positive Half-Cycle:} Terminal top is ($+$), bottom is ($-$). Diodes $D_1$ and $D_3$ are Forward-Biased (ON); $D_2$ and $D_4$ are Reverse-Biased (OFF). Current enters top of $R_L$.
+    \item \textbf{Negative Half-Cycle:} Terminal top is ($-$), bottom is ($+$). Diodes $D_2$ and $D_4$ are Forward-Biased (ON); $D_1$ and $D_3$ are Reverse-Biased (OFF). Current enters top of $R_L$ in the identical direction.
+\end{itemize}
+
+\begin{keyequation}[Full-Wave Bridge Rectifier Performance Parameters]
+\begin{align}
+    V_{dc} &= \frac{2V_m}{\pi} \approx 0.636 V_m \\
+    I_{dc} &= \frac{2I_m}{\pi} \\
+    V_{rms} &= \frac{V_m}{\sqrt{2}} \approx 0.707 V_m \\
+    \text{Ripple Factor } \gamma &= \sqrt{\left(\frac{V_{rms}}{V_{dc}}\right)^2 - 1} = \sqrt{\left(\frac{V_m/\sqrt{2}}{2V_m/\pi}\right)^2 - 1} = \sqrt{\frac{\pi^2}{8} - 1} \approx 0.482 \\
+    \text{Max Efficiency } \eta_{max} &= \frac{8}{\pi^2} \approx 81.2\% \\
+    \text{Peak Inverse Voltage (PIV)} &= V_m \quad (\text{Bridge}) \quad [2V_m \text{ for Center-Tapped}]
+\end{align}
+\end{keyequation}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Parameter} & \textbf{Half-Wave} & \textbf{Center-Tapped Full-Wave} & \textbf{Bridge Full-Wave} \\
+\midrule
+Number of Diodes & 1 & 2 & 4 \\
+Transformer Center-Tap Required & No & Yes & No \\
+DC Output Voltage ($V_{dc}$) & $\frac{V_m}{\pi} \approx 0.318 V_m$ & $\frac{2V_m}{\pi} \approx 0.636 V_m$ & $\frac{2V_m}{\pi} \approx 0.636 V_m$ \\
+RMS Output Voltage ($V_{rms}$) & $\frac{V_m}{2} = 0.5 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ \\
+Ripple Factor ($\gamma$) & $1.21$ & $0.482$ & $0.482$ \\
+Ripple Frequency ($f_{ripple}$) & $f_{in}$ & $2f_{in}$ & $2f_{in}$ \\
+Max Efficiency ($\eta_{max}$) & $40.6\%$ & $81.2\%$ & $81.2\%$ \\
+Peak Inverse Voltage (PIV) & $V_m$ & $2V_m$ & $V_m$ \\
+Transformer Utilization Factor & $0.287$ & $0.693$ & $0.812$ \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive performance comparison of rectifier topologies.}
+\label{tab:rectifier-comparison}
+\end{table}
+
+\begin{example}[Full-Wave Bridge Rectifier Design Calculation]
+A Full-Wave Bridge Rectifier is supplied by a sinusoidal transformer secondary voltage $v_s(t) = 230\sqrt{2}\sin(100\pi t)\,\si{\volt}$ with a load resistance $R_L = \SI{500}{\ohm}$. Assuming practical silicon diodes each having a forward drop $V_D = \SI{0.7}{\volt}$:
+\begin{enumerate}
+    \item Find the peak voltage across the load $V_{L,peak}$.
+    \item Calculate the DC output voltage $V_{dc}$ and DC load current $I_{dc}$.
+    \item Determine the ripple voltage $V_{ac}$ and the ripple factor.
+    \item What is the minimum PIV rating required for each diode?
+\end{enumerate}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item Peak secondary voltage: $V_m = 230\sqrt{2} \approx \SI{325.27}{\volt}$
+    \item Frequency: $\omega = 100\pi \implies f = \frac{100\pi}{2\pi} = \SI{50}{\hertz}$
+    \item Load: $R_L = \SI{500}{\ohm}$, Diode drop: $V_D = \SI{0.7}{\volt}$ (2 conducting diodes in series during each half cycle)
+\end{itemize}
+
+\textbf{Step 2: Peak Load Voltage}
+\begin{equation*}
+    V_{L,peak} = V_m - 2V_D = 325.27 - 2(0.7) = \SI{323.87}{\volt}
+\end{equation*}
+
+\textbf{Step 3: DC Voltage and DC Current}
+\begin{align*}
+    V_{dc} &= \frac{2 V_{L,peak}}{\pi} = \frac{2 \times 323.87}{\pi} \approx \SI{206.18}{\volt} \\
+    I_{dc} &= \frac{V_{dc}}{R_L} = \frac{206.18}{\SI{500}{\ohm}} = \SI{0.4124}{\ampere} = \SI{412.4}{\milli\ampere}
+\end{align*}
+
+\textbf{Step 4: RMS Voltage, Ripple Voltage and Ripple Factor}
+\begin{align*}
+    V_{rms} &= \frac{V_{L,peak}}{\sqrt{2}} = \frac{323.87}{\sqrt{2}} \approx \SI{229.01}{\volt} \\
+    V_{ac} &= \sqrt{V_{rms}^2 - V_{dc}^2} = \sqrt{(229.01)^2 - (206.18)^2} = \sqrt{52445.58 - 42510.19} = \SI{99.68}{\volt} \\
+    \gamma &= \frac{V_{ac}}{V_{dc}} = \frac{99.68}{206.18} \approx 0.483
+\end{align*}
+
+\textbf{Step 5: Peak Inverse Voltage (PIV)}
+\begin{equation*}
+    \text{PIV} = V_m - V_D = 325.27 - 0.7 = \SI{324.57}{\volt}
+\end{equation*}
+
+\textbf{Final Answers:}
+$$\mathbf{V_{L,peak} = \SI{323.87}{\volt}, \quad V_{dc} = \SI{206.18}{\volt}, \quad I_{dc} = \SI{412.4}{\milli\ampere}, \quad \gamma = 0.483, \quad \text{PIV} \ge \SI{324.6}{\volt}}$$
+\end{example}
+
+---
+
+\section{Bipolar Junction Transistor (BJT)}
+
+\subsection{Construction and Physical Mechanism}
+The Bipolar Junction Transistor (BJT) is a three-terminal semiconductor device containing two back-to-back PN junctions ($J_E$ and $J_C$). It is termed *bipolar* because conduction involves both majority and minority carriers (electrons and holes).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Emitter
+    \fill[brandblue!20] (0,0) rectangle (2.5,2.5);
+    \draw[thick, brandnavy] (0,0) rectangle (2.5,2.5);
+    \node at (1.25, 1.6) [font=\bfseries\sffamily] {Emitter (E)};
+    \node at (1.25, 0.9) [font=\scriptsize, align=center] {N-type\\Heavily Doped\\Medium Area};
+
+    % Base
+    \fill[brandamber!20] (2.5,0) rectangle (3.5,2.5);
+    \draw[thick, brandnavy] (2.5,0) rectangle (3.5,2.5);
+    \node at (3.0, 1.6) [font=\bfseries\sffamily] {Base (B)};
+    \node at (3.0, 0.9) [font=\scriptsize, align=center] {P-type\\Lightly Doped\\Ultra-Thin};
+
+    % Collector
+    \fill[brandteal!20] (3.5,0) rectangle (7.0,2.5);
+    \draw[thick, brandnavy] (3.5,0) rectangle (7.0,2.5);
+    \node at (5.25, 1.6) [font=\bfseries\sffamily] {Collector (C)};
+    \node at (5.25, 0.9) [font=\scriptsize, align=center] {N-type\\Moderately Doped\\Largest Area};
+
+    % Junctions
+    \draw[line width=1.5pt, brandaccent] (2.5, 0) -- (2.5, 2.5) node[above, font=\tiny\bfseries] {$J_E$};
+    \draw[line width=1.5pt, brandpurple] (3.5, 0) -- (3.5, 2.5) node[above, font=\tiny\bfseries] {$J_C$};
+\end{tikzpicture}
+\caption{Physical structural proportions and doping hierarchy of an NPN Bipolar Junction Transistor.}
+\label{fig:bjt-structure}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Emitter (E):} Heavily doped ($N_D^{++}$) to emit a massive quantity of majority carriers into the base. Moderate physical size.
+    \item \textbf{Base (B):} Ultra-thin ($\sim \SI{1}{\micro\meter}$) and lightly doped ($N_A^-$) to minimize electron-hole recombination as carriers traverse toward the collector.
+    \item \textbf{Collector (C):} Moderately doped ($N_D^+$) and physically the largest region to facilitate thermal heat dissipation generated by collected carriers.
+\end{itemize}
+
+\subsection{Fundamental Current Relationships}
+Applying Kirchhoff's Current Law to the BJT package:
+\begin{keyequation}[BJT Fundamental Current Equation]
+\begin{equation}
+    I_E = I_B + I_C
+\end{equation}
+\end{keyequation}
+In active operation, because the base is lightly doped and extremely thin, approximately $95\text{--}99\%$ of emitted carriers traverse directly to the collector. Thus:
+\begin{equation}
+    I_B \approx (1\text{--}5\%)\text{ of } I_E, \qquad I_C \approx (95\text{--}99\%)\text{ of } I_E \implies I_E \approx I_C
+\end{equation}
+
+\subsection{BJT Operating Modes}
+The biasing polarities of the Emitter-Base Junction ($J_E$) and Collector-Base Junction ($J_C$) establish four distinct operational regions:
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXXl}
+\toprule
+\textbf{Mode of Operation} & \textbf{$J_E$ Bias (EBJ)} & \textbf{$J_C$ Bias (CBJ)} & \textbf{Primary Application} \\
+\midrule
+\textbf{Cut-off Mode} & Reverse & Reverse & Open Electronic Switch (OFF) \\
+\textbf{Active Mode} & Forward & Reverse & Linear Analog Signal Amplifier \\
+\textbf{Saturation Mode} & Forward & Forward & Closed Electronic Switch (ON) \\
+\textbf{Inverted Mode} & Reverse & Forward & Low-gain specialized applications \\
+\bottomrule
+\end{tabularx}
+\caption{BJT Operational Modes and Biasing Requirements.}
+\label{tab:bjt-modes}
+\end{table}
+
+\subsection{Common Emitter (CE) Configuration \& Characteristics}
+The Common Emitter (CE) configuration is the most widely utilized BJT circuit arrangement due to its simultaneous high current gain and high voltage gain.
+
+\begin{center}
+\begin{circuitikz}[scale=0.95, transform shape]
+    \draw (0,0) node[npn] (npn) {}
+          (npn.base) node[left=2pt] {B}
+          (npn.collector) node[above=2pt] {C}
+          (npn.emitter) node[below=2pt] {E};
+    
+    % Base Circuit
+    \draw (npn.base) to[R, l=$R_B$, i<=$I_B$] (-3,0)
+          to[V, v=$V_{BB}$, invert] (-3,-2)
+          to[short] (0,-2) -- (npn.emitter);
+          
+    % Collector Circuit
+    \draw (npn.collector) to[R, l=$R_C$, i<=$I_C$] (0,3)
+          to[short] (3,3)
+          to[V, v=$V_{CC}$] (3,-2)
+          to[short] (0,-2);
+          
+    \draw (0,-2) node[ground] {};
+\end{circuitikz}
+\end{center}
+
+\subsubsection{1. CE Input Characteristics ($I_B$ vs. $V_{BE}$)}
+Plots base current $I_B$ ($\si{\micro\ampere}$) versus base-emitter voltage $V_{BE}$ ($\si{\volt}$) at fixed values of collector-emitter voltage $V_{CE}$.
+\begin{itemize}
+    \item Resembles a forward-biased diode characteristic with a knee voltage at $V_{BE} \approx \SI{0.7}{\volt}$ for Silicon.
+    \item Increasing $V_{CE}$ slightly shifts the curve to the right due to base-width modulation (Early effect).
+\end{itemize}
+
+\subsubsection{2. CE Output Characteristics ($I_C$ vs. $V_{CE}$)}
+Plots collector current $I_C$ ($\si{\milli\ampere}$) versus collector-emitter voltage $V_{CE}$ ($\si{\volt}$) for constant base current steps $I_B$.
+\begin{itemize}
+    \item \textbf{Cut-off Region ($I_B \le 0$):} Both junctions reverse-biased. $I_C = I_{CEO} \approx 0$. Transistor behaves as an open switch.
+    \item \textbf{Saturation Region ($V_{CE} < V_{CE(sat)} \approx \SI{0.2}{\volt}$):} Both junctions forward-biased. $I_C$ is limited by external collector resistance $R_C$, not by $I_B$. Transistor behaves as a closed switch.
+    \item \textbf{Active Region ($V_{CE} > \SI{0.2}{\volt}$):} $J_E$ forward-biased, $J_C$ reverse-biased. $I_C$ is nearly horizontal and controlled linearly by $I_B$:
+    \begin{equation}
+        I_C = \beta I_B
+    \end{equation}
+\end{itemize}
+
+\subsection{Current Amplification Factors: \texorpdfstring{$\alpha$ and $\beta$}{Alpha and Beta}}
+\begin{itemize}
+    \item \textbf{Common Base Current Gain ($\alpha$):}
+    \begin{equation}
+        \alpha = \frac{I_C}{I_E} \quad (\text{Typical range: } 0.95 \text{ to } 0.998)
+    \end{equation}
+    \item \textbf{Common Emitter Current Gain ($\beta$ or $h_{FE}$):}
+    \begin{equation}
+        \beta = \frac{I_C}{I_B} \quad (\text{Typical range: } 20 \text{ to } 500)
+    \end{equation}
+\end{itemize}
+
+\begin{keyequation}[Mathematical Relationship Between $\alpha$ and $\beta$]
+From $I_E = I_B + I_C$, dividing through by $I_C$:
+\begin{equation}
+    \frac{I_E}{I_C} = \frac{I_B}{I_C} + 1 \implies \frac{1}{\alpha} = \frac{1}{\beta} + 1 = \frac{\beta + 1}{\beta}
+\end{equation}
+Solving for $\beta$ and $\alpha$:
+\begin{equation}
+    \beta = \frac{\alpha}{1 - \alpha} \iff \alpha = \frac{\beta}{1 + \beta}
+\end{equation}
+\end{keyequation}
+
+\begin{example}[BJT CE Bias Point \& Gain Calculation]
+An NPN transistor in CE configuration operates in the active region with a base current $I_B = \SI{40}{\micro\ampere}$ and current gain $\beta = 120$. 
+\begin{enumerate}
+    \item Calculate the collector current $I_C$ and emitter current $I_E$.
+    \item Determine the common-base current gain $\alpha$.
+    \item If $V_{CC} = \SI{12}{\volt}$ and $R_C = \SI{1.8}{\kilo\ohm}$, compute the collector-emitter voltage $V_{CE}$ and confirm whether the transistor operates in the active mode.
+\end{enumerate}
+
+\tcblower
+\textbf{Step 1: Given Data}
+\begin{itemize}
+    \item $I_B = \SI{40}{\micro\ampere} = \SI{0.040}{\milli\ampere}$, $\beta = 120$, $V_{CC} = \SI{12}{\volt}$, $R_C = \SI{1.8}{\kilo\ohm}$
+\end{itemize}
+
+\textbf{Step 2: Calculate $I_C$ and $I_E$}
+\begin{align*}
+    I_C &= \beta I_B = 120 \times \SI{40}{\micro\ampere} = \SI{4800}{\micro\ampere} = \SI{4.8}{\milli\ampere} \\
+    I_E &= I_B + I_C = \SI{0.040}{\milli\ampere} + \SI{4.8}{\milli\ampere} = \SI{4.84}{\milli\ampere}
+\end{align*}
+
+\textbf{Step 3: Calculate $\alpha$}
+\begin{equation*}
+    \alpha = \frac{\beta}{1 + \beta} = \frac{120}{121} \approx 0.9917
+\end{equation*}
+
+\textbf{Step 4: Calculate $V_{CE}$ and Verify Active Mode}
+Applying KVL to the collector-emitter loop:
+\begin{align*}
+    V_{CC} - I_C R_C - V_{CE} &= 0 \\
+    V_{CE} &= V_{CC} - I_C R_C = 12\text{ V} - (4.8\text{ mA} \times 1.8\text{ k}\Omega) = 12 - 8.64 = \SI{3.36}{\volt}
+\end{align*}
+Since $V_{CE} = \SI{3.36}{\volt} > V_{CE(sat)} \approx \SI{0.2}{\volt}$, the collector-base junction remains reverse-biased ($V_{CB} = V_{CE} - V_{BE} = 3.36 - 0.7 = \SI{2.66}{\volt} > 0$), confirming stable **Active Region Operation**.
+
+\textbf{Final Answers:}
+$$\mathbf{I_C = \SI{4.8}{\milli\ampere}, \quad I_E = \SI{4.84}{\milli\ampere}, \quad \alpha = 0.9917, \quad V_{CE} = \SI{3.36}{\volt} \text{ (Active Mode)}}$$
+\end{example}
+
+---
+
+\section{Summary \& Chapter Review}
+\begin{quickrevision}[Unit 1 Essential Review Takeaways]
+\begin{itemize}
+    \item \textbf{Ohm's Law:} $V = IR$; valid for ohmic materials at constant temperature.
+    \item \textbf{Kirchhoff's Current Law (KCL):} $\sum I = 0$ (Conservation of Charge at a node).
+    \item \textbf{Kirchhoff's Voltage Law (KVL):} $\sum V = 0$ (Conservation of Energy in a closed loop).
+    \item \textbf{VDR \& CDR:} $V_1 = V_s \frac{R_1}{R_1+R_2}$ (series); $I_1 = I_s \frac{R_2}{R_1+R_2}$ (parallel).
+    \item \textbf{Semiconductor Gaps:} Insulator ($>5\text{ eV}$), Silicon ($1.12\text{ eV}$), Germanium ($0.72\text{ eV}$), Conductor ($0\text{ eV}$).
+    \item \textbf{Extrinsic Doping:} N-type (Pentavalent: majority electrons, $n \approx N_D$), P-type (Trivalent: majority holes, $p \approx N_A$). Mass action: $n \cdot p = n_i^2$.
+    \item \textbf{PN Diode Knee Voltages:} Silicon $= 0.7\text{ V}$, Germanium $= 0.3\text{ V}$.
+    \item \textbf{Rectification Efficiency:} Half-Wave $\eta_{max} = 40.6\%$, Full-Wave $\eta_{max} = 81.2\%$. Ripple factor: HWR $= 1.21$, FWR $= 0.482$.
+    \item \textbf{BJT Relations:} $I_E = I_B + I_C$, $I_C = \beta I_B$, $\beta = \frac{\alpha}{1-\alpha}$, Active mode requires $J_E$ forward and $J_C$ reverse biased.
+\end{itemize}
+\end{quickrevision}

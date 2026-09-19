@@ -1,0 +1,63 @@
+\chapter{JavaScript Application Development \& Control Flow}
+
+\section{4.1 Introduction to JavaScript}
+JavaScript is a high-level, interpreted programming language used to make web pages dynamic and interactive.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Key Features}: Client-side execution (runs directly in user browser), Dynamic typing (no explicit type declarations), Object-oriented, and Event-driven.
+    \item \textbf{Placing JavaScript}:
+    \begin{itemize}
+        \item In \texttt{<head>}: Loaded before body content, ideal for functions called later.
+        \item In \texttt{<body>}: Runs immediately as browser reads it (e.g. \texttt{document.write()}).
+        \item \textbf{Best Practice}: Place scripts right before closing \texttt{</body>} or use an external \texttt{<script src="script.js"></script>} so HTML elements load first.
+    \end{itemize}
+\end{itemize}
+
+\section{4.2 Variables: var, let, and const}
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X X}
+\toprule
+\textbf{Keyword} & \textbf{Scope} & \textbf{Re-declare} & \textbf{Re-assign} & \textbf{Hoisted} \\
+\midrule
+\texttt{var} & Function-scoped & \checkmark Yes & \checkmark Yes & \checkmark Yes (\texttt{undefined}) \\
+\texttt{let} & Block-scoped \texttt{\{\}} & $\times$ No & \checkmark Yes & $\times$ No (TDZ) \\
+\texttt{const} & Block-scoped \texttt{\{\}} & $\times$ No & $\times$ No & $\times$ No (Must initialize) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{4.3 Operators in JavaScript}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Arithmetic}: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%} (Remainder: \texttt{10 \% 3 = 1}), \texttt{**} (Power: \texttt{2 ** 3 = 8}).
+    \item \textbf{Assignment}: \texttt{=}, \texttt{+=}, \texttt{-=}, \texttt{*=}, \texttt{/=}, \texttt{\%=}.
+    \item \textbf{Comparison}: \texttt{==} (Equal value), \texttt{===} (Equal value \& type), \texttt{!=}, \texttt{!==}, \texttt{>}, \texttt{<}, \texttt{>=}, \texttt{<=}.
+    \item \textbf{Logical}: \texttt{\&\&} (AND), \texttt{||} (OR), \texttt{!} (NOT).
+    \item \textbf{String Concatenation}: \texttt{let full = first + " " + last;}.
+    \item \textbf{Increment/Decrement}: \texttt{num++} (increases by 1), \texttt{num--} (decreases by 1).
+\end{itemize}
+
+\section{4.4 Control Statements \& Loops}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{\texttt{if...else}}: Executes code branch based on truthy/falsy condition.
+    \item \textbf{\texttt{switch}}: Selects block from multiple options. \textbf{Rule}: Requires \texttt{break;} or it falls through.
+    \item \textbf{\texttt{while} Loop}: Checks condition before each iteration.
+    \item \textbf{\texttt{do...while} Loop}: Executes code \textbf{at least once}, then checks condition.
+    \item \textbf{\texttt{for} Loop}: Used when iteration count is known in advance (Initialization; Condition; Increment).
+    \item \textbf{\texttt{break}} (Exits loop immediately) vs. \textbf{\texttt{continue}} (Skips current iteration).
+\end{itemize}
+
+\section{4.5 Popup Dialog Boxes}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{alert("Message")}: Displays simple message, returns \texttt{undefined}.
+    \item \texttt{confirm("Are you sure?")}: Asks confirmation, returns \texttt{true} (OK) or \texttt{false} (Cancel).
+    \item \texttt{prompt("Enter Name:")}: Takes user text input, returns \texttt{string} or \texttt{null}.
+\end{itemize}
+
+\section{4.6 JavaScript Objects}
+An object is a collection of key-value pairs storing data and functions.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Accessing}: Dot notation (\texttt{student.name}) or Bracket notation (\texttt{student["name"]}).
+    \item \textbf{Adding \& Deleting}: \texttt{student.grade = "A";} | \texttt{delete student.course;}.
+    \item \textbf{Methods \& \texttt{this}}: A method is a function stored inside an object. \texttt{this} refers to the current object.
+    \item \textbf{Looping}: Use \texttt{for(let key in car) \{ console.log(key + ": " + car[key]); \}}.
+    \item \textbf{JSON}: \texttt{JSON.stringify(object)} converts object to JSON string.
+\end{itemize}

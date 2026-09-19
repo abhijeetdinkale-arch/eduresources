@@ -1,0 +1,139 @@
+\chapter{Unit 5: Version Control}
+\label{chap:unit5_qb}
+
+\section{Practice Question Set (50 MCQs)}
+
+\mcqitem{1}{What is the primary purpose of a Version Control System (VCS)?}{To compile source code into machine language}{To record changes to files over time so that specific versions can be recalled later}{To design user interfaces for websites}{To speed up CPU clock frequency}
+
+\mcqitem{2}{Who designed and created the Git version control system in 2005?}{Dennis Ritchie}{Linus Torvalds}{James Gosling}{Guido van Rossum}
+
+\mcqitem{3}{What kind of version control architecture is used by Git?}{Centralized only}{Distributed version control system}{Peer-to-peer torrent system}{Single-user manual logging}
+
+\mcqitem{4}{What does "distributed" mean in the context of Git?}{Only the central server stores the history}{Every developer's local repository contains the complete history of the project}{Files are distributed randomly on the internet}{Developers can only commit while connected to the internet}
+
+\mcqitem{5}{What is GitHub?}{The command-line program installed on your laptop}{A cloud-based hosting and collaboration service for Git repositories}{A high-level programming language}{A database management system}
+
+\mcqitem{6}{Which hidden directory is created by Git inside a project folder to store all its tracking metadata and commit history?}{\texttt{.github}}{\texttt{.git}}{\texttt{.version}}{\texttt{.repo}}
+
+\mcqitem{7}{Which command is used to initialize a new local Git repository in the current working directory?}{\texttt{git start}}{\texttt{git init}}{\texttt{git create}}{\texttt{git new}}
+
+\mcqitem{8}{Which Git command checks the current status of the working directory and staging area?}{\texttt{git status}}{\texttt{git check}}{\texttt{git log}}{\texttt{git inspect}}
+
+\mcqitem{9}{In Git's three-stage architecture, what is the intermediate area where changes are prepared before being committed?}{Working Directory}{Staging Area (Index)}{Remote Repository}{Trash Bin}
+
+\mcqitem{10}{Which command is used to add changes from the working directory to the Git staging area?}{\texttt{git commit}}{\texttt{git add <filename>}}{\texttt{git save}}{\texttt{git stage}}
+
+\mcqitem{11}{Which command stages all modified, deleted, and untracked files in the current directory and its subdirectories?}{\texttt{git add .}}{\texttt{git commit -a}}{\texttt{git push --all}}{\texttt{git save .}}
+
+\mcqitem{12}{Which command permanently records the staged snapshot into the local repository history?}{\texttt{git save}}{\texttt{git commit -m "message"}}{\texttt{git push}}{\texttt{git freeze}}
+
+\mcqitem{13}{What does the \texttt{-m} flag stand for in the command \texttt{git commit -m "Initial commit"}?}{Module}{Message}{Modify}{Merge}
+
+\mcqitem{14}{A file that exists in your project folder but has never been added to Git's staging area is considered:}{Committed}{Untracked}{Staged}{Ignored}
+
+\mcqitem{15}{What is the purpose of a \texttt{.gitignore} file?}{To list files and patterns that Git should intentionally ignore and not track}{To delete old commits}{To store user passwords}{To speed up internet downloads}
+
+\mcqitem{16}{Which of the following should typically be included in a \texttt{.gitignore} file?}{Project documentation (\texttt{README.md})}{Source code files (\texttt{main.c})}{Temporary files, build outputs, and environment variables (\texttt{.env}, \texttt{*.log})}{License file}
+
+\mcqitem{17}{Which command removes a file from the staging area while leaving the file safe in your working directory?}{\texttt{git rm -f}}{\texttt{git restore --staged <filename>}}{\texttt{git delete}}{\texttt{git wipe}}
+
+\mcqitem{18}{Which command displays the list of past commits in chronological order from newest to oldest?}{\texttt{git history}}{\texttt{git log}}{\texttt{git show-all}}{\texttt{git list}}
+
+\mcqitem{19}{Which command displays commit history condensed into a single line per commit?}{\texttt{git log --oneline}}{\texttt{git history --short}}{\texttt{git log --brief}}{\texttt{git summary}}
+
+\mcqitem{20}{In Git, what is a branch?}{A completely separate physical hard drive}{A lightweight movable pointer to a specific commit}{A deleted repository}{An untracked image file}
+
+\mcqitem{21}{What is the conventional name for the default initial branch in modern Git repositories?}{\texttt{root}}{\texttt{master} or \texttt{main}}{\texttt{base}}{\texttt{head}}
+
+\mcqitem{22}{Which modern command creates a new branch named \texttt{feature-login} and immediately switches to it?}{\texttt{git branch feature-login}}{\texttt{git switch -c feature-login}}{\texttt{git make feature-login}}{\texttt{git jump feature-login}}
+
+\mcqitem{23}{Which equivalent older command creates and checks out a new branch named \texttt{dev}?}{\texttt{git checkout -b dev}}{\texttt{git switch dev}}{\texttt{git branch -new dev}}{\texttt{git create dev}}
+
+\mcqitem{24}{Which command lists all existing local branches in the current repository?}{\texttt{git branch}}{\texttt{git list --branches}}{\texttt{git status}}{\texttt{git show}}
+
+\mcqitem{25}{In the output of \texttt{git branch}, what does an asterisk (\texttt{*}) next to a branch name indicate?}{The branch is corrupted}{The branch has been deleted}{It is the currently active/checked-out branch}{The branch has uncommitted errors}
+
+\mcqitem{26}{Which command is used to set your global user name in Git configuration?}{\texttt{git config --global user.name "Your Name"}}{\texttt{git set name "Your Name"}}{\texttt{git user.name = "Your Name"}}{\texttt{git init --name "Your Name"}}
+
+\mcqitem{27}{Which command sets your global commit email address in Git?}{\texttt{git email "your@email.com"}}{\texttt{git config --global user.email "your@email.com"}}{\texttt{git config set email "your@email.com"}}{\texttt{git register --email}}
+
+\mcqitem{28}{What does the \texttt{--global} flag do when configuring Git?}{Applies the configuration setting to all repositories for the current OS user}{Uploads settings to GitHub public profile}{Makes the repository readable by everyone}{Deletes local configuration}
+
+\mcqitem{29}{Which command verifies that Git is installed on your computer and shows its version?}{\texttt{git --version}}{\texttt{git check}}{\texttt{git status}}{\texttt{git info}}
+
+\mcqitem{30}{What is the default short name given to the primary remote repository when cloned or linked?}{\texttt{server}}{\texttt{origin}}{\texttt{remote1}}{\texttt{master}}
+
+\mcqitem{31}{Which command uploads committed local branch changes to a remote repository on GitHub?}{\texttt{git pull}}{\texttt{git push}}{\texttt{git fetch}}{\texttt{git commit}}
+
+\mcqitem{32}{What does the \texttt{-u} flag in \texttt{git push -u origin main} accomplish?}{Unzips the files}{Sets the upstream tracking reference between local and remote branches}{Undoes previous commits}{Updates Git software}
+
+\mcqitem{33}{Which command downloads changes from a remote repository and immediately merges them into the current branch?}{\texttt{git fetch}}{\texttt{git pull}}{\texttt{git push}}{\texttt{git clone}}
+
+\mcqitem{34}{Which command downloads remote repository history without automatically merging it into your working branch?}{\texttt{git fetch}}{\texttt{git pull}}{\texttt{git push}}{\texttt{git commit}}
+
+\mcqitem{35}{Which command creates an identical local copy of an existing remote repository from GitHub?}{\texttt{git copy URL}}{\texttt{git clone URL}}{\texttt{git download URL}}{\texttt{git import URL}}
+
+\mcqitem{36}{Saving a file inside a code editor (e.g., Ctrl+S in VS Code):}{Automatically creates a Git commit}{Stages the file in Git}{Only saves changes to the local disk working directory without modifying Git history}{Pushes the code to GitHub}
+
+\mcqitem{37}{Does creating a commit locally automatically upload it to GitHub?}{Yes, always immediately}{No, commits remain local until explicitly pushed with \texttt{git push}}{Only if the file is smaller than 1 MB}{Only on Windows}
+
+\mcqitem{38}{What is a unique 40-character hexadecimal string used by Git to identify a specific commit called?}{A commit hash / SHA-1 checksum}{A PIN number}{A file extension}{A branch label}
+
+\mcqitem{39}{On GitHub, what feature allows developers to propose changes from their branch and request code review before merging?}{Issue tracker}{Pull Request (PR)}{Git bash}{Fork bomb}
+
+\mcqitem{40}{What is a GitHub repository that can only be viewed and accessed by authorized collaborators called?}{Public repository}{Private repository}{Open-source repository}{Forked repository}
+
+\mcqitem{41}{Which of the following is considered a best practice for writing Git commit messages?}{Writing single vague words like \texttt{"updates"} or \texttt{"stuff"}}{Writing clear, descriptive messages in the imperative mood (e.g., \texttt{"Fix login button alignment"})}{Leaving the message empty}{Typing random numbers}
+
+\mcqitem{42}{What does \texttt{git status} report when all working files have been staged and committed?}{"Fatal error"}{"Nothing to commit, working tree clean"}{"Staging overflow"}{"Remote disconnected"}
+
+\mcqitem{43}{What happens if you edit a file after adding it to the staging area with \texttt{git add}?}{Git automatically updates the staging area}{The new modifications remain unstaged until you run \texttt{git add} again}{Git crashes}{The file gets locked}
+
+\mcqitem{44}{What is the primary function of the \texttt{README.md} file in a GitHub repository?}{To store encrypted passwords}{To provide an introduction, overview, and documentation for the project in Markdown format}{To compile C++ code}{To hold binary images}
+
+\mcqitem{45}{Can Git be used to track changes locally on your computer without any internet connection?}{No, Git always requires an active internet connection}{Yes, all core Git operations (init, status, add, commit, log, branch) work fully offline}{Only for Python files}{Only on Linux}
+
+\mcqitem{46}{Which command displays all configured Git settings and their configuration file origins?}{\texttt{git config --list --show-origin}}{\texttt{git check --all}}{\texttt{git show settings}}{\texttt{git inspect}}
+
+\mcqitem{47}{On GitHub, what secure authentication method has largely replaced standard account passwords for command-line Git operations?}{SMS text codes only}{Personal Access Tokens (PAT) and SSH keys}{Unencrypted plain text}{Motherboard serial numbers}
+
+\mcqitem{48}{What happens if you delete the hidden \texttt{.git} folder from a project directory?}{All your project source files are permanently deleted}{Git tracking history is removed, turning the folder into a regular unversioned directory}{The computer operating system crashes}{GitHub repository is automatically deleted}
+
+\mcqitem{49}{What is the purpose of Git branches during team software development?}{To prevent multiple developers from working on the project}{To allow team members to work on separate features in isolation without disrupting the main codebase}{To duplicate the entire hard disk}{To compile code in the background}
+
+\mcqitem{50}{In a branch name such as \texttt{feature/navbar-styling}, the forward slash (\texttt{/}):}{Creates an actual physical subdirectory inside Windows}{Is merely an organizational naming convention to categorize the branch}{Deletes the branch}{Disconnects the remote}
+
+\newpage
+\section{Answer Key \& Explanations --- Unit 5}
+
+\begin{answerkeytable}{Unit 5: Version Control --- Answer Key}
+\begin{tabular}{*{10}{c}}
+\toprule
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\midrule
+1 & \textbf{B} & 11 & \textbf{A} & 21 & \textbf{B} & 31 & \textbf{B} & 41 & \textbf{B} \\
+2 & \textbf{B} & 12 & \textbf{B} & 22 & \textbf{B} & 32 & \textbf{B} & 42 & \textbf{B} \\
+3 & \textbf{B} & 13 & \textbf{B} & 23 & \textbf{A} & 33 & \textbf{B} & 43 & \textbf{B} \\
+4 & \textbf{B} & 14 & \textbf{B} & 24 & \textbf{A} & 34 & \textbf{A} & 44 & \textbf{B} \\
+5 & \textbf{B} & 15 & \textbf{A} & 25 & \textbf{C} & 35 & \textbf{B} & 45 & \textbf{B} \\
+6 & \textbf{B} & 16 & \textbf{C} & 26 & \textbf{A} & 36 & \textbf{C} & 46 & \textbf{A} \\
+7 & \textbf{B} & 17 & \textbf{B} & 27 & \textbf{B} & 37 & \textbf{B} & 47 & \textbf{B} \\
+8 & \textbf{A} & 18 & \textbf{B} & 28 & \textbf{A} & 38 & \textbf{A} & 48 & \textbf{B} \\
+9 & \textbf{B} & 19 & \textbf{A} & 29 & \textbf{A} & 39 & \textbf{B} & 49 & \textbf{B} \\
+10 & \textbf{B} & 20 & \textbf{B} & 30 & \textbf{B} & 40 & \textbf{B} & 50 & \textbf{B} \\
+\bottomrule
+\end{tabular}
+\end{answerkeytable}
+
+\begin{expbox}[Selected Question Explanations]
+\begin{itemize}[leftmargin=5mm]
+    \item \textbf{Q.3 (B):} Git is a distributed VCS; every cloned local repository holds the entire commit history, allowing full offline operation.
+    \item \textbf{Q.9 (B):} The staging area (or index) serves as a preview buffer where developers select exactly what changes to include in the next commit.
+    \item \textbf{Q.15 (A):} The \texttt{.gitignore} text file specifies wildcards and directory patterns (like logs or build artifacts) that Git should deliberately omit from tracking.
+    \item \textbf{Q.20 (B):} A Git branch is simply a lightweight, movable pointer to a commit, facilitating parallel feature development.
+    \item \textbf{Q.36 (C):} Saving a file in an editor only updates the working directory on disk. It must be explicitly staged (\texttt{git add}) and committed (\texttt{git commit}) to enter Git history.
+    \item \textbf{Q.37 (B):} \texttt{git commit} only saves changes locally; \texttt{git push} is required to transfer those commits to a remote hosting platform like GitHub.
+\end{itemize}
+\end{expbox}
+
+\newpage

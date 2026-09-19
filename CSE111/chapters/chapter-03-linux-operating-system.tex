@@ -1,0 +1,598 @@
+\chapter{Linux Operating System}
+\label{chap:linux-operating-system}
+
+% ==============================================================================
+% SECTION 3.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+The Linux operating system is the cornerstone of modern internet infrastructure, cloud computing, enterprise servers, supercomputing, and embedded engineering. Built upon Unix architectural foundations and open-source collaboration, Linux provides developers with a transparent, powerful, and secure computing environment. Mastering Linux navigation, shell commands, octal permissions, virtualization platforms, and file system mechanics is an indispensable competency for every software engineer.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze the Linux Architecture}, describing the interaction between hardware, the monolithic Linux kernel, the Bash shell interpreter, and user utilities.
+    \item \textbf{Differentiate Major Linux Distributions (Distros)}, matching Ubuntu, Debian, Fedora, RHEL, CentOS, Kali Linux, and Linux Mint to specific enterprise and personal use cases.
+    \item \textbf{Master the Linux Shell Command Suite}, executing directory navigation (\texttt{pwd}, \texttt{cd}, \texttt{ls}), file operations (\texttt{mkdir}, \texttt{rmdir}, \texttt{touch}, \texttt{cp}, \texttt{mv}, \texttt{rm}), content inspection (\texttt{cat}, \texttt{more}, \texttt{less}, \texttt{head}, \texttt{tail}), and process management (\texttt{ps}, \texttt{kill}, \texttt{man}).
+    \item \textbf{Calculate and Apply Linux Permissions (\texttt{chmod})}, converting fluently between symbolic strings (\texttt{rwxr-xr-x}) and numeric octal masks (\texttt{755}, \texttt{644}, \texttt{700}).
+    \item \textbf{Conduct a Systems Comparison between Windows and Linux}, evaluating file hierarchies, security models, case sensitivity, and package management.
+    \item \textbf{Deploy Virtual Machines (VMs)}, contrasting Type-1 and Type-2 hypervisors (VirtualBox, VMware, Hyper-V) and explaining VM snapshots.
+    \item \textbf{Evaluate Storage File Systems}, examining FAT32 (4GB limit), NTFS (MFT, Journaling, ACLs), HFS+, UDF, and the Linux \texttt{ext} family (\texttt{ext2}, \texttt{ext3}, \texttt{ext4}), alongside MBR and GPT partitioning schemes.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 3.2: LINUX OVERVIEW \& ARCHITECTURE
+% ==============================================================================
+\section{Linux Operating System: Overview, History \& Architecture}
+
+\subsection{What is Linux?}
+
+\textbf{Linux} is a free, open-source, Unix-like operating system kernel created by Finnish computer science student \textbf{Linus Torvalds} in \textbf{1991}. Frustrated by the licensing restrictions and limitations of Minix (an educational microkernel OS), Torvalds developed a monolithic Unix-compatible kernel for Intel 80386 personal computers and released its source code to the global developer community under the \textbf{GNU General Public License (GPL)}.
+
+\begin{definition}[Linux Operating System]
+A free, open-source, multi-user, multi-tasking operating system based on Unix principles, where the core monolithic kernel coordinates hardware access and user-space utilities provide the shell and application interface.
+\end{definition}
+
+\subsection{Architectural Hierarchy of Linux}
+
+The Linux architecture is organized into four clean, concentric functional layers (Figure~\ref{fig:linux-architecture-layers}):
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    layer/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=11.5cm, minimum height=0.85cm, align=center, font=\sffamily\bfseries\small},
+    arrow/.style={{Stealth[scale=1.0]}-{Stealth[scale=1.0]}, thick, draw=brandblue}
+]
+    \node[layer, fill=boxpurplebg, draw=boxpurpleborder] (app) at (0, 3.3) {User Applications \& Compilers (Browsers, GCC, Text Editors, Servers)};
+    \node[layer, fill=boxskybg, draw=boxskyborder] (shell) at (0, 2.2) {Shell / Command-Line Interpreter (Bash, Zsh, Sh) \& GUI (X11 / Wayland)};
+    \node[layer, fill=boxamberbg, draw=brandgold] (kernel) at (0, 1.1) {Linux Kernel (Process Scheduler, VFS, Memory Manager, Device Drivers)};
+    \node[layer, fill=boxnavybg, draw=brandnavy] (hw) at (0, 0.0) {Hardware Layer (CPU, RAM, Disks, Network Interfaces, PCIe Buses)};
+
+    \draw[arrow] (app) -- (shell);
+    \draw[arrow] (shell) -- (kernel);
+    \draw[arrow] (kernel) -- (hw);
+\end{tikzpicture}
+\caption{The Four Structural Layers of the Linux Operating System.}
+\label{fig:linux-architecture-layers}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Hardware Layer}: The physical electronic circuitry: CPU, primary RAM, storage drives, network interface cards (NIC), and peripherals.
+    \item \textbf{Kernel Layer}: The heart of Linux. It executes in privileged Mode (Ring 0) and directly controls hardware resources, process scheduling, memory allocation, and virtual file systems.
+    \item \textbf{Shell Layer}: A Command-Line Interface (CLI) program that reads user-entered textual commands, parses flags and arguments, and executes appropriate kernel system calls (\texttt{fork}, \texttt{execve}).
+    \item \textbf{Utilities / Applications}: User-space software tools, development packages (GNU Coreutils, GCC, Git), and desktop environments.
+\end{enumerate}
+
+\begin{keyequation}[The Core Unix Philosophy in Linux]
+"Everything is a file." In Linux, physical hard drives (\texttt{/dev/sda}), terminal screens (\texttt{/dev/tty}), and system memory stats (\texttt{/proc/meminfo}) are represented as uniform file abstractions within the hierarchical directory tree.
+\end{keyequation}
+
+% ==============================================================================
+% SECTION 3.3: KEY FEATURES OF LINUX
+% ==============================================================================
+\section{Key Features of the Linux Operating System}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Open Source}: The full source code of the Linux kernel is completely public and free to inspect, modify, and redistribute under the GNU General Public License (GPL).
+    \item \textbf{Multi-User Capability}: Multiple independent users can log into the system simultaneously (via SSH or terminal sessions) without resource contention or unauthorized access to each other's files.
+    \item \textbf{Multi-Tasking}: The kernel scheduler rapidly alternates between hundreds of processes, enabling multiple applications to execute concurrently.
+    \item \textbf{Robust Security \& Privilege Isolation}: Employs strict user-group-other (\texttt{ugo}) file permission matrices, mandatory access control, and isolation between the root superuser and unprivileged standard accounts.
+    \item \textbf{Portability}: The Linux kernel compiles and executes across a vast range of hardware processor architectures (x86, x86-64, ARM, RISC-V, MIPS, PowerPC), powering everything from smart home sensors and Android smartphones to 100\% of the world's Top 500 supercomputers.
+    \item \textbf{Stability and Reliability}: Linux systems are engineered for uninterrupted operation, capable of running continuously for years without requiring a reboot.
+    \item \textbf{Unified Hierarchical File System (FHS)}: All storage volumes, partitions, and devices are organized in a single inverted directory tree starting at the root directory (\texttt{/}).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 3.4: LINUX DISTRIBUTIONS (DISTROS)
+% ==============================================================================
+\section{Linux Distributions (Distros)}
+
+Because the Linux kernel is modular and open-source, different technology vendors and community foundations combine the kernel with GNU utilities, package managers, and desktop shells to create customized \textbf{Distributions (Distros)}:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    distro/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=5.5cm, minimum height=1.3cm, align=center, font=\sffamily\small}
+]
+    \node[distro, fill=boxskybg, draw=boxskyborder] at (0, 3.2) {\textbf{Ubuntu}\\{\scriptsize User-friendly, Debian-based, cloud standard}};
+    \node[distro, fill=boxgoldbg, draw=brandgold] at (6.2, 3.2) {\textbf{Debian}\\{\scriptsize Renowned for rock-solid stability \& server reliability}};
+
+    \node[distro, fill=boxrosebg, draw=brandaccent] at (0, 1.6) {\textbf{RHEL (Red Hat)}\\{\scriptsize Commercial enterprise server distribution}};
+    \node[distro, fill=boxamberbg, draw=boxamberborder] at (6.2, 1.6) {\textbf{Fedora}\\{\scriptsize Upstream innovation testbed sponsored by Red Hat}};
+
+    \node[distro, fill=boxpurplebg, draw=boxpurpleborder] at (0, 0.0) {\textbf{Kali Linux}\\{\scriptsize Dedicated cybersecurity \& penetration testing suite}};
+    \node[distro, fill=boxgreenbg, draw=boxgreenborder] at (6.2, 0.0) {\textbf{Linux Mint}\\{\scriptsize Windows-like GUI (Cinnamon) for desktop migrants}};
+\end{tikzpicture}
+\caption{Popular Linux Distributions and Their Primary Domain Specializations.}
+\label{fig:linux-distributions}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Ubuntu}: The most widely used Linux distribution for desktop PCs, artificial intelligence development, and cloud virtual machines. Based on Debian, backed by Canonical, and utilizes the \texttt{apt} package manager.
+    \item \textbf{Debian}: A community-maintained distribution renowned for extreme stability, strict free-software principles, and robust packaging. It serves as the upstream foundation for Ubuntu and Kali Linux.
+    \item \textbf{Fedora}: A cutting-edge distribution sponsored by Red Hat that incorporates the latest upstream Linux features, Linux kernel releases, and GNOME technologies.
+    \item \textbf{Red Hat Enterprise Linux (RHEL)}: A paid, commercial enterprise operating system offering long-term stability, certifications, and support for mission-critical corporate infrastructure.
+    \item \textbf{CentOS (Stream)}: A free, community-driven downstream/midstream distribution binary-compatible with RHEL, widely utilized for web hosting servers.
+    \item \textbf{Kali Linux}: A Debian-based distribution pre-loaded with over 600 digital forensics, reverse engineering, and penetration testing security tools (Metasploit, Nmap, Wireshark).
+    \item \textbf{Linux Mint}: A user-centric distribution featuring the Cinnamon desktop environment, designed specifically to offer a familiar desktop metaphor for users transitioning from Microsoft Windows.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.5: SHELL COMMANDS MASTER SUITE
+% ==============================================================================
+\section{The Linux Shell and Essential Command Suite}
+
+The \textbf{Shell} is the command-line interpreter that translates user keyboard commands into system calls. The standard shell across most Linux systems is \textbf{Bash (Bourne Again Shell)}.
+
+\subsection{Master Linux Command Reference Table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{l>{\ttfamily}p{2.8cm}>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Functional Category} & \textbf{Command \& Syntax} & \textbf{Technical Description \& Practical Usage} \\
+\midrule
+\textbf{Directory Navigation} & pwd & \textbf{Print Working Directory}: Prints the full absolute path of the current working directory. \\
+\textbf{Directory Listing} & ls -la & \textbf{List Directory}: Lists files in directory (\texttt{-l} long format with permissions/size, \texttt{-a} includes hidden files starting with \texttt{.}). \\
+\textbf{Directory Changing} & cd /path/to/dir & \textbf{Change Directory}: Navigates to target directory (\texttt{cd ..} moves to parent directory, \texttt{cd ~} moves to user home). \\
+\textbf{Directory Creation} & mkdir -p a/b/c & \textbf{Make Directory}: Creates a new directory (\texttt{-p} creates intermediate parent directories automatically). \\
+\textbf{Directory Deletion} & rmdir empty\_dir & \textbf{Remove Directory}: Deletes directory \textbf{only if it is completely empty}; fails on non-empty directories. \\
+\textbf{File Creation/Touch} & touch file.txt & Creates an empty file if it doesn't exist, or updates access and modification timestamps if it does. \\
+\textbf{File Copying} & cp -r src/ dest/ & \textbf{Copy}: Copies files from source to destination (\texttt{-r} flag enables recursive directory copying). \\
+\textbf{File Moving/Renaming} & mv old.txt new.txt & \textbf{Move}: Moves files between directory paths or renames files in place. \\
+\textbf{File Deletion} & rm -rf target/ & \textbf{Remove}: Deletes files (\texttt{-r} recursively deletes directories and contents, \texttt{-f} forces deletion without prompting). \\
+\textbf{Full Content Viewing} & cat file.txt & \textbf{Concatenate}: Dumps the entire textual contents of a file sequentially to stdout. \\
+\textbf{Paged Content Viewing} & less document.txt & Opens interactive pager to view files one page at a time (supports bidirectional scrolling and search). \\
+\textbf{Head Inspection} & head -n 10 file.txt & Outputs the first $N$ lines (default 10) of the specified file. \\
+\textbf{Tail Inspection} & tail -n 20 file.txt & Outputs the last $N$ lines (default 10) of the specified file (\texttt{tail -f} monitors live appends). \\
+\textbf{Process Status} & ps aux & \textbf{Process Status}: Generates a snapshot of all currently running processes across all users with PIDs and CPU/RAM usage. \\
+\textbf{Process Termination} & kill -9 <PID> & Sends termination signals to a process by Process ID (PID) (\texttt{-9} sends uncatchable \texttt{SIGKILL}). \\
+\textbf{Manual Pages} & man <command> & Displays the full official Unix manual page, flags, and documentation for a command. \\
+\textbf{Screen Clearing} & clear & Clears the terminal display buffer. \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Linux Shell Commands Reference Guide.}
+\label{tab:linux-commands-master}
+\end{table}
+
+% ==============================================================================
+% SECTION 3.6: LINUX FILE PERMISSIONS \& CHMOD
+% ==============================================================================
+\section{Linux File Permissions and \texttt{chmod} Mechanics}
+
+Linux enforces a multi-tier security model on every filesystem entry (file, directory, device).
+
+\subsection{The Permission Triplets (\texttt{ugo} Model)}
+
+When executing \texttt{ls -l}, permissions appear as a 10-character string (e.g., \texttt{-rwxr-xr--}):
+\begin{itemize}
+    \item \textbf{Character 1 (File Type)}: \texttt{-} denotes a regular file; \texttt{d} denotes a directory; \texttt{l} denotes a symbolic link.
+    \item \textbf{Characters 2--4 (User / Owner, \texttt{u})}: Permissions for the user who owns the file.
+    \item \textbf{Characters 5--7 (Group, \texttt{g})}: Permissions for members of the group owning the file.
+    \item \textbf{Characters 8--10 (Others, \texttt{o})}: Permissions for all other system accounts.
+\end{itemize}
+
+\subsection{Octal Numeric Weights}
+Each permission character has a standardized binary/octal numeric weight:
+\begin{itemize}
+    \item $\mathbf{r}$ (Read) $= \mathbf{4}$ ($2^2$, binary \texttt{100}): Allows reading file contents or listing directory files.
+    \item $\mathbf{w}$ (Write) $= \mathbf{2}$ ($2^1$, binary \texttt{010}): Allows modifying/truncating file contents or creating/deleting files in directory.
+    \item $\mathbf{x}$ (Execute) $= \mathbf{1}$ ($2^0$, binary \texttt{001}): Allows executing binary program/script or traversing into directory (\texttt{cd}).
+    \item \textbf{$-$} (No Permission) $= \mathbf{0}$.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    perm/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=3.4cm, minimum height=1.6cm, align=center, font=\sffamily\small}
+]
+    \node[perm, fill=boxgoldbg, draw=brandgold] (u) at (0, 0) {\textbf{Owner (User: \texttt{u})}\\\texttt{r w x}\\$4 + 2 + 1 = \mathbf{7}$};
+    \node[perm, fill=boxskybg, draw=boxskyborder] (g) at (4.2, 0) {\textbf{Group (\texttt{g})}\\\texttt{r - x}\\$4 + 0 + 1 = \mathbf{5}$};
+    \node[perm, fill=boxamberbg, draw=boxamberborder] (o) at (8.4, 0) {\textbf{Others (\texttt{o})}\\\texttt{r - x}\\$4 + 0 + 1 = \mathbf{5}$};
+    
+    \node[anchor=north, font=\sffamily\bfseries\color{brandnavy}] at (4.2, -1.2) {Resulting Octal Permission Mask: \texttt{chmod 755 filename}};
+\end{tikzpicture}
+\caption{Octal Permission Calculation for \texttt{rwxr-xr-x} ($755$).}
+\label{fig:chmod-octal-calculation}
+\end{figure}
+
+\subsection{Common Octal Permission Combinations}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{\texttt{755} (\texttt{rwxr-xr-x})}: Owner has full read/write/execute ($7$); Group and Others can read and execute ($5$). Standard for public executables and web server scripts.
+    \item \textbf{\texttt{644} (\texttt{rw-r--r--})}: Owner can read and write ($6$); Group and Others can only read ($4$). Standard default permission for regular text documents and data files.
+    \item \textbf{\texttt{700} (\texttt{rwx------})}: Owner has full access ($7$); Group and Others have zero access ($0$). Utilized for private SSH keys (\texttt{id\_rsa}) and sensitive directories.
+    \item \textbf{\texttt{777} (\texttt{rwxrwxrwx})}: Complete read, write, and execute permissions granted to everyone on the system. \textbf{Severe security hazard; prohibited in production}.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.7: WINDOWS VS LINUX COMPARISON
+% ==============================================================================
+\section{Technical Comparative Synthesis: Linux vs. Microsoft Windows}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Technical Metric} & \textbf{Linux Operating System} & \textbf{Microsoft Windows} \\
+\midrule
+\textbf{Licensing \& Cost} & Free and Open Source (GNU GPL); zero license fees. & Commercial proprietary software; per-device license fees. \\
+\textbf{Source Code Access} & 100\% open; source code can be audited and customized. & Closed source; proprietary intellectual property of Microsoft. \\
+\textbf{File System Hierarchy} & Single unified inverted tree rooted at \texttt{/}; no drive letters. & Multi-rooted hierarchy partitioned into drive letters (\texttt{C:}, \texttt{D:}). \\
+\textbf{Security Architecture} & Multi-user isolation; root password required for system modifications; low vulnerability. & Prone to malware and viruses; requires active antivirus software (Defender). \\
+\textbf{Case Sensitivity} & \textbf{Strictly case-sensitive} (\texttt{File.txt}, \texttt{file.txt}, and \texttt{FILE.TXT} are 3 distinct files). & \textbf{Case-insensitive but preserving} (\texttt{File.txt} and \texttt{file.txt} refer to the same file). \\
+\textbf{Software Updates} & Centralized package managers (\texttt{apt}, \texttt{dnf}) update OS and all apps simultaneously. & Windows Update handles OS; applications manage updates independently. \\
+\textbf{Interface Paradigm} & Command-Line Interface (CLI) first; headless server standard; modular GUI. & Graphical User Interface (GUI) first; command shell secondary. \\
+\textbf{Kernel Architecture} & Monolithic Kernel. & Hybrid Kernel (Microkernel core + executive services). \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison between Linux and Microsoft Windows Operating Systems.}
+\label{tab:windows-vs-linux}
+\end{table}
+
+% ==============================================================================
+% SECTION 3.8: VIRTUAL MACHINES \& HYPERVISORS
+% ==============================================================================
+\section{Virtualization: Virtual Machines \& Hypervisors}
+
+\subsection{What is a Virtual Machine?}
+
+\begin{definition}[Virtual Machine (VM)]
+A software-based emulation of a physical computer system that executes an isolated guest operating system on top of host hardware using virtualized CPU, memory, storage, and network resources.
+\end{definition}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Host OS}: The native operating system installed directly on the physical computer hardware (e.g., Windows 11 running on a physical laptop).
+    \item \textbf{Guest OS}: The virtualized operating system running inside the isolated VM environment (e.g., Ubuntu running inside VirtualBox).
+    \item \textbf{Hypervisor (Virtual Machine Monitor, VMM)}: The software or firmware layer that creates, manages, and executes virtual machines by virtualizing hardware CPU registers and memory page tables.
+\end{itemize}
+
+\subsection{Hypervisor Classifications}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Type-1 Hypervisor (Bare-Metal)}:
+    Executes directly on the physical server hardware with no underlying host operating system. Provides maximum performance and minimal virtualization latency. Examples: \textbf{VMware ESXi, Microsoft Hyper-V (Server Mode), KVM, Xen}.
+    \item \textbf{Type-2 Hypervisor (Hosted)}:
+    Executes as a standard application on top of an existing host operating system. Ideal for students, developers, and software testing. Examples: \textbf{Oracle VirtualBox, VMware Workstation Player}.
+\end{enumerate}
+
+\subsection{VM Management \& Snapshots}
+\begin{itemize}
+    \item \textbf{Setup Workflow}: Download OS ISO image $\rightarrow$ Create new VM container in Hypervisor $\rightarrow$ Allocate RAM (e.g., 4GB) and CPU cores $\rightarrow$ Create Virtual Hard Disk (e.g., 25GB VDI/VMDK) $\rightarrow$ Mount ISO in virtual optical drive $\rightarrow$ Boot and install OS.
+    \item \textbf{Snapshots}: A hypervisor management feature that freezes and saves the complete runtime state, memory registers, and differential disk blocks of a VM at an exact instant. If a student breaks the OS during configuration experiments, the VM can be instantly restored to the snapshot point in seconds.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.9: FILE SYSTEMS \& PARTITIONING
+% ==============================================================================
+\section{Storage File Systems and Partitioning Schemes}
+
+A \textbf{File System} is the on-disk data structure used by an operating system to index, allocate, and retrieve files from physical storage blocks.
+
+\subsection{Major File System Standards}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{FAT (File Allocation Table)}:
+    \begin{itemize}
+        \item Developed by Microsoft for MS-DOS; versions include FAT12, FAT16, and \textbf{FAT32}.
+        \item \textbf{Critical Limitation}: FAT32 has a hard \textbf{maximum individual file size limit of $4\,\text{GB}$} ($4{,}294{,}967{,}295\text{ bytes}$) and a maximum partition volume limit of $32\,\text{GB}$ in Windows formatting tools. Lacks access permissions and journaling.
+        \item \textbf{Advantage}: Universal cross-platform compatibility across Windows, Mac, Linux, Android, and gaming consoles.
+    \end{itemize}
+
+    \item \textbf{NTFS (New Technology File System)}:
+    \begin{itemize}
+        \item The proprietary default file system for modern Microsoft Windows (Windows 10, 11, Windows Server).
+        \item \textbf{Features}: Supports files up to $16\,\text{EB}$, \textbf{Master File Table (MFT)} central indexing, \textbf{Journaling} (maintains a circular log of metadata changes to recover from sudden power loss without filesystem corruption), Access Control List (ACL) security permissions, transparent file compression, and encryption (EFS).
+    \end{itemize}
+
+    \item \textbf{HFS / HFS+ (Hierarchical File System Plus)}:
+    \begin{itemize}
+        \item Apple proprietary file system utilized across macOS before the release of APFS (Apple File System).
+    \end{itemize}
+
+    \item \textbf{UDF (Universal Disk Format)}:
+    \begin{itemize}
+        \item Open, vendor-neutral optical file system standard (ISO/IEC 13346) optimized for \textbf{DVDs, Blu-ray discs}, and high-compatibility flash media.
+    \end{itemize}
+
+    \item \textbf{Extended File System (\texttt{ext}) Family (Linux Standard)}:
+    \begin{itemize}
+        \item \texttt{ext2}: Non-journaled Linux filesystem; low overhead, but susceptible to long recovery checks (\texttt{fsck}) after power loss.
+        \item \texttt{ext3}: Added transaction \textbf{Journaling} to \texttt{ext2}, preventing filesystem corruption during crashes.
+        \item \texttt{ext4}: The modern default Linux filesystem. Supports volumes up to $1\,\text{EB}$ and files up to $16\,\text{TB}$. Features \textbf{Extent Allocation} (contiguous physical block tracking reducing fragmentation) and \textbf{Delayed Allocation} (optimizing write buffer performance).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Storage Partitioning Schemes: MBR vs. GPT}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{MBR (Master Boot Record)}: Legacy partitioning standard (introduced in 1983). Limited to a \textbf{maximum disk size of $2\,\text{TB}$} and a maximum of \textbf{4 primary partitions}.
+    \item \textbf{GPT (GUID Partition Table)}: Modern partitioning standard associated with UEFI firmware. Supports disks up to \textbf{$9.4\,\text{ZB}$} ($9.4 \times 10^9\,\text{TB}$) and up to \textbf{128 primary partitions} with backup redundancy tables and CRC32 checksums.
+    \item \textbf{GFS (Google File System)}: A proprietary distributed file system developed by Google designed to provide fault-tolerant data storage across massive clusters of commodity servers.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 3.10: WORKED EXAMPLES
+% ==============================================================================
+\section{Worked Technical \& Practical Examples}
+
+\begin{example}[Linux Permission Octal Calculation]
+A system administrator creates a shell script named \texttt{backup.sh}. The required access policies are:
+\begin{itemize}
+    \item The \textbf{Owner} must have full read, write, and execute permissions.
+    \item The \textbf{Group} must be able to read and execute the script, but not modify it.
+    \item \textbf{Others} must have zero permissions.
+\end{itemize}
+Determine the symbolic permission string, calculate the octal permission value, and write the exact terminal command.
+
+\begin{solutionbox}[Step-by-Step Permission Solution]
+\begin{enumerate}
+    \item \textbf{Symbolic String Formation}:
+    \begin{itemize}
+        \item Owner: \texttt{rwx}
+        \item Group: \texttt{r-x}
+        \item Others: \texttt{---}
+        \item Combined String: \texttt{-rwxr-x---}
+    \end{itemize}
+    \item \textbf{Octal Value Calculation}:
+    \begin{align*}
+        \text{Owner (u)} \&= 4 (\text{read}) + 2 (\text{write}) + 1 (\text{execute}) = \mathbf{7} \\
+        \text{Group (g)} \&= 4 (\text{read}) + 0 (\text{no write}) + 1 (\text{execute}) = \mathbf{5} \\
+        \text{Others (o)} \&= 0 + 0 + 0 = \mathbf{0}
+    \end{align*}
+    Combined Octal Mask $= \mathbf{750}$.
+    \item \textbf{Terminal Command}:
+    \begin{lstlisting}[language=bash]
+chmod 750 backup.sh
+    \end{lstlisting}
+\end{enumerate}
+\end{solutionbox}
+\end{example}
+
+\begin{example}[FAT32 File Transfer Limitation]
+A student attempts to copy a $5.2\,\text{GB}$ ISO file onto an empty $64\,\text{GB}$ USB flash drive formatted with the \textbf{FAT32} file system. The transfer fails immediately with an error message stating "File too large for destination volume." Explain why this error occurs and provide the technical solution.
+
+\begin{solutionbox}[Technical Diagnosis \& Solution]
+\begin{enumerate}
+    \item \textbf{Diagnosis}: Although the USB drive has $64\,\text{GB}$ of free capacity, the FAT32 file system uses a 32-bit field for file length, creating a hard \textbf{maximum individual file size limit of $4\,\text{GB}$} ($4{,}294{,}967{,}295\text{ bytes}$). Because the ISO is $5.2\,\text{GB}$, FAT32 cannot index the file.
+    \item \textbf{Solution}: Reformat the USB drive with a modern file system that supports large file sizes:
+    \begin{itemize}
+        \item \textbf{NTFS} or \textbf{exFAT} (for Windows/Mac cross-compatibility).
+        \item \textbf{ext4} (if utilized strictly on Linux systems).
+    \end{itemize}
+\end{enumerate}
+\end{solutionbox}
+\end{example}
+
+% ==============================================================================
+% SECTION 3.11: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Exam Points]
+\begin{itemize}
+    \item \textbf{chmod Numeric Weights}: Remember: $\text{Read} = 4$, $\text{Write} = 2$, $\text{Execute} = 1$. Practice common masks: \texttt{777} (all), \texttt{755} (executables), \texttt{644} (documents), \texttt{700} (private).
+    \item \textbf{Linux Case Sensitivity}: Emphasize that Linux is strictly \textbf{case-sensitive} in filenames and commands. \texttt{LS} or \texttt{Cd} will fail with "command not found".
+    \item \textbf{Type-1 vs. Type-2 Hypervisors}: Type-1 runs directly on hardware (bare-metal, ESXi); Type-2 runs on top of a host OS (VirtualBox).
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Concept Confusions]
+\begin{itemize}
+    \item \textbf{Confusing \texttt{rmdir} and \texttt{rm}}: \texttt{rmdir} can \textbf{only} delete empty directories. To delete a directory containing files, you must use \texttt{rm -r} or \texttt{rm -rf}.
+    \item \textbf{Confusing MBR and GPT}: MBR is limited to $2\,\text{TB}$ and 4 primary partitions. GPT supports up to $9.4\,\text{ZB}$ and 128 partitions.
+    \item \textbf{Confusing Host and Guest OS}: The \textbf{Host OS} is on the physical hardware; the \textbf{Guest OS} is inside the virtual machine.
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 3.12: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 3 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Linux Origins}: Monolithic open-source kernel developed by Linus Torvalds in 1991 under GNU GPL.
+    \item \textbf{4 Layers}: Hardware $\rightarrow$ Kernel (Ring 0) $\rightarrow$ Shell (CLI / Bash) $\rightarrow$ User Applications (Ring 3).
+    \item \textbf{Key Distros}: Ubuntu (popular desktop/cloud), Debian (stable), Fedora (cutting-edge), RHEL (enterprise server), CentOS (free server), Kali (cybersecurity), Mint (Windows-like).
+    \item \textbf{Essential Commands}: \texttt{pwd} (path), \texttt{ls -la} (list with hidden), \texttt{cd} (change dir), \texttt{mkdir -p} (create dir tree), \texttt{touch} (create file), \texttt{cp -r} (copy dir), \texttt{mv} (rename/move), \texttt{rm -rf} (force remove dir), \texttt{cat} (dump file), \texttt{less} (scroll file), \texttt{head}/\texttt{tail} (first/last lines), \texttt{ps aux} (processes), \texttt{kill -9} (terminate PID), \texttt{man} (manual).
+    \item \textbf{Permissions}: Read ($r=4$), Write ($w=2$), Execute ($x=1$) across User, Group, Others. \texttt{755} = \texttt{rwxr-xr-x}, \texttt{644} = \texttt{rw-r--r--}, \texttt{700} = \texttt{rwx------}.
+    \item \textbf{Linux vs. Windows}: Linux is free, open-source, case-sensitive, uses single tree \texttt{/}, package managers. Windows is commercial, closed-source, case-insensitive, uses drive letters (\texttt{C:}).
+    \item \textbf{Virtualization}: Host OS (physical) vs. Guest OS (virtual); Type-1 Bare-Metal (ESXi) vs. Type-2 Hosted (VirtualBox); Snapshots freeze VM state.
+    \item \textbf{File Systems}: FAT32 ($4\,\text{GB}$ file limit), NTFS (Windows, MFT, Journaling, ACLs), ext4 (Linux default, $1\,\text{EB}$ capacity, extents).
+    \item \textbf{Partitioning}: MBR ($2\,\text{TB}$ limit, 4 partitions) vs. GPT ($9.4\,\text{ZB}$ limit, 128 partitions, UEFI).
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 3.13: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Technical, Practical \& Command Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Short Answer}: Write the single Linux command to create a directory structure \texttt{test/project/src} in a single operation.
+    \item \textbf{Command Execution}: Explain the exact flag functions in the command \texttt{ls -la /var/log}.
+    \item \textbf{Permission Problem}: A file has the permission string \texttt{-rw-rw-r--}. What is its numeric octal representation?
+    \item \textbf{Permission Problem}: Write the \texttt{chmod} command to grant the owner read/write/execute, the group read/execute, and others read-only permissions on \texttt{run.sh}.
+    \item \textbf{Technical Comparison}: Differentiate between Type-1 (Bare-Metal) and Type-2 (Hosted) hypervisors, providing two examples of each.
+    \item \textbf{File System Analysis}: Explain the role of \textit{Journaling} in modern file systems such as NTFS and ext4.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 3.14: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item In what year was the initial version of the Linux kernel released by Linus Torvalds?
+    \begin{enumerate}[label=(\alph*)]
+        \item 1985
+        \item 1991
+        \item 1995
+        \item 2001
+    \end{enumerate}
+
+    \item Which Linux command displays the current absolute directory path in the terminal?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{dir}
+        \item \texttt{path}
+        \item \texttt{pwd}
+        \item \texttt{whereami}
+    \end{enumerate}
+
+    \item What is the numeric octal value of the permission string \texttt{-rwxr-xr-x}?
+    \begin{enumerate}[label=(\alph*)]
+        \item 777
+        \item 755
+        \item 644
+        \item 700
+    \end{enumerate}
+
+    \item Which Linux distribution is specifically tailored for ethical hacking and penetration testing?
+    \begin{enumerate}[label=(\alph*)]
+        \item Ubuntu
+        \item CentOS
+        \item Kali Linux
+        \item Linux Mint
+    \end{enumerate}
+
+    \item Which command is used to force-terminate a non-responsive process with PID 3450?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{stop 3450}
+        \item \texttt{kill -9 3450}
+        \item \texttt{end 3450}
+        \item \texttt{exit -f 3450}
+    \end{enumerate}
+
+    \item Oracle VirtualBox is categorized as which type of virtualization software?
+    \begin{enumerate}[label=(\alph*)]
+        \item Type-1 Bare-Metal Hypervisor
+        \item Type-2 Hosted Hypervisor
+        \item Native Microkernel
+        \item Monolithic Driver
+    \end{enumerate}
+
+    \item What is the maximum disk partition size limit imposed by the legacy MBR partitioning standard?
+    \begin{enumerate}[label=(\alph*)]
+        \item $500\,\text{GB}$
+        \item $2\,\text{TB}$
+        \item $16\,\text{TB}$
+        \item $9.4\,\text{ZB}$
+    \end{enumerate}
+
+    \item Which Linux filesystem introduced extents and is the standard default for modern Linux distributions?
+    \begin{enumerate}[label=(\alph*)]
+        \item FAT32
+        \item NTFS
+        \item ext2
+        \item ext4
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) 1991} --- Linus Torvalds released the first Linux kernel in 1991.
+    \item \textbf{(c) pwd} --- \texttt{pwd} stands for Print Working Directory.
+    \item \textbf{(b) 755} --- Owner: $4+2+1=7$; Group: $4+0+1=5$; Others: $4+0+1=5$.
+    \item \textbf{(c) Kali Linux} --- Kali is pre-loaded with penetration testing and security tools.
+    \item \textbf{(b) kill -9 3450} --- \texttt{-9} sends the unblockable \texttt{SIGKILL} signal to process PID 3450.
+    \item \textbf{(b) Type-2 Hosted Hypervisor} --- VirtualBox runs on top of an existing host OS.
+    \item \textbf{(b) $2\,\text{TB}$} --- MBR uses 32-bit sector addressing, limiting partitions to $2\,\text{TB}$.
+    \item \textbf{(d) ext4} --- \texttt{ext4} is the standard modern Linux filesystem supporting extents and large files.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 3.15: UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 3: Linux Operating System (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the function of the \texttt{-f} flag in the command \texttt{tail -f /var/log/syslog}.
+    \item Convert the permission string \texttt{-rw-r--r--} into its numeric octal equivalent.
+    \item What is the primary difference between a Host OS and a Guest OS in virtualization?
+    \item Name the core database table in the NTFS file system that indexes all files and metadata.
+    \item State whether the Linux file system is case-sensitive or case-insensitive.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Technical Explanations \& Syntax ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Explain the Linux permission security model. Detail the calculation and meaning of permissions \texttt{755}, \texttt{644}, and \texttt{700}, explaining why \texttt{777} is a critical security vulnerability.
+    \item Compare Microsoft Windows and Linux across five distinct technical dimensions: file hierarchy, security, case sensitivity, cost, and kernel architecture.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Virtualization \& Systems Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item An engineering student is configuring a development environment on a personal computer.
+    \begin{enumerate}[label=(\alph*)]
+        \item Explain the differences between Type-1 (Bare-Metal) and Type-2 (Hosted) hypervisors, and explain how a student can use VirtualBox to safely run Linux inside Windows. (4 Marks)
+        \item Describe the function and utility of \textbf{Virtual Machine Snapshots}. (2 Marks)
+        \item Compare the \textbf{FAT32}, \textbf{NTFS}, and \textbf{ext4} file systems, highlighting their maximum file sizes, journaling capabilities, and primary operating system domains. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item \textbf{Function of \texttt{tail -f}}: The \texttt{-f} (follow) flag monitors the file in real time, outputting newly appended log lines live. [1 Mark]
+    \item \textbf{Octal Conversion}: \texttt{-rw-r--r--} $\implies (4+2+0)(4+0+0)(4+0+0) = \mathbf{644}$. [1 Mark]
+    \item \textbf{Host vs. Guest OS}: The Host OS runs natively on physical hardware; the Guest OS runs virtualized inside a virtual machine container. [1 Mark]
+    \item \textbf{NTFS Index Table}: \textbf{Master File Table (MFT)}. [1 Mark]
+    \item \textbf{Case Sensitivity}: Linux is strictly \textbf{case-sensitive}. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Linux Permission Security Model} (1 Mark each):
+    \begin{itemize}
+        \item \textit{Structure}: Permissions are divided into User (u), Group (g), and Others (o) with weights $r=4, w=2, x=1$.
+        \item \textit{755 (\texttt{rwxr-xr-x})}: Owner has full control ($7$); Group/Others can read and execute ($5$). Standard for scripts.
+        \item \textit{644 (\texttt{rw-r--r--})}: Owner can read/write ($6$); Group/Others can only read ($4$). Standard for files.
+        \item \textit{700 (\texttt{rwx------})}: Owner has exclusive full control ($7$); all others have zero access ($0$). Used for private keys.
+        \item \textit{777 Vulnerability}: Grants read, write, and execution to every user on the system, allowing any unprivileged process or attacker to modify or delete files.
+    \end{itemize}
+
+    \item \textbf{Windows vs. Linux Comparison Table} (1 Mark per parameter):
+    \begin{itemize}
+        \item \textit{File Hierarchy}: Linux uses single tree rooted at \texttt{/}; Windows uses drive letters (\texttt{C:}, \texttt{D:}).
+        \item \textit{Security}: Linux has multi-user privilege isolation; Windows is more prone to malware.
+        \item \textit{Case Sensitivity}: Linux is case-sensitive; Windows is case-insensitive.
+        \item \textit{Cost}: Linux is free and open-source; Windows is commercial proprietary.
+        \item \textit{Kernel}: Linux is Monolithic; Windows is Hybrid.
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Virtualization \& File Systems}:
+    \begin{enumerate}[label=(\alph*)]
+        \item \textit{Hypervisors}:
+        \begin{itemize}
+            \item \textbf{Type-1 (Bare-Metal)}: Runs directly on hardware (ESXi, Hyper-V); enterprise high-performance standard. [1.5 Marks]
+            \item \textbf{Type-2 (Hosted)}: Runs as an app inside host OS (VirtualBox, VMware Player). [1.5 Marks]
+            \item \textbf{Student Setup}: The student installs VirtualBox on Windows (Host), creates a VM, mounts an Ubuntu ISO, and runs Linux inside Windows without repartitioning. [1 Mark]
+        \end{itemize}
+
+        \item \textit{Snapshots}:
+        A snapshot captures the complete differential disk state and memory registers of a VM at an exact moment, allowing instantaneous rollback if an error or corruption occurs. [2 Marks]
+
+        \item \textit{File Systems Comparison} (4 Marks):
+        \begin{itemize}
+            \item \textbf{FAT32}: Max file size $= 4\,\text{GB}$; No journaling; Universal cross-platform compatibility.
+            \item \textbf{NTFS}: Max file size $= 16\,\text{EB}$; Full transaction journaling and ACLs; Windows default.
+            \item \textbf{ext4}: Max file size $= 16\,\text{TB}$; Journaling and extent allocation; Linux default.
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

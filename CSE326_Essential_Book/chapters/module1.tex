@@ -1,0 +1,106 @@
+\chapter{HTML Fundamentals, Document Structure \& Essential Tags}
+
+\section{1.1 Introduction to Web Technologies}
+Web technologies are the tools and protocols we use to build websites and web applications (e.g., Google, Facebook, Amazon).
+
+\begin{summarybox}[Core Components of Web Technologies]
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Frontend (What the user sees)}:
+    \begin{itemize}
+        \item \textbf{HTML}: Creates the skeletal structure (headings, paragraphs, images).
+        \item \textbf{CSS}: Adds styling, design, layout, colors, and responsive aesthetics.
+        \item \textbf{JavaScript}: Makes the webpage interactive (animations, popups, event handling, form validation).
+    \end{itemize}
+    \item \textbf{Backend (Behind the scenes)}:
+    \begin{itemize}
+        \item Handles user authentication, database operations, business logic.
+        \item Languages: Python, Java, PHP, Node.js; Databases: MySQL, MongoDB.
+    \end{itemize}
+    \item \textbf{Web Server \& Internet Basics}:
+    \begin{itemize}
+        \item \textbf{Web Server}: Computer software/hardware delivering web assets.
+        \item \textbf{HTTP/HTTPS}: Application protocols for sending and receiving webpages securely over TLS.
+        \item \textbf{DNS (Domain Name System)}: Converts readable website names (\texttt{google.com}) into machine IP addresses.
+    \end{itemize}
+\end{enumerate}
+\end{summarybox}
+
+\section{1.2 HTML Document Structure \& Doctype}
+HTML stands for \textbf{HyperText Markup Language}. It was originally developed by \textbf{Tim Berners-Lee in 1990}, recognized as the father of the web.
+
+\begin{codeexample}[Standard HTML5 Document Scaffolding]
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn HTML basics with simple examples.">
+  <meta name="keywords" content="HTML, Meta Tags, Beginner, Website">
+  <meta name="author" content="Dr. Navneet Kaur">
+  <title>My First Webpage</title>
+</head>
+<body>
+  <h1>HTML Images 1</h1>
+  <h2>HTML Images 2</h2>
+  <p>HTML images are defined with the img tag:</p>
+  <img src="flower.jpg" alt="Beautiful Flower" width="104" height="142">
+</body>
+</html>
+\end{lstlisting}
+\end{codeexample}
+
+\begin{notebox}[Granular Tag Breakdown]
+\begin{itemize}[leftmargin=*]
+    \item \texttt{<!DOCTYPE html>}: Special declaration telling the browser the document type is HTML5 (triggers Standards Mode).
+    \item \texttt{<html>}: Root element and parent of everything on the webpage.
+    \item \texttt{<head>}: Contains non-visual metadata, title, and stylesheets.
+    \item \texttt{<body>}: Encapsulates all visible content presented to the user.
+    \item \texttt{<main>}: Specifies the main content of a document. \textbf{Rule}: There must not be more than one \texttt{<main>} element per document.
+    \item \textbf{Comments}: \texttt{<!-- text -->} ignored by the browser, not visible on screen.
+\end{itemize}
+\end{notebox}
+
+\section{1.3 Tag vs. Element \& Types of Tags}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tag}: Any keyword enclosed inside angle brackets: \texttt{<tagname>} or \texttt{</tagname>}.
+    \item \textbf{Element}: An opening tag, a closing tag, and all content in between: \texttt{<p>Content</p>}.
+    \item \textbf{Paired Tags}: Tags having separate opening and closing tags (e.g. \texttt{<p>...</p>}, \texttt{<h1>...</h1>}).
+    \item \textbf{Unpaired / Void Tags}: Tags having opening and closing in a single tag without content (e.g. \texttt{<hr>}, \texttt{<br>}, \texttt{<img>}, \texttt{<meta>}).
+\end{itemize}
+
+\section{1.4 Meta Tags: The Silent Assistants}
+\begin{summarybox}[Why Meta Tags Matter]
+The \texttt{<meta>} tag provides information about a webpage to browsers and search engines.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Character Set}: \texttt{<meta charset="UTF-8">} prevents character glitching so currency symbols like INR (Rupee) (Rupee), EUR (Euro) (Euro), and emojis render cleanly.
+    \item \textbf{Viewport}: \texttt{<meta name="viewport" content="width=device-width, initial-scale=1.0">} makes pages mobile-friendly and prevents unwanted zoomed-out rendering.
+    \item \textbf{SEO Description}: \texttt{<meta name="description" content="...">} controls search engine result snippets.
+\end{itemize}
+\end{summarybox}
+
+\section{1.5 Semantic Text Formatting Tags}
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X l}
+\toprule
+\textbf{Tag} & \textbf{Semantic Meaning / Purpose} & \textbf{Common Use Case} & \textbf{Default Look} \\
+\midrule
+\texttt{<dfn>} & Marks a term being defined & Technical definitions & Italic by default \\
+\texttt{<cite>} & Marks a title of a creative work & Books, movies, papers, songs & Italic by default \\
+\texttt{<i>} & Styling only (no extra meaning) & Foreign words, thoughts & Italic \\
+\texttt{<em>} & Adds semantic stress emphasis & Important stressed words & Italic \\
+\texttt{<strong>} & Strong semantic importance/urgency & Warnings, alerts, keywords & Bold \\
+\texttt{<b>} & Styling only (no semantic weight) & Visual bold text & Bold \\
+\texttt{<mark>} & Highlights text as relevant & Search term highlighting & Yellow background \\
+\texttt{<small>} & Reduces text size & Disclaimers, copyright & Smaller text \\
+\texttt{<sub>} & Subscript & Chemical formulas ($\text{H}_2\text{O}$) & Lower text \\
+\texttt{<sup>} & Superscript & Mathematical powers ($2^5=32$) & Upper text \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{1.6 Inline vs. Block-Level Elements}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Block-level Elements}: Always begin on a new line and occupy the full width of the parent container by default (e.g., \texttt{<div>}, \texttt{<p>}, \texttt{<h1>-<h6>}, \texttt{<ul>}, \texttt{<ol>}, \texttt{<li>}, \texttt{<table>}, \texttt{<section>}, \texttt{<article>}).
+    \item \textbf{Inline Elements}: Do not start on a new line; they flow within the text and take only as much width as their content needs (e.g., \texttt{<span>}, \texttt{<a>}, \texttt{<strong>}, \texttt{<em>}, \texttt{<b>}, \texttt{<i>}, \texttt{<img>}, \texttt{<label>}).
+\end{itemize}

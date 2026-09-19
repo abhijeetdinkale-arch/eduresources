@@ -1,0 +1,42 @@
+\chapter{Unit 6: Engineering Materials \& Superconductivity}
+
+\begin{formulabox}{1. Dielectric Materials \& Polarization}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Electric Displacement Vector:} $\vec{D} = \epsilon_0 \vec{E} + \vec{P} = \epsilon_r \epsilon_0 \vec{E}$.
+    \item \textbf{Electric Susceptibility:} $\vec{P} = \epsilon_0 \chi_e \vec{E} \implies \epsilon_r = 1 + \chi_e$.
+    \item \textbf{Lorentz Local Internal Field (Cubic Lattice):} $E_{\text{loc}} = E + \frac{P}{3\epsilon_0}$.
+    \item \textbf{Total Atomic Polarizability:} $\alpha = \alpha_e + \alpha_i + \alpha_o + \alpha_s$.
+    \begin{align*}
+    \text{Electronic Polarizability:} \quad & \alpha_e = 4\pi\epsilon_0 R^3 \quad (\text{Temperature-independent}) \\
+    \text{Orientational Polarizability (Langevin):} \quad & \alpha_o = \frac{p_0^2}{3 k_B T} \quad (\propto 1/T)
+    \end{align*}
+    \item \textbf{Clausius-Mossotti Equation:}
+    \[
+    \frac{\epsilon_r - 1}{\epsilon_r + 2} = \frac{N \alpha}{3\epsilon_0} = \frac{N (\alpha_e + \alpha_i)}{3\epsilon_0}
+    \]
+    \item \textbf{Dielectric Loss Tangent:} $\tan\delta = \frac{\epsilon''}{\epsilon'}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{2. Magnetic Materials \& Hysteresis}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Magnetic Flux Density:} $\vec{B} = \mu_0(\vec{H} + \vec{M}) = \mu_r \mu_0 \vec{H}$.
+    \item \textbf{Magnetic Susceptibility:} $\vec{M} = \chi_m \vec{H} \implies \mu_r = 1 + \chi_m$.
+    \item \textbf{Curie-Weiss Law (Ferromagnet $\to$ Paramagnet above $T_C$):} $\chi_m = \frac{C}{T - \theta_p}$.
+    \item \textbf{Hysteresis Energy Loss per Cycle:} $W_h = \oint \vec{B}\cdot d\vec{H} = \text{Area of } B\text{-}H \text{ Loop}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{3. Superconductivity \& Meissner Effect}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{Critical Magnetic Field Parabolic Temperature Law:}
+    \[
+    H_c(T) = H_c(0)\left[ 1 - \left(\frac{T}{T_c}\right)^2 \right]
+    \]
+    \item \textbf{Silsbee's Critical Current Rule (Wire radius $r$):} $I_c = 2\pi r H_c$.
+    \item \textbf{Meissner Effect (Perfect Diamagnetism):} $\vec{B} = 0 \implies \mu_0(\vec{H} + \vec{M}) = 0 \implies \vec{M} = -\vec{H} \implies \chi_m = -1$.
+    \item \textbf{London Penetration Depth:} $\lambda_L = \sqrt{\frac{m}{\mu_0 n_s e^2}}, \quad B(x) = B(0)e^{-x/\lambda_L}$.
+    \item \textbf{BCS Superconducting Energy Gap at $0\text{ K}$:} $E_g(0) = 2\Delta(0) = 3.528\,k_B T_c$.
+    \item \textbf{Josephson Supercurrent:} $I_s = I_c \sin(\Delta\phi)$, with AC frequency $f = \frac{2eV}{h} = \frac{V}{\Phi_0}$ ($\Phi_0 = \frac{h}{2e} \approx 2.067 \times 10^{-15}\text{ Wb}$).
+\end{itemize}
+\end{formulabox}

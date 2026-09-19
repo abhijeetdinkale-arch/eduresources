@@ -1,0 +1,336 @@
+\section{Continuous Assessment 2 (CA-2) --- Set C}
+\label{sec:ca2_set_c}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{C}{50 Minutes}{30 Marks}{CO4 (Multivariable Limits, Continuity, Partial Derivatives \& Optimization), CO5 (Multiple Integrals \& Transformations)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    If $u = \sin^{-1}\left(\frac{x + 2y + 3z}{\sqrt{x^8 + y^8 + z^8}}\right)$, verify \textbf{Euler's Theorem on Homogeneous Functions} and prove that:
+    \[
+    x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} + z \frac{\partial u}{\partial z} = -3 \tan u
+    \]
+}{5}{CO4}{L3 Apply}
+
+\questionitem{2}{
+    Compute the \textbf{Jacobian} $\frac{\partial(u,v,w)}{\partial(x,y,z)}$ for the transformation:
+    \[
+    u = \frac{yz}{x}, \quad v = \frac{zx}{y}, \quad w = \frac{xy}{z}
+    \]
+}{5}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    Using the \textbf{Method of Lagrange Multipliers}, find the shortest distance from the origin $(0,0,0)$ to the plane:
+    \[
+    2x + 3y - z = 14
+    \]
+}{5}{CO4}{L3 Apply}
+
+\questionitem{4}{
+    Change the order of integration and evaluate:
+    \[
+    \int_0^1 \int_x^1 \frac{\sin y}{y} \, dy \, dx
+    \]
+}{5}{CO5}{L3 Apply}
+
+\questionitem{5}{
+    Using double integration, compute the total area of the planar region enclosed between the two intersecting parabolas:
+    \[
+    y^2 = 4ax \quad \text{and} \quad x^2 = 4ay \quad (a > 0)
+    \]
+}{5}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    Using \textbf{spherical polar coordinates}, evaluate the triple integral:
+    \[
+    \iiint_V (x^2 + y^2 + z^2) \, dV
+    \]
+    where $V$ is the solid sphere of radius $R$ centered at the origin: $x^2 + y^2 + z^2 \le R^2$.
+}{5}{CO5}{L3 Apply}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-2 Set C)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Identifying the Homogeneous Function}
+Given $u = \sin^{-1}\left(\frac{x + 2y + 3z}{\sqrt{x^8 + y^8 + z^8}}\right)$.
+Let $f(x,y,z) = \sin u = \frac{x + 2y + 3z}{\sqrt{x^8 + y^8 + z^8}}$.
+Test homogeneity by replacing $x, y, z$ with $t x, t y, t z$:
+\[
+f(tx, ty, tz) = \frac{t(x + 2y + 3z)}{\sqrt{t^8(x^8 + y^8 + z^8)}} = \frac{t(x + 2y + 3z)}{t^4 \sqrt{x^8 + y^8 + z^8}} = t^{1-4} f(x,y,z) = t^{-3} f(x,y,z)
+\]
+Thus, $f = \sin u$ is a homogeneous function of degree $n = -3$.
+
+\textbf{Step 2: Applying Euler's Theorem}
+By Euler's Theorem for homogeneous functions:
+\[
+x \frac{\partial f}{\partial x} + y \frac{\partial f}{\partial y} + z \frac{\partial f}{\partial z} = n f = -3 f
+\]
+Since $f = \sin u$, by the chain rule:
+\[
+\frac{\partial f}{\partial x} = \cos u \frac{\partial u}{\partial x}, \quad \frac{\partial f}{\partial y} = \cos u \frac{\partial u}{\partial y}, \quad \frac{\partial f}{\partial z} = \cos u \frac{\partial u}{\partial z}
+\]
+Substitute into Euler's equation:
+\[
+x \left(\cos u \frac{\partial u}{\partial x}\right) + y \left(\cos u \frac{\partial u}{\partial y}\right) + z \left(\cos u \frac{\partial u}{\partial z}\right) = -3 \sin u
+\]
+Divide both sides by $\cos u$ (since $\cos u \neq 0$):
+\[
+\mathbf{x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} + z \frac{\partial u}{\partial z} = -3 \frac{\sin u}{\cos u} = -3 \tan u} \quad \text{(Hence Proved!)}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Identifying $f = \sin u$ and testing degree of homogeneity $n = -3$: \textbf{2 Marks}\\
+$\bullet$ Stating Euler's Theorem for $f$: \textbf{1.5 Marks}\\
+$\bullet$ Chain rule application and dividing by $\cos u$ to obtain $-3\tan u$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: Jacobian Matrix Definition}
+The Jacobian is the determinant of the partial derivative matrix:
+\[
+J = \frac{\partial(u,v,w)}{\partial(x,y,z)} = \begin{vmatrix}
+u_x & u_y & u_z \\
+v_x & v_y & v_z \\
+w_x & w_y & w_z
+\end{vmatrix}
+\]
+\textbf{Step 2: Partial Derivatives}
+For $u = \frac{yz}{x}$: $u_x = -\frac{yz}{x^2}, \quad u_y = \frac{z}{x}, \quad u_z = \frac{y}{x}$.\\
+For $v = \frac{zx}{y}$: $v_x = \frac{z}{y}, \quad v_y = -\frac{zx}{y^2}, \quad v_z = \frac{x}{y}$.\\
+For $w = \frac{xy}{z}$: $w_x = \frac{y}{z}, \quad w_y = \frac{x}{z}, \quad w_z = -\frac{xy}{z^2}$.
+
+\textbf{Step 3: Evaluating the Determinant}
+\[
+J = \begin{vmatrix}
+-\frac{yz}{x^2} & \frac{z}{x} & \frac{y}{x} \\
+\frac{z}{y} & -\frac{zx}{y^2} & \frac{x}{y} \\
+\frac{y}{z} & \frac{x}{z} & -\frac{xy}{z^2}
+\end{vmatrix}
+\]
+Factor out $\frac{1}{x}$ from row 1, $\frac{1}{y}$ from row 2, and $\frac{1}{z}$ from row 3:
+\[
+J = \frac{1}{xyz} \begin{vmatrix}
+-\frac{yz}{x} & z & y \\
+z & -\frac{zx}{y} & x \\
+y & x & -\frac{xy}{z}
+\end{vmatrix}
+\]
+Now factor out $\frac{1}{x}$ from col 1, $\frac{1}{y}$ from col 2, and $\frac{1}{z}$ from col 3:
+\[
+J = \frac{1}{(xyz)^2} \begin{vmatrix}
+-yz & yz & yz \\
+xz & -xz & xz \\
+xy & xy & -xy
+\end{vmatrix}
+\]
+Factor out $yz$ from row 1, $xz$ from row 2, and $xy$ from row 3:
+\[
+J = \frac{(yz)(xz)(xy)}{(xyz)^2} \begin{vmatrix}
+-1 & 1 & 1 \\
+1 & -1 & 1 \\
+1 & 1 & -1
+\end{vmatrix}
+= \frac{(xyz)^2}{(xyz)^2} \begin{vmatrix}
+-1 & 1 & 1 \\
+1 & -1 & 1 \\
+1 & 1 & -1
+\end{vmatrix}
+\]
+Evaluate the $3\times 3$ numerical determinant:
+\[
+\begin{vmatrix}
+-1 & 1 & 1 \\
+1 & -1 & 1 \\
+1 & 1 & -1
+\end{vmatrix}
+= -1((-1)(-1) - 1(1)) - 1(1(-1) - 1(1)) + 1(1(1) - (-1)(1))
+\]
+\[
+= -1(1 - 1) - 1(-1 - 1) + 1(1 + 1) = 0 - 1(-2) + 1(2) = 2 + 2 = \mathbf{4}
+\]
+Therefore:
+\[
+\mathbf{\frac{\partial(u,v,w)}{\partial(x,y,z)} = 4}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Partial derivatives setup: \textbf{1.5 Marks}\\
+$\bullet$ Determinant formulation and factoring of terms: \textbf{2 Marks}\\
+$\bullet$ Numerical determinant evaluation giving final value $4$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Objective Function and Constraint}
+Distance squared from $(0,0,0)$ to $(x,y,z)$ is:
+\[
+f(x,y,z) = x^2 + y^2 + z^2
+\]
+Subject to the constraint $g(x,y,z) = 2x + 3y - z - 14 = 0$.
+
+\textbf{Step 2: Lagrange Multiplier System}
+Set $\nabla f = \lambda \nabla g$:
+\begin{align*}
+2x &= 2\lambda \implies x = \lambda \\
+2y &= 3\lambda \implies y = \frac{3}{2}\lambda \\
+2z &= -\lambda \implies z = -\frac{1}{2}\lambda
+\end{align*}
+\textbf{Step 3: Finding $\lambda$}
+Substitute $x, y, z$ into the constraint:
+\[
+2(\lambda) + 3\left(\frac{3}{2}\lambda\right) - \left(-\frac{1}{2}\lambda\right) = 14
+\]
+\[
+2\lambda + \frac{9}{2}\lambda + \frac{1}{2}\lambda = 14 \implies 7\lambda = 14 \implies \mathbf{\lambda = 2}
+\]
+Thus, the closest point on the plane is:
+\[
+x = 2, \quad y = \frac{3}{2}(2) = 3, \quad z = -\frac{1}{2}(2) = -1 \implies \mathbf{(2, 3, -1)}
+\]
+\textbf{Step 4: Shortest Distance}
+\[
+d = \sqrt{x^2 + y^2 + z^2} = \sqrt{2^2 + 3^2 + (-1)^2} = \sqrt{4 + 9 + 1} = \mathbf{\sqrt{14}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Objective function and constraint setup: \textbf{1 Mark}\\
+$\bullet$ Lagrange equations $\nabla f = \lambda \nabla g$: \textbf{1.5 Marks}\\
+$\bullet$ Solving for $\lambda = 2$ and closest point $(2,3,-1)$: \textbf{1.5 Marks}\\
+$\bullet$ Distance computation giving $\sqrt{14}$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Original Region of Integration}
+The integral is:
+\[
+I = \int_0^1 \int_x^1 \frac{\sin y}{y} \, dy \, dx
+\]
+Notice that $\int \frac{\sin y}{y} dy$ is non-elementary. Changing order makes it immediately solvable!
+Given bounds:
+\[
+x \in [0, 1], \quad y \in [x, 1]
+\]
+This represents a triangular region bounded by $y = x$, the line $y = 1$, and the y-axis ($x = 0$).
+
+\textbf{Step 2: Reversing Order (Horizontal Strips)}
+In the reversed order:
+\[
+y \in [0, 1], \quad x \in [0, y]
+\]
+Thus:
+\[
+I = \int_0^1 \int_0^y \frac{\sin y}{y} \, dx \, dy
+\]
+\textbf{Step 3: Evaluating the Integral}
+Inner integral with respect to $x$:
+\[
+\int_0^y \frac{\sin y}{y} \, dx = \frac{\sin y}{y} [x]_0^y = \frac{\sin y}{y} (y) = \sin y
+\]
+Outer integral with respect to $y$:
+\[
+I = \int_0^1 \sin y \, dy = [-\cos y]_0^1 = -\cos(1) - (-\cos(0)) = \mathbf{1 - \cos(1)}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Region identification and motivation for change of order: \textbf{1.5 Marks}\\
+$\bullet$ Correct reversed limits ($y \in [0,1], x \in [0,y]$): \textbf{1.5 Marks}\\
+$\bullet$ Evaluation of inner and outer integrals giving $1 - \cos(1)$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Intersection of the Parabolas}
+Given $y^2 = 4ax$ and $x^2 = 4ay \implies y = \frac{x^2}{4a}$.
+Substitute $y$ into the first equation:
+\[
+\left(\frac{x^2}{4a}\right)^2 = 4ax \implies \frac{x^4}{16a^2} = 4ax \implies x(x^3 - 64a^3) = 0
+\]
+The points of intersection are $x = 0$ and $x = 4a$.
+At $x = 0 \implies y = 0$. At $x = 4a \implies y = 4a$.
+Vertices: $(0,0)$ and $(4a, 4a)$.
+
+\textbf{Step 2: Area Formulation via Double Integration}
+The area of the enclosed domain is:
+\[
+A = \iint_R dx \, dy = \int_0^{4a} \int_{x^2/(4a)}^{2\sqrt{ax}} dy \, dx
+\]
+\textbf{Step 3: Evaluation}
+\[
+A = \int_0^{4a} \left( 2\sqrt{a} x^{1/2} - \frac{x^2}{4a} \right) dx = \left[ 2\sqrt{a} \frac{x^{3/2}}{3/2} - \frac{x^3}{12a} \right]_0^{4a}
+\]
+\[
+= \frac{4\sqrt{a}}{3}(4a)^{3/2} - \frac{(4a)^3}{12a} = \frac{4\sqrt{a}}{3}(8 a^{3/2}) - \frac{64 a^3}{12a} = \frac{32a^2}{3} - \frac{16a^2}{3} = \mathbf{\frac{16a^2}{3}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Intersection points calculation: \textbf{1.5 Marks}\\
+$\bullet$ Double integral setup with correct limits: \textbf{1.5 Marks}\\
+$\bullet$ Accurate integration giving $16a^2/3$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Spherical Polar Coordinates}
+Let:
+\[
+x = \rho \sin\phi \cos\theta, \quad y = \rho \sin\phi \sin\theta, \quad z = \rho \cos\phi
+\]
+Then $x^2 + y^2 + z^2 = \rho^2$, and the volume element is:
+\[
+dV = \rho^2 \sin\phi \, d\rho \, d\phi \, d\theta
+\]
+\textbf{Step 2: Domain Limits for Full Sphere of Radius $R$}
+\[
+\rho \in [0, R], \quad \phi \in [0, \pi], \quad \theta \in [0, 2\pi]
+\]
+\textbf{Step 3: Integral Evaluation}
+The three variables are completely decoupled:
+\[
+\iiint_V (x^2+y^2+z^2) \, dV = \int_0^{2\pi} d\theta \cdot \int_0^\pi \sin\phi \, d\phi \cdot \int_0^R \rho^2 (\rho^2 \, d\rho)
+\]
+Evaluate each factor:
+\begin{itemize}[leftmargin=6mm]
+    \item $\int_0^{2\pi} d\theta = 2\pi$
+    \item $\int_0^\pi \sin\phi \, d\phi = [-\cos\phi]_0^\pi = -(-1) - (-1) = 2$
+    \item $\int_0^R \rho^4 \, d\rho = \left[ \frac{\rho^5}{5} \right]_0^R = \frac{R^5}{5}$
+\end{itemize}
+Multiplying the three components:
+\[
+I = (2\pi)(2)\left(\frac{R^5}{5}\right) = \mathbf{\frac{4\pi R^5}{5}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Spherical coordinate equations and Jacobian $\rho^2 \sin\phi$: \textbf{1.5 Marks}\\
+$\bullet$ Correct limits for complete sphere: \textbf{1.5 Marks}\\
+$\bullet$ Evaluation of each single integral giving $4\pi R^5/5$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

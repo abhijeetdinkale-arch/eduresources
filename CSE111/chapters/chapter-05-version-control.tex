@@ -1,0 +1,199 @@
+\chapter{Version Control with Git \& GitHub}
+\label{chap:version_control}
+
+\begin{tcolorbox}[enhanced, colback=boxnavybg, colframe=brandnavy, boxrule=1.2pt, arc=4pt, title={\Large\bfseries\sffamily Unit 5 Overview \& Learning Objectives}]
+\sffamily\normalsize
+This chapter introduces professional software version tracking and collaborative team development using Git and GitHub. By the end of this unit, students will be able to:
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+    \item Understand the distributed version control model and its advantages over centralized systems.
+    \item Configure local Git author identity and understand configuration scopes.
+    \item Navigate the Git three-tree architecture: Working Directory, Staging Area, and Local Repository.
+    \item Master daily terminal operations: \texttt{init}, \texttt{status}, \texttt{add}, \texttt{commit}, \texttt{log}, and \texttt{restore}.
+    \item Utilize branches for isolated feature development and synchronize local repositories with remote GitHub remotes.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Orientation: The Principle of Version Control}
+
+\textbf{Version Control} is a systematic software engineering methodology for recording modifications made to files over time, enabling developers to review historical revisions, compare changes, collaborate concurrently without overwriting code, and restore previous operational states whenever bugs arise.
+
+\subsection{The Distributed Architecture of Git}
+Created by **Linus Torvalds in 2005** to manage development of the Linux kernel, \textbf{Git} is a free, open-source \textbf{Distributed Version Control System (DVCS)}. 
+
+Unlike legacy centralized version control systems (such as SVN or CVS) where developers must connect to a single central server to commit changes or view project history, \textbf{every Git clone on a developer's machine is a complete repository} containing the entire project history, branches, and commit metadata. Developers can inspect logs, create branches, and commit snapshots completely offline.
+
+\begin{definition}[Key Version Control Terminology]
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Repository (Repo):} A directory containing project files along with a hidden administrative folder (\texttt{.git}) that tracks the entire historical record of changes.
+    \item \textbf{Commit:} A saved permanent snapshot of staged modifications, uniquely identified by a 40-character SHA-1 hash.
+    \item \textbf{Branch:} A lightweight, movable pointer to a specific commit representing an independent line of development.
+    \item \textbf{Remote Repository:} A copy of the repository hosted on a cloud server or local network (e.g., on GitHub) used for backup and multi-developer collaboration.
+\end{itemize}
+\end{definition}
+
+\section{Git vs. GitHub: Local Tools vs. Cloud Collaboration}
+
+A common beginner misconception is confusing Git with GitHub. They are distinct technologies:
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Git:} The command-line software tool installed locally on your operating system that manages snapshots, staging, branches, and version history.
+    \item \textbf{GitHub:} A cloud-based web hosting platform that stores remote Git repositories, offering collaboration features such as web-based code viewing, Pull Requests, automated testing (CI/CD), and team permission management.
+\end{itemize}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Aspect} & \textbf{Git} & \textbf{GitHub} \\
+\midrule
+\textbf{Type} & Command-line version control software & Cloud-hosted web collaboration service \\
+\textbf{Installation} & Installed locally on personal computers & Accessed via web browser and APIs \\
+\textbf{Network Need} & 100\% functional offline for local work & Requires internet to sync with cloud \\
+\textbf{Maintainer} & Open-source community (initiated by Linus) & Commercial enterprise (subsidiary of Microsoft) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Relationship Between Local and Remote Repositories}
+Local and remote repositories remain separate copies whose histories are explicitly synchronized through Git networking commands:
+\begin{itemize}[leftmargin=1.2em]
+    \item \texttt{git push}: Uploads local branch commits to the remote repository.
+    \item \texttt{git fetch}: Downloads new remote commits into local tracking references without altering working files.
+    \item \texttt{git pull}: Fetches remote updates and immediately merges them into the current active branch.
+    \item \texttt{git clone <URL>}: Downloads a full remote repository and its entire history into a brand new local folder.
+\end{itemize}
+
+\begin{examalert}[The Synchronization Golden Rule]
+Saving a file inside an editor (e.g., \texttt{Ctrl+S}) only updates the local file on disk. Creating a commit (\texttt{git commit}) records the snapshot locally on your machine. Nothing is uploaded to GitHub until you explicitly run \texttt{git push}.
+\end{examalert}
+
+\section{Initial Setup and Configuration}
+
+\subsection{Installing Git}
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Windows:} Download from the official website (\url{https://git-scm.com/}); installs Git along with the \textbf{Git Bash} terminal emulator.
+    \item \textbf{macOS:} Installed via Apple Command Line Developer Tools:
+    \begin{lstlisting}[language=bash]
+xcode-select --install
+    \end{lstlisting}
+    \item \textbf{Linux (Debian/Ubuntu):} Installed via package manager:
+    \begin{lstlisting}[language=bash]
+sudo apt update && sudo apt install git
+    \end{lstlisting}
+    \item \textbf{Verification:} Check version in the terminal:
+    \begin{lstlisting}[language=bash]
+git --version
+    \end{lstlisting}
+\end{itemize}
+
+\subsection{Configuring User Identity}
+Before creating commits, developers must configure their author identity. Git records this information permanently inside every commit:
+\begin{lstlisting}[language=bash]
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+\end{lstlisting}
+The \texttt{--global} flag writes settings to the user's home configuration file (\texttt{\textasciitilde/.gitconfig}), applying them to all repositories on that machine. To verify active settings:
+\begin{lstlisting}[language=bash]
+git config --list --show-origin
+\end{lstlisting}
+
+\section{Local Repository Workflow: The Three-Tree Architecture}
+
+Git organizes files across three logical areas:
+\begin{center}
+\fbox{\parbox{3.4cm}{\centering\textbf{1. Working Directory}\\Visible project files being edited}} $\xrightarrow{\texttt{git add}}$
+\fbox{\parbox{3.4cm}{\centering\textbf{2. Staging Area (Index)}\\Selected changes prepared for commit}} $\xrightarrow{\texttt{git commit}}$
+\fbox{\parbox{3.4cm}{\centering\textbf{3. Local Repository}\\Permanent history in \texttt{.git}}}
+\end{center}
+
+\subsection{Step-by-Step Local Commands}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Initializing a Repository:} Navigate into your project directory and initialize Git tracking:
+    \begin{lstlisting}[language=bash]
+mkdir my-project && cd my-project
+git init -b main
+    \end{lstlisting}
+    This creates the hidden \textbf{\texttt{.git}} directory, which contains object stores, branches, HEAD references, and configuration.
+    
+    \item \textbf{Checking Repository Status:}
+    \begin{lstlisting}[language=bash]
+git status
+    \end{lstlisting}
+    Reports which branch is active, which files are staged for commit, which files are modified but unstaged, and which files are untracked.
+
+    \item \textbf{Staging Files:}
+    \begin{lstlisting}[language=bash]
+git add README.md       # Stages a specific file
+git add .               # Stages all modified and new files in directory
+    \end{lstlisting}
+    If a staged file is edited again before committing, the newly added modifications remain in the working tree until \texttt{git add} is executed again.
+
+    \item \textbf{Unstaging Modifications:}
+    \begin{lstlisting}[language=bash]
+git restore --staged README.md
+    \end{lstlisting}
+    Removes the file from the staging index while leaving all edits safe in the working directory.
+
+    \item \textbf{Creating a Commit:}
+    \begin{lstlisting}[language=bash]
+git commit -m "Add project overview to README"
+    \end{lstlisting}
+    Creates a new immutable snapshot. A good commit message uses the imperative mood (e.g., \texttt{"Fix login validation bug"}), accurately describing the functional change.
+
+    \item \textbf{Viewing Project History:}
+    \begin{lstlisting}[language=bash]
+git log --oneline
+    \end{lstlisting}
+    Displays past commits from newest to oldest in a concise single-line format showing the truncated SHA-1 hash and commit message.
+\end{enumerate}
+
+\subsection{Ignoring Unwanted Files: \texttt{.gitignore}}
+Certain files should never be committed into version control (such as temporary editor files, log files, compiled binaries, and private API keys or database passwords). Creating a plain-text file named \textbf{\texttt{.gitignore}} in the repository root instructs Git to ignore matching patterns:
+\begin{lstlisting}
+# Ignore environment secrets
+.env
+
+# Ignore compiled artifacts and dependencies
+*.log
+__pycache__/
+node_modules/
+\end{lstlisting}
+
+\section{Branching and Collaborative Workflows}
+
+A **branch** in Git represents an independent line of software development. Developing on separate branches allows engineers to build features, experiment with designs, or fix bugs without destabilizing the production codebase on the \texttt{main} branch.
+
+\subsection{Branch Operations}
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Create and Switch to a New Branch:}
+    \begin{lstlisting}[language=bash]
+git switch -c feature/login-page
+# Older syntax: git checkout -b feature/login-page
+    \end{lstlisting}
+    \item \textbf{List Existing Branches:}
+    \begin{lstlisting}[language=bash]
+git branch
+    \end{lstlisting}
+    The active checked-out branch is marked with an asterisk (\texttt{*}).
+    \item \textbf{Switching Between Existing Branches:}
+    \begin{lstlisting}[language=bash]
+git switch main
+    \end{lstlisting}
+    \item \textbf{Publishing a Branch to GitHub:}
+    \begin{lstlisting}[language=bash]
+git push -u origin feature/login-page
+    \end{lstlisting}
+    The \texttt{-u} flag configures upstream tracking so future synchronizations require only typing \texttt{git push}.
+\end{itemize}
+
+\section{Chapter Review \& Key Takeaways}
+\begin{tcolorbox}[enhanced, colback=boxgreenbg, colframe=boxgreenborder, boxrule=1pt, arc=4pt, title={\bfseries\sffamily Summary Checklist}]
+\sffamily\small
+\begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+    \item Git is a distributed VCS created by Linus Torvalds (2005); GitHub is a cloud hosting platform for Git repositories.
+    \item Local Git architecture flows from Working Directory $\xrightarrow{\texttt{git add}}$ Staging Area $\xrightarrow{\texttt{git commit}}$ Repository (\texttt{.git}).
+    \item \texttt{.gitignore} prevents temporary build files, logs, and sensitive credentials from entering repository history.
+    \item A Git branch is a lightweight movable pointer to a commit; \texttt{git switch -c <name>} creates and switches branches.
+    \item Committing records changes locally; \texttt{git push} is required to upload commits to GitHub.
+\end{itemize}
+\end{tcolorbox}

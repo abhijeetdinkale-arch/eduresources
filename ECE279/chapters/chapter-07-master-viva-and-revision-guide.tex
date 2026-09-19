@@ -1,0 +1,116 @@
+\chapter{Practical 7: Master Viva Voce \& Practical Exam Revision Guide}
+
+\section{Source Material Truncation Notice}
+
+\begin{commonmistake}[Authoritative Source Material Truncation Notice]
+The primary reference document (\texttt{ECE 279 Compressed.pdf}) contains \textbf{63 total pages}. Page 63 terminates with a navigation button \texttt{NEXT Practical 7}. The text, circuit diagrams, procedures, and viva questions for \textbf{Practical 7} were omitted in the source PDF file provided. Per strict project guidelines against AI speculation, Practical 7 is explicitly recorded here as \textbf{Truncated / Omitted in Source PDF}.
+
+To ensure maximum utility for LPU students preparing for practical examinations, this chapter provides a comprehensive, high-yield \textbf{Master Viva Voce Revision Bank} covering all practical topics in ECE279.
+\end{commonmistake}
+
+\section{Master Viva Voce Question Bank (All Units)}
+
+\subsection{Unit 1: Electronic Components \& Instruments (Practical 1)}
+
+\begin{vivaqa}[Resistor Color Coding]
+\textbf{Question:} State the color sequence for a $47\text{ k}\Omega \pm 10\%$ resistor.\\[4pt]
+\textbf{Answer:} Yellow (4), Violet (7), Orange ($\times 10^3$), Silver ($\pm 10\%$).
+\end{vivaqa}
+
+\begin{vivaqa}[Multimeter Internal Resistance]
+\textbf{Question:} What is the ideal internal resistance of a Voltmeter and an Ammeter?\\[4pt]
+\textbf{Answer:} Ideal Voltmeter = $\infty$ (Infinite resistance to prevent drawing current). Ideal Ammeter = $0\,\Omega$ (Zero resistance to prevent voltage drop).
+\end{vivaqa}
+
+\begin{vivaqa}[CRO Time-Base Generator]
+\textbf{Question:} What is the function of the time-base generator in a CRO?\\[4pt]
+\textbf{Answer:} It generates a linear sawtooth voltage wave that sweeps the electron beam horizontally across the screen at a uniform velocity.
+\end{vivaqa}
+
+\subsection{Unit 2: DC Circuit Laws \& KVL (Practical 2)}
+
+\begin{vivaqa}[KCL vs. KVL]
+\textbf{Question:} Differentiate between Kirchhoff's Current Law (KCL) and Kirchhoff's Voltage Law (KVL).\\[4pt]
+\textbf{Answer:} KCL is based on the \textbf{Law of Conservation of Charge} ($\sum I_{in} = \sum I_{out}$ at a node). KVL is based on the \textbf{Law of Conservation of Energy} ($\sum V = 0$ around a closed loop).
+\end{vivaqa}
+
+\begin{vivaqa}[Mesh vs. Loop]
+\textbf{Question:} What is the difference between a loop and a mesh?\\[4pt]
+\textbf{Answer:} A loop is any closed conducting path in a circuit. A mesh is a basic loop that does not contain any other loop inside it.
+\end{vivaqa}
+
+\subsection{Unit 3: Semiconductor Diodes (Practical 3)}
+
+\begin{vivaqa}[Cut-in Voltage Factors]
+\textbf{Question:} Why is cut-in voltage lower for Germanium ($0.3\text{V}$) than Silicon ($0.7\text{V}$)?\\[4pt]
+\textbf{Answer:} Germanium has a smaller energy bandgap ($E_g \approx 0.67\text{ eV}$) compared to Silicon ($E_g \approx 1.12\text{ eV}$), requiring less thermal/external energy to overcome the potential barrier.
+\end{vivaqa}
+
+\begin{vivaqa}[Static vs. Dynamic Resistance]
+\textbf{Question:} How does static resistance ($R_{dc}$) differ from dynamic resistance ($r_{ac}$)?\\[4pt]
+\textbf{Answer:} Static resistance ($R_{dc} = V/I$) is measured at a single DC operating Q-point. Dynamic resistance ($r_{ac} = \Delta V / \Delta I$) is the reciprocal of the slope of the $V$-$I$ curve at that Q-point for AC signals.
+\end{vivaqa}
+
+\subsection{Unit 4: Digital Logic \& Universal Gates (Practical 4)}
+
+\begin{vivaqa}[TTL 7402 IC Trap]
+\textbf{Question:} Why do students often miswire IC 7402 during practical examinations?\\[4pt]
+\textbf{Answer:} IC 7402 (NOR) has a reversed pin layout where Pin 1 is the \textbf{Output} and Pins 2 \& 3 are \textbf{Inputs}, unlike standard 74xx ICs (like 7400 NAND) where Pins 1 \& 2 are Inputs and Pin 3 is Output.
+\end{vivaqa}
+
+\begin{vivaqa}[Universal Gate Minimization]
+\textbf{Question:} Why are universal gates preferred in industrial IC manufacturing?\\[4pt]
+\textbf{Answer:} Manufacturing a single gate type (e.g., all NANDs) in mass production significantly reduces semiconductor fabrication costs, mask complexity, and inventory overhead.
+\end{vivaqa}
+
+\subsection{Unit 5: Arithmetic Adders (Practical 5)}
+
+\begin{vivaqa}[Full Adder using 2-Input NAND Gates]
+\textbf{Question:} How many 2-input NAND gates are required to construct a Full Adder?\\[4pt]
+\textbf{Answer:} \textbf{9 NAND gates} (5 NAND gates per Half Adder $\times 2$, minus 1 redundant gate optimization).
+\end{vivaqa}
+
+\begin{vivaqa}[Carry Lookahead vs. Ripple Carry]
+\textbf{Question:} Why is a Carry Lookahead Adder faster than a Ripple Carry Adder?\\[4pt]
+\textbf{Answer:} A Ripple Carry Adder has $O(n)$ propagation delay as carry ripples sequentially through $n$ stages. A Carry Lookahead Adder calculates carry signals in parallel using $O(1)$ logic expressions ($P_i = A_i \oplus B_i, G_i = A_i B_i$).
+\end{vivaqa}
+
+\subsection{Unit 6: Sequential Flip-Flops (Practical 6)}
+
+\begin{vivaqa}[SR to JK Transformation]
+\textbf{Question:} How does a JK Flip-Flop eliminate the invalid state ($S=1, R=1$) of an SR Flip-Flop?\\[4pt]
+\textbf{Answer:} By feeding back the outputs $Q$ and $\bar{Q}$ to the input steering gates, converting the invalid condition into a deterministic \textbf{Toggle state} ($Q_{n+1} = \bar{Q}_n$).
+\end{vivaqa}
+
+\begin{vivaqa}[Master-Slave Flip-Flop Operation]
+\textbf{Question:} Describe how a Master-Slave JK Flip-Flop prevents Race-Around.\\[4pt]
+\textbf{Answer:} It consists of two flip-flops (Master and Slave) triggered on opposite clock levels/edges. The Master responds while Clock is HIGH, but the Slave output changes only on the falling clock edge when Master is isolated, preventing feedback oscillations.
+\end{vivaqa}
+
+\section{Summary Formula \& IC Quick Reference}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l p{4.5cm} X}
+\toprule
+\textbf{IC Package} & \textbf{Function} & \textbf{Key Pinout / Logic Rule} \\
+\midrule
+\textbf{IC 7400} & Quad 2-Input NAND & Pins 1,2 In $\to$ 3 Out; Pin 7 GND, Pin 14 Vcc. \\
+\textbf{IC 7402} & Quad 2-Input NOR & Pin 1 Out $\leftarrow$ Pins 2,3 In; Pin 7 GND, Pin 14 Vcc. \\
+\textbf{IC 7408} & Quad 2-Input AND & Pins 1,2 In $\to$ 3 Out; Pin 7 GND, Pin 14 Vcc. \\
+\textbf{IC 7410} & Triple 3-Input NAND & Gate 1: Pins 1,2,13 In $\to$ 12 Out; Gate 2: Pins 3,4,5 In $\to$ 6 Out. \\
+\textbf{IC 7432} & Quad 2-Input OR & Pins 1,2 In $\to$ 3 Out; Pin 7 GND, Pin 14 Vcc. \\
+\textbf{IC 7486} & Quad 2-Input XOR & Pins 1,2 In $\to$ 3 Out ($A \oplus B$); Pin 7 GND, Pin 14 Vcc. \\
+\bottomrule
+\end{tabularx}
+\caption{Master Integrated Circuit (IC) Quick Reference Table.}
+\label{tab:master-ic-ref}
+\end{table}
+
+\begin{examtip}[Practical Exam Checklist]
+1. Always verify IC power connections (Pin 14 to $+5\text{V}$, Pin 7 to $\text{GND}$) before turning on power supply!\\
+2. Use current limiting resistors ($220\,\Omega\text{--}470\,\Omega$) in series with all indicator LEDs to avoid burning out IC outputs.\\
+3. When measuring DC voltages, connect DMM in parallel and verify probe polarity to avoid negative reading sign errors.\\
+4. Double check logic level inputs: Logic $0 = 0\text{V (GND)}$, Logic $1 = +5\text{V (Vcc)}$. Never leave TTL inputs floating!
+\end{examtip}

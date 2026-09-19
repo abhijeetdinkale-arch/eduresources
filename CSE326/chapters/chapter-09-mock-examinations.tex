@@ -1,0 +1,525 @@
+\chapter{Full-Length University Mock Examinations}
+\label{chap:mock-examinations}
+
+% ==============================================================================
+% MOCK EXAMINATION 1
+% ==============================================================================
+\section{University Mock Examination 1}
+
+\begin{mockexam}[CSE326 Mock Examination 1 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the role of the \texttt{<!DOCTYPE html>} declaration.
+    \item What is the difference between \texttt{<strong>} and \texttt{<b>}?
+    \item Give two examples of unpaired (void) HTML tags.
+    \item How do you open an anchor link in a new browser tab?
+    \item What is the purpose of \texttt{border-collapse: collapse;} in CSS table styling?
+    \item Differentiate between \texttt{box-sizing: content-box} and \texttt{border-box}.
+    \item Explain the difference between \texttt{var} and \texttt{let} in variable scoping.
+    \item What does \texttt{5 === "5"} evaluate to and why?
+    \item State the difference between \texttt{innerHTML} and \texttt{textContent}.
+    \item What is the purpose of \texttt{event.preventDefault()} in form validation?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Explain the difference between Block-level and Inline elements with two HTML examples of each.
+    \item Differentiate between HTTP \texttt{GET} and \texttt{POST} methods during form submissions.
+    \item Explain the four concentric layers of the CSS Box Model with an annotated diagram.
+    \item Predict the output of the following JavaScript code:
+    \begin{lstlisting}[language=JavaScript]
+console.log("10" + 5, "10" - 5);
+console.log(0 == false, 0 === false);
+    \end{lstlisting}
+    \item Explain how the \texttt{arguments} object works in JavaScript functions with a code example.
+    \item Differentiate between Event Bubbling and Event Capturing in the DOM.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Write a complete, standards-compliant HTML5 document for a University Faculty Directory containing metadata, semantic headers, an address using \texttt{<br>}, and formatted contact details. (10 Marks)
+    \item Construct an academic timetable table in HTML using \texttt{colspan} for lunch breaks, \texttt{rowspan} for laboratory slots, and style it with alternating row colors and hover highlights using CSS. (10 Marks)
+    \item Design a complete CSS stylesheet for a modern Product Showcase Card, featuring box-sizing, padding, borders, shadows, and interactive hover elevation animations. (10 Marks)
+    \item Write a complete JavaScript form validation script for an admission form checking non-empty student names, 10-digit mobile numbers via regex, and email structure, preventing submission upon errors. (10 Marks)
+    \item Implement a dynamic To-Do List web application using JavaScript DOM methods (\texttt{createElement}, \texttt{appendChild}, \texttt{remove}, \texttt{classList.toggle}) that adds and deletes tasks dynamically. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 1}
+
+\begin{solutionbox}[Solutions to Mock Exam 1 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Instructs the browser to render the page in standard HTML5 mode rather than quirks mode. [2M]
+    \item \texttt{<b>} is visual only; \texttt{<strong>} conveys semantic importance for screen readers and SEO. [2M]
+    \item \texttt{<br>} and \texttt{<img>}. [2M]
+    \item \texttt{<a href="url" target="\_blank">}. [2M]
+    \item Merges double borders of adjacent table cells into a single unified border line. [2M]
+    \item In \texttt{content-box}, padding/border add to width; in \texttt{border-box}, padding/border are absorbed within width. [2M]
+    \item \texttt{var} is function-scoped; \texttt{let} is block-scoped (\texttt{\{\}}). [2M]
+    \item \texttt{false} because \texttt{===} strictly evaluates both value and data type without coercion (Number vs String). [2M]
+    \item \texttt{innerHTML} parses HTML tags (XSS risk); \texttt{textContent} inserts safe literal text. [2M]
+    \item Halts default browser form submission when client-side validation fails. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Block elements (\texttt{<div>}, \texttt{<p>}) start on a new line and expand to 100\% width. Inline elements (\texttt{<span>}, \texttt{<a>}) flow with text and only occupy content width. [5M]
+    \item \texttt{GET} appends data to URL query strings (insecure, length-limited); \texttt{POST} transmits payloads inside HTTP request body (secure, unlimited length, supports file uploads). [5M]
+    \item Box Model: Content Box (innermost) $\to$ Padding $\to$ Border $\to$ Margin (outermost). [5M]
+    \item Outputs: \texttt{"105" 5} and \texttt{true false}. [5M]
+    \item \texttt{arguments} is an array-like object containing all parameters passed during invocation. Example: \texttt{function sum() \{ let s=0; for(let v of arguments) s+=v; return s; \}}. [5M]
+    \item Bubbling triggers events from the target element upwards to ancestors; Capturing trickles events downwards from window to target. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Faculty Directory HTML5 Document}: Includes DOCTYPE, UTF-8, viewport, \texttt{<h1>}, \texttt{<h2>}, \texttt{<p>}, \texttt{<abbr>}, \texttt{<strong>}, \texttt{<br>}. [10M]
+    \item \textbf{Academic Timetable Table}: Implements \texttt{<table>} with \texttt{border-collapse: collapse;}, \texttt{colspan="5"} for lunch break, \texttt{rowspan="2"} for lab, and CSS \texttt{tr:hover \{ background-color: \#e0f2fe; \}}. [10M]
+    \item \textbf{Product Showcase Card CSS}: Sets \texttt{width: 300px; box-sizing: border-box; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;} and \texttt{:hover \{ transform: translateY(-5px); \}}. [10M]
+    \item \textbf{Form Validation Engine}: Intercepts \texttt{submit}, validates non-empty name, regex \texttt{/\textasciicircum\textbackslash d\{10\}\$/} for phone, regex \texttt{/\textasciicircum[\textasciicircum\textbackslash s@]+@[\textasciicircum\textbackslash s@]+\textbackslash.[\textasciicircum\textbackslash s@]+\$/} for email, and halts with \texttt{e.preventDefault()}. [10M]
+    \item \textbf{Dynamic To-Do List Application}: Implements \texttt{document.createElement("li")}, attaches click listener toggling \texttt{classList.toggle("completed")}, adds delete button with \texttt{li.remove()}, and appends to parent list. [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 2
+% ==============================================================================
+\section{University Mock Examination 2}
+
+\begin{mockexam}[CSE326 Mock Examination 2 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the purpose of the \texttt{viewport} meta tag?
+    \item How does \texttt{<del>} differ from \texttt{<small>}?
+    \item State the difference between \texttt{type="radio"} and \texttt{type="checkbox"}.
+    \item What attribute is required on \texttt{<form>} for uploading files?
+    \item How do you apply inline CSS to an element?
+    \item What is the difference between \texttt{background-size: cover} and \texttt{contain}?
+    \item What does \texttt{confirm()} return when the user clicks Cancel?
+    \item What is the result of \texttt{typeof null} in JavaScript?
+    \item Which DOM method returns a live \texttt{HTMLCollection}?
+    \item How do you toggle a CSS class using the \texttt{classList} API?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Explain the semantic meaning of \texttt{<abbr>}, \texttt{<cite>}, and \texttt{<dfn>} with code snippets.
+    \item Write HTML code creating an ordered list numbered with uppercase Roman numerals starting from IV.
+    \item Explain CSS selector specificity and order the following: \texttt{p}, \texttt{\#title}, \texttt{.highlight}, \texttt{style="..."}.
+    \item Write a JavaScript object representing a \texttt{student} with properties and a \texttt{getSummary()} method using \texttt{this}.
+    \item Differentiate between \texttt{while} and \texttt{do...while} loops in JavaScript with code examples.
+    \item Explain how to dynamically create, configure, and append an image node to the DOM.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Design a complete University Course Registration Form featuring text fields, radio buttons with shared name, elective checkboxes, a dropdown select menu, and file upload. (10 Marks)
+    \item Build an embedded multimedia learning page containing native \texttt{<audio>} and \texttt{<video>} players with poster frames, fallback formats, and playback controls. (10 Marks)
+    \item Write a complete external CSS stylesheet for an interactive data table with sticky headers, zebra striping, and cell padding. (10 Marks)
+    \item Write a JavaScript password validation script that checks min 8 characters, at least one digit, and matching password confirmation. (10 Marks)
+    \item Implement a dynamic Shopping Cart summary in JavaScript that calculates subtotal, tax (18\%), and updates DOM text nodes upon clicking an "Apply Discount" button. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 2}
+
+\begin{solutionbox}[Solutions to Mock Exam 2 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Configures responsive mobile scaling to match physical device screen width with a 1:1 initial zoom. [2M]
+    \item \texttt{<del>} renders strikethrough text for deleted content; \texttt{<small>} renders smaller text for legal side notes. [2M]
+    \item Radio buttons allow selecting only one option from a group; checkboxes allow selecting multiple options independently. [2M]
+    \item \texttt{enctype="multipart/form-data"} with \texttt{method="POST"}. [2M]
+    \item Using the \texttt{style} attribute: \texttt{<p style="color: blue;">}. [2M]
+    \item \texttt{cover} scales image to fill the container completely; \texttt{contain} scales image to fit within container boundaries without clipping. [2M]
+    \item Boolean \texttt{false}. [2M]
+    \item \texttt{"object"}. [2M]
+    \item \texttt{document.getElementsByClassName()} or \texttt{document.getElementsByTagName()}. [2M]
+    \item \texttt{element.classList.toggle("className")}. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item \texttt{<abbr title="desc">} defines abbreviations; \texttt{<cite>} titles of creative works; \texttt{<dfn>} defining instance of terms. [5M]
+    \item \texttt{<ol type="I" start="4"> <li>Item 1</li> <li>Item 2</li> </ol>}. [5M]
+    \item Specificity order: \texttt{style="..."} (1000) > \texttt{\#title} (100) > \texttt{.highlight} (10) > \texttt{p} (1). [5M]
+    \item Student Object: \texttt{const s = \{ name: "Aarav", gpa: 9.0, getSummary: function() \{ return `\$\{this.name\}: \$\{this.gpa\}`; \} \};}. [5M]
+    \item \texttt{while} checks condition pre-test (0 or more executions); \texttt{do...while} checks condition post-test (at least 1 execution). [5M]
+    \item \texttt{const img = document.createElement("img"); img.src="pic.jpg"; img.alt="Pic"; document.body.appendChild(img);}. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Registration Form}: Implements \texttt{<form method="POST" enctype="multipart/form-data">}, text/email inputs, radio gender group, checkboxes, \texttt{<select>}, and file input. [10M]
+    \item \textbf{Multimedia Webpage}: Constructs \texttt{<video controls poster="thumb.jpg"> <source src="v.mp4" type="video/mp4"> </video>} and \texttt{<audio controls>}. [10M]
+    \item \textbf{Table Stylesheet}: Implements \texttt{border-collapse: collapse;}, \texttt{th \{ background: \#0284c7; color: white; \}}, \texttt{tr:nth-child(even) \{ background: \#f8fafc; \}}, and \texttt{tr:hover}. [10M]
+    \item \textbf{Password Validator}: Validates length $\ge 8$, regex \texttt{/\textbackslash d/}, and equality check \texttt{p1 === p2}, reporting errors in DOM. [10M]
+    \item \textbf{Shopping Cart Engine}: Computes items total, adds 18\% tax, applies 10\% discount on button click, and updates \texttt{textContent} of summary elements. [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 3
+% ==============================================================================
+\section{University Mock Examination 3}
+
+\begin{mockexam}[CSE326 Mock Examination 3 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the meaning and function of the \texttt{<dfn>} tag.
+    \item How does \texttt{<del>} differ from \texttt{<s>}?
+    \item What is the purpose of the \texttt{charset="UTF-8"} metadata tag?
+    \item How do you configure a video element to loop continuously?
+    \item What is the default \texttt{text-align} property value in CSS?
+    \item Explain the function of \texttt{font-family} font stacks.
+    \item What is the difference between \texttt{break} and \texttt{continue} in JavaScript loops?
+    \item What does \texttt{isNaN("CSE326")} return?
+    \item How do you remove a child element from the DOM?
+    \item What does \texttt{event.target} refer to in event handling?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Write HTML code creating a definition list describing three web development terms.
+    \item Explain the CSS Box Model calculation for total rendered element width under default box-sizing.
+    \item Predict the output of this JavaScript snippet:
+    \begin{lstlisting}[language=JavaScript]
+function calc() {
+    let a = 5;
+    if (true) {
+        let a = 10;
+        var b = 20;
+    }
+    console.log(a, b);
+}
+calc();
+    \end{lstlisting}
+    \item Write a function that accepts arbitrary numbers using \texttt{arguments} and returns the maximum value.
+    \item Differentiate between \texttt{innerHTML}, \texttt{innerText}, and \texttt{textContent}.
+    \item Explain the difference between inline, DOM property, and \texttt{addEventListener} event handling.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Design a complete University Course Syllabus page utilizing semantic HTML5 tags (\texttt{<header>}, \texttt{<section>}, \texttt{<article>}, \texttt{<footer>}), nested lists, and metadata. (10 Marks)
+    \item Construct a multi-column pricing table using HTML tables, \texttt{colspan}, \texttt{rowspan}, and modern CSS styling with hover highlights. (10 Marks)
+    \item Write a complete CSS stylesheet for a horizontal navigation bar with drop-down menus using hover pseudo-classes. (10 Marks)
+    \item Write a complete JavaScript form validation script checking student name length, email regex, 10-digit mobile number, and age bounds (18 to 35). (10 Marks)
+    \item Build an interactive image carousel in JavaScript that advances images sequentially upon clicking a "Next" button and cycles back to the start. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 3}
+
+\begin{solutionbox}[Solutions to Mock Exam 3 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Indicates the defining instance of a term being defined in the document. [2M]
+    \item \texttt{<del>} conveys semantic deletion with datetime tracking; \texttt{<s>} represents visual strikethrough for inaccurate data. [2M]
+    \item Enables global character encoding supporting international alphabets and symbols. [2M]
+    \item Adding the boolean attribute \texttt{loop} to the \texttt{<video>} tag. [2M]
+    \item \texttt{left} (or \texttt{right} for right-to-left languages). [2M]
+    \item Provides a prioritized fallback list of font typefaces if the primary font is missing on the client OS. [2M]
+    \item \texttt{break} terminates the loop immediately; \texttt{continue} skips the current iteration and moves to the next. [2M]
+    \item \texttt{true} (cannot be parsed to a number). [2M]
+    \item \texttt{parentElement.removeChild(childElement)} or \texttt{childElement.remove()}. [2M]
+    \item Points to the specific innermost element that dispatched the event. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Definition list: \texttt{<dl> <dt>HTML</dt><dd>Markup</dd> <dt>CSS</dt><dd>Style</dd> <dt>JS</dt><dd>Logic</dd> </dl>}. [5M]
+    \item Total Width = \texttt{width + padding-left + padding-right + border-left + border-right}. [5M]
+    \item Output: \texttt{5 20} (inner \texttt{let a} is shadowed within block; \texttt{var b} is function-scoped). [5M]
+    \item Max Function: \texttt{function findMax() \{ let m = -Infinity; for(let v of arguments) if(v>m) m=v; return m; \}}. [5M]
+    \item \texttt{innerHTML} parses tags; \texttt{textContent} returns literal text; \texttt{innerText} returns rendered text respecting CSS display. [5M]
+    \item Inline mixes HTML/JS; DOM property allows only one function; \texttt{addEventListener} supports multiple independent listeners. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Syllabus Webpage}: Fully semantic document structure with \texttt{<header>}, \texttt{<main>}, \texttt{<section>}, nested lists, and metadata. [10M]
+    \item \textbf{Pricing Table}: Implements \texttt{<table>} with \texttt{border-collapse}, highlighted "Recommended" tier via CSS, and \texttt{colspan="3"}. [10M]
+    \item \textbf{Horizontal Navbar CSS}: Styles \texttt{<ul>} with \texttt{display: flex; list-style: none; a \{ text-decoration: none; padding: 12px; \}} and \texttt{a:hover}. [10M]
+    \item \textbf{Comprehensive Form Validation}: Validates name length, email regex \texttt{/\textasciicircum[\textasciicircum\textbackslash s@]+@[\textasciicircum\textbackslash s@]+\textbackslash.[\textasciicircum\textbackslash s@]+\$/}, phone \texttt{/\textasciicircum\textbackslash d\{10\}\$/}, and age $18 \le \text{age} \le 35$. [10M]
+    \item \textbf{Interactive Image Carousel}: Array of images, current index pointer, \texttt{btnNext.addEventListener("click", () => \{ idx = (idx + 1) \% imgs.length; img.src = imgs[idx]; \})}. [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 4
+% ==============================================================================
+\section{University Mock Examination 4}
+
+\begin{mockexam}[CSE326 Mock Examination 4 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State two advantages of HTML5 semantic tags over generic \texttt{<div>} elements.
+    \item What is the difference between \texttt{<q>} and \texttt{<blockquote>}?
+    \item What does \texttt{<input type="reset">} do?
+    \item Which CSS selector targets all paragraphs inside a \texttt{<div class="content">}?
+    \item What does \texttt{text-transform: capitalize;} accomplish?
+    \item What is the difference between \texttt{null} and \texttt{undefined} in JavaScript?
+    \item What is the Temporal Dead Zone (TDZ)?
+    \item How do you access an object property dynamically using a variable?
+    \item What is the purpose of \texttt{classList.toggle()}?
+    \item Explain the term event delegation.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Construct an HTML audio player supporting MP3 and OGG formats with playback controls.
+    \item Explain CSS selector specificity hierarchy with numerical weights.
+    \item Predict the output of this JavaScript object method program:
+    \begin{lstlisting}[language=JavaScript]
+const user = {
+    name: "Kavya",
+    greet: function() { return `Hello, ${this.name}`; }
+};
+console.log(user.greet());
+    \end{lstlisting}
+    \item Write a function that checks if a string is a palindrome in JavaScript.
+    \item Explain how \texttt{document.querySelectorAll()} differs from \texttt{document.getElementsByTagName()}.
+    \item Differentiate between \texttt{focus} and \texttt{blur} events in web forms.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Design a complete University Feedback Portal form containing rating radio groups, interest checkboxes, a feedback textarea, and file upload. (10 Marks)
+    \item Build an interactive Product Card with responsive image, title, price, discount badge, and hover elevation animation using CSS. (10 Marks)
+    \item Write a complete JavaScript program that dynamically generates an HTML table from an array of student objects and appends it to the DOM. (10 Marks)
+    \item Write a complete form validation script for a student login portal that prevents submission if email or password fields are invalid. (10 Marks)
+    \item Implement an interactive FAQ accordion component in JavaScript where clicking question headers toggles visibility of answer panels. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 4}
+
+\begin{solutionbox}[Solutions to Mock Exam 4 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Semantic tags improve accessibility for screen readers and boost SEO ranking by clearly defining structural roles. [2M]
+    \item \texttt{<q>} is inline with automatic quotes; \texttt{<blockquote>} is an indented block element. [2M]
+    \item Resets all form control inputs back to their initial default values. [2M]
+    \item \texttt{.content p}. [2M]
+    \item Capitalizes the first character of each word. [2M]
+    \item \texttt{undefined} indicates a declared variable without value; \texttt{null} represents intentional absence of object value. [2M]
+    \item The scope region before a \texttt{let}/\texttt{const} variable is declared where accessing it throws a \texttt{ReferenceError}. [2M]
+    \item Using bracket notation: \texttt{obj[variableKey]}. [2M]
+    \item Adds the CSS class if absent; removes it if already present. [2M]
+    \item Attaching a single event listener to a parent container to handle events from multiple child elements via event bubbling. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item \texttt{<audio controls> <source src="a.mp3" type="audio/mpeg"> <source src="a.ogg" type="audio/ogg"> </audio>}. [5M]
+    \item Specificity: Inline style (1000) > ID selector (100) > Class/Pseudo-class (10) > Element selector (1). [5M]
+    \item Output: \texttt{"Hello, Kavya"} (\texttt{this.name} accesses object property). [5M]
+    \item Palindrome: \texttt{function isPal(s) \{ const c = s.toLowerCase().replace(/[\textasciicircum a-z0-9]/g, ''); return c === c.split('').reverse().join(''); \}}. [5M]
+    \item \texttt{querySelectorAll()} returns a static \texttt{NodeList} with \texttt{.forEach()}; \texttt{getElementsByTagName()} returns a live \texttt{HTMLCollection}. [5M]
+    \item \texttt{focus} fires when an element gains active cursor focus; \texttt{blur} fires when the element loses focus. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Feedback Portal Form}: Implements form with radio rating group, checkboxes, textarea, file upload, and submit button. [10M]
+    \item \textbf{Product Card Component}: Styled container with \texttt{box-sizing: border-box}, \texttt{border-radius}, image banner, discount badge, and hover transition. [10M]
+    \item \textbf{Dynamic Student Table Generator}: Iterates array of objects, creates \texttt{<table>}, \texttt{<tr>}, \texttt{<td>} nodes, and appends to container. [10M]
+    \item \textbf{Login Form Validator}: Validates email format with regex, enforces min 8 character password, and alerts errors. [10M]
+    \item \textbf{Accordion FAQ Component}: Attaches click listeners to \texttt{.accordion-header}, toggling \texttt{.active} class on parent item. [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 5
+% ==============================================================================
+\section{University Mock Examination 5}
+
+\begin{mockexam}[CSE326 Mock Examination 5 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the function of the \texttt{<mark>} tag in HTML5.
+    \item What is the purpose of \texttt{enctype="multipart/form-data"} in HTML forms?
+    \item How do you specify multiple image formats as fallbacks in HTML5?
+    \item What is the difference between \texttt{padding} and \texttt{margin} in the CSS Box Model?
+    \item Which CSS pseudo-class targets an element when the mouse hovers over it?
+    \item Explain why \texttt{0 == "0"} is true but \texttt{0 === "0"} is false.
+    \item What does \texttt{document.createElement()} do?
+    \item How do you change the text content of a DOM element safely without parsing HTML tags?
+    \item What is the return value of \texttt{document.getElementById()} when no element matches?
+    \item Explain the role of \texttt{event.stopPropagation()}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Construct an HTML5 document boilerplate and explain the purpose of each tag.
+    \item Write CSS code demonstrating how to create a responsive, centered card container.
+    \item Predict the output of the following JavaScript code:
+    \begin{lstlisting}[language=JavaScript]
+let x = 10;
+function test() {
+    console.log(x);
+    let x = 20;
+}
+test();
+    \end{lstlisting}
+    \item Write a function that calculates the sum of all elements in an array using a \texttt{for} loop.
+    \item Explain how \texttt{classList.add()} and \texttt{classList.remove()} manipulate DOM classes.
+    \item Differentiate between \texttt{click} and \texttt{dblclick} events in web applications.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Design a complete University Course Syllabus page utilizing semantic HTML5 tags, tables, and lists. (10 Marks)
+    \item Build an interactive timetable table featuring cell merging (\texttt{colspan}, \texttt{rowspan}) and CSS zebra striping. (10 Marks)
+    \item Write a complete external CSS stylesheet for an interactive form featuring stylized input focus rings and submit buttons. (10 Marks)
+    \item Write a complete JavaScript form validation script checking student name, email regex, and password confirmation. (10 Marks)
+    \item Implement a dynamic real-time search filter in JavaScript that filters table rows as the user types into an input field. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 5}
+
+\begin{solutionbox}[Solutions to Mock Exam 5 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Represents text marked or highlighted for notation/reference (rendered with yellow background). [2M]
+    \item Required for uploading binary files over HTTP POST without converting payload to text strings. [2M]
+    \item Using multiple nested \texttt{<source>} tags inside \texttt{<video>} or \texttt{<audio>}. [2M]
+    \item Padding is transparent space inside the border; Margin is transparent space outside the border. [2M]
+    \item \texttt{:hover}. [2M]
+    \item \texttt{==} coerces string \texttt{"0"} to number 0; \texttt{===} compares value and type without coercion (Number vs String). [2M]
+    \item Instantiates a new unattached HTML element node in memory. [2M]
+    \item Using \texttt{element.textContent = "Text";}. [2M]
+    \item \texttt{null}. [2M]
+    \item Prevents the event from propagating further up or down the DOM tree (halts bubbling/capturing). [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item Boilerplate: \texttt{<!DOCTYPE html>}, \texttt{<html lang="en">}, \texttt{<head>} with metadata/title, \texttt{<body>}. [5M]
+    \item Card CSS: \texttt{.card \{ width: 300px; margin: 0 auto; padding: 20px; box-sizing: border-box; border-radius: 8px; \}}. [5M]
+    \item \textbf{Output}: Throws a \texttt{ReferenceError: Cannot access 'x' before initialization} due to the Temporal Dead Zone (TDZ) of block-scoped \texttt{let x}. [5M]
+    \item Sum Function: \texttt{function sumArray(arr) \{ let s = 0; for(let i=0; i<arr.length; i++) s += arr[i]; return s; \}}. [5M]
+    \item \texttt{classList.add()} inserts a class string into the token list; \texttt{classList.remove()} deletes it without affecting other classes. [5M]
+    \item \texttt{click} fires on single button press; \texttt{dblclick} fires when two clicks occur within short temporal threshold. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Syllabus Webpage}: Fully semantic document structure with \texttt{<header>}, \texttt{<main>}, \texttt{<section>}, nested lists, and metadata. [10M]
+    \item \textbf{Timetable Table}: Implements \texttt{<table>} with \texttt{border-collapse: collapse;}, \texttt{colspan="5"} for lunch break, \texttt{rowspan="2"} for lab, and CSS \texttt{tr:hover}. [10M]
+    \item \textbf{Form Stylesheet}: Implements full-width inputs, focus rings via \texttt{:focus}, and animated submit button. [10M]
+    \item \textbf{Form Validation Engine}: Intercepts \texttt{submit}, validates non-empty name, email regex, password length $\ge 8$, and matching confirmation. [10M]
+    \item \textbf{Real-Time Search Filter}: Attaches \texttt{input} listener to search field, loops through \texttt{<tr>} elements, checking \texttt{row.textContent.toLowerCase().includes(query)} to toggle \texttt{display}. [10M]
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% MOCK EXAMINATION 6
+% ==============================================================================
+\section{University Mock Examination 6}
+
+\begin{mockexam}[CSE326 Mock Examination 6 (100 Marks --- 3 Hours)]
+\noindent\textbf{Section A: Short Compulsory Questions ($10 \times 2 = 20\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the purpose of the \texttt{<abbr>} tag and its \texttt{title} attribute?
+    \item Explain the difference between \texttt{<i>} and \texttt{<em>}.
+    \item What does \texttt{<input type="password">} do?
+    \item Which CSS property controls the spacing between lines of text?
+    \item What is the specificity value of a class selector?
+    \item Explain why \texttt{typeof []} evaluates to \texttt{"object"}.
+    \item What is the difference between \texttt{let} and \texttt{const}?
+    \item How do you select all elements with class \texttt{"card"} using \texttt{querySelectorAll()}?
+    \item What does \texttt{element.appendChild()} accomplish?
+    \item Differentiate between \texttt{focus} and \texttt{blur} events.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Medium Problems ($6 \times 5 = 30\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=11]
+    \item Construct an HTML definition list for three computer network protocols.
+    \item Explain the cascading order of CSS styles when inline, internal, and external styles conflict.
+    \item Predict the output of the following JavaScript program:
+    \begin{lstlisting}[language=JavaScript]
+const car = {
+    brand: "Tesla",
+    getBrand: function() { return this.brand; }
+};
+console.log(car.getBrand());
+    \end{lstlisting}
+    \item Write a function that counts vowels in an input string.
+    \item Differentiate between \texttt{innerHTML} and \texttt{textContent} with security examples.
+    \item Explain Event Bubbling with an annotated diagram.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problems ($5 \times 10 = 50\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=17]
+    \item Design a complete University Faculty Profile webpage with semantic tags, profile image, contact details, and qualifications table. (10 Marks)
+    \item Build an embedded multimedia learning page containing audio and video players with poster frames, fallback formats, and playback controls. (10 Marks)
+    \item Write a complete external CSS stylesheet for an academic timetable featuring zebra striping, sticky headers, and hover highlights. (10 Marks)
+    \item Write a complete JavaScript form validation script for a student admission portal checking name, email regex, 10-digit mobile number, and age bounds. (10 Marks)
+    \item Implement an interactive FAQ accordion component in JavaScript where clicking question headers toggles answer panel visibility. (10 Marks)
+\end{enumerate}
+\end{mockexam}
+
+\subsection{Complete Worked Solutions for Mock Examination 6}
+
+\begin{solutionbox}[Solutions to Mock Exam 6 (100 Marks)]
+\noindent\textbf{Section A Solutions ($10 \times 2 = 20\text{ Marks}$)}:
+\begin{enumerate}
+    \item Defines abbreviations or acronyms; \texttt{title} supplies the full expanded term shown on hover. [2M]
+    \item \texttt{<i>} renders italic text without importance; \texttt{<em>} applies stress emphasis that alters vocal nuance. [2M]
+    \item Masks entered characters with dots/asterisks to conceal sensitive passwords. [2M]
+    \item \texttt{line-height}. [2M]
+    \item Specificity weight of $10$ (or $(0, 0, 1, 0)$). [2M]
+    \item Arrays are a specialized subtype of objects in JavaScript. [2M]
+    \item \texttt{let} allows variable reassignment; \texttt{const} enforces immutable identifier binding. [2M]
+    \item \texttt{document.querySelectorAll(".card")}. [2M]
+    \item Inserts a node as the last child of the specified parent element. [2M]
+    \item \texttt{focus} triggers when an input gains active cursor; \texttt{blur} triggers when it loses focus. [2M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($6 \times 5 = 30\text{ Marks}$)}:
+\begin{enumerate}[start=11]
+    \item \texttt{<dl> <dt>HTTP</dt><dd>Web Transfer</dd> <dt>FTP</dt><dd>File Transfer</dd> <dt>SMTP</dt><dd>Mail Transfer</dd> </dl>}. [5M]
+    \item Priority order: Inline style ($1000$) > Internal / External style by specificity > Browser default. [5M]
+    \item Output: \texttt{"Tesla"} (\texttt{this.brand} resolves to property on host object). [5M]
+    \item Vowel counter: \texttt{function countVowels(s) \{ return (s.match(/[aeiou]/gi) || []).length; \}}. [5M]
+    \item \texttt{innerHTML} parses tags (vulnerable to XSS); \texttt{textContent} inserts safe literal characters. [5M]
+    \item Event Bubbling propagates events upwards from child target to ancestors. [5M]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($5 \times 10 = 50\text{ Marks}$)}:
+\begin{enumerate}[start=17]
+    \item \textbf{Faculty Profile Webpage}: Semantic document structure with \texttt{<header>}, \texttt{<main>}, \texttt{<section>}, profile image, and qualifications table. [10M]
+    \item \textbf{Multimedia Webpage}: Constructs \texttt{<video controls poster="thumb.jpg"> <source src="v.mp4" type="video/mp4"> </video>} and \texttt{<audio controls>}. [10M]
+    \item \textbf{Timetable Stylesheet}: Implements \texttt{border-collapse: collapse;}, \texttt{th \{ background: \#0284c7; color: white; \}}, \texttt{tr:nth-child(even) \{ background: \#f8fafc; \}}, and \texttt{tr:hover}. [10M]
+    \item \textbf{Admission Validator}: Validates name, email regex \texttt{/\textasciicircum[\textasciicircum\textbackslash s@]+@[\textasciicircum\textbackslash s@]+\textbackslash.[\textasciicircum\textbackslash s@]+\$/}, phone \texttt{/\textasciicircum\textbackslash d\{10\}\$/}, and age $17 \le \text{age} \le 30$. [10M]
+    \item \textbf{Accordion FAQ Component}: Attaches click listeners to \texttt{.accordion-header}, toggling \texttt{.active} class on parent item. [10M]
+\end{enumerate}
+\end{solutionbox}

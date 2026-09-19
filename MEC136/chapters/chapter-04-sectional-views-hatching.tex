@@ -1,0 +1,222 @@
+\chapter{Unit 4: Sectional Views \& Hatching Standards}
+
+\section{A. What You'll Learn}
+Standard orthographic views represent hidden internal features using dashed lines. However, when an object has complex internal geometry, an abundance of hidden lines creates visual confusion. In this unit, you will master:
+\begin{itemize}
+    \item Purpose and principles of sectioning.
+    \item Cutting Plane Lines and Section Hatching standards ($45^\circ$ thin continuous lines, \texttt{ANSI31}).
+    \item **Full Section**, **Half Section**, and **Offset Section** view types.
+    \item Sectioning view placement in First Angle and Third Angle systems.
+    \item **Non-hatching exceptions** (webs/ribs, fasteners, shafts, pins, solid rods).
+    \item AutoCAD sectioning and modification tools (\texttt{STRETCH}, \texttt{EXPLODE}, \texttt{OFFSET}, \texttt{EXTEND}, \texttt{JOIN}, \texttt{REGION}, \texttt{BREAK}).
+    \item AutoCAD Hatching commands (\texttt{HATCH}, \texttt{HATCHEDIT}, \texttt{ANSI31}, Pick Points vs. Select Objects).
+\end{itemize}
+
+---
+
+\section{B. Fundamentals of Sectioning}
+
+\begin{definition}[Sectional View]
+A drawing view created by imagining an object cut by a plane surface to expose its internal construction details.
+\end{definition}
+
+\subsection{Purpose of Sectioning}
+\begin{itemize}
+    \item To clarify internal details and eliminate confusion caused by excessive hidden dashed lines.
+    \item To facilitate accurate dimensioning of internal features (holes, keyways, slots).
+    \item To clearly distinguish solid material from internal void spaces.
+\end{itemize}
+
+\subsection{Key Components of Sectioning}
+\begin{enumerate}
+    \item \textbf{Cutting Plane Line:} A thick chain line (long dash alternating with two short dashes) with thickened ends and arrowheads indicating the direction of viewing.
+    \item \textbf{Section Lines (Hatching):} Thin continuous lines drawn at a **$45^\circ$ angle** to indicate solid material cut by the plane. Void areas (holes/cavities) are **NOT** hatched.
+\end{enumerate}
+
+---
+
+\section{C. Types of Sectional Views}
+
+\subsection{1. Full Section}
+Created when the cutting plane passes entirely through the object in a straight line, splitting it into two parts.
+\begin{itemize}
+    \item \textbf{Usage:} Best for objects where internal features lie along a central axis.
+    \item \textbf{Representation:} The sectional view replaces the standard exterior view.
+\end{itemize}
+
+\subsection{2. Half Section}
+Created by passing two cutting planes at right angles to each other along center lines. Effectively, **one-quarter of the object is removed**.
+\begin{itemize}
+    \item \textbf{Usage:} Ideal for symmetrical objects (cylinders, pulleys, gear blanks).
+    \item \textbf{Representation:} One half of the view shows internal features in section; the other half shows exterior appearance.
+    \item \textbf{Key Rule:} Hidden lines are omitted in the un-sectioned half. The boundary between sectioned and un-sectioned halves is a **Center Line**, not a solid line!
+\end{itemize}
+
+\subsection{3. Offset Section}
+Used when internal features do not lie in a straight line. The cutting plane "steps" or bends to pass through offset features.
+\begin{itemize}
+    \item \textbf{Usage:} Complex parts with holes/slots located at different depths.
+    \item \textbf{Key Rule:} The bends in the cutting plane are **NOT** shown in the final sectional view; the view appears as if all features lay on a single continuous plane.
+\end{itemize}
+
+---
+
+\section{D. Non-Hatching Exceptions (Rules of Sectioning)}
+
+\begin{importantrule}[Standard Engineering Sectioning Exceptions]
+To prevent misinterpretation of solid strength or shape, the following solid items are **NOT** hatched when cut longitudinally (along their length):
+\begin{enumerate}
+    \item \textbf{Thin Ribs / Webs:} Triangular or flat reinforcing webs cut along their longitudinal plane are left unhatched.
+    \item \textbf{Fasteners:} Bolts, nuts, screws, studs, washers, and rivets.
+    \item \textbf{Shafts \& Solid Pins:} Solid shafts, keys, cotters, and pins.
+    \item \textbf{Ball and Roller Bearings:} Rolling elements (balls, rollers).
+\end{enumerate}
+\end{importantrule}
+
+---
+
+\section{E. AutoCAD Modification \& Creation Commands}
+
+\begin{autocadcmd}[STRETCH]
+Elongates or shrinks geometry while maintaining vertex connectivity.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{STRETCH} or \texttt{S}
+    \item \textbf{Critical Requirement:} Objects MUST be selected using a **Crossing Window** (green window drawn right-to-left). Points *inside* the window move; points *outside* remain fixed.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[EXPLODE]
+Breaks compound objects (Blocks, Polylines, Hatches, Rectangles) into constituent component segments (lines, arcs).
+\begin{itemize}
+    \item \textbf{Command:} \texttt{EXPLODE} or \texttt{X}
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[OFFSET]
+Creates concentric circles, parallel lines, or parallel curves at a specified distance.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{OFFSET} or \texttt{O}
+    \item \textbf{Workflow:} Type \texttt{O} $\to$ Enter distance value $\to$ Select object $\to$ Click side to offset.
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[EXTEND]
+Lengthens a line or arc to meet another boundary object edge.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{EXTEND} or \texttt{EX}
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[REGION]
+Converts closed coplanar line segments into a 2D region plane surface.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{REGION} or \texttt{REG}
+\end{itemize}
+\end{autocadcmd}
+
+---
+
+\section{F. AutoCAD Hatching Commands \& Workflow}
+
+\begin{autocadcmd}[HATCH]
+Fills enclosed areas or selected objects with a hatch pattern or solid fill.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{HATCH} or \texttt{H}
+    \item \textbf{Standard Pattern:} \texttt{ANSI31} (diagonal lines at $45^\circ$ for cast iron / general material).
+    \item \textbf{Hatch Scale:} Adjusts line spacing (if hatching appears solid black, increase scale; if lines don't appear, decrease scale).
+    \item \textbf{Pick Points vs. Select Objects:}
+    \begin{itemize}
+        \item \textbf{Pick Points:} Click inside a closed boundary area (AutoCAD auto-detects boundary).
+        \item \textbf{Select Objects:} Click specific closed boundary objects.
+    \end{itemize}
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[HATCHEDIT]
+Modifies an existing hatch pattern, scale, or angle without redrawing.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{HATCHEDIT} or \texttt{HE}
+\end{itemize}
+\end{autocadcmd}
+
+\subsection{Step-by-Step 2D Sectional View Workflow}
+1. Draw standard Top View and Front View outline.
+2. Draw Cutting Plane Line on Top View (e.g., passing through center).
+3. Project cut feature boundary lines down into Front View using \texttt{XLINE}.
+4. Trim away exterior shell lines cut away by plane using \texttt{TRIM}.
+5. Change exposed internal hidden dashed lines to continuous visible object lines.
+6. Switch to 'Hatch Layer' $\to$ Type \texttt{H} $\to$ Select pattern \texttt{ANSI31} $\to$ Click inside solid cut walls. (Ensure webs and fasteners are excluded!).
+7. Label view below: "\texttt{SECTION A-A}".
+
+---
+
+\section{G. Chapter 4 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+What is a Half Section? What line separates the sectioned half from the un-sectioned half?\\[4pt]
+\textbf{Answer:} A Half Section removes one-quarter of a symmetrical object using two cutting planes at right angles. The boundary line between sectioned and un-sectioned halves is a **Center Line**.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+State three solid components that are exempt from hatching when cut longitudinally.\\[4pt]
+\textbf{Answer:} 1. Thin Reinforcing Webs/Ribs. 2. Fasteners (Bolts, Nuts, Screws). 3. Solid Shafts and Pins.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+Describe the AutoCAD procedure to stretch a shaft length by $30\text{ mm}$ using the \texttt{STRETCH} command.\\[4pt]
+\textbf{Answer:} Type \texttt{STRETCH} (or \texttt{S}) $\to$ Press \texttt{Enter} $\to$ Draw a **Crossing Window** (green window right-to-left) enclosing the shaft end $\to$ Press \texttt{Enter} $\to$ Click base point $\to$ Move cursor in stretch direction with Ortho ON $\to$ Type \texttt{30} $\to$ Press \texttt{Enter}.
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. What is the standard angle for general section hatching lines (\texttt{ANSI31})?  
+   A. $30^\circ$  
+   B. $45^\circ$  
+   C. $60^\circ$  
+   D. $90^\circ$  
+   \textbf{Answer: B} — Section hatching lines are drawn at a $45^\circ$ angle.
+
+2. Which section type removes one-quarter of an object?  
+   A. Full Section  
+   B. Half Section  
+   C. Offset Section  
+   D. Revolved Section  
+   \textbf{Answer: B} — Half section removes one-quarter of the object.
+
+3. Thin reinforcing webs cut longitudinally are:  
+   A. Hatched with double lines  
+   B. Hatched at $60^\circ$  
+   C. Left unhatched  
+   D. Drawn with dashed lines  
+   \textbf{Answer: C} — Webs cut longitudinally are left unhatched.
+
+4. Which selection method MUST be used with the AutoCAD \texttt{STRETCH} command?  
+   A. Single Pick Click  
+   B. Blue Window Selection (Left-to-Right)  
+   C. Green Crossing Window Selection (Right-to-Left)  
+   D. Select All  
+   \textbf{Answer: C} — \texttt{STRETCH} requires a green Crossing Window selection.
+
+5. What does an Offset Section cutting plane line do?  
+   A. Passes straight through the central axis  
+   B. Steps/bends to pass through offset features  
+   C. Cuts at a $45^\circ$ angle  
+   D. Removes half the object  
+   \textbf{Answer: B} — Offset section cutting planes step/bend to pass through offset features.
+
+---
+
+\section{H. Unit 4 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $\text{Section Hatching Line Angle} = 45^\circ \text{ (ANSI31 Pattern)}$.
+    \item $\text{Half Section} \to \text{1/4 of object removed; boundary line = Center Line}$.
+    \item $\text{Offset Section} \to \text{Cutting plane steps/bends; bends NOT shown in section view}$.
+    \item $\text{Non-Hatching Exceptions} \to \text{Webs/ribs, bolts, nuts, shafts, pins cut longitudinally}$.
+    \item $\text{AutoCAD Stretch} \to \text{Must use Green Crossing Window (Right-to-Left)}$.
+    \item $\text{AutoCAD Hatch} \to \texttt{H} \to \text{ANSI31} \to \text{Pick Points}$.
+    \item $\text{AutoCAD Explode} \to \texttt{X} \text{ breaks compound polylines/hatches into separate lines}$.
+\end{itemize}
+\end{revisionchecklist}

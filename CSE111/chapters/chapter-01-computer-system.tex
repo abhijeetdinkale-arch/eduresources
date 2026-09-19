@@ -1,0 +1,782 @@
+\chapter{Computer System}
+\label{chap:computer-system}
+
+% ==============================================================================
+% SECTION 1.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+The modern digital computer is an electronic, programmable data-processing machine that ingests raw input data, performs arithmetic and logical transformations at immense speeds, stores intermediate and final results, and generates human- or machine-interpretable output. Understanding the internal organization of computer hardware, memory hierarchies, processor specializations, interface protocols, and storage redundancy systems provides the necessary foundation for all computer science and software engineering disciplines.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Analyze the Von Neumann Architecture} and explain the sequential execution flow across the five core computer operations.
+    \item \textbf{Differentiate CPU Subcomponents}, including the Arithmetic Logic Unit (ALU), Control Unit (CU), internal high-speed registers, and system buses (Data, Address, and Control).
+    \item \textbf{Evaluate Memory Hierarchies}, contrasting volatile vs. non-volatile memory, SRAM (CPU Cache) vs. DRAM (Main Memory), and ROM variants (PROM, EPROM, EEPROM).
+    \item \textbf{Compare Secondary Storage Technologies}, conducting a deep technical analysis of Solid State Drives (SSD) versus Hard Disk Drives (HDD).
+    \item \textbf{Distinguish Serial vs. Parallel Processors}, explaining why CPUs excel at low-latency sequential tasks while GPUs excel at massive parallel SIMD computations (AI/ML, 3D rendering).
+    \item \textbf{Identify Hardware Interconnects}, categorizing wired (USB, SATA, HDMI) and wireless (Bluetooth, NFC) interface standards, bandwidths, and pin configurations.
+    \item \textbf{Design Redundant Storage Arrays (RAID)}, calculating storage efficiency, usable capacity, and fault tolerance across RAID levels 0, 1, 5, 6, and 10.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 1.2: BASIC STRUCTURE OF A COMPUTER
+% ==============================================================================
+\section{Basic Structure of a Computer and its Components}
+
+\subsection{The Von Neumann Architecture}
+
+Modern general-purpose computers operate on the architectural framework established by mathematician and physicist \textbf{John von Neumann} in 1945. The defining characteristic of the \textbf{Von Neumann Architecture} is the \textbf{Stored-Program Concept}: both program instructions and data are stored together in a common, unified read-write primary memory space. 
+
+\begin{definition}[Von Neumann Architecture]
+A theoretical computing architecture consisting of a Central Processing Unit (containing an Arithmetic Logic Unit and processor registers), a Control Unit (containing an instruction register and program counter), a primary memory unit to store data and instructions, external mass storage, and input/output mechanisms, all interconnected via a shared system bus.
+\end{definition}
+
+\subsection{The Five Core Computer Operations}
+
+Every computing system, regardless of physical scale (from embedded microcontrollers to supercomputers), executes five fundamental operations:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Inputting}: The process of entering raw data, programs, and user commands into the computer system via peripheral input transducers.
+    \item \textbf{Storing}: The persistent or transient retention of data and program instructions in internal memory units (registers, cache, primary RAM, secondary disks) for immediate or future processing.
+    \item \textbf{Processing}: The execution of arithmetic transformations (addition, subtraction, multiplication, division) and logical evaluations (comparisons, boolean operations) on data held in processor registers.
+    \item \textbf{Outputting}: The transformation and presentation of processed binary results into human-readable visual, audio, or printed formats, or machine-readable control signals.
+    \item \textbf{Controlling}: The coordinated sequencing, synchronization, and timing of all internal hardware operations directed by the Control Unit (CU).
+\end{enumerate}
+
+\subsection{Functional Block Diagram of a Computer}
+
+The primary physical hardware subsystems are organized as shown in Figure~\ref{fig:computer-block-diagram}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=2.6cm, minimum height=1.1cm, align=center, font=\sffamily\bfseries\small},
+    cpubox/.style={rectangle, draw=brandaccent, fill=boxrosebg, dashed, rounded corners=6pt, thick, inner sep=10pt},
+    arrow/.style={-{Stealth[scale=1.1]}, thick, draw=brandnavy},
+    darrow/.style={{Stealth[scale=1.1]}-{Stealth[scale=1.1]}, thick, draw=brandblue}
+]
+    % Nodes
+    \node[box] (input) at (0, 2) {Input Unit\\{\scriptsize (Keyboard, Mouse)}};
+    
+    % CPU Components
+    \node[box, fill=boxamberbg, draw=brandgold] (cu) at (4.5, 3) {Control Unit (CU)\\{\scriptsize "Traffic Signal"}};
+    \node[box, fill=boxamberbg, draw=brandgold] (alu) at (4.5, 1) {Arithmetic Logic\\Unit (ALU)};
+    \node[box, fill=boxgoldbg, draw=brandgold, minimum width=2.2cm, minimum height=0.7cm] (reg) at (4.5, -0.6) {Registers\\{\scriptsize (ACC, PC, MAR)}};
+    
+    \node[box] (mem) at (9, 2) {Primary Memory\\{\scriptsize (RAM / ROM)}};
+    \node[box] (sec) at (9, -0.6) {Secondary Storage\\{\scriptsize (SSD / HDD)}};
+    \node[box] (output) at (13.2, 2) {Output Unit\\{\scriptsize (Monitor, Printer)}};
+    
+    % CPU Enclosure
+    \begin{scope}[on background layer]
+        \node[cpubox, fit=(cu) (alu) (reg), label={[brandaccent, font=\sffamily\bfseries]above:Central Processing Unit (CPU)}] (cpu) {};
+    \end{scope}
+
+    % Arrows
+    \draw[arrow] (input) -- (cu);
+    \draw[arrow] (input) -- (alu);
+    \draw[darrow] (alu) -- (reg);
+    \draw[darrow] (cu) -- (alu);
+    \draw[darrow] (cu) -- (mem);
+    \draw[darrow] (alu) -- (mem);
+    \draw[darrow] (mem) -- (sec);
+    \draw[arrow] (mem) -- (output);
+    \draw[arrow] (cu) -- (output);
+
+\end{tikzpicture}
+\caption{Functional Block Diagram of a Computer System illustrating data and control paths.}
+\label{fig:computer-block-diagram}
+\end{figure}
+
+\subsection{The Central Processing Unit (CPU)}
+
+Commonly designated as the "brain" of the computer, the \textbf{Central Processing Unit (CPU)} is the primary integrated circuit responsible for fetching, decoding, and executing machine-code instructions. The CPU is internally partitioned into three critical sub-units:
+
+\subsubsection{1. Arithmetic Logic Unit (ALU)}
+The ALU contains digital combinatorial and sequential logic circuits (adders, subtractors, multiplexers, and logic gates) that execute all computational operations:
+\begin{itemize}
+    \item \textbf{Arithmetic Operations}: Standard binary arithmetic, including addition ($+$), subtraction ($-$), multiplication ($\times$), and integer division ($\div$).
+    \item \textbf{Logical Operations}: Boolean evaluations, including $\text{AND}$, $\text{OR}$, $\text{NOT}$, $\text{XOR}$, bitwise shifts, and relational evaluations ($<, >, \le, \ge, =, \ne$).
+\end{itemize}
+
+\subsubsection{2. Control Unit (CU)}
+The Control Unit is the supervisory nerve center of the processor. It does \textbf{not} execute arithmetic or manipulate data directly; rather, it directs the operational sequence of the entire system:
+\begin{itemize}
+    \item Generates micro-timing and clock signals to orchestrate the \textbf{Fetch-Decode-Execute} instruction cycle.
+    \item Decodes binary opcodes held in the Instruction Register (IR).
+    \item Acts as an internal "traffic controller," directing data flow along system buses between the ALU, registers, cache, memory, and peripheral I/O interfaces.
+\end{itemize}
+
+\subsubsection{3. Processor Registers}
+Registers are ultra-high-speed, low-capacity volatile storage locations implemented directly inside the CPU die using static flip-flop circuits. Operating at core CPU clock speeds ($\sim 0.2\text{--}0.5\,\text{ns}$ access latency), they hold immediate operands, memory addresses, and execution flags:
+\begin{itemize}
+    \item \textbf{Accumulator (ACC)}: Holds the intermediate and final arithmetic or logical results generated by the ALU.
+    \item \textbf{Program Counter (PC)}: Stores the physical memory address of the \textbf{next} instruction waiting to be fetched from RAM. It automatically increments after every fetch.
+    \item \textbf{Memory Address Register (MAR)}: Holds the memory address currently being read from or written to via the Address Bus.
+    \item \textbf{Memory Data Register (MDR) / Memory Buffer Register (MBR)}: Temporarily buffers the actual data word transferred to or from the memory bus.
+    \item \textbf{Instruction Register (IR)}: Holds the binary machine-code instruction currently being decoded by the Control Unit.
+\end{itemize}
+
+\subsection{The System Bus Architecture}
+
+The CPU communicates with primary memory and peripheral interface controllers over a set of parallel physical electrical conductors termed the \textbf{System Bus}. The system bus is partitioned into three functional signal groups:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    bus/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=2pt, thick, minimum width=11.5cm, minimum height=0.7cm, font=\sffamily\bfseries\small, align=center},
+    arrow/.style={{Stealth[scale=1.0]}-{Stealth[scale=1.0]}, thick, draw=brandblue},
+    uarrow/.style={-{Stealth[scale=1.0]}, thick, draw=brandaccent}
+]
+    \node[bus, fill=boxskybg, draw=boxskyborder] (data) at (0, 2) {Data Bus (Bidirectional) --- Carries Operands and Result Data Words};
+    \node[bus, fill=boxamberbg, draw=boxamberborder] (addr) at (0, 0.8) {Address Bus (Unidirectional from CPU) --- Carries Target Physical Memory Addresses};
+    \node[bus, fill=boxrosebg, draw=boxroseborder] (ctrl) at (0, -0.4) {Control Bus (Bidirectional / Strobe) --- Carries Read/Write, Interrupt, and Clock Signals};
+\end{tikzpicture}
+\caption{The Three Components of the Computer System Bus.}
+\label{fig:system-bus-architecture}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Data Bus (Bidirectional)}: Transmits actual numerical data words, instruction operands, and ASCII/Unicode characters between the CPU, RAM, and I/O devices. The \textbf{width} of the data bus (e.g., 32-bit or 64-bit) determines the native word size the processor can transfer in a single bus cycle.
+    \item \textbf{Address Bus (Unidirectional)}: Carries the binary physical memory address from the CPU (specifically from the MAR) to primary memory modules or memory-mapped I/O controllers. The width of the address bus determines the \textbf{maximum addressable physical memory capacity} of the system:
+    \begin{equation}
+        \text{Maximum Addressable Memory} = 2^n \text{ addressable bytes (where } n = \text{address bus lines)}
+    \end{equation}
+    For instance, a 32-bit address bus can address $2^{32} = 4{,}294{,}967{,}296\text{ bytes} = 4\,\text{GB}$ of RAM, whereas a 64-bit address bus can theoretically address $2^{64} = 16\,\text{EB}$ (Exabytes).
+    \item \textbf{Control Bus (Bidirectional / Strobe Lines)}: Carries timing, synchronization, and control signals generated by the Control Unit to dictate bus activity. Key control lines include:
+    \begin{itemize}
+        \item \textbf{Memory Read ($\overline{\text{MEMR}}$) / Memory Write ($\overline{\text{MEMW}}$)}: Signals whether the CPU is requesting data from memory or committing data to memory.
+        \item \textbf{I/O Read ($\overline{\text{IOR}}$) / I/O Write ($\overline{\text{IOW}}$)}: Directs peripheral port communications.
+        \item \textbf{Interrupt Request (IRQ) \& Acknowledge (INTA)}: Allows asynchronous hardware devices to signal the CPU for servicing.
+        \item \textbf{Clock ($\text{CLK}$) \& Reset ($\text{RST}$)}: Provides synchronous bus clock pulses and system hardware initialization.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.3: MEMORIES AND ITS TYPES (RAM \& ROM)
+% ==============================================================================
+\section{Computer Memory Hierarchy: Primary Memory}
+
+Computer memory constitutes the physical silicon and magnetic medium utilized to store data, runtime operational states, and executable program instructions. Memory is structured into a hierarchical pyramid based on access latency, cost per bit, and storage capacity (Figure~\ref{fig:memory-hierarchy}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    level/.style={draw=brandnavy, thick, align=center, font=\sffamily\small},
+    arrow/.style={-{Stealth[scale=1.1]}, thick, draw=brandaccent}
+]
+    % Pyramid Levels
+    \draw[level, fill=boxgoldbg] (0, 3.2) -- (-1.2, 2.4) -- (1.2, 2.4) -- cycle;
+    \node[align=center] at (0, 2.7) {\textbf{\scriptsize CPU Registers}\\{\tiny $< 1\,\text{ns}, < 1\,\text{KB}$}};
+
+    \draw[level, fill=boxamberbg] (-1.2, 2.4) -- (-2.4, 1.6) -- (2.4, 1.6) -- (1.2, 2.4) -- cycle;
+    \node[align=center] at (0, 1.95) {\textbf{\scriptsize CPU Cache (SRAM: L1, L2, L3)}\\{\tiny $1\text{--}10\,\text{ns}, 1\text{--}64\,\text{MB}$}};
+
+    \draw[level, fill=boxskybg] (-2.4, 1.6) -- (-3.6, 0.8) -- (3.6, 0.8) -- (2.4, 1.6) -- cycle;
+    \node[align=center] at (0, 1.15) {\textbf{\scriptsize Primary Main Memory (DRAM: DDR4/DDR5)}\\{\tiny $10\text{--}50\,\text{ns}, 8\text{--}64\,\text{GB}$}};
+
+    \draw[level, fill=boxnavybg] (-3.6, 0.8) -- (-4.8, 0.0) -- (4.8, 0.0) -- (3.6, 0.8) -- cycle;
+    \node[align=center] at (0, 0.35) {\textbf{\scriptsize Secondary Mass Storage (SSD / HDD)}\\{\tiny $0.1\text{--}15\,\text{ms}, 512\,\text{GB}\text{--}16\,\text{TB}$}};
+
+    % Side Arrows
+    \draw[arrow] (-5.3, 0.0) -- (-5.3, 3.2) node[midway, left=2pt, align=right, font=\sffamily\scriptsize\bfseries] {Increasing Speed\\Higher Cost / Bit\\Lower Latency};
+    \draw[arrow] (5.3, 3.2) -- (5.3, 0.0) node[midway, right=2pt, align=left, font=\sffamily\scriptsize\bfseries] {Increasing Capacity\\Lower Cost / Bit\\Higher Latency};
+\end{tikzpicture}
+\caption{The Hierarchical Memory Architecture of a Modern Computer.}
+\label{fig:memory-hierarchy}
+\end{figure}
+
+\subsection{Primary Memory (Main Memory)}
+
+\textbf{Primary Memory} refers to internal memory directly addressable by the CPU memory controller via the system address bus. It is fast, high-bandwidth, and divided into two core classifications: \textbf{RAM} and \textbf{ROM}.
+
+\subsection{RAM (Random Access Memory)}
+
+\textbf{Random Access Memory (RAM)} is volatile read-write memory that holds the operating system kernel, active software applications, and runtime data structures currently in execution. "Random Access" indicates that any memory cell can be accessed directly in constant time ($O(1)$ latency), regardless of its physical sector location.
+
+\begin{definition}[Volatile Memory]
+Memory that requires continuous electrical power to maintain its stored state. When electrical power is interrupted or switched off, all data held within volatile memory is instantaneously and permanently lost.
+\end{definition}
+
+\subsubsection{Types of RAM: SRAM vs. DRAM}
+RAM is physically implemented via two fundamentally different silicon circuit topologies:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Static RAM (SRAM)}:
+    \begin{itemize}
+        \item \textbf{Circuit Architecture}: Each storage bit is constructed using a bistable latching circuit comprising \textbf{6 CMOS transistors (6T cell)}.
+        \item \textbf{Operational Mechanism}: Holds its binary state continuously as long as DC power is supplied. It does \textbf{not} require dynamic capacitive refreshing.
+        \item \textbf{Characteristics}: Ultra-fast access time ($\sim 1\text{--}10\,\text{ns}$), low access latency, low power consumption during idle states, but larger physical silicon footprint (lower density) and significantly higher manufacturing cost.
+        \item \textbf{Primary Application}: \textbf{Processor On-Die Caches (L1, L2, L3 Cache)} and high-speed network router buffers.
+    \end{itemize}
+    \item \textbf{Dynamic RAM (DRAM)}:
+    \begin{itemize}
+        \item \textbf{Circuit Architecture}: Each storage bit is implemented using a minimalist cell containing \textbf{1 transistor and 1 microscopic storage capacitor (1T-1C cell)}.
+        \item \textbf{Operational Mechanism}: The capacitor stores an electric charge representing a binary $1$ (charged) or binary $0$ (discharged). Because capacitors naturally leak electrical charge over time, DRAM cells must be \textbf{continuously recharged (refreshed)} thousands of times per second (typically every $64\,\text{ms}$) via a memory controller refresh cycle.
+        \item \textbf{Characteristics}: Slower access latency ($\sim 15\text{--}60\,\text{ns}$) due to pre-charge and refresh overhead, but achieves immense packing density (billions of bits per chip) at very low cost per gigabyte.
+        \item \textbf{Primary Application}: \textbf{System Main Memory (DDR4, DDR5 RAM modules)}.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{ROM (Read Only Memory)}
+
+\textbf{Read Only Memory (ROM)} is non-volatile memory designed to permanently store essential hardware initialization firmware, such as the computer's \textbf{BIOS (Basic Input/Output System)} or \textbf{UEFI (Unified Extensible Firmware Interface)}.
+
+\begin{definition}[Non-Volatile Memory]
+Memory that retains its stored binary data permanently, even when the computer system is completely powered down or disconnected from electrical supply.
+\end{definition}
+
+\subsubsection{Evolutionary Types of ROM}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{PROM (Programmable ROM)}: Manufactured as blank memory chips with microscopic internal fuses. The user or engineer programs the chip once using a specialized high-voltage hardware device called a PROM programmer/burner. Once programmed, the internal fuses are permanently blown, making the chip \textbf{irreversible and non-erasable}.
+    \item \textbf{EPROM (Erasable Programmable ROM)}: Features a distinctive transparent fused-quartz window on top of the ceramic chip package. The entire chip can be completely erased by exposing it to concentrated \textbf{Ultraviolet (UV) light} for 20 to 30 minutes, which discharges the floating gates. It can then be reprogrammed.
+    \item \textbf{EEPROM (Electrically Erasable Programmable ROM)}: Erased and reprogrammed electrically at the byte level without requiring UV exposure or removal from the circuit board. EEPROM can be erased and rewritten thousands of times in-circuit. This technology is the direct precursor to modern \textbf{NAND Flash Memory}, which powers solid-state drives (SSDs), USB flash thumb drives, and smartphone internal storage.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.4: SECONDARY STORAGE DEVICES
+% ==============================================================================
+\section{Secondary Storage Devices \& Technologies}
+
+\textbf{Secondary Storage} (Auxiliary Storage) provides non-volatile, high-capacity, permanent mass storage for operating system binaries, installed applications, and user files. While significantly slower than primary RAM, secondary storage retains data indefinitely across system power cycles at a fraction of the cost per gigabyte.
+
+\subsection{Classifications of Secondary Storage}
+
+Secondary storage media are categorized into three primary technological families:
+
+\subsubsection{1. Magnetic Storage Media}
+\begin{itemize}
+    \item \textbf{Hard Disk Drive (HDD)}: Contains stacked rigid circular aluminum/glass platters coated with a microscopic ferromagnetic layer, spinning at high rotational velocities ($5{,}400$ or $7{,}200\,\text{RPM}$). An electromagnetic actuator arm sweeps a read/write head fractions of a micrometer above the surface to read and write magnetic flux polarities.
+    \item \textbf{Magnetic Tape}: A long, thin plastic ribbon coated with a magnetizable material wound on reels. It is a strictly \textbf{sequential access storage medium} (accessing data requires winding past preceding data), making it unsuitable for random real-time access but the industry standard for \textbf{long-term, low-cost enterprise archival backup}.
+\end{itemize}
+
+\subsubsection{2. Optical Storage Media}
+Optical discs store digital information in the form of microscopic microscopic pits and lands pressed or burned along continuous spiral tracks, read using focused semiconductor diode laser beams:
+\begin{itemize}
+    \item \textbf{Compact Disc (CD)}: Capacity $\approx \mathbf{700\,\text{MB}}$; read/written using a $780\,\text{nm}$ infrared laser.
+    \item \textbf{Digital Versatile Disc (DVD)}: Capacity $\approx \mathbf{4.7\,\text{GB}}$ (Single Layer) to $\mathbf{8.5\,\text{GB}}$ (Dual Layer); utilizes a narrower $650\,\text{nm}$ red laser with smaller pit dimensions.
+    \item \textbf{Blu-ray Disc (BD)}: Capacity $\approx \mathbf{25\,\text{GB}}$ (Single Layer) to $\mathbf{50\,\text{GB}}$ (Dual Layer); utilizes a short-wavelength $405\,\text{nm}$ blue-violet laser allowing tightly packed spiral tracks for High-Definition content.
+\end{itemize}
+
+\subsubsection{3. Solid-State Storage Media (Flash Memory)}
+Solid-state storage is constructed from semiconductor integrated circuits containing arrays of floating-gate or charge-trap NAND flash transistors. With \textbf{zero mechanical moving parts}, solid-state devices provide near-instantaneous seek times, high physical shock resistance, and immense sequential throughput. Examples include Solid State Drives (SSDs), USB Flash Drives, and SD/microSD cards.
+
+% ==============================================================================
+% SECTION 1.5: SSD VS HDD COMPARISON
+% ==============================================================================
+\section{Technical Comparative Synthesis: SSD vs. HDD}
+
+The fundamental technological shift in personal and enterprise computing over the last decade has been the transition from magnetic hard disk drives to solid-state drives. Table~\ref{tab:ssd-vs-hdd} details their architectural differences.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Evaluation Metric} & \textbf{Hard Disk Drive (HDD)} & \textbf{Solid State Drive (SSD)} \\
+\midrule
+\textbf{Underlying Mechanism} & Electromechanical: Spinning magnetic platters and mechanical read/write actuator heads. & Purely Electronic: Solid-state non-volatile NAND flash memory chips. \\
+\textbf{Data Access Latency} & High latency ($\sim 5\text{--}15\,\text{ms}$) caused by mechanical seek time and rotational delay. & Near-instantaneous access latency ($< 0.1\,\text{ms}$); zero mechanical positioning delay. \\
+\textbf{Read/Write Speeds} & Typical sequential speeds of $80\text{--}200\,\text{MB/s}$. & Speeds of $500\text{--}550\,\text{MB/s}$ (SATA III) up to $3{,}500\text{--}7{,}500\,\text{MB/s}$ (NVMe PCIe Gen4/5). \\
+\textbf{Physical Durability} & Fragile: Vulnerable to physical shock, drops, vibrations, and magnetic fields. & Extremely durable: High resistance to drops, physical impacts, and magnetic interference. \\
+\textbf{Acoustic Noise} & Audibly generates mechanical humming, spinning noise, and clicking sounds. & Completely silent operation ($0\,\text{dB}$) across all workloads. \\
+\textbf{Power Consumption} & Higher electrical draw ($\sim 6\text{--}10\,\text{W}$) to power the physical spindle motor. & Highly energy-efficient ($\sim 1\text{--}3\,\text{W}$); significantly prolongs laptop battery life. \\
+\textbf{Cost per Gigabyte} & Significantly cheaper per gigabyte; ideal for high-capacity bulk data archiving. & Higher cost per gigabyte, though the price gap continues to narrow rapidly. \\
+\textbf{Physical Form Factors} & Standard $3.5\text{-inch}$ (Desktop) and $2.5\text{-inch}$ (Legacy Laptop) metallic enclosures. & Compact $2.5\text{-inch}$ SATA, ultra-slim M.2 (2280) gumstick modules, PCIe cards. \\
+\textbf{File Fragmentation} & Suffers severe performance degradation as scattered file fragments require repeated mechanical seeks. & Fragmentation causes negligible performance impact because any NAND cell is accessed in $O(1)$ time. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Technical Comparison between HDD and SSD Storage Technologies.}
+\label{tab:ssd-vs-hdd}
+\end{table}
+
+% ==============================================================================
+% SECTION 1.6: PROCESSORS AND GPU
+% ==============================================================================
+\section{Processors: CPU vs. GPU Architectures}
+
+Modern computational workloads require specialized hardware execution pipelines. The two primary processors in personal and enterprise computing are the \textbf{CPU} and the \textbf{GPU}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    cpubox/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=4pt, thick, minimum width=6cm, minimum height=3.2cm},
+    gpubox/.style={rectangle, draw=brandaccent, fill=boxrosebg, rounded corners=4pt, thick, minimum width=6cm, minimum height=3.2cm},
+    core/.style={rectangle, draw=brandblue, fill=boxskybg, font=\sffamily\bfseries\scriptsize, align=center, minimum width=2.4cm, minimum height=1.0cm},
+    gcore/.style={rectangle, draw=brandaccent, fill=boxgoldbg, minimum size=0.42cm}
+]
+    % CPU side
+    \node[cpubox] (cpub) at (0, 0) {};
+    \node[anchor=north, font=\sffamily\bfseries\color{brandnavy}] at (0, 1.5) {CPU: Few Powerful Cores (Serial)};
+    \node[core] at (-1.3, 0.4) {Core 1\\{\tiny (Large Cache)}};
+    \node[core] at (1.3, 0.4) {Core 2\\{\tiny (Large Cache)}};
+    \node[core] at (-1.3, -0.8) {Core 3\\{\tiny (Branch Predict)}};
+    \node[core] at (1.3, -0.8) {Core 4\\{\tiny (Branch Predict)}};
+
+    % GPU side
+    \node[gpubox] (gpub) at (7.5, 0) {};
+    \node[anchor=north, font=\sffamily\bfseries\color{brandaccent}] at (7.5, 1.5) {GPU: Thousands of Small Cores (Parallel)};
+    
+    % Draw grid of small cores for GPU
+    \foreach \x in {5.2, 5.7, 6.2, 6.7, 7.2, 7.7, 8.2, 8.7, 9.2, 9.7} {
+        \foreach \y in {0.6, 0.1, -0.4, -0.9} {
+            \node[gcore] at (\x, \y) {};
+        }
+    }
+\end{tikzpicture}
+\caption{Architectural Comparison: Multi-Core CPU (Serial Execution) vs. Massively Parallel GPU.}
+\label{fig:cpu-vs-gpu}
+\end{figure}
+
+\subsection{CPU (Central Processing Unit)}
+\begin{itemize}
+    \item \textbf{Architectural Philosophy}: Optimized for \textbf{low-latency, complex sequential (serial) execution}.
+    \item \textbf{Core Structure}: Features a relatively small number of powerful, highly complex physical cores (e.g., 4, 8, 16, or 32 cores) equipped with extensive hardware branch prediction logic, deep execution pipelines, and multi-megabyte shared L2/L3 caches.
+    \item \textbf{Operating Metric}: High clock speeds measured in Gigahertz ($\text{GHz}$, typically $3.0\text{--}5.5\,\text{GHz}$), executing complex instruction sets with multiple dependency branches.
+    \item \textbf{Primary Domain}: Running operating systems, handling file management, executing complex single-threaded business logic, and coordinating hardware.
+\end{itemize}
+
+\subsection{GPU (Graphics Processing Unit)}
+\begin{itemize}
+    \item \textbf{Architectural Philosophy}: Optimized for \textbf{massively parallel, high-throughput SIMD (Single Instruction, Multiple Data) processing}.
+    \item \textbf{Core Structure}: Features hundreds to \textbf{thousands of smaller, energy-efficient arithmetic logic cores} executing concurrently.
+    \item \textbf{Operating Metric}: Moderate clock frequencies ($1.5\text{--}2.5\,\text{GHz}$) paired with ultra-wide high-bandwidth memory interfaces (GDDR6, HBM3).
+    \item \textbf{Primary Applications}:
+    \begin{enumerate}
+        \item \textbf{3D Graphics \& Gaming}: Real-time matrix transformations, pixel shading, rasterization, and ray tracing.
+        \item \textbf{Video Editing \& Encoding}: Parallel frame rendering and multi-stream 4K/8K video transcode pipelines.
+        \item \textbf{Machine Learning \& Deep Learning}: Rapid dense matrix multiplications ($A \times B + C$) foundational to training and running Large Language Models (LLMs) and neural networks.
+        \item \textbf{Cryptocurrency Mining \& Scientific Simulation}: High-throughput SHA-256/Ethash hashing and Monte Carlo molecular physics simulations.
+    \end{enumerate}
+\end{itemize}
+
+\begin{keyequation}[The Core Analogy: CPU vs. GPU]
+A \textbf{CPU} is analogous to a high-speed sports car: it moves a small payload (one or few complex tasks) from point A to point B at blistering speeds. A \textbf{GPU} is analogous to a massive passenger bus or freight train: individual transit speed per person is slightly slower, but it transports thousands of passengers simultaneously in a single trip.
+\end{keyequation}
+
+% ==============================================================================
+% SECTION 1.7: PC CONNECTION INTERFACES
+% ==============================================================================
+\section{PC Connection Interfaces (Wired \& Wireless)}
+
+Connection interfaces establish standardized electrical, optical, or radio communication channels enabling the computer motherboard to exchange data with external peripherals and internal mass storage devices.
+
+\subsection{Wired Interfaces}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{USB (Universal Serial Bus)}:
+    \begin{itemize}
+        \item The global industry standard for connecting hot-pluggable peripherals (mice, keyboards, external storage, smartphones) providing bidirectional serial data and DC power delivery over a single cable.
+        \item \textbf{Speed Evolution Standards}:
+        \begin{itemize}
+            \item \textbf{USB 2.0 (HighSpeed)}: Transfer speeds up to $\mathbf{480\,\text{Mbps}}$ ($60\,\text{MB/s}$).
+            \item \textbf{USB 3.0 / USB 3.1 Gen 1 (SuperSpeed)}: Transfer speeds up to $\mathbf{5\,\text{Gbps}}$ ($625\,\text{MB/s}$).
+            \item \textbf{USB 3.2 Gen 2 (SuperSpeed+)}: Transfer speeds up to $\mathbf{10\text{--}20\,\text{Gbps}}$.
+            \item \textbf{USB4 / Thunderbolt 4}: Transfer speeds up to $\mathbf{40\,\text{Gbps}}$ utilizing dual-channel PCIe and DisplayPort tunneling.
+        \end{itemize}
+        \item \textbf{Physical Connector Types}:
+        \begin{itemize}
+            \item \textbf{Type-A}: Standard rectangular 4-pin/9-pin host port found on desktop and laptop PCs.
+            \item \textbf{Type-B}: Square-profile keyed connector commonly utilized on printers and audio interfaces.
+            \item \textbf{Type-C}: Modern 24-pin reversible connector supporting high-speed data, \textbf{USB Power Delivery (USB-PD up to $240\,\text{W}$)}, and video output via DisplayPort Alt Mode.
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{SATA (Serial Advanced Technology Attachment)}:
+    \begin{itemize}
+        \item Dedicated point-to-point internal serial bus interface utilized to connect host bus adapters on the motherboard directly to mass storage devices (internal HDDs, $2.5\text{-inch}$ SATA SSDs, and optical drives).
+        \item \textbf{SATA Revision 3.0 (SATA III)}: Standard operating bandwidth of $\mathbf{6.0\,\text{Gbps}}$, delivering maximum theoretical payload throughput of $\sim 600\,\text{MB/s}$ (real-world $\sim 550\,\text{MB/s}$).
+    \end{itemize}
+
+    \item \textbf{HDMI (High-Definition Multimedia Interface)}:
+    \begin{itemize}
+        \item Proprietary all-digital audio/video interconnect standard utilizing Transition-Minimized Differential Signaling (TMDS).
+        \item Transmits uncompressed digital video bitstreams, multi-channel digital audio (LPCM, Dolby Atmos), and Consumer Electronics Control (CEC) over a single cable connecting PCs to monitors, projectors, and television displays.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Wireless Interfaces}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Bluetooth}:
+    \begin{itemize}
+        \item Short-range personal area wireless standard operating in the license-free $\mathbf{2.402\text{--}2.480\,\text{GHz}}$ ISM (Industrial, Scientific, and Medical) UHF radio band.
+        \item Utilizes \textbf{Frequency-Hopping Spread Spectrum (FHSS)} technology, switching across 79 designated channels 1600 times per second to minimize interference from Wi-Fi networks.
+        \item \textbf{Operating Range}: Standard Class 2 consumer devices operate up to $\sim \mathbf{10\,\text{meters}}$ ($33\,\text{feet}$).
+        \item \textbf{Primary Applications}: Wireless audio transmission (A2DP headphones), peripheral input devices (keyboards, mice, gamepads), and low-power IoT telemetry (Bluetooth Low Energy / BLE).
+    \end{itemize}
+
+    \item \textbf{NFC (Near Field Communication)}:
+    \begin{itemize}
+        \item High-frequency, ultra-short-range wireless communication standard operating at $\mathbf{13.56\,\text{MHz}}$ based on ISO/IEC 14443 standards.
+        \item \textbf{Operating Range}: Strictly restricted to $\mathbf{4\,\text{cm}}$ ($\approx 1.5\text{-inches}$) or less.
+        \item \textbf{Physical Mechanism}: Operates via \textbf{magnetic inductive coupling} between two loop antennas placed within each other's near field. Can wirelessly power passive, battery-less tags (NFC tags, smart cards).
+        \item \textbf{Primary Applications}: Contactless point-of-sale mobile payments (\textbf{Apple Pay, Google Pay, Samsung Wallet}), public transit fare cards (Metro smartcards), digital building keycards, and one-tap smartphone pairing.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.8: RAID AND RAID LEVELS
+% ==============================================================================
+\section{Storage Virtualization: RAID and RAID Levels}
+
+In enterprise server environments, individual storage disks represent a dangerous single point of failure and an I/O performance bottleneck. \textbf{RAID} resolves both challenges through storage virtualization.
+
+\begin{definition}[RAID (Redundant Array of Independent Disks)]
+A data storage virtualization technology that combines multiple physical disk drive components into one or more logical units to achieve data redundancy (fault tolerance), performance enhancement (higher I/O throughput), or both.
+\end{definition}
+
+\subsection{Three Foundational RAID Techniques}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Striping (Data Segmentation)}: Partitioning contiguous data into fixed-size block chunks (e.g., $64\,\text{KB}$) and writing them alternately across multiple physical disks. Because multiple drive heads read and write simultaneously, aggregate I/O throughput increases directly with the number of disks.
+    \item \textbf{Mirroring (Data Duplication)}: Writing identical, simultaneous copies of the exact same data blocks to two or more independent disks. Provides complete data redundancy; if one drive physically dies, the system continues running uninterrupted on the mirror.
+    \item \textbf{Parity (Error-Correcting Checksums)}: Calculating mathematical checksums across striped data blocks using binary $\text{XOR}$ logic ($A \oplus B = C$). If any single drive in the array fails, the missing data bits can be calculated dynamically:
+    \begin{equation}
+        \text{If } D\_1 \oplus D\_2 = P \implies D\_1 = D\_2 \oplus P
+    \end{equation}
+\end{itemize}
+
+\subsection{Standard RAID Levels Master Comparison}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{RAID Level} & \textbf{Core Technique} & \textbf{Min. Disks} & \textbf{Usable Storage Capacity} & \textbf{Fault Tolerance \& Trade-offs} \\
+\midrule
+\textbf{RAID 0} & Pure Striping & $2$ & $100\%$ ($N \times \text{Size}$) & \textbf{Zero Fault Tolerance}: If 1 drive fails, \textbf{100\% of all data across the array is lost}. Maximum throughput. \\
+\textbf{RAID 1} & Pure Mirroring & $2$ & $50\%$ ($1 \times \text{Size}$) & \textbf{Survives 1 Drive Failure}: High redundancy; expensive because storage capacity is cut in half. Slower writes. \\
+\textbf{RAID 5} & Striping with Distributed Parity & $3$ & $\frac{N-1}{N}$ ($(N-1) \times \text{Size}$) & \textbf{Survives 1 Drive Failure}: Excellent balance of cost, storage efficiency, and safety. Write penalty due to parity calculation. \\
+\textbf{RAID 6} & Striping with Dual Distributed Parity & $4$ & $\frac{N-2}{N}$ ($(N-2) \times \text{Size}$) & \textbf{Survives 2 Simultaneous Failures}: Dual mathematical parity syndromes. High safety; slower write latency. \\
+\textbf{RAID 10 (1+0)} & Nested: Striping across Mirrored sets & $4$ (Even) & $50\%$ ($\frac{N}{2} \times \text{Size}$) & \textbf{Survives up to $N/2$ Failures} (1 per mirrored pair): Blistering speed and extreme safety. High drive cost. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison of Common RAID Levels.}
+\label{tab:raid-levels-master}
+\end{table}
+
+% ==============================================================================
+% SECTION 1.9: WORKED EXAMPLES
+% ==============================================================================
+\section{Worked Numerical \& Practical Examples}
+
+\begin{example}[Calculating Maximum Addressable Physical Memory]
+A processor features a \textbf{36-bit Address Bus} and an \textbf{8-bit byte-addressable} memory architecture. Calculate the maximum theoretical RAM capacity this processor can support.
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+\begin{enumerate}
+    \item \textbf{Formula}: Total Addressable Memory Space $= 2^n \text{ bytes}$, where $n$ is the number of address lines.
+    \item \textbf{Substitution}:
+    \begin{align*}
+        \text{Total Bytes} \&= 2^{36} \text{ bytes} \\
+        \&= 2^6 \times 2^{30} \text{ bytes}
+    \end{align*}
+    \item \textbf{Unit Conversion}:
+    \begin{align*}
+        2^{30} \text{ bytes} \&= 1\,\text{Gigabyte (GB)} \\
+        2^6 \&= 64 \\
+        \implies \text{Total Memory} \&= 64 \times 1\,\text{GB} = \mathbf{64\,\text{GB}}
+    \end{align*}
+    \item \textbf{Conclusion}: A 36-bit address bus allows the CPU to directly address up to \textbf{64 Gigabytes} of physical RAM.
+\end{enumerate}
+\end{solutionbox}
+\end{example}
+
+\begin{example}[RAID Array Usable Storage \& Fault-Tolerance Calculations]
+An enterprise file server is configured with \textbf{six (6) identical $4\,\text{TB}$ Solid State Drives}. Calculate the total usable storage capacity and state the fault tolerance (maximum allowed simultaneous drive failures) if the array is configured as:
+\begin{enumerate}[label=(\alph*)]
+    \item RAID 0
+    \item RAID 1 (assuming 2-drive mirror sets)
+    \item RAID 5
+    \item RAID 6
+    \item RAID 10
+\end{enumerate}
+
+\begin{solutionbox}[Step-by-Step Storage Calculations]
+Given: Total number of disks $N = 6$, Individual disk capacity $C = 4\,\text{TB}$. Raw capacity $= 6 \times 4\,\text{TB} = 24\,\text{TB}$.
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{RAID 0 (Pure Striping)}:
+    \begin{itemize}
+        \item Usable Capacity $= N \times C = 6 \times 4\,\text{TB} = \mathbf{24\,\text{TB}}$ ($100\%$ capacity utilization).
+        \item Fault Tolerance $= \mathbf{0\text{ drives}}$ (A single drive failure destroys all data).
+    \end{itemize}
+    
+    \item \textbf{RAID 1 (Pure Mirroring)}:
+    \begin{itemize}
+        \item Usable Capacity $= 1 \times C = \mathbf{4\,\text{TB}}$ (if all 6 mirror each other) or $3 \times 4 = \mathbf{12\,\text{TB}}$ (in three 2-disk pairs).
+        \item Fault Tolerance $= \mathbf{5\text{ drives}}$ (if full 6-way mirror) or $1$ drive per pair.
+    \end{itemize}
+
+    \item \textbf{RAID 5 (Distributed Parity)}:
+    \begin{itemize}
+        \item Formula: Usable Capacity $= (N - 1) \times C$
+        \item Usable Capacity $= (6 - 1) \times 4\,\text{TB} = 5 \times 4\,\text{TB} = \mathbf{20\,\text{TB}}$ ($83.3\%$ efficiency).
+        \item Fault Tolerance $= \mathbf{1\text{ drive failure}}$.
+    \end{itemize}
+
+    \item \textbf{RAID 6 (Dual Distributed Parity)}:
+    \begin{itemize}
+        \item Formula: Usable Capacity $= (N - 2) \times C$
+        \item Usable Capacity $= (6 - 2) \times 4\,\text{TB} = 4 \times 4\,\text{TB} = \mathbf{16\,\text{TB}}$ ($66.7\%$ efficiency).
+        \item Fault Tolerance $= \mathbf{2\text{ simultaneous drive failures}}$.
+    \end{itemize}
+
+    \item \textbf{RAID 10 (Striped Mirrored Pairs)}:
+    \begin{itemize}
+        \item Formula: Usable Capacity $= (N / 2) \times C$
+        \item Usable Capacity $= (6 / 2) \times 4\,\text{TB} = 3 \times 4\,\text{TB} = \mathbf{12\,\text{TB}}$ ($50\%$ efficiency).
+        \item Fault Tolerance $= \mathbf{\text{Up to } 3\text{ drive failures}}$ (provided no two failed drives belong to the exact same mirrored pair).
+    \end{itemize}
+\end{enumerate}
+\end{solutionbox}
+\end{example}
+
+% ==============================================================================
+% SECTION 1.10: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Exam Points]
+\begin{itemize}
+    \item \textbf{SRAM vs. DRAM}: In exam multiple-choice and short-answer questions, remember: \textbf{SRAM = Flip-Flops = Cache = Fast \& Expensive = No Refresh}. \textbf{DRAM = Capacitors = Main RAM = Leaks Charge = Needs Periodic Refresh}.
+    \item \textbf{EEPROM as Flash}: When asked what technology forms the basis of USB pen drives and SSDs, the answer is \textbf{EEPROM (Electrically Erasable PROM)}.
+    \item \textbf{RAID 0 Danger}: Always emphasize that RAID 0 provides \textbf{ZERO redundancy}. The "0" stands for zero fault tolerance.
+    \item \textbf{Address Bus Direction}: The address bus is strictly \textbf{unidirectional} (CPU $\rightarrow$ Memory). The data bus is \textbf{bidirectional}.
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Concept Confusions]
+\begin{itemize}
+    \item \textbf{Confusing Control Unit with ALU}: The Control Unit does \textbf{not} perform calculations or logical decisions. It only fetches, decodes, and routes control signals.
+    \item \textbf{Forgetting Parity Overhead in RAID 5/6}: When calculating RAID 5 capacity, students frequently forget to subtract 1 disk for parity ($(N-1)\times C$). For RAID 6, subtract 2 disks ($(N-2)\times C$).
+    \item \textbf{Assuming GPU Replaces CPU}: A GPU cannot replace a CPU because GPUs lack complex branch prediction logic, hardware interrupt handling, and out-of-order execution required to run an operating system.
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 1.11: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 1 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Von Neumann Architecture}: Stored-program concept where data and instructions share primary memory. Five operations: Inputting, Storing, Processing, Outputting, Controlling.
+    \item \textbf{CPU Subcomponents}: ALU (Arithmetic \& Logic), CU (Instruction decoding \& bus traffic control), Registers (High-speed internal storage: ACC, PC, MAR, MDR, IR).
+    \item \textbf{Buses}: Data Bus (Bidirectional), Address Bus (Unidirectional, $2^n$ memory limit), Control Bus (Timing \& read/write strobes).
+    \item \textbf{RAM vs. ROM}: RAM is volatile read/write; ROM is non-volatile read-only.
+    \item \textbf{SRAM vs. DRAM}: SRAM uses 6T flip-flops (CPU cache, no refresh); DRAM uses 1T-1C cells (Main RAM, requires periodic refresh).
+    \item \textbf{ROM Variants}: PROM (programmed once with fuses), EPROM (erased via UV light), EEPROM (erased electrically, basis of Flash/SSDs).
+    \item \textbf{SSD vs. HDD}: SSD uses electronic NAND flash (fast, silent, durable, low power); HDD uses spinning magnetic platters (slow, mechanical, noisy, cheap bulk storage).
+    \item \textbf{CPU vs. GPU}: CPU has few powerful cores optimized for serial low-latency tasks; GPU has thousands of smaller cores optimized for massive SIMD parallel tasks (3D, Deep Learning).
+    \item \textbf{Wired Interfaces}: USB 2.0 ($480\,\text{Mbps}$), USB 3.0 ($5\,\text{Gbps}$), USB4 ($40\,\text{Gbps}$); SATA III ($6\,\text{Gbps}$ storage); HDMI (digital audio/video).
+    \item \textbf{Wireless Interfaces}: Bluetooth ($2.4\,\text{GHz}$ ISM band, $\sim 10\,\text{m}$); NFC ($13.56\,\text{MHz}$, $\le 4\,\text{cm}$, Apple/Google Pay).
+    \item \textbf{RAID Summary}: RAID 0 (Striping, $0$ fault tolerance), RAID 1 (Mirroring, $50\%$ capacity), RAID 5 (Distributed parity, min 3 disks, survives 1 failure), RAID 6 (Dual parity, min 4 disks, survives 2 failures), RAID 10 (Striped mirrors, min 4 disks, $50\%$ capacity).
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 1.12: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual, Technical \& Calculation Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Short Answer}: State the primary role of the Program Counter (PC) register during the CPU fetch cycle.
+    \item \textbf{Short Answer}: Why must Dynamic RAM (DRAM) be refreshed periodically while Static RAM (SRAM) does not require refreshing?
+    \item \textbf{Conceptual}: Explain why file fragmentation severely degrades the read performance of a mechanical HDD but has negligible impact on an SSD.
+    \item \textbf{Technical Comparison}: Differentiate between EPROM and EEPROM with respect to their erasing mechanism and practical application.
+    \item \textbf{Interface Analysis}: State the maximum theoretical bandwidth of USB 2.0, USB 3.0, and SATA III.
+    \item \textbf{Calculation Problem}: A computer system utilizes a 32-bit physical address bus. What is the maximum RAM capacity the processor can address in gigabytes?
+    \item \textbf{RAID Design Problem}: A company requires at least $12\,\text{TB}$ of usable storage with the ability to survive two simultaneous disk failures. If $3\,\text{TB}$ drives are used, calculate the number of drives required under RAID 6.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 1.13: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which functional unit of the CPU is responsible for decoding instructions and coordinating data traffic along system buses?
+    \begin{enumerate}[label=(\alph*)]
+        \item Arithmetic Logic Unit (ALU)
+        \item Control Unit (CU)
+        \item Accumulator (ACC)
+        \item Memory Data Register (MDR)
+    \end{enumerate}
+
+    \item In the Von Neumann architecture, where are program instructions and operational data stored?
+    \begin{enumerate}[label=(\alph*)]
+        \item In separate physical memory modules with distinct buses
+        \item In the same shared primary memory space
+        \item Exclusively in internal CPU registers
+        \item In optical secondary storage
+    \end{enumerate}
+
+    \item Which type of memory is constructed using 6-transistor flip-flop circuits and is used to implement CPU L1/L2 caches?
+    \begin{enumerate}[label=(\alph*)]
+        \item DRAM
+        \item SRAM
+        \item EEPROM
+        \item PROM
+    \end{enumerate}
+
+    \item Which ROM technology can be erased by exposing the chip's quartz window to intense ultraviolet (UV) light?
+    \begin{enumerate}[label=(\alph*)]
+        \item PROM
+        \item EPROM
+        \item EEPROM
+        \item Flash ROM
+    \end{enumerate}
+
+    \item What is the maximum individual file size supported by the FAT32 file system?
+    \begin{enumerate}[label=(\alph*)]
+        \item $2\,\text{GB}$
+        \item $4\,\text{GB}$
+        \item $32\,\text{GB}$
+        \item $16\,\text{TB}$
+    \end{enumerate}
+
+    \item Near Field Communication (NFC) operates at which frequency and standard distance?
+    \begin{enumerate}[label=(\alph*)]
+        \item $2.4\,\text{GHz}$ and up to $10\,\text{meters}$
+        \item $13.56\,\text{MHz}$ and $4\,\text{cm}$ or less
+        \item $5.0\,\text{GHz}$ and up to $50\,\text{meters}$
+        \item $900\,\text{MHz}$ and up to $1\,\text{meter}$
+    \end{enumerate}
+
+    \item If an array of five (5) $2\,\text{TB}$ hard drives is configured in a \textbf{RAID 5} configuration, what is the total usable storage capacity?
+    \begin{enumerate}[label=(\alph*)]
+        \item $10\,\text{TB}$
+        \item $8\,\text{TB}$
+        \item $6\,\text{TB}$
+        \item $4\,\text{TB}$
+    \end{enumerate}
+
+    \item Which RAID level provides block-level striping with dual distributed parity, enabling the array to survive up to two simultaneous disk failures?
+    \begin{enumerate}[label=(\alph*)]
+        \item RAID 0
+        \item RAID 1
+        \item RAID 5
+        \item RAID 6
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) Control Unit (CU)} --- The CU decodes instructions and orchestrates control signals; the ALU performs arithmetic.
+    \item \textbf{(b) In the same shared primary memory space} --- The hallmark of the Von Neumann architecture is the unified memory space for data and instructions.
+    \item \textbf{(b) SRAM} --- Static RAM uses flip-flops, requires no refresh, and serves as high-speed CPU cache.
+    \item \textbf{(b) EPROM} --- EPROM chips have a transparent quartz window erased via UV light.
+    \item \textbf{(b) $4\,\text{GB}$} --- FAT32 has a hard $4\,\text{GB}$ ($2^{32}-1$ bytes) individual file size limitation.
+    \item \textbf{(b) $13.56\,\text{MHz}$ and $4\,\text{cm}$ or less} --- NFC operates via magnetic inductive coupling at $13.56\,\text{MHz}$ within $4\,\text{cm}$.
+    \item \textbf{(b) $8\,\text{TB}$} --- For RAID 5, Usable Capacity $= (N-1) \times C = (5-1) \times 2\,\text{TB} = 8\,\text{TB}$.
+    \item \textbf{(d) RAID 6} --- RAID 6 writes two independent parity blocks across all drives, surviving 2 simultaneous disk failures.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.14: UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 1: Computer System (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Define the term \textit{Bus Width} and explain its significance for the Data Bus.
+    \item What is the fundamental operational difference between volatile and non-volatile memory?
+    \item State the minimum number of physical drives required to construct a functional RAID 5 array.
+    \item Which wireless technology is used for contactless payment systems such as Apple Pay?
+    \item Why does a solid-state drive (SSD) consume less electrical power than a hard disk drive (HDD)?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical \& Technical Explanations ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Draw and explain the internal subcomponents of the Central Processing Unit (CPU), clearly describing the specific functions of the ALU, Control Unit, and processor registers.
+    \item Compare and contrast Static RAM (SRAM) and Dynamic RAM (DRAM) across five distinct technical parameters: circuit components, access speed, density, cost, and typical application.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Problem \& Design ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item An enterprise data center requires a reliable, high-performance storage array.
+    \begin{enumerate}[label=(\alph*)]
+        \item Explain the three core RAID concepts: Striping, Mirroring, and Parity. (3 Marks)
+        \item A database administrator is deploying an array using \textbf{eight (8) identical $2\,\text{TB}$ drives}. Calculate the total usable storage capacity, storage efficiency percentage, and fault tolerance (number of allowed drive failures) for:
+        \begin{itemize}
+            \item (i) RAID 0
+            \item (ii) RAID 5
+            \item (iii) RAID 6
+            \item (iv) RAID 10 (4 Marks)
+        \end{itemize}
+        \item Recommend the best RAID configuration for a mission-critical transactional database requiring both high write performance and high fault tolerance, justifying your choice. (3 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item \textbf{Bus Width}: The number of parallel electrical conducting lines in a bus. For the Data Bus, it determines the word size (e.g., 32-bit or 64-bit) transferred in a single clock cycle. [1 Mark]
+    \item \textbf{Volatile vs. Non-Volatile}: Volatile memory (e.g., RAM) loses all stored data when power is removed; non-volatile memory (e.g., ROM, Flash) retains data permanently without power. [1 Mark]
+    \item \textbf{Minimum Disks for RAID 5}: Minimum of \textbf{three (3) disks}. [1 Mark]
+    \item \textbf{Contactless Payment Technology}: \textbf{NFC (Near Field Communication)} operating at $13.56\,\text{MHz}$. [1 Mark]
+    \item \textbf{SSD Power Efficiency}: SSDs are constructed purely from semiconductor NAND flash with zero moving mechanical parts, whereas HDDs require continuous power to run an electric spindle motor. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{CPU Subcomponents}:
+    \begin{itemize}
+        \item \textit{ALU}: Performs arithmetic ($+, -, \times, \div$) and logical ($\text{AND}, \text{OR}, <, >$) operations. [1.5 Marks]
+        \item \textit{Control Unit (CU)}: Generates timing signals, decodes instructions, and routes data traffic ("traffic signal"). [1.5 Marks]
+        \item \textit{Registers}: Ultra-fast storage inside CPU. Program Counter (stores next address), Accumulator (stores ALU result), MAR/MDR (memory bus buffers), IR (current instruction). [2 Marks]
+    \end{itemize}
+    
+    \item \textbf{SRAM vs. DRAM Comparison Table} (1 Mark per parameter):
+    \begin{itemize}
+        \item \textit{Circuit Component}: SRAM uses 6-transistor flip-flops; DRAM uses 1 transistor + 1 capacitor.
+        \item \textit{Access Speed}: SRAM is ultra-fast ($1\text{--}10\,\text{ns}$); DRAM is slower ($15\text{--}60\,\text{ns}$).
+        \item \textit{Refreshing}: SRAM requires no refresh; DRAM requires periodic capacitive refreshing.
+        \item \textit{Density \& Cost}: SRAM has low density and high cost; DRAM has high density and low cost.
+        \item \textit{Application}: SRAM is used for CPU Caches (L1/L2/L3); DRAM is used for System Main RAM.
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Comprehensive RAID Problem}:
+    \begin{enumerate}[label=(\alph*)]
+        \item \textit{Concepts}:
+        \begin{itemize}
+            \item \textbf{Striping}: Splitting data across multiple disks to increase read/write speed. [1 Mark]
+            \item \textbf{Mirroring}: Writing identical copies of data to multiple disks for safety. [1 Mark]
+            \item \textbf{Parity}: Calculated XOR checksums used to reconstruct data if a drive fails. [1 Mark]
+        \end{itemize}
+        
+        \item \textit{Calculations for 8 Disks of $2\,\text{TB}$ (Raw Capacity $= 16\,\text{TB}$)}:
+        \begin{itemize}
+            \item \textbf{RAID 0}: Usable $= 8 \times 2 = \mathbf{16\,\text{TB}}$ ($100\%$). Fault tolerance $= \mathbf{0\text{ drives}}$. [1 Mark]
+            \item \textbf{RAID 5}: Usable $= (8 - 1) \times 2 = \mathbf{14\,\text{TB}}$ ($87.5\%$). Fault tolerance $= \mathbf{1\text{ drive}}$. [1 Mark]
+            \item \textbf{RAID 6}: Usable $= (8 - 2) \times 2 = \mathbf{12\,\text{TB}}$ ($75\%$). Fault tolerance $= \mathbf{2\text{ drives}}$. [1 Mark]
+            \item \textbf{RAID 10}: Usable $= (8 / 2) \times 2 = \mathbf{8\,\text{TB}}$ ($50\%$). Fault tolerance $= \mathbf{\text{Up to } 4\text{ drives}}$ ($1$ per pair). [1 Mark]
+        \end{itemize}
+        
+        \item \textit{Recommendation \& Justification}:
+        \begin{itemize}
+            \item \textbf{Recommendation}: \textbf{RAID 10 (RAID 1+0)}. [1 Mark]
+            \item \textbf{Justification}: Transactional databases generate heavy random write I/O. RAID 5/6 suffers from a write penalty due to parity calculations. RAID 10 avoids parity calculations entirely (providing maximum write throughput) while offering robust fault tolerance across mirrored pairs. [2 Marks]
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

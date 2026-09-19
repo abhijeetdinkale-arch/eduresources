@@ -1,0 +1,334 @@
+\chapter{Unit 1: Introduction to Engineering Drawing \& AutoCAD Setup}
+
+\section{A. What You'll Learn}
+Engineering drawing is the universal graphic language used by engineers and architects to communicate physical object designs with mathematical precision. In this unit, you will master:
+\begin{itemize}
+    \item Essential manual drawing instruments, pencil lead grading, and proper handling.
+    \item Standardized Line Types (The Alphabet of Lines) defined by ISO and ANSI standards.
+    \item Dimensioning components, mechanics, Aligned vs. Unidirectional systems, and single-stroke vertical Gothic lettering.
+    \item Scales, Representative Fraction ($R.F.$), Length of Scale ($L.O.S.$), Plain Scales, and Diagonal Scales based on similar triangles.
+    \item Fundamental AutoCAD 2D interface navigation, drawing limits, units, object snap (\texttt{OSNAP}), orthogonal mode (\texttt{ORTHO}), and function keys.
+\end{itemize}
+
+---
+
+\section{B. Conceptual Framework of Drawing Instruments}
+
+\subsection{Key Instruments and Their Applications}
+
+\begin{definition}[Drawing Board]
+Provides a smooth, flat, rectangular surface for securing drawing sheets. Made of seasoned soft wood strips (such as pine) to prevent warping and allow easy pin/tape insertion.
+\end{definition}
+
+\begin{definition}[Mini-Drafter]
+An indispensable drafting tool that combines the functions of a T-square, set squares, protractor, and scales into a single mechanism. It uses a 3D parallelogram linkage clamped to the drawing board to keep ruling edges parallel across the entire sheet.
+\end{definition}
+
+\begin{itemize}
+    \item \textbf{T-Square:} Traditional tool consisting of a stock and blade used primarily for drawing horizontal parallel lines and supporting set squares.
+    \item \textbf{Set Squares:} Used in combination with a drafter or T-square:
+    \begin{itemize}
+        \item \textbf{$45^\circ\text{ Set Square}$:} Angles of $45^\circ, 90^\circ, 135^\circ$.
+        \item \textbf{$30^\circ\text{--}60^\circ\text{ Set Square}$:} Angles of $30^\circ, 60^\circ, 90^\circ, 120^\circ, 150^\circ$.
+    \end{itemize}
+    \item \textbf{Instrument Box:}
+    \begin{itemize}
+        \item \textbf{Large Compass:} Features a knee joint for drawing large circles ($> 50\text{ mm}$ radius).
+        \item \textbf{Bow Compass:} Used for drawing precise small circles and arcs.
+        \item \textbf{Dividers:} Used to transfer dimensions from scales to drawing paper or divide lines into equal segments.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Pencil Lead Grading and Selection}
+Pencil leads are classified by hardness (clay content vs. graphite ratio).
+
+\begin{importantrule}[Pencil Lead Application Matrix]
+\begin{itemize}
+    \item \textbf{Hard Grades ($4\text{H to } 6\text{H}$):} High clay content. Used for very light construction lines, center lines, locus lines, and guide lines.
+    \item \textbf{Medium Grades ($\text{H}, 2\text{H}$):} Standard drafting leads. Used for visible object lines, dimension lines, extension lines, arrowheads, and lettering.
+    \item \textbf{Soft Grades ($\text{HB}, \text{B}$):} High graphite content. Used for artistic sketching or freehand boundary lines. (Rarely used in precision engineering drawing).
+\end{itemize}
+\end{importantrule}
+
+\subsection{French Curves}
+French curves are plastic templates with varying smooth curves used to draw non-circular curves (such as ellipses, parabolas, hyperbolas, and involutes) that cannot be drawn with a standard compass.
+
+---
+
+\section{C. Line Types (The Alphabet of Lines)}
+
+Standardization of lines is governed by ISO and ANSI standards. Line thickness and style convey specific geometric meanings.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l c X c}
+\toprule
+\textbf{Line Type} & \textbf{Representation} & \textbf{Description \& Application} & \textbf{Pencil Grade} \\
+\midrule
+\textbf{Visible / Object Line} & \rule{2.5cm}{1.2pt} & Continuous thick line. Represents visible outlines and sharp edges. & $\text{H}$ or $\text{HB}$ \\
+\addlinespace
+\textbf{Hidden Line} & \rule[0.5ex]{0.4cm}{0.8pt}\hspace{2pt}\rule[0.5ex]{0.4cm}{0.8pt}\hspace{2pt}\rule[0.5ex]{0.4cm}{0.8pt} & Dashed medium line. Represents interior/hidden edges. & $2\text{H}$ \\
+\addlinespace
+\textbf{Center Line} & \rule[0.5ex]{0.6cm}{0.5pt}\hspace{2pt}\rule[0.5ex]{0.1cm}{0.5pt}\hspace{2pt}\rule[0.5ex]{0.6cm}{0.5pt} & Long dash -- short dash chain line. Indicates axes of symmetry. & $4\text{H}$ \\
+\addlinespace
+\textbf{Construction Line} & \rule{2.5cm}{0.3pt} & Continuous very thin line. Used for initial layout projections. & $4\text{H}$ or $6\text{H}$ \\
+\addlinespace
+\textbf{Dimension / Extension} & \rule{2.5cm}{0.5pt} & Continuous thin line. Defines start and limit of measurements. & $2\text{H}$ \\
+\addlinespace
+\textbf{Cutting Plane Line} & \rule[0.5ex]{0.6cm}{1.5pt}\hspace{2pt}\rule[0.5ex]{0.1cm}{1.5pt}\hspace{2pt}\rule[0.5ex]{0.6cm}{1.5pt} & Thick chain line with thickened ends. Shows hypothetical section cut. & $\text{H}$ \\
+\bottomrule
+\end{tabularx}
+\caption{The Alphabet of Lines: Standard Engineering Line Types.}
+\label{tab:line-types}
+\end{table}
+
+---
+
+\section{D. Dimensioning Principles \& Systems}
+
+Dimensioning is the process of specifying exact physical sizes, locations, and geometric characteristics of object features.
+
+\subsection{Components of a Dimension}
+\begin{itemize}
+    \item \textbf{Extension Line:} Thin continuous line extending from the object edge. A gap of $1\text{ mm}$ is left between object and extension line.
+    \item \textbf{Dimension Line:} Thin continuous line terminated by arrowheads defining measurement boundaries.
+    \item \textbf{Arrowheads:} Standard ratio of **Length to Width is $3:1$**. Arrowheads must be sharp, filled, and uniform.
+    \item \textbf{Leader Line:} Thin line leading from a note to a feature (e.g., hole diameter), terminating in an arrowhead or dot.
+\end{itemize}
+
+\subsection{Systems of Dimensioning}
+
+\begin{definition}[Aligned System]
+Dimensions are placed perpendicular to the dimension line. Values are placed above the dimension line and read from the bottom or right-hand side of the sheet.
+\end{definition}
+
+\begin{definition}[Unidirectional System]
+Dimensions are placed vertically regardless of line orientation. Values are read from the bottom of the sheet only. The dimension line is broken in the middle to insert text.
+\end{definition}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Feature} & \textbf{Aligned Dimensioning System} & \textbf{Unidirectional Dimensioning System} \\
+\midrule
+\textbf{Text Orientation} & Perpendicular to dimension line & Always horizontal (upright) \\
+\textbf{Reading Direction} & Read from bottom or right side & Read from bottom only \\
+\textbf{Dimension Line} & Continuous unbroken line & Broken in middle for text entry \\
+\textbf{Application} & Standard engineering drawings (ISO) & Aircraft, automotive, heavy machinery (ANSI) \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Aligned and Unidirectional Dimensioning Systems.}
+\label{tab:dimension-systems}
+\end{table}
+
+---
+
+\section{E. Single-Stroke Vertical Gothic Lettering}
+
+Lettering on technical drawings must be uniform, highly legible, and suitable for microfilming or digital scanning. "Single stroke" means letter line thickness is produced in one stroke of the pencil.
+
+\begin{keyequation}[Single-Stroke Lettering Proportions]
+\begin{itemize}
+    \item \textbf{Standard Height-to-Width Ratio:} $7:4$ for most letters ($A, B, C, D, E, F, G, H, J, K, L, N, O, P, Q, R, S, T, U, V, X, Y, Z$).
+    \item \textbf{Wide Letters ($M, W$):} Ratio of $7:5$ or $7:6$.
+    \item \textbf{Narrow Letter ($I$):} Single vertical stroke ($7:1$).
+    \item \textbf{Letter Spacing:} $\approx \frac{1}{5} h$ (where $h$ is character height).
+    \item \textbf{Word Spacing:} $\approx 1 h$.
+    \item \textbf{Line Spacing:} $\approx \frac{1}{2} h \text{ to } 1 h$.
+\end{itemize}
+\end{keyequation}
+
+---
+
+\section{F. Scales and Representative Fraction ($R.F.$)}
+
+Scales allow large objects (e.g., buildings, bridges) or small objects (e.g., watch gears, micro-chips) to be represented accurately on standard paper sizes.
+
+\begin{keyequation}[Representative Fraction ($R.F.$)]
+\begin{equation}
+    R.F. = \frac{\text{Length of object on drawing sheet}}{\text{Actual physical length of object}}
+\end{equation}
+\end{keyequation}
+
+\begin{keyequation}[Length of Scale ($L.O.S.$)]
+\begin{equation}
+    L.O.S. = R.F. \times \text{Maximum length to be measured}
+\end{equation}
+\end{keyequation}
+
+\subsection{Classification of Scales}
+\begin{itemize}
+    \item \textbf{Full Scale ($1:1$):} Drawing dimensions equal actual physical dimensions.
+    \item \textbf{Reducing Scale ($1:X$):} Drawing dimensions smaller than actual object (e.g., $1:10, 1:50, 1:100$).
+    \item \textbf{Enlarging Scale ($X:1$):} Drawing dimensions larger than actual object (e.g., $2:1, 5:1, 10:1$).
+\end{itemize}
+
+\subsection{Plain Scale vs. Diagonal Scale}
+
+\begin{definition}[Plain Scale]
+Consists of a line divided into a number of equal main units, with the first main unit subdivided into smaller parts. Represents two units (e.g., Kilometers and Hectometers, or Meters and Decimeters).
+\end{definition}
+
+\begin{definition}[Diagonal Scale]
+Used when minute measurements are required or to measure three consecutive units (e.g., Meters, Decimeters, and Centimeters) or up to two decimal places. Based on the principle of \textbf{Similar Triangles}.
+\end{definition}
+
+\begin{importantrule}[Principle of Similar Triangles in Diagonal Scales]
+To divide a short vertical line of length $h$ into 10 equal parts, a diagonal line is drawn across 10 horizontal parallel lines. By similar triangles, the distance from the vertical axis to the diagonal line at the $n^{\text{th}}$ horizontal line equals $\frac{n}{10}$ of the base unit.
+\end{importantrule}
+
+\begin{example}[Diagonal Scale Construction]
+\textbf{Problem:} Construct a diagonal scale of $R.F. = 1:40$ to read meters, decimeters, and centimeters up to $6\text{ m}$. Mark a distance of $4.56\text{ m}$ on the scale.\\[4pt]
+\textbf{Solution Step 1: Calculate Length of Scale ($L.O.S.$)}
+\begin{equation*}
+    L.O.S. = R.F. \times \text{Max Length} = \frac{1}{40} \times 6\text{ m} = \frac{1}{40} \times 600\text{ cm} = \mathbf{15\text{ cm}}
+\end{equation*}
+
+\noindent \textbf{Solution Step 2: Main Division}
+Draw a line $15\text{ cm}$ long and divide it into 6 equal main parts. Each main part represents $1\text{ m}$.
+
+\noindent \textbf{Solution Step 3: Subdivisions \& Diagonals}
+Divide the first left division ($1\text{ m}$) horizontally into 10 equal parts (each $= 1\text{ dm} = 0.1\text{ m}$). Erect a vertical rectangle height $5\text{ cm}$ and divide vertically into 10 equal parts (each $= 1\text{ cm} = 0.01\text{ m}$). Draw diagonal lines connecting subdivision $n$ on bottom to $n+1$ on top.
+
+\noindent \textbf{Solution Step 4: Locate $4.56\text{ m}$}
+Take 4 main units ($4\text{ m}$) to the right of zero, move 5 subdivisions left ($0.5\text{ m}$), and move up to the $6^{\text{th}}$ horizontal line ($0.06\text{ m}$). Total distance = $4 + 0.5 + 0.06 = \mathbf{4.56\text{ m}}$.
+\end{example}
+
+---
+
+\section{G. Introduction to AutoCAD Interface \& Setup}
+
+AutoCAD (Computer-Aided Design) replaces manual drafting tools with digital precision.
+
+\subsection{Interface Layout Components}
+\begin{enumerate}
+    \item \textbf{Application Menu (Big Red A):} File management (New, Open, Save, Export).
+    \item \textbf{Ribbon:} Organized tabs (Home, Insert, Annotate) containing panels of drafting tools.
+    \item \textbf{Drawing Area (Viewport):} Infinite 2D/3D graphics area.
+    \item \textbf{UCS Icon:} Visual indicator of $X, Y, Z$ coordinate axes.
+    \item \textbf{Command Line:} Primary method for entering AutoCAD commands and viewing system prompts.
+    \item \textbf{Status Bar:} Toggles for drawing aids (Grid, Snap, Ortho, OSNAP) at bottom right.
+\end{enumerate}
+
+\subsection{Essential AutoCAD Setup Commands}
+
+\begin{autocadcmd}[UNITS]
+Defines measurement type and precision.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{UNITS} or \texttt{UN}
+    \item \textbf{Type:} Decimal (Mechanical), Architectural (Feet/Inches).
+    \item \textbf{Precision:} Number of decimal places (e.g., \texttt{0.00}).
+    \item \textbf{Insertion Scale:} Units for blocks/content (Millimeters).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[LIMITS]
+Sets the invisible boundary of the drawing area (equivalent to paper size).
+\begin{itemize}
+    \item \textbf{Command:} \texttt{LIMITS}
+    \item \textbf{Lower-Left Corner:} Type \texttt{0,0} $\to$ Press \texttt{Enter}.
+    \item \textbf{Upper-Right Corner:} Type \texttt{210,297} (for A4 sheet) $\to$ Press \texttt{Enter}.
+    \item \textbf{Required Refresh:} Type \texttt{Z} (Zoom) $\to$ \texttt{Enter} $\to$ Type \texttt{A} (All) $\to$ \texttt{Enter}.
+\end{itemize}
+\end{autocadcmd}
+
+\subsection{Function Key Cheat Sheet}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c l X}
+\toprule
+\textbf{Key} & \textbf{Function} & \textbf{Operational Description} \\
+\midrule
+\texttt{F1} & Help & Opens Autodesk help documentation. \\
+\texttt{F2} & Text Screen & Displays command history window. \\
+\texttt{F3} & OSNAP & Toggles Object Snap on/off (Endpoint, Midpoint, Center). \\
+\texttt{F7} & Grid & Toggles background grid display. \\
+\texttt{F8} & ORTHO & Restricts cursor motion to horizontal ($0^\circ, 180^\circ$) and vertical ($90^\circ, 270^\circ$). \\
+\texttt{F9} & Snap Mode & Restricts cursor movement to grid intervals. \\
+\texttt{F10} & Polar Tracking & Restricts cursor to specified angle increments. \\
+\texttt{F12} & Dynamic Input & Displays command prompts and coordinates near cursor. \\
+\bottomrule
+\end{tabularx}
+\caption{AutoCAD Function Key Reference.}
+\label{tab:function-keys}
+\end{table}
+
+---
+
+\section{H. Chapter 1 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+State the standard height-to-width ratio for single-stroke vertical Gothic lettering for normal letters, wide letters ($M, W$), and narrow letter ($I$).\\[4pt]
+\textbf{Answer:} Normal letters $= 7:4$; Wide letters ($M, W$) $= 7:5$ or $7:6$; Narrow letter ($I$) $= 7:1$.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+Differentiate between a Plain Scale and a Diagonal Scale. State the underlying geometric principle of a Diagonal Scale.\\[4pt]
+\textbf{Answer:} A Plain Scale reads two units or one unit and its first subdivision. A Diagonal Scale reads three consecutive units or up to two decimal places. Its underlying principle is the **Principle of Similar Triangles**.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+A distance of $5\text{ cm}$ on a map represents an actual distance of $25\text{ m}$. Calculate the $R.F.$ and determine the Length of Scale ($L.O.S.$) to measure up to $80\text{ m}$.\\[4pt]
+\textbf{Answer:}  
+$$R.F. = \frac{5\text{ cm}}{25\text{ m}} = \frac{5}{2500} = \mathbf{\frac{1}{500}}$$
+$$L.O.S. = R.F. \times \text{Max Length} = \frac{1}{500} \times 8000\text{ cm} = \mathbf{16\text{ cm}}$$
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. Which pencil lead grade is recommended for drawing visible object lines?  
+   A. $4\text{H}$  
+   B. $6\text{H}$  
+   C. $\text{H}$ or $2\text{H}$  
+   D. $\text{HB}$ or $\text{B}$  
+   \textbf{Answer: C} — Medium grades ($\text{H}, 2\text{H}$) are used for object lines and dimensioning.
+
+2. What is the standard ratio of length to width for dimension arrowheads?  
+   A. $1:1$  
+   B. $2:1$  
+   C. $3:1$  
+   D. $4:1$  
+   \textbf{Answer: C} — Engineering arrowheads require a $3:1$ length-to-width ratio.
+
+3. The scale factor for a reducing scale $1:50$ means:  
+   A. Drawing is 50 times larger than actual object  
+   B. $1\text{ cm}$ on drawing represents $50\text{ cm}$ actual length  
+   C. $50\text{ cm}$ on drawing represents $1\text{ cm}$ actual length  
+   D. Representative fraction is 50  
+   \textbf{Answer: B} — $R.F. = 1/50$, drawing is $1/50^{\text{th}}$ of actual size.
+
+4. Which function key toggles Ortho mode in AutoCAD?  
+   A. \texttt{F3}  
+   B. \texttt{F7}  
+   C. \texttt{F8}  
+   D. \texttt{F12}  
+   \textbf{Answer: C} — \texttt{F8} toggles Ortho mode.
+
+5. What is the correct sequence of AutoCAD commands to set up an A4 sheet limit?  
+   A. \texttt{UNITS} $\to$ \texttt{LIMITS} ($0,0$ to $210,297$) $\to$ \texttt{ZOOM} $\to$ \texttt{ALL}  
+   B. \texttt{LIMITS} $\to$ \texttt{OSNAP} $\to$ \texttt{GRID}  
+   C. \texttt{LINE} $\to$ \texttt{PLINE} $\to$ \texttt{RECTANG}  
+   D. \texttt{DIMSTYLE} $\to$ \texttt{UNITS} $\to$ \texttt{SAVE}  
+   \textbf{Answer: A} — Standard setup workflow.
+
+---
+
+\section{I. Unit 1 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $\text{Hard Pencils } (4\text{H--}6\text{H}) \to \text{Construction/Center Lines}$; $\text{Medium Pencils } (\text{H}, 2\text{H}) \to \text{Object Lines/Lettering}$.
+    \item $\text{Visible Lines} \to \text{Continuous Thick}$; $\text{Hidden Lines} \to \text{Dashed Medium}$; $\text{Center Lines} \to \text{Chain Thin}$.
+    \item $\text{Dimension Arrowhead Ratio} = 3:1$.
+    \item $\text{Aligned System} \to \text{Text perpendicular to dimension line}$; $\text{Unidirectional System} \to \text{Text horizontal}$.
+    \item $R.F. = \frac{\text{Drawing Length}}{\text{Actual Length}}$; $L.O.S. = R.F. \times \text{Max Length}$.
+    \item $\text{Diagonal Scale Principle} = \text{Similar Triangles}$.
+    \item $\text{AutoCAD Setup} \to \texttt{UNITS} \to \texttt{LIMITS } (0,0 \text{ to } 210,297) \to \texttt{ZOOM ALL}$.
+    \item $\texttt{F3} = \text{OSNAP}, \quad \texttt{F8} = \text{ORTHO}, \quad \texttt{F7} = \text{GRID}$.
+\end{itemize}
+\end{revisionchecklist}

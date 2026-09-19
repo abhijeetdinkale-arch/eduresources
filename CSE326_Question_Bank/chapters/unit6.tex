@@ -1,0 +1,150 @@
+\chapter{Unit 6: Web Application Architecture, Storage \& Deployment}
+
+\section{Section 1: 50 Chapter-Wise Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25 --- 50\% Easy)}
+\mcqitem{1}{[Easy] What is the primary function of browser Developer Tools (F12)?}{Playing web games}{Debugging HTML, inspecting styles, analyzing network traffic and JS execution}{Compiling C++ code}{Editing video files}
+\mcqitem{2}{[Easy] Which DevTools panel displays the live DOM tree and computed CSS styles?}{Console}{Elements}{Sources}{Network}
+\mcqitem{3}{[Easy] Which DevTools panel is used to inspect JavaScript console logs and errors?}{Console}{Application}{Security}{Lighthouse}
+\mcqitem{4}{[Easy] Which DevTools panel allows setting breakpoints and stepping through code line-by-line?}{Sources}{Elements}{Network}{Memory}
+\mcqitem{5}{[Easy] Which DevTools panel displays HTTP requests, file sizes, and status codes?}{Network}{Console}{Elements}{Application}
+\mcqitem{6}{[Easy] Which DevTools panel displays localStorage, sessionStorage, and cookies?}{Application}{Sources}{Performance}{Security}
+\mcqitem{7}{[Easy] What is the storage capacity limit of HTML5 'localStorage' per origin?}{4 KB}{50 KB}{5--10 MB}{1 GB}
+\mcqitem{8}{[Easy] What is the lifespan of data stored inside 'localStorage'?}{Deleted when tab closes}{Persists permanently until explicitly cleared via script or user}{Expires after 1 hour}{Cleared on page refresh}
+\mcqitem{9}{[Easy] What is the lifespan of data stored in 'sessionStorage'?}{Persists permanently}{Scoped strictly to the lifetime of the active browser tab}{Expires in 30 minutes}{Stored on server}
+\mcqitem{10}{[Easy] Which method saves a key-value item in localStorage?}{localStorage.save()}{localStorage.setItem("key", "val")}{localStorage.put()}{localStorage.add()}
+\mcqitem{11}{[Easy] Which method retrieves an item from localStorage by its key?}{localStorage.getItem("key")}{localStorage.read()}{localStorage.find()}{localStorage.get()}
+\mcqitem{12}{[Easy] Which method deletes all key-value entries in localStorage?}{localStorage.clear()}{localStorage.purge()}{localStorage.removeAll()}{localStorage.delete()}
+\mcqitem{13}{[Easy] What is Git?}{A cloud hosting platform}{A distributed version control system for tracking code changes}{A CSS framework}{A web server}
+\mcqitem{14}{[Easy] Which command initializes a new local Git repository in the current folder?}{git start}{git init}{git new}{git create}
+\mcqitem{15}{[Easy] Which command stages all modified files in the working directory for commit?}{git stage}{git add .}{git push}{git save}
+\mcqitem{16}{[Easy] Which command records staged snapshots into repository history with a message?}{git commit -m "message"}{git save -m "message"}{git record}{git push}
+\mcqitem{17}{[Easy] Which command pushes committed changes from a local branch to remote GitHub repository?}{git push origin main}{git upload main}{git send}{git publish}
+\mcqitem{18}{[Easy] What is GitHub Pages?}{A web browser}{A free static website hosting service directly from GitHub repositories}{A database system}{A JavaScript compiler}
+\mcqitem{19}{[Easy] What default file does GitHub Pages look for as the homepage of a website?}{home.html}{index.html}{main.html}{default.html}
+\mcqitem{20}{[Easy] Which file specifies file patterns that Git should intentionally ignore from tracking?}{.gitconfig}{.gitignore}{.gitkeep}{README.md}
+\mcqitem{21}{[Easy] Which HTML script attribute defers script execution until HTML parsing completes?}{async}{defer}{delay}{wait}
+\mcqitem{22}{[Easy] Which command clones a remote repository onto a local machine?}{git clone $<$url$>$}{git copy $<$url$>$}{git download}{git fetch}
+\mcqitem{23}{[Easy] What is a Pull Request (PR) on GitHub?}{A request to pull code from server}{A proposed set of changes submitted for code review before merging into a main branch}{A git command line}{An issue report}
+\mcqitem{24}{[Easy] What does 'console.error("msg")' do in DevTools?}{Stops page execution}{Logs a highlighted red error message in the console}{Throws a fatal exception}{Closes browser}
+\mcqitem{25}{[Easy] What is the primary advantage of minifying CSS and JavaScript files for deployment?}{Encrypts the code}{Reduces file size in bytes to speed up network download and page load}{Changes font styling}{Eliminates logic bugs}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 26 to 40 --- 30\% Medium)}
+\mcqitem{26}{[Medium] What is the Critical Rendering Path order in web browsers?}{DOM -$>$ Layout -$>$ CSSOM -$>$ Composite}{HTML/DOM -$>$ CSS/CSSOM -$>$ Render Tree -$>$ Layout -$>$ Paint -$>$ Composite}{Paint -$>$ Layout -$>$ DOM}{JavaScript -$>$ CSSOM -$>$ DOM}
+\mcqitem{27}{[Medium] What is the difference between 'defer' and 'async' on '$<$script$>$' tags?}{async executes immediately when downloaded (out-of-order); defer executes in order after HTML parsing}{defer is faster}{async blocks parsing}{They are identical}
+\mcqitem{28}{[Medium] Why must complex objects be converted using 'JSON.stringify()' before storing in localStorage?}{localStorage can only store string values}{To encrypt the object}{To reduce memory by 90\%}{Objects cause syntax errors in JS}
+\mcqitem{29}{[Medium] What does 'git checkout -b feature' (or 'git switch -c feature') do?}{Deletes branch feature}{Creates and switches to a new branch named 'feature'}{Pushes branch feature}{Merges feature branch}
+\mcqitem{30}{[Medium] What happens during a Git merge conflict?}{Git deletes both files}{Git marks the conflict sections with $<$$<$$<$$<$$<$$<$$<$ and requires manual resolution before committing}{The repository is corrupted}{GitHub rejects all future pushes}
+\mcqitem{31}{[Medium] Why should project sites on GitHub Pages use relative asset paths ('./style.css') instead of absolute ('/style.css')?}{Absolute paths resolve to the root user domain (user.github.io/) missing the repository subpath folder}{GitHub Pages blocks relative paths}{Absolute paths are too long}{Relative paths encrypt the stylesheet}
+\mcqitem{32}{[Medium] What is the purpose of adding a '.nojekyll' file to a GitHub Pages repository?}{Disables HTML rendering}{Bypasses Jekyll processing so files starting with underscores are not ignored}{Enables PHP execution}{Disables HTTPS}
+\mcqitem{33}{[Medium] What does Core Web Vitals metric LCP (Largest Contentful Paint) measure?}{Time taken to render the largest main visual content block (should be $<$= 2.5s)}{Time to resolve DNS}{Number of layout shifts}{Server disk speed}
+\mcqitem{34}{[Medium] What does Core Web Vitals metric CLS (Cumulative Layout Shift) measure?}{Network latency}{Visual stability (unexpected layout movement during page load, target $<$= 0.1)}{Total script execution time}{CSS download time}
+\mcqitem{35}{[Medium] How does breakpoint debugging in DevTools Sources compare to 'console.log()'?}{console.log is always superior}{Breakpoints pause execution, allowing live scope inspection, call stack traversal, and step-by-step debugging without editing code}{Breakpoints only work in production}{console.log freezes the CPU}
+\mcqitem{36}{[Medium] What is the purpose of 'git status'?}{Shows repository commit history}{Displays working directory state, staged files, and untracked changes}{Checks internet connection}{Deploys to GitHub}
+\mcqitem{37}{[Medium] What is the purpose of 'git log'?}{Shows network speed}{Displays chronological commit history with author, dates, and commit hashes}{Lists untracked files}{Reverts all commits}
+\mcqitem{38}{[Medium] What does 'git remote add origin $<$URL$>$' do?}{Downloads files from URL}{Associates a remote repository URL with the local repository alias 'origin'}{Pushes code to GitHub}{Initializes Git}
+\mcqitem{39}{[Medium] Why is Lighthouse used in browser DevTools?}{To generate JavaScript code}{To run automated audits on Performance, Accessibility, Best Practices, and SEO}{To compile SASS}{To manage cookies}
+\mcqitem{40}{[Medium] What is the WCAG 2.1 AA minimum contrast ratio requirement for standard body text?}{2:1}{3:1}{4.5:1}{7:1}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 50 --- 20\% Hard)}
+\mcqitem{41}{[Hard] How does Layout Thrashing (forced synchronous reflow) degrade client-side performance?}{It crashes the network socket}{Interleaving DOM writes and reads (e.g. reading offsetHeight after writing style) forces browser to recalculate layout repeatedly in a single frame}{It deletes CSSOM}{It blocks garbage collection}
+\mcqitem{42}{[Hard] Why should sensitive API keys and database credentials NEVER be stored in client-side JavaScript or GitHub Pages?}{GitHub Pages charges for secrets}{Client-side code and static repositories are completely public and accessible via browser DevTools/source inspection}{Browsers refuse to parse keys}{It slows down rendering}
+\mcqitem{43}{[Hard] What is the difference between 'localStorage' and HTTP Cookies in terms of network payload overhead?}{localStorage data is sent with every HTTP header; Cookies are not}{Cookies are sent automatically with every matching HTTP request header, adding bandwidth overhead; localStorage is never sent over network}{Both are sent on every request}{Neither can be read by JavaScript}
+\mcqitem{44}{[Hard] How does 'git diff' assist developers before committing code?}{It deletes unneeded files}{It shows line-by-line differences between the working tree, staging area, and previous commits}{It automatically writes commit messages}{It pushes code to master}
+\mcqitem{45}{[Hard] What is the purpose of a 'staging environment' before production deployment?}{To save server disk space}{To test the build, integrations, and performance in an environment identical to production without affecting live users}{To compile HTML}{To convert JS to CSS}
+\mcqitem{46}{[Hard] Why does animating 'transform' and 'opacity' achieve smooth 60fps performance compared to animating 'width' or 'left'?}{transform and opacity run on GPU compositor thread, skipping Layout and Paint stages}{width uses WebGL}{left blocks the network}{opacity disables CSSOM}
+\mcqitem{47}{[Hard] What is the role of 'Cache-Control: max-age=31536000, immutable' with asset content hashing?}{Disables caching}{Allows browsers to cache static assets for 1 year safely because new deployments change filename hashes (e.g. main.8f3a.js)}{Deletes cached assets daily}{Forces server re-validation on every reload}
+\mcqitem{48}{[Hard] What is the Git Three-Tree Architecture?}{Working Directory -$>$ Staging Area (Index) -$>$ Repository (HEAD Commit History)}{Local -$>$ Staging -$>$ Cloud}{Master -$>$ Slave -$>$ Backup}{HTML -$>$ CSS -$>$ JS}
+\mcqitem{49}{[Hard] What is the risk of using 'innerHTML' inside dynamic client-side rendering with unvalidated user input?}{Breaks responsive layout}{Enables Cross-Site Scripting (XSS) where malicious scripts injected by attackers execute in victim browsers}{Disables localStorage}{Causes 404 HTTP errors}
+\mcqitem{50}{[Hard] What does 'window.addEventListener("unhandledrejection", handler)' catch in client applications?}{Synchronous syntax errors}{Unhandled rejected JavaScript Promises that lack a .catch() block}{404 image errors}{CSS parsing warnings}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Explanations}
+
+\begin{answerkeytable}{Unit 6: 50 Questions Answer Key}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{B} & DevTools provides runtime inspection and debugging. & 26 & \textbf{B} & DOM + CSSOM form Render Tree, followed by Layout, Paint, and Composite. \\
+2 & \textbf{B} & Elements panel inspects DOM nodes and active styles. & 27 & \textbf{A} & async runs out-of-order upon download; defer runs in order post-parse. \\
+3 & \textbf{A} & Console panel outputs logs, warnings, and errors. & 28 & \textbf{A} & Web Storage API keys and values are strictly strings. \\
+4 & \textbf{A} & Sources panel provides JavaScript breakpoint debugging. & 29 & \textbf{B} & Creates and checks out new branch simultaneously. \\
+5 & \textbf{A} & Network panel logs HTTP traffic and asset waterfalls. & 30 & \textbf{B} & Git prompts developer to resolve conflicting diff markers. \\
+6 & \textbf{A} & Application panel manages browser storage. & 31 & \textbf{A} & Project sites reside in repository subpaths; absolute root paths 404. \\
+7 & \textbf{C} & localStorage quota is typically 5MB to 10MB per origin. & 32 & \textbf{B} & .nojekyll stops Jekyll from ignoring underscore folders/assets. \\
+8 & \textbf{B} & localStorage persists across browser restarts. & 33 & \textbf{A} & LCP measures perceived load speed (target $<$= 2.5s). \\
+9 & \textbf{B} & sessionStorage is cleared when tab is closed. & 34 & \textbf{B} & CLS measures visual page stability. \\
+10 & \textbf{B} & setItem(key, value) stores data. & 35 & \textbf{B} & Breakpoints allow interactive state inspection without code churn. \\
+11 & \textbf{A} & getItem(key) retrieves data. & 36 & \textbf{B} & git status summarizes working tree and staging area. \\
+12 & \textbf{A} & clear() removes all stored keys. & 37 & \textbf{B} & git log displays commit history. \\
+13 & \textbf{B} & Git is a distributed version control system. & 38 & \textbf{B} & Links local repo to remote origin endpoint. \\
+14 & \textbf{B} & git init creates .git repository. & 39 & \textbf{B} & Lighthouse provides automated 0-100 quality scoring. \\
+15 & \textbf{B} & git add . stages changes. & 40 & \textbf{C} & WCAG 2.1 AA requires minimum 4.5:1 contrast for normal text. \\
+16 & \textbf{A} & git commit creates an immutable snapshot. & 41 & \textbf{B} & Reading layout properties after DOM writes triggers synchronous reflow. \\
+17 & \textbf{A} & git push transfers commits to remote. & 42 & \textbf{B} & All client assets are public; secrets must remain on server-side proxies. \\
+18 & \textbf{B} & GitHub Pages hosts static websites over HTTPS. & 43 & \textbf{B} & Cookies add request header weight; Web Storage is strictly local. \\
+19 & \textbf{B} & index.html is the standard root entry point. & 44 & \textbf{B} & git diff provides exact patch diff inspection. \\
+20 & \textbf{B} & .gitignore lists files to exclude from versioning. & 45 & \textbf{B} & Staging provides safe pre-production verification. \\
+21 & \textbf{B} & defer executes script after parsing in source order. & 46 & \textbf{A} & transform and opacity operate on compositor thread without triggering reflow. \\
+22 & \textbf{A} & git clone copies remote repo locally. & 47 & \textbf{B} & Content hashing + immutable cache ensures instant cache hits and clean invalidation. \\
+23 & \textbf{B} & Pull Requests facilitate peer code review. & 48 & \textbf{A} & Git manages Working Directory, Index (Staging), and Commit History. \\
+24 & \textbf{B} & console.error logs red error entries. & 49 & \textbf{B} & Unsanitized innerHTML allows arbitrary script execution (XSS). \\
+25 & \textbf{B} & Minification strips whitespace/comments to reduce payload. & 50 & \textbf{B} & unhandledrejection catches orphaned promise rejections. \\
+\bottomrule
+\end{tabularx}
+\end{answerkeytable}
+
+\section{Section 3: Conceptual Theory \& Coding Questions}
+\noindent\textbf{Q.51 [Theory --- 5 Marks]} Compare \texttt{localStorage}, \texttt{sessionStorage}, and \texttt{Cookies} across Storage Quota, Persistence, Scope, and Network Behavior.
+
+\begin{qbsolutionbox}[Answer to Q.51]
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Feature} & \textbf{\texttt{localStorage}} & \textbf{\texttt{sessionStorage}} & \textbf{Cookies} \\
+\midrule
+\textbf{Capacity} & 5--10 MB per origin & $\sim 5$ MB per origin & $\sim 4$ KB per cookie \\
+\textbf{Persistence} & Permanent until cleared & Tab/Session lifetime & Configurable expiration \\
+\textbf{Scope} & Same origin across all tabs & Restricted to single tab & Configurable domain/path \\
+\textbf{Network} & Never sent with HTTP & Never sent with HTTP & Sent with every HTTP request \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{qbsolutionbox}
+
+\noindent\textbf{Q.52 [Coding --- 5 Marks]} Write a complete JavaScript module that saves a user preferences object (theme and fontSize) into \texttt{localStorage} and restores it on page load.
+
+\begin{qbsolutionbox}[Answer to Q.52]
+\begin{lstlisting}[language=JavaScript]
+// Save preferences to localStorage
+function savePreferences(theme, fontSize) {
+  const prefs = {
+    theme: theme,
+    fontSize: fontSize,
+    updatedAt: new Date().toISOString()
+  };
+  localStorage.setItem("userPreferences", JSON.stringify(prefs));
+  console.log("Preferences saved successfully.");
+}
+
+// Load and apply preferences from localStorage
+function loadPreferences() {
+  const rawData = localStorage.getItem("userPreferences");
+  if (!rawData) return; // Use defaults if empty
+
+  try {
+    const prefs = JSON.parse(rawData);
+    document.body.className = prefs.theme; // Apply theme class
+    document.body.style.fontSize = prefs.fontSize; // Apply font size
+    console.log("Preferences applied:", prefs);
+  } catch (err) {
+    console.error("Error loading preferences:", err);
+  }
+}
+
+// Attach to page load event
+window.addEventListener("DOMContentLoaded", loadPreferences);
+\end{lstlisting}
+\end{qbsolutionbox}
+

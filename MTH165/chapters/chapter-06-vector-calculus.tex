@@ -1,0 +1,459 @@
+\chapter{Vector Calculus \& Field Integral Theorems}
+\label{chap:vector-calculus}
+
+% ==============================================================================
+% SECTION 6.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Vector calculus provides the universal mathematical framework for modeling electromagnetic field theory, continuum mechanics, fluid dynamics, heat transfer, and gravitation. This unit covers vector differential operators (Gradient, Divergence, Curl), directional derivatives, conservative fields and scalar potentials, line, surface, and volume integrals, and the three cornerstone integral theorems of field theory: Green's Theorem in the Plane, Stokes' Theorem, and Gauss's Divergence Theorem.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Compute the Gradient ($\nabla\phi$)}, Unit Normal Vectors, Tangent Planes, and \textbf{Directional Derivatives} along specified directions.
+    \item \textbf{Evaluate the Divergence ($\nabla\cdot\vec{F}$)} and \textbf{Curl ($\nabla\times\vec{F}$)}, testing for \textbf{Solenoidal} (divergence-free) and \textbf{Irrotational} (curl-free) fields.
+    \item \textbf{Construct the Scalar Potential Function $\phi$} for conservative force fields and calculate \textbf{Work Done} via path-independent Line Integrals.
+    \item \textbf{Apply and Verify Green's Theorem in the Plane} relating 2D closed line integrals to double integrals of curl.
+    \item \textbf{Apply and Verify Stokes' Theorem} connecting 3D line integrals around closed loops to surface integrals of curl over open capping surfaces.
+    \item \textbf{Apply and Verify Gauss's Divergence Theorem} transforming closed surface flux into volume integrals of divergence.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 6.2: VECTOR DIFFERENTIAL CALCULUS
+% ==============================================================================
+\section{Vector Differential Calculus: Gradient, Divergence \& Curl}
+
+\subsection{The Del Vector Differential Operator}
+\begin{equation}
+    \nabla = \hat{i}\frac{\partial}{\partial x} + \hat{j}\frac{\partial}{\partial y} + \hat{k}\frac{\partial}{\partial z}
+\end{equation}
+
+\subsection{Gradient of a Scalar Field ($\nabla\phi$)}
+
+\begin{definition}[Gradient]
+For a continuously differentiable scalar field $\phi(x,y,z)$, the gradient is:
+\begin{equation}
+    \nabla\phi = \grad\phi = \frac{\partial\phi}{\partial x}\hat{i} + \frac{\partial\phi}{\partial y}\hat{j} + \frac{\partial\phi}{\partial z}\hat{k}
+\end{equation}
+\end{definition}
+
+\subsubsection{Geometrical \& Physical Properties of Gradient}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Outward Normal Vector}: $\nabla\phi$ is perpendicular to the level surface $\phi(x,y,z) = c$ at every point.
+    \item \textbf{Unit Normal Vector}: $\hat{n} = \frac{\nabla\phi}{|\nabla\phi|}$.
+    \item \textbf{Angle Between Two Surfaces}: If two surfaces $\phi_1 = c_1$ and $\phi_2 = c_2$ intersect at point $P$, the angle $\theta$ between them is:
+    \begin{equation}
+        \cos\theta = \frac{\nabla\phi_1 \cdot \nabla\phi_2}{|\nabla\phi_1| |\nabla\phi_2|}
+    \end{equation}
+    \item \textbf{Directional Derivative}: The rate of change of $\phi$ in the direction of a unit vector $\hat{u}$ is:
+    \begin{equation}
+        D_{\hat{u}}\phi = \nabla\phi \cdot \hat{u} = |\nabla\phi| \cos\theta
+    \end{equation}
+    The \textbf{maximum directional derivative} occurs in the direction of $\nabla\phi$ and equals $|\nabla\phi|$.
+\end{itemize}
+
+\subsection{Divergence of a Vector Field ($\nabla\cdot\vec{F}$)}
+
+\begin{definition}[Divergence and Solenoidal Fields]
+For a vector field $\vec{F} = F_1\hat{i} + F_2\hat{j} + F_3\hat{k}$, the divergence is:
+\begin{equation}
+    \nabla\cdot\vec{F} = \Div\vec{F} = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item Physical Meaning: Net volumetric flux expansion per unit volume.
+    \item \textbf{Solenoidal Vector Field}: A vector field with zero divergence everywhere ($\nabla\cdot\vec{F} = 0$, incompressible flow).
+\end{itemize}
+\end{definition}
+
+\subsection{Curl of a Vector Field ($\nabla\times\vec{F}$)}
+
+\begin{definition}[Curl, Irrotational Fields \& Scalar Potential]
+The curl of $\vec{F}$ is:
+\begin{equation}
+    \nabla\times\vec{F} = \curl\vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\[0.3em] \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\[0.3em] F_1 & F_2 & F_3 \end{vmatrix} = \left(\frac{\partial F_3}{\partial y} - \frac{\partial F_2}{\partial z}\right)\hat{i} - \left(\frac{\partial F_3}{\partial x} - \frac{\partial F_1}{\partial z}\right)\hat{j} + \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y}\right)\hat{k}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Irrotational / Conservative Field}: A vector field whose curl is identically zero ($\nabla\times\vec{F} = \vec{0}$).
+    \item \textbf{Scalar Potential Function ($\phi$)}: If $\vec{F}$ is irrotational, there exists a scalar function $\phi$ such that $\vec{F} = \nabla\phi$.
+\end{itemize}
+\end{definition}
+
+\subsection{Fundamental Vector Differential Identities}
+\begin{align}
+    \curl(\grad\phi) &= \nabla\times(\nabla\phi) = \vec{0} \quad (\text{Gradient fields are always irrotational}) \\
+    \Div(\curl\vec{F}) &= \nabla\cdot(\nabla\times\vec{F}) = 0 \quad (\text{Curl fields are always solenoidal}) \\
+    \nabla^2\phi &= \Div(\grad\phi) = \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} + \frac{\partial^2\phi}{\partial z^2} \quad (\text{Laplacian Operator})
+\end{align}
+
+\begin{example}[Scalar Potential and Work Done]
+Show that $\vec{F} = (2xy + z^3)\hat{i} + x^2\hat{j} + 3xz^2\hat{k}$ is conservative, find its scalar potential $\phi$ such that $\vec{F} = \nabla\phi$, and find the work done in moving a particle from $(1,-1,1)$ to $(2,1,2)$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Solution]
+\textbf{Step 1: Verify $\curl\vec{F} = \vec{0}$}:
+\begin{equation*}
+    \nabla\times\vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ 2xy+z^3 & x^2 & 3xz^2 \end{vmatrix} = \hat{i}(0 - 0) - \hat{j}(3z^2 - 3z^2) + \hat{k}(2x - 2x) = \mathbf{\vec{0}}
+\end{equation*}
+Hence $\vec{F}$ is conservative.
+
+\textbf{Step 2: Find Scalar Potential $\phi$}:
+We set $\vec{F} = \nabla\phi \implies \frac{\partial\phi}{\partial x} = 2xy + z^3, \frac{\partial\phi}{\partial y} = x^2, \frac{\partial\phi}{\partial z} = 3xz^2$.
+\begin{align*}
+    \phi &= \int (2xy+z^3)dx = x^2 y + xz^3 + g(y,z) \\
+    \frac{\partial\phi}{\partial y} &= x^2 + \frac{\partial g}{\partial y} = x^2 \implies \frac{\partial g}{\partial y} = 0 \implies g(y,z) = h(z) \\
+    \frac{\partial\phi}{\partial z} &= 3xz^2 + h'(z) = 3xz^2 \implies h'(z) = 0 \implies h(z) = C
+\end{align*}
+Thus $\mathbf{\phi(x,y,z) = x^2 y + xz^3 + C}$.
+
+\textbf{Step 3: Work Done Calculation}:
+\begin{equation*}
+    W = \int_{(1,-1,1)}^{(2,1,2)} \vec{F}\cdot d\vec{r} = \phi(2,1,2) - \phi(1,-1,1)
+\end{equation*}
+\begin{align*}
+    \phi(2,1,2) &= (2^2)(1) + 2(2^3) = 4 + 16 = 20 \\
+    \phi(1,-1,1) &= (1^2)(-1) + 1(1^3) = -1 + 1 = 0 \\
+    W &= 20 - 0 = \mathbf{20}
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.3: THE THREE FUNDAMENTAL FIELD THEOREMS
+% ==============================================================================
+\section{The Three Fundamental Field Theorems}
+
+\subsection{Green's Theorem in the Plane}
+
+\begin{theorem}[Green's Theorem]
+Let $C$ be a positively oriented, piecewise-smooth, simple closed curve bounding a region $R$ in the $xy$-plane. If $P(x,y)$ and $Q(x,y)$ have continuous partial derivatives on $R$, then:
+\begin{equation}
+    \oint_C (P\,dx + Q\,dy) = \iint_R \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy
+\end{equation}
+\textbf{Enclosed Plane Area via Line Integral}: $A = \frac{1}{2}\oint_C (x\,dy - y\,dx)$.
+\end{theorem}
+
+\subsection{Stokes' Theorem}
+
+\begin{theorem}[Stokes' Theorem]
+Let $S$ be an oriented piecewise-smooth open surface bounded by a simple closed boundary curve $C$. If $\vec{F}$ is a continuously differentiable vector field, then:
+\begin{equation}
+    \oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot \hat{n} \, dS
+\end{equation}
+\end{theorem}
+
+\subsection{Gauss's Divergence Theorem}
+
+\begin{theorem}[Gauss's Divergence Theorem]
+Let $V$ be the 3D volume enclosed by a closed surface $S$ with outward unit normal $\hat{n}$. If $\vec{F}$ is a continuously differentiable vector field, then:
+\begin{equation}
+    \iint_S \vec{F} \cdot \hat{n} \, dS = \iiint_V (\nabla \cdot \vec{F}) \, dV
+\end{equation}
+\end{theorem}
+
+\begin{example}[Verification of Green's Theorem]
+Verify Green's Theorem for $\oint_C [(xy + y^2)dx + x^2 dy]$ where $C$ is the closed curve bounded by $y = x$ and $y = x^2$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Verification Solution]
+Here $P = xy + y^2$ and $Q = x^2$. The intersection of $y = x$ and $y = x^2$ occurs at $(0,0)$ and $(1,1)$.
+
+\textbf{Part 1: Double Integral Side ($\iint_R (Q_x - P_y)dA$)}:
+\begin{equation*}
+    \frac{\partial Q}{\partial x} = 2x, \quad \frac{\partial P}{\partial y} = x + 2y \implies \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} = 2x - (x+2y) = x - 2y
+\end{equation*}
+Limits: $y$ from $x^2$ to $x$, $x$ from $0$ to $1$.
+\begin{align*}
+    \iint_R (x - 2y)\,dy dx &= \int_0^1 \left[ xy - y^2 \right]_{x^2}^x dx = \int_0^1 \left[ (x^2 - x^2) - (x^3 - x^4) \right] dx \\
+    &= \int_0^1 (x^4 - x^3)\,dx = \left[ \frac{x^5}{5} - \frac{x^4}{4} \right]_0^1 = \frac{1}{5} - \frac{1}{4} = \mathbf{-\frac{1}{20}}
+\end{align*}
+
+\textbf{Part 2: Line Integral Side ($\oint_C P dx + Q dy$)}:
+\begin{itemize}
+    \item \textbf{Along $C_1$ ($y = x^2$ from $(0,0)$ to $(1,1)$)}: $dy = 2x dx$.
+    \begin{equation*}
+        I_1 = \int_0^1 [(x(x^2) + x^4)dx + x^2(2x dx)] = \int_0^1 (x^3 + x^4 + 2x^3)dx = \int_0^1 (3x^3 + x^4)dx = \frac{3}{4} + \frac{1}{5} = \frac{19}{20}
+    \end{equation*}
+    \item \textbf{Along $C_2$ ($y = x$ from $(1,1)$ to $(0,0)$)}: $dy = dx$.
+    \begin{equation*}
+        I_2 = \int_1^0 [(x^2 + x^2)dx + x^2 dx] = \int_1^0 3x^2\,dx = [x^3]_1^0 = 0 - 1 = -1
+    \end{equation*}
+\end{itemize}
+Total Line Integral:
+\begin{equation*}
+    \oint_C = I_1 + I_2 = \frac{19}{20} - 1 = \mathbf{-\frac{1}{20}}
+\end{equation*}
+Since $\text{Line Integral} = \text{Double Integral} = -\frac{1}{20}$, \textbf{Green's Theorem is Verified}.
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.4: METHOD SELECTION GUIDE
+% ==============================================================================
+\section{Method Selection Guide for Vector Field Theorems}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Integral to Evaluate} & \textbf{Geometry / Condition} & \textbf{Optimal Theorem to Apply} \\
+\midrule
+$\oint_C (P\,dx + Q\,dy)$ & Closed planar curve $C \subset \mathbb{R}^2$ & \textbf{Green's Theorem in the Plane} \\
+$\oint_C \vec{F} \cdot d\vec{r}$ & Closed 3D boundary curve $C = \partial S$ & \textbf{Stokes' Theorem} ($\iint_S (\nabla\times\vec{F})\cdot\hat{n} dS$) \\
+$\iint_S \vec{F} \cdot \hat{n} \, dS$ & \textbf{CLOSED} 3D surface $S = \partial V$ & \textbf{Gauss's Divergence Theorem} ($\iiint_V (\nabla\cdot\vec{F}) dV$) \\
+$\int_A^B \vec{F} \cdot d\vec{r}$ & Conservative Field ($\nabla\times\vec{F}=\vec{0}$) & \textbf{Fundamental Theorem}: $\phi(B) - \phi(A)$ \\
+\bottomrule
+\end{tabularx}
+\caption{Vector Field Theorem Decision Matrix.}
+\label{tab:vector-theorems-matrix}
+\end{table}
+
+% ==============================================================================
+% SECTION 6.5: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Closed vs Open Surfaces for Gauss \& Stokes]
+\begin{itemize}
+    \item \textbf{Gauss Divergence Theorem} requires a strictly \textbf{CLOSED surface} enclosing a 3D volume (e.g., full sphere, complete cube). If the surface is open (e.g., hemisphere without a base disk), you must add the capping surface or use Stokes' Theorem!
+    \item \textbf{Stokes' Theorem} applies to \textbf{OPEN surfaces} bounded by a perimeter loop $C$.
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 6.6: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 6 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Gradient}: $\nabla\phi = \phi_x\hat{i} + \phi_y\hat{j} + \phi_z\hat{k}$ (Normal to surface $\phi=c$).
+    \item \textbf{Directional Derivative}: $D_{\hat{u}}\phi = \nabla\phi \cdot \hat{u}$. Max value $= |\nabla\phi|$.
+    \item \textbf{Divergence}: $\nabla\cdot\vec{F} = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}$. Solenoidal if $\nabla\cdot\vec{F} = 0$.
+    \item \textbf{Curl}: $\nabla\times\vec{F} = \vec{0} \iff$ Irrotational $\iff \vec{F} = \nabla\phi$.
+    \item \textbf{Green's Theorem}: $\oint_C (P dx + Q dy) = \iint_R (Q_x - P_y) dx dy$.
+    \item \textbf{Stokes' Theorem}: $\oint_C \vec{F}\cdot d\vec{r} = \iint_S (\nabla\times\vec{F})\cdot\hat{n} dS$.
+    \item \textbf{Gauss Divergence Theorem}: $\iint_S \vec{F}\cdot\hat{n} dS = \iiint_V (\nabla\cdot\vec{F}) dV$.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 6.7: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Find $\nabla\phi$ for $\phi = x^2 y z + 4 x z^2$ at the point $(1, -2, -1)$.
+    \item Find the divergence and curl of $\vec{F} = x^2 y\hat{i} - 2xz\hat{j} + 2yz\hat{k}$.
+    \item Find the unit normal vector $\hat{n}$ to the surface $x^2 + y^2 + z^2 = 9$ at $(2, -1, 2)$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item Find the directional derivative of $\phi = 2xy + z^2$ at $(1, -1, 3)$ in the direction of $\vec{v} = \hat{i} + 2\hat{j} + 2\hat{k}$.
+    \item Prove that $\vec{F} = (y^2\cos x + z^3)\hat{i} + (2y\sin x - 4)\hat{j} + (3xz^2 + 2)\hat{k}$ is conservative and find its scalar potential $\phi$.
+    \item Use Green's Theorem to find the area enclosed by the ellipse $x = a\cos t, y = b\sin t$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item Verify Stokes' Theorem for $\vec{F} = (2x-y)\hat{i} - yz^2\hat{j} - y^2 z\hat{k}$ over the upper hemisphere $x^2+y^2+z^2 = 1, z \ge 0$.
+    \item Verify Gauss's Divergence Theorem for $\vec{F} = 4x\hat{i} - 2y^2\hat{j} + z^2\hat{k}$ over the cylinder $x^2+y^2 \le 4, 0 \le z \le 3$.
+    \item Evaluate $\iint_S \vec{F}\cdot\hat{n}\,dS$ where $\vec{F} = x^3\hat{i} + y^3\hat{j} + z^3\hat{k}$ and $S$ is the sphere $x^2+y^2+z^2 = a^2$ using Gauss's Theorem.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Prove that $\nabla^2\left(\frac{1}{r}\right) = 0$ for $r \ne 0$, where $r = |\vec{r}| = \sqrt{x^2+y^2+z^2}$.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 6.8: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item A vector field $\vec{F}$ is solenoidal if:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\nabla\times\vec{F} = \vec{0}$
+        \item $\nabla\cdot\vec{F} = 0$
+        \item $\nabla\phi = \vec{F}$
+        \item $\nabla^2\vec{F} = \vec{0}$
+    \end{enumerate}
+
+    \item A vector field $\vec{F}$ is irrotational if:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\nabla\cdot\vec{F} = 0$
+        \item $\nabla\times\vec{F} = \vec{0}$
+        \item $\nabla^2\vec{F} = \vec{0}$
+        \item $\vec{F}\cdot\vec{r} = 0$
+    \end{enumerate}
+
+    \item The value of $\Div(\curl\vec{F})$ for any smooth vector field $\vec{F}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\vec{0}$
+        \item 0
+        \item 1
+        \item $\nabla^2\vec{F}$
+    \end{enumerate}
+
+    \item The value of $\curl(\grad\phi)$ for any smooth scalar field $\phi$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item $\vec{0}$
+        \item $\nabla^2\phi$
+        \item $\vec{r}$
+    \end{enumerate}
+
+    \item The maximum directional derivative of $\phi$ at a point occurs in the direction of:
+    \begin{enumerate}[label=(\alph*)]
+        \item Tangent line
+        \item $\nabla\phi$
+        \item $-\nabla\phi$
+        \item Unit vector $\hat{i}$
+    \end{enumerate}
+
+    \item Green's Theorem relates a line integral around a 2D closed curve to a:
+    \begin{enumerate}[label=(\alph*)]
+        \item Surface integral in 3D
+        \item Double integral over the enclosed plane region
+        \item Triple integral
+        \item Line integral in 3D
+    \end{enumerate}
+
+    \item Stokes' Theorem transforms a line integral $\oint_C \vec{F}\cdot d\vec{r}$ into:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\iiint_V (\nabla\cdot\vec{F}) dV$
+        \item $\iint_S (\nabla\times\vec{F})\cdot\hat{n} dS$
+        \item $\iint_S \vec{F}\cdot\hat{n} dS$
+        \item $\oint_C \phi ds$
+    \end{enumerate}
+
+    \item Gauss's Divergence Theorem applies to:
+    \begin{enumerate}[label=(\alph*)]
+        \item Open surfaces
+        \item Closed surfaces bounding a 3D volume
+        \item Planar 2D curves
+        \item Single points
+    \end{enumerate}
+
+    \item If $\vec{F} = \nabla\phi$, the work done by $\vec{F}$ around ANY closed path $C$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\phi(C)$
+        \item 0
+        \item $2\pi$
+        \item $\infty$
+    \end{enumerate}
+
+    \item The divergence of the position vector $\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item 1
+        \item 2
+        \item 3
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) $\nabla\cdot\vec{F} = 0$} --- Definition of solenoidal field.
+    \item \textbf{(b) $\nabla\times\vec{F} = \vec{0}$} --- Definition of irrotational field.
+    \item \textbf{(b) 0} --- Fundamental vector identity: divergence of curl is identically scalar zero.
+    \item \textbf{(b) $\vec{0}$} --- Fundamental vector identity: curl of gradient is identically vector zero.
+    \item \textbf{(b) $\nabla\phi$} --- $D_{\hat{u}}\phi = |\nabla\phi|\cos\theta$, maximized at $\theta = 0 \implies \hat{u} = \frac{\nabla\phi}{|\nabla\phi|}$.
+    \item \textbf{(b) Double integral over enclosed plane region} --- Statement of Green's theorem in 2D.
+    \item \textbf{(b) $\iint_S (\nabla\times\vec{F})\cdot\hat{n} dS$} --- Stokes' theorem statement.
+    \item \textbf{(b) Closed surfaces bounding a 3D volume} --- Gauss's theorem requirement.
+    \item \textbf{(b) 0} --- Conservative force fields have zero circulation around closed paths.
+    \item \textbf{(d) 3} --- $\nabla\cdot\vec{r} = \frac{\partial x}{\partial x} + \frac{\partial y}{\partial y} + \frac{\partial z}{\partial z} = 1 + 1 + 1 = 3$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.9: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 6: Vector Calculus (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Define an Irrotational vector field.
+    \item Write the mathematical formula for Gauss's Divergence Theorem.
+    \item State Stokes' Theorem.
+    \item Compute $\nabla(x^2+y^2+z^2)$.
+    \item What is the value of $\nabla\times\vec{r}$ where $\vec{r} = x\hat{i}+y\hat{j}+z\hat{k}$?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Find the directional derivative of $\phi = x^2 y z + 4 x z^2$ at $(1, -2, -1)$ in the direction of the vector $2\hat{i} - \hat{j} - 2\hat{k}$.
+    \item Determine constants $a, b, c$ such that $\vec{F} = (x+2y+az)\hat{i} + (bx-3y-z)\hat{j} + (4x+cy+2z)\hat{k}$ is irrotational.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Theorem Verification ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item Verify Gauss's Divergence Theorem for $\vec{F} = 4xz\hat{i} - y^2\hat{j} + yz\hat{k}$ over the cube bounded by $x = 0, x = 1, y = 0, y = 1, z = 0, z = 1$.
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item A vector field $\vec{F}$ satisfying $\nabla\times\vec{F} = \vec{0}$. [1 Mark]
+    \item $\iint_S \vec{F}\cdot\hat{n}\,dS = \iiint_V (\nabla\cdot\vec{F})\,dV$. [1 Mark]
+    \item $\oint_C \vec{F}\cdot d\vec{r} = \iint_S (\nabla\times\vec{F})\cdot\hat{n}\,dS$. [1 Mark]
+    \item $\nabla(x^2+y^2+z^2) = 2x\hat{i} + 2y\hat{j} + 2z\hat{k} = 2\vec{r}$. [1 Mark]
+    \item $\nabla\times\vec{r} = \vec{0}$. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item $\nabla\phi = (2xyz + 4z^2)\hat{i} + x^2 z\hat{j} + (x^2 y + 8xz)\hat{k}$. [1.5 Marks]
+    At $(1, -2, -1)$:
+    $\nabla\phi = [2(1)(-2)(-1) + 4(-1)^2]\hat{i} + (1^2)(-1)\hat{j} + [(1^2)(-2) + 8(1)(-1)]\hat{k} = (4+4)\hat{i} - \hat{j} + (-2-8)\hat{k} = 8\hat{i} - \hat{j} - 10\hat{k}$. [1.5 Marks]
+    Unit vector $\hat{u} = \frac{2\hat{i} - \hat{j} - 2\hat{k}}{\sqrt{4+1+4}} = \frac{2\hat{i} - \hat{j} - 2\hat{k}}{3}$. [1 Mark]
+    $D_{\hat{u}}\phi = \nabla\phi \cdot \hat{u} = \frac{8(2) + (-1)(-1) + (-10)(-2)}{3} = \frac{16 + 1 + 20}{3} = \mathbf{\frac{37}{3}}$. [1 Mark]
+
+    \item $\nabla\times\vec{F} = \hat{i}(c - (-1)) - \hat{j}(4 - a) + \hat{k}(b - 2) = \vec{0}$. [2.5 Marks]
+    Equating components to zero:
+    $c + 1 = 0 \implies \mathbf{c = -1}$ [1 Mark]
+    $4 - a = 0 \implies \mathbf{a = 4}$ [1 Mark]
+    $b - 2 = 0 \implies \mathbf{b = 2}$ [0.5 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Verification of Gauss's Theorem on Unit Cube}:
+    $\vec{F} = 4xz\hat{i} - y^2\hat{j} + yz\hat{k}$.
+    $\nabla\cdot\vec{F} = \frac{\partial}{\partial x}(4xz) + \frac{\partial}{\partial y}(-y^2) + \frac{\partial}{\partial z}(yz) = 4z - 2y + y = 4z - y$. [2 Marks]
+
+    \textbf{Volume Integral}:
+    \begin{align*}
+        \iiint_V (4z - y)\,dx\,dy\,dz &= \int_0^1 dx \int_0^1 dy \int_0^1 (4z - y)\,dz = 1 \cdot \int_0^1 \left[ 2z^2 - yz \right]_0^1 dy \\
+        &= \int_0^1 (2 - y)\,dy = \left[ 2y - \frac{y^2}{2} \right]_0^1 = 2 - \frac{1}{2} = \mathbf{\frac{3}{2}} \quad [3\text{ Marks}]
+    \end{align*}
+
+    \textbf{Surface Integrals (6 Faces of Unit Cube)}:
+    \begin{itemize}
+        \item Face $x = 1$ ($\hat{n} = \hat{i}$): $\iint 4(1)z\,dy dz = 4 \int_0^1 dy \int_0^1 z dz = 4(1)(1/2) = 2$.
+        \item Face $x = 0$ ($\hat{n} = -\hat{i}$): $\iint -4(0)z\,dy dz = 0$.
+        \item Face $y = 1$ ($\hat{n} = \hat{j}$): $\iint -(1)^2\,dx dz = -1(1)(1) = -1$.
+        \item Face $y = 0$ ($\hat{n} = -\hat{j}$): $\iint -(-(0)^2)\,dx dz = 0$.
+        \item Face $z = 1$ ($\hat{n} = \hat{k}$): $\iint y(1)\,dx dy = \int_0^1 dx \int_0^1 y dy = 1(1/2) = 1/2$.
+        \item Face $z = 0$ ($\hat{n} = -\hat{k}$): $\iint -y(0)\,dx dy = 0$.
+    \end{itemize}
+    Sum of flux over 6 faces $= 2 + 0 - 1 + 0 + 1/2 + 0 = 1 + 1/2 = \mathbf{\frac{3}{2}}$. [4 Marks]
+    Since $\text{Surface Integral} = \text{Volume Integral} = \frac{3}{2}$, \textbf{Gauss's Divergence Theorem is Verified}. [1 Mark]
+\end{enumerate}
+\end{solutionbox}

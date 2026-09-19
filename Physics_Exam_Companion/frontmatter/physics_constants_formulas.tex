@@ -1,0 +1,97 @@
+\chapter*{Physical Constants \& Master Formula Sheet}
+\addcontentsline{toc}{chapter}{Physical Constants \& Master Formula Sheet}
+
+\begin{multicols}{2}
+{\small
+\section*{Fundamental Physical Constants}
+\begin{itemize}[leftmargin=*]
+    \item Speed of light in vacuum: $c = \SI{3.0e8}{\meter\per\second}$
+    \item Planck's constant: $h = \SI{6.626e-34}{\joule\second}$
+    \item Reduced Planck constant: $\hbar = \SI{1.054e-34}{\joule\second}$
+    \item Elementary charge: $e = \SI{1.602e-19}{\coulomb}$
+    \item Electron rest mass: $m_e = \SI{9.109e-31}{\kilo\gram}$
+    \item Permittivity of free space: $\varepsilon_0 = \SI{8.854e-12}{\farad\per\meter}$
+    \item Permeability of free space: $\mu_0 = 4\pi \times 10^{-7}\ \si{\henry\per\meter}$
+    \item Boltzmann constant: $k_B = \SI{1.381e-23}{\joule\per\kelvin}$
+    \item Free space intrinsic impedance: $\eta_0 = \sqrt{\frac{\mu_0}{\varepsilon_0}} \approx 377\ \Omega$
+\end{itemize}
+
+\section*{Unit 1: Electromagnetic Theory}
+\begin{itemize}[leftmargin=*]
+    \item Continuity Equation: $\nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t}$
+    \item Displacement Current: $\mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \varepsilon \frac{\partial \mathbf{E}}{\partial t}$
+    \item Maxwell's Equations (Differential):
+    \begin{align*}
+    \nabla \cdot \mathbf{D} &= \rho_v, \quad \nabla \cdot \mathbf{B} = 0 \\
+    \nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t}, \quad \nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t}
+    \end{align*}
+    \item Wave speed: $v = \frac{1}{\sqrt{\mu \varepsilon}}$, in vacuum $c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}}$
+    \item Poynting Vector: $\mathbf{S} = \mathbf{E} \times \mathbf{H}$ (Units: $\si{\watt\per\meter\squared}$)
+    \item Energy density: $u = \frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2$
+\end{itemize}
+
+\section*{Unit 2: Lasers and Applications}
+\begin{itemize}[leftmargin=*]
+    \item Planck's radiation law: $u(\nu) = \frac{8\pi h \nu^3}{c^3} \frac{1}{e^{h\nu/k_B T} - 1}$
+    \item Einstein's Relations:
+    \[
+    B_{12} = B_{21}, \quad \frac{A_{21}}{B_{21}} = \frac{8\pi h \nu^3}{c^3}
+    \]
+    \item Population Inversion Condition: $N_2 > N_1$
+    \item He-Ne Laser wavelength: $\lambda = \SI{632.8}{\nano\meter}$ (Red)
+    \item Ruby Laser active medium: $\text{Cr}^{3+}$ in $\text{Al}_2\text{O}_3$ ($\SI{694.3}{\nano\meter}$)
+\end{itemize}
+
+\columnbreak
+
+\section*{Unit 3: Fiber Optics}
+\begin{itemize}[leftmargin=*]
+    \item Fractional Refractive Index: $\Delta = \frac{n_1 - n_2}{n_1}$
+    \item Critical Angle: $\theta_c = \sin^{-1}(n_2 / n_1)$
+    \item Numerical Aperture: $\text{NA} = \sqrt{n_1^2 - n_2^2} \approx n_1 \sqrt{2\Delta}$
+    \item Acceptance Angle: $\theta_a = \sin^{-1}(\text{NA})$
+    \item Normalized Frequency ($V$-number):
+    \[
+    V = \frac{2\pi a}{\lambda}\text{NA} = \frac{2\pi a}{\lambda}\sqrt{n_1^2 - n_2^2}
+    \]
+    \item Number of Modes (Step-Index): $M \approx \frac{V^2}{2}$
+    \item Attenuation ($\si{\deci\bel\per\kilo\meter}$): $\alpha = \frac{10}{L}\log_{10}\left(\frac{P_{\text{in}}}{P_{\text{out}}}\right)$
+\end{itemize}
+
+\section*{Unit 4: Quantum Mechanics}
+\begin{itemize}[leftmargin=*]
+    \item de Broglie Wavelength: $\lambda = \frac{h}{p} = \frac{h}{\sqrt{2mE}}$
+    \item Uncertainty Principle: $\Delta x \Delta p \ge \frac{\hbar}{2}$, $\Delta E \Delta t \ge \frac{\hbar}{2}$
+    \item Time-Independent Schrödinger Eqn (1D):
+    \[
+    -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} + V(x)\psi = E\psi
+    \]
+    \item 1D Infinite Well ($0 \le x \le L$):
+    \begin{align*}
+    \psi_n(x) &= \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right) \\
+    E_n &= \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2} \quad (n=1,2,\dots)
+    \end{align*}
+    \item Zero-point energy: $E_1 = \frac{h^2}{8mL^2}$
+\end{itemize}
+
+\section*{Unit 5: Semiconductor Physics}
+\begin{itemize}[leftmargin=*]
+    \item Fermi-Dirac Function: $f(E) = \frac{1}{1 + e^{(E - E_F)/k_B T}}$
+    \item Mass-Action Law: $n \cdot p = n_i^2$
+    \item Conductivity: $\sigma = e(n\mu_e + p\mu_h)$
+    \item Einstein Relation: $\frac{D_n}{\mu_n} = \frac{D_p}{\mu_p} = \frac{k_B T}{e}$
+    \item Hall Voltage: $V_H = \frac{I B}{n e w} = \frac{R_H I B}{w}$
+    \item Hall Coefficient: $R_H = \frac{1}{n e}$ (or $\frac{-1}{ne}$ for electrons, $\frac{+1}{pe}$ for holes)
+\end{itemize}
+
+\section*{Unit 6: Engineering Materials}
+\begin{itemize}[leftmargin=*]
+    \item Electric Susceptibility: $\mathbf{P} = \varepsilon_0 \chi_e \mathbf{E}$, $\varepsilon_r = 1 + \chi_e$
+    \item Clausius-Mossotti: $\frac{\varepsilon_r - 1}{\varepsilon_r + 2} = \frac{N\alpha}{3\varepsilon_0}$
+    \item Magnetic Susceptibility: $\mathbf{M} = \chi_m \mathbf{H}$, $\mu_r = 1 + \chi_m$
+    \item Meissner Effect in Superconductors: $\mathbf{B} = 0 \implies \chi_m = -1$ (Ideal Diamagnet)
+    \item Critical Field: $H_c(T) = H_c(0)\left[1 - \left(\frac{T}{T_c}\right)^2\right]$
+\end{itemize}
+}
+\end{multicols}
+\newpage

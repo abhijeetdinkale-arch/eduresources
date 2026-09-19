@@ -1,0 +1,112 @@
+\section{Continuous Assessment 1 --- Set C}
+\label{sec:ca1_set_c}
+
+\LPUCSHeader{Continuous Assessment 1 (Objective MCQ)}{C}{50 Minutes}{30 Marks}{CO1 \& CO2 (Unit 1: Computer System \& Unit 2: Operating System)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{In an Arithmetic Logic Unit (ALU), the Zero Flag (Z) in the status/flags register is asserted (set to 1) when:}{The outcome of the most recently executed arithmetic or logical operation is exactly zero}{An unsigned arithmetic carry overflows the register width}{A division by zero hardware trap is triggered}{The accumulator contains a negative value}{1}
+
+\mcqitem{2}{In classic accumulator-based CPU architectures, the Accumulator (AC) register serves as:}{The primary working register that holds one operand and receives the result of each ALU operation}{The register containing the address of the interrupt vector}{The register tracking stack frame base addresses}{The memory buffer register for secondary disk storage}{1}
+
+\mcqitem{3}{In a Direct Memory Access (DMA) 'Cycle Stealing' mode, the DMA controller:}{Pauses CPU bus access for exactly one memory bus cycle to transfer a single data word}{Holds the system bus continuously for several seconds, completely starving the CPU}{Transfers data only when the computer is shut down}{Executes assembly code without an ALU}{1}
+
+\mcqitem{4}{Which cache mapping scheme permits a given main memory block to be placed in any available cache line, achieving maximum cache hit rates at the expense of complex associative search hardware?}{Fully Associative Mapping}{Direct Mapping}{2-Way Set-Associative Mapping}{Modulo Mapping}{1}
+
+\mcqitem{5}{The cache block replacement algorithm that discards the cache line that has not been accessed for the longest duration of time is:}{Least Recently Used (LRU)}{First-In, First-Out (FIFO)}{Least Frequently Used (LFU)}{Random Replacement}{1}
+
+\mcqitem{6}{Blu-ray optical discs store substantially more data ($25\text{ GB}$ per layer) than standard DVDs ($4.7\text{ GB}$) primarily because they utilize:}{A shorter wavelength blue-violet laser ($405\text{ nm}$) which can focus on smaller pits and tighter tracks}{A magnetic coil instead of optical reflection}{Infrared lasers with larger beam spots}{Multiple mechanical read heads spinning simultaneously}{1}
+
+\mcqitem{7}{A RAID 10 (RAID 1+0) storage configuration provides high I/O throughput and fault tolerance by:}{Striping data across pairs of mirrored drives (requiring at least 4 physical disks)}{Calculating double Reed-Solomon parity across 2 disks}{Mirroring two unstriped single drives}{Using tape drives as backup}{1}
+
+\mcqitem{8}{Double Data Rate (DDR) Synchronous DRAM achieves twice the data transfer rate of conventional SDR SDRAM by:}{Transferring data on both the rising (leading) and falling (trailing) edges of each clock cycle}{Doubling the physical voltage supplied to the memory chip}{Using mechanical switches inside each memory cell}{Operating without a system clock}{1}
+
+\mcqitem{9}{In an M.2 SSD labeled with form factor '2280', the numbers '22' and '80' represent:}{A width of $22\text{ mm}$ and a physical length of $80\text{ mm}$}{A storage capacity of $22\text{ GB}$ with an $80\text{ mm}$ cable}{22 data pins and 80 ground pins}{A read speed of $2200\text{ MB/s}$ and write speed of $800\text{ MB/s}$}{1}
+
+\mcqitem{10}{Advanced Format (AF) modern hard disk drives and SSDs format physical disk sectors to what standard byte size to improve format efficiency and error correction?}{$4096\text{ bytes}$ ($4\text{ KB}$ sectors)}{$512\text{ bytes}$}{$128\text{ bytes}$}{$65,536\text{ bytes}$}{1}
+
+\mcqitem{11}{Memory interleaving improves overall system memory bandwidth by:}{Distributing consecutive memory addresses across multiple independent memory banks that can be accessed concurrently}{Compressing all memory blocks into cache}{Slowing down the clock to eliminate bus contention}{Writing duplicate copies into ROM}{1}
+
+\mcqitem{12}{NAND Flash memory differs fundamentally from standard EEPROM because Flash memory:}{Performs erase operations in whole multi-kilobyte blocks rather than byte-by-byte}{Cannot be electrically erased once written}{Requires ultraviolet light exposure to erase data}{Is completely volatile}{1}
+
+\mcqitem{13}{Modern multi-core processors connect CPU sockets and coherent memory controllers using high-speed point-to-point interconnect fabrics such as:}{Intel UPI / Ultra Path Interconnect (or AMD Infinity Fabric)}{Legacy ISA Bus}{Parallel IDE ribbon cable}{Serial RS-232 interface}{1}
+
+\mcqitem{14}{A 'Warm Boot' (or soft reboot) performed by an operating system differs from a 'Cold Boot' (hard power cycle) because:}{The system restarts without completely interrupting the electrical power supply to the motherboard or re-running full hardware POST}{The hard drive platters stop spinning completely}{The RAM contents are guaranteed to be permanently saved to disk}{All hardware components are physically disconnected}{1}
+
+\mcqitem{15}{The Central Processing Unit register that points to the top memory address of the current active execution stack is the:}{Stack Pointer (SP)}{Base Pointer (BP)}{Instruction Pointer (IP)}{Link Register (LR)}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q16 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{The standard C library function \texttt{printf("Hello\textbackslash n")} interacts with the underlying operating system by:}{Formatting the string in user space and invoking the \texttt{write()} system call to switch into kernel mode}{Directly writing ASCII pixel values to the monitor video card from user mode}{Bypassing the operating system kernel completely}{Triggering a hardware reboot interrupt}{1}
+
+\mcqitem{17}{In an operating system process state transition model, a process transitions from the 'Running' state to the 'Ready' state when:}{Its allocated CPU execution time-slice (quantum) expires under preemptive scheduling}{It issues an I/O request for disk access}{It executes the \texttt{exit()} system call}{It encounters a division-by-zero error}{1}
+
+\mcqitem{18}{Which CPU scheduling algorithm is mathematically proven to provide the minimum possible average waiting time for a given set of stationary processes?}{Shortest Job First (SJF)}{First-Come, First-Served (FCFS)}{Round Robin with large quantum}{Longest Job First (LJF)}{1}
+
+\mcqitem{19}{The 'Priority Inversion' anomaly, where a high-priority task is indefinitely blocked waiting for a resource held by a low-priority task that is preempted by medium tasks, is resolved using:}{Priority Inheritance Protocol}{First-Come, First-Served scheduling}{Completely disabling all hardware interrupts}{Deleting the low-priority process}{1}
+
+\mcqitem{20}{Dijkstra's Banker's Algorithm is deployed in operating systems to accomplish:}{Deadlock Avoidance by ensuring resource allocations never move the system from a safe state to an unsafe state}{Deadlock Detection and recovery via process termination}{Memory defragmentation on magnetic disks}{CPU clock frequency throttling}{1}
+
+\mcqitem{21}{Belady's Anomaly is a counter-intuitive phenomenon observed in certain virtual memory page replacement algorithms where:}{Allocating more physical page frames to a process causes an increase in the number of page faults}{The CPU clock speed decreases when RAM capacity increases}{A system deadlocks whenever more than 2 processes run}{Hard disk seek times increase as sectors are defragmented}{1}
+
+\mcqitem{22}{Which page replacement algorithm suffers from Belady's Anomaly?}{First-In, First-Out (FIFO)}{Least Recently Used (LRU)}{Optimal Page Replacement (OPT)}{Stack-based replacement algorithms}{1}
+
+\mcqitem{23}{In a paged virtual memory architecture with a page size of $4\text{ KB}$ ($2^{12}\text{ bytes}$), how many bits in a 32-bit virtual address represent the page offset?}{12 bits}{20 bits}{16 bits}{4 bits}{1}
+
+\mcqitem{24}{An operating system architecture that groups similar computational jobs into batches and executes them sequentially without interactive user intervention is a:}{Batch Operating System}{Time-Sharing Operating System}{Real-Time Operating System}{Distributed Operating System}{1}
+
+\mcqitem{25}{A Cross-Compiler is a specialized software development tool that:}{Runs on one computer architecture (host) and emits executable binary code for a different target architecture}{Translates high-level code into two different human languages simultaneously}{Combines C and Python code into one file}{Converts HTML code into PDF files}{1}
+
+\mcqitem{26}{During compiler construction, the Lexical Analysis phase (Scanner) reads the raw source code character stream and produces:}{A linear sequence of syntactic tokens (e.g., keywords, identifiers, operators)}{An Abstract Syntax Tree (AST)}{Optimized machine assembly instructions}{A relocatable object file with resolved memory symbols}{1}
+
+\mcqitem{27}{The compiler data structure that stores identifiers, their data types, allocated scopes, and relative memory offsets is the:}{Symbol Table}{Parse Tree}{Call Stack}{Interrupt Vector Table}{1}
+
+\mcqitem{28}{In modern optimizing compilers, Three-Address Code (TAC) is used as an:}{Intermediate Representation (IR) that simplifies machine-independent optimization passes}{Assembly format for 3-pin microcontrollers}{Instruction set that limits memory to 3 bytes}{Error reporting mechanism for linkers}{1}
+
+\mcqitem{29}{The uninitialized global and static variables of a C program are allocated in which segment of the executable binary image?}{BSS Segment (Block Started by Symbol)}{Text Segment}{Stack Segment}{Data Segment (Initialized)}{1}
+
+\mcqitem{30}{In the context of multi-programming operating systems, the degree of multi-programming is controlled and regulated by the:}{Long-Term Scheduler (Job Scheduler)}{Short-Term Scheduler (CPU Scheduler)}{Medium-Term Scheduler (Swapper)}{Device Dispatcher}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (CA-1 Set C)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Architectural \& Systems Explanations]
+\textbf{Q.4 (Ans: A)} In fully associative mapping, any block of main memory can be loaded into any available cache line. This eliminates conflict misses entirely, but requires an associative (content-addressable) comparison where every cache line tag is evaluated simultaneously in parallel by dedicated comparator circuits.\\[2mm]
+\textbf{Q.7 (Ans: A)} RAID 10 (or $1+0$) is a nested RAID level where data is first mirrored across disk pairs (RAID 1) and those mirrored sets are then striped (RAID 0). This provides fault tolerance against drive failure in each mirror pair without the parity computation overhead of RAID 5/6.\\[2mm]
+\textbf{Q.18 (Ans: A)} SJF scheduling minimizes average waiting time because scheduling a job with a shorter execution burst ahead of a longer one reduces the waiting time of the shorter job by the duration of the long job, while increasing the long job's wait by only the short duration, mathematically minimizing $\sum W_i$.\\[2mm]
+\textbf{Q.21 \& Q.22 (Ans: A)} Belady's Anomaly demonstrates that FIFO is not a stack algorithm; the set of pages in a frame buffer of size $k$ is not necessarily a subset of the pages in a frame buffer of size $k+1$. Increasing frames can cause early-evicted pages to miss during subsequent loops, increasing page faults.\\[2mm]
+\textbf{Q.23 (Ans: A)} A page size of $4\text{ KB} = 4096\text{ bytes} = 2^{12}\text{ bytes}$. The offset within a page requires $\log_2(4096) = 12\text{ bits}$. In a 32-bit address, the remaining $32 - 12 = 20\text{ bits}$ are used for the Virtual Page Number (VPN), allowing $2^{20} \approx 1\text{ million}$ virtual pages.
+\end{solutionbox}
+
+\newpage

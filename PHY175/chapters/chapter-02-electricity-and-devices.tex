@@ -1,0 +1,394 @@
+\chapter{Fundamentals of Electricity and Circuit Devices}
+\label{chap:electricity_devices}
+
+\section{Introduction and Overview}
+Electrical circuit theory and modern semiconductor devices form the physical backbone of all modern computing and communication systems. In this chapter, we bridge fundamental electric circuit laws (Ohm's law, KCL, KVL) with nonlinear semiconductor devices (PN diodes, bridge rectifiers, BJTs, CMOS logic), state-of-the-art memory architectures (SRAM, DRAM, SSD Flash), AI hardware acceleration models (Roofline analysis), IoT networking subnetting, and fiber-optic physical layer communications.
+
+\section{Fundamental Circuit Laws and Network Analysis}
+\subsection{Ohm's Law, KCL, and KVL}
+\begin{definitionbox}[Core Circuit Laws]
+\begin{enumerate}
+    \item \textbf{Ohm's Law:} The current $I$ flowing through an ideal linear conductor is directly proportional to the potential difference $V$ across it at constant temperature:
+    \begin{equation}
+        V = I R \quad \text{or} \quad \mathbf{J} = \sigma \mathbf{E}
+    \end{equation}
+    \item \textbf{Kirchhoff's Current Law (KCL):} Based on the \textbf{Conservation of Electric Charge}, the algebraic sum of all currents entering and leaving any circuit node is identically zero:
+    \begin{equation}
+        \sum_{k=1}^N I_k = 0 \implies \sum I_{\text{entering}} = \sum I_{\text{leaving}}
+    \end{equation}
+    \item \textbf{Kirchhoff's Voltage Law (KVL):} Based on the \textbf{Conservation of Energy}, the algebraic sum of all electric potential differences (voltages) around any closed loop in a circuit is identically zero:
+    \begin{equation}
+        \sum_{k=1}^M V_k = 0 \implies \sum V_{\text{rises}} = \sum V_{\text{drops}}
+    \end{equation}
+\end{enumerate}
+\end{definitionbox}
+
+\subsection{Systematic Node-Voltage and Mesh-Current Analysis}
+\begin{enumerate}
+    \item \textbf{Nodal Analysis:} Select a reference (ground) node ($0\,\text{V}$). Apply KCL at each non-reference node $k$:
+    \begin{equation}
+        \sum_{j \neq k} \frac{V_k - V_j}{R_{kj}} = I_{\text{source}, k}
+    \end{equation}
+    In matrix form for $n$ independent nodes:
+    \begin{equation}
+        \begin{bmatrix} G_{11} & G_{12} & \dots & G_{1n} \\ G_{21} & G_{22} & \dots & G_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ G_{n1} & G_{n2} & \dots & G_{nn} \end{bmatrix} \begin{bmatrix} V_1 \\ V_2 \\ \vdots \\ V_n \end{bmatrix} = \begin{bmatrix} I_1 \\ I_2 \\ \vdots \\ I_n \end{bmatrix}
+    \end{equation}
+    where $G_{ii}$ is the sum of conductances connected to node $i$, and $G_{ij} = -1/R_{ij}$ is the mutual conductance between nodes $i$ and $j$.
+    \item \textbf{Mesh Analysis:} Assign clockwise mesh currents $I_1, I_2, \dots, I_m$ to each planar loop. Apply KVL around each mesh:
+    \begin{equation}
+        \begin{bmatrix} R_{11} & R_{12} & \dots & R_{1m} \\ R_{21} & R_{22} & \dots & R_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ R_{m1} & R_{m2} & \dots & R_{mm} \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \\ \vdots \\ I_m \end{bmatrix} = \begin{bmatrix} V_1 \\ V_2 \\ \vdots \\ V_m \end{bmatrix}
+    \end{equation}
+\end{enumerate}
+
+\subsection{Voltage and Current Division Principles}
+\begin{itemize}
+    \item \textbf{Voltage Division (Series Resistors):} For $N$ resistors connected in series across total voltage $V_{total}$:
+    \begin{equation}
+        V_k = V_{total} \left(\frac{R_k}{\sum_{i=1}^N R_i}\right)
+    \end{equation}
+    \item \textbf{Current Division (Parallel Resistors):} For two parallel branches $R_1, R_2$ carrying total input current $I_{total}$:
+    \begin{equation}
+        I_1 = I_{total} \left(\frac{R_2}{R_1 + R_2}\right), \quad I_2 = I_{total} \left(\frac{R_1}{R_1 + R_2}\right)
+    \end{equation}
+\end{itemize}
+
+\section{Semiconductor Diodes and Power Rectifier Circuits}
+\subsection{The PN Junction Diode and Shockley Equation}
+A PN junction consists of adjoining p-type and n-type semiconductor regions. Thermal diffusion of majority carriers creates a \textbf{depletion region} with uncompensated ionized dopants, creating a built-in potential barrier $V_{bi} \approx 0.7\,\text{V}$ (for Silicon) or $0.3\,\text{V}$ (for Germanium).
+
+The current-voltage relationship is described by the \textbf{Shockley Ideal Diode Equation}:
+\begin{equation}
+    I_D = I_s \left(e^{\frac{V_D}{\eta V_t}} - 1\right)
+\end{equation}
+where $I_s$ is reverse saturation current, $\eta$ is ideality factor ($1 \le \eta \le 2$), and $V_t = \frac{k_BT}{q} \approx 25.86\,\text{mV}$ at $300\,\text{K}$.
+
+\subsection{Full-Wave Bridge Rectifier with Capacitor Filter}
+A full-wave bridge rectifier employs four diodes in a closed ring configuration to convert AC voltage $v_{in}(t) = V_m \sin(\omega t)$ into pulsating DC.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Comparison of Rectifier Circuit Topologies}
+\label{tab:rectifiers}
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Parameter} & \textbf{Half-Wave Rectifier} & \textbf{Center-Tapped Full-Wave} & \textbf{Bridge Rectifier} \\
+\midrule
+\textbf{Number of Diodes} & 1 & 2 & 4 \\
+\textbf{DC Output Voltage ($V_{dc}$)} & $\frac{V_m}{\pi} \approx 0.318 V_m$ & $\frac{2V_m}{\pi} \approx 0.636 V_m$ & $\frac{2V_m}{\pi} \approx 0.636 V_m$ \\
+\textbf{RMS Output Voltage ($V_{rms}$)} & $\frac{V_m}{2} = 0.5 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ \\
+\textbf{Rectification Efficiency ($\eta$)} & $40.6\%$ & $81.2\%$ & $81.2\%$ \\
+\textbf{Ripple Frequency ($f_r$)} & $f_{in}$ ($50\,\text{Hz}$) & $2 f_{in}$ ($100\,\text{Hz}$) & $2 f_{in}$ ($100\,\text{Hz}$) \\
+\textbf{Ripple Factor ($\gamma$) without filter} & $1.21$ & $0.482$ & $0.482$ \\
+\textbf{Peak Inverse Voltage (PIV)} & $V_m$ & $2 V_m$ & $V_m$ \\
+\textbf{Transformer Utilization Factor} & $0.287$ & $0.693$ & $0.812$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{derivationbox}[Capacitor Filter Ripple Factor ($\gamma$) and Peak-to-Peak Ripple Voltage ($V_{r(pp)}$)]
+Connecting a large smoothing capacitor $C$ in parallel with load resistor $R_L$:
+\begin{itemize}
+    \item The capacitor charges to peak voltage $V_{peak} = V_m - 2V_D$ (for bridge rectifier).
+    \item During the interval between peaks ($T_r = \frac{1}{2f}$), the capacitor discharges through load $R_L$: $v(t) \approx V_{peak} e^{-t/(R_L C)} \approx V_{peak}\left(1 - \frac{t}{R_L C}\right)$.
+\end{itemize}
+The total charge lost during discharge time $T_r \approx \frac{1}{2f}$ is:
+\begin{equation}
+    \Delta Q = I_{dc} T_r = \frac{I_{dc}}{2f} = C V_{r(pp)} \implies V_{r(pp)} = \frac{I_{dc}}{2 f C} = \frac{V_{peak}}{2 f C R_L}
+\end{equation}
+Approximating the ripple waveform as a triangular wave of peak-to-peak amplitude $V_{r(pp)}$:
+\begin{equation}
+    V_{r,rms} = \frac{V_{r(pp)}}{2\sqrt{3}} = \frac{V_{peak}}{4\sqrt{3} f C R_L}
+\end{equation}
+The DC output voltage is $V_{dc} = V_{peak} - \frac{V_{r(pp)}}{2} \approx V_{peak}$. The \textbf{Ripple Factor} $\gamma$ is:
+\begin{equation}
+    \gamma \equiv \frac{V_{r,rms}}{V_{dc}} = \frac{\frac{V_{peak}}{4\sqrt{3} f C R_L}}{V_{peak}} = \frac{1}{4\sqrt{3} f C R_L}
+\end{equation}
+\end{derivationbox}
+
+\section{Bipolar Junction Transistors (BJT): Operation, Biasing, and Stability}
+\subsection{Physical Structure and Current Relations}
+A BJT consists of two back-to-back PN junctions forming three terminals: \textbf{Emitter (E)} (heavily doped), \textbf{Base (B)} (ultra-thin, lightly doped), and \textbf{Collector (C)} (moderately doped, large area for heat dissipation).
+
+\begin{equation}
+    I_E = I_B + I_C
+\end{equation}
+\begin{itemize}
+    \item \textbf{Common Base Current Gain ($\alpha$):} $\alpha = \frac{I_C}{I_E} \approx 0.95 - 0.998$.
+    \item \textbf{Common Emitter Current Gain ($\beta$):} $\beta = \frac{I_C}{I_B} \approx 50 - 500$.
+    \item Mathematical relationship:
+    \begin{equation}
+        \beta = \frac{\alpha}{1 - \alpha}, \quad \alpha = \frac{\beta}{\beta + 1}
+    \end{equation}
+\end{itemize}
+
+\subsection{BJT Operating Regions and DC Load Line Analysis}
+\begin{table}[htbp]
+\centering
+\small
+\caption{BJT Operating Modes and Junction Biasing}
+\label{tab:bjt_modes}
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Operating Region} & \textbf{Emitter-Base (EBJ)} & \textbf{Collector-Base (CBJ)} & \textbf{Primary Application} \\
+\midrule
+\textbf{Cutoff} & Reverse Biased & Reverse Biased & Digital OFF Switch ($I_C \approx 0, V_{CE} \approx V_{CC}$) \\
+\textbf{Active (Forward-Active)} & Forward Biased & Reverse Biased & Linear Analog Amplifier ($I_C = \beta I_B$) \\
+\textbf{Saturation} & Forward Biased & Forward Biased & Digital ON Switch ($V_{CE,\text{sat}} \approx 0.2\,\text{V}$) \\
+\textbf{Reverse Active} & Reverse Biased & Forward Biased & Specialized TTL logic switches (low gain) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{derivationbox}[DC Load Line and $Q$-Point Determination in Common Emitter]
+In a Common Emitter circuit with supply $V_{CC}$ and collector resistor $R_C$:
+Applying KVL to the collector-emitter loop:
+\begin{equation}
+    V_{CC} - I_C R_C - V_{CE} = 0 \implies I_C = -\frac{1}{R_C} V_{CE} + \frac{V_{CC}}{R_C}
+\end{equation}
+This represents a straight line with slope $-1/R_C$ on the $I_C$-$V_{CE}$ output characteristics:
+\begin{itemize}
+    \item \textbf{Cutoff Point ($I_C = 0$):} $V_{CE} = V_{CC}$.
+    \item \textbf{Saturation Point ($V_{CE} = 0$):} $I_{C,\text{sat}} = \frac{V_{CC}}{R_C}$.
+    \item \textbf{Quiescent Operating Point ($Q$-Point):} The intersection of the DC load line with the specific base current curve $I_B$:
+    \begin{equation}
+        Q = (V_{CEQ}, I_{CQ})
+    \end{equation}
+\end{itemize}
+\end{derivationbox}
+
+\subsection{Bias Stabilization and Stability Factors}
+To prevent thermal runaway (where temperature increase elevates $I_{CO}$, which elevates $I_C$, further heating the junction until destruction), biasing circuits are rated by the \textbf{Stability Factor} $S$:
+\begin{equation}
+    S \equiv \frac{\partial I_C}{\partial I_{CO}} = \frac{1 + \beta}{1 - \beta \left(\frac{\partial I_B}{\partial I_C}\right)}
+\end{equation}
+\begin{itemize}
+    \item \textbf{Fixed Bias Circuit:} $I_B = \frac{V_{CC} - V_{BE}}{R_B} \implies \frac{\partial I_B}{\partial I_C} = 0 \implies S = 1 + \beta$ (Extremely poor thermal stability).
+    \item \textbf{Voltage Divider Bias with Emitter Resistor $R_E$:}
+    \begin{equation}
+        S = (1 + \beta) \frac{1 + \frac{R_{TH}}{R_E}}{1 + \beta + \frac{R_{TH}}{R_E}} \approx 1 + \frac{R_{TH}}{R_E} \quad (\text{if } R_{TH} \ll \beta R_E)
+    \end{equation}
+    Selecting $R_{TH} \le 0.1 \beta R_E$ establishes near-perfect stability ($S \to 1$), making the $Q$-point virtually independent of transistor $\beta$ and temperature.
+\end{itemize}
+
+\section{CMOS Digital Integrated Circuits and Power Dissipation}
+\subsection{CMOS Inverter Operation and Voltage Transfer Characteristics (VTC)}
+Complementary Metal-Oxide-Semiconductor (CMOS) logic integrates complementary pairs of p-channel (PMOS) and n-channel (NMOS) MOSFETs.
+\begin{itemize}
+    \item When input $V_{in} = \text{LOW} (0\,\text{V})$: PMOS is ON (pulls output to $V_{DD}$), NMOS is OFF. Output $V_{out} = V_{DD}$ (\textbf{HIGH}).
+    \item When input $V_{in} = \text{HIGH} (V_{DD})$: PMOS is OFF, NMOS is ON (pulls output to $\text{GND}$). Output $V_{out} = 0\,\text{V}$ (\textbf{LOW}).
+    \item \textbf{Noise Margins:}
+    \begin{align}
+        NM_H &= V_{OH} - V_{IH} = V_{DD} - V_{IH} \\
+        NM_L &= V_{IL} - V_{OL} = V_{IL} - 0 = V_{IL}
+    \end{align}
+\end{itemize}
+
+\begin{derivationbox}[CMOS Dynamic Power Dissipation Derivation]
+When the CMOS inverter transitions from LOW to HIGH, energy drawn from the power supply $V_{DD}$ to charge the total output load capacitance $C_L$ is:
+\begin{equation}
+    E_{\text{supply}} = \int_0^\infty i(t) V_{DD} dt = V_{DD} \int_0^\infty i(t) dt = V_{DD} Q = C_L V_{DD}^2
+\end{equation}
+Energy stored in capacitor: $E_{\text{cap}} = \frac{1}{2} C_L V_{DD}^2$. The remaining $\frac{1}{2} C_L V_{DD}^2$ is dissipated as heat in the PMOS transistor.
+During the HIGH-to-LOW transition, the capacitor discharges through NMOS to ground, dissipating the stored $\frac{1}{2} C_L V_{DD}^2$.
+Total energy dissipated per full clock cycle ($0 \to 1 \to 0$) is:
+\begin{equation}
+    E_{\text{cycle}} = C_L V_{DD}^2
+\end{equation}
+For clock frequency $f$ and switching activity factor $\alpha$ ($0 \le \alpha \le 1$):
+\begin{equation}
+    P_{\text{dynamic}} = \alpha C_L V_{DD}^2 f
+\end{equation}
+Total CMOS power dissipation is the sum of dynamic and static leakage power:
+\begin{equation}
+    P_{\text{total}} = \alpha C_L V_{DD}^2 f + V_{DD} I_{\text{leakage}}
+\end{equation}
+\end{derivationbox}
+
+\section{Semiconductor Memory Technologies and AI Hardware Accelerators}
+\subsection{SRAM vs. DRAM vs. Flash SSD Memory}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Comparison of Primary Semiconductor Memory Technologies}
+\label{tab:memory_technologies}
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Feature} & \textbf{SRAM (Static RAM)} & \textbf{DRAM (Dynamic RAM)} & \textbf{Flash SSD (NAND)} \\
+\midrule
+\textbf{Cell Architecture} & 6-Transistor (6T) cross-coupled CMOS latch & 1-Transistor 1-Capacitor (1T1C) cell & Floating-Gate MOSFET / 3D Charge-Trap NAND \\
+\textbf{Storage Mechanism} & Bistable latch state ($Q, \bar{Q}$) & Capacitor charge ($Q = C V$) & Trapped tunneling electrons in floating gate \\
+\textbf{Volatility} & Volatile (loses data on power down) & Volatile (requires periodic refresh $\sim 64\,\text{ms}$) & Non-Volatile (retains data without power) \\
+\textbf{Access Latency} & Ultra-fast ($0.5 - 2\,\text{ns}$) & Fast ($10 - 20\,\text{ns}$) & Moderate/Slow ($10 - 100\,\mu\text{s}$) \\
+\textbf{Integration Density} & Low (large cell area) & High ($1$ cell per bit) & Ultra-High (multi-layer 3D stacking) \\
+\textbf{Cost per Bit} & Highest & Moderate & Lowest \\
+\textbf{Primary Role} & CPU L1/L2/L3 On-chip Cache & Main System Memory (DDR5) & Secondary Storage, NVMe Solid State Drives \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{AI Hardware Accelerators and the Roofline Performance Model}
+Modern deep learning workloads (Transformer attention, Convolutional GEMM matrix multiplications) require trillions of Multiply-Accumulate (MAC) operations.
+\begin{itemize}
+    \item \textbf{Systolic Arrays (Google TPU):} A 2D grid of processing elements (PEs) that stream weights and data rhythmically across adjacent registers without fetching from memory every step, dramatically lowering energy consumption.
+    \item \textbf{Roofline Performance Model:} Characterizes processor operational throughput ($P$, in $\text{TFLOP/s}$) as a function of \textbf{Arithmetic Intensity} ($I$, in $\text{FLOPs/byte}$):
+    \begin{equation}
+        P = \min\left(P_{\text{peak}}, I \times \text{Bandwidth}_{\text{memory}}\right)
+    \end{equation}
+    \begin{itemize}
+        \item \textbf{Memory-Bound Regime ($I < I_{\text{knee}}$):} Performance is limited by memory bandwidth ($P = I \times \text{BW}$).
+        \item \textbf{Compute-Bound Regime ($I \ge I_{\text{knee}}$):} Performance saturates at hardware peak compute capacity $P_{\text{peak}}$.
+    \end{itemize}
+\end{itemize}
+
+\section{IoT Sensors, IPv4 Subnetting, and Optical Fiber Communications}
+\subsection{IPv4 Network Subnetting Fundamentals}
+In modern IoT architectures, sensor nodes are organized into IP subnetworks. For a `/27` CIDR prefix:
+\begin{itemize}
+    \item \textbf{Subnet Mask:} $27$ network bits $\implies \mathtt{255.255.255.224}$ \\ (Binary: \texttt{11111111.11111111.11111111.11100000}).
+    \item \textbf{Host Bits:} $32 - 27 = 5$ host bits.
+    \item \textbf{Total IP Addresses per Subnet:} $2^5 = 32$.
+    \item \textbf{Usable Host Addresses:} $2^5 - 2 = 30$ (subtracting Network ID and Broadcast address).
+\end{itemize}
+
+\subsection{Optical Fiber Physics: Total Internal Reflection, Dispersion, and Attenuation}
+Optical fibers guide light signals over long distances with minimal attenuation via \textbf{Total Internal Reflection (TIR)} at the core-cladding interface.
+\begin{itemize}
+    \item Refractive index condition: Core index $n_1 >$ Cladding index $n_2$.
+    \item \textbf{Critical Angle ($\theta_c$):} From Snell's law ($n_1 \sin \theta_c = n_2 \sin 90^\circ$):
+    \begin{equation}
+        \sin \theta_c = \frac{n_2}{n_1} \implies \theta_c = \arcsin\left(\frac{n_2}{n_1}\right)
+    \end{equation}
+    \item \textbf{Acceptance Angle ($\theta_a$) and Numerical Aperture ($\text{NA}$):} The maximum cone of incident light accepted into the core from air ($n_0 = 1$):
+    \begin{equation}
+        \text{NA} = \sin \theta_a = \sqrt{n_1^2 - n_2^2}
+    \end{equation}
+    \item \textbf{Intermodal Dispersion in Step-Index Fibers:} Light rays traveling along different zig-zag paths arrive at different times. The pulse broadening $\Delta t_{\text{modal}}$ over fiber length $L$ is:
+    \begin{equation}
+        \Delta t_{\text{modal}} = \frac{L}{c/n_1}\left(\frac{1}{\sin \theta_c} - 1\right) = \frac{L n_1}{c}\left(\frac{n_1 - n_2}{n_2}\right) \approx \frac{L n_1 \Delta}{c}
+    \end{equation}
+    where $\Delta = \frac{n_1 - n_2}{n_1}$ is the fractional index difference.
+    \item \textbf{Fiber Attenuation Coefficient ($\alpha_{\text{dB}}$):} Signal power loss over distance $L$:
+    \begin{equation}
+        \alpha_{\text{dB}} = \frac{10}{L} \log_{10}\left(\frac{P_{\text{in}}}{P_{\text{out}}}\right) \quad (\text{dB/km})
+    \end{equation}
+\end{itemize}
+
+\section{Comprehensive Worked Examples and Problem Solutions}
+
+\begin{examplebox}[Example 2.1: Full-Wave Bridge Rectifier Design with Capacitor Filter]
+\textbf{Problem:} A bridge rectifier supplied with $230\,\text{V}_{\text{rms}}, 50\,\text{Hz}$ AC uses a step-down transformer with a turns ratio of $10:1$. Silicon diodes have forward drop $V_D = 0.7\,\text{V}$. The load is $R_L = 500\,\Omega$, and a filtering capacitor $C = 1000\,\mu\text{F}$ is connected.
+\begin{enumerate}[label=(\alph*)]
+    \item Calculate the secondary peak voltage $V_m$ and peak filtered DC voltage $V_{peak}$.
+    \item Determine the peak-to-peak ripple voltage $V_{r(pp)}$, ripple factor $\gamma$, and DC load current $I_{dc}$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}[label=(\alph*)]
+    \item Secondary RMS voltage: $V_{2,\text{rms}} = \frac{230}{10} = 23.0\,\text{V}_{\text{rms}}$.
+    Peak secondary voltage: $V_m = \sqrt{2} \times 23.0\,\text{V} = \mathbf{32.53\,\text{V}}$.
+    Accounting for two conducting diodes in bridge:
+    \begin{equation}
+        V_{peak} = V_m - 2 V_D = 32.53 - 2(0.7) = \mathbf{31.13\,\text{V}}
+    \end{equation}
+    \item \textbf{Ripple and DC Current:}
+    Ripple frequency: $f_r = 2 f = 2 \times 50 = 100\,\text{Hz}$.
+    \begin{align}
+        V_{r(pp)} &= \frac{V_{peak}}{2 f C R_L} = \frac{31.13}{2(50)(1000 \times 10^{-6})(500)} = \frac{31.13}{50} = \mathbf{0.623\,\text{V}} \\
+        V_{dc} &= V_{peak} - \frac{V_{r(pp)}}{2} = 31.13 - 0.31 = \mathbf{30.82\,\text{V}} \\
+        I_{dc} &= \frac{V_{dc}}{R_L} = \frac{30.82\,\text{V}}{500\,\Omega} = \mathbf{61.64\,\text{mA}} \\
+        \gamma &= \frac{V_{r(pp)}}{2\sqrt{3} V_{dc}} = \frac{0.623}{2\sqrt{3}(30.82)} = \frac{0.623}{106.76} = \mathbf{0.00583} \quad (0.583\%)
+    \end{align}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 2.2: BJT Voltage Divider Bias Circuit $Q$-Point Calculation]
+\textbf{Problem:} A silicon NPN transistor ($\beta = 100, V_{BE} = 0.7\,\text{V}$) is configured in a voltage divider bias circuit with $V_{CC} = 15.0\,\text{V}$, $R_1 = 39\,\text{k}\Omega$, $R_2 = 10\,\text{k}\Omega$, $R_C = 2.2\,\text{k}\Omega$, and $R_E = 1.0\,\text{k}\Omega$.
+Determine the Thevenin equivalent base voltage $V_{TH}$, base resistance $R_{TH}$, base current $I_B$, collector current $I_C$, and collector-emitter voltage $V_{CE}$ at the $Q$-point.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Thevenin Equivalent Circuit at the Base:}
+    \begin{align}
+        V_{TH} &= V_{CC}\left(\frac{R_2}{R_1 + R_2}\right) = 15.0\left(\frac{10}{39 + 10}\right) = 15.0\left(\frac{10}{49}\right) = \mathbf{3.061\,\text{V}} \\
+        R_{TH} &= R_1 \parallel R_2 = \frac{39 \times 10}{49}\,\text{k}\Omega = \mathbf{7.959\,\text{k}\Omega}
+    \end{align}
+    \item \textbf{Base and Collector Currents:}
+    Applying KVL around the base-emitter loop ($V_{TH} - I_B R_{TH} - V_{BE} - I_E R_E = 0$, with $I_E = (\beta+1)I_B$):
+    \begin{align}
+        I_B &= \frac{V_{TH} - V_{BE}}{R_{TH} + (\beta + 1)R_E} = \frac{3.061 - 0.70}{7959 + (101)(1000)} = \frac{2.361}{108{,}959} = \mathbf{21.67\,\mu\text{A}} \\
+        I_C &= \beta I_B = 100 \times 21.67\,\mu\text{A} = \mathbf{2.167\,\text{mA}} \\
+        I_E &= I_B + I_C = 2.189\,\text{mA}
+    \end{align}
+    \item \textbf{Collector-Emitter Voltage ($V_{CE}$):}
+    Applying KVL to the collector-emitter loop:
+    \begin{align}
+        V_{CE} &= V_{CC} - I_C R_C - I_E R_E = 15.0 - (2.167 \times 10^{-3})(2200) - (2.189 \times 10^{-3})(1000) \\
+        &= 15.0 - 4.767 - 2.189 = \mathbf{8.044\,\text{V}}
+    \end{align}
+    The quiescent operating point is $Q = (8.04\,\text{V}, 2.17\,\text{mA})$ in the active region ($V_{CE} > 0.2\,\text{V}$).
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 2.3: CMOS Microprocessor Dynamic Power Scaling]
+\textbf{Problem:} A 64-bit multi-core CMOS processor with total switching capacitance $C_L = 25.0\,\text{nF}$ operates at clock frequency $f_1 = 3.2\,\text{GHz}$ with supply voltage $V_{DD1} = 1.20\,\text{V}$ and average activity factor $\alpha = 0.20$.
+\begin{enumerate}[label=(\alph*)]
+    \item Calculate the baseline dynamic power dissipation $P_1$.
+    \item To reduce heat generation, Dynamic Voltage and Frequency Scaling (DVFS) reduces $V_{DD2}$ to $0.95\,\text{V}$ and frequency to $f_2 = 2.4\,\text{GHz}$. Compute the new dynamic power $P_2$ and percentage power reduction.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Baseline Dynamic Power:}
+    \begin{align}
+        P_1 &= \alpha C_L V_{DD1}^2 f_1 = (0.20)(25.0 \times 10^{-9}\,\text{F})(1.20\,\text{V})^2(3.2 \times 10^9\,\text{s}^{-1}) \\
+        &= (0.20)(25.0 \times 10^{-9})(1.44)(3.2 \times 10^9) = \mathbf{23.04\,\text{W}}
+    \end{align}
+    \item \textbf{Scaled Dynamic Power:}
+    \begin{align}
+        P_2 &= \alpha C_L V_{DD2}^2 f_2 = (0.20)(25.0 \times 10^{-9})(0.95)^2(2.4 \times 10^9) \\
+        &= (0.20)(25.0 \times 10^{-9})(0.9025)(2.4 \times 10^9) = \mathbf{10.83\,\text{W}}
+    \end{align}
+    Percentage Power Reduction:
+    \begin{equation}
+        \Delta P\% = \frac{P_1 - P_2}{P_1} \times 100\% = \frac{23.04 - 10.83}{23.04} \times 100\% = \frac{12.21}{23.04} \times 100\% = \mathbf{53.0\%}
+    \end{equation}
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}[Example 2.4: Optical Fiber Dispersion and Signal Bandwidth Limit]
+\textbf{Problem:} A step-index silica optical fiber has core refractive index $n_1 = 1.480$, cladding index $n_2 = 1.460$, and length $L = 5.0\,\text{km}$. Speed of light in vacuum is $c = 3.0 \times 10^8\,\text{m/s}$.
+\begin{enumerate}[label=(\alph*)]
+    \item Calculate the fractional refractive index difference $\Delta$, critical angle $\theta_c$, and numerical aperture $\text{NA}$.
+    \item Compute the total intermodal pulse delay dispersion $\Delta t_{\text{modal}}$ and the maximum achievable optical bit rate $B \approx \frac{1}{2\Delta t}$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Fractional Index Difference and Critical Angle:}
+    \begin{align}
+        \Delta &= \frac{n_1 - n_2}{n_1} = \frac{1.480 - 1.460}{1.480} = \frac{0.020}{1.480} = \mathbf{0.01351} \quad (1.351\%) \\
+        \sin \theta_c &= \frac{n_2}{n_1} = \frac{1.460}{1.480} = 0.9865 \implies \theta_c = \arcsin(0.9865) = \mathbf{80.57^\circ} \\
+        \text{NA} &= \sqrt{n_1^2 - n_2^2} = \sqrt{(1.480)^2 - (1.460)^2} = \sqrt{2.1904 - 2.1316} = \sqrt{0.0588} = \mathbf{0.2425}
+    \end{align}
+    \item \textbf{Intermodal Dispersion and Bit Rate:}
+    \begin{align}
+        \Delta t_{\text{modal}} &= \frac{L n_1}{c}\left(\frac{n_1 - n_2}{n_2}\right) = \frac{(5000\,\text{m})(1.480)}{3.0 \times 10^8\,\text{m/s}}\left(\frac{0.020}{1.460}\right) \\
+        &= (2.467 \times 10^{-5}\,\text{s})(0.01370) = 3.379 \times 10^{-7}\,\text{s} = \mathbf{337.9\,\text{ns}} \\
+        B_{\text{max}} &\approx \frac{1}{2 \Delta t_{\text{modal}}} = \frac{1}{2(337.9 \times 10^{-9}\,\text{s})} = \mathbf{1.48\,\text{Mbps}}
+    \end{align}
+\end{enumerate}
+\end{examplebox}
+
+\section{Chapter Summary and Key Takeaways}
+\begin{takeawaybox}
+\begin{itemize}
+    \item \textbf{Circuit Theorems:} KCL is charge conservation ($\sum I = 0$); KVL is energy conservation ($\sum V = 0$).
+    \item \textbf{Rectifier Systems:} Bridge rectifiers achieve $81.2\%$ efficiency with ripple frequency $2f$. A capacitor filter yields ripple $\gamma = \frac{1}{4\sqrt{3} f C R_L}$.
+    \item \textbf{BJT Amplification:} In active mode ($V_{BE} \approx 0.7\,\text{V}$, CBJ reverse-biased), $I_C = \beta I_B$. Voltage divider bias provides robust $Q$-point thermal stability ($S \to 1$).
+    \item \textbf{CMOS Power:} Dynamic power scales quadratically with voltage: $P = \alpha C_L V_{DD}^2 f$.
+    \item \textbf{Memory Cells:} SRAM (6T fast cache), DRAM (1T1C high density), Flash (non-volatile floating gate).
+    \item \textbf{Roofline Model:} $P = \min(P_{\text{peak}}, I \times \text{BW})$, differentiating compute-bound and memory-bound AI workloads.
+    \item \textbf{Optical Fibers:} Total internal reflection occurs when $n_1 > n_2$. Numerical aperture $\text{NA} = \sqrt{n_1^2 - n_2^2} = \sin \theta_a$. Intermodal dispersion is $\Delta t \approx \frac{L n_1 \Delta}{c}$.
+\end{itemize}
+\end{takeawaybox}

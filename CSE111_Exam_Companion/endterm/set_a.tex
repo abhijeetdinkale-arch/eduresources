@@ -1,0 +1,124 @@
+\section{End-Term Examination --- Set A}
+\label{sec:endterm_set_a}
+
+\LPUCSHeader{End-Term Examination (Comprehensive MCQ)}{A}{120 Minutes}{30 Marks}{CO1 to CO6 (Units 1 to 6 Comprehensive)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Instructions: All 30 questions are compulsory. Each question carries 1 mark. A penalty of 0.25 marks is deducted for each incorrect response.}
+\end{center}
+
+\vspace{3mm}
+
+% ------------------------------------------------------------------------------
+% UNIT 1: COMPUTER SYSTEM (Q1 TO Q5)
+% ------------------------------------------------------------------------------
+\mcqitem{1}{In the von Neumann architecture, the shared communication path between the CPU and memory that creates the 'von Neumann Bottleneck' is the:}{System Bus (which multiplexes instruction and data traffic over the same channel)}{L1 Cache Register}{Arithmetic Logic Unit}{Interrupt Vector Controller}{1}
+
+\mcqitem{2}{Which computer memory technology utilizes bistable latching flip-flops (typically 6 transistors per bit) and delivers sub-2-nanosecond access latencies?}{Static RAM (SRAM)}{Dynamic RAM (DRAM)}{NAND Flash Memory}{Phase-Change Memory}{1}
+
+\mcqitem{3}{A RAID 5 storage array constructed from five $2\text{ TB}$ NVMe drives provides a usable data capacity of:}{$8\text{ TB}$ (calculated as $(N - 1) \times \text{Capacity}$)}{$10\text{ TB}$}{$4\text{ TB}$}{$6\text{ TB}$}{1}
+
+\mcqitem{4}{The central processor register that holds the specific memory address of the next machine instruction to be fetched from RAM is the:}{Program Counter (PC)}{Instruction Register (IR)}{Memory Buffer Register (MBR)}{Accumulator (AC)}{1}
+
+\mcqitem{5}{Solid-State Drives (SSDs) communicate directly with the host CPU over PCI Express lanes using which optimized protocol?}{NVMe (Non-Volatile Memory Express)}{SATA Revision 3.0}{SCSI Parallel Interface}{PATA IDE}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 2: OPERATING SYSTEM (Q6 TO Q10)
+% ------------------------------------------------------------------------------
+\mcqitem{6}{An operating system switches the CPU execution context from unprivileged User Mode (Ring 3) to privileged Kernel Mode (Ring 0) via:}{A System Call instruction (\texttt{syscall}) or hardware interrupt}{A standard high-level variable assignment}{A compiler preprocessor directive}{A physical memory defragmentation cycle}{1}
+
+\mcqitem{7}{The four necessary Coffman conditions required for a deadlock to occur are:}{Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait}{Atomicity, Consistency, Isolation, and Durability}{Preemption, Aging, Swapping, and Paging}{Compilation, Linking, Loading, and Execution}{1}
+
+\mcqitem{8}{In virtual memory architectures, a Page Fault occurs when:}{A referenced virtual page is currently not present in physical RAM frames}{The CPU clock speed drops below $1\text{ GHz}$}{A division by zero arithmetic error occurs}{Two threads write to the same register}{1}
+
+\mcqitem{9}{During the C software build lifecycle, which utility resolves external function references and links precompiled static library archives into an executable?}{Linker}{Compiler}{Preprocessor}{Assembler}{1}
+
+\mcqitem{10}{A real-time operating system where missing an operational task deadline leads directly to catastrophic system failure (e.g., flight avionics) is a:}{Hard Real-Time System}{Soft Real-Time System}{Batch Operating System}{Time-Sharing System}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 3: LINUX OPERATING SYSTEM (Q11 TO Q15)
+% ------------------------------------------------------------------------------
+\mcqitem{11}{According to the Linux Filesystem Hierarchy Standard (FHS), system-wide configuration files (e.g., \texttt{/etc/passwd}) reside in:}{\texttt{/etc}}{\texttt{/bin}}{\texttt{/dev}}{\texttt{/proc}}{1}
+
+\mcqitem{12}{In Linux, what exact permissions are set on a file after executing \texttt{chmod 755 run.sh}?}{Owner: \texttt{rwx}, Group: \texttt{r-x}, Others: \texttt{r-x}}{Owner: \texttt{rw-}, Group: \texttt{rw-}, Others: \texttt{r--}}{Owner: \texttt{rwx}, Group: \texttt{---}, Others: \texttt{---}}{Owner: \texttt{r-x}, Group: \texttt{r-x}, Others: \texttt{r-x}}{1}
+
+\mcqitem{13}{An Inode in a Linux filesystem contains:}{File metadata (size, permissions, ownership, timestamps, block pointers), but NOT the filename}{Only the human-readable filename}{The full plaintext contents of the file}{The root superuser password}{1}
+
+\mcqitem{14}{Which command line instruction searches for the case-insensitive string "timeout" inside \texttt{system.log}?}{\texttt{grep -i "timeout" system.log}}{\texttt{find -name "timeout" system.log}}{\texttt{cat system.log > timeout}}{\texttt{tail -n timeout system.log}}{1}
+
+\mcqitem{15}{The special permission bit set on \texttt{/tmp} that permits users to create files but allows ONLY the file's owner to delete their own file is the:}{Sticky Bit (octal \texttt{1000})}{SetUID Bit (octal \texttt{4000})}{SetGID Bit (octal \texttt{2000})}{Immutable Bit}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 4: COHORTS AND TECHNICAL SKILL SETS (Q16 TO Q20)
+% ------------------------------------------------------------------------------
+\mcqitem{16}{In the Cloud and DevOps cohort, which open-source container orchestration engine manages automated scaling, networking, and self-healing across server clusters?}{Kubernetes (K8s)}{Vagrant}{VirtualBox}{Webpack}{1}
+
+\mcqitem{17}{In algorithmic problem solving, what is the average and worst-case time complexity of Merge Sort on an array of $N$ elements?}{$O(N \log N)$}{$O(N^2)$}{$O(N)$}{$O(\log N)$}{1}
+
+\mcqitem{18}{In technical behavioral interviews at tier-1 tech companies, the STAR interview answering method stands for:}{Situation, Task, Action, Result}{System, Testing, Architecture, Refactoring}{Security, Token, Authorization, Routing}{Syntax, Types, Arguments, Returns}{1}
+
+\mcqitem{19}{In the AI and Data Science engineering cohort, which Python library provides high-performance $N$-dimensional array objects and vectorized linear algebra operations?}{NumPy}{Flask}{BeautifulSoup}{Matplotlib}{1}
+
+\mcqitem{20}{In software licensing, the MIT License is classified as:}{A permissive open-source license allowing free use, modification, and commercial distribution}{A copyleft license requiring all derivative code to be GPL licensed}{A proprietary commercial license with annual fees}{A patent-restricting license}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 5: COMPUTER NETWORKS AND COMMUNICATION (Q21 TO Q25)
+% ------------------------------------------------------------------------------
+\mcqitem{21}{In the 7-layer OSI Reference Model, which layer is responsible for logical IP addressing and routing packets across intermediate networks?}{Layer 3: Network Layer}{Layer 2: Data Link Layer}{Layer 4: Transport Layer}{Layer 7: Application Layer}{1}
+
+\mcqitem{22}{How does a Layer 2 Network Switch prevent packet collisions compared to a legacy Layer 1 Hub?}{The switch maintains a dynamic MAC address table to forward frames strictly to the destination port}{The switch operates at lower electrical voltage}{The hub encrypts all data packets}{The switch broadcasts all packets to all ports}{1}
+
+\mcqitem{23}{The Address Resolution Protocol (ARP) resolves:}{A known 32-bit IP address to a physical 48-bit MAC address}{A domain name to an IP address}{A MAC address to an email address}{A port number to a transport protocol}{1}
+
+\mcqitem{24}{In an IPv4 network, the CIDR notation \texttt{/24} corresponds to which standard subnet mask and provides how many usable host addresses?}{\texttt{255.255.255.0}, providing 254 usable host addresses}{\texttt{255.255.0.0}, providing 65534 usable host addresses}{\texttt{255.0.0.0}, providing 16 million usable host addresses}{\texttt{255.255.255.128}, providing 126 usable host addresses}{1}
+
+\mcqitem{25}{The security principle of the CIA Triad that ensures information is protected from unauthorized modification or tampering is:}{Integrity}{Confidentiality}{Availability}{Non-repudiation}{1}
+
+% ------------------------------------------------------------------------------
+% UNIT 6: VERSION CONTROL & MODERN AI TOOLS (Q26 TO Q30)
+% ------------------------------------------------------------------------------
+\mcqitem{26}{Git is architecturally classified as a Distributed Version Control System (DVCS) because:}{Every developer's local clone contains the full repository history, commit tree, and branch logs}{Commits can only be created when connected to a central server}{It does not track file changes}{It requires a paid subscription to initialize a repository}{1}
+
+\mcqitem{27}{In Git's Three-Tree Architecture, executing the command \texttt{git add filename.py} transitions the file's modifications from:}{The Working Directory to the Staging Area (Index)}{The Staging Area to the Remote GitHub repository}{The Local Repository to the Working Directory}{The Remote Server to the Local Cache}{1}
+
+\mcqitem{28}{In Git branch management, what is the primary operational difference between \texttt{git merge} and \texttt{git rebase}?}{\texttt{git merge} preserves full branch history via a merge commit; \texttt{git rebase} replays commits onto a new base, producing a clean linear history}{\texttt{git merge} permanently deletes the feature branch commits}{\texttt{git rebase} cannot be executed locally}{\texttt{git merge} only works on remote repositories}{1}
+
+\mcqitem{29}{In Prompt Engineering with Large Language Models (LLMs), 'Chain-of-Thought (CoT)' prompting improves multi-step reasoning accuracy by:}{Instructing the model to break down its reasoning step-by-step before delivering the final answer}{Asking the model to guess the answer instantly without explanation}{Providing zero instructions to the model}{Repeating the user query 100 times in a loop}{1}
+
+\mcqitem{30}{In generative AI systems, 'Hallucination' refers to the phenomenon where an LLM:}{Generates factually inaccurate, nonsensical, or completely fabricated information with high linguistic confidence}{Refuses to answer questions due to safety filters}{Executes Python scripts at compile time}{Undergoes a hardware memory leak in the GPU}{1}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% ANSWER KEY & EXPLANATIONS
+% ------------------------------------------------------------------------------
+\subsection*{Answer Key (End-Term Set A)}
+
+\begin{center}
+\begin{tabular}{|c|c||c|c||c|c||c|c||c|c||c|c|}
+\hline
+\textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} & \textbf{Q} & \textbf{Ans} \\
+\hline
+1 & \textbf{A} & 6 & \textbf{A} & 11 & \textbf{A} & 16 & \textbf{A} & 21 & \textbf{A} & 26 & \textbf{A} \\
+2 & \textbf{A} & 7 & \textbf{A} & 12 & \textbf{A} & 17 & \textbf{A} & 22 & \textbf{A} & 27 & \textbf{A} \\
+3 & \textbf{A} & 8 & \textbf{A} & 13 & \textbf{A} & 18 & \textbf{A} & 23 & \textbf{A} & 28 & \textbf{A} \\
+4 & \textbf{A} & 9 & \textbf{A} & 14 & \textbf{A} & 19 & \textbf{A} & 24 & \textbf{A} & 29 & \textbf{A} \\
+5 & \textbf{A} & 10 & \textbf{A} & 15 & \textbf{A} & 20 & \textbf{A} & 25 & \textbf{A} & 30 & \textbf{A} \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\subsection*{Detailed Technical Solutions}
+
+\begin{solutionbox}[Key Comprehensive Technical Explanations]
+\textbf{Q.3 (Ans: A)} RAID 5 distributes single parity across all member drives. For $N = 5$ drives of $2\text{ TB}$, usable capacity is $(N - 1) \times S = (5 - 1) \times 2\text{ TB} = 8\text{ TB}$.\\[2mm]
+\textbf{Q.12 (Ans: A)} Octal 7 is $\texttt{rwx}$ ($4+2+1$), while octal 5 is $\texttt{r-x}$ ($4+0+1$). \texttt{chmod 755} assigns read, write, and execute permissions to the file owner, and read and execute permissions to group members and all others.\\[2mm]
+\textbf{Q.27 (Ans: A)} Git's three-tier local architecture consists of: (1) \textit{Working Directory} (untracked/modified files on disk), (2) \textit{Staging Area / Index} (snapshot prepared for commit via \texttt{git add}), and (3) \textit{Git Repository} (committed snapshot history permanently stored in \texttt{.git/objects} via \texttt{git commit}).\\[2mm]
+\textbf{Q.28 (Ans: A)} \texttt{git merge feature} creates a 3-way merge commit with two parent commits, preserving the exact historical topology of the feature branch. In contrast, \texttt{git rebase main} takes the unique commits from \texttt{feature}, temporarily rewinds to \texttt{main}, and reapplies the commits on top of \texttt{main}, creating new commit hashes and a linear project history.\\[2mm]
+\textbf{Q.29 (Ans: A)} Chain-of-Thought (CoT) prompting prompts the autoregressive transformer model to generate intermediate reasoning tokens prior to outputting the final conclusion. Because transformers predict each token conditioned on all preceding tokens, generating reasoning steps enriches the context window and substantially reduces logical deduction errors.
+\end{solutionbox}
+
+\newpage

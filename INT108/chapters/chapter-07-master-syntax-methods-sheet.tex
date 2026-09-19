@@ -1,0 +1,865 @@
+\chapter{Master Python Syntax, Methods \& Library Cheatsheet}
+\label{chap:master-syntax-methods-sheet}
+
+% ==============================================================================
+% SECTION 7.1: OVERVIEW
+% ==============================================================================
+\section{Consolidated Python Reference Matrices}
+
+Every professional Python developer relies on a robust mental model of the language's core syntax, operator precedence, and built-in library capabilities. In computer science education, transitioning from isolated theoretical concepts to a holistic engineering understanding requires stepping back and observing how these components interact in complex software architectures. 
+
+In this chapter, we synthesize Python 3 into an authoritative, high-density reference manual. You will find exhaustive matrices detailing container methods, set operations, mathematical built-in functions, exception hierarchies, regular expression assertions, and file operations. 
+
+Do not attempt to memorize these tables by rote; instead, use them as a continuous reference point while debugging and architecting your applications. We have intentionally paired these reference sheets with practical code demonstrations and technical viva-voce questions to contextualize their real-world application.
+
+% ==============================================================================
+% SECTION 7.2: OPERATORS & PRECEDENCE
+% ==============================================================================
+\subsection{Master Operators \& Precedence Matrix}
+
+Expressions are evaluated based on a strict operator precedence hierarchy. Understanding this hierarchy prevents subtle logical errors and reduces the need for excessive parentheses. When operators share the same precedence, associativity dictates whether they are evaluated left-to-right or right-to-left. \lpuBadge
+
+The Python interpreter builds an Abstract Syntax Tree (AST) where operators with higher precedence form deeper, inner nodes that are evaluated first. Short-circuit operators (\texttt{and}, \texttt{or}) carry the lowest precedence but possess the unique ability to halt evaluation entirely once truthiness is unambiguously determined.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{cll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Precedence} & \textbf{Operator} & \textbf{Associativity} & \textbf{Description} \\
+\midrule
+\textbf{1 (Highest)} & \texttt{()} & Left-to-Right & Parentheses (Grouping / Function Call) \\
+\textbf{2} & \texttt{**} & \textbf{Right-to-Left} & Exponentiation (Power) \\
+\textbf{3} & \texttt{+x}, \texttt{-x}, \texttt{\textasciitilde x} & Right-to-Left & Positive, Negative, Bitwise NOT \\
+\textbf{4} & \texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%} & Left-to-Right & Multiplication, True Division, Floor Division, Modulus \\
+\textbf{5} & \texttt{+}, \texttt{-} & Left-to-Right & Addition, Subtraction \\
+\textbf{6} & \texttt{<<}, \texttt{>>} & Left-to-Right & Bitwise Shift Operators \\
+\textbf{7} & \texttt{\&} & Left-to-Right & Bitwise AND \\
+\textbf{8} & \texttt{\textasciicircum}, \texttt{|} & Left-to-Right & Bitwise XOR, Bitwise OR \\
+\textbf{9} & \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}, \texttt{is}, \texttt{in} & Left-to-Right & Comparisons, Identity, Membership \\
+\textbf{10} & \texttt{not} & Right-to-Left & Logical NOT \\
+\textbf{11} & \texttt{and} & Left-to-Right & Logical AND (Short-circuit) \\
+\textbf{12 (Lowest)} & \texttt{or} & Left-to-Right & Logical OR (Short-circuit) \\
+\bottomrule
+\end{tabularx}
+\caption{Python Operator Precedence and Associativity Hierarchy.}
+\label{tab:master-operators}
+\end{table}
+
+\begin{pythoncode}[]{Operator Precedence Demonstration}
+# Exponentiation has Right-to-Left associativity
+result_1 = 2 ** 3 ** 2
+print(f"2 ** 3 ** 2 equals {result_1} (Evaluated as 2 ** (3 ** 2))")
+
+# Multiplication and Addition Left-to-Right
+result_2 = 10 + 5 * 2 - 3
+print(f"10 + 5 * 2 - 3 equals {result_2} (Multiplication first)")
+
+# Logical Short-Circuiting
+def expensive_call():
+    print("Expensive call executed!")
+    return True
+
+print("Evaluating: True or expensive_call()")
+result_3 = True or expensive_call() # Short-circuits, does not execute function
+print(f"Result 3 is {result_3}")
+\end{pythoncode}
+\begin{outputbox}
+2 ** 3 ** 2 equals 512 (Evaluated as 2 ** (3 ** 2))
+10 + 5 * 2 - 3 equals 17 (Multiplication first)
+Evaluating: True or expensive_call()
+Result 3 is True
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.3: DATA TYPES & MUTABILITY
+% ==============================================================================
+\subsection{Data Types, Mutability \& Hashability Reference}
+
+At the core of Python's memory model is the concept of mutability. Immutable objects like strings and tuples can never be altered once created; any operation that appears to modify them actually spawns a completely new object in memory. This rigid guarantee allows immutable objects to be \textit{hashable}, meaning they can be hashed into a unique integer signature and subsequently used as dictionary keys or set elements.
+
+Conversely, mutable collections like lists and dictionaries can be manipulated in-place. Because their internal state can shift over time, their hash values would theoretically fluctuate, which is why Python strictly forbids mutable structures from acting as dictionary keys.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lllll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Type Name} & \textbf{Class} & \textbf{Mutable?} & \textbf{Ordered?} & \textbf{Hashable?} & \textbf{Example Literal} \\
+\midrule
+\textbf{Integer} & \texttt{int} & No & N/A & Yes & \texttt{42} \\
+\textbf{Float} & \texttt{float} & No & N/A & Yes & \texttt{3.14} \\
+\textbf{Boolean} & \texttt{bool} & No & N/A & Yes & \texttt{True}, \texttt{False} \\
+\textbf{String} & \texttt{str} & No & Yes & Yes & \texttt{"hello"} \\
+\textbf{Tuple} & \texttt{tuple} & No & Yes & Yes (if contents hashable) & \texttt{(1, 2, "a")} \\
+\textbf{List} & \texttt{list} & \textbf{Yes} & Yes & \textbf{No} & \texttt{[1, 2, "a"]} \\
+\textbf{Dictionary} & \texttt{dict} & \textbf{Yes} & Yes (3.7+) & \textbf{No} & \texttt{\{"key": "value"\}} \\
+\textbf{Set} & \texttt{set} & \textbf{Yes} & No & \textbf{No} & \texttt{\{1, 2, 3\}} \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Python Data Types, Mutability, and Hashability.}
+\label{tab:master-types}
+\end{table}
+
+\begin{pythoncode}[]{Proving Mutability via Memory Addressing}
+# Immutable String Example
+s = "LPU"
+original_s_id = id(s)
+s += " Engineering"
+print(f"String ID before: {original_s_id}, after modification: {id(s)}")
+
+# Mutable List Example
+lst = [1, 2, 3]
+original_lst_id = id(lst)
+lst.append(4)
+print(f"List ID before: {original_lst_id}, after modification: {id(lst)}")
+\end{pythoncode}
+\begin{outputbox}
+String ID before: 4330125808, after modification: 4330138928
+List ID before: 4330114048, after modification: 4330114048
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.4: CONTAINER METHODS
+% ==============================================================================
+\subsection{Sequence \& Container Methods Matrix}
+
+Python provides a rich, unified interface for its built-in collections. However, subtle differences in method behavior---specifically regarding in-place mutation versus returning new objects---frequently lead to silent bugs in student code.
+
+For instance, string operations \textit{always} return new strings, whereas list sorting (\texttt{sort()}) mutates the original sequence and returns \texttt{None}. Recognizing which methods return \texttt{None} versus mutated data is paramount to avoiding \texttt{TypeError} exceptions when chaining calls.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Method Signature} & \textbf{Description} & \textbf{Returns} & \textbf{Exceptions Raised} \\
+\midrule
+\multicolumn{4}{c}{\cellcolor{pybg}\textbf{String Methods (\texttt{str}) - Immutable Operations}} \\
+\midrule
+\texttt{s.lower()} & Converts all alphabetical characters to lowercase. & \texttt{str} & None \\
+\texttt{s.strip([chars])} & Removes leading/trailing whitespace (or specified chars). & \texttt{str} & None \\
+\texttt{s.split(sep=None)} & Splits string by separator into a list of substrings. & \texttt{list} & None \\
+\texttt{s.join(iterable)} & Concatenates iterable of strings using \texttt{s} as delimiter. & \texttt{str} & \texttt{TypeError} (if non-strings present) \\
+\texttt{s.find(sub)} & Returns lowest index where substring \texttt{sub} is found. & \texttt{int} & None (returns $-1$ if missing) \\
+\texttt{s.replace(old, new)} & Replaces all occurrences of \texttt{old} with \texttt{new}. & \texttt{str} & None \\
+\midrule
+\multicolumn{4}{c}{\cellcolor{pybg}\textbf{List Methods (\texttt{list}) - In-Place Mutations}} \\
+\midrule
+\texttt{L.append(x)} & Adds item \texttt{x} to the end of the list. & \texttt{None} & None \\
+\texttt{L.extend(iter)} & Appends all elements from the given iterable. & \texttt{None} & \texttt{TypeError} (if not iterable) \\
+\texttt{L.insert(i, x)} & Inserts item \texttt{x} at index \texttt{i}. & \texttt{None} & None \\
+\texttt{L.pop([i])} & Removes and returns the item at index \texttt{i} (default last). & \texttt{Any} & \texttt{IndexError} (if empty/out of range) \\
+\texttt{L.remove(x)} & Removes first occurrence of value \texttt{x}. & \texttt{None} & \texttt{ValueError} (if \texttt{x} missing) \\
+\texttt{L.sort(key, rev)} & Sorts list in place using optional key and reverse flags. & \texttt{None} & \texttt{TypeError} (if incomparable types) \\
+\midrule
+\multicolumn{4}{c}{\cellcolor{pybg}\textbf{Dictionary Methods (\texttt{dict}) - Key-Value Mapping}} \\
+\midrule
+\texttt{D.keys()} & Returns a view object displaying all dictionary keys. & \texttt{dict\_keys} & None \\
+\texttt{D.values()} & Returns a view object displaying all dictionary values. & \texttt{dict\_values} & None \\
+\texttt{D.items()} & Returns a view displaying \texttt{(key, value)} tuple pairs. & \texttt{dict\_items} & None \\
+\texttt{D.get(k, default)} & Retrieves value for key \texttt{k}, or \texttt{default} if missing. & \texttt{Any} & None (avoids \texttt{KeyError}) \\
+\texttt{D.pop(k, default)} & Removes key \texttt{k} and returns its value. & \texttt{Any} & \texttt{KeyError} (if missing and no default) \\
+\texttt{D.update(other)} & Updates dictionary with key-value pairs from \texttt{other}. & \texttt{None} & \texttt{TypeError} (if invalid format) \\
+\bottomrule
+\end{tabularx}
+\caption{Detailed Sequence \& Container Methods Reference.}
+\label{tab:master-container-methods}
+\end{table}
+
+\begin{pythoncode}[]{Container Manipulation and Method Chaining}
+# String Methods (Chaining is allowed because they return strings)
+raw_text = "  PYTHON Programming  "
+clean_text = raw_text.strip().lower().replace("python", "modern python")
+print(f"Cleaned String: '{clean_text}'")
+
+# List Methods (Chaining fails because they return None)
+roster = ["Charlie", "Alice"]
+roster.append("Bob")
+roster.sort() # Mutates in place
+print(f"Sorted List: {roster}")
+
+# Dictionary Methods
+inventory = {"Apples": 50, "Oranges": 20}
+print(f"Items view: {list(inventory.items())}")
+print(f"Safe get for Bananas: {inventory.get('Bananas', 0)}")
+\end{pythoncode}
+\begin{outputbox}
+Cleaned String: 'modern python programming'
+Sorted List: ['Alice', 'Bob', 'Charlie']
+Items view: [('Apples', 50), ('Oranges', 20)]
+Safe get for Bananas: 0
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.5: SET METHODS
+% ==============================================================================
+\subsection{Set Methods \& Mathematical Operations Reference}
+
+Sets strictly implement mathematical set theory concepts. Backed by a high-performance hash table (identical to dictionaries but without values), sets provide lightning-fast $O(1)$ membership testing and guarantee element uniqueness. 
+
+Set operations can be performed either via intuitive symbolic operators (which require both operands to be strict sets) or via explicitly named methods (which generously accept any iterable sequence as an argument). \examBadge
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Method / Operator} & \textbf{Description} & \textbf{Returns} & \textbf{Exceptions Raised} \\
+\midrule
+\texttt{s.add(elem)} & Adds a single element to the set. & \texttt{None} & \texttt{TypeError} (if unhashable) \\
+\texttt{s.remove(elem)} & Removes \texttt{elem} from the set. & \texttt{None} & \texttt{KeyError} (if missing) \\
+\texttt{s.discard(elem)} & Removes \texttt{elem} if present, fails silently if missing. & \texttt{None} & None \\
+\texttt{s.pop()} & Removes and returns an arbitrary element. & \texttt{Any} & \texttt{KeyError} (if empty) \\
+\texttt{s.clear()} & Removes all elements, leaving an empty set \texttt{set()}. & \texttt{None} & None \\
+\texttt{s.union(*other)} | \texttt{s | t} & Elements in \texttt{s} or \texttt{t} (or both). & \texttt{set} & None \\
+\texttt{s.intersection(*other)} | \texttt{s \& t} & Elements common to \texttt{s} and \texttt{t}. & \texttt{set} & None \\
+\texttt{s.difference(*other)} | \texttt{s - t} & Elements in \texttt{s} but not in \texttt{t}. & \texttt{set} & None \\
+\texttt{s.symmetric\_difference(t)} | \texttt{s \textasciicircum\ t} & Elements in either \texttt{s} or \texttt{t}, but not both. & \texttt{set} & None \\
+\texttt{s.issubset(t)} | \texttt{s <= t} & Checks if every element in \texttt{s} is in \texttt{t}. & \texttt{bool} & None \\
+\texttt{s.issuperset(t)} | \texttt{s >= t} & Checks if every element in \texttt{t} is in \texttt{s}. & \texttt{bool} & None \\
+\bottomrule
+\end{tabularx}
+\caption{Mathematical Set Operations and Mutating Methods.}
+\label{tab:master-set-methods}
+\end{table}
+
+\begin{pythoncode}[]{Mathematical Set Theory in Action}
+engineers = {"Alice", "Bob", "Charlie", "David"}
+managers = {"Charlie", "Eve", "Frank"}
+python_devs = {"Alice", "Bob", "Charlie"}
+
+# Intersection: People who are both engineers AND managers
+eng_managers = engineers.intersection(managers)
+print(f"Engineering Managers: {eng_managers}")
+
+# Difference: Engineers who are NOT managers
+pure_engineers = engineers - managers
+print(f"Pure Engineers: {pure_engineers}")
+
+# Superset check: Are all Python devs also engineers?
+is_subset = python_devs.issubset(engineers)
+print(f"Are all Python devs engineers? {is_subset}")
+
+# Symmetric Difference: People who are ONLY one or the other, not both
+exclusive_roles = engineers ^ managers
+print(f"Exclusive Roles: {exclusive_roles}")
+\end{pythoncode}
+\begin{outputbox}
+Engineering Managers: {'Charlie'}
+Pure Engineers: {'Alice', 'Bob', 'David'}
+Are all Python devs engineers? True
+Exclusive Roles: {'Frank', 'David', 'Eve', 'Alice', 'Bob'}
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.6: BUILT-IN FUNCTIONS
+% ==============================================================================
+\subsection{Built-in Functions Reference}
+
+The Python interpreter automatically injects a suite of highly optimized utility functions directly into the global namespace. These built-ins provide foundational capabilities ranging from sequence iteration and memory introspection to functional programming primitives like \texttt{map()} and \texttt{filter()}.
+
+Many functional built-ins return lazy iterators rather than fully populated memory structures. This design drastically reduces memory consumption when processing massive datasets, but requires explicit casting (e.g., \texttt{list(map(...))}) if you need to visualize the entire result at once.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Function Signature} & \textbf{Return Type} & \textbf{Description} \\
+\midrule
+\texttt{enumerate(iterable, start=0)} & \texttt{enumerate} obj & Yields \texttt{(index, value)} tuples during iteration. \\
+\texttt{zip(*iterables)} & \texttt{zip} obj & Yields tuples grouping $i$-th elements from parallel iterables. \\
+\texttt{map(func, iterable)} & \texttt{map} obj & Yields results of applying \texttt{func} to each element lazily. \\
+\texttt{filter(func, iterable)} & \texttt{filter} obj & Yields elements where \texttt{func(elem)} evaluates to Truthy. \\
+\texttt{any(iterable)} & \texttt{bool} & Returns \texttt{True} if \textit{at least one} element is Truthy. \\
+\texttt{all(iterable)} & \texttt{bool} & Returns \texttt{True} if \textit{all} elements are Truthy. \\
+\texttt{sorted(iterable, key, rev)} & \texttt{list} & Returns a brand new sorted list from any iterable. \\
+\texttt{reversed(seq)} & \texttt{iterator} & Yields elements in reverse order without modifying original. \\
+\texttt{abs(x)} & \texttt{int}/\texttt{float} & Returns the absolute (positive) magnitude of a number. \\
+\texttt{round(number, ndigits)} & \texttt{int}/\texttt{float} & Rounds to nearest even choice at given decimal precision. \\
+\texttt{isinstance(obj, class)} & \texttt{bool} & Checks if \texttt{obj} is an instance of \texttt{class} (or subclass). \\
+\texttt{issubclass(cls, class)} & \texttt{bool} & Checks if \texttt{cls} is a derived subclass of \texttt{class}. \\
+\texttt{id(obj)} & \texttt{int} & Returns the unique memory address identifier for the object. \\
+\texttt{hash(obj)} & \texttt{int} & Returns an integer hash value (requires immutable object). \\
+\texttt{dir([obj])} & \texttt{list} & Returns a list of valid attributes for the object or scope. \\
+\texttt{help([obj])} & \texttt{None} & Invokes built-in interactive help system or prints docstrings. \\
+\texttt{eval(expression)} & \texttt{Any} & Evaluates a string as a Python expression and returns result. \\
+\texttt{exec(code)} & \texttt{None} & Executes dynamic Python code strings (statements and logic). \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Python Built-in Global Functions.}
+\label{tab:master-builtins}
+\end{table}
+
+\begin{pythoncode}[]{Functional Programming Paradigms with Built-ins}
+scores = [45, 82, 33, 91, 56, 77]
+
+# 1. map() and filter() combined with lambda functions
+passed = filter(lambda x: x >= 50, scores)
+graded = map(lambda x: (x, "A" if x >= 90 else "B" if x >= 70 else "C"), passed)
+print("Grades:", list(graded))
+
+# 2. any() and all() logic checks
+print("Did everyone pass?", all(score >= 50 for score in scores))
+print("Did anyone score an A?", any(score >= 90 for score in scores))
+
+# 3. enumerate() for indexed iteration
+for rank, score in enumerate(sorted(scores, reverse=True), start=1):
+    if rank <= 3:
+        print(f"Rank {rank}: {score} points")
+\end{pythoncode}
+\begin{outputbox}
+Grades: [(82, 'B'), (91, 'A'), (56, 'C'), (77, 'B')]
+Did everyone pass? False
+Did anyone score an A? True
+Rank 1: 91 points
+Rank 2: 82 points
+Rank 3: 77 points
+\end{outputbox}
+
+\begin{pythoncode}[]{Dynamic Typing and Object Introspection}
+def process_data(data):
+    if isinstance(data, list):
+        print(f"Processing a list of {len(data)} elements.")
+    elif isinstance(data, str):
+        print(f"Processing string of length {len(data)}.")
+    elif isinstance(data, (int, float)):
+        print(f"Processing numeric value: {abs(data)}")
+
+process_data([1, 2, 3])
+process_data("LPU Engineering")
+process_data(-42.5)
+
+print("\nExecuting dynamic string logic:")
+x = 10
+eval("print(f'x squared is {x**2}')")
+\end{pythoncode}
+\begin{outputbox}
+Processing a list of 3 elements.
+Processing string of length 15.
+Processing numeric value: 42.5
+
+Executing dynamic string logic:
+x squared is 100
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.7: FILE I/O MODES
+% ==============================================================================
+\subsection{File Modes \& I/O Reference}
+
+Persistent data storage requires interacting with the operating system's underlying file descriptors. Python handles file I/O streams using various mode strings that dictate read/write permissions, pointer placement, and truncation behavior. 
+
+Modern Python strictly enforces the use of Context Managers (\texttt{with} statements). By encapsulating file operations inside a context manager, the language guarantees that system resources and buffers are safely released when the block terminates, even if a catastrophic \texttt{Exception} is raised midway. Additionally, always specify an explicit \texttt{encoding} (typically \texttt{"utf-8"}) to prevent platform-dependent decoding bugs on Windows versus macOS/Linux. \enrichBadge
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xccc}
+\toprule
+\textbf{Mode} & \textbf{Description} & \textbf{Pointer} & \textbf{Truncates?} & \textbf{Creates?} \\
+\midrule
+\texttt{'r'} & Read-only. Raises \texttt{FileNotFoundError} if missing. & Start & No & No \\
+\texttt{'w'} & Write-only. Obliterates existing content. & Start & \textbf{Yes} & \textbf{Yes} \\
+\texttt{'a'} & Append-only. New writes go to end of file safely. & End & No & \textbf{Yes} \\
+\texttt{'r+'} & Read and Write. Raises error if file is missing. & Start & No & No \\
+\texttt{'w+'} & Read and Write. Obliterates existing content. & Start & \textbf{Yes} & \textbf{Yes} \\
+\texttt{'a+'} & Read and Append. Read pointer sits at the end. & End & No & \textbf{Yes} \\
+\texttt{'rb'}\dots & Binary mode equivalents (\texttt{'rb'}, \texttt{'wb'}, \texttt{'ab'}). No encoding. & - & - & - \\
+\bottomrule
+\end{tabularx}
+\caption{Complete Python File Access Modes Reference.}
+\label{tab:master-file-modes}
+\end{table}
+
+\begin{pythoncode}[]{Robust File I/O with Context Managers}
+import os
+
+file_path = "system_log.txt"
+
+# 1. Writing to a file (Truncates if exists, creates if missing)
+with open(file_path, mode='w', encoding='utf-8') as file:
+    file.write("Initialization started.\n")
+
+# 2. Appending to the file (Pointer locked at the end)
+with open(file_path, mode='a', encoding='utf-8') as file:
+    file.write("Loading configurations...\n")
+
+# 3. Reading the file back
+with open(file_path, mode='r', encoding='utf-8') as file:
+    content = file.read()
+    print("--- File Contents ---")
+    print(content.strip())
+    
+# Clean up temporary artifact
+os.remove(file_path)
+\end{pythoncode}
+\begin{outputbox}
+--- File Contents ---
+Initialization started.
+Loading configurations...
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.8: EXCEPTIONS HIERARCHY
+% ==============================================================================
+\subsection{Built-in Exceptions Hierarchy Reference}
+
+Robust programs must gracefully handle anomalous conditions using exceptions rather than crashing abruptly. Python organizes exceptions into an object-oriented inheritance tree descending from \texttt{BaseException}. 
+
+When handling errors using \texttt{try-except} blocks, catching a parent exception class will automatically intercept all of its children. Therefore, you must construct exception handlers from the most specific leaf nodes (like \texttt{FileNotFoundError}) up to the broader root classes (like \texttt{OSError} or \texttt{Exception}) to ensure the correct handler intercepts the error. \examBadge
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{BaseException} \textit{(The root of all exceptions. Never catch this directly unless intentional.)}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{SystemExit} \textit{(Raised by sys.exit())}
+        \item \texttt{KeyboardInterrupt} \textit{(Raised when the user hits Ctrl+C)}
+        \item \texttt{Exception} \textit{(Base class for all standard runtime exceptions. Safe to catch.)}
+        \begin{itemize}[leftmargin=1.5em]
+            \item \texttt{ArithmeticError}
+            \begin{itemize}[leftmargin=1.5em]
+                \item \texttt{ZeroDivisionError} \textit{(Raised on x / 0 or x \% 0)}
+                \item \texttt{OverflowError} \textit{(Raised when math operations exceed limits)}
+            \end{itemize}
+            \item \texttt{AttributeError} \textit{(Raised when attribute reference or assignment fails)}
+            \item \texttt{EOFError} \textit{(Raised when input() hits end-of-file without reading data)}
+            \item \texttt{ImportError}
+            \begin{itemize}[leftmargin=1.5em]
+                \item \texttt{ModuleNotFoundError} \textit{(Raised when import cannot locate the module)}
+            \end{itemize}
+            \item \texttt{LookupError}
+            \begin{itemize}[leftmargin=1.5em]
+                \item \texttt{IndexError} \textit{(Raised when sequence index is out of range)}
+                \item \texttt{KeyError} \textit{(Raised when dictionary key is not found)}
+            \end{itemize}
+            \item \texttt{NameError} \textit{(Raised when a local or global variable name is missing)}
+            \item \texttt{OSError} \textit{(Base for operating system related errors)}
+            \begin{itemize}[leftmargin=1.5em]
+                \item \texttt{FileNotFoundError} \textit{(Raised when file or directory does not exist)}
+                \item \texttt{PermissionError} \textit{(Raised when lacking adequate access rights)}
+            \end{itemize}
+            \item \texttt{RuntimeError}
+            \begin{itemize}[leftmargin=1.5em]
+                \item \texttt{RecursionError} \textit{(Raised when maximum recursion depth is exceeded)}
+            \end{itemize}
+            \item \texttt{TypeError} \textit{(Raised when operation applied to an inappropriate type)}
+            \item \texttt{ValueError} \textit{(Raised when operation receives correct type but invalid value)}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\begin{pythoncode}[]{Catching Exceptions in Hierarchical Order}
+def safe_divide_file(filename, divisor):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            number = int(f.read().strip())
+            result = number / divisor
+            print(f"Result: {result}")
+    except FileNotFoundError:
+        print("Error: The file could not be found.")
+    except ValueError:
+        print("Error: The file contains invalid non-integer data.")
+    except ZeroDivisionError:
+        print("Error: Cannot divide by zero.")
+    except Exception as e:
+        print(f"Caught a generic unexpected error: {e}")
+    finally:
+        print("Execution of safe_divide_file completed.")
+
+# Demonstration trigger
+safe_divide_file("missing_file.txt", 5)
+\end{pythoncode}
+\begin{outputbox}
+Error: The file could not be found.
+Execution of safe_divide_file completed.
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.9: REGEX MATRIX
+% ==============================================================================
+\subsection{Regular Expressions Pattern Reference}
+
+Text processing often requires pattern matching capabilities that exceed simple substring checks. The \texttt{re} module compiles Regular Expression (regex) string patterns into optimized finite state machines for advanced parsing.
+
+Always prefix your regex strings with \texttt{r} (e.g., \texttt{r"\textbackslash d+"}) to designate them as \textit{Raw Strings}. This prevents Python from prematurely interpreting backslash characters (like \texttt{\textbackslash n} or \texttt{\textbackslash b}) as literal escape sequences before they reach the regex engine. \lpuBadge
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{cl>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Pattern} & \textbf{Category} & \textbf{Matching Meaning} & \textbf{Example} \\
+\midrule
+\texttt{\textbackslash d} / \texttt{\textbackslash D} & Character Class & Decimal digit ($0-9$) / Non-digit & \texttt{\textbackslash d+} matches \texttt{"2026"} \\
+\texttt{\textbackslash w} / \texttt{\textbackslash W} & Character Class & Word character ($[a-zA-Z0-9\_]$) / Non-word & \texttt{\textbackslash w+} matches \texttt{"var\_1"} \\
+\texttt{\textbackslash s} / \texttt{\textbackslash S} & Character Class & Whitespace (space, tab, newline) / Non-whitespace & \texttt{\textbackslash s+} matches spaces \\
+\texttt{\textbackslash b} / \texttt{\textbackslash B} & Boundary & Word boundary / Non-word boundary & \texttt{\textbackslash bcat\textbackslash b} isolates "cat" \\
+\texttt{\textasciicircum} / \texttt{\$} & Anchors & Start of string / End of string & \texttt{\textasciicircum LPU\$} strictly bounds "LPU" \\
+\texttt{*} / \texttt{+} / \texttt{?} & Quantifiers & 0 or more / 1 or more / 0 or 1 (Optional) & \texttt{https?://} \\
+\texttt{(?P<name>...)} & Grouping & Named capturing group for dictionary mapping & \texttt{(?P<year>\textbackslash d\{4\})} \\
+\texttt{(?=...)} & Lookaround & Positive Lookahead (asserts what follows) & \texttt{foo(?=bar)} \\
+\texttt{(?!...)} & Lookaround & Negative Lookahead (asserts what does NOT follow) & \texttt{foo(?!bar)} \\
+\texttt{(?<=...)} & Lookaround & Positive Lookbehind (asserts what precedes) & \texttt{(?<=@)domain} \\
+\midrule
+\texttt{re.I} / \texttt{IGNORECASE} & Flag & Case-insensitive matching overriding exact case & \texttt{re.search("a", "A", re.I)} \\
+\texttt{re.M} / \texttt{MULTILINE} & Flag & \texttt{\textasciicircum} and \texttt{\$} apply to internal line breaks (\texttt{\textbackslash n}) & \texttt{re.findall("\textasciicircum st", x, re.M)} \\
+\texttt{re.S} / \texttt{DOTALL} & Flag & Dot (\texttt{.}) matches any character \textit{including} newline & \texttt{re.match(".*", x, re.S)} \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Regular Expressions Pattern \& Flag Reference.}
+\label{tab:master-regex}
+\end{table}
+
+\begin{pythoncode}[]{Advanced Regex: Named Groups and Lookarounds}
+import re
+
+log_entry = "2026-09-08 ERROR: [AuthModule] Connection timed out."
+
+# Pattern utilizes named groups (?P<name>...) and lookbehind (?<=\[)
+pattern = r"(?P<date>\d{4}-\d{2}-\d{2})\s+(?P<level>\w+):\s+\[(?<=\[)(.*?)(?=\])\]\s+(.*)"
+
+match = re.search(pattern, log_entry)
+if match:
+    print(f"Date: {match.group('date')}")
+    print(f"Level: {match.group('level')}")
+    print(f"Module: {match.group(3)}")  # Accessible by positional index too
+    print(f"Message: {match.group(4)}")
+\end{pythoncode}
+\begin{outputbox}
+Date: 2026-09-08
+Level: ERROR
+Module: AuthModule
+Message: Connection timed out.
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.10: STRING FORMATTING
+% ==============================================================================
+\subsection{f-String Formatting Directives Cheatsheet}
+
+Introduced in Python 3.6, f-strings provide a concise, readable syntax for embedding expressions inside string literals. Beyond simple variable injection, the formatter allows for granular control over decimal precision, character padding, alignment, and numerical comma grouping.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{cl>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Specifier} & \textbf{Formatting Category} & \textbf{Description \& Output} & \textbf{Example Code} \\
+\midrule
+\texttt{\{x:.2f\}} & Precision & 2 decimal places floating-point & \texttt{f"\{3.14159:.2f\}"} $\to$ \texttt{"3.14"} \\
+\texttt{\{x:>10\}} & Right Alignment & Right-aligned in a 10-character field & \texttt{f"\{'LPU':>10\}"} \\
+\texttt{\{x:<10\}} & Left Alignment & Left-aligned in a 10-character field & \texttt{f"\{'LPU':<10\}"} \\
+\texttt{\{x:\textasciicircum 10\}} & Center Alignment & Centered in a 10-character field & \texttt{f"\{'LPU':\textasciicircum 10\}"} \\
+\texttt{\{x:,d\}} & Thousands Separator & Comma grouping for integers & \texttt{f"\{1000000:,d\}"} $\to$ \texttt{"1,000,000"} \\
+\texttt{\{x:05d\}} & Zero Padding & Pad with leading zeros to 5 digits & \texttt{f"\{42:05d\}"} $\to$ \texttt{"00042"} \\
+\texttt{\{x:\%\}} & Percentage & Format as percentage with default decimals & \texttt{f"\{0.75:.1\%\}"} $\to$ \texttt{"75.0\%"} \\
+\bottomrule
+\end{tabularx}
+\caption{Python f-string Precision, Padding, and Alignment Directives.}
+\label{tab:master-fstrings}
+\end{table}
+
+\begin{pythoncode}[]{Dynamic Formatting via f-Strings}
+revenue = 4589200
+profit_margin = 0.1845
+department = "AEROSPACE"
+
+print(f"| {department:<15} | Revenue: ${revenue:,.2f} | Margin: {profit_margin:.1%} |")
+\end{pythoncode}
+\begin{outputbox}
+| AEROSPACE       | Revenue: $4,589,200.00 | Margin: 18.5% |
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.11: GRADED PRACTICE
+% ==============================================================================
+\section{Graded Programming Practice Problems}
+
+\begin{practiceset}[Comprehensive Concept Integration]
+To consolidate your understanding of the syntax, built-ins, and data structures presented in this reference chapter, attempt the following graded problems. They progress from foundational manipulations to complex log parsing, simulating real-world engineering tasks.
+\end{practiceset}
+
+\subsection*{Problem 1: System User Categorization (Easy)}
+\textbf{Objective}: Use sequence methods and dictionaries to cleanly map data.
+\textbf{Task}: Write a function \texttt{categorize\_users(user\_list)} that takes a list of strings formatted as \texttt{"username:ROLE "}. Strip whitespace, convert usernames to lowercase, and return a dictionary mapping roles to lists of valid usernames. Ignore entries lacking a colon.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lXl}
+\toprule
+\textbf{Category} & \textbf{Input Array} & \textbf{Expected Output Dictionary} \\
+\midrule
+Normal & \texttt{["Alice:ADMIN ", "bOB:user", " Charlie:USER "]} & \texttt{\{'admin': ['alice'], 'user': ['bob', 'charlie']\}} \\
+Boundary & \texttt{[]} & \texttt{\{\}} \\
+Error/Edge & \texttt{["InvalidFormat"]} & \texttt{\{\}} \textit{(Skips string gracefully)} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{pythoncode}[]{Solution: System User Categorization}
+def categorize_users(user_list):
+    result = {}
+    for entry in user_list:
+        entry = entry.strip()
+        if ":" not in entry:
+            continue
+        user, role = entry.split(":")
+        user = user.lower().strip()
+        role = role.lower().strip()
+        
+        if role not in result:
+            result[role] = []
+        result[role].append(user)
+    return result
+
+print(categorize_users(["Alice:ADMIN ", "bOB:user", " Charlie:USER ", "InvalidEntry"]))
+\end{pythoncode}
+\begin{outputbox}
+ {'admin': ['alice'], 'user': ['bob', 'charlie']}
+\end{outputbox}
+
+\subsection*{Problem 2: Unique IP Collision Detector (Moderate)}
+\textbf{Objective}: Employ set operations and functional built-ins.
+\textbf{Task}: Write \texttt{find\_collisions(server\_a, server\_b)} to find IP addresses that connected to \textit{both} servers. The lists contain duplicates. Return a strictly sorted list of the colliding IP addresses using built-in functions.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lXl}
+\toprule
+\textbf{Category} & \textbf{Input Arguments} & \textbf{Expected Output List} \\
+\midrule
+Normal & \texttt{["10.0.0.1", "10.0.0.2"], ["10.0.0.2", "192.168.1.1"]} & \texttt{["10.0.0.2"]} \\
+Boundary & \texttt{["10.1.1.1"], ["192.168.0.1"]} & \texttt{[]} \textit{(No collisions)} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{pythoncode}[]{Solution: Unique IP Collision Detector}
+def find_collisions(server_a, server_b):
+    # Convert lists to sets to find the mathematical intersection
+    set_a = set(server_a)
+    set_b = set(server_b)
+    
+    collisions = set_a.intersection(set_b)
+    # Return a strictly sorted list of the resulting set
+    return sorted(collisions)
+
+print(find_collisions(["10.0.0.1", "10.0.0.2"], ["10.0.0.2", "192.168.1.1"]))
+\end{pythoncode}
+\begin{outputbox}
+['10.0.0.2']
+\end{outputbox}
+
+\subsection*{Problem 3: Secure Log Extractor (Hard)}
+\textbf{Objective}: Combine File I/O, Exception Handling, and Regex Lookarounds.
+\textbf{Task}: Write \texttt{extract\_secure\_logs(filepath)} that reads a log file. It must safely handle missing files. If found, it should extract and return all User IDs strictly following the pattern \texttt{ID:} using a positive lookbehind regex assertion \texttt{(?<=ID:)\textbackslash d+}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lXl}
+\toprule
+\textbf{Category} & \textbf{File Contents Scenario} & \textbf{Expected Behavior} \\
+\midrule
+Normal & \texttt{"Connection OK ID:9912. Error ID:441 "} & Returns \texttt{["9912", "441"]} \\
+Exception & File does not exist in directory & Returns \texttt{[]}, prints "Log missing." \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{pythoncode}[]{Solution: Secure Log Extractor}
+import re
+import os
+
+def extract_secure_logs(filepath):
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+            # Match digits strictly preceded by "ID:"
+            pattern = r"(?<=ID:)\d+"
+            return re.findall(pattern, content)
+    except FileNotFoundError:
+        print("Log missing.")
+        return []
+
+# Test Setup
+with open("temp_log.txt", "w") as f:
+    f.write("Connection OK ID:9912. Error ID:441")
+
+print("Found IDs:", extract_secure_logs("temp_log.txt"))
+print("Missing file test:", extract_secure_logs("ghost.txt"))
+os.remove("temp_log.txt")
+\end{pythoncode}
+\begin{outputbox}
+Found IDs: ['9912', '441']
+Log missing.
+Missing file test: []
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 7.12: VIVA-VOCE QUESTIONS
+% ==============================================================================
+\section{Top 50 Technical Viva-Voce Questions \& Model Answers}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Q}: How does Python manage memory for small integers?\\
+    \textbf{A}: CPython maintains an internal integer cache for numbers between $-5$ and $256$. Re-assigning variables to these values binds them to identical pre-allocated objects in memory.
+
+    \item \textbf{Q}: What is the difference between \texttt{is} and \texttt{==}?\\
+    \textbf{A}: \texttt{==} evaluates equality of contents/values. \texttt{is} evaluates identity of memory address (\texttt{id(a) == id(b)}).
+
+    \item \textbf{Q}: Why are default mutable arguments dangerous in Python?\\
+    \textbf{A}: Default parameter values are evaluated once at function definition time, not at invocation. A mutable default (like \texttt{def f(l=[]):}) persists mutations across successive calls.
+
+    \item \textbf{Q}: What is the LEGB rule?\\
+    \textbf{A}: It is Python's variable lookup hierarchy: Local $\to$ Enclosing $\to$ Global $\to$ Built-in.
+
+    \item \textbf{Q}: What is Name Mangling in Python OOP?\\
+    \textbf{A}: Attributes starting with double underscores (\texttt{\_\_pin}) are internally rewritten to \texttt{\_ClassName\_\_pin} to avoid namespace collisions and accidental overriding in subclasses.
+
+    \item \textbf{Q}: Why does Python not support method overloading by parameter signature?\\
+    \textbf{A}: Python is dynamically typed without compile-time signature dispatch. Re-defining a method identifier in a class rebinds the name to the latest function object.
+
+    \item \textbf{Q}: What is the role of the \texttt{with} statement in file handling?\\
+    \textbf{A}: It acts as a context manager that invokes \texttt{\_\_enter\_\_} and guarantees \texttt{\_\_exit\_\_} execution, automatically closing file descriptors even when exceptions are raised.
+
+    \item \textbf{Q}: What is the difference between \texttt{re.match()} and \texttt{re.search()}?\\
+    \textbf{A}: \texttt{re.match()} matches patterns strictly starting at index 0 of the string. \texttt{re.search()} scans the entire string and returns the first match location.
+
+    \item \textbf{Q}: What is the difference between shallow copy and deep copy?\\
+    \textbf{A}: Shallow copy duplicates the outer container while copying inner object references. Deep copy recursively creates duplicates of all nested objects.
+
+    \item \textbf{Q}: How does floor division behave for negative numbers in Python?\\
+    \textbf{A}: It rounds toward negative infinity: \texttt{-16 // 5 = -4}.
+
+    \item \textbf{Q}: What is the difference between a list and a tuple?\\
+    \textbf{A}: Lists are mutable sequences enclosed in \texttt{[]}; tuples are immutable sequences enclosed in \texttt{()}.
+
+    \item \textbf{Q}: What is a docstring and how is it accessed?\\
+    \textbf{A}: A string literal placed as the first statement in a function/class/module. Accessed via \texttt{func.\_\_doc\_\_} or \texttt{help(func)}.
+
+    \item \textbf{Q}: What is the difference between \texttt{append()} and \texttt{extend()} on lists?\\
+    \textbf{A}: \texttt{append(x)} adds object $x$ as a single element; \texttt{extend(iter)} iterates through the iterable and appends each element individually.
+
+    \item \textbf{Q}: What is a generator function and how does it differ from a regular function?\\
+    \textbf{A}: A generator uses \texttt{yield} instead of \texttt{return}, producing a stream of values lazily on demand without loading everything into memory.
+
+    \item \textbf{Q}: What does the \texttt{pass} statement do?\\
+    \textbf{A}: \texttt{pass} is a null operation; it serves as a syntactical placeholder where code is required but no action is needed.
+
+    \item \textbf{Q}: What is the purpose of \texttt{\_\_init\_\_} in Python classes?\\
+    \textbf{A}: \texttt{\_\_init\_\_} is the constructor method automatically invoked upon object instantiation to initialize instance attributes.
+
+    \item \textbf{Q}: What is the difference between \texttt{del} and \texttt{pop()} on lists?\\
+    \textbf{A}: \texttt{pop(i)} removes and returns the element at index $i$; \texttt{del} removes the element or slice without returning a value.
+
+    \item \textbf{Q}: How does Python handle integer overflow?\\
+    \textbf{A}: Python 3 integers have arbitrary precision; integers automatically grow to consume available memory without fixed bit-width overflow.
+
+    \item \textbf{Q}: What is short-circuit evaluation?\\
+    \textbf{A}: Python stops evaluating boolean expressions as soon as the result is unambiguous (e.g., \texttt{False and X} stops immediately).
+
+    \item \textbf{Q}: What is the difference between \texttt{str()} and \texttt{repr()}?\\
+    \textbf{A}: \texttt{str()} returns an informal, user-friendly representation; \texttt{repr()} returns an unambiguous, official representation suitable for debugging.
+
+    \item \textbf{Q}: How do you create an empty set in Python?\\
+    \textbf{A}: Using \texttt{s = set()} (since \texttt{\{\}} creates an empty dictionary).
+
+    \item \textbf{Q}: What is a lambda function?\\
+    \textbf{A}: A small, anonymous, inline function defined using the \texttt{lambda} keyword: \texttt{lambda x: x*2}.
+
+    \item \textbf{Q}: What does \texttt{*args} and \texttt{**kwargs} mean in a function definition?\\
+    \textbf{A}: \texttt{*args} collects arbitrary positional arguments into a tuple; \texttt{**kwargs} collects arbitrary keyword arguments into a dictionary.
+
+    \item \textbf{Q}: What is the purpose of the \texttt{global} keyword?\\
+    \textbf{A}: It permits modification of a module-level global variable from inside a local function scope.
+
+    \item \textbf{Q}: What is the purpose of the \texttt{nonlocal} keyword?\\
+    \textbf{A}: It permits modification of a variable in an outer enclosing function scope from an inner nested function.
+
+    \item \textbf{Q}: What is method overriding in Python?\\
+    \textbf{A}: When a subclass defines a method with the identical name as an inherited method in its superclass, replacing parent behavior.
+
+    \item \textbf{Q}: What is the role of \texttt{super()} in inheritance?\\
+    \textbf{A}: It delegates method calls to the parent superclass, enabling constructor chaining and collaborative multiple inheritance.
+
+    \item \textbf{Q}: What is Method Resolution Order (MRO)?\\
+    \textbf{A}: The linear ordering algorithm (C3 Linearization) used by Python to search for methods and attributes across inheritance trees.
+
+    \item \textbf{Q}: What is pickling in Python?\\
+    \textbf{A}: Serializing a Python object hierarchy into a binary byte stream using the standard \texttt{pickle} module.
+
+    \item \textbf{Q}: What is unpickling?\\
+    \textbf{A}: Converting a binary byte stream back into a live Python object hierarchy in memory.
+
+    \item \textbf{Q}: When does the \texttt{else} block execute in a \texttt{try-except} statement?\\
+    \textbf{A}: Only when the \texttt{try} block finishes normally without raising any exceptions.
+
+    \item \textbf{Q}: When does the \texttt{finally} block execute?\\
+    \textbf{A}: Always and unconditionally, regardless of whether exceptions were raised, caught, or unhandled.
+
+    \item \textbf{Q}: How do you manually trigger an exception in Python?\\
+    \textbf{A}: Using the \textbf{\texttt{raise}} keyword followed by an exception instance (e.g., \texttt{raise ValueError("Invalid")}).
+
+    \item \textbf{Q}: What is the purpose of \texttt{zip()} built-in function?\\
+    \textbf{A}: It aggregates elements from two or more iterables into pairs/tuples of corresponding elements.
+
+    \item \textbf{Q}: What is a list comprehension?\\
+    \textbf{A}: A concise syntactic construct for constructing new lists by applying expressions and filters over an iterable.
+
+    \item \textbf{Q}: What is a dictionary comprehension?\\
+    \textbf{A}: A concise construct for building dictionaries from key-value expressions over an iterable: \texttt{\{k: v for k, v in iter\}}.
+
+    \item \textbf{Q}: What is the difference between \texttt{remove()} and \texttt{discard()} in sets?\\
+    \textbf{A}: \texttt{remove(x)} raises \texttt{KeyError} if $x$ is not present; \texttt{discard(x)} does nothing if $x$ is missing.
+
+    \item \textbf{Q}: How do you reverse a string in Python using slicing?\\
+    \textbf{A}: \texttt{s[::-1]}.
+
+    \item \textbf{Q}: What is the output of \texttt{bool("False")}?\\
+    \textbf{A}: \texttt{True} (because any non-empty string evaluates to \texttt{True} in a boolean context).
+
+    \item \textbf{Q}: What does the \texttt{strip()} method do on strings?\\
+    \textbf{A}: Removes leading and trailing whitespace characters (spaces, tabs, newlines) from a string.
+
+    \item \textbf{Q}: What does \texttt{split()} return when called with no arguments?\\
+    \textbf{A}: Splits the string on consecutive whitespace and returns a list of non-empty words.
+
+    \item \textbf{Q}: What is the difference between \texttt{sort()} and \texttt{sorted()}?\\
+    \textbf{A}: \texttt{list.sort()} modifies the list in place and returns \texttt{None}; \texttt{sorted(iterable)} returns a new sorted list.
+
+    \item \textbf{Q}: What is a sparse matrix and how is it efficiently stored in Python?\\
+    \textbf{A}: A matrix composed mostly of zeros; stored efficiently using a dictionary with coordinate tuples \texttt{(row, col)} as keys.
+
+    \item \textbf{Q}: What is a recursion base case?\\
+    \textbf{A}: The non-recursive terminating condition that stops subsequent recursive calls and prevents infinite stack overflow.
+
+    \item \textbf{Q}: What is the purpose of \texttt{\_\_name\_\_ == "\_\_main\_\_"}?\\
+    \textbf{A}: It allows a Python script to detect whether it is being run directly by the user or imported as a module into another file.
+
+    \item \textbf{Q}: What is an f-string?\\
+    \textbf{A}: Formatted string literal prefixed with \texttt{f} that evaluates embedded Python expressions inside curly braces \texttt{\{\}}.
+
+    \item \textbf{Q}: What does the \texttt{any()} function do?\\
+    \textbf{A}: Returns \texttt{True} if at least one element of the iterable evaluates to \texttt{True}; otherwise \texttt{False}.
+
+    \item \textbf{Q}: What does the \texttt{all()} function do?\\
+    \textbf{A}: Returns \texttt{True} if all elements of the iterable evaluate to \texttt{True}; otherwise \texttt{False}.
+
+    \item \textbf{Q}: What is memoization?\\
+    \textbf{A}: An optimization technique that caches the return values of expensive function calls based on input arguments to avoid recalculation.
+
+    \item \textbf{Q}: What is operator overloading in Python?\\
+    \textbf{A}: Defining custom behaviors for built-in operators (\texttt{+}, \texttt{-}, \texttt{==}) on user-defined classes by implementing special dunder methods (\texttt{\_\_add\_\_}, \texttt{\_\_eq\_\_}).
+\end{enumerate}

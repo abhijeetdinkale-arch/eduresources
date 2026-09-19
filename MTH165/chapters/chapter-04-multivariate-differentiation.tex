@@ -1,0 +1,148 @@
+\chapter{Multivariate Differentiation}
+\label{chap:multivariate-differentiation}
+
+% ==============================================================================
+% SECTION 4.1: OVERVIEW & LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Multivariate differential calculus extends rate-of-change and optimization principles to functions of several independent variables $z = f(x,y)$ or $w = f(x,y,z)$. In engineering applications, physical quantities (such as thermodynamic state variables, stress distributions, electrodynamic potentials, and machine learning cost landscapes) depend on multiple spatial and temporal coordinates simultaneously.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Evaluate Multivariable Limits \& Continuity}: Test limits using the two-path test and polar coordinates ($x = r\cos\theta, y = r\sin\theta$).
+    \item \textbf{Compute Partial Derivatives}: Calculate first-order and higher-order partial derivatives and apply Clairaut's Theorem ($f_{xy} = f_{yx}$).
+    \item \textbf{Calculate Total Differentials}: Formulate $dz = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy$, perform linear approximations, and quantify error propagation.
+    \item \textbf{Apply Chain Rules}: Differentiate composite functions dependent on single or multiple parameters.
+    \item \textbf{Apply Euler's Theorem on Homogeneous Functions}: Verify degree $n$ homogeneity and apply 1st and 2nd order Euler identities.
+    \item \textbf{Perform 2D Optimization}: Find critical points, evaluate the Hessian discriminant $D = f_{xx}f_{yy} - f_{xy}^2$, and classify local minima, local maxima, and saddle points.
+    \item \textbf{Solve Constrained Optimization}: Implement the method of \textbf{Lagrange Multipliers} ($\nabla f = \lambda \nabla g$).
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 4.2: LIMITS, CONTINUITY & PARTIAL DERIVATIVES
+% ==============================================================================
+\section{Limits, Continuity \& Partial Derivatives}
+
+\begin{definition}[Limit in Two Variables]
+We write $\lim_{(x,y)\to (x_0,y_0)} f(x,y) = L$ if for every $\epsilon > 0$, there exists a $\delta > 0$ such that $0 < \sqrt{(x-x_0)^2 + (y-y_0)^2} < \delta \implies |f(x,y) - L| < \epsilon$.
+\end{definition}
+
+\begin{theorem}[Two-Path Test for Non-Existence of Limit]
+If $f(x,y)$ approaches different values along two distinct paths approaching $(x_0,y_0)$ (e.g., $y = mx$ vs $y = kx^2$), then $\lim_{(x,y)\to (x_0,y_0)} f(x,y)$ does not exist.
+\end{theorem}
+
+\begin{theorem}[Clairaut's Theorem / Schwarz's Theorem]
+If $f(x,y)$ and its partial derivatives $f_x, f_y, f_{xy}, f_{yx}$ are continuous on an open region containing $(x_0,y_0)$, then the mixed second-order partial derivatives are identical:
+\begin{equation}
+\frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x} \quad (f_{yx} = f_{xy})
+\end{equation}
+\end{theorem}
+
+% ==============================================================================
+% SECTION 4.3: TOTAL DIFFERENTIAL & ERROR PROPAGATION
+% ==============================================================================
+\section{Total Differentials \& Error Propagation}
+
+\begin{definition}[Total Differential]
+For a differentiable function $z = f(x,y)$, the \textbf{total differential} $dz$ is:
+\begin{equation}
+dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy
+\end{equation}
+For small increments $\Delta x$ and $\Delta y$, the estimated absolute change is:
+\begin{equation}
+\Delta z \approx \frac{\partial z}{\partial x} \Delta x + \frac{\partial z}{\partial y} \Delta y
+\end{equation}
+The percentage / relative error is given by:
+\begin{equation}
+\frac{\Delta z}{z} \times 100\% = \left( \frac{1}{z} \frac{\partial z}{\partial x} \Delta x + \frac{1}{z} \frac{\partial z}{\partial y} \Delta y \right) \times 100\%
+\end{equation}
+\end{definition}
+
+% ==============================================================================
+% SECTION 4.4: EULER'S THEOREM FOR HOMOGENEOUS FUNCTIONS
+% ==============================================================================
+\section{Euler's Theorem on Homogeneous Functions}
+
+\begin{definition}[Homogeneous Function]
+A function $f(x,y)$ is said to be \textbf{homogeneous of degree $n$} if:
+\begin{equation}
+f(tx, ty) = t^n f(x,y) \quad \text{for all } t > 0
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Euler's Theorem for Homogeneous Functions]
+If $u = f(x,y)$ is a homogeneous function of degree $n$ having continuous partial derivatives, then:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{First-Order Form}:
+    \begin{equation}
+    x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n u
+    \end{equation}
+    \item \textbf{Second-Order Form}:
+    \begin{equation}
+    x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} = n(n-1)u
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Euler's Theorem Application]
+If $u = \sin^{-1}\left(\frac{x^2 + y^2}{x + y}\right)$, prove that $x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \tan u$.
+\end{example}
+
+\begin{solutionbox}
+Let $z = \sin u = \frac{x^2 + y^2}{x + y}$.
+Testing homogeneity:
+\begin{equation}
+z(tx, ty) = \frac{(tx)^2 + (ty)^2}{tx + ty} = \frac{t^2(x^2 + y^2)}{t(x+y)} = t^1 \frac{x^2+y^2}{x+y} = t^1 z(x,y)
+\end{equation}
+Thus, $z$ is a homogeneous function of degree $n = 1$.
+By Euler's Theorem on $z$:
+\begin{equation}
+x \frac{\partial z}{\partial x} + y \frac{\partial z}{\partial y} = 1 \cdot z = z
+\end{equation}
+Since $z = \sin u$, we have $\frac{\partial z}{\partial x} = \cos u \frac{\partial u}{\partial x}$ and $\frac{\partial z}{\partial y} = \cos u \frac{\partial u}{\partial y}$.
+Substituting:
+\begin{equation}
+x \left(\cos u \frac{\partial u}{\partial x}\right) + y \left(\cos u \frac{\partial u}{\partial y}\right) = \sin u
+\end{equation}
+Dividing throughout by $\cos u$:
+\begin{equation}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \frac{\sin u}{\cos u} = \tan u
+\end{equation}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.5: UNCONSTRAINED & CONSTRAINED OPTIMIZATION
+% ==============================================================================
+\section{Multivariable Extrema \& Lagrange Multipliers}
+
+\begin{theorem}[Second Partial Derivative Test (Hessian Discriminant)]
+Let $(a,b)$ be a critical point of $f(x,y)$ such that $f_x(a,b) = 0$ and $f_y(a,b) = 0$.
+Define $r = f_{xx}(a,b)$, $s = f_{xy}(a,b)$, $t = f_{yy}(a,b)$, and the discriminant:
+\begin{equation}
+D = r t - s^2 = f_{xx} f_{yy} - (f_{xy})^2
+\end{equation}
+\begin{enumerate}[leftmargin=1.5em]
+    \item If $D > 0$ and $r > 0$ (or $t > 0$), then $(a,b)$ is a \textbf{Local Minimum}.
+    \item If $D > 0$ and $r < 0$ (or $t < 0$), then $(a,b)$ is a \textbf{Local Maximum}.
+    \item If $D < 0$, then $(a,b)$ is a \textbf{Saddle Point}.
+    \item If $D = 0$, the test is \textbf{Inconclusive}.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Method of Lagrange Multipliers]
+To find the extreme values of $f(x,y,z)$ subject to the constraint $g(x,y,z) = c$ (where $\nabla g \ne 0$):
+Solve the system of equations:
+\begin{equation}
+\nabla f = \lambda \nabla g \iff \begin{cases}
+f_x = \lambda g_x \\
+f_y = \lambda g_y \\
+f_z = \lambda g_z \\
+g(x,y,z) = c
+\end{cases}
+\end{equation}
+where $\lambda$ is the \textbf{Lagrange multiplier}.
+\end{theorem}
+

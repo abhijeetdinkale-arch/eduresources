@@ -1,0 +1,37 @@
+\documentclass[a4paper,11pt,oneside,openany]{book}
+\usepackage{style}
+
+% Global compatibility for Pandoc/Markdown converted elements
+\providecommand{\tightlist}{}
+
+\title{Orientation to Computing}
+\author{LPU Engineering Open}
+\date{Semester 1 Study Guide}
+
+\begin{document}
+
+% ==============================================================================
+% FRONTMATTER: Cover, Copyright, Disclaimer, and Table of Contents
+% ==============================================================================
+\frontmatter
+
+\makebookcover
+\copyrightpage
+\disclaimerpage
+
+\tableofcontents
+\newpage
+
+\mainmatter
+
+% ==============================================================================
+% CHAPTER INPUTS (UNITS 1 TO 6)
+% ==============================================================================
+\input{chapters/chapter-01-computer-languages}
+\input{chapters/chapter-02-computer-fundamentals}
+\input{chapters/chapter-03-computer-hardware}
+\input{chapters/chapter-04-number-systems}
+\input{chapters/chapter-05-version-control}
+\input{chapters/chapter-06-modern-ai-trends-and-tools}
+
+\end{document}

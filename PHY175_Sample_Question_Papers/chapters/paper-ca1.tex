@@ -1,0 +1,61 @@
+\chapter{Continuous Assessment 1 (CA-1) Model Paper}
+\section*{Course: PHY175 $\cdot$ Max Marks: 30 $\cdot$ Time: 60 Minutes}
+
+\subsection*{Section A: Multiple-Choice Questions (10 Marks, 1 Mark Each)}
+\begin{enumerate}[leftmargin=*]
+    \item According to Drude theory, electrical conductivity $\sigma$ is proportional to:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\tau / n$ \item $n \tau$ \item $1/(n\tau)$ \item $m / (n\tau)$
+    \end{enumerate}
+    \item At $0\,\text{K}$, the occupation probability for states with $E > E_F$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $1$ \item $0.5$ \item $0$ \item $e^{-1}$
+    \end{enumerate}
+    \item The Hall coefficient $R_H$ is negative for:
+    \begin{enumerate}[label=(\alph*)]
+        \item Holes \item Electrons \item Positive ions \item Neutrons
+    \end{enumerate}
+    \item A bridge rectifier supplied with $50\,\text{Hz}$ AC has a ripple frequency of:
+    \begin{enumerate}[label=(\alph*)]
+        \item $25\,\text{Hz}$ \item $50\,\text{Hz}$ \item $100\,\text{Hz}$ \item $200\,\text{Hz}$
+    \end{enumerate}
+    \item In an active-mode BJT, the base-emitter junction is:
+    \begin{enumerate}[label=(\alph*)]
+        \item Reverse biased \item Forward biased \item Unbiased \item Breakdown biased
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Section B: Analytical \& Numerical Problems (20 Marks)}
+
+\begin{examqbox}{1 [5 Marks]}
+A semiconductor slab of thickness $t = 0.5\,\text{mm}$ carries a current of $2.0\,\text{mA}$ in a magnetic field $B = 0.50\,\text{T}$. If the carrier density is $n = 5.0 \times 10^{22}\,\text{m}^{-3}$, compute the Hall voltage $V_H$ and state which carrier type corresponds to a negative Hall voltage.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{Given:} $t = 0.50 \times 10^{-3}\,\text{m}, I = 2.0 \times 10^{-3}\,\text{A}, B = 0.50\,\text{T}, n = 5.0 \times 10^{22}\,\text{m}^{-3}, e = 1.6 \times 10^{-19}\,\text{C}$.
+\begin{equation}
+V_H = \frac{I B}{n e t} = \frac{(2.0 \times 10^{-3})(0.50)}{(5.0 \times 10^{22})(1.6 \times 10^{-19})(0.50 \times 10^{-3})} = \frac{1.0 \times 10^{-3}}{4.0} = 0.25\,\text{mV}
+\end{equation}
+A negative Hall voltage indicates that electrons (negative charge carriers) are the majority carriers.
+\end{solbox}
+
+\begin{examqbox}{2 [5 Marks]}
+Explain the concept of effective mass $m^*$ for electrons in a crystal lattice. Why can transport near the top of the valence band be described using positively charged holes?
+\end{examqbox}
+
+\begin{solbox}
+Under crystal periodic potential, acceleration $a = \frac{1}{\hbar^2}\frac{d^2E}{dk^2} F_{ext} \implies m^* = \frac{\hbar^2}{d^2E/dk^2}$. Near the valence band maximum, band curvature is negative ($\frac{d^2E}{dk^2} < 0$), causing electrons to accelerate opposite to external forces. To avoid negative mass notation, this behavior is represented by fictitious \textbf{holes} carrying positive charge $+e$ and positive effective mass $m_h^* = -m_e^* > 0$.
+\end{solbox}
+
+\begin{examqbox}{3 [10 Marks]}
+(a) Derive the dynamic power dissipation formula $P_{dyn} = \alpha C V_{DD}^2 f$ for a CMOS logic circuit.\\
+(b) A CMOS processor operates at $1.2\,\text{V}$ and $500\,\text{MHz}$ with $C=20\,\text{pF}$ and $\alpha=0.25$. Calculate its initial dynamic power. If the voltage is reduced to $1.0\,\text{V}$ and frequency to $400\,\text{MHz}$, determine the new power and percentage savings.
+\end{examqbox}
+
+\begin{solbox}
+\textbf{(a) Derivation:} Each clock cycle charging load capacitance $C$ to $V_{DD}$ draws energy $E_{drawn} = C V_{DD}^2$. Over frequency $f$ with activity factor $\alpha$, $P_{dyn} = \alpha C V_{DD}^2 f$.\\
+\textbf{(b) Calculations:}\\
+1. Initial: $P_{init} = (0.25)(20 \times 10^{-12})(1.2)^2(500 \times 10^6) = 3.60\,\text{mW}$.\\
+2. New: $P_{new} = (0.25)(20 \times 10^{-12})(1.0)^2(400 \times 10^6) = 2.00\,\text{mW}$.\\
+3. Percentage power reduction $= \frac{3.60 - 2.00}{3.60} \times 100\% = 44.4\%$.
+\end{solbox}

@@ -1,0 +1,540 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/08/29 v1.0 ECE249 Engineering Textbook Style Package]
+
+% ==============================================================================
+% 1. CORE ENCODING, FONTS & MICRO-TYPOGRAPHY
+% ==============================================================================
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+% ==============================================================================
+% 2. PAGE GEOMETRY & LAYOUT
+% ==============================================================================
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% ==============================================================================
+% 3. MATHEMATICS, SI UNITS & CIRCUITRY
+% ==============================================================================
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{cancel}
+\RequirePackage{siunitx}
+\sisetup{
+    separate-uncertainty = true,
+    inter-unit-product = \ensuremath{{}\cdot{}}
+}
+
+% Circuitikz and TikZ
+\RequirePackage[siunitx, american, cuteinductors, smartlabels]{circuitikz}
+\usetikzlibrary{shapes, shapes.gates.logic.US, shapes.gates.logic.IEC, arrows.meta, positioning, calc, decorations.pathmorphing, patterns, backgrounds, fit, matrix, chains}
+
+% ==============================================================================
+% 4. CODE LISTINGS (ARDUINO / C++)
+% ==============================================================================
+\RequirePackage{listings}
+\lstset{
+    language=C++,
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{boxgraybg},
+    frame=single,
+    rulecolor=\color{boxgrayborder},
+    keywordstyle=\color{brandblue}\bfseries,
+    commentstyle=\color{brandslate}\itshape,
+    stringstyle=\color{brandaccent},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2,
+    showstringspaces=false,
+    captionpos=b,
+    numbers=left,
+    numberstyle=\tiny\color{brandslate},
+    numbersep=6pt
+}
+
+% ==============================================================================
+% 5. COLOR PALETTE
+% ==============================================================================
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+
+\definecolor{brandnavy}{RGB}{15, 32, 67}         % Deep Engineering Navy #0F2043
+\definecolor{brandblue}{RGB}{24, 76, 148}        % Electric Sapphire #184C94
+\definecolor{brandteal}{RGB}{13, 148, 136}       % Modern Teal #0D9488
+\definecolor{brandslate}{RGB}{71, 85, 105}       % Slate #475569
+\definecolor{branddark}{RGB}{15, 23, 42}         % Dark Text #0F172A
+\definecolor{brandaccent}{RGB}{220, 38, 38}      % Signal Crimson #DC2626
+\definecolor{brandamber}{RGB}{217, 119, 6}       % Amber Warning #D97706
+\definecolor{brandpurple}{RGB}{124, 58, 237}     % Logic Violet #7C3AED
+
+\definecolor{boxnavyborder}{RGB}{15, 32, 67}
+\definecolor{boxnavybg}{RGB}{243, 247, 255}
+
+\definecolor{boxamberborder}{RGB}{217, 119, 6}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+
+\definecolor{boxtealborder}{RGB}{13, 148, 136}
+\definecolor{boxtealbg}{RGB}{240, 253, 250}
+
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+
+\definecolor{boxpurpleborder}{RGB}{124, 58, 237}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+
+\definecolor{boxgrayborder}{RGB}{148, 163, 184}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxslatebg}{RGB}{241, 245, 249}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+% ==============================================================================
+% 6. TCOLORBOX ENVIRONMENTS (PEDAGOGICAL BOXES)
+% ==============================================================================
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins, breakable, hooks}
+
+% Definition Box
+\newtcolorbox{definition}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=boxnavyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Formal Definition}{Definition: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Key Principle & Formula Box
+\newtcolorbox{keyequation}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgoldbg,
+    colframe=boxamberborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Key Law / Formula / Governing Principle}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandamber,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Worked Example Box (Understand -> Solve)
+\newtcolorbox{example}[1][]{
+    enhanced,
+    breakable,
+    colback=boxskybg,
+    colframe=boxskyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example}{Worked Example: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxskyborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% High-Yield Exam Tip Box
+\newtcolorbox{examtip}[1][]{
+    enhanced,
+    breakable,
+    colback=boxtealbg,
+    colframe=boxtealborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Exam Strategy \& High-Yield Tip}{Exam Tip: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxtealborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Common Pitfall / Trap Box
+\newtcolorbox{commonmistake}[1][]{
+    enhanced,
+    breakable,
+    colback=boxrosebg,
+    colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Common Student Pitfall / Exam Trap}{Common Pitfall: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxroseborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Quick Revision Summary Box
+\newtcolorbox{quickrevision}[1][]{
+    enhanced,
+    breakable,
+    colback=boxslatebg,
+    colframe=brandslate,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Quick Revision Summary}{Quick Revision: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandslate,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Practice Exercise Box
+\newtcolorbox{practiceset}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=brandblue,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Section Practice Exercises}{Practice Set: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandblue,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Solution Box
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=boxgrayborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Step-by-Step Solution \& Verification}{#1}},
+    boxrule=1.0pt,
+    leftrule=3.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=branddark,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Important Notice / Hardware Warning Box
+\newtcolorbox{important}[1][]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=boxpurpleborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Important Engineering Concept}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=boxpurpleborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Hardware Pinout & Interfacing Box
+\newtcolorbox{pinoutbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=brandnavy,
+    fonttitle=\bfseries\sffamily\small,
+    title={\ifstrempty{#1}{Hardware Pinout \& Electrical Specs}{#1}},
+    boxrule=1.0pt,
+    leftrule=4.0pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% ==============================================================================
+% 7. TABLES, LISTS & ENUMERATIONS
+% ==============================================================================
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{makecell}
+\RequirePackage{enumitem}
+\setlist{itemsep=3pt, topsep=4pt, parsep=1pt}
+
+% Table columns
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+% ==============================================================================
+% 8. HEADERS, FOOTERS & SECTION TITLES
+% ==============================================================================
+\RequirePackage[breakall]{truncate}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhead[L]{\small\sffamily\color{brandslate}\textbf{ECE249} \textbar\ Digital Electronics \& Arduino}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\truncate{0.55\linewidth}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+    \fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\RequirePackage{titlesec}
+
+% Chapter style: Clean numbered banner with bottom accent rule
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{branddark}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+% ==============================================================================
+% 9. HYPERLINKS & PDF METADATA
+% ==============================================================================
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=boxtealborder,
+    urlcolor=brandblue,
+    pdfauthor={LPU Engineering Open Contributors},
+    pdftitle={ECE249: Digital Electronics, Electrical Fundamentals & Microcontroller Interfacing},
+    pdfsubject={Comprehensive University Engineering Textbook and Exam Guide},
+    pdfkeywords={ECE249, Electrical Laws, Semiconductors, Diodes, BJT, Arduino, Sensors, Number Systems, Logic Gates, Boolean Algebra, K-Maps, Combinational Logic, Flip-Flops, Shift Registers, Counters},
+    plainpages=false,
+    bookmarksnumbered=true,
+    pdfpagelayout=OneColumn,
+    pdfpagemode=UseOutlines
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ==============================================================================
+% 10. FRONTMATTER MACROS: COVER, COPYRIGHT & DISCLAIMER
+% ==============================================================================
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    % Top background accent band
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    % Series badge at top
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ STUDY GUIDE SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Open-Source Academic Textbooks for Engineering Students};
+    
+    % Decorative bottom band
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Student-Led Educational Initiative \textbullet\ 2026 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Source (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{30}{36}\selectfont\bfseries\sffamily\color{brandnavy} Digital Electronics\par}
+    \vspace{0.4cm}
+    {\fontsize{20}{25}\selectfont\bfseries\sffamily\color{brandnavy} \& Electrical Fundamentals\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} ECE249 $\cdot$ Semester 1 \& 2 Study Guide\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Circuit Laws \textbullet\ Semiconductors \textbullet\ Arduino Interfacing \textbullet\ Logic Gates \textbullet\ Counters}\par}
+    
+    \vspace{1.8cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Subject Features:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Comprehensive coverage of DC circuit laws, network theorems, and semiconductor band theory.
+            \item Solid-state devices: PN diodes, Zener regulation, BJT biasing, and switching operations.
+            \item Embedded systems companion: Arduino UNO architecture, hardware pinouts, and sensor interfacing.
+            \item Combinational logic, Boolean algebra, Karnaugh maps, latches, flip-flops, and synchronous counters.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Team / Publisher:}\\
+    LPU Engineering Open Publishing Project\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large ECE249: Digital Electronics, Electrical Fundamentals \& Microcontroller Interfacing}\\
+\textit{\sffamily An Open-Source Educational Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Release Edition:} 2026 Edition (Phase 1 Base Architecture)\\
+\textbf{\sffamily Primary Source Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Contributors of LPU Engineering Open.\\
+This manuscript, diagrams, and educational text are distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\noindent
+The accompanying schematic diagrams, Arduino/C++ listings, and layout macros are distributed under the terms of the \textbf{MIT License}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Open Contributors, \textit{ECE249: Digital Electronics, Electrical Fundamentals \& Microcontroller Interfacing --- Study Guide}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Important Disclaimer \& Institutional Non-Affiliation}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Student-Created Resource}\\
+This book is an independent, non-profit, student-led open educational resource designed to aid students in understanding electrical principles, digital electronics, and microcontroller interfacing for university examinations.
+
+\textbf{2. Non-Affiliation Notice}\\
+\textbf{LPU Engineering Open is NOT affiliated with, sponsored by, authorized by, or endorsed by Lovely Professional University (LPU).} Lovely Professional University is not responsible for the contents, factual accuracy, exam representations, or editorial choices in this book.
+
+\textbf{3. Trademark \& Fair Use}\\
+Any references to university curriculum structures, course codes (e.g., ECE249), subject syllabi, or exam formats are made strictly under educational \textbf{fair use} principles to provide appropriate context and academic alignment for students studying these topics.
+
+\textbf{4. Accuracy \& Laboratory Safety}\\
+While every effort has been made by student and educator contributors to verify circuit derivations, formulas, and schematic accuracy, electrical experiments involve hardware and mains safety considerations. The publishers provide this material on an ``as-is'' basis. Readers are encouraged to report any corrections on the project's repository.
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

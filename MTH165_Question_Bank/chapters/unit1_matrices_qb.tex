@@ -1,0 +1,151 @@
+\chapter{Unit 1: Matrix Methods and Linear Systems}
+
+\section{Section 1: 20 Solved Comprehensive Subjective Problems}
+
+\begin{subjectiveq}{1.1}
+Reduce the matrix $A$ to Row Echelon Form and find its rank:
+\begin{equation}
+A = \begin{bmatrix}
+1 & 2 & 3 & 2 \\
+2 & 3 & 5 & 1 \\
+1 & 3 & 4 & 5
+\end{bmatrix}
+\end{equation}
+\end{subjectiveq}
+
+\begin{solbox}
+Apply elementary row operations:
+\begin{enumerate}
+    \item $R_2 \to R_2 - 2R_1$ and $R_3 \to R_3 - R_1$:
+    \begin{equation}
+    \begin{bmatrix}
+    1 & 2 & 3 & 2 \\
+    0 & -1 & -1 & -3 \\
+    0 & 1 & 1 & 3
+    \end{bmatrix}
+    \end{equation}
+    \item $R_3 \to R_3 + R_2$:
+    \begin{equation}
+    \begin{bmatrix}
+    1 & 2 & 3 & 2 \\
+    0 & -1 & -1 & -3 \\
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+    \end{equation}
+\end{enumerate}
+The row echelon form contains \textbf{2 non-zero rows}. Therefore, $\operatorname{rank}(A) = 2$.
+\end{solbox}
+
+\begin{examinertip}
+Always clearly state the elementary row operations used ($R_i \to R_i + c R_j$) at each step. Rank equals the number of non-zero rows in the final echelon form.
+\end{examinertip}
+
+\begin{subjectiveq}{1.2}
+Find the eigenvalues and corresponding eigenvectors of the matrix:
+\begin{equation}
+A = \begin{bmatrix}
+8 & -6 & 2 \\
+-6 & 7 & -4 \\
+2 & -4 & 3
+\end{bmatrix}
+\end{equation}
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Characteristic Equation}: $\det(A - \lambda I) = 0 \implies \lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0$.
+\begin{align}
+S_1 &= 8 + 7 + 3 = 18 \\
+S_2 &= (21 - 16) + (24 - 4) + (56 - 36) = 5 + 20 + 20 = 45 \\
+S_3 &= \det(A) = 8(5) + 6(-10) + 2(10) = 40 - 60 + 20 = 0
+\end{align}
+Thus: $\lambda^3 - 18\lambda^2 + 45\lambda = 0 \implies \lambda(\lambda - 3)(\lambda - 15) = 0$.
+The eigenvalues are $\lambda_1 = 0, \; \lambda_2 = 3, \; \lambda_3 = 15$.
+
+2. \textbf{Eigenvectors}:
+\begin{itemize}
+    \item For $\lambda = 0$: $(A - 0I)v = 0 \implies v_1 = \begin{bmatrix} 1 & 2 & 2 \end{bmatrix}^T$.
+    \item For $\lambda = 3$: $(A - 3I)v = 0 \implies v_2 = \begin{bmatrix} 2 & 1 & -2 \end{bmatrix}^T$.
+    \item For $\lambda = 15$: $(A - 15I)v = 0 \implies v_3 = \begin{bmatrix} 2 & -2 & 1 \end{bmatrix}^T$.
+\end{itemize}
+Notice that since $A$ is symmetric, all eigenvectors are mutually orthogonal: $v_1 \cdot v_2 = 0, v_1 \cdot v_3 = 0, v_2 \cdot v_3 = 0$.
+\end{solbox}
+
+\begin{examinertip}
+For real symmetric matrices, eigenvectors corresponding to distinct eigenvalues are always orthogonal. Verifying $v_i \cdot v_j = 0$ provides an instant check on calculation accuracy!
+\end{examinertip}
+
+\begin{subjectiveq}{1.3}
+Verify the Cayley--Hamilton theorem for $A = \begin{bmatrix} 2 & -1 & 1 \\ -1 & 2 & -1 \\ 1 & -1 & 2 \end{bmatrix}$ and compute $A^{-1}$ and $A^4$.
+\end{subjectiveq}
+
+\begin{solbox}
+1. \textbf{Characteristic Equation}:
+$S_1 = 2+2+2 = 6$, $S_2 = 3+3+3 = 9$, $S_3 = \det(A) = 4$.
+Characteristic polynomial: $\lambda^3 - 6\lambda^2 + 9\lambda - 4 = 0$.
+By Cayley--Hamilton: $A^3 - 6A^2 + 9A - 4I = O$.
+
+2. \textbf{Computation of $A^{-1}$}:
+Multiply by $A^{-1}$: $A^2 - 6A + 9I - 4A^{-1} = O \implies A^{-1} = \frac{1}{4}(A^2 - 6A + 9I)$.
+Computing matrices yields:
+\begin{equation}
+A^{-1} = \frac{1}{4}\begin{bmatrix} 3 & 1 & -1 \\ 1 & 3 & 1 \\ -1 & 1 & 3 \end{bmatrix}
+\end{equation}
+
+3. \textbf{Computation of $A^4$}:
+$A^4 = 6A^3 - 9A^2 + 4A = 6(6A^2 - 9A + 4I) - 9A^2 + 4A = 27A^2 - 50A + 24I$.
+\end{solbox}
+
+\section{Section 2: 50 Solved Multiple-Choice Questions (MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 25)}
+\mcqitem{1}{If $A$ is a square matrix of order $n$, then $|k A|$ is equal to:}{$k |A|$}{$k^n |A|$}{$n k |A|$}{$k^{-n} |A|$}
+\mcqitem{2}{The rank of a null matrix of order $m \times n$ is:}{$1$}{$0$}{$m$}{$n$}
+\mcqitem{3}{The eigenvalues of a diagonal matrix are:}{Always zero}{Its diagonal elements}{Reciprocals of diagonal entries}{Imaginary}
+\mcqitem{4}{If the rank of augmented matrix $[A|b]$ is greater than rank of $A$, then the system $Ax=b$ has:}{Unique solution}{Infinitely many solutions}{No solution}{Trivial solution}
+\mcqitem{5}{The sum of eigenvalues of a matrix $A$ equals:}{$\det(A)$}{$\operatorname{trace}(A)$}{$\operatorname{rank}(A)$}{$0$}
+\mcqitem{6}{If $\lambda$ is an eigenvalue of $A$, then an eigenvalue of $A^{-1}$ is:}{$-\lambda$}{$\lambda^2$}{$1/\lambda$}{$1 - \lambda$}
+\mcqitem{7}{The determinant of an orthogonal matrix is always:}{$0$}{$\pm 1$}{$\infty$}{$2$}
+\mcqitem{8}{If $A^T = -A$, then $A$ is called:}{Symmetric}{Skew-symmetric}{Orthogonal}{Hermitian}
+\mcqitem{9}{For a homogeneous system $Ax = 0$ with $n$ variables, non-trivial solutions exist if:}{$\operatorname{rank}(A) = n$}{$\operatorname{rank}(A) < n$}{$\det(A) \ne 0$}{$\operatorname{rank}(A) > n$}
+\mcqitem{10}{A matrix $A$ is idempotent if:}{$A^2 = I$}{$A^2 = A$}{$A^T = A$}{$A^k = 0$}
+
+\newpage
+\subsection*{Part II: Intermediate Analytical Level (Questions 26 to 40)}
+\mcqitem{26}{If $A = \begin{bmatrix} 1 & 2 \\ 0 & 3 \end{bmatrix}$, then the eigenvalues of $A^3$ are:}{$1, 9$}{$1, 27$}{$3, 9$}{$1, 6$}
+\mcqitem{27}{The product of eigenvalues of $A = \begin{bmatrix} 2 & 1 & 0 \\ 0 & 3 & 4 \\ 0 & 0 & 5 \end{bmatrix}$ is:}{$10$}{$30$}{$25$}{$0$}
+\mcqitem{28}{If $A$ is an orthogonal matrix, then $A^{-1}$ equals:}{$A$}{$A^T$}{$-A$}{$I$}
+\mcqitem{29}{The characteristic equation of $A = \begin{bmatrix} 1 & 4 \\ 2 & 3 \end{bmatrix}$ is:}{$\lambda^2 - 4\lambda - 5 = 0$}{$\lambda^2 + 4\lambda + 5 = 0$}{$\lambda^2 - 4\lambda + 5 = 0$}{$\lambda^2 + 5\lambda - 4 = 0$}
+\mcqitem{30}{If the eigenvalues of $A$ are $2, 3, 5$, then $\det(A)$ is:}{$10$}{$30$}{$25$}{$0$}
+
+\newpage
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 50)}
+\mcqitem{41}{If $A^2 - A + I = O$, then $A^{-1}$ equals:}{$A - I$}{$I - A$}{$A + I$}{$-A - I$}
+\mcqitem{42}{For what value of $k$ is the matrix $\begin{bmatrix} 1 & 2 \\ 3 & k \end{bmatrix}$ singular?}{$2$}{$4$}{$6$}{$8$}
+\mcqitem{43}{The number of linearly independent eigenvectors of an $n \times n$ matrix with distinct eigenvalues is:}{$1$}{$n-1$}{$n$}{$0$}
+\mcqitem{44}{If $A$ is skew-symmetric of odd order $2n+1$, then $\det(A)$ is:}{$1$}{$-1$}{$0$}{Undefined}
+\mcqitem{45}{If $\lambda = 0$ is an eigenvalue of $A$, then:}{$A$ is invertible}{$A$ is non-singular}{$\det(A) = 0$}{$\operatorname{trace}(A) = 0$}
+
+\newpage
+\section{Section 3: Answer Key \& Technical Rationales}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 1: Answer Key \& Rationales}}
+\vspace{2mm}
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Rationale} \\
+\midrule
+1 & \textbf{(b)} & $|kA| = k^n|A|$ by determinant scalar law & 26 & \textbf{(b)} & $\lambda(A^3) = \lambda^3 \implies 1^3, 3^3 = 1, 27$ \\
+2 & \textbf{(b)} & Null matrix has no non-zero pivots & 27 & \textbf{(b)} & $\det(A) = 2 \times 3 \times 5 = 30$ \\
+3 & \textbf{(b)} & Triangular/diagonal eigenvalues are diagonal entries & 28 & \textbf{(b)} & $A^T A = I \implies A^{-1} = A^T$ \\
+4 & \textbf{(c)} & $\rho(A) < \rho([A|b]) \implies$ Inconsistent & 29 & \textbf{(a)} & $\lambda^2 - \operatorname{tr}(A)\lambda + \det(A) = \lambda^2 - 4\lambda - 5$ \\
+5 & \textbf{(b)} & Trace equals sum of eigenvalues & 30 & \textbf{(b)} & Product of eigenvalues $= 2 \times 3 \times 5 = 30$ \\
+6 & \textbf{(c)} & $A v = \lambda v \implies A^{-1} v = (1/\lambda)v$ & 41 & \textbf{(b)} & Multiply by $A^{-1} \implies A - I + A^{-1} = 0$ \\
+7 & \textbf{(b)} & $\det(A^T A) = \det(A)^2 = 1 \implies \det = \pm 1$ & 42 & \textbf{(c)} & $\det = k - 6 = 0 \implies k = 6$ \\
+8 & \textbf{(b)} & Definition of skew-symmetric matrix & 43 & \textbf{(c)} & Distinct eigenvalues guarantee $n$ independent eigenvectors \\
+9 & \textbf{(b)} & Infinite non-trivial solutions when $\rho(A) < n$ & 44 & \textbf{(c)} & $|-A| = (-1)^{2n+1}|A| = -|A| \implies |A|=0$ \\
+10 & \textbf{(b)} & $A^2 = A$ defines idempotency & 45 & \textbf{(c)} & $\det(A) = \prod \lambda_i = 0$ \\
+\bottomrule
+\end{tabularx}
+\end{table}

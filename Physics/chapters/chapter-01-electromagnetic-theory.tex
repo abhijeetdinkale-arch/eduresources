@@ -1,0 +1,1056 @@
+\chapter{Electromagnetic Theory}
+\label{chap:em-theory}
+
+\section{Chapter Overview \& Learning Objectives}
+Electromagnetic theory is the foundational framework uniting electricity, magnetism, and optics into a single, elegant mathematical discipline. Formulated in its complete form by James Clerk Maxwell in 1865, electrodynamics explains phenomena ranging from static Coulomb attraction to wireless telecommunications, optical waveguides, antenna radiation, and high-frequency relativistic electrodynamics.
+
+In this chapter, we develop the principles of classical electrodynamics from first principles. We begin with a rigorous review of vector differential calculus, formulate the local conservation of charge via the continuity equation, analyze the critical physical inconsistency in static Ampère's law, and introduce Maxwell's revolutionary concept of displacement current. We then establish Maxwell's four fundamental equations in both differential and integral forms, derive the electromagnetic wave equations in dielectric and conducting media, and conclude with Poynting's theorem for energy flow, energy density, and radiation pressure.
+
+\begin{important}[Core Learning Objectives]
+Upon mastering the material in this chapter, you should be able to:
+\begin{enumerate}
+    \item Apply vector differential operators ($\nabla, \nabla \cdot, \nabla \times, \nabla^2$) and fundamental integral theorems (Gauss's Divergence Theorem and Stokes' Theorem) to solve physical field problems.
+    \item Derive the equation of continuity from the principle of local charge conservation and determine the dielectric charge relaxation time $\tau_r$.
+    \item Explain the physical limitation of static Ampère's circuital law and derive Maxwell's displacement current density $\mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t}$.
+    \item State and interpret Maxwell's four equations in differential and integral forms in free space and material media.
+    \item Derive the electromagnetic wave equation from Maxwell's curl equations and deduce the speed of light $c = 1/\sqrt{\mu_0 \varepsilon_0}$ and intrinsic impedance $\eta_0 \approx 377\,\Omega$.
+    \item Prove the transverse nature of plane electromagnetic waves ($\mathbf{k} \perp \mathbf{E} \perp \mathbf{H}$).
+    \item Analyze wave propagation in lossy conducting media, calculate attenuation constant $\alpha$, phase constant $\beta$, and evaluate skin depth $\delta$.
+    \item Derive Poynting's theorem from Maxwell's equations and calculate instantaneous and time-averaged Poynting flux, electromagnetic energy density, and radiation pressure.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 1.2: VECTOR CALCULUS FOUNDATIONS
+% ==============================================================================
+\section{Mathematical Foundations: Vector Differential Calculus}
+Electrodynamics is formulated in the language of vector calculus. A clear physical and mathematical mastery of differential vector operators is essential before analyzing time-varying fields.
+
+\subsection{The Del (\texorpdfstring{$\nabla$}{Del}) Operator and Spatial Derivatives}
+The vector differential operator $\nabla$ (del or nabla) in Cartesian coordinates $(x, y, z)$ is defined as:
+\begin{equation}
+    \nabla = \hat{\mathbf{i}} \frac{\partial}{\partial x} + \hat{\mathbf{j}} \frac{\partial}{\partial y} + \hat{\mathbf{k}} \frac{\partial}{\partial z}
+\end{equation}
+Operating with $\nabla$ produces three fundamental spatial derivatives:
+
+\begin{definition}[Gradient of a Scalar Field]
+The gradient of a differentiable scalar function $V(x, y, z)$ is a vector pointing in the direction of maximum spatial rate of increase of $V$, with magnitude equal to that maximum rate:
+\begin{equation}
+    \nabla V = \text{grad}\,V = \hat{\mathbf{i}} \frac{\partial V}{\partial x} + \hat{\mathbf{j}} \frac{\partial V}{\partial y} + \hat{\mathbf{k}} \frac{\partial V}{\partial z}
+\end{equation}
+In electrostatics, the electric field is related to the scalar potential by $\mathbf{E} = -\nabla V$.
+\end{definition}
+
+\begin{definition}[Divergence of a Vector Field]
+The divergence of a vector field $\mathbf{A}(x,y,z)$ is a scalar representing the net outward flux of the vector per unit volume as the volume shrinks to zero:
+\begin{equation}
+    \nabla \cdot \mathbf{A} = \text{div}\,\mathbf{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}
+\end{equation}
+\begin{itemize}
+    \item If $\nabla \cdot \mathbf{A} > 0$, the point acts as a \textbf{source} (net positive outward flux).
+    \item If $\nabla \cdot \mathbf{A} < 0$, the point acts as a \textbf{sink} (net negative inward flux).
+    \item If $\nabla \cdot \mathbf{A} = 0$ everywhere, the field is \textbf{solenoidal} (lines of flux are continuous closed loops with no isolated sources or sinks, e.g., the magnetic field $\mathbf{B}$).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Curl of a Vector Field]
+The curl of a vector field $\mathbf{A}(x,y,z)$ is a vector measuring the circulation density or rotational vortex intensity of the field around an infinitesimal loop:
+\begin{equation}
+    \nabla \times \mathbf{A} = \text{curl}\,\mathbf{A} = 
+    \begin{vmatrix}
+    \hat{\mathbf{i}} & \hat{\mathbf{j}} & \hat{\mathbf{k}} \\
+    \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+    A_x & A_y & A_z
+    \end{vmatrix}
+    = \hat{\mathbf{i}}\left(\frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z}\right)
+    + \hat{\mathbf{j}}\left(\frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x}\right)
+    + \hat{\mathbf{k}}\left(\frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y}\right)
+\end{equation}
+If $\nabla \times \mathbf{A} = \mathbf{0}$ throughout a region, the field is termed \textbf{irrotational} or \textbf{conservative}.
+\end{definition}
+
+\subsection{Fundamental Integral Theorems of Vector Calculus}
+The bridge between local differential relationships and macroscopic experimental measurements is provided by two foundational integral theorems:
+
+\begin{keyequation}[Gauss's Divergence Theorem]
+The total outward flux of a vector field $\mathbf{A}$ through a closed surface $S$ bounding volume $V$ equals the volume integral of the divergence of $\mathbf{A}$:
+\begin{equation}
+    \oiint_S \mathbf{A} \cdot d\mathbf{S} = \iiint_V (\nabla \cdot \mathbf{A})\, dV
+\end{equation}
+\end{keyequation}
+
+\begin{keyequation}[Stokes' Circulation Theorem]
+The circulation of a vector field $\mathbf{A}$ around an oriented closed boundary contour $C$ equals the surface integral of the curl of $\mathbf{A}$ over any open surface $S$ bounded by $C$:
+\begin{equation}
+    \oint_C \mathbf{A} \cdot d\mathbf{l} = \iint_S (\nabla \times \mathbf{A}) \cdot d\mathbf{S}
+\end{equation}
+\end{keyequation}
+
+\subsection{Important Vector Identities for Electrodynamics}
+Four algebraic vector identities are repeatedly invoked in electromagnetic proofs:
+\begin{enumerate}
+    \item \textbf{Divergence of a Curl is Identically Zero}:
+    \begin{equation}
+        \nabla \cdot (\nabla \times \mathbf{A}) \equiv 0 \quad \text{for any twice-differentiable vector field } \mathbf{A}
+    \end{equation}
+    \item \textbf{Curl of a Gradient is Identically Zero}:
+    \begin{equation}
+        \nabla \times (\nabla V) \equiv \mathbf{0} \quad \text{for any twice-differentiable scalar field } V
+    \end{equation}
+    \item \textbf{Curl of a Curl Identity (Vector Laplacian)}:
+    \begin{equation}
+        \nabla \times (\nabla \times \mathbf{A}) = \nabla(\nabla \cdot \mathbf{A}) - \nabla^2 \mathbf{A}
+    \end{equation}
+    \item \textbf{Divergence of a Cross Product}:
+    \begin{equation}
+        \nabla \cdot (\mathbf{A} \times \mathbf{B}) = \mathbf{B} \cdot (\nabla \times \mathbf{A}) - \mathbf{A} \cdot (\nabla \times \mathbf{B})
+    \end{equation}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.3: CONTINUITY EQUATION
+% ==============================================================================
+\section{The Equation of Continuity and Charge Conservation}
+The principle of conservation of electric charge is an exact, universal conservation law of nature. It asserts that charge can neither be created nor destroyed; it can only be transported through space as an electric current.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Volume boundary
+    \draw[thick, fill=boxnavybg, draw=brandnavy] (0,0) ellipse (2.2cm and 1.4cm);
+    \node[brandnavy, font=\bfseries] at (0,0.3) {Volume $V$};
+    \node[brandslate, font=\small] at (0,-0.3) {Charge density $\rho_v(t)$};
+    
+    % Surface normal and flux vectors
+    \draw[->, very thick, brandblue] (1.8, 0.7) -- (3.0, 1.2) node[right] {$\mathbf{J} \cdot d\mathbf{S}$ (Outward Current)};
+    \draw[->, thick, brandnavy] (1.4, 0.5) -- (2.2, 0.9) node[midway, above left] {$d\mathbf{S}$};
+    \draw[->, very thick, brandblue] (-1.8, 0.4) -- (-2.9, 0.7) node[left] {$\mathbf{J}$};
+    \draw[->, very thick, brandblue] (0.5, -1.3) -- (0.8, -2.2) node[below] {$\mathbf{J}$};
+    
+    % Caption inside node
+    \node[below, font=\small\sffamily\color{branddark}] at (0,-2.6) {Closed Surface $S = \partial V$};
+\end{tikzpicture}
+\caption{Current density flux $\mathbf{J} \cdot d\mathbf{S}$ escaping across the closed boundary $S$ enclosing volume $V$.}
+\label{fig:continuity-volume}
+\end{figure}
+
+\subsection{Derivation of the Continuity Equation}
+Consider an arbitrary, fixed macroscopic volume $V$ bounded by a closed smooth surface $S$. The total electric charge enclosed within volume $V$ at time $t$ is:
+\begin{equation}
+    Q_{\text{encl}}(t) = \iiint_V \rho_v(\mathbf{r}, t)\, dV
+\end{equation}
+where $\rho_v$ is the volume charge density ($\si{C/m^3}$).
+
+If net positive charge flows out across the bounding surface $S$, the total current leaving the volume is the surface flux of the current density vector $\mathbf{J}$ ($\si{A/m^2}$):
+\begin{equation}
+    I_{\text{out}} = \oiint_S \mathbf{J} \cdot d\mathbf{S}
+\end{equation}
+By the principle of conservation of charge, the rate at which charge escapes across the boundary must precisely equal the time rate of decrease of the enclosed charge:
+\begin{equation}
+    I_{\text{out}} = -\frac{dQ_{\text{encl}}}{dt} \implies \oiint_S \mathbf{J} \cdot d\mathbf{S} = -\frac{d}{dt} \iiint_V \rho_v\, dV
+\end{equation}
+Because the volume $V$ is stationary in space, the total time derivative converts to a partial derivative within the integrand:
+\begin{equation}
+    \oiint_S \mathbf{J} \cdot d\mathbf{S} = -\iiint_V \frac{\partial \rho_v}{\partial t}\, dV
+\end{equation}
+Applying Gauss's Divergence Theorem to the left-hand closed surface integral:
+\begin{equation}
+    \iiint_V (\nabla \cdot \mathbf{J})\, dV = -\iiint_V \frac{\partial \rho_v}{\partial t}\, dV \implies \iiint_V \left( \nabla \cdot \mathbf{J} + \frac{\partial \rho_v}{\partial t} \right) dV = 0
+\end{equation}
+Since this integral must hold identically for any arbitrarily chosen volume $V$, the integrand itself must vanish identically everywhere.
+
+\begin{keyequation}[Equation of Continuity]
+\begin{equation}
+    \nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t} \iff \nabla \cdot \mathbf{J} + \frac{\partial \rho_v}{\partial t} = 0
+\end{equation}
+\end{keyequation}
+
+\subsection{Physical Implications and Dielectric Relaxation Time}
+In steady-state direct current (DC) circuits, the charge distribution is stationary ($\partial \rho_v / \partial t = 0$). Under these conditions, the divergence of current density vanishes:
+\begin{equation}
+    \nabla \cdot \mathbf{J} = 0 \quad \text{(Steady-state current)}
+\end{equation}
+This is the differential statement of Kirchhoff's Current Law (KCL): the net current entering any junction or node equals the net current leaving it.
+
+\subsubsection{Charge Relaxation in a Homogeneous Conducting Medium}
+If an excess volume charge $\rho_v(0)$ is introduced into the interior of a conducting medium with electrical conductivity $\sigma$ and permittivity $\varepsilon$, what happens over time? Using Ohm's law in point form ($\mathbf{J} = \sigma \mathbf{E}$) and Gauss's law ($\nabla \cdot \mathbf{E} = \rho_v / \varepsilon$):
+\begin{equation}
+    \nabla \cdot \mathbf{J} = \nabla \cdot (\sigma \mathbf{E}) = \sigma (\nabla \cdot \mathbf{E}) = \sigma \left( \frac{\rho_v}{\varepsilon} \right)
+\end{equation}
+Substituting this into the continuity equation:
+\begin{equation}
+    \frac{\sigma}{\varepsilon} \rho_v + \frac{\partial \rho_v}{\partial t} = 0 \implies \frac{\partial \rho_v}{\partial t} = -\frac{\sigma}{\varepsilon} \rho_v
+\end{equation}
+Integrating this first-order separable differential equation yields:
+\begin{equation}
+    \rho_v(t) = \rho_v(0) \exp\left(-\frac{t}{\tau_r}\right)
+\end{equation}
+where $\tau_r$ is the \textbf{charge relaxation time constant}:
+\begin{equation}
+    \tau_r = \frac{\varepsilon}{\sigma}
+\end{equation}
+For a good conductor such as copper ($\sigma \approx 5.8 \times 10^7\,\si{S/m}$, $\varepsilon \approx \varepsilon_0 = 8.854 \times 10^{-12}\,\si{F/m}$):
+\begin{equation}
+    \tau_{r,\text{Cu}} \approx \frac{8.854 \times 10^{-12}}{5.8 \times 10^7} \approx 1.5 \times 10^{-19}\,\si{s}
+\end{equation}
+This demonstrates that any free interior charge redistributes itself exclusively onto the conductor's outer surface in less than an attosecond. In dielectrics (e.g., fused quartz, $\sigma \approx 10^{-17}\,\si{S/m}$), $\tau_r$ can span days or months.
+
+% ==============================================================================
+% SECTION 1.4: DISPLACEMENT CURRENT
+% ==============================================================================
+\section{Inconsistency of Static Ampère's Law \& Displacement Current}
+
+\subsection{The Mathematical Contradiction in Static Electrodynamics}
+Ampère's Circuital Law in magnetostatics relates the circulation of the magnetic field intensity $\mathbf{H}$ to the enclosed conduction current:
+\begin{equation}
+    \oint_C \mathbf{H} \cdot d\mathbf{l} = I_c \iff \nabla \times \mathbf{H} = \mathbf{J}
+\end{equation}
+Let us take the divergence of both sides of this equation:
+\begin{equation}
+    \nabla \cdot (\nabla \times \mathbf{H}) = \nabla \cdot \mathbf{J}
+\end{equation}
+From vector identity (1.9), the divergence of any vector curl is identically zero ($\nabla \cdot (\nabla \times \mathbf{H}) \equiv 0$). Therefore, static Ampère's law demands:
+\begin{equation}
+    \nabla \cdot \mathbf{J} = 0
+\end{equation}
+However, according to the continuity equation (1.13), $\nabla \cdot \mathbf{J} = -\partial \rho_v / \partial t$. Consequently, Ampère's static law is mathematically consistent \textbf{only} for steady DC currents ($\partial \rho_v / \partial t = 0$). For any time-varying, dynamic electromagnetic system where charges accumulate or deplete, static Ampère's law leads to an immediate mathematical and physical contradiction!
+
+\subsection{Maxwell's Hypothesis and Mathematical Resolution}
+To rectify this flaw, James Clerk Maxwell postulated in 1861 that a missing current density term, which he designated as the \textbf{displacement current density} $\mathbf{J}_d$, must be added to the conduction current density $\mathbf{J}$:
+\begin{equation}
+    \nabla \times \mathbf{H} = \mathbf{J} + \mathbf{J}_d
+\end{equation}
+Taking the divergence of both sides:
+\begin{equation}
+    \nabla \cdot (\nabla \times \mathbf{H}) = \nabla \cdot \mathbf{J} + \nabla \cdot \mathbf{J}_d = 0 \implies \nabla \cdot \mathbf{J}_d = -\nabla \cdot \mathbf{J}
+\end{equation}
+Substituting the continuity equation $-\nabla \cdot \mathbf{J} = \frac{\partial \rho_v}{\partial t}$:
+\begin{equation}
+    \nabla \cdot \mathbf{J}_d = \frac{\partial \rho_v}{\partial t}
+\end{equation}
+Now, using Gauss's Law of electrostatics, $\rho_v = \nabla \cdot \mathbf{D}$, where $\mathbf{D}$ is the electric displacement field ($\mathbf{D} = \varepsilon \mathbf{E}$):
+\begin{equation}
+    \nabla \cdot \mathbf{J}_d = \frac{\partial}{\partial t}(\nabla \cdot \mathbf{D}) = \nabla \cdot \left(\frac{\partial \mathbf{D}}{\partial t}\right)
+\end{equation}
+Comparing both sides directly identifies Maxwell's displacement current density:
+
+\begin{keyequation}[Displacement Current Density]
+\begin{equation}
+    \mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \varepsilon \frac{\partial \mathbf{E}}{\partial t} \quad \left[\si{\frac{A}{m^2}}\right]
+\end{equation}
+\end{keyequation}
+The modified Ampère-Maxwell circuital equation now reads:
+\begin{equation}
+    \nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t} = \mathbf{J} + \varepsilon \frac{\partial \mathbf{E}}{\partial t}
+\end{equation}
+
+\subsection{Physical Demonstration: The Charging Parallel-Plate Capacitor}
+To understand the profound physical reality of displacement current, consider a circular parallel-plate capacitor being charged by a time-varying current $I(t)$, as illustrated in Figure \ref{fig:capacitor-displacement}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Wire and plates
+    \draw[very thick, branddark] (-3.5,0) -- (-1.5,0);
+    \draw[very thick, branddark] (1.5,0) -- (3.5,0);
+    \draw[->, ultra thick, brandblue] (-3.0,0.3) -- (-2.0,0.3) node[above] {$I_c(t)$};
+    \draw[->, ultra thick, brandblue] (2.0,0.3) -- (3.0,0.3) node[above] {$I_c(t)$};
+    
+    % Capacitor plates
+    \draw[ultra thick, fill=brandnavy!20] (-1.5,-1.5) rectangle (-1.2,1.5);
+    \node[above, brandnavy, font=\bfseries] at (-1.35,1.5) {$+Q(t)$};
+    \draw[ultra thick, fill=brandnavy!20] (1.2,-1.5) rectangle (1.5,1.5);
+    \node[above, brandnavy, font=\bfseries] at (1.35,1.5) {$-Q(t)$};
+    
+    % E-field lines in dielectric gap
+    \foreach \y in {-1.0, -0.5, 0.0, 0.5, 1.0} {
+        \draw[->, thick, brandaccent] (-1.2,\y) -- (1.2,\y);
+    }
+    \node[brandaccent, font=\bfseries] at (0,1.2) {$\mathbf{E}(t), \mathbf{J}_d(t)$};
+    
+    % Amperian loop C
+    \draw[thick, dashed, brandnavy] (-2.2,0) ellipse (0.4cm and 1.2cm);
+    \node[left, brandnavy, font=\small] at (-2.6, 0.9) {Loop $C$};
+    
+    % Surface S1 (flat disk)
+    \node[below, brandslate, font=\small] at (-2.2,-1.4) {Surface $S_1$ (Flat)};
+    % Surface S2 (bag bulging between plates)
+    \draw[thick, dotted, brandblue] (-2.2, 1.2) to[out=0, in=90] (0, 1.2) to[out=-90, in=0] (-2.2, -1.2);
+    \node[below, brandblue, font=\small] at (0,-1.4) {Surface $S_2$ (Balloon/Bag)};
+\end{tikzpicture}
+\caption{Maxwell's classic thought experiment: Ambiguity in static Ampère's law when bounding surfaces $S_1$ and $S_2$ share the same contour $C$ during capacitor charging.}
+\label{fig:capacitor-displacement}
+\end{figure}
+
+Let us draw a closed circular contour $C$ around the connecting wire and apply Stokes' theorem:
+\begin{equation}
+    \oint_C \mathbf{H} \cdot d\mathbf{l} = \iint_S (\nabla \times \mathbf{H}) \cdot d\mathbf{S}
+\end{equation}
+\begin{enumerate}
+    \item \textbf{Surface $S_1$ (Flat circular disc piercing the wire):}\\
+    The wire cuts surface $S_1$, so it carries conduction current $I_c = \iint_{S_1} \mathbf{J} \cdot d\mathbf{S}$. Static Ampère's law gives:
+    \begin{equation}
+        \oint_C \mathbf{H} \cdot d\mathbf{l} = I_c
+    \end{equation}
+    \item \textbf{Surface $S_2$ (Balloon-shaped surface bulging into the dielectric gap):}\\
+    Surface $S_2$ rests on the exact same boundary loop $C$, but bulges between the plates where no actual electrons flow ($\mathbf{J} = \mathbf{0}$). Static Ampère's law would erroneously predict:
+    \begin{equation}
+        \oint_C \mathbf{H} \cdot d\mathbf{l} = 0
+    \end{equation}
+\end{enumerate}
+This yields a direct contradiction: the line integral along contour $C$ cannot simultaneously equal $I_c$ and $0$!
+
+Maxwell's displacement current perfectly resolves the paradox. Between the capacitor plates of area $A$ and charge $Q(t)$, the electric field is $E(t) = \frac{Q(t)}{\varepsilon A} = \frac{\sigma_s(t)}{\varepsilon}$. The displacement flux through surface $S_2$ is:
+\begin{equation}
+    I_d = \iint_{S_2} \mathbf{J}_d \cdot d\mathbf{S} = \iint_{S_2} \left(\varepsilon \frac{\partial \mathbf{E}}{\partial t}\right) \cdot d\mathbf{S} = \varepsilon A \frac{\partial}{\partial t}\left(\frac{Q(t)}{\varepsilon A}\right) = \frac{dQ(t)}{dt} = I_c
+\end{equation}
+Thus, the displacement current $I_d$ passing through the dielectric gap is \textbf{identically equal} to the conduction current $I_c$ flowing through the external wires. Current flow is continuous around the complete circuit!
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lXX}
+\toprule
+\textbf{Property / Parameter} & \textbf{Conduction Current Density ($\mathbf{J}_c$)} & \textbf{Displacement Current Density ($\mathbf{J}_d$)} \\
+\midrule
+\textbf{Physical Origin} & Real physical drift of charge carriers (electrons or ions) & Time rate of change of electric displacement field ($\partial \mathbf{D}/\partial t$) \\
+\textbf{Governing Equation} & $\mathbf{J}_c = \sigma \mathbf{E} = n q \mathbf{v}_d$ (Ohm's Law) & $\mathbf{J}_d = \varepsilon \frac{\partial \mathbf{E}}{\partial t}$ (Maxwell's Postulate) \\
+\textbf{Medium Required} & Requires conductors/semiconductors ($\sigma > 0$) & Occurs in dielectrics, insulators, and perfect vacuum ($\sigma = 0$) \\
+\textbf{Ohmic Heating} & Causes Joule dissipation ($P = \mathbf{J}_c \cdot \mathbf{E} = \sigma E^2$) & Produces no direct Joule heat loss in lossless media \\
+\textbf{Magnetic Effect} & Generates a circulating magnetic field ($\nabla \times \mathbf{H}$) & Generates an identical circulating magnetic field ($\nabla \times \mathbf{H}$) \\
+\textbf{Phase Relation} & In-phase with applied electric field $\mathbf{E}(t)$ & Leads applied electric field $\mathbf{E}(t)$ by $90^\circ$ ($\pi/2\,\text{rad}$) \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison between Conduction and Displacement Current.}
+\label{tab:conduction-vs-displacement}
+\end{table}
+
+% ==============================================================================
+% SECTION 1.5: MAXWELL'S EQUATIONS
+% ==============================================================================
+\section{Maxwell's Equations in Differential \& Integral Forms}
+
+Maxwell's equations represent the complete governing set of classical electrodynamics. They encapsulate electrostatics, magnetostatics, induction, and wave radiation into four concise equations.
+
+\subsection{Master Table of Maxwell's Equations}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Law / Designation} & \textbf{Differential Form} & \textbf{Integral Form} & \textbf{Fundamental Physical Interpretation} \\
+\midrule
+\textbf{Gauss's Law for $\mathbf{E}$} & $\nabla \cdot \mathbf{D} = \rho_v$ & $\oiint_S \mathbf{D} \cdot d\mathbf{S} = Q_{\text{encl}}$ & Electric flux originates on positive charges and terminates on negative charges; isolated monopoles exist. \\
+\textbf{Gauss's Law for $\mathbf{B}$} & $\nabla \cdot \mathbf{B} = 0$ & $\oiint_S \mathbf{B} \cdot d\mathbf{S} = 0$ & Magnetic flux lines are continuous, closed loops; no isolated magnetic monopoles exist in nature. \\
+\textbf{Faraday's Law} & $\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$ & $\oint_C \mathbf{E} \cdot d\mathbf{l} = -\frac{d\Phi_B}{dt}$ & A time-varying magnetic field induces an electromotive force (circulating non-conservative electric field). \\
+\textbf{Ampère-Maxwell Law} & $\nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t}$ & $\oint_C \mathbf{H} \cdot d\mathbf{l} = I_c + \iint_S \frac{\partial \mathbf{D}}{\partial t} \cdot d\mathbf{S}$ & Magnetic fields are produced both by electric currents ($\mathbf{J}$) and by time-varying electric fields ($\partial \mathbf{D}/\partial t$). \\
+\bottomrule
+\end{tabularx}
+\caption{Maxwell's Equations in General Material Media.}
+\label{tab:maxwell-master}
+\end{table}
+
+\subsection{Constitutive Relations in Linear, Isotropic, Homogeneous (LIH) Media}
+In material media, Maxwell's field vectors are coupled through empirical \textbf{constitutive relations}:
+\begin{align}
+    \mathbf{D} &= \varepsilon \mathbf{E} = \varepsilon_0 \varepsilon_r \mathbf{E} = \varepsilon_0 \mathbf{E} + \mathbf{P} \\
+    \mathbf{B} &= \mu \mathbf{H} = \mu_0 \mu_r \mathbf{H} = \mu_0(\mathbf{H} + \mathbf{M}) \\
+    \mathbf{J} &= \sigma \mathbf{E} \quad \text{(Point form of Ohm's law)}
+\end{align}
+where $\varepsilon_0 \approx 8.854 \times 10^{-12}\,\si{F/m}$ is the permittivity of free space, $\mu_0 = 4\pi \times 10^{-7}\,\si{H/m}$ is the permeability of free space, $\mathbf{P}$ is electric polarization ($\si{C/m^2}$), and $\mathbf{M}$ is magnetization ($\si{A/m}$).
+
+\subsection{Maxwell's Equations in Source-Free Vacuum}
+In free space devoid of electric charges ($\rho_v = 0$) and conduction currents ($\mathbf{J} = \mathbf{0}$), with $\mathbf{D} = \varepsilon_0 \mathbf{E}$ and $\mathbf{B} = \mu_0 \mathbf{H}$:
+\begin{align}
+    \nabla \cdot \mathbf{E} &= 0 \\
+    \nabla \cdot \mathbf{H} &= 0 \\
+    \nabla \times \mathbf{E} &= -\mu_0 \frac{\partial \mathbf{H}}{\partial t} \\
+    \nabla \times \mathbf{H} &= \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\end{align}
+Notice the extraordinary symmetry: time variations in $\mathbf{H}$ generate $\mathbf{E}$ (Faraday), and time variations in $\mathbf{E}$ generate $\mathbf{H}$ (Maxwell). This mutual regeneration underpins self-sustaining wave propagation!
+
+\subsection{Electromagnetic Boundary Conditions}
+When electromagnetic waves cross an interface between two distinct media (Medium 1 and Medium 2), Maxwell's equations impose four boundary conditions:
+\begin{enumerate}
+    \item \textbf{Normal Component of \texorpdfstring{$\mathbf{D}$}{D}}:
+    \begin{equation}
+        D_{1n} - D_{2n} = \rho_s \iff \hat{\mathbf{n}}_{12} \cdot (\mathbf{D}_1 - \mathbf{D}_2) = \rho_s
+    \end{equation}
+    If the interface is free of surface charge ($\rho_s = 0$), $D_{1n} = D_{2n} \implies \varepsilon_1 E_{1n} = \varepsilon_2 E_{2n}$.
+    \item \textbf{Normal Component of \texorpdfstring{$\mathbf{B}$}{B}}:
+    \begin{equation}
+        B_{1n} - B_{2n} = 0 \iff \hat{\mathbf{n}}_{12} \cdot (\mathbf{B}_1 - \mathbf{B}_2) = 0 \implies B_{1n} = B_{2n}
+    \end{equation}
+    The normal component of magnetic flux density is \textbf{always continuous}.
+    \item \textbf{Tangential Component of \texorpdfstring{$\mathbf{E}$}{E}}:
+    \begin{equation}
+        E_{1t} - E_{2t} = 0 \iff \hat{\mathbf{n}}_{12} \times (\mathbf{E}_1 - \mathbf{E}_2) = \mathbf{0} \implies E_{1t} = E_{2t}
+    \end{equation}
+    The tangential component of the electric field is \textbf{always continuous}.
+    \item \textbf{Tangential Component of \texorpdfstring{$\mathbf{H}$}{H}}:
+    \begin{equation}
+        H_{1t} - H_{2t} = K_s \iff \hat{\mathbf{n}}_{12} \times (\mathbf{H}_1 - \mathbf{H}_2) = \mathbf{K}_s
+    \end{equation}
+    For non-conducting media where surface current density $\mathbf{K}_s = \mathbf{0}$, $H_{1t} = H_{2t}$.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 1.6: ELECTROMAGNETIC WAVE PROPAGATION
+% ==============================================================================
+\section{Electromagnetic Wave Propagation in Media}
+
+\subsection{Derivation of the Electromagnetic Wave Equation in Free Space}
+We now prove that Maxwell's equations predict electromagnetic radiation propagating as waves. Take the curl of Faraday's Law (Equation 1.33):
+\begin{equation}
+    \nabla \times (\nabla \times \mathbf{E}) = \nabla \times \left( -\mu_0 \frac{\partial \mathbf{H}}{\partial t} \right) = -\mu_0 \frac{\partial}{\partial t}(\nabla \times \mathbf{H})
+\end{equation}
+Substitute the Ampère-Maxwell law (Equation 1.34) $\nabla \times \mathbf{H} = \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}$:
+\begin{equation}
+    \nabla \times (\nabla \times \mathbf{E}) = -\mu_0 \frac{\partial}{\partial t}\left( \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t} \right) = -\mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}
+\end{equation}
+Now, apply the vector identity (1.10) to the left side:
+\begin{equation}
+    \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E} = -\mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}
+\end{equation}
+Since free space is charge-free ($\rho_v = 0$), Gauss's law gives $\nabla \cdot \mathbf{E} = 0$. Hence, the first term vanishes identically:
+
+\begin{keyequation}[3D Electromagnetic Wave Equations]
+\begin{align}
+    \nabla^2 \mathbf{E} &= \mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2} \\
+    \nabla^2 \mathbf{H} &= \mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{H}}{\partial t^2}
+\end{align}
+\end{keyequation}
+For general lossless non-conducting linear media, $\mu_0 \varepsilon_0$ is replaced by $\mu \varepsilon$.
+
+\subsection{Velocity of Propagation and the Speed of Light}
+Comparing Equation (1.42) with the standard 3D classical wave equation for a disturbance $\psi$ propagating with velocity $v$:
+\begin{equation}
+    \nabla^2 \psi = \frac{1}{v^2} \frac{\partial^2 \psi}{\partial t^2}
+\end{equation}
+We immediately obtain:
+\begin{equation}
+    \frac{1}{v^2} = \mu \varepsilon \implies v = \frac{1}{\sqrt{\mu \varepsilon}}
+\end{equation}
+In free space vacuum, $v = c$:
+\begin{equation}
+    c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} = \frac{1}{\sqrt{(4\pi \times 10^{-7}\,\si{H/m})(8.854 \times 10^{-12}\,\si{F/m})}} \approx 2.9979 \times 10^8\,\si{m/s}
+\end{equation}
+This profound triumph of 19th-century physics proved conclusively that \textbf{light is an electromagnetic wave}.
+
+In a material dielectric medium, the phase velocity is reduced:
+\begin{equation}
+    v = \frac{c}{\sqrt{\mu_r \varepsilon_r}} = \frac{c}{n} \implies n = \sqrt{\mu_r \varepsilon_r} \approx \sqrt{\varepsilon_r} \quad (\text{since } \mu_r \approx 1 \text{ for non-magnetic dielectrics})
+\end{equation}
+where $n$ is the optical refractive index of the medium (Maxwell's relation).
+
+\subsection{Transverse Nature of Electromagnetic Waves}
+Consider a uniform plane wave propagating along the $+z$ direction:
+\begin{equation}
+    \mathbf{E}(z, t) = \mathbf{E}_0 e^{i(kz - \omega t)}, \quad \mathbf{H}(z, t) = \mathbf{H}_0 e^{i(kz - \omega t)}
+\end{equation}
+where $k = \frac{\omega}{v} = \frac{2\pi}{\lambda}$ is the wave number and $\omega = 2\pi f$ is angular frequency.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1, x={(0.85cm,-0.2cm)}, y={(0.5cm,0.45cm)}, z={(0cm,0.9cm)}]
+    % Axes
+    \draw[->, thick, branddark] (0,0,0) -- (6.5,0,0) node[right] {$z$ (Propagation direction $\mathbf{k}$)};
+    \draw[->, thick, branddark] (0,0,0) -- (0,3.0,0) node[above right] {$y$ ($\mathbf{H}$ Field)};
+    \draw[->, thick, branddark] (0,0,0) -- (0,0,2.5) node[above] {$x$ ($\mathbf{E}$ Field)};
+    
+    % E-field (along x-axis, i.e., vertical in z-projection)
+    \draw[thick, brandblue, domain=0:6.0, samples=60] plot (\x, {0}, {1.8*sin(\x*180/1.5)});
+    
+    % H-field (along y-axis)
+    \draw[thick, brandaccent, domain=0:6.0, samples=60] plot (\x, {1.8*sin(\x*180/1.5)}, {0});
+    
+    % Field vectors at selected points
+    \foreach \x in {0.75, 2.25, 3.75, 5.25} {
+        \draw[->, thick, brandblue] (\x,0,0) -- (\x, 0, {1.8*sin(\x*180/1.5)});
+        \draw[->, thick, brandaccent] (\x,0,0) -- (\x, {1.8*sin(\x*180/1.5)}, 0);
+    }
+    
+    % Labels
+    \node[brandblue, font=\bfseries] at (0.75, 0, 2.1) {$\mathbf{E}$};
+    \node[brandaccent, font=\bfseries] at (0.75, 2.1, 0) {$\mathbf{H}$};
+\end{tikzpicture}
+\caption{Spatial structure of a linearly polarized transverse electromagnetic (TEM) wave.}
+\label{fig:tem-wave}
+\end{figure}
+
+Applying Gauss's law $\nabla \cdot \mathbf{E} = 0$:
+\begin{equation}
+    \frac{\partial E_x}{\partial x} + \frac{\partial E_y}{\partial y} + \frac{\partial E_z}{\partial z} = 0
+\end{equation}
+For a uniform wave independent of $x$ and $y$, $\frac{\partial E_z}{\partial z} = 0 \implies i k E_z = 0 \implies E_z = 0$. Similarly, $\nabla \cdot \mathbf{H} = 0 \implies H_z = 0$.
+
+Thus, \textbf{neither the electric nor the magnetic field has any longitudinal component along the direction of propagation}. Both vectors oscillate exclusively in the transverse plane perpendicular to $\mathbf{k}$.
+
+\subsection{Intrinsic Wave Impedance (\texorpdfstring{$\eta$}{eta})}
+Applying Faraday's law $\nabla \times \mathbf{E} = -\mu \frac{\partial \mathbf{H}}{\partial t}$ to a wave with $\mathbf{E} = E_x(z,t)\hat{\mathbf{i}}$:
+\begin{equation}
+    \frac{\partial E_x}{\partial z}\hat{\mathbf{j}} = -\mu \frac{\partial H_y}{\partial t}\hat{\mathbf{j}} \implies i k E_0 = \mu (i\omega) H_0 \implies \frac{E_0}{H_0} = \frac{\omega\mu}{k} = \frac{\omega\mu}{\omega\sqrt{\mu\varepsilon}} = \sqrt{\frac{\mu}{\varepsilon}}
+\end{equation}
+
+\begin{definition}[Intrinsic Wave Impedance]
+The ratio of the electric field amplitude to the magnetic field amplitude in a medium is the \textbf{intrinsic wave impedance} $\eta$:
+\begin{equation}
+    \eta = \frac{E_0}{H_0} = \sqrt{\frac{\mu}{\varepsilon}} \quad [\si{\Omega}]
+\end{equation}
+For free space vacuum:
+\begin{equation}
+    \eta_0 = \sqrt{\frac{\mu_0}{\varepsilon_0}} = \sqrt{\frac{4\pi \times 10^{-7}}{8.854 \times 10^{-12}}} = 120\pi \approx 376.73\,\Omega \approx 377\,\Omega
+\end{equation}
+\end{definition}
+
+\subsection{Wave Propagation in Lossy Conducting Media \& Skin Depth}
+In a linear, isotropic conducting medium with non-zero conductivity $\sigma > 0$, Maxwell's curl equations include both conduction and displacement currents:
+\begin{align}
+    \nabla \times \mathbf{E} &= -\mu \frac{\partial \mathbf{H}}{\partial t} \\
+    \nabla \times \mathbf{H} &= \sigma \mathbf{E} + \varepsilon \frac{\partial \mathbf{E}}{\partial t}
+\end{align}
+Taking the curl of Equation (1.52) and substituting Equation (1.53) yields the \textbf{telegrapher's wave equation}:
+\begin{equation}
+    \nabla^2 \mathbf{E} = \mu \varepsilon \frac{\partial^2 \mathbf{E}}{\partial t^2} + \mu \sigma \frac{\partial \mathbf{E}}{\partial t}
+\end{equation}
+For harmonic time dependence $\mathbf{E}(z,t) = \mathbf{E}_0 e^{-\gamma z} e^{i\omega t}$, this reduces to:
+\begin{equation}
+    \frac{d^2 \mathbf{E}}{dz^2} = \gamma^2 \mathbf{E}
+\end{equation}
+where $\gamma$ is the \textbf{complex propagation constant}:
+\begin{equation}
+    \gamma = \alpha + i\beta = \sqrt{i\omega\mu(\sigma + i\omega\varepsilon)} = i\omega\sqrt{\mu\varepsilon}\sqrt{1 - i\frac{\sigma}{\omega\varepsilon}}
+\end{equation}
+Here:
+\begin{itemize}
+    \item $\alpha$ is the \textbf{attenuation constant} ($\si{Np/m}$), governing spatial decay.
+    \item $\beta$ is the \textbf{phase constant} ($\si{rad/m}$), governing wave oscillation.
+    \item $\frac{\sigma}{\omega\varepsilon} = \tan\theta$ is the \textbf{loss tangent} of the medium.
+\end{itemize}
+
+\subsubsection{Good Conductors (\texorpdfstring{$\sigma \gg \omega \varepsilon$}{sigma >> omega epsilon})}
+When conduction current overwhelmingly dominates displacement current ($\sigma / (\omega\varepsilon) \gg 1$):
+\begin{equation}
+    \gamma \approx \sqrt{i\omega\mu\sigma} = \sqrt{\omega\mu\sigma} \left(\frac{1 + i}{\sqrt{2}}\right) = \sqrt{\frac{\omega\mu\sigma}{2}} + i\sqrt{\frac{\omega\mu\sigma}{2}}
+\end{equation}
+Thus, the attenuation and phase constants are equal:
+\begin{equation}
+    \alpha = \beta = \sqrt{\frac{\omega \mu \sigma}{2}} = \sqrt{\pi f \mu \sigma}
+\end{equation}
+
+\begin{definition}[Skin Depth / Depth of Penetration]
+The \textbf{skin depth} $\delta$ is the depth into a conducting material at which the amplitude of the electromagnetic field decays to $1/e$ ($\approx 36.8\%$) of its surface value:
+\begin{equation}
+    \delta = \frac{1}{\alpha} = \sqrt{\frac{2}{\omega \mu \sigma}} = \frac{1}{\sqrt{\pi f \mu \sigma}} \quad [\si{m}]
+\end{equation}
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Axes
+    \draw[->, thick, branddark] (0,0) -- (6.5,0) node[right] {Depth into Conductor $z$};
+    \draw[->, thick, branddark] (0,0) -- (0,3.2) node[above] {Field Amplitude $E(z)$};
+    
+    % Decay curve
+    \draw[ultra thick, brandblue, domain=0:6.0, samples=50] plot (\x, {2.8*exp(-\x/1.5)});
+    
+    % Surface boundary
+    \draw[ultra thick, brandnavy] (0,0) -- (0,3.0);
+    \node[left, brandnavy, font=\bfseries] at (0,2.8) {$E_0$ (Surface)};
+    
+    % 1/e level (z = delta = 1.5)
+    \draw[dashed, brandaccent] (1.5,0) -- (1.5, {2.8*exp(-1)}) -- (0, {2.8*exp(-1)});
+    \node[left, brandaccent, font=\small] at (0, {2.8*exp(-1)}) {$E_0/e \approx 0.368 E_0$};
+    \node[below, brandaccent, font=\bfseries] at (1.5,0) {$\delta = 1/\alpha$};
+    
+    % 1% level (z = 4.6 delta = 4.6*1.5 = 6.9)
+    \draw[dashed, brandslate] (4.5,0) -- (4.5, {2.8*exp(-3)}) -- (0, {2.8*exp(-3)});
+    \node[below, brandslate, font=\small] at (4.5,0) {$z \approx 4.6\delta$ ($1\% E_0$)};
+\end{tikzpicture}
+\caption{Exponential decay of electromagnetic field amplitude inside a good conductor.}
+\label{fig:skin-depth}
+\end{figure}
+
+% ==============================================================================
+% SECTION 1.7: POYNTING THEOREM
+% ==============================================================================
+\section{Poynting Theorem \& Electromagnetic Energy Transport}
+
+\subsection{The Poynting Vector}
+Electromagnetic waves carry both energy and linear momentum through space. The directional energy flux density is described by the Poynting vector, formulated by John Henry Poynting in 1884.
+
+\begin{definition}[Poynting Vector]
+The instantaneous energy flow per unit area per unit time (power density) carried by an electromagnetic field is defined as:
+\begin{equation}
+    \mathbf{S} = \mathbf{E} \times \mathbf{H} \quad \left[\si{\frac{W}{m^2}}\right]
+\end{equation}
+The vector $\mathbf{S}$ points in the direction of wave propagation ($\mathbf{E} \perp \mathbf{H} \implies \mathbf{S} \parallel \hat{\mathbf{k}}$).
+\end{definition}
+
+\subsection{Mathematical Derivation of Poynting's Theorem}
+Consider the vector identity for the divergence of a cross product (Identity 1.11):
+\begin{equation}
+    \nabla \cdot (\mathbf{E} \times \mathbf{H}) = \mathbf{H} \cdot (\nabla \times \mathbf{E}) - \mathbf{E} \cdot (\nabla \times \mathbf{H})
+\end{equation}
+Substitute Faraday's law $\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$ and the Ampère-Maxwell law $\nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t}$:
+\begin{equation}
+    \nabla \cdot (\mathbf{E} \times \mathbf{H}) = \mathbf{H} \cdot \left( -\frac{\partial \mathbf{B}}{\partial t} \right) - \mathbf{E} \cdot \left( \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t} \right) = -\mathbf{H} \cdot \frac{\partial \mathbf{B}}{\partial t} - \mathbf{E} \cdot \frac{\partial \mathbf{D}}{\partial t} - \mathbf{E} \cdot \mathbf{J}
+\end{equation}
+For linear, non-dispersive media ($\mathbf{D} = \varepsilon \mathbf{E}$ and $\mathbf{B} = \mu \mathbf{H}$):
+\begin{align}
+    \mathbf{E} \cdot \frac{\partial \mathbf{D}}{\partial t} &= \mathbf{E} \cdot \left( \varepsilon \frac{\partial \mathbf{E}}{\partial t} \right) = \frac{\partial}{\partial t}\left( \frac{1}{2} \varepsilon E^2 \right) \\
+    \mathbf{H} \cdot \frac{\partial \mathbf{B}}{\partial t} &= \mathbf{H} \cdot \left( \mu \frac{\partial \mathbf{H}}{\partial t} \right) = \frac{\partial}{\partial t}\left( \frac{1}{2} \mu H^2 \right)
+\end{align}
+Defining the total electromagnetic energy density $u_{\text{em}}$:
+\begin{equation}
+    u_{\text{em}} = u_e + u_m = \frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2 \quad \left[\si{\frac{J}{m^3}}\right]
+\end{equation}
+We obtain the \textbf{differential form of Poynting's Theorem}:
+\begin{equation}
+    \nabla \cdot \mathbf{S} = -\frac{\partial u_{\text{em}}}{\partial t} - \mathbf{J} \cdot \mathbf{E} \iff -\nabla \cdot \mathbf{S} = \frac{\partial u_{\text{em}}}{\partial t} + \mathbf{J} \cdot \mathbf{E}
+\end{equation}
+Integrating Equation (1.66) over a finite volume $V$ bounded by closed surface $S$ and applying the Divergence Theorem:
+
+\begin{keyequation}[Poynting's Theorem (Integral Form)]
+\begin{equation}
+    -\oiint_S \mathbf{S} \cdot d\mathbf{S} = \frac{\partial}{\partial t} \iiint_V \left( \frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2 \right) dV + \iiint_V (\mathbf{J} \cdot \mathbf{E})\, dV
+\end{equation}
+\textbf{Physical Meaning:}
+\begin{enumerate}
+    \item $-\oiint_S \mathbf{S} \cdot d\mathbf{S}$: Total electromagnetic power flowing \textbf{into} volume $V$ across boundary $S$.
+    \item $\frac{\partial}{\partial t}\iiint_V u_{\text{em}}\,dV$: Time rate of increase of energy stored in the electric and magnetic fields within $V$.
+    \item $\iiint_V (\mathbf{J} \cdot \mathbf{E})\,dV$: Rate of work done on charges (Ohmic Joule heating dissipation $\sigma E^2$).
+\end{enumerate}
+\end{keyequation}
+
+\subsection{Time-Averaged Poynting Vector for Harmonic Plane Waves}
+For sinusoidal fields $\mathbf{E}(\mathbf{r},t) = \text{Re}\{\mathbf{E}_0 e^{i(\mathbf{k}\cdot\mathbf{r} - \omega t)}\}$ and $\mathbf{H}(\mathbf{r},t) = \text{Re}\{\mathbf{H}_0 e^{i(\mathbf{k}\cdot\mathbf{r} - \omega t)}\}$, the time-average of the Poynting vector over a complete cycle $T = 2\pi/\omega$ is:
+\begin{equation}
+    \langle \mathbf{S} \rangle = \frac{1}{T}\int_0^T \mathbf{S}(t)\, dt = \frac{1}{2}\text{Re}(\mathbf{E}_0 \times \mathbf{H}_0^*)
+\end{equation}
+For a uniform plane wave in free space where $E_0 = \eta_0 H_0$:
+\begin{equation}
+    \langle S \rangle = \frac{1}{2} E_0 H_0 = \frac{E_0^2}{2\eta_0} = \frac{1}{2} \eta_0 H_0^2 = c u_{\text{avg}} \quad \left[\si{\frac{W}{m^2}}\right]
+\end{equation}
+where $u_{\text{avg}} = \frac{1}{2}\varepsilon_0 E_{\text{rms}}^2 + \frac{1}{2}\mu_0 H_{\text{rms}}^2 = \frac{1}{2}\varepsilon_0 E_0^2$.
+
+\subsection{Radiation Pressure and Momentum of Electromagnetic Waves}
+Because electromagnetic fields transport energy, they also carry linear momentum density $\mathbf{p}_{\text{em}}$:
+\begin{equation}
+    \mathbf{p}_{\text{em}} = \frac{\mathbf{S}}{c^2} \quad \left[\si{\frac{N\cdot s}{m^3}}\right]
+\end{equation}
+When an electromagnetic wave strikes a material surface, the transfer of momentum exerts a mechanical \textbf{radiation pressure} $P_{\text{rad}}$:
+\begin{itemize}
+    \item \textbf{Total Absorption (Black Surface)}:
+    \begin{equation}
+        P_{\text{rad}} = \frac{\langle S \rangle}{c} = u_{\text{avg}} \quad \left[\si{\frac{N}{m^2}} \text{ or } \si{Pa}\right]
+    \end{equation}
+    \item \textbf{Total Reflection (Perfect Mirror at normal incidence)}:
+    \begin{equation}
+        P_{\text{rad}} = \frac{2\langle S \rangle}{c} = 2 u_{\text{avg}}
+    \end{equation}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 1.8: QUICK REVISION
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Electromagnetic Theory Formula Cheat Sheet]
+\begin{itemize}
+    \item \textbf{Continuity Equation}: $\nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t}$, \quad Charge relaxation: $\tau_r = \frac{\varepsilon}{\sigma}$
+    \item \textbf{Displacement Current Density}: $\mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \varepsilon \frac{\partial \mathbf{E}}{\partial t}$
+    \item \textbf{Maxwell's Equations (Differential)}:
+    \begin{equation*}
+        \nabla \cdot \mathbf{D} = \rho_v, \quad \nabla \cdot \mathbf{B} = 0, \quad \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}, \quad \nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t}
+    \end{equation*}
+    \item \textbf{Speed of Light in Vacuum}: $c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} \approx 3.0 \times 10^8\,\si{m/s}$
+    \item \textbf{Wave Velocity in Medium}: $v = \frac{c}{\sqrt{\mu_r \varepsilon_r}} = \frac{c}{n}$
+    \item \textbf{Intrinsic Wave Impedance}: $\eta = \sqrt{\frac{\mu}{\varepsilon}}$, \quad Free space: $\eta_0 = \sqrt{\frac{\mu_0}{\varepsilon_0}} = 120\pi \approx 377\,\Omega$
+    \item \textbf{Propagation in Conductors}: $\alpha = \beta = \sqrt{\pi f \mu \sigma}$, \quad Skin depth: $\delta = \frac{1}{\sqrt{\pi f \mu \sigma}}$
+    \item \textbf{Poynting Vector}: $\mathbf{S} = \mathbf{E} \times \mathbf{H}$, \quad Time-Average: $\langle S \rangle = \frac{E_0^2}{2\eta}$
+    \item \textbf{Energy Density}: $u = \frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2$, \quad Radiation Pressure: $P_{\text{rad}} = \frac{\langle S \rangle}{c} \text{ (abs)}, \; \frac{2\langle S \rangle}{c} \text{ (refl)}$
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 1.9: WORKED NUMERICAL EXAMPLES
+% ==============================================================================
+\section{Worked Numerical Examples}
+
+\begin{example}[Displacement Current in a Parallel-Plate Capacitor]
+A circular parallel-plate capacitor with plate radius $r = 6.0\,\si{cm}$ and plate separation $d = 1.5\,\si{mm}$ is filled with Teflon ($\varepsilon_r = 2.1$). A sinusoidal voltage $V(t) = 200 \sin(100\pi t)\,\si{V}$ is applied across the plates. Calculate:
+\begin{enumerate}
+    \item The displacement current density $J_d(t)$.
+    \item The peak total displacement current $I_{d,\text{peak}}$.
+    \item The peak magnetic field intensity $H_{\text{peak}}$ induced at a radial distance $r = 3.0\,\si{cm}$ from the plate axis.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Displacement Current Density $J_d(t)$}:\\
+    The electric field between the plates is uniform:
+    \begin{equation*}
+        E(t) = \frac{V(t)}{d} = \frac{200}{1.5 \times 10^{-3}} \sin(100\pi t) = 1.333 \times 10^5 \sin(100\pi t)\,\si{V/m}
+    \end{equation*}
+    The displacement current density is:
+    \begin{align*}
+        J_d(t) &= \varepsilon_0 \varepsilon_r \frac{\partial E}{\partial t} = (8.854 \times 10^{-12})(2.1)(1.333 \times 10^5)(100\pi) \cos(100\pi t) \\
+        &= (2.479 \times 10^{-6})(314.16) \cos(100\pi t) \approx 7.79 \times 10^{-4} \cos(100\pi t)\,\si{A/m^2} \\
+        &= 0.779 \cos(100\pi t)\,\si{mA/m^2}
+    \end{align*}
+    
+    \item \textbf{Peak Total Displacement Current $I_{d,\text{peak}}$}:\\
+    Plate area $A = \pi r^2 = \pi (0.06\,\si{m})^2 = 1.131 \times 10^{-2}\,\si{m^2}$.
+    \begin{equation*}
+        I_{d,\text{peak}} = J_{d,\text{peak}} \times A = (7.788 \times 10^{-4}\,\si{A/m^2})(1.131 \times 10^{-2}\,\si{m^2}) \approx 8.81 \times 10^{-6}\,\si{A} = 8.81\,\si{\mu A}
+    \end{equation*}
+    
+    \item \textbf{Peak Induced Magnetic Field at $r_0 = 3.0\,\si{cm}$}:\\
+    Applying Ampère-Maxwell's law along a circular loop of radius $r_0 = 0.03\,\si{m}$:
+    \begin{equation*}
+        \oint H \cdot dl = H(2\pi r_0) = J_{d,\text{peak}} (\pi r_0^2) \implies H_{\text{peak}} = \frac{J_{d,\text{peak}} r_0}{2}
+    \end{equation*}
+    \begin{equation*}
+        H_{\text{peak}} = \frac{(7.788 \times 10^{-4}\,\si{A/m^2})(0.03\,\si{m})}{2} \approx 1.17 \times 10^{-5}\,\si{A/m}
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Complete Plane EM Wave Characterization]
+A uniform plane electromagnetic wave propagating in a non-magnetic lossless dielectric medium ($\mu_r = 1, \varepsilon_r = 4.0$) in the $+z$ direction has an electric field:
+\begin{equation*}
+    \mathbf{E}(z, t) = 120 \cos(6\pi \times 10^8 t - \beta z)\hat{\mathbf{a}}_x\,\si{V/m}
+\end{equation*}
+Find:
+\begin{enumerate}
+    \item The phase velocity $v$, phase constant $\beta$, and wavelength $\lambda$.
+    \item The intrinsic impedance of the medium $\eta$.
+    \item The magnetic field expression $\mathbf{H}(z, t)$.
+    \item The time-averaged Poynting vector $\langle \mathbf{S} \rangle$ and total average energy density $u_{\text{avg}}$.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Velocity, Phase Constant, and Wavelength}:
+    \begin{align*}
+        v &= \frac{c}{\sqrt{\varepsilon_r}} = \frac{3.0 \times 10^8\,\si{m/s}}{\sqrt{4.0}} = 1.50 \times 10^8\,\si{m/s} \\
+        \omega &= 6\pi \times 10^8\,\si{rad/s} \implies \beta = \frac{\omega}{v} = \frac{6\pi \times 10^8}{1.50 \times 10^8} = 4\pi \approx 12.57\,\si{rad/m} \\
+        \lambda &= \frac{2\pi}{\beta} = \frac{2\pi}{4\pi} = 0.50\,\si{m}
+    \end{align*}
+    
+    \item \textbf{Intrinsic Impedance $\eta$}:
+    \begin{equation*}
+        \eta = \sqrt{\frac{\mu_0}{\varepsilon_0 \varepsilon_r}} = \frac{\eta_0}{\sqrt{\varepsilon_r}} = \frac{377\,\Omega}{\sqrt{4}} = 188.5\,\Omega
+    \end{equation*}
+    
+    \item \textbf{Magnetic Field $\mathbf{H}(z, t)$}:\\
+    Since the wave travels in $+z$ with $\mathbf{E} \parallel \hat{\mathbf{a}}_x$, the magnetic field is oriented along $+\hat{\mathbf{a}}_y$:
+    \begin{align*}
+        H_0 &= \frac{E_0}{\eta} = \frac{120\,\si{V/m}}{188.5\,\Omega} \approx 0.637\,\si{A/m} \\
+        \mathbf{H}(z, t) &= 0.637 \cos(6\pi \times 10^8 t - 4\pi z)\hat{\mathbf{a}}_y\,\si{A/m}
+    \end{align*}
+    
+    \item \textbf{Poynting Flux and Average Energy Density}:
+    \begin{align*}
+        \langle \mathbf{S} \rangle &= \frac{1}{2} E_0 H_0 \hat{\mathbf{a}}_z = \frac{1}{2}(120)(0.637)\hat{\mathbf{a}}_z \approx 38.22 \hat{\mathbf{a}}_z\,\si{W/m^2} \\
+        u_{\text{avg}} &= \frac{\langle S \rangle}{v} = \frac{38.22\,\si{W/m^2}}{1.50 \times 10^8\,\si{m/s}} \approx 2.55 \times 10^{-7}\,\si{J/m^3}
+    \end{align*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Radiation Pressure on a Solar Sail Spacecraft]
+The solar irradiance (Poynting flux) at Earth's orbit outside the atmosphere is $S = 1360\,\si{W/m^2}$. A solar sail spacecraft deploys a flat, highly reflective aluminum sail of area $A = 500\,\si{m^2}$ (reflectivity $R = 95\%$).
+\begin{enumerate}
+    \item Calculate the total radiation pressure exerted on the sail at normal incidence.
+    \item Calculate the total propulsion force exerted on the spacecraft.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Radiation Pressure}:\\
+    For a surface with reflection coefficient $R$, the absorbed fraction $(1-R)$ delivers momentum flux $S/c$, while the reflected fraction $R$ delivers $2S/c$:
+    \begin{align*}
+        P_{\text{rad}} &= (1-R)\frac{S}{c} + R\left(\frac{2S}{c}\right) = (1+R)\frac{S}{c} \\
+        &= (1 + 0.95) \frac{1360\,\si{W/m^2}}{3.0 \times 10^8\,\si{m/s}} = (1.95)(4.533 \times 10^{-6}) \approx 8.84 \times 10^{-6}\,\si{N/m^2} = 8.84\,\si{\mu Pa}
+    \end{align*}
+    
+    \item \textbf{Total Mechanical Force}:
+    \begin{equation*}
+        F_{\text{rad}} = P_{\text{rad}} \times A = (8.84 \times 10^{-6}\,\si{N/m^2})(500\,\si{m^2}) \approx 4.42 \times 10^{-3}\,\si{N} = 4.42\,\si{mN}
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}[Skin Depth in Copper across Frequency Bands]
+Copper has conductivity $\sigma = 5.8 \times 10^7\,\si{S/m}$ and relative permeability $\mu_r = 1$. Calculate the skin depth $\delta$ of copper at:
+\begin{enumerate}
+    \item Industrial power line frequency: $f_1 = 50\,\si{Hz}$
+    \item Radio frequency: $f_2 = 1.0\,\si{MHz}$
+    \item Microwave radar frequency: $f_3 = 10.0\,\si{GHz}$
+\end{enumerate}
+
+\textbf{Solution:}
+Using the skin depth formula $\delta = \frac{1}{\sqrt{\pi f \mu_0 \sigma}}$:
+\begin{equation*}
+    \sqrt{\pi \mu_0 \sigma} = \sqrt{\pi (4\pi \times 10^{-7})(5.8 \times 10^7)} = \sqrt{2.2897 \times 10^2} \approx 15.132\,\si{s^{1/2}/m}
+\end{equation*}
+\begin{enumerate}
+    \item \textbf{At $50\,\si{Hz}$}:
+    \begin{equation*}
+        \delta_1 = \frac{1}{15.132 \sqrt{50}} = \frac{1}{(15.132)(7.071)} \approx 9.35 \times 10^{-3}\,\si{m} = 9.35\,\si{mm}
+    \end{equation*}
+    \item \textbf{At $1.0\,\si{MHz} = 10^6\,\si{Hz}$}:
+    \begin{equation*}
+        \delta_2 = \frac{1}{15.132 \times 10^3} \approx 6.61 \times 10^{-5}\,\si{m} = 66.1\,\si{\mu m}
+    \end{equation*}
+    \item \textbf{At $10.0\,\si{GHz} = 10^{10}\,\si{Hz}$}:
+    \begin{equation*}
+        \delta_3 = \frac{1}{15.132 \times 10^5} \approx 6.61 \times 10^{-7}\,\si{m} = 0.661\,\si{\mu m} = 661\,\si{nm}
+    \end{equation*}
+\end{enumerate}
+This clearly demonstrates why high-frequency RF currents are confined to microscopic surface layers, necessitating silver-plated waveguides and braided Litz wires.
+\end{example}
+
+\begin{example}[Verification of Poynting Theorem in a DC Resistor]
+A cylindrical carbon resistor of radius $a$, length $L$, and conductivity $\sigma$ carries a steady direct current $I$.
+\begin{enumerate}
+    \item Determine the electric field $\mathbf{E}$ and magnetic field $\mathbf{H}$ at the outer cylindrical surface of the resistor.
+    \item Calculate the Poynting vector $\mathbf{S}$ at the resistor surface and find the total power entering the resistor.
+    \item Verify that this power equals the Joule heat dissipated ($I^2 R$).
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Fields at the Surface}:\\
+    The electric field is longitudinal along the cylinder axis: $E = \frac{V}{L} = \frac{I}{\sigma (\pi a^2)}$.\\
+    By Ampère's law, the magnetic field at radius $r = a$ is azimuthal: $H = \frac{I}{2\pi a}$.
+    
+    \item \textbf{Poynting Vector Flow}:\\
+    Since $\mathbf{E}$ is axial ($\hat{\mathbf{z}}$) and $\mathbf{H}$ is azimuthal ($\hat{\boldsymbol{\phi}}$), the Poynting vector points radially \textbf{inward} into the resistor:
+    \begin{equation*}
+        \mathbf{S} = \mathbf{E} \times \mathbf{H} = E H (-\hat{\mathbf{r}}) = -\left( \frac{I}{\sigma \pi a^2} \right) \left( \frac{I}{2\pi a} \right)\hat{\mathbf{r}} = -\frac{I^2}{2\pi^2 \sigma a^3}\hat{\mathbf{r}}
+    \end{equation*}
+    The total power flowing in through the cylindrical surface area $A = 2\pi a L$ is:
+    \begin{equation*}
+        P_{\text{in}} = \iint S\, dA = \left( \frac{I^2}{2\pi^2 \sigma a^3} \right)(2\pi a L) = \frac{I^2 L}{\sigma \pi a^2}
+    \end{equation*}
+    
+    \item \textbf{Joule Dissipation Match}:\\
+    Since the electrical resistance is $R = \frac{L}{\sigma \pi a^2}$:
+    \begin{equation*}
+        P_{\text{in}} = I^2 R
+    \end{equation*}
+    This confirms that the energy dissipated as heat in a resistor does not travel down the copper wire internally; it flows through the surrounding electromagnetic field and enters the resistor through its outer surface!
+\end{enumerate}
+\end{example}
+
+\begin{example}[Submarine Radio Communication in Seawater]
+Seawater has conductivity $\sigma = 4.0\,\si{S/m}$ and $\varepsilon_r = 81$ (with $\mu_r = 1$). A submarine radio transmitter operates at very low frequency (VLF) $f = 25\,\si{kHz}$.
+\begin{enumerate}
+    \item Determine whether seawater behaves as a good conductor or a dielectric at this frequency.
+    \item Calculate the attenuation constant $\alpha$, phase velocity $v_p$, and skin depth $\delta$.
+    \item Find the depth at which the transmitted signal amplitude drops to $0.1\%$ ($-60\,\si{dB}$) of its surface value.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Loss Tangent Test}:
+    \begin{equation*}
+        \frac{\sigma}{\omega \varepsilon} = \frac{4.0}{(2\pi \times 25 \times 10^3)(81 \times 8.854 \times 10^{-12})} = \frac{4.0}{1.127 \times 10^{-4}} \approx 3.55 \times 10^4 \gg 1
+    \end{equation*}
+    Because $\frac{\sigma}{\omega\varepsilon} \gg 1$, seawater behaves as a \textbf{good conductor} at $25\,\si{kHz}$.
+    
+    \item \textbf{Attenuation, Velocity, and Skin Depth}:
+    \begin{align*}
+        \alpha &= \sqrt{\pi f \mu_0 \sigma} = \sqrt{\pi (25 \times 10^3)(4\pi \times 10^{-7})(4.0)} = \sqrt{0.3948} \approx 0.628\,\si{Np/m} \\
+        \delta &= \frac{1}{\alpha} = \frac{1}{0.628} \approx 1.59\,\si{m} \\
+        v_p &= \omega \delta = (2\pi \times 25 \times 10^3)(1.59) \approx 2.50 \times 10^5\,\si{m/s}
+    \end{align*}
+    
+    \item \textbf{Depth for $0.1\%$ Amplitude}:\\
+    We require $e^{-\alpha z} = 10^{-3} \implies -\alpha z = \ln(10^{-3}) = -6.908$:
+    \begin{equation*}
+        z = \frac{6.908}{\alpha} = 6.908 \times 1.59\,\si{m} \approx 11.0\,\si{m}
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+% ==============================================================================
+% SECTION 1.10: EXAM TIPS & COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Distinguishing Electric and Magnetic Energy Density in Exams]
+In any traveling electromagnetic plane wave in a lossless medium, energy is always partitioned equally between the electric and magnetic fields:
+\begin{equation*}
+    u_e = \frac{1}{2}\varepsilon E^2 = \frac{1}{2}\varepsilon (\eta H)^2 = \frac{1}{2}\varepsilon \left(\frac{\mu}{\varepsilon}\right) H^2 = \frac{1}{2}\mu H^2 = u_m
+\end{equation*}
+Hence, the total instantaneous energy density is simply $u = \varepsilon E^2 = \mu H^2$.
+\end{examtip}
+
+\begin{commonmistake}[Omitting the $1/2$ in Time-Averaged Poynting Vector]
+When calculating average power from peak field amplitudes $E_0$ and $H_0$, you \textbf{must} include the factor of $1/2$:
+\begin{equation*}
+    \langle S \rangle = \frac{1}{2} E_0 H_0 = \frac{E_0^2}{2\eta_0} \quad (\text{CORRECT})
+\end{equation*}
+Writing $\langle S \rangle = E_0 H_0$ is a frequent student error that overestimates power by $100\%$. If RMS values are given, then $S_{\text{avg}} = E_{\text{rms}} H_{\text{rms}} = \frac{E_{\text{rms}}^2}{\eta_0}$.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 1.11: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Conceptual \& Numerical Practice Problems]
+\textbf{A. Conceptual Review Questions}
+\begin{enumerate}
+    \item State Maxwell's four equations in differential form and explain why static Ampère's law fails for time-varying circuits.
+    \item Explain the physical significance of the Poynting vector. What is the direction of the Poynting vector inside a coaxial transmission cable?
+    \item Why are electromagnetic waves in free space strictly transverse in nature? Give a complete mathematical justification using Gauss's laws.
+    \item Define skin depth $\delta$. Why do microwave communication circuits use hollow silver-plated copper tubes rather than solid wires?
+    \item Explain why the dielectric relaxation time $\tau_r$ in metals is extremely small ($\approx 10^{-19}\,\si{s}$) while in insulators it can exceed several hours.
+\end{enumerate}
+
+\textbf{B. Numerical Exercises}
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item A parallel-plate air capacitor with square plates of side $10\,\si{cm}$ separated by $2.0\,\si{mm}$ is charged by a $50\,\si{Hz}$ sinusoidal voltage source $V(t) = 311 \sin(100\pi t)\,\si{V}$. Calculate the maximum displacement current $I_{d,\text{max}}$. \hfill [\textbf{Ans:} $4.33\,\si{\mu A}$]
+    \item An electromagnetic plane wave in free space has a peak magnetic field $H_0 = 1.5\,\si{A/m}$. Find the electric field amplitude $E_0$, the time-averaged Poynting flux $\langle S \rangle$, and the radiation pressure on a perfect absorber. \hfill [\textbf{Ans:} $565.5\,\si{V/m}$, $424.1\,\si{W/m^2}$, $1.41\,\si{\mu Pa}$]
+    \item A laser beam with average power $P = 150\,\si{mW}$ and beam diameter $d = 2.0\,\si{mm}$ propagates in air. Find the peak electric field $E_0$ and the radiation force exerted when normally incident on a total reflector. \hfill [\textbf{Ans:} $6.0 \times 10^3\,\si{V/m}$, $1.0 \times 10^{-9}\,\si{N}$]
+    \item Calculate the skin depth of aluminum ($\sigma = 3.5 \times 10^7\,\si{S/m}, \mu_r = 1$) at frequencies of $60\,\si{Hz}$ and $2.45\,\si{GHz}$ (microwave oven frequency). \hfill [\textbf{Ans:} $10.98\,\si{mm}$, $1.72\,\si{\mu m}$]
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 1.12: MCQS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}
+    \item The equation of continuity $\nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t}$ is a direct mathematical statement of:
+    \begin{enumerate}
+        \item Conservation of linear momentum
+        \item Conservation of energy
+        \item Local conservation of electric charge
+        \item Conservation of magnetic flux
+    \end{enumerate}
+    
+    \item In a source-free non-conducting dielectric medium, the ratio of electric to magnetic field amplitude ($E/H$) equals:
+    \begin{enumerate}
+        \item $\sqrt{\varepsilon/\mu}$
+        \item $\sqrt{\mu/\varepsilon}$
+        \item $\mu\varepsilon$
+        \item $1/\sqrt{\mu\varepsilon}$
+    \end{enumerate}
+    
+    \item The displacement current density is given by:
+    \begin{enumerate}
+        \item $\mathbf{J}_d = \sigma \mathbf{E}$
+        \item $\mathbf{J}_d = \varepsilon \frac{\partial \mathbf{E}}{\partial t}$
+        \item $\mathbf{J}_d = \mu \frac{\partial \mathbf{H}}{\partial t}$
+        \item $\mathbf{J}_d = \frac{1}{\varepsilon}\frac{\partial \mathbf{D}}{\partial t}$
+    \end{enumerate}
+    
+    \item Which of Maxwell's equations demonstrates that isolated magnetic charges (monopoles) do not exist?
+    \begin{enumerate}
+        \item $\nabla \cdot \mathbf{D} = \rho_v$
+        \item $\nabla \cdot \mathbf{B} = 0$
+        \item $\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$
+        \item $\nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial \mathbf{D}}{\partial t}$
+    \end{enumerate}
+    
+    \item In a good conductor, as the signal frequency $f$ increases by a factor of 100, the skin depth $\delta$:
+    \begin{enumerate}
+        \item Increases by 100 times
+        \item Decreases by 100 times
+        \item Decreases by 10 times
+        \item Remains unchanged
+    \end{enumerate}
+    
+    \item The dimension of the Poynting vector $\mathbf{S}$ is:
+    \begin{enumerate}
+        \item $\si{W/m}$
+        \item $\si{J/m^2}$
+        \item $\si{W/m^2}$
+        \item $\si{N/m}$
+    \end{enumerate}
+    
+    \item The phase difference between $\mathbf{E}$ and $\mathbf{H}$ in a good conductor is:
+    \begin{enumerate}
+        \item $0^\circ$ (in phase)
+        \item $45^\circ$ ($\pi/4\,\text{rad}$)
+        \item $90^\circ$ ($\pi/2\,\text{rad}$)
+        \item $180^\circ$ ($\pi\,\text{rad}$)
+    \end{enumerate}
+    
+    \item When an electromagnetic wave carrying average intensity $\langle S \rangle$ undergoes complete normal reflection at a flat mirror, the radiation pressure is:
+    \begin{enumerate}
+        \item $\langle S \rangle / c$
+        \item $2\langle S \rangle / c$
+        \item $\langle S \rangle / (2c)$
+        \item Zero
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[Answer Key to Chapter 1 MCQs]
+\textbf{1.} (c) Local conservation of electric charge \quad \textbar\quad
+\textbf{2.} (b) $\sqrt{\mu/\varepsilon}$ \quad \textbar\quad
+\textbf{3.} (b) $\varepsilon \frac{\partial \mathbf{E}}{\partial t}$ \quad \textbar\quad
+\textbf{4.} (b) $\nabla \cdot \mathbf{B} = 0$ \\
+\textbf{5.} (c) Decreases by 10 times ($\delta \propto 1/\sqrt{f}$) \quad \textbar\quad
+\textbf{6.} (c) $\si{W/m^2}$ \quad \textbar\quad
+\textbf{7.} (b) $45^\circ$ ($\mathbf{H}$ lags $\mathbf{E}$ by $\pi/4$) \quad \textbar\quad
+\textbf{8.} (b) $2\langle S \rangle / c$
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 1.13: CHAPTER TEST
+% ==============================================================================
+\section{Self-Assessment Chapter Test}
+
+\begin{chaptertest}[Comprehensive Chapter 1 Test (Time: 45 Minutes \textbullet\ Max Marks: 25)]
+\begin{enumerate}
+    \item \textbf{[5 Marks] Derivation}: Derive the continuity equation $\nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t}$ from first principles and prove that any excess charge placed inside a conductor decays exponentially with relaxation time $\tau_r = \varepsilon/\sigma$.
+    
+    \item \textbf{[7 Marks] Theory \& Derivation}:
+    \begin{enumerate}
+        \item Why was static Ampère's law inconsistent with time-varying fields? Explain Maxwell's modification in detail.
+        \item Show that during the charging of a circular parallel-plate capacitor, the displacement current in the dielectric gap equals the conduction current in the leads.
+    \end{enumerate}
+    
+    \item \textbf{[7 Marks] Wave Propagation}:
+    \begin{enumerate}
+        \item Starting from Maxwell's curl equations, derive the 3D electromagnetic wave equation for the electric field $\mathbf{E}$ in a charge-free dielectric medium.
+        \item An EM wave of frequency $f = 100\,\si{MHz}$ travels in a medium with $\mu_r = 1$ and $\varepsilon_r = 9.0$. If the peak electric field is $E_0 = 300\,\si{V/m}$, find velocity $v$, wavelength $\lambda$, impedance $\eta$, and average Poynting flux $\langle S \rangle$.
+    \end{enumerate}
+    
+    \item \textbf{[6 Marks] Poynting Theorem}: State and derive Poynting's theorem from Maxwell's equations. Give the physical interpretation of each term in both differential and integral forms.
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Detailed Solutions to Chapter Test]
+\textbf{Solution 1:}\\
+Let $Q = \iiint_V \rho_v dV$. Net outflow current is $I = \oiint_S \mathbf{J} \cdot d\mathbf{S} = -\frac{dQ}{dt} = -\iiint_V \frac{\partial \rho_v}{\partial t} dV$. Applying Divergence Theorem: $\iiint_V (\nabla \cdot \mathbf{J}) dV = -\iiint_V \frac{\partial \rho_v}{\partial t} dV \implies \nabla \cdot \mathbf{J} = -\frac{\partial \rho_v}{\partial t}$.\\
+In a conducting medium, $\mathbf{J} = \sigma \mathbf{E}$. By Gauss's Law, $\nabla \cdot \mathbf{E} = \rho_v / \varepsilon$, so $\nabla \cdot \mathbf{J} = \frac{\sigma}{\varepsilon} \rho_v$. Substituting into continuity gives $\frac{\partial \rho_v}{\partial t} + \frac{\sigma}{\varepsilon}\rho_v = 0$, whose solution is $\rho_v(t) = \rho_v(0) e^{-t/\tau_r}$ with $\tau_r = \varepsilon/\sigma$.
+
+\vspace{0.3cm}
+\textbf{Solution 2:}\\
+(a) Taking the divergence of static Ampère's law $\nabla \times \mathbf{H} = \mathbf{J}$ gives $\nabla \cdot (\nabla \times \mathbf{H}) \equiv 0 \implies \nabla \cdot \mathbf{J} = 0$, which contradicts continuity ($\nabla \cdot \mathbf{J} = -\partial \rho_v/\partial t$). Maxwell added $\mathbf{J}_d = \partial \mathbf{D}/\partial t$, giving $\nabla \cdot (\mathbf{J} + \mathbf{J}_d) = -\partial \rho_v/\partial t + \partial(\nabla \cdot \mathbf{D})/\partial t = 0$, restoring mathematical consistency.\\
+(b) Inside the capacitor, $E = Q/(\varepsilon A) \implies D = Q/A$. The total displacement current is $I_d = \iint \frac{\partial D}{\partial t} dA = A \frac{d}{dt}(Q/A) = \frac{dQ}{dt} = I_c$.
+
+\vspace{0.3cm}
+\textbf{Solution 3:}\\
+(a) $\nabla \times (\nabla \times \mathbf{E}) = \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$. Since $\rho_v = 0 \implies \nabla \cdot \mathbf{E} = 0$, this yields $-\nabla^2 \mathbf{E} = -\mu \frac{\partial}{\partial t}(\nabla \times \mathbf{H}) = -\mu \varepsilon \frac{\partial^2 \mathbf{E}}{\partial t^2} \implies \nabla^2 \mathbf{E} = \mu \varepsilon \frac{\partial^2 \mathbf{E}}{\partial t^2}$.\\
+(b) $v = \frac{c}{\sqrt{9}} = 1.0 \times 10^8\,\si{m/s}$; $\lambda = \frac{v}{f} = \frac{1.0 \times 10^8}{10^8} = 1.0\,\si{m}$; $\eta = \frac{377}{\sqrt{9}} = 125.67\,\Omega$; $\langle S \rangle = \frac{E_0^2}{2\eta} = \frac{300^2}{2(125.67)} = \frac{90000}{251.33} \approx 358.1\,\si{W/m^2}$.
+
+\vspace{0.3cm}
+\textbf{Solution 4:}\\
+Start from $\nabla \cdot (\mathbf{E} \times \mathbf{H}) = \mathbf{H} \cdot (\nabla \times \mathbf{E}) - \mathbf{E} \cdot (\nabla \times \mathbf{H})$. Substitute $\nabla \times \mathbf{E} = -\partial \mathbf{B}/\partial t$ and $\nabla \times \mathbf{H} = \mathbf{J} + \partial \mathbf{D}/\partial t$:
+$\nabla \cdot \mathbf{S} = -\mathbf{H}\cdot\frac{\partial \mathbf{B}}{\partial t} - \mathbf{E}\cdot\frac{\partial \mathbf{D}}{\partial t} - \mathbf{E}\cdot\mathbf{J} = -\frac{\partial}{\partial t}\left(\frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2\right) - \mathbf{J}\cdot\mathbf{E}$.
+Integrating over volume $V$ and using Divergence Theorem yields $-\oiint_S \mathbf{S} \cdot d\mathbf{S} = \frac{\partial}{\partial t}\iiint_V u_{em} dV + \iiint_V \sigma E^2 dV$.
+\end{solutionbox}

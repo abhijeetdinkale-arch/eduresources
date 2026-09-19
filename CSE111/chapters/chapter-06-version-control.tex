@@ -1,0 +1,578 @@
+\chapter{Version Control \& Applied Modern Computing}
+\label{chap:version-control}
+
+% ==============================================================================
+% SECTION 6.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Modern software engineering relies on collaborative version control, automated development toolchains, applied artificial intelligence, and developer portfolio platforms. Version control systems allow distributed engineering teams to track code changes, branch experimental features, and merge software without conflicts. Concurrently, generative AI, retrieval-augmented research assistants, prompt engineering frameworks, and technical profile platforms are reshaping developer productivity.
+
+\begin{important}[Core Learning Objectives]
+After completing this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Differentiate Version Control Architectures}, contrasting Centralized Version Control (CVCS) with Distributed Version Control (DVCS).
+    \item \textbf{Distinguish Git from GitHub}, comparing local CLI version control tracking against cloud-based hosting and collaboration services.
+    \item \textbf{Execute Core Git Workflows}, mastering the three-stage architecture (Working Directory, Staging Area, Local Repository) and CLI commands (\texttt{git init}, \texttt{status}, \texttt{add}, \texttt{commit}).
+    \item \textbf{Implement Git Branching and Merging}, executing \texttt{git branch}, \texttt{git checkout} / \texttt{switch}, \texttt{git checkout -b}, and \texttt{git merge}.
+    \item \textbf{Analyze Artificial Intelligence (AI) and Generative AI}, contrasting Large Language Models (LLMs), Diffusion Models (denoising), and Generative Adversarial Networks (GANs).
+    \item \textbf{Evaluate Specialized AI Research Tools}, analyzing Perplexity AI (live citations), Google NotebookLM (hallucination-free RAG), and JenniAI.
+    \item \textbf{Apply the CREATE Prompt Engineering Framework}, constructing high-accuracy prompts while addressing AI ethics (plagiarism, bias, hallucinations, data privacy).
+    \item \textbf{Build Professional Developer Profiles}, leveraging GitHub, Figma, Stack Overflow, and competitive programming portals (LeetCode, HackerRank).
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 6.2: OVERVIEW OF GIT AND GITHUB
+% ==============================================================================
+\section{Overview of Git and GitHub}
+
+\subsection{What is Version Control?}
+
+\begin{definition}[Version Control System (VCS)]
+A software system that records changes made to a file or set of files over time, allowing developers to recall specific historical versions, inspect chronological diffs, revert breaking modifications, and collaborate seamlessly across teams.
+\end{definition}
+
+\subsubsection{Centralized vs. Distributed Version Control}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Centralized VCS (CVCS)}: A single central server stores the entire version database (e.g., SVN, Perforce). If the central server suffers downtime or data corruption, developers cannot commit new snapshots or view historical logs.
+    \item \textbf{Distributed VCS (DVCS)}: Every developer clones a complete, fully autonomous local copy of the entire repository history (e.g., Git). Developers can commit, branch, and inspect diffs completely offline.
+\end{itemize}
+
+\subsection{Git vs. GitHub: Technical Differentiation}
+
+A universal beginner confusion is assuming Git and GitHub are identical. They are fundamentally distinct technologies:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Evaluation Metric} & \textbf{Git} & \textbf{GitHub} \\
+\midrule
+\textbf{Fundamental Nature} & Distributed Version Control \textbf{Command-Line Software Tool}. & Cloud-based \textbf{Web Hosting Service} and Collaboration Platform. \\
+\textbf{Execution Environment} & Installed and executed \textbf{locally} on a developer's computer. & Hosted in the \textbf{Cloud}; accessed via web browsers and REST APIs. \\
+\textbf{Core Functionality} & Tracking local file revisions, commit snapshots, branching, merging. & Remote repo backup, Pull Requests (PRs), Issue Tracking, CI/CD Actions. \\
+\textbf{Network Dependency} & 100\% operational \textbf{offline} without internet access. & Requires active internet connectivity to synchronize and push commits. \\
+\textbf{Creator / Governance} & Created by \textbf{Linus Torvalds} in 2005 (Open Source GPL). & Commercial service founded in 2008; acquired by \textbf{Microsoft}. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Comparison between Git and GitHub.}
+\label{tab:git-vs-github-master}
+\end{table}
+
+% ==============================================================================
+% SECTION 6.3: ENVIRONMENT SETUP \& CONFIGURATION
+% ==============================================================================
+\section{Environment Setup and Configuration}
+
+\subsection{Installing Git}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Windows}: Download the installer from \texttt{https://git-scm.com} and run the setup wizard (Git Bash included).
+    \item \textbf{macOS}: Install via Homebrew: \texttt{brew install git}.
+    \item \textbf{Linux (Debian/Ubuntu)}: Install via APT: \texttt{sudo apt-get update \&\& sudo apt-get install git}.
+\end{itemize}
+
+\subsection{Global User Identity Configuration}
+Before creating commits, configure your global author name and email address:
+
+\begin{lstlisting}[language=bash]
+# Verify installation version
+$ git --version
+git version 2.44.0
+
+# Set author name and email address for commit history
+$ git config --global user.name "John Doe"
+$ git config --global user.email "john.doe@example.com"
+\end{lstlisting}
+
+% ==============================================================================
+% SECTION 6.4: BASIC GIT OPERATIONS
+% ==============================================================================
+\section{Basic Git Operations: The Three-Tier Architecture}
+
+Git organizes code changes across a three-stage architectural model (Figure~\ref{fig:git-architecture}):
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    stage/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=3.4cm, minimum height=1.8cm, align=center, font=\sffamily\small},
+    arrow/.style={-{Stealth[scale=1.1]}, thick, draw=brandaccent}
+]
+    \node[stage, fill=boxrosebg, draw=brandaccent] (work) at (0, 0) {\textbf{1. Working Directory}\\Untracked \& Modified Files\\{\scriptsize (Your local edits)}};
+    \node[stage, fill=boxgoldbg, draw=brandgold] (stage) at (4.5, 0) {\textbf{2. Staging Area (Index)}\\Staged Files\\{\scriptsize (Ready to commit)}};
+    \node[stage, fill=boxskybg, draw=boxskyborder] (repo) at (9.0, 0) {\textbf{3. Local Repository}\\Committed Snapshots\\{\scriptsize (Permanent in \texttt{.git})}};
+
+    \draw[arrow] (work) -- (stage) node[midway, above=2pt, font=\ttfamily\scriptsize] {git add};
+    \draw[arrow] (stage) -- (repo) node[midway, above=2pt, font=\ttfamily\scriptsize] {git commit};
+\end{tikzpicture}
+\caption{The Three-Stage Architecture of Git Version Control.}
+\label{fig:git-architecture}
+\end{figure}
+
+\subsection{Core CLI Commands}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Initializing a Local Repository (\texttt{git init})}:
+    Creates a hidden sub-directory named \texttt{.git} in the root of the project folder, establishing the local database.
+\begin{lstlisting}[language=bash]
+git init
+\end{lstlisting}
+
+    \item \textbf{Checking Repository Status (\texttt{git status})}:
+    Displays which files are untracked, modified, or staged in the index.
+\begin{lstlisting}[language=bash]
+git status
+\end{lstlisting}
+
+    \item \textbf{Staging Changes (\texttt{git add})}:
+    Moves modified and new files from the Working Directory into the Staging Area:
+\begin{lstlisting}[language=bash]
+git add hello.txt    # Stages a specific single file
+git add .            # Stages all modified and new files in the directory
+\end{lstlisting}
+
+    \item \textbf{Committing Changes (\texttt{git commit})}:
+    Takes the staged snapshot and writes it permanently into the local repository with a mandatory descriptive message:
+\begin{lstlisting}[language=bash]
+git commit -m "feat: initial commit with hello.txt"
+\end{lstlisting}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.5: BRANCHING AND MERGING
+% ==============================================================================
+\section{Branching and Merging in Git}
+
+\subsection{Concept of a Branch}
+
+\begin{definition}[Git Branch]
+A lightweight, movable pointer to a specific commit in the repository history, enabling independent, isolated lines of feature development without corrupting the production codebase on the default branch (\texttt{main} or \texttt{master}).
+\end{definition}
+
+\subsection{Branching Operations Workflow}
+
+\begin{lstlisting}[language=bash]
+# List all existing local branches (* denotes active branch)
+$ git branch
+
+# Create a new feature branch
+$ git branch feature-login
+
+# Switch working directory to the feature branch
+$ git checkout feature-login
+# (Or using modern Git syntax):
+$ git switch feature-login
+
+# Create and switch to a new branch in a single command
+$ git checkout -b feature-login
+
+# Merge feature branch back into main (executed from main branch)
+$ git checkout main
+$ git merge feature-login
+\end{lstlisting}
+
+% ==============================================================================
+% SECTION 6.6: INTRODUCTION TO AI \& APPLICATIONS
+% ==============================================================================
+\section{Introduction to Artificial Intelligence \& Real-World Applications}
+
+\subsection{What is Artificial Intelligence?}
+
+\begin{definition}[Artificial Intelligence (AI)]
+The simulation of human intelligence processes by computer systems, encompassing the capabilities of learning (data acquisition and rule formation), reasoning (applying rules to reach conclusions), and self-correction.
+\end{definition}
+
+\subsection{Major Real-World Application Domains}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Healthcare \& Medicine}: Medical image segmentation for early tumor detection, IBM Watson oncology diagnostics, and AlphaFold protein 3D structure predictions.
+    \item \textbf{Finance \& Banking}: High-frequency algorithmic market trading, automated credit risk assessment, and real-time fraudulent transaction anomaly detection.
+    \item \textbf{Autonomous Transportation}: Deep computer vision perception and trajectory planning in self-driving vehicles (Tesla Autopilot, Waymo) and predictive traffic routing (Google Maps).
+    \item \textbf{E-Commerce \& Streaming}: Real-time matrix-factorization recommendation systems (Amazon, Netflix, Spotify).
+    \item \textbf{Social Media}: Algorithmic content moderation, face recognition tagging, and behavioral engagement feed algorithms (TikTok).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.7: GENERATIVE AI ARCHITECTURES \& TOOLS
+% ==============================================================================
+\section{Generative AI Architectures and Tooling}
+
+\subsection{What is Generative AI?}
+
+\begin{definition}[Generative AI]
+A specialized paradigm of artificial intelligence focused on generating \textbf{new, novel synthetic content} (text, photorealistic imagery, code, audio, video) that mirrors patterns learned from extensive training data.
+\end{definition}
+
+\subsection{Three Core Generative Model Frameworks}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Large Language Models (LLMs)}:
+    Transformer-based deep neural networks utilizing self-attention mechanisms to predict and generate natural language tokens sequentially. Examples: \textbf{OpenAI GPT-4, Anthropic Claude, Google Gemini, Meta LLaMA}.
+    \item \textbf{Diffusion Models}:
+    Generative models trained to iteratively reverse a thermodynamic diffusion process by stripping Gaussian noise from a random latent representation to synthesize high-resolution images from text prompts. Examples: \textbf{Stable Diffusion, Midjourney, DALL-E 3}.
+    \item \textbf{Generative Adversarial Networks (GANs)}:
+    A dual-network architecture where two deep neural networks—a \textbf{Generator} (which synthesizes candidate content) and a \textbf{Discriminator} (which evaluates whether content is real or synthetic)—compete in a minimax game to iteratively refine output quality.
+\end{enumerate}
+
+\subsection{Categorization of Generative AI Tools}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Text \& Code Generation}: ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google).
+    \item \textbf{Image Generation}: Midjourney, DALL-E 3 (OpenAI), Stable Diffusion (open-source local execution).
+    \item \textbf{Video Synthesis}: OpenAI Sora, Runway Gen-2, Synthesia (AI avatars for presentations).
+\end{itemize}
+
+% ==============================================================================
+% SECTION 6.8: SPECIALIZED AI RESEARCH TOOLS
+% ==============================================================================
+\section{Specialized AI Academic \& Research Tools}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Perplexity AI}: A conversational AI search engine that conducts real-time web crawling, synthesizing natural language answers with \textbf{direct clickable citations and verifiable sources}.
+    \item \textbf{NotebookLM (Google)}: A personalized AI research notebook using Retrieval-Augmented Generation (RAG). Users upload their own source documents (PDFs, notes), and the AI restricts its reasoning \textbf{strictly to the uploaded material, eliminating hallucinations}.
+    \item \textbf{JenniAI}: An AI academic writing assistant providing literature reviews, citation generation, and technical autocomplete.
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.9: PROMPT ENGINEERING \& THE CREATE FRAMEWORK
+% ==============================================================================
+\section{Prompt Engineering and Ethical AI}
+
+\subsection{What is Prompt Engineering?}
+
+\begin{definition}[Prompt Engineering]
+The practice of structuring, refining, and designing textual inputs (prompts) to generative AI models to guide the model toward generating precise, accurate, and contextually optimal outputs.
+\end{definition}
+
+\subsection{The CREATE Prompting Framework}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    cbox/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=3pt, thick, minimum width=1.7cm, minimum height=1.3cm, align=center, font=\sffamily\bfseries\small}
+]
+    \node[cbox, fill=boxgoldbg, draw=brandgold] at (0, 0) {C\\{\tiny Context}};
+    \node[cbox, fill=boxskybg, draw=boxskyborder] at (2.1, 0) {R\\{\tiny Request}};
+    \node[cbox, fill=boxamberbg, draw=boxamberborder] at (4.2, 0) {E\\{\tiny Example}};
+    \node[cbox, fill=boxpurplebg, draw=boxpurpleborder] at (6.3, 0) {A\\{\tiny Audience}};
+    \node[cbox, fill=boxrosebg, draw=brandaccent] at (8.4, 0) {T\\{\tiny Tone}};
+    \node[cbox, fill=boxgreenbg, draw=boxgreenborder] at (10.5, 0) {E\\{\tiny Extra Rules}};
+\end{tikzpicture}
+\caption{The CREATE Prompt Engineering Framework.}
+\label{fig:create-framework}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{C --- Context}: Establish the persona and role (e.g., *"Act as a Senior Linux Kernel Architect..."*).
+    \item \textbf{R --- Request}: Define the explicit core task (e.g., *"Explain process scheduling states..."*).
+    \item \textbf{E --- Example}: Provide a few-shot demonstration of the desired output format.
+    \item \textbf{A --- Audience}: Specify target audience (e.g., *"For a first-year engineering student..."*).
+    \item \textbf{T --- Tone}: Set the demeanor (e.g., *"Maintain a professional, formal academic tone..."*).
+    \item \textbf{E --- Extra Constraints}: State hard bounds (e.g., *"Limit output to 200 words. Format as a table."*).
+\end{itemize}
+
+\subsection{Ethical Considerations in AI Usage}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Plagiarism}: Submitting raw AI-generated text as original student coursework without attribution violates academic integrity.
+    \item \textbf{Algorithmic Bias}: AI models can amplify historical racial, gender, and socio-economic biases present in web datasets.
+    \item \textbf{Hallucinations}: LLMs generate statistically probable text completions and can invent false facts or fake citations. Human verification is mandatory.
+    \item \textbf{Data Privacy}: Never input confidential source code or personal identifying information (PII) into public AI chat interfaces.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 6.10: PROFESSIONAL DEVELOPER PROFILES
+% ==============================================================================
+\section{Developer Profiles and Professional Platforms}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Design \& Prototyping (Figma)}: Cloud-based UI/UX vector design tool used by developers to showcase user interface wireframes, component libraries, and interactive prototypes.
+    \item \textbf{Code Portfolio (GitHub)}: The primary public technical portfolio for engineers. Active green contribution squares, pinned open-source repositories, and comprehensive \texttt{README.md} files demonstrate real coding competence.
+    \item \textbf{Technical Knowledge (Stack Overflow)}: Global Q\&A community. High reputation points validate a developer's technical debugging and peer assistance skills.
+    \item \textbf{Skill Verification (HackerRank \& HackerEarth)}: Platforms offering verified skill badges (Python, SQL, Algorithms) used by enterprise recruiters for initial candidate screening.
+    \item \textbf{Algorithmic Mastery (LeetCode)}: The industry standard platform for Data Structures and Algorithms (DSA) technical interview preparation (Easy, Medium, Hard problem tiers).
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 6.11: WORKED EXAMPLES
+% ==============================================================================
+\section{Worked Practical Workflows}
+
+\begin{example}[Complete Git Version Control Lifecycle]
+A developer starts a new project named \texttt{calculator}, adds a file \texttt{calc.py}, creates a commit, develops a feature on a new branch \texttt{feature-sub}, and merges it into \texttt{main}. Provide the exact command sequence.
+
+\begin{solutionbox}[Step-by-Step Git Command Sequence]
+\begin{lstlisting}[language=bash]
+# 1. Initialize local repository
+$ mkdir calculator && cd calculator
+$ git init
+
+# 2. Create base file and stage it
+$ echo "def add(a,b): return a+b" > calc.py
+$ git status
+$ git add calc.py
+
+# 3. Create initial commit on main
+$ git commit -m "feat: initial commit with addition"
+
+# 4. Create and switch to feature branch
+$ git checkout -b feature-sub
+
+# 5. Modify file and commit on feature branch
+$ echo "def sub(a,b): return a-b" >> calc.py
+$ git commit -am "feat: add subtraction functionality"
+
+# 6. Switch back to main and merge
+$ git checkout main
+$ git merge feature-sub
+\end{lstlisting}
+\end{solutionbox}
+\end{example}
+
+% ==============================================================================
+% SECTION 6.12: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[High-Yield Exam Points]
+\begin{itemize}
+    \item \textbf{Git vs. GitHub}: Always state: \textbf{Git is the local software tool}; \textbf{GitHub is the cloud hosting platform}.
+    \item \textbf{Git Three Stages}: Memorize the exact flow: \textbf{Working Directory $\xrightarrow{\text{git add}}$ Staging Area $\xrightarrow{\text{git commit}}$ Local Repository}.
+    \item \textbf{CREATE Framework}: In prompt engineering questions, list the six components: \textbf{Context, Request, Example, Audience, Tone, Extra constraints}.
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Exam Traps \& Concept Confusions]
+\begin{itemize}
+    \item \textbf{Forgetting to Stage Before Commit}: Running \texttt{git commit} without running \texttt{git add} first will commit nothing unless \texttt{-a} is used on tracked files.
+    \item \textbf{Confusing Diffusion Models and GANs}: Diffusion models generate images by \textbf{removing noise}; GANs use two competing networks (\textbf{Generator vs. Discriminator}).
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 6.13: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 6 Key Takeaways]
+\begin{itemize}
+    \item \textbf{VCS}: CVCS (central server, SVN) vs. DVCS (full local copy, Git).
+    \item \textbf{Git vs. GitHub}: Git is a local CLI tool (Linus Torvalds, 2005); GitHub is a cloud hosting service (Microsoft).
+    \item \textbf{Git Config}: \texttt{git config --global user.name "Name"}, \texttt{git config --global user.email "email"}.
+    \item \textbf{Git 3 Stages}: Working Directory $\rightarrow$ Staging Area $\rightarrow$ Repository.
+    \item \textbf{Core Commands}: \texttt{git init} (init repo), \texttt{git status} (check files), \texttt{git add} (stage files), \texttt{git commit -m} (permanent snapshot).
+    \item \textbf{Branching}: \texttt{git branch} (list), \texttt{git checkout -b} (create \& switch), \texttt{git merge} (merge branch into main).
+    \item \textbf{Generative AI}: LLMs (Transformers, text/code), Diffusion Models (denoising, images), GANs (Generator vs. Discriminator).
+    \item \textbf{AI Research}: Perplexity (search with citations), NotebookLM (hallucination-free RAG), JenniAI.
+    \item \textbf{CREATE Framework}: Context, Request, Example, Audience, Tone, Extra constraints.
+    \item \textbf{AI Ethics}: Plagiarism, Algorithmic Bias, Hallucinations, Data Privacy.
+    \item \textbf{Developer Platforms}: Figma (UI/UX), GitHub (portfolio), Stack Overflow (Q\&A), LeetCode/HackerRank (DSA prep).
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 6.14: PRACTICE EXERCISES
+% ==============================================================================
+\section{Practice Exercises}
+
+\begin{practiceset}[Technical, Conceptual \& Command Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Short Answer}: Write the single Git command that simultaneously creates a new branch named \texttt{feature-auth} and switches to it.
+    \item \textbf{Short Answer}: What is the primary difference between a Distributed Version Control System (DVCS) and a Centralized VCS?
+    \item \textbf{Technical Comparison}: Differentiate between Git and GitHub across four distinct technical criteria.
+    \item \textbf{AI Models}: Compare Diffusion Models and Generative Adversarial Networks (GANs) with respect to their image generation mechanics.
+    \item \textbf{Prompt Engineering}: Using the \textbf{CREATE Framework}, transform the poor prompt *"Write a python script for a server"* into a high-quality prompt.
+    \item \textbf{Platform Analysis}: Explain how a software engineering student should structure their \textbf{GitHub profile} to maximize attractiveness to technical recruiters.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 6.15: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Which Git command moves modified files from the Working Directory into the Staging Area?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{git push}
+        \item \texttt{git commit}
+        \item \texttt{git add}
+        \item \texttt{git stage-in}
+    \end{enumerate}
+
+    \item What is the function of the hidden \texttt{.git} directory created upon running \texttt{git init}?
+    \begin{enumerate}[label=(\alph*)]
+        \item Stores temporary operating system swap files
+        \item Contains all Git repository metadata, object databases, and commit history
+        \item Installs the Python runtime environment
+        \item Connects the PC to GitHub via Wi-Fi
+    \end{enumerate}
+
+    \item Which generative AI model architecture uses a Generator and a Discriminator competing against each other?
+    \begin{enumerate}[label=(\alph*)]
+        \item Large Language Model (LLM)
+        \item Generative Adversarial Network (GAN)
+        \item Diffusion Model
+        \item Convolutional Neural Network (CNN)
+    \end{enumerate}
+
+    \item Which AI research tool specializes in grounding answers strictly in user-uploaded source documents to prevent hallucinations?
+    \begin{enumerate}[label=(\alph*)]
+        \item Midjourney
+        \item Google NotebookLM
+        \item Synthesia
+        \item DALL-E 3
+    \end{enumerate}
+
+    \item In the CREATE prompt engineering framework, what does the letter 'C' stand for?
+    \begin{enumerate}[label=(\alph*)]
+        \item Command
+        \item Code
+        \item Context
+        \item Creativity
+    \end{enumerate}
+
+    \item Which platform is recognized globally as the primary portfolio for developers to showcase public code repositories and open-source contributions?
+    \begin{enumerate}[label=(\alph*)]
+        \item Figma
+        \item GitHub
+        \item Stack Overflow
+        \item Coursera
+    \end{enumerate}
+
+    \item Which command is used to merge a branch named \texttt{feature-pay} into the currently checked-out \texttt{main} branch?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{git combine feature-pay}
+        \item \texttt{git merge feature-pay}
+        \item \texttt{git join feature-pay}
+        \item \texttt{git append feature-pay}
+    \end{enumerate}
+
+    \item A generative AI model stating a false historical date or inventing a non-existent scientific paper citation is exhibiting which phenomenon?
+    \begin{enumerate}[label=(\alph*)]
+        \item Overfitting
+        \item Hallucination
+        \item Prompt Injection
+        \item Tokenization
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(c) git add} --- \texttt{git add} moves files into the Staging Area (index).
+    \item \textbf{(b) Contains all Git repository metadata, object databases, and commit history} --- \texttt{.git} is the repository database.
+    \item \textbf{(b) Generative Adversarial Network (GAN)} --- GANs use a Generator vs. Discriminator minimax competition.
+    \item \textbf{(b) Google NotebookLM} --- NotebookLM restricts reasoning to uploaded user documents.
+    \item \textbf{(c) Context} --- CREATE = Context, Request, Example, Audience, Tone, Extra constraints.
+    \item \textbf{(b) GitHub} --- GitHub is the global standard code hosting portfolio.
+    \item \textbf{(b) git merge feature-pay} --- Merges the specified branch into the active branch.
+    \item \textbf{(b) Hallucination} --- Confident generation of factually incorrect synthetic output.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 6.16: UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 6: Version Control \& Applied AI (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Define the term \textit{Commit} in Git.
+    \item What is the purpose of the Staging Area in the Git three-tier architecture?
+    \item Name the two competing neural networks comprising a GAN.
+    \item State the meaning of the letter 'R' in the CREATE prompt engineering framework.
+    \item Which online platform is the global standard for preparing for Data Structures and Algorithms (DSA) coding interviews?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical \& Technical Explanations ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Compare and contrast Git and GitHub across five parameters: tool type, execution location, offline capability, core functions, and ownership.
+    \item Explain the \textbf{CREATE Prompt Engineering Framework}, defining each of its six components with a concrete illustrative example.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Version Control \& AI Workflow ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item An engineering team is developing a web application.
+    \begin{enumerate}[label=(\alph*)]
+        \item Provide the exact Git command sequence to initialize a repository, configure author credentials, create an initial commit on \texttt{main}, branch off to \texttt{feature-navbar}, commit a modification, and merge it back into \texttt{main}. (5 Marks)
+        \item Explain the image generation mechanism of \textbf{Diffusion Models} (forward diffusion vs. reverse denoising). (3 Marks)
+        \item Discuss two ethical considerations in using AI for engineering coursework. (2 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item \textbf{Commit}: An immutable point-in-time snapshot of staged files written permanently to the local repository database. [1 Mark]
+    \item \textbf{Staging Area}: An intermediate preparation index where modified files are curated before being committed. [1 Mark]
+    \item \textbf{GAN Networks}: \textbf{Generator} and \textbf{Discriminator}. [1 Mark]
+    \item \textbf{'R' in CREATE}: \textbf{Request} (the core task to be executed). [1 Mark]
+    \item \textbf{DSA Preparation Platform}: \textbf{LeetCode}. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Git vs. GitHub Comparison Table} (1 Mark per parameter):
+    \begin{itemize}
+        \item \textit{Type}: Git is a CLI software tool; GitHub is a cloud hosting web service.
+        \item \textit{Location}: Git runs locally on the computer; GitHub is hosted in the cloud.
+        \item \textit{Offline}: Git works 100\% offline; GitHub requires internet connectivity.
+        \item \textit{Functions}: Git tracks commits/branches; GitHub manages PRs, issues, CI/CD.
+        \item \textit{Ownership}: Git is open-source GPL (Linus Torvalds); GitHub is owned by Microsoft.
+    \end{itemize}
+
+    \item \textbf{CREATE Prompting Framework} (5 Marks):
+    \begin{itemize}
+        \item \textit{Context}: Role definition (e.g., "Act as a Senior Database Administrator"). [1 Mark]
+        \item \textit{Request}: Core task (e.g., "Write an optimized SQL query for employee salaries"). [1 Mark]
+        \item \textit{Example}: Desired output format reference. [0.5 Marks]
+        \item \textit{Audience}: Target demographic (e.g., "For junior developers"). [0.5 Marks]
+        \item \textit{Tone}: Demeanor (e.g., "Professional and concise"). [1 Mark]
+        \item \textit{Extra Constraints}: Rules (e.g., "Include indexing tips, limit to 100 words"). [1 Mark]
+    \end{itemize}
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Git Workflow \& AI Concepts}:
+    \begin{enumerate}[label=(\alph*)]
+        \item \textit{Git Command Sequence} (5 Marks):
+        \begin{lstlisting}[language=bash]
+# Configure identity & initialize
+$ git config --global user.name "Alice"
+$ git config --global user.email "alice@eng.org"
+$ git init
+
+# Initial commit on main
+$ touch index.html
+$ git add index.html
+$ git commit -m "feat: initial commit"
+
+# Branch, modify, commit
+$ git checkout -b feature-navbar
+$ echo "<nav></nav>" >> index.html
+$ git commit -am "feat: add navbar component"
+
+# Merge back into main
+$ git checkout main
+$ git merge feature-navbar
+        \end{lstlisting}
+
+        \item \textit{Diffusion Models} (3 Marks):
+        \begin{itemize}
+            \item \textbf{Forward Process}: Gradually adds Gaussian noise to an image step-by-step until it becomes pure random static.
+            \item \textbf{Reverse Process}: The neural network is trained to predict and remove noise iteratively from the static, conditioned on textual prompt embeddings, synthesizing a crisp, detailed final image.
+        \end{itemize}
+
+        \item \textit{Ethical Considerations} (2 Marks):
+        \begin{itemize}
+            \item \textbf{Academic Integrity / Plagiarism}: Passing off AI-generated code or text as one's own without attribution undermines learning.
+            \item \textbf{Hallucinations \& Verification}: AI outputs can contain subtle bugs or fabricated facts that require rigorous manual engineering verification.
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

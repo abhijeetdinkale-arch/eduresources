@@ -1,0 +1,144 @@
+\chapter{Unit 5: Introduction to Sequential Logic Circuits}
+
+\section{Section 1: Chapter-Wise Multiple-Choice Questions (60 MCQs)}
+
+\subsection*{Part I: Foundational Level (Questions 1 to 20)}
+\mcqitem{1}{What does the letter S represent in an SR latch?}{Select}{Store}{Shift}{Set}
+\mcqitem{2}{For active-high NOR-based SR latch, which input holds previous output?}{$S=0, R=0$}{$S=0, R=1$}{$S=1, R=1$}{$S=1, R=0$}
+\mcqitem{3}{Main advantage of D latch over SR latch:}{Shifts data between stages}{Produces two clock signals}{Counts clock pulses}{Avoids the invalid SR input}
+\mcqitem{4}{Which flip-flop removes the invalid state of the SR flip-flop?}{SR flip-flop}{T flip-flop}{JK flip-flop}{D flip-flop}
+\mcqitem{5}{What happens to a JK flip-flop when $J=1$ and $K=1$?}{The output toggles}{The output sets}{The output holds}{The output resets}
+\mcqitem{6}{For a D flip-flop, what is next output $Q_{n+1}$ after active clock edge?}{$Q_{n+1} = Q_n$}{$Q_{n+1} = \bar{D}$}{$Q_{n+1} = D$}{$Q_{n+1} = 0$}
+\mcqitem{7}{What does a T flip-flop do when $T=0$?}{Holds its state}{Toggles its state}{Resets its output}{Sets its output}
+\mcqitem{8}{Which flip-flop is commonly used to store one bit of input data directly?}{D flip-flop}{T flip-flop}{SR flip-flop}{JK flip-flop}
+\mcqitem{9}{A master-slave flip-flop is formed using how many connected flip-flop stages?}{One stage}{Two stages}{Three stages}{Four stages}
+\mcqitem{10}{Main purpose of master-slave arrangement in JK flip-flop:}{Increase input count}{Remove clock}{Convert data format}{To prevent race-around}
+\mcqitem{11}{To make JK flip-flop behave like T flip-flop, inputs are connected as:}{$J=T, K=T$}{$J=1, K=T$}{$J=0, K=T$}{$J=T, K=0$}
+\mcqitem{12}{How can D flip-flop be made to operate as T flip-flop?}{Use $D = T$}{Use $D = T + Q_n$}{Use $D = T Q_n$}{Use $D = T \oplus Q_n$}
+\mcqitem{13}{What does SISO stand for in shift registers?}{Parallel-In Serial-Out}{Serial-In Parallel-Out}{Serial-In Serial-Out}{Parallel-In Parallel-Out}
+\mcqitem{14}{Which shift register converts serial input to parallel output?}{PISO}{SISO}{SIPO}{PIPO}
+\mcqitem{15}{Which shift register converts parallel data into serial data?}{PISO}{SIPO}{PIPO}{SISO}
+\mcqitem{16}{In which register are data loaded and read out in parallel?}{SISO}{SIPO}{PISO}{PIPO}
+\mcqitem{17}{Why is an asynchronous counter also called a ripple counter?}{Data shifts both directions}{Clock changes ripple through stages}{Outputs change before inputs}{All stages share one clock}
+\mcqitem{18}{What sequence does 3-bit binary UP counter follow after $011$?}{$010$}{$111$}{$100$}{$101$}
+\mcqitem{19}{What sequence does 3-bit binary DOWN counter follow after $101$?}{$011$}{$110$}{$000$}{$100$}
+\mcqitem{20}{How many distinct states does a Mod-10 counter have?}{12 states}{16 states}{10 states}{8 states}
+
+\subsection*{Part II: Intermediate Analytical Level (Questions 21 to 40)}
+\mcqitem{21}{Active-high SR latch initially $Q=0$. Inputs $(S,R)$ sequence: $(1,0) \to (0,0) \to (0,1)$. Final $Q$:}{$Q=1$}{$Q=0$}{Indeterminate}{Toggles continuously}
+\mcqitem{22}{Gated D latch transparent when $E=1$. $D$ changes $0\to 1$ while $E=0$, later $E$ becomes 1. What happens to $Q$?}{$Q$ becomes 1 when $E$ becomes 1}{$Q$ toggles}{$Q$ becomes 0}{$Q$ unchanged while $E=1$}
+\mcqitem{23}{D latch implemented from SR latch using $S=D, R=\bar{D}$. Main purpose:}{Makes latch toggle}{Prevents forbidden input combination}{Disables latch}{Converts to counter}
+\mcqitem{24}{Positive-edge JK flip-flop has $J=K=1$, initially $Q=0$. $Q$ after 5 clock edges:}{$Q=1$}{High impedance}{$Q=0$}{Indeterminate}
+\mcqitem{25}{D flip-flop initially $Q=0$. $D=1$ before edge 1, changes to 0 between edges, $D=0$ before edge 2. $Q$ values after edges:}{0 then 0}{1 then 0}{1 then 1}{0 then 1}
+\mcqitem{26}{T flip-flop starts $Q=1$. Inputs at four edges: $T = 1, 0, 1, 1$. Final $Q$:}{Unchanged}{Indeterminate}{$Q=1$}{$Q=0$}
+\mcqitem{27}{For JK flip-flop, present state $Q_n=1$. Which input pair produces $Q_{n+1}=0$ without relying on toggle?}{$J=1, K=0$}{$J=0, K=0$}{$J=0, K=1$}{$J=1, K=1$}
+\mcqitem{28}{In master-slave JK, master enabled on CLK HIGH, slave on CLK LOW. External output updates:}{At transition from high to low}{At transition from low to high}{Continuously during low}{Continuously during high}
+\mcqitem{29}{Why master-slave JK avoids race-around when $J=K=1$?}{Stages respond during opposite clock levels}{Output disconnected}{Clock multiplied}{Inputs forced low}
+\mcqitem{30}{JK flip-flop to operate as D flip-flop. Input connections:}{$J=D, K=D$}{$J=D, K=\bar{D}$}{$J=\bar{D}, K=D$}{$J=\bar{D}, K=\bar{D}$}
+\mcqitem{31}{D flip-flop to behave as T flip-flop. Expression applied to D input:}{$D = T \oplus Q_n$}{$D = T + Q_n$}{$D = T Q_n$}{$D = T \oplus \bar{Q}_n$}
+\mcqitem{32}{JK flip-flop with $J=K=T$. If $T=1$ for 6 clock edges, initial $Q=1$, final state:}{Indeterminate}{$Q=1$}{$Q=0$}{Alternates}
+\mcqitem{33}{4-bit SISO right-shift initially $0000$. Serial input sequence $1, 0, 1, 1$ over 4 pulses. Content after 4th pulse:}{$1011$}{$1110$}{$0011$}{$1101$}
+\mcqitem{34}{5-bit SIPO starts cleared. Clock pulses before all 5 bits available simultaneously in parallel:}{10 pulses}{5 pulses}{4 pulses}{6 pulses}
+\mcqitem{35}{4-bit PISO parallel-loaded with $1010$ ($Q_3Q_2Q_1Q_0$). Shifts right using $Q_0$ as serial out. Transmitted bit sequence:}{$0, 0, 1, 1$}{$0, 1, 0, 1$}{$1, 0, 1, 0$}{$1, 1, 0, 0$}
+\mcqitem{36}{Register most suitable for transferring 8-bit word in one clock event when all lines available:}{8-bit SISO}{8-bit SIPO}{8-bit PISO}{8-bit PIPO}
+\mcqitem{37}{4-bit asynchronous binary up counter initially $1101_2$ ($13$). State after 3 pulses:}{$0000_2$}{$1110_2$}{$1111_2$}{$0001_2$}
+\mcqitem{38}{3-bit asynchronous down counter in state $000_2$. State after one more pulse:}{$000_2$}{$110_2$}{$001_2$}{$111_2$}
+\mcqitem{39}{Minimum number of flip-flops required for asynchronous Mod-10 counter:}{4 flip-flops}{5 flip-flops}{3 flip-flops}{10 flip-flops}
+\mcqitem{40}{4-bit asynchronous counter operates as Mod-12 UP counter. State triggering asynchronous clear:}{$1100_2$}{$1101_2$}{$1011_2$}{$1111_2$}
+
+\subsection*{Part III: Advanced Mastery Level (Questions 41 to 60)}
+\mcqitem{41}{Active-low NAND SR latch initially $Q=0$. Inputs driven to $\bar{S}=\bar{R}=0$, returned to $1$ simultaneously. Final state:}{$Q$ must remain 0}{$Q$ is not logically predictable}{$Q$ toggles continuously}{$Q$ must become 1}
+\mcqitem{42}{Positive D latch initially $Q=0$. Enable HIGH during $1\le t < 4$ and $6\le t < 9$. $D$ changes to $1,0,1,0,1$ at $t=2,3,5,7,8$. Times $Q$ changes:}{$t = 2, 3, 5, 7, 8$}{$t = 2, 3, 6, 7, 8$}{$t = 2, 4, 6, 7, 9$}{$t = 1, 3, 5, 7, 8$}
+\mcqitem{43}{Positive-edge JK starts $Q=0$. $(J,K)$ values at 4 edges: $(1,1), (1,0), (1,1), (0,1)$. State sequence:}{$1, 0, 1, 0$}{$1, 1, 0, 0$}{$0, 1, 0, 0$}{$1, 1, 1, 0$}
+\mcqitem{44}{SR flip-flop inputs generated as $S=X\bar{Q}$ and $R=XQ$. Operation performed:}{Resets when $X=0$, holds when $X=1$}{Holds when $X=0$, toggles when $X=1$}{Sets when $X=0$, resets when $X=1$}{Toggles when $X=0$, holds when $X=1$}
+\mcqitem{45}{D flip-flop has $D = Q \oplus AB$, initially $Q=1$. At 4 edges, $(A,B)$ is $(0,0), (1,1), (1,0), (1,1)$. State sequence:}{$0, 1, 1, 0$}{$1, 1, 0, 0$}{$1, 0, 1, 0$}{$1, 0, 0, 1$}
+\mcqitem{46}{T flip-flop starts $Q=1$. $T=1$ only when clock edge is prime (edges $2,3,5,7$). State after 7th edge:}{$Q=0$, 7 toggles}{$Q=1$, 6 toggles}{$Q=0$, 3 toggles}{$Q=1$, because 4 toggles occur}
+\mcqitem{47}{Master-slave JK has $J=K=1$ throughout complete clock pulse, initial $Q=0$. What happens?}{Toggles once at rising transition}{Remains unchanged}{Toggles repeatedly during high}{Toggles once at the falling transition}
+\mcqitem{48}{Master-slave D flip-flop: master transparent for $\text{CLK}=0$, slave for $\text{CLK}=1$. Input changes $0\to 1$ shortly after rising transition. When does new value appear at $Q$?}{During next low clock level}{At following falling transition}{At the next rising transition}{Immediately after same transition}
+\mcqitem{49}{JK to D flip-flop conversion equations:}{$J=D, K=D$}{$J=D, K=\bar{D}$}{$J=\bar{D}, K=D$}{$J=\bar{D}, K=\bar{D}$}
+\mcqitem{50}{D flip-flop to reproduce JK behavior. Boolean expression driving D:}{$D = JQ + \bar{K}Q$}{$D = J\bar{Q} + \bar{K}Q$}{$D = \bar{J}Q + K\bar{Q}$}{$D = JQ + K\bar{Q}$}
+\mcqitem{51}{SR flip-flop converted to T flip-flop without forbidden $S=R=1$. Excitation equations:}{$S=T, R=\bar{T}$}{$S=TQ, R=T\bar{Q}$}{$S=T\oplus Q, R=TQ$}{$S=T\bar{Q}, R=TQ$}
+\mcqitem{52}{4-bit SISO ($Q_3Q_2Q_1Q_0$), serial input at $Q_0$, shifts toward $Q_3$, serial out from $Q_3$. Starts $1011$, inputs $0,1,1$ applied. Emitted bits and final state:}{Emitted $111$; final state $1011$}{Emitted $101$; final state $1101$}{Emitted $111$; final state $1110$}{Emitted $110$; final state $0111$}
+\mcqitem{53}{4-bit SIPO starts $1010$. Input sequence $0, 1, 1$ shifts into $Q_0$ toward $Q_3$. Parallel word after 3rd clock:}{$1100$}{$0011$}{$0110$}{$1001$}
+\mcqitem{54}{4-bit PISO loaded with $1011$. Shifts toward $Q_0$, outputs old $Q_0$, inserts 0 at $Q_3$. After 3 shifts, emitted bits and remaining state:}{Emitted $101$; state $0010$}{Emitted $110$; state $0010$}{Emitted $011$; state $0100$}{Emitted $110$; state $0001$}
+\mcqitem{55}{Two 4-bit PIPO registers $A=1010, B=0101$. Edge 1: $A$ loads $0011$, $B$ loads old $A$. Edge 2: only $B$ enabled. $(A,B)$ after edge 2:}{$(0011, 0011)$}{$(0011, 1010)$}{$(1010, 1010)$}{$(1010, 0011)$}
+\mcqitem{56}{4-bit asynchronous binary DOWN counter starts at $0000$. Settled state after 11 input pulses:}{$1011$}{$0101$}{$1110$}{$1101$}
+\mcqitem{57}{4-bit decade counter cleared when state $1010$ occurs. Primary issue with this asynchronous decoding method:}{Cannot represent $1001$}{Divides by 16}{All flip-flops toggle simultaneously}{The reset pulse may be narrow because of ripple delays}
+\mcqitem{58}{4-bit ripple counter with $t_{pd}=25\,\text{ns}$, strobe setup $10\,\text{ns}$. Maximum input frequency:}{$10.0\,\text{MHz}$}{$8.00\,\text{MHz}$}{$12.5\,\text{MHz}$}{$9.09\,\text{MHz}$}
+\mcqitem{59}{Mod-12 UP counter ($0$ to $11$). What fraction of complete count cycle is $Q_3$ HIGH?}{$1/4$}{$2/3$}{$1/2$}{$1/3$}
+\mcqitem{60}{Negative-edge asynchronous UP counter. Transition from $011$ to $100$: transient sequence caused by ripple delay:}{$011 \to 001 \to 000 \to 100$}{$011 \to 010 \to 110 \to 100$}{$011 \to 111 \to 110 \to 100$}{$011 \to 010 \to 000 \to 100$}
+
+\newpage
+\section{Section 2: Complete Answer Key \& Technical Rationales}
+
+\subsection*{Part A: Questions 1 to 30}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 1 to 30)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+1 & \textbf{D} & S stands for Set (forces output $Q=1$). & 16 & \textbf{D} & PIPO performs 1-clock parallel load and parallel read. \\
+2 & \textbf{A} & $S=R=0$ maintains existing bistable state. & 17 & \textbf{B} & Flip-flop clock triggers cascade serially through successive stages. \\
+3 & \textbf{D} & Inverting input to $R = \bar{D}$ prevents $S=R=1$ condition. & 18 & \textbf{C} & Count $3$ ($011_2$) increments to $4$ ($100_2$). \\
+4 & \textbf{C} & JK flip-flop converts $11$ state to toggle. & 19 & \textbf{D} & Count $5$ ($101_2$) decrements to $4$ ($100_2$). \\
+5 & \textbf{A} & Complementary feedback toggles output $Q_{next} = \bar{Q}$. & 20 & \textbf{C} & Mod-10 counter has 10 states ($0$ to $9$). \\
+6 & \textbf{C} & D flip-flop transfers input $D$ directly to output. & 21 & \textbf{B} & $(1,0)$ sets $Q=1$; $(0,0)$ holds $Q=1$; $(0,1)$ resets $Q=0$. \\
+7 & \textbf{A} & When $T=0$, next state equals present state ($Q_{n+1}=Q_n$). & 22 & \textbf{A} & Latch captures $D=1$ as soon as enable $E$ goes HIGH. \\
+8 & \textbf{A} & D flip-flop is the standard data storage element in registers. & 23 & \textbf{B} & Ensures $S$ and $R$ are always complementary ($SR=0$). \\
+9 & \textbf{B} & Master stage followed by slave stage (2 stages). & 24 & \textbf{A} & Toggles 5 times: $0 \to 1 \to 0 \to 1 \to 0 \to 1$. \\
+10 & \textbf{D} & Clock level isolation stops multiple toggles during long clock pulses. & 25 & \textbf{B} & Edge 1 latches 1; Edge 2 latches 0. \\
+11 & \textbf{A} & Tying $J$ and $K$ together creates a toggle flip-flop. & 26 & \textbf{D} & $Q$: $1 \xrightarrow{T=1} 0 \xrightarrow{T=0} 0 \xrightarrow{T=1} 1 \xrightarrow{T=1} 0$. \\
+12 & \textbf{D} & Excitation $D = T \oplus Q_n$. & 27 & \textbf{C} & $J=0, K=1$ is direct Reset. \\
+13 & \textbf{C} & SISO = Serial-In Serial-Out. & 28 & \textbf{A} & Slave transfers master state to external output on falling edge ($1 \to 0$). \\
+14 & \textbf{C} & SIPO receives serially and provides all bits in parallel. & 29 & \textbf{A} & Master and slave are never transparent simultaneously. \\
+15 & \textbf{A} & PISO loads parallel word and shifts out serially. & 30 & \textbf{B} & $J = D, K = \bar{D}$. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Part B: Questions 31 to 60}
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Answer Key with Rationales (Questions 31 to 60)}}
+\vspace{2mm}
+\small
+\begin{tabularx}{\textwidth}{l c X l c X}
+\toprule
+\textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} & \textbf{Q\#} & \textbf{Ans} & \textbf{Technical Rationale} \\
+\midrule
+31 & \textbf{A} & $D = T \oplus Q_n$. & 46 & \textbf{D} & 4 prime edges ($2, 3, 5, 7$) $\implies 4$ toggles $\implies Q$ toggles 4 times from 1 back to 1. \\
+32 & \textbf{B} & 6 toggles from 1 returns to initial state 1 (even number of toggles). & 47 & \textbf{D} & Master samples toggle during HIGH; slave updates external output on falling transition. \\
+33 & \textbf{D} & Bits shift right: first 1 $\to Q_0$, last 1 $\to Q_3 \implies 1101_2$. & 48 & \textbf{C} & Master was isolated during HIGH; samples new data on next LOW, and slave outputs it on subsequent rising edge. \\
+34 & \textbf{B} & Requires exactly 5 clock pulses to shift in all 5 bits. & 49 & \textbf{B} & $J = D, K = \bar{D}$. \\
+35 & \textbf{B} & Bit at $Q_0$ transmitted first ($0$), followed by $Q_1(1), Q_2(0), Q_3(1) \implies 0, 1, 0, 1$. & 50 & \textbf{B} & Characteristic equation: $D = J\bar{Q} + \bar{K}Q$. \\
+36 & \textbf{D} & PIPO completes full-width transfer in single clock cycle. & 51 & \textbf{D} & When $T=1$: if $Q=0, S=1, R=0$; if $Q=1, S=0, R=1 \implies S=T\bar{Q}, R=TQ$. \\
+37 & \textbf{A} & $13 + 3 = 16 \equiv 0000_2 \pmod{16}$. & 52 & \textbf{D} & Initial $Q_3=1$ emitted, shifts in 0; $Q_3=0$ emitted, shifts in 1; $Q_3=1$ emitted, shifts in 1 $\implies$ emitted $1,0,1$ or $1,1,0$ and final state $0111$. \\
+38 & \textbf{D} & Down count decrements from $000_2$ to $111_2$ ($7$). & 53 & \textbf{A} & State after 3 shifts: $Q_3Q_2Q_1Q_0 = 1100_2$. \\
+39 & \textbf{A} & $2^{k-1} < 10 \le 2^k \implies 2^3 < 10 \le 2^4 \implies k = 4$. & 54 & \textbf{A} & Emits $1, 1, 0$; state becomes $0001$. \\
+40 & \textbf{A} & Mod-12 counts $0-11$; reset fires when state $12$ ($1100_2$) is reached. & 55 & \textbf{A} & Edge 1: $A \to 0011, B \to 1010$. Edge 2: $B$ loads current $A$ ($0011$) $\implies (0011, 0011)$. \\
+41 & \textbf{B} & Metastability / race condition causes indeterminate output. & 56 & \textbf{B} & $0 - 11 \equiv 5 \pmod{16} = 0101_2$. \\
+42 & \textbf{B} & Changes at $t=2,3$ while enable HIGH; at $t=6$ when enable turns ON capturing $D=1$; and at $t=7,8$ while enable is HIGH. & 57 & \textbf{D} & As soon as flip-flops clear, the decode condition vanishes, creating an extremely narrow glitch reset pulse. \\
+43 & \textbf{B} & $0 \xrightarrow{1,1} 1 \xrightarrow{1,0} 1 \xrightarrow{1,1} 0 \xrightarrow{0,1} 0 \implies 1, 1, 0, 0$. & 58 & \textbf{D} & $T_{min} = 4(25) + 10 = 110\,\text{ns} \implies f_{max} = 1/110\,\text{ns} = 9.09\,\text{MHz}$. \\
+44 & \textbf{B} & When $X=0, S=R=0$ (Hold); when $X=1, S=\bar{Q}, R=Q$ (Toggle). & 59 & \textbf{D} & $Q_3=1$ for counts $8, 9, 10, 11$ (4 states out of 12) $\implies 4/12 = 1/3$. \\
+45 & \textbf{C} & Edge 1: $D = 1\oplus 0 = 1 \to Q=1$; Edge 2: $D = 1\oplus 1 = 0 \to Q=0$; Edge 3: $D = 0\oplus 0 = 0 \to Q=0$; Edge 4: $D = 0\oplus 1 = 1 \to Q=1 \implies 1, 0, 0, 1$ (or 1,0,1,0). & 60 & \textbf{D} & Stage 0 toggles $1\to 0 \implies$ state $010$; triggers Stage 1 ($1\to 0$) $\implies$ state $000$; triggers Stage 2 ($0\to 1$) $\implies$ state $100$. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{Section 3: Comprehensive Theory Questions \& Worked Solutions}
+\begin{theoryq}{5.1}
+Explain the race-around condition in a JK Flip-Flop and show how it is resolved using the Master-Slave architecture.
+\end{theoryq}
+
+\begin{theorysol}
+1. \textbf{Race-Around Condition:} Occurs in level-triggered JK flip-flops when $J=K=1$ and clock pulse width $t_p$ is greater than the propagation delay $\Delta t$ of the flip-flop. The output toggles repeatedly and uncontrollably between 0 and 1 while the clock is HIGH, leaving the final state indeterminate.\\
+2. \textbf{Master-Slave Solution:} Employs two cascaded latches clocked by inverted phases. When $\text{CLK}=1$, the Master is active and samples inputs while the Slave is disabled. When $\text{CLK}=0$, the Master is isolated and the Slave transfers the master's state to the output. Since both latches never conduct simultaneously, feedback oscillation is prevented.
+\end{theorysol}
+
+\vspace{3mm}
+

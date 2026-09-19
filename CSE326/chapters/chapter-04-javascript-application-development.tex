@@ -1,0 +1,590 @@
+\chapter{JavaScript Application Development (Syntax, Variables, Logic \& Objects)}
+\label{chap:javascript-application-development}
+
+% ==============================================================================
+% SECTION 4.1: OVERVIEW \& OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+\begin{conceptbox}[Unit 4 Academic Scope \lpuBadge]
+JavaScript provides the dynamic, programmable behavioral layer of the web. This unit covers script placement strategies within HTML documents, variable declarations and scope architectures (\texttt{var}, \texttt{let}, \texttt{const}), arithmetic, comparison, and logical operators, branching control structures (\texttt{if-else}, \texttt{switch}), iterative loops (\texttt{for}, \texttt{while}, \texttt{do-while}), browser popup dialogs (\texttt{alert}, \texttt{confirm}, \texttt{prompt}), and JavaScript object literal data structures with methods and the \texttt{this} keyword.
+\end{conceptbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Script Architecture}: Compare script placement within \texttt{<head>} versus the bottom of \texttt{<body>}, and configure external \texttt{.js} files for caching.
+    \item \textbf{Variable Scope \& Lifecycle}: Contrast function-scoped \texttt{var} (and hoisting) with block-scoped \texttt{let} and \texttt{const} (Temporal Dead Zone).
+    \item \textbf{Operator Mechanics}: Distinguish loose equality (\texttt{==}) from strict type-and-value equality (\texttt{===}).
+    \item \textbf{Control Flow \& Branching}: Implement multi-way decisions via \texttt{switch-case} and control loop iterations using \texttt{break} and \texttt{continue}.
+    \item \textbf{Iterative Loops}: Design terminating \texttt{for}, \texttt{while}, and \texttt{do-while} loops.
+    \item \textbf{Object-Oriented JavaScript}: Construct object literals, access properties via dot and bracket notation, and implement methods bound to \texttt{this}.
+\end{itemize}
+
+% ==============================================================================
+% SECTION 4.2: INCORPORATING JAVASCRIPT IN HTML
+% ==============================================================================
+\section{Incorporating JavaScript in HTML}
+
+JavaScript can be embedded into an HTML document using three distinct strategies:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Placement Strategy} & \textbf{Execution Timing \& Characteristics} & \textbf{Recommended Use Case} \\
+\midrule
+\textbf{Inside \texttt{<head>}} & Loads and parses \textbf{before} the HTML body is rendered; blocks HTML parsing. & Pre-loading utilities, polyfills \\
+\textbf{Inside \texttt{<body>} (Bottom)} & Executes \textbf{after} DOM elements are constructed; ensures non-blocking UI rendering. & **Standard Web Best Practice** \\
+\textbf{External \texttt{.js} File} & Linked via \texttt{<script src="app.js"></script>}; browser caches script file. & Production multi-page applications \\
+\bottomrule
+\end{tabularx}
+\caption{JavaScript Inclusion Modalities in HTML Documents.}
+\label{tab:js-placement}
+\end{table}
+
+\begin{htmlcode}{Script Inclusion at Bottom of Body}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Integration</title>
+</head>
+<body>
+    <h1 id="headline">Original Text</h1>
+    <button id="btnAction">Click to Modify</button>
+
+    <!-- External Script loaded at bottom of body -->
+    <script src="main.js"></script>
+</body>
+</html>
+\end{htmlcode}
+
+% ==============================================================================
+% SECTION 4.3: VARIABLES (VAR, LET, CONST)
+% ==============================================================================
+\section{Variables: \texttt{var}, \texttt{let}, and \texttt{const}}
+
+Modern ECMAScript (ES6+) provides three variable declaration keywords with fundamentally different scoping and mutability rules:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{llllX}
+\toprule
+\textbf{Keyword} & \textbf{Scope} & \textbf{Hoisting Behavior} & \textbf{Re-declaration?} & \textbf{Reassignment?} \\
+\midrule
+\textbf{\texttt{var}} & Function / Global & Hoisted \& initialized as \texttt{undefined} & **Allowed** & **Allowed** \\
+\textbf{\texttt{let}} & **Block Scope** (\texttt{\{\}}) & Hoisted in **Temporal Dead Zone (TDZ)** & Prohibited & **Allowed** \\
+\textbf{\texttt{const}} & **Block Scope** (\texttt{\{\}}) & Hoisted in **Temporal Dead Zone (TDZ)** & Prohibited & **Prohibited** (Immutable binding) \\
+\bottomrule
+\end{tabularx}
+\caption{Detailed Architectural Comparison of \texttt{var}, \texttt{let}, and \texttt{const}.}
+\label{tab:var-let-const}
+\end{table}
+
+\begin{jscode}{Scoping and Temporal Dead Zone Demonstration}
+function testScope() {
+    // var is function-scoped
+    if (true) {
+        var functionScoped = "Visible outside this if-block";
+        let blockScoped = "Visible ONLY inside this if-block";
+        const constantVal = 3.14159;
+    }
+    console.log(functionScoped); // Works: "Visible outside this if-block"
+    // console.log(blockScoped);  // ReferenceError: blockScoped is not defined
+    // console.log(constantVal);  // ReferenceError: constantVal is not defined
+}
+
+// Mutability in const objects
+const student = { name: "Rohan", gpa: 8.5 };
+student.gpa = 9.0; // Allowed: Modifying property of object
+console.log("Updated GPA:", student.gpa);
+
+// student = { name: "New" }; // TypeError: Assignment to constant variable
+\end{jscode}
+
+\begin{outputbox}
+Visible outside this if-block
+Updated GPA: 9.0
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 4.4: OPERATORS \& TYPE COERCION
+% ==============================================================================
+\section{Operators \& Type Coercion}
+
+\subsection{Arithmetic and Assignment Operators}
+JavaScript supports standard arithmetic operators: \texttt{+} (addition / string concatenation), \texttt{-} (subtraction), \texttt{*} (multiplication), \texttt{/} (true division), \texttt{\%} (modulus), \texttt{++} (increment), and \texttt{--} (decrement).
+
+\subsection{Loose Equality (\texttt{==}) vs. Strict Equality (\texttt{===})}
+\begin{conceptbox}[The Critical Strict Equality Rule \examBadge]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Loose Equality (\texttt{==})}: Performs **implicit type coercion** before comparing values. \texttt{5 == "5"} evaluates to \texttt{True} because the string \texttt{"5"} is coerced to number \texttt{5}.
+    \item \textbf{Strict Equality (\texttt{===})}: Evaluates equality of **both value and data type** without coercion. \texttt{5 === "5"} evaluates to \texttt{False} (number vs. string).
+\end{itemize}
+\end{conceptbox}
+
+\begin{jscode}{Loose vs Strict Equality Comparisons}
+console.log(5 == "5");     // true  (Type coercion applied)
+console.log(5 === "5");    // false (Distinct data types: Number vs String)
+console.log(0 == false);   // true  (Coerced to 0)
+console.log(0 === false);  // false (Number vs Boolean)
+console.log(null == undefined);  // true
+console.log(null === undefined); // false
+\end{jscode}
+
+\subsection{Logical Operators and Short-Circuit Evaluation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Logical AND (\texttt{\&\&})}: Returns \texttt{true} if both operands are truthy. Short-circuits on first falsy value.
+    \item \textbf{Logical OR (\texttt{||})}: Returns \texttt{true} if at least one operand is truthy. Short-circuits on first truthy value.
+    \item \textbf{Logical NOT (\texttt{!})}: Inverts truth value (\texttt{!true} $\to$ \texttt{false}).
+\end{itemize}
+
+% ==============================================================================
+% SECTION 4.5: CONTROL FLOW \& LOOPS
+% ==============================================================================
+\section{Control Flow \& Looping Statements}
+
+\subsection{The \texttt{if...else} and \texttt{switch} Statements}
+\begin{jscode}{Multi-way Decision Tree via switch}
+let dayCode = 3;
+let dayName = "";
+
+switch (dayCode) {
+    case 1:
+        dayName = "Monday";
+        break;
+    case 2:
+        dayName = "Tuesday";
+        break;
+    case 3:
+        dayName = "Wednesday";
+        break;
+    default:
+        dayName = "Invalid Day Code";
+}
+console.log("Scheduled Day:", dayName);
+\end{jscode}
+
+\subsection{Iterative Loops: \texttt{for}, \texttt{while}, and \texttt{do...while}}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xl}
+\toprule
+\textbf{Loop Construct} & \textbf{Evaluation Timing \& Mechanics} & \textbf{Guaranteed Iterations} \\
+\midrule
+\texttt{for (init; cond; step)} & Evaluates condition **before** each iteration (Pre-test) & $0$ or more \\
+\texttt{while (condition)} & Evaluates condition **before** loop entry (Pre-test) & $0$ or more \\
+\texttt{do \{ ... \} while (cond)} & Executes body first, then evaluates condition (Post-test) & **At least 1 execution** \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of JavaScript Looping Statements.}
+\label{tab:js-loops}
+\end{table}
+
+\begin{jscode}{Demonstrating do...while Guarantee}
+let count = 10;
+
+// Condition (count < 5) is FALSE from the start
+do {
+    console.log("Executed once regardless of condition! count =", count);
+    count++;
+} while (count < 5);
+\end{jscode}
+\begin{outputbox}
+Executed once regardless of condition! count = 10
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 4.6: BROWSER POPUP DIALOGS
+% ==============================================================================
+\section{Browser Popup Dialogs (\texttt{alert}, \texttt{confirm}, \texttt{prompt})}
+
+JavaScript provides three built-in modal dialog methods that block thread execution until dismissed:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Dialog Method} & \textbf{Return Value} & \textbf{Primary Purpose} \\
+\midrule
+\texttt{alert("msg")} & \texttt{undefined} & Displays informational notice with an "OK" button \\
+\texttt{confirm("msg")} & \texttt{Boolean} (\texttt{true} on OK, \texttt{false} on Cancel) & Requests user binary confirmation for destructive actions \\
+\texttt{prompt("msg", "default")} & \texttt{String} (Input text) or \texttt{null} (on Cancel) & Prompts user for a single-line textual string value \\
+\bottomrule
+\end{tabularx}
+\caption{JavaScript Browser Popup Dialog Functions.}
+\label{tab:dialog-functions}
+\end{table}
+
+\begin{jscode}{Using Popup Dialogs}
+// 1. Alert
+alert("Examination portal session initialized.");
+
+// 2. Confirm
+let deleteConfirm = confirm("Are you sure you wish to delete this record?");
+if (deleteConfirm) {
+    console.log("Record deleted.");
+} else {
+    console.log("Deletion aborted by user.");
+}
+
+// 3. Prompt
+let studentName = prompt("Enter student name:", "Aarav");
+if (studentName !== null) {
+    console.log("Welcome,", studentName);
+}
+\end{jscode}
+
+% ==============================================================================
+% SECTION 4.7: JAVASCRIPT OBJECTS
+% ==============================================================================
+\section{Working with JavaScript Objects}
+
+\subsection{Object Literals, Properties \& Methods}
+An **Object** in JavaScript is an unordered collection of related key-value pairs (properties) and functions (methods):
+
+\begin{jscode}{Object Creation, Methods, and the this Reference}
+// Object Literal Notation
+const universityCourse = {
+    courseCode: "CSE326",
+    courseTitle: "Web Development",
+    credits: 3,
+    enrolledStudents: 120,
+
+    // Object Method
+    getCourseSummary: function() {
+        // 'this' references the host object instance
+        return `${this.courseCode}: ${this.courseTitle} (${this.credits} Credits)`;
+    }
+};
+
+// Accessing properties via Dot and Bracket notation
+console.log("Course Code (Dot):", universityCourse.courseCode);
+console.log("Course Title (Bracket):", universityCourse["courseTitle"]);
+
+// Invoking Object Method
+console.log("Summary:", universityCourse.getCourseSummary());
+
+// Dynamically adding new property
+universityCourse.instructor = "Dr. Sharma";
+console.log("Instructor:", universityCourse.instructor);
+\end{jscode}
+
+\begin{outputbox}
+Course Code (Dot): CSE326
+Course Title (Bracket): Web Development
+Summary: CSE326: Web Development (3 Credits)
+Instructor: Dr. Sharma
+\end{outputbox}
+
+% ==============================================================================
+% SECTION 4.8: EXAM TIPS \& PITFALLS
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Unit 4 High-Yield Traps]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Missing \texttt{break} in Switch}: Forgetting \texttt{break} causes execution to "fall through" into subsequent cases regardless of whether their condition matches.
+    \item \textbf{The \texttt{==} vs \texttt{===} Trap}: Always prefer \texttt{===} in examinations and production code to prevent unintended type coercions (e.g., \texttt{"" == 0} is \texttt{true}).
+    \item \textbf{Reassigning \texttt{const} vs Mutating Object}: You CAN modify properties of a \texttt{const} object (\texttt{obj.x = 10}), but you CANNOT rebind the identifier to a new object (\texttt{obj = \{\}}).
+\end{itemize}
+\end{examtip}
+
+% ==============================================================================
+% SECTION 4.9: OUTPUT PREDICTION \& DEBUGGING
+% ==============================================================================
+\section{Output Prediction \& Debugging Challenges}
+
+\begin{outputprediction}[Variable Hoisting and Strict Equality]
+\textbf{Question}: Predict the exact output logged:
+\begin{lstlisting}[language=JavaScript]
+console.log(x); // Hoisting test
+var x = 10;
+console.log("5" + 2, "5" - 2);
+console.log([] == 0, [] === 0);
+\end{lstlisting}
+\textbf{Answer \& Tracing}:
+\begin{itemize}
+    \item \texttt{var x} is hoisted and initialized with \texttt{undefined}. Line 1 logs \texttt{undefined}.
+    \item \texttt{"5" + 2} performs string concatenation $\to$ \texttt{"52"}. \texttt{"5" - 2} coerces to numeric subtraction $\to$ \texttt{3}.
+    \item \texttt{[] == 0} coerces empty array to empty string then to 0 $\to$ \texttt{true}. \texttt{[] === 0} compares Object vs Number $\to$ \texttt{false}.
+\end{itemize}
+\end{outputprediction}
+
+\begin{debuggingbox}[Fixing Scope Leakage and Switch Fallthrough]
+\textbf{Buggy Code}:
+\begin{lstlisting}[language=JavaScript]
+function compute(val) {
+    switch(val) {
+        case 1:
+            var res = "One";
+        case 2:
+            var res = "Two";
+    }
+    return res;
+}
+console.log(compute(1)); // Returns "Two" instead of "One"!
+\end{lstlisting}
+\textbf{Diagnosis \& Correction}: Missing \texttt{break} causes case 1 to fall through into case 2. Use \texttt{let} and add \texttt{break}:
+\begin{lstlisting}[language=JavaScript]
+function compute(val) {
+    let res = "";
+    switch(val) {
+        case 1:
+            res = "One";
+            break;
+        case 2:
+            res = "Two";
+            break;
+    }
+    return res;
+}
+\end{lstlisting}
+\end{debuggingbox}
+
+% ==============================================================================
+% SECTION 4.10: GRADED PRACTICE PROBLEMS \& SOLUTIONS
+% ==============================================================================
+\section{Graded Programming Practice Problems \& Solutions}
+
+\begin{practiceset}[Unit 4 Practice Problems]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Level 1 (Foundation)}: Write a JavaScript script that prompts the user for their birth year and calculates their current age using an alert dialog.
+    \item \textbf{Level 1 (Foundation)}: Write a \texttt{for} loop that prints all even numbers between 1 and 20 to the browser console.
+    \item \textbf{Level 2 (Standard)}: Create a \texttt{do...while} loop that simulates rolling a 6-sided die using \texttt{Math.random()} until a 6 is rolled.
+    \item \textbf{Level 2 (Standard)}: Write a function that accepts a student exam percentage and returns letter grades using a \texttt{switch(true)} construct.
+    \item \textbf{Level 3 (Exam Tier)}: Create a complete \texttt{bankAccount} object literal with properties \texttt{accountNumber}, \texttt{balance}, and methods \texttt{deposit(amount)}, \texttt{withdraw(amount)}, and \texttt{getBalance()}.
+    \item \textbf{Level 3 (Exam Tier)}: Write a JavaScript program that calculates the factorial of an input number using a \texttt{while} loop.
+    \item \textbf{Level 4 (Challenge)}: Design an interactive command-line quiz application utilizing objects, array iteration, \texttt{prompt()} user inputs, and score calculations.
+\end{enumerate}
+\end{practiceset}
+
+\subsection{Complete Step-by-Step Worked Solutions}
+
+\begin{solutionbox}[Solutions to Unit 4 Practice Problems]
+\noindent\textbf{Solution to Problem 3 (Die Roll Simulation)}:
+\begin{lstlisting}[language=JavaScript]
+let rollCount = 0;
+let rollValue = 0;
+
+do {
+    // Generate integer between 1 and 6
+    rollValue = Math.floor(Math.random() * 6) + 1;
+    rollCount++;
+    console.log(`Roll ${rollCount}: Rolled a ${rollValue}`);
+} while (rollValue !== 6);
+
+console.log(`Target 6 reached in ${rollCount} rolls!`);
+\end{lstlisting}
+
+\noindent\textbf{Solution to Problem 5 (Bank Account Object)}:
+\begin{lstlisting}[language=JavaScript]
+const bankAccount = {
+    accountNumber: "LPU-CSE-9901",
+    balance: 5000.0,
+
+    deposit: function(amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            return `Deposited Rs. ${amount}. New Balance: Rs. ${this.balance}`;
+        }
+        return "Invalid deposit amount.";
+    },
+
+    withdraw: function(amount) {
+        if (amount > 0 && amount <= this.balance) {
+            this.balance -= amount;
+            return `Withdrew Rs. ${amount}. Remaining Balance: Rs. ${this.balance}`;
+        }
+        return "Transaction Denied: Insufficient Funds.";
+    },
+
+    getBalance: function() {
+        return `Current Balance: Rs. ${this.balance}`;
+    }
+};
+
+console.log(bankAccount.deposit(1500));
+console.log(bankAccount.withdraw(2000));
+\end{lstlisting}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 4.11: MULTIPLE CHOICE QUESTIONS
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the value of \texttt{5 === "5"} in JavaScript?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{true} \quad (b) \texttt{false} \quad (c) \texttt{undefined} \quad (d) \texttt{NaN}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Strict equality compares both value and data type without coercion.}
+
+    \item Which variable declaration keyword creates block-scoped mutable variables?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{var} \quad (b) \texttt{let} \quad (c) \texttt{const} \quad (d) \texttt{global}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{let} provides block-scoped mutable variables.}
+
+    \item What does \texttt{confirm("Save changes?")} return if the user clicks "Cancel"?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{null} \quad (b) \texttt{undefined} \quad (c) \texttt{false} \quad (d) \texttt{0}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Clicking Cancel on a confirm dialog returns Boolean \texttt{false}.}
+
+    \item Which loop construct is guaranteed to execute its code block at least once?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{for} \quad (b) \texttt{while} \quad (c) \texttt{do...while} \quad (d) \texttt{forEach}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{\texttt{do...while} tests its condition after executing the body.}
+
+    \item In an object method, what does the \texttt{this} keyword refer to?
+    \begin{enumerate}[label=(\alph*)]
+        \item Global window \quad (b) The host object instance \quad (c) Function parameter \quad (d) HTML DOM
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{this} inside an object method refers to the calling object.}
+
+    \item What is the output of \texttt{"10" - 5}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{"105"} \quad (b) \texttt{5} \quad (c) \texttt{NaN} \quad (d) \texttt{TypeError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{The subtraction operator coerces strings to numbers $\to 10 - 5 = 5$.}
+
+    \item What error occurs when attempting to reassign a \texttt{const} variable identifier?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{SyntaxError} \quad (b) \texttt{TypeError} \quad (c) \texttt{ReferenceError} \quad (d) \texttt{RangeError}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Reassigning a \texttt{const} binding raises \texttt{TypeError}.}
+
+    \item What does \texttt{prompt()} return if the user clicks "Cancel"?
+    \begin{enumerate}[label=(\alph*)]
+        \item Empty string \texttt{""} \quad (b) \texttt{false} \quad (c) \texttt{null} \quad (d) \texttt{undefined}
+    \end{enumerate}
+    \textbf{Answer}: (c) --- \textit{Dismissing a prompt dialog returns \texttt{null}.}
+
+    \item Which statement immediately skips the remaining code in the current loop iteration?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{break} \quad (b) \texttt{continue} \quad (c) \texttt{return} \quad (d) \texttt{exit}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{\texttt{continue} jumps directly to the next iteration.}
+
+    \item How do you access an object property named \texttt{course-id}?
+    \begin{enumerate}[label=(\alph*)]
+        \item \texttt{obj.course-id} \quad (b) \texttt{obj["course-id"]} \quad (c) \texttt{obj->course-id} \quad (d) \texttt{obj(course-id)}
+    \end{enumerate}
+    \textbf{Answer}: (b) --- \textit{Properties with hyphens require bracket notation.}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 4.12: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 4 Examination (25 Marks --- 45 Minutes)]
+\noindent\textbf{Section A: Short Answer Concepts ($3 \times 2 = 6\text{ Marks}$)}
+\begin{enumerate}
+    \item Differentiate between \texttt{var}, \texttt{let}, and \texttt{const}.
+    \item Explain the difference between \texttt{==} and \texttt{===} in JavaScript.
+    \item What is the role of the \texttt{this} keyword in object methods?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Code Tracing \& Output Prediction ($3 \times 3 = 9\text{ Marks}$)}
+\begin{enumerate}[start=4]
+    \item Predict the output of this loop and operator code:
+    \begin{lstlisting}[language=JavaScript]
+let sum = 0;
+for (let i = 1; i <= 5; i++) {
+    if (i === 3) continue;
+    sum += i;
+}
+console.log("Sum:", sum);
+    \end{lstlisting}
+    \item Trace the output of this object method call:
+    \begin{lstlisting}[language=JavaScript]
+const calc = {
+    num: 10,
+    double: function() { return this.num * 2; }
+};
+console.log(calc.double());
+    \end{lstlisting}
+    \item What is returned by \texttt{prompt("Enter score")} if the user types \texttt{95} and clicks OK vs. Cancel?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Programming Problem ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[start=7]
+    \item Design a complete JavaScript interactive student grade evaluation system:
+    \begin{enumerate}[label=(\alph*)]
+        \item Prompt user for 3 subject scores using \texttt{prompt()} and parse to numbers. (3 Marks)
+        \item Calculate average and assign letter grades using a \texttt{switch(true)} or chained \texttt{if-else}. (3 Marks)
+        \item Create a \texttt{reportCard} object storing name, scores, average, and a \texttt{printStatus()} method displayed via an \texttt{alert()}. (4 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\subsection{Unit Test Complete Solutions \& Rubric}
+
+\begin{solutionbox}[Complete Solutions for Unit 4 Test]
+\noindent\textbf{Section A Solutions}:
+\begin{enumerate}
+    \item \textbf{Var vs. Let vs. Const} [2 Marks]: \texttt{var} is function-scoped and hoisted with \texttt{undefined}; \texttt{let} is block-scoped and mutable; \texttt{const} is block-scoped with immutable binding.
+    \item \textbf{Equality Operators} [2 Marks]: \texttt{==} coerces operand types before comparing values; \texttt{===} compares value and type strictly without coercion.
+    \item \textbf{This Keyword} [2 Marks]: \texttt{this} refers to the calling object instance within whose context the method is executed.
+\end{enumerate}
+
+\noindent\textbf{Section B Solutions}:
+\begin{enumerate}[start=4]
+    \item \textbf{Loop Tracing} [3 Marks]: $i=1 \to \text{sum}=1$; $i=2 \to \text{sum}=3$; $i=3 \to$ skip; $i=4 \to \text{sum}=7$; $i=5 \to \text{sum}=12$. Output: \texttt{"Sum: 12"}.
+    \item \textbf{Object Method Output} [3 Marks]: \texttt{this.num} accesses $10$, computing $10 \times 2 = \mathbf{20}$.
+    \item \textbf{Prompt Return Values} [3 Marks]: Clicking OK returns string \texttt{"95"}; clicking Cancel returns \texttt{null}.
+\end{enumerate}
+
+\noindent\textbf{Section C Solution}:
+\begin{enumerate}[start=7]
+    \item \textbf{Interactive Grade Evaluation Script} [10 Marks]:
+\begin{lstlisting}[language=JavaScript]
+// Step 1: Collect user inputs
+let studentName = prompt("Enter student name:", "Aarav");
+let m1 = parseFloat(prompt("Enter marks for Subject 1 (0-100):"));
+let m2 = parseFloat(prompt("Enter marks for Subject 2 (0-100):"));
+let m3 = parseFloat(prompt("Enter marks for Subject 3 (0-100):"));
+
+// Step 2 & 3: Construct Report Object
+const reportCard = {
+    name: studentName,
+    marks: [m1, m2, m3],
+    
+    getAverage: function() {
+        return (this.marks[0] + this.marks[1] + this.marks[2]) / 3;
+    },
+    
+    getGrade: function() {
+        let avg = this.getAverage();
+        if (avg >= 90) return "A+";
+        if (avg >= 80) return "A";
+        if (avg >= 70) return "B";
+        if (avg >= 60) return "C";
+        return "F";
+    },
+    
+    displayReport: function() {
+        let summary = `--- Student Report Card ---\nName: ${this.name}\nAverage: ${this.getAverage().toFixed(2)}\nGrade: ${this.getGrade()}`;
+        alert(summary);
+    }
+};
+
+reportCard.displayReport();
+\end{lstlisting}
+\textbf{Marking Scheme}: Input parsing: 3M; Average and grade logic: 3M; Object structure and alert display: 4M.
+\end{enumerate}
+\end{solutionbox}

@@ -1,0 +1,508 @@
+\chapter{Single-Variable Integral Calculus, Special Functions \& Applications}
+\label{chap:single-variable-integral-calculus}
+
+% ==============================================================================
+% SECTION 2.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Integral calculus constitutes the mathematical machinery for continuous summation, boundary accumulation, and geometric measurement. This unit covers advanced techniques of single-variable integration, reduction formulae for higher-order trigonometric integrals, the analysis and convergence testing of improper integrals, the theory and identities of the Euler Beta and Gamma special functions, and geometric engineering applications including rectification (arc length), quadrature (plane area), and solids of revolution (volumes and surface areas).
+
+\begin{important}[Core Learning Objectives]
+After completing this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Evaluate Definite Integrals} using fundamental calculus theorems, symmetry, and \textbf{Leibniz's Rule for Differentiation under the Integral Sign}.
+    \item \textbf{Derive Reduction Formulae} for single and combined trigonometric powers ($\sin^n x, \cos^n x, \tan^n x, \sec^n x, \sin^m x \cos^n x$) and apply \textbf{Walli's Formula}.
+    \item \textbf{Analyze Improper Integrals} of Type I (infinite limits) and Type II (discontinuous integrands), classifying convergence using comparison tests and the $\mu$-test.
+    \item \textbf{Master the Beta $B(m,n)$ and Gamma $\Gamma(n)$ Special Functions}, establishing their recurrence relations, reflection identities, and Legendre's duplication formula.
+    \item \textbf{Compute Geometric Measurements}: Arc length (\textbf{Rectification}), enclosed plane area (\textbf{Quadrature}), and \textbf{Volume / Surface Area of Revolution} across Cartesian, Parametric, and Polar coordinate systems.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 2.2: DEFINITE INTEGRALS \& PROPERTIES
+% ==============================================================================
+\section{Definite Integrals and Fundamental Properties}
+
+\subsection{Fundamental Theorem of Calculus \& Leibniz Differentiation Rule}
+
+\begin{theorem}[Leibniz Rule for Differentiation under the Integral Sign]
+Let $f(x,t)$ and $\frac{\partial f}{\partial x}$ be continuous in both $x$ and $t$, and let the limits of integration $u(x)$ and $v(x)$ be differentiable functions of $x$. Then:
+\begin{equation}
+    \frac{d}{dx}\left[\int_{u(x)}^{v(x)} f(x,t)\,dt\right] = \int_{u(x)}^{v(x)} \frac{\partial f(x,t)}{\partial x}\,dt + f(x, v(x)) \frac{dv}{dx} - f(x, u(x)) \frac{du}{dx}
+\end{equation}
+\end{theorem}
+
+\subsection{Core Definite Integral Properties}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{King's Property}: $\int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx$.
+    \item \textbf{Origin Symmetry}: $\int_{-a}^a f(x)\,dx = \begin{cases} 2\int_0^a f(x)\,dx \& \text{if } f(-x) = f(x) \text{ (Even)} \\ 0 \& \text{if } f(-x) = -f(x) \text{ (Odd)} \end{cases}$
+    \item \textbf{Periodic Symmetries}: $\int_0^{2a} f(x)\,dx = \begin{cases} 2\int_0^a f(x)\,dx \& \text{if } f(2a-x) = f(x) \\ 0 \& \text{if } f(2a-x) = -f(x) \end{cases}$
+\end{itemize}
+
+% ==============================================================================
+% SECTION 2.3: REDUCTION FORMULAE \& WALLI'S FORMULA
+% ==============================================================================
+\section{Reduction Formulae \& Walli's Formula}
+
+\subsection{Trigonometric Reduction Formulae}
+
+\begin{keyequation}[Master Trigonometric Reduction Formulae]
+\begin{align}
+    I_n &= \int \sin^n x\,dx = -\frac{\sin^{n-1}x \cos x}{n} + \frac{n-1}{n} I_{n-2} \\
+    J_n &= \int \cos^n x\,dx = \frac{\cos^{n-1}x \sin x}{n} + \frac{n-1}{n} J_{n-2} \\
+    T_n &= \int \tan^n x\,dx = \frac{\tan^{n-1}x}{n-1} - T_{n-2} \\
+    S_n &= \int \sec^n x\,dx = \frac{\sec^{n-2}x \tan x}{n-1} + \frac{n-2}{n-1} S_{n-2} \\
+    I_{m,n} &= \int \sin^m x \cos^n x\,dx = -\frac{\sin^{m-1}x \cos^{n+1}x}{m+n} + \frac{m-1}{m+n} I_{m-2,n}
+\end{align}
+\end{keyequation}
+
+\subsection{Walli's Formula for Definite Integrals on $\left[0, \frac{\pi}{2}\right]$}
+
+\begin{theorem}[Walli's Formula]
+For non-negative integers $m$ and $n$:
+\begin{equation}
+    \int_0^{\pi/2} \sin^m x \cos^n x\,dx = \frac{(m-1)(m-3)\cdots(2 \text{ or } 1) \cdot (n-1)(n-3)\cdots(2 \text{ or } 1)}{(m+n)(m+n-2)(m+n-4)\cdots(2 \text{ or } 1)} \cdot K
+\end{equation}
+where $K = \frac{\pi}{2}$ if \textbf{both} $m$ and $n$ are even integers ($m, n \in \{0, 2, 4, \dots\}$), and $K = 1$ otherwise.
+\end{theorem}
+
+% ==============================================================================
+% SECTION 2.4: IMPROPER INTEGRALS
+% ==============================================================================
+\section{Improper Integrals and Convergence}
+
+\subsection{Classification of Improper Integrals}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Type I (Infinite Limits of Integration)}: One or both limits are infinite:
+    \begin{equation}
+        \int_a^\infty f(x)\,dx = \lim_{t\to\infty} \int_a^t f(x)\,dx, \quad \int_{-\infty}^\infty f(x)\,dx = \int_{-\infty}^c f(x)\,dx + \int_c^\infty f(x)\,dx
+    \end{equation}
+    \item \textbf{Type II (Discontinuous Integrand)}: The integrand $f(x)$ becomes infinite at one or more points in ${[a,b]}$:
+    \begin{equation}
+        \int_a^b f(x)\,dx = \lim_{\epsilon\to 0^+} \int_{a+\epsilon}^b f(x)\,dx \quad (\text{if singularity at } x = a)
+    \end{equation}
+\end{itemize}
+
+\subsection{Convergence Tests for Improper Integrals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Comparison Test for $\int_a^\infty f(x)dx$}: If $0 \le f(x) \le g(x)$ for all $x \ge a$:
+    \begin{itemize}
+        \item $\int_a^\infty g(x)dx$ converges $\implies \int_a^\infty f(x)dx$ converges.
+        \item $\int_a^\infty f(x)dx$ diverges $\implies \int_a^\infty g(x)dx$ diverges.
+    \end{itemize}
+    \item \textbf{$\mu$-Test for Infinite Intervals}: Let $\lim_{x\to\infty} x^\mu f(x) = L$ (finite).
+    \begin{itemize}
+        \item If $\mu > 1$ and $L$ is finite $\implies \int_a^\infty f(x)dx$ \textbf{converges}.
+        \item If $\mu \le 1$ and $L \ne 0$ (or $L = \infty$) $\implies \int_a^\infty f(x)dx$ \textbf{diverges}.
+    \end{itemize}
+\end{enumerate}
+
+% ==============================================================================
+% SECTION 2.5: BETA AND GAMMA SPECIAL FUNCTIONS
+% ==============================================================================
+\section{Special Functions: Beta and Gamma Functions}
+
+\subsection{The Gamma Function}
+
+\begin{definition}[Gamma Function (Euler's Integral of the Second Kind)]
+For any real $n > 0$, the Gamma function $\Gamma(n)$ is defined by the convergent improper integral:
+\begin{equation}
+    \Gamma(n) = \int_0^\infty e^{-t} t^{n-1}\,dt
+\end{equation}
+\end{definition}
+
+\subsubsection{Key Properties of the Gamma Function}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Recurrence Relation}: $\Gamma(n+1) = n \Gamma(n)$ for all $n > 0$.
+    \item \textbf{Factorial Relation}: For positive integers $n \in \mathbb{N}$: $\Gamma(n+1) = n!$ and $\Gamma(n) = (n-1)!$.
+    \item \textbf{Half-Integer Value}: $\mathbf{\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}}$.
+    \item \textbf{Euler's Reflection Formula}: $\Gamma(p) \Gamma(1-p) = \frac{\pi}{\sin(p\pi)}$ for $0 < p < 1$.
+\end{enumerate}
+
+\subsection{The Beta Function}
+
+\begin{definition}[Beta Function (Euler's Integral of the First Kind)]
+For $m > 0, n > 0$, the Beta function $B(m,n)$ is defined by:
+\begin{equation}
+    B(m,n) = \int_0^1 x^{m-1}(1-x)^{n-1}\,dx
+\end{equation}
+\end{definition}
+
+\subsubsection{Alternative Forms of the Beta Function}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Trigonometric Form}: Substituting $x = \sin^2\theta \implies dx = 2\sin\theta\cos\theta\,d\theta$:
+    \begin{equation}
+        B(m,n) = 2 \int_0^{\pi/2} \sin^{2m-1}\theta \cos^{2n-1}\theta\,d\theta
+    \end{equation}
+    \item \textbf{Infinite Interval Form}: Substituting $x = \frac{y}{1+y}$:
+    \begin{equation}
+        B(m,n) = \int_0^\infty \frac{y^{m-1}}{(1+y)^{m+n}}\,dy
+    \end{equation}
+\end{itemize}
+
+\subsection{Fundamental Beta-Gamma Relationship}
+
+\begin{theorem}[Relation Between Beta and Gamma Functions]
+For all $m > 0, n > 0$:
+\begin{equation}
+    B(m,n) = \frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}
+\end{equation}
+\end{theorem}
+
+\begin{methodbox}[Master Integration Formula for $\int_0^{\pi/2} \sin^p\theta \cos^q\theta\,d\theta$]
+To evaluate $\int_0^{\pi/2} \sin^p\theta \cos^q\theta\,d\theta$, set:
+\begin{equation}
+    2m - 1 = p \implies m = \frac{p+1}{2}, \quad 2n - 1 = q \implies n = \frac{q+1}{2}
+\end{equation}
+Then apply the fundamental formula:
+\begin{equation}
+    \int_0^{\pi/2} \sin^p\theta \cos^q\theta\,d\theta = \frac{1}{2} B\left(\frac{p+1}{2}, \frac{q+1}{2}\right) = \mathbf{\frac{\Gamma\left(\frac{p+1}{2}\right)\Gamma\left(\frac{q+1}{2}\right)}{2\Gamma\left(\frac{p+q+2}{2}\right)}}
+\end{equation}
+\end{methodbox}
+
+\begin{theorem}[Legendre's Duplication Formula]
+For any $m > 0$:
+\begin{equation}
+    \Gamma(m)\Gamma\left(m + \frac{1}{2}\right) = \frac{\sqrt{\pi}}{2^{2m-1}} \Gamma(2m)
+\end{equation}
+\end{theorem}
+
+\begin{example}[Beta-Gamma Integration with Radical Integrand]
+Evaluate the integral $I = \int_0^1 x^4 (1 - x^2)^{5/2}\,dx$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+Substitute $x^2 = t \implies x = t^{1/2} \implies dx = \frac{1}{2} t^{-1/2} dt$. The limits remain $0$ to $1$:
+\begin{align*}
+    I &= \int_0^1 (t^{1/2})^4 (1 - t)^{5/2} \left(\frac{1}{2} t^{-1/2}\right) dt = \frac{1}{2} \int_0^1 t^2 (1 - t)^{5/2} t^{-1/2}\,dt \\
+    &= \frac{1}{2} \int_0^1 t^{3/2} (1 - t)^{5/2}\,dt = \frac{1}{2} B\left(\frac{3}{2}+1, \frac{5}{2}+1\right) = \frac{1}{2} B\left(\frac{5}{2}, \frac{7}{2}\right)
+\end{align*}
+Expressing in Gamma functions:
+\begin{equation*}
+    I = \frac{1}{2} \frac{\Gamma(5/2)\Gamma(7/2)}{\Gamma(5/2 + 7/2)} = \frac{1}{2} \frac{\Gamma(5/2)\Gamma(7/2)}{\Gamma(6)}
+\end{equation*}
+Computing individual Gamma values:
+\begin{align*}
+    \Gamma\left(\frac{5}{2}\right) &= \frac{3}{2} \cdot \frac{1}{2} \Gamma\left(\frac{1}{2}\right) = \frac{3}{4}\sqrt{\pi} \\
+    \Gamma\left(\frac{7}{2}\right) &= \frac{5}{2} \cdot \frac{3}{2} \cdot \frac{1}{2} \Gamma\left(\frac{1}{2}\right) = \frac{15}{8}\sqrt{\pi} \\
+    \Gamma(6) &= 5! = 120
+\end{align*}
+Substituting back:
+\begin{equation*}
+    I = \frac{1}{2} \cdot \frac{\left(\frac{3}{4}\sqrt{\pi}\right)\left(\frac{15}{8}\sqrt{\pi}\right)}{120} = \frac{1}{2} \cdot \frac{\frac{45\pi}{32}}{120} = \frac{45\pi}{2 \cdot 32 \cdot 120} = \frac{3\pi}{2 \cdot 32 \cdot 8} = \mathbf{\frac{3\pi}{512}}
+\end{equation*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.6: GEOMETRIC APPLICATIONS
+% ==============================================================================
+\section{Geometric Applications: Quadrature, Rectification \& Volumes}
+
+\subsection{Quadrature (Calculation of Plane Areas)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Cartesian Area}: $A = \int_a^b [y_2(x) - y_1(x)]\,dx$ (or $\int_c^d [x_2(y) - x_1(y)]\,dy$).
+    \item \textbf{Polar Area}: $A = \frac{1}{2} \int_{\alpha}^\beta r^2\,d\theta$.
+\end{itemize}
+
+\subsection{Rectification (Arc Length of Curves)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Cartesian Form}: $s = \int_a^b \sqrt{1 + \left(\frac{dy}{dx}\right)^2}\,dx$.
+    \item \textbf{Parametric Form}: $s = \int_{t_1}^{t_2} \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt$.
+    \item \textbf{Polar Form}: $s = \int_{\alpha}^\beta \sqrt{r^2 + \left(\frac{dr}{d\theta}\right)^2}\,d\theta$.
+\end{itemize}
+
+\subsection{Volumes and Surface Areas of Solids of Revolution}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Axis of Revolution} & \textbf{Volume of Solid of Revolution ($V$)} & \textbf{Surface Area of Revolution ($S$)} \\
+\midrule
+\textbf{About $x$-axis} & $V = \pi \int_a^b y^2\,dx = \pi \int_a^b (y_2^2 - y_1^2)\,dx$ & $S = 2\pi \int_a^b y \sqrt{1 + (y')^2}\,dx$ \\
+\textbf{About $y$-axis} & $V = \pi \int_c^d x^2\,dy = 2\pi \int_a^b x y\,dx$ & $S = 2\pi \int_c^d x \sqrt{1 + (x')^2}\,dy$ \\
+\textbf{About Initial Line (Polar)} & $V = \frac{2}{3}\pi \int_\alpha^\beta r^3 \sin\theta\,d\theta$ & $S = 2\pi \int_\alpha^\beta r \sin\theta \sqrt{r^2 + r_1^2}\,d\theta$ \\
+\bottomrule
+\end{tabularx}
+\caption{Formulas for Volume and Surface Area of Solids of Revolution.}
+\label{tab:revolution-formulas}
+\end{table}
+
+\begin{example}[Arc Length of the Astroid]
+Find the total perimeter length of the astroid $x^{2/3} + y^{2/3} = a^{2/3}$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+Parametric equations for the astroid: $x = a\cos^3 t, y = a\sin^3 t$, where $t$ varies from $0$ to $2\pi$.
+By four-quadrant symmetry, the total perimeter is $s = 4 s_1$, where $s_1$ is the arc length in the first quadrant ($0 \le t \le \pi/2$):
+\begin{align*}
+    \frac{dx}{dt} &= 3a\cos^2 t (-\sin t) = -3a\cos^2 t \sin t \\
+    \frac{dy}{dt} &= 3a\sin^2 t (\cos t) = 3a\sin^2 t \cos t
+\end{align*}
+Computing the differential arc length:
+\begin{align*}
+    \left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2 &= 9a^2 \cos^4 t \sin^2 t + 9a^2 \sin^4 t \cos^2 t = 9a^2 \sin^2 t \cos^2 t (\cos^2 t + \sin^2 t) \\
+    &= 9a^2 \sin^2 t \cos^2 t \\
+    \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2} &= 3a \sin t \cos t
+\end{align*}
+Integrating for total perimeter:
+\begin{equation*}
+    s = 4 \int_0^{\pi/2} 3a \sin t \cos t\,dt = 12a \left[ \frac{\sin^2 t}{2} \right]_0^{\pi/2} = 12a \left(\frac{1}{2} - 0\right) = \mathbf{6a}
+\end{equation*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.7: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Walli's and Beta-Gamma Multipliers]
+\begin{itemize}
+    \item \textbf{Walli's $K$ Factor}: When applying Walli's formula, students often forget to multiply by $\frac{\pi}{2}$ when \textbf{both} powers are even. If at least one power is odd, $K = 1$.
+    \item \textbf{Factor of $1/2$ in Beta Integrals}: Always remember that $\int_0^{\pi/2} \sin^p\theta \cos^q\theta\,d\theta = \mathbf{\frac{1}{2}} B\left(\frac{p+1}{2}, \frac{q+1}{2}\right)$. Forgetting the $\frac{1}{2}$ doubles the answer!
+\end{itemize}
+\end{examtip}
+
+\begin{commonmistake}[Gamma of Negative Numbers]
+$\Gamma(n)$ is defined only for $n > 0$ (and extended to non-integer negatives). $\Gamma(0) = \pm\infty$ and $\Gamma(-n)$ for integers $n \in \{1, 2, 3, \dots\}$ is \textbf{undefined / infinite}. Never substitute negative integers into $\Gamma(n)$.
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 2.8: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 2 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Leibniz Rule}: $\frac{d}{dx}\int_{u(x)}^{v(x)} f(x,t)dt = \int_{u(x)}^{v(x)} \frac{\partial f}{\partial x}dt + f(x,v)v'(x) - f(x,u)u'(x)$.
+    \item \textbf{Walli's Formula}: $\int_0^{\pi/2} \sin^m x \cos^n x\,dx = \frac{(m-1)!!(n-1)!!}{(m+n)!!} \cdot K$ ($K=\pi/2$ if both even; $1$ otherwise).
+    \item \textbf{Gamma Function}: $\Gamma(n) = \int_0^\infty e^{-t} t^{n-1} dt$; $\Gamma(n+1)=n\Gamma(n)=n!$; $\Gamma(1/2)=\sqrt{\pi}$.
+    \item \textbf{Beta Function}: $B(m,n) = \int_0^1 x^{m-1}(1-x)^{n-1}dx = 2\int_0^{\pi/2}\sin^{2m-1}\theta\cos^{2n-1}\theta d\theta = \frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}$.
+    \item \textbf{Duplication Formula}: $\Gamma(m)\Gamma(m+1/2) = \frac{\sqrt{\pi}}{2^{2m-1}}\Gamma(2m)$.
+    \item \textbf{Arc Length}: Cartesian $ds = \sqrt{1+(y')^2}dx$; Polar $ds = \sqrt{r^2+r_1^2}d\theta$.
+    \item \textbf{Volume of Revolution}: $V = \pi \int y^2 dx$ (about $x$-axis); $V = 2\pi \int xy dx$ (about $y$-axis via shells).
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 2.9: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Evaluate $\int_0^{\pi/2} \sin^8 x\,dx$ and $\int_0^{\pi/2} \cos^7 x\,dx$ using Walli's formula.
+    \item Evaluate $\Gamma(7/2)$ and $\Gamma(-3/2)$.
+    \item Test the convergence of the improper integral $\int_1^\infty \frac{1}{x^3 + 2x + 1}\,dx$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item Prove the reduction formula for $\int \tan^n x\,dx$, and evaluate $\int_0^{\pi/4} \tan^5 x\,dx$.
+    \item Evaluate $\int_0^{\pi/2} \sin^6\theta \cos^4\theta\,d\theta$ using Beta and Gamma functions.
+    \item Find the entire perimeter of the cardioid $r = a(1+\cos\theta)$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item Prove that $\int_0^1 \frac{x^2}{\sqrt{1-x^4}}\,dx \times \int_0^1 \frac{1}{\sqrt{1-x^4}}\,dx = \frac{\pi}{4}$.
+    \item Find the volume of the spindle generated by rotating the region enclosed by $y = \sin x$ ($0 \le x \le \pi$) about the $x$-axis.
+    \item Evaluate $\int_0^\infty \frac{x^2}{(1+x^4)^2}\,dx$ using Beta-Gamma transformations.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Prove Legendre's Duplication Formula $\Gamma(m)\Gamma\left(m+\frac{1}{2}\right) = \frac{\sqrt{\pi}}{2^{2m-1}}\Gamma(2m)$ using Beta function identities.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 2.10: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item What is the value of $\Gamma(1/2)$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{\pi}{2}$
+        \item $\sqrt{\pi}$
+        \item $\pi$
+        \item $\frac{\sqrt{\pi}}{2}$
+    \end{enumerate}
+
+    \item What is the value of $\int_0^{\pi/2} \sin^5 x\,dx$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{8}{15}$
+        \item $\frac{8\pi}{15}$
+        \item $\frac{4}{15}$
+        \item $\frac{16}{15}$
+    \end{enumerate}
+
+    \item The Beta function $B(m,n)$ is related to Gamma functions by which identity?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{\Gamma(m)+\Gamma(n)}{\Gamma(m+n)}$
+        \item $\frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}$
+        \item $\frac{\Gamma(mn)}{\Gamma(m)\Gamma(n)}$
+        \item $\Gamma(m)\Gamma(n)\Gamma(m+n)$
+    \end{enumerate}
+
+    \item What is the value of $\int_0^{\pi/2} \sqrt{\tan\theta}\,d\theta$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\pi$
+        \item $\frac{\pi}{2}$
+        \item $\frac{\pi}{\sqrt{2}}$
+        \item $\frac{\pi}{2\sqrt{2}}$
+    \end{enumerate}
+
+    \item The total arc length of the cardioid $r = a(1+\cos\theta)$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $4a$
+        \item $6a$
+        \item $8a$
+        \item $16a$
+    \end{enumerate}
+
+    \item The improper integral $\int_1^\infty \frac{1}{x^p}\,dx$ converges if and only if:
+    \begin{enumerate}[label=(\alph*)]
+        \item $p \ge 1$
+        \item $p > 1$
+        \item $p < 1$
+        \item $p \le 1$
+    \end{enumerate}
+
+    \item If $f(x)$ is an odd function, then $\int_{-a}^a f(x)\,dx$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $2\int_0^a f(x)dx$
+        \item $a f(a)$
+        \item $0$
+        \item $f'(a)$
+    \end{enumerate}
+
+    \item What is the value of $\Gamma(5/2)$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{3\sqrt{\pi}}{4}$
+        \item $\frac{15\sqrt{\pi}}{8}$
+        \item $\frac{\sqrt{\pi}}{2}$
+        \item $3\sqrt{\pi}$
+    \end{enumerate}
+
+    \item The volume of the solid generated by revolving $y = f(x)$ from $x=a$ to $x=b$ about the $x$-axis is given by:
+    \begin{enumerate}[label=(\alph*)]
+        \item $2\pi \int_a^b y\,dx$
+        \item $\pi \int_a^b y^2\,dx$
+        \item $\pi \int_a^b x y\,dx$
+        \item $2\pi \int_a^b y^2\,dx$
+    \end{enumerate}
+
+    \item What is the value of $B(1, 1)$?
+    \begin{enumerate}[label=(\alph*)]
+        \item $0$
+        \item $1$
+        \item $\pi$
+        \item $\frac{1}{2}$
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) $\sqrt{\pi}$} --- Fundamental identity $\Gamma(1/2) = \sqrt{\pi}$.
+    \item \textbf{(a) $\frac{8}{15}$} --- Walli's formula for $n=5$ (odd): $\frac{4}{5} \cdot \frac{2}{3} \cdot 1 = \frac{8}{15}$.
+    \item \textbf{(b) $\frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}$} --- Fundamental Beta-Gamma connection.
+    \item \textbf{(c) $\frac{\pi}{\sqrt{2}}$} --- $\frac{1}{2}B(3/4, 1/4) = \frac{1}{2}\frac{\pi}{\sin(\pi/4)} = \frac{\pi}{\sqrt{2}}$.
+    \item \textbf{(c) $8a$} --- $s = 2 \int_0^\pi \sqrt{a^2(1+\cos\theta)^2 + a^2\sin^2\theta}\,d\theta = 4a\int_0^\pi \cos(\theta/2)d\theta = 8a$.
+    \item \textbf{(b) $p > 1$} --- $p$-integral convergence test on $[1, \infty)$.
+    \item \textbf{(c) $0$} --- Integral of any odd function over symmetric limits $[-a, a]$ is zero.
+    \item \textbf{(a) $\frac{3\sqrt{\pi}}{4}$} --- $\Gamma(5/2) = \frac{3}{2}\Gamma(3/2) = \frac{3}{2} \cdot \frac{1}{2}\Gamma(1/2) = \frac{3\sqrt{\pi}}{4}$.
+    \item \textbf{(b) $\pi \int_a^b y^2\,dx$} --- Standard disk method formula.
+    \item \textbf{(b) $1$} --- $B(1,1) = \frac{\Gamma(1)\Gamma(1)}{\Gamma(2)} = \frac{1 \cdot 1}{1!} = 1$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 2.11: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 2: Single-Variable Integral Calculus (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Write the recurrence relation for the Gamma function $\Gamma(n+1)$.
+    \item State the value of $\int_0^{\pi/2} \cos^6 x\,dx$ using Walli's formula.
+    \item Define an Improper Integral of Type I.
+    \item Write the formula for the arc length $s$ of a polar curve $r = f(\theta)$ from $\theta = \alpha$ to $\theta = \beta$.
+    \item State Legendre's Duplication Formula.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical \& Technical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Prove that $B(m,n) = 2 \int_0^{\pi/2} \sin^{2m-1}\theta \cos^{2n-1}\theta\,d\theta$, and evaluate $\int_0^{\pi/2} \sin^4\theta \cos^6\theta\,d\theta$.
+    \item Find the volume of the solid generated by revolving the region enclosed by the parabola $y^2 = 4ax$ and its latus rectum $x = a$ about the $x$-axis.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Derivation \& Proof ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item Special Functions and Reduction Identities:
+    \begin{enumerate}[label=(\alph*)]
+        \item Derive the reduction formula for $I_n = \int \sin^n x\,dx$, and deduce Walli's formula for $\int_0^{\pi/2} \sin^n x\,dx$. (5 Marks)
+        \item Prove that $\int_0^1 \frac{x^2}{\sqrt{1-x^4}}\,dx \times \int_0^1 \frac{1}{\sqrt{1-x^4}}\,dx = \frac{\pi}{4}$. (5 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item $\Gamma(n+1) = n \Gamma(n)$ for $n > 0$ (or $n!$ for $n \in \mathbb{N}$). [1 Mark]
+    \item $\int_0^{\pi/2} \cos^6 x\,dx = \frac{5}{6} \cdot \frac{3}{4} \cdot \frac{1}{2} \cdot \frac{\pi}{2} = \mathbf{\frac{5\pi}{32}}$. [1 Mark]
+    \item An integral where one or both limits of integration are infinite ($\pm\infty$). [1 Mark]
+    \item $s = \int_\alpha^\beta \sqrt{r^2 + \left(\frac{dr}{d\theta}\right)^2}\,d\theta$. [1 Mark]
+    \item $\Gamma(m)\Gamma(m+1/2) = \frac{\sqrt{\pi}}{2^{2m-1}}\Gamma(2m)$. [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Trigonometric Beta Proof \& Evaluation}:
+    In $B(m,n) = \int_0^1 x^{m-1}(1-x)^{n-1}dx$, put $x = \sin^2\theta \implies dx = 2\sin\theta\cos\theta\,d\theta$.
+    When $x=0 \implies \theta=0$; $x=1 \implies \theta=\pi/2$. [1.5 Marks]
+    $B(m,n) = \int_0^{\pi/2} (\sin^2\theta)^{m-1}(1-\sin^2\theta)^{n-1}(2\sin\theta\cos\theta)d\theta = 2\int_0^{\pi/2}\sin^{2m-1}\theta\cos^{2n-1}\theta\,d\theta$. [1.5 Marks]
+    To evaluate $\int_0^{\pi/2} \sin^4\theta \cos^6\theta\,d\theta$:
+    $2m-1=4 \implies m=5/2$; $2n-1=6 \implies n=7/2$.
+    $I = \frac{1}{2} B(5/2, 7/2) = \frac{1}{2}\frac{\Gamma(5/2)\Gamma(7/2)}{\Gamma(6)} = \frac{1}{2}\frac{(3/4\sqrt{\pi})(15/8\sqrt{\pi})}{120} = \mathbf{\frac{3\pi}{512}}$. [2 Marks]
+
+    \item \textbf{Volume of Paraboloid}:
+    Parabola: $y^2 = 4ax$. Limits from $x = 0$ to $x = a$. [1.5 Marks]
+    $V = \pi \int_0^a y^2\,dx = \pi \int_0^a 4ax\,dx$. [1.5 Marks]
+    $V = 4a\pi \left[ \frac{x^2}{2} \right]_0^a = 4a\pi \left(\frac{a^2}{2}\right) = \mathbf{2\pi a^3}$. [2 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Comprehensive Derivations}:
+    \begin{enumerate}[label=(\alph*)]
+        \item $I_n = \int \sin^n x\,dx = \int \sin^{n-1}x \cdot \sin x\,dx$.
+        Integrating by parts: $u = \sin^{n-1}x, dv = \sin x\,dx \implies du = (n-1)\sin^{n-2}x \cos x\,dx, v = -\cos x$. [1.5 Marks]
+        $I_n = -\sin^{n-1}x \cos x + (n-1)\int \sin^{n-2}x \cos^2 x\,dx = -\sin^{n-1}x \cos x + (n-1)\int \sin^{n-2}x(1-\sin^2 x)dx$. [1.5 Marks]
+        $I_n = -\sin^{n-1}x \cos x + (n-1)I_{n-2} - (n-1)I_n \implies n I_n = -\sin^{n-1}x \cos x + (n-1)I_{n-2}$.
+        $\mathbf{I_n = -\frac{\sin^{n-1}x \cos x}{n} + \frac{n-1}{n}I_{n-2}}$. [1 Mark]
+        For definite integral $\int_0^{\pi/2}$, $[-\sin^{n-1}x\cos x]_0^{\pi/2} = 0 - 0 = 0$.
+        Thus $I_n = \frac{n-1}{n} I_{n-2}$. Successive application yields Walli's formula with $I_0 = \pi/2$ (even) and $I_1 = 1$ (odd). [1 Mark]
+
+        \item Let $I_1 = \int_0^1 \frac{x^2}{\sqrt{1-x^4}}\,dx$ and $I_2 = \int_0^1 \frac{1}{\sqrt{1-x^4}}\,dx$.
+        Put $x^2 = \sin\theta \implies 2x dx = \cos\theta d\theta \implies dx = \frac{\cos\theta d\theta}{2\sqrt{\sin\theta}}$:
+        $I_1 = \int_0^{\pi/2} \frac{\sin\theta}{\cos\theta}\frac{\cos\theta d\theta}{2\sqrt{\sin\theta}} = \frac{1}{2}\int_0^{\pi/2} \sin^{1/2}\theta\,d\theta = \frac{1}{4} B\left(\frac{3}{4}, \frac{1}{2}\right) = \frac{1}{4}\frac{\Gamma(3/4)\Gamma(1/2)}{\Gamma(5/4)} = \frac{1}{4}\frac{\Gamma(3/4)\sqrt{\pi}}{\frac{1}{4}\Gamma(1/4)} = \frac{\sqrt{\pi}\Gamma(3/4)}{\Gamma(1/4)}$. [2.5 Marks]
+        Similarly, $I_2 = \int_0^{\pi/2} \frac{1}{\cos\theta}\frac{\cos\theta d\theta}{2\sqrt{\sin\theta}} = \frac{1}{2}\int_0^{\pi/2} \sin^{-1/2}\theta\,d\theta = \frac{1}{4} B\left(\frac{1}{4}, \frac{1}{2}\right) = \frac{1}{4}\frac{\Gamma(1/4)\Gamma(1/2)}{\Gamma(3/4)} = \frac{\sqrt{\pi}\Gamma(1/4)}{4\Gamma(3/4)}$. [2 Marks]
+        Multiplying:
+        $I_1 \times I_2 = \left(\frac{\sqrt{\pi}\Gamma(3/4)}{\Gamma(1/4)}\right) \times \left(\frac{\sqrt{\pi}\Gamma(1/4)}{4\Gamma(3/4)}\right) = \frac{\pi}{4}$. [0.5 Marks]
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

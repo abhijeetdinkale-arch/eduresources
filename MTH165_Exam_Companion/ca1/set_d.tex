@@ -1,0 +1,289 @@
+\section{Continuous Assessment 1 (CA-1) --- Set D}
+\label{sec:ca1_set_d}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{D}{50 Minutes}{30 Marks}{CO1 (Matrices \& Systems of Linear Equations), CO2 (Higher-Order ODEs \& Calculus)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+% ------------------------------------------------------------------------------
+% QUESTION PAPER
+% ------------------------------------------------------------------------------
+
+\questionitem{1}{
+    Prove that the matrix:
+    \[
+    A = \frac{1}{3}\begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix}
+    \]
+    is an \textbf{orthogonal matrix}. Hence, find $A^{-1}$ without computing any determinants or cofactors.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    Diagonalize the matrix $A = \begin{bmatrix} 1 & 4 \\ 2 & 3 \end{bmatrix}$ by finding a modal matrix $P$ such that $P^{-1} A P = D$. Hence, evaluate $A^4$.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Solve the non-homogeneous differential equation with polynomial right-hand side:
+    \[
+    (D^2 + 2D + 1)y = 2x^2 + 3x + 1
+    \]
+}{5}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Solve the differential equation with product RHS $e^{ax}V(x)$:
+    \[
+    (D^2 - 2D + 1)y = x e^x
+    \]
+}{5}{CO2}{L3 Apply}
+
+\questionitem{5}{
+    Determine the value of $k$ such that the vectors in $\mathbb{R}^3$:
+    \[
+    v_1 = (1, 2, 1), \quad v_2 = (2, 5, 0), \quad v_3 = (3, 7, k)
+    \]
+    are \textbf{linearly dependent}.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{6}{
+    Solve the differential equation:
+    \[
+    (D^2 - 3D + 2)y = e^x \cos x
+    \]
+}{5}{CO2}{L3 Apply}
+
+\vspace{5mm}
+\hrule
+\vspace{5mm}
+
+% ------------------------------------------------------------------------------
+% COMPLETE STEP-BY-STEP SOLUTIONS
+% ------------------------------------------------------------------------------
+\subsection*{Solutions \& Marking Scheme (CA-1 Set D)}
+
+% Solution 1
+\begin{solutionbox}[Solution to Question 1 (5 Marks)]
+\textbf{Step 1: Condition for Orthogonal Matrix}
+A square matrix $A$ is orthogonal if and only if $A^T A = I$.
+Given:
+\[
+A = \frac{1}{3}\begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix} \implies A^T = \frac{1}{3}\begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix}
+\]
+\textbf{Step 2: Matrix Multiplication $A^T A$}
+\[
+A^T A = \frac{1}{9}\begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix}
+\]
+Evaluate entry by entry:
+\begin{itemize}[leftmargin=6mm]
+    \item $(1,1) = 1(1) + 2(2) + (-2)(-2) = 1 + 4 + 4 = 9$
+    \item $(1,2) = 1(2) + 2(1) + (-2)(2) = 2 + 2 - 4 = 0$
+    \item $(1,3) = 1(2) + 2(-2) + (-2)(-1) = 2 - 4 + 2 = 0$
+    \item $(2,2) = 2(2) + 1(1) + 2(2) = 4 + 1 + 4 = 9$
+    \item $(2,3) = 2(2) + 1(-2) + 2(-1) = 4 - 2 - 2 = 0$
+    \item $(3,3) = 2(2) + (-2)(-2) + (-1)(-1) = 4 + 4 + 1 = 9$
+\end{itemize}
+Thus:
+\[
+A^T A = \frac{1}{9}\begin{bmatrix} 9 & 0 & 0 \\ 0 & 9 & 0 \\ 0 & 0 & 9 \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = I
+\]
+Hence, $A$ is an **orthogonal matrix**.
+
+\textbf{Step 3: Finding $A^{-1}$}
+For any orthogonal matrix, $A^{-1} = A^T$. Therefore:
+\[
+\mathbf{A^{-1} = A^T = \frac{1}{3}\begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Definition of orthogonal matrix ($A^T A = I$): \textbf{1 Mark}\\
+$\bullet$ Explicit multiplication verification showing $A^T A = I$: \textbf{2.5 Marks}\\
+$\bullet$ Stating $A^{-1} = A^T$ and writing correct matrix: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 2
+\begin{solutionbox}[Solution to Question 2 (5 Marks)]
+\textbf{Step 1: Eigenvalues of $A$}
+For $A = \begin{bmatrix} 1 & 4 \\ 2 & 3 \end{bmatrix}$:
+\[
+\det(A - \lambda I) = (1 - \lambda)(3 - \lambda) - 8 = \lambda^2 - 4\lambda + 3 - 8 = \lambda^2 - 4\lambda - 5 = 0
+\]
+\[
+(\lambda - 5)(\lambda + 1) = 0 \implies \mathbf{\lambda_1 = 5, \quad \lambda_2 = -1}
+\]
+\textbf{Step 2: Eigenvectors and Modal Matrix $P$}
+\begin{itemize}[leftmargin=6mm]
+    \item For $\lambda = 5$: $(A - 5I)X = 0 \implies \begin{bmatrix} -4 & 4 \\ 2 & -2 \end{bmatrix}\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \implies x_1 = x_2$.
+    Eigenvector: $\mathbf{X_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}}$.
+    \item For $\lambda = -1$: $(A + I)X = 0 \implies \begin{bmatrix} 2 & 4 \\ 2 & 4 \end{bmatrix}\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \implies x_1 + 2x_2 = 0 \implies x_1 = -2x_2$.
+    Eigenvector: $\mathbf{X_2 = \begin{bmatrix} -2 \\ 1 \end{bmatrix}}$.
+\end{itemize}
+Modal matrix $P = \begin{bmatrix} 1 & -2 \\ 1 & 1 \end{bmatrix}$. Its inverse is:
+\[
+P^{-1} = \frac{1}{1(1) - (-2)(1)}\begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix} = \frac{1}{3}\begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}
+\]
+Diagonal matrix $D = P^{-1} A P = \begin{bmatrix} 5 & 0 \\ 0 & -1 \end{bmatrix}$.
+
+\textbf{Step 3: Calculating $A^4$}
+Since $A = P D P^{-1}$, we have $A^4 = P D^4 P^{-1}$:
+\[
+D^4 = \begin{bmatrix} 5^4 & 0 \\ 0 & (-1)^4 \end{bmatrix} = \begin{bmatrix} 625 & 0 \\ 0 & 1 \end{bmatrix}
+\]
+\[
+A^4 = \begin{bmatrix} 1 & -2 \\ 1 & 1 \end{bmatrix}\begin{bmatrix} 625 & 0 \\ 0 & 1 \end{bmatrix} \left(\frac{1}{3}\begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}\right) = \frac{1}{3}\begin{bmatrix} 625 & -2 \\ 625 & 1 \end{bmatrix}\begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}
+\]
+\[
+A^4 = \frac{1}{3}\begin{bmatrix} 625 + 2 & 1250 - 2 \\ 625 - 1 & 1250 + 1 \end{bmatrix} = \frac{1}{3}\begin{bmatrix} 627 & 1248 \\ 624 & 1251 \end{bmatrix} = \mathbf{\begin{bmatrix} 209 & 416 \\ 208 & 417 \end{bmatrix}}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Eigenvalues $\lambda = 5, -1$: \textbf{1.5 Marks}\\
+$\bullet$ Eigenvectors and modal matrix $P, P^{-1}$: \textbf{1.5 Marks}\\
+$\bullet$ Computation of $A^4 = P D^4 P^{-1}$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 3
+\begin{solutionbox}[Solution to Question 3 (5 Marks)]
+\textbf{Step 1: Complementary Function ($y_c$)}
+$m^2 + 2m + 1 = 0 \implies (m + 1)^2 = 0 \implies m = -1, -1$.
+\[
+\mathbf{y_c = (c_1 + c_2 x)e^{-x}}
+\]
+\textbf{Step 2: Particular Integral ($y_p$)}
+\[
+y_p = \frac{1}{(1 + D)^2} (2x^2 + 3x + 1) = (1 + D)^{-2} (2x^2 + 3x + 1)
+\]
+Expand using binomial theorem $(1+D)^{-2} = 1 - 2D + 3D^2 - \dots$:
+\[
+y_p = (1 - 2D + 3D^2)(2x^2 + 3x + 1)
+\]
+Compute derivatives:
+\begin{itemize}[leftmargin=6mm]
+    \item $D(2x^2 + 3x + 1) = 4x + 3$
+    \item $D^2(2x^2 + 3x + 1) = 4$
+\end{itemize}
+Substitute back:
+\[
+y_p = (2x^2 + 3x + 1) - 2(4x + 3) + 3(4) = 2x^2 + 3x + 1 - 8x - 6 + 12 = \mathbf{2x^2 - 5x + 7}
+\]
+\textbf{Step 3: General Solution}
+\[
+\mathbf{y(x) = (c_1 + c_2 x)e^{-x} + 2x^2 - 5x + 7}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function $y_c$: \textbf{1.5 Marks}\\
+$\bullet$ Binomial series expansion of operator $(1+D)^{-2}$: \textbf{2 Marks}\\
+$\bullet$ General solution: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 4
+\begin{solutionbox}[Solution to Question 4 (5 Marks)]
+\textbf{Step 1: Complementary Function}
+$m^2 - 2m + 1 = 0 \implies (m - 1)^2 = 0 \implies \mathbf{y_c = (c_1 + c_2 x)e^x}$.
+
+\textbf{Step 2: Particular Integral with Exponential Shift}
+\[
+y_p = \frac{1}{(D - 1)^2} (x e^x)
+\]
+Apply exponential shift rule $\frac{1}{f(D)} [e^{ax} V] = e^{ax} \frac{1}{f(D+a)} V$ with $a = 1$:
+\[
+y_p = e^x \frac{1}{((D + 1) - 1)^2} x = e^x \frac{1}{D^2} x
+\]
+Now integrate $x$ twice:
+\[
+\frac{1}{D} x = \int x \, dx = \frac{x^2}{2}, \quad \frac{1}{D^2} x = \int \frac{x^2}{2} \, dx = \frac{x^3}{6}
+\]
+Thus:
+\[
+\mathbf{y_p = \frac{1}{6} x^3 e^x}
+\]
+\textbf{Step 3: General Solution}
+\[
+\mathbf{y(x) = (c_1 + c_2 x)e^x + \frac{1}{6} x^3 e^x}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function: \textbf{1.5 Marks}\\
+$\bullet$ Exponential shift theorem application: \textbf{2 Marks}\\
+$\bullet$ Evaluation of $\frac{1}{D^2} x$ and general solution: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 5
+\begin{solutionbox}[Solution to Question 5 (5 Marks)]
+\textbf{Step 1: Linear Dependence Condition}
+Vectors $v_1, v_2, v_3 \in \mathbb{R}^3$ are linearly dependent if and only if the determinant of the matrix formed by them as rows (or columns) vanishes:
+\[
+\det \begin{bmatrix} 1 & 2 & 1 \\ 2 & 5 & 0 \\ 3 & 7 & k \end{bmatrix} = 0
+\]
+\textbf{Step 2: Evaluating the Determinant}
+Expand along Row 2 (which contains a zero):
+\[
+\det = -2\begin{vmatrix} 2 & 1 \\ 7 & k \end{vmatrix} + 5\begin{vmatrix} 1 & 1 \\ 3 & k \end{vmatrix} - 0
+\]
+\[
+= -2(2k - 7) + 5(k - 3) = -4k + 14 + 5k - 15 = k - 1
+\]
+\textbf{Step 3: Solving for $k$}
+For linear dependence:
+\[
+k - 1 = 0 \implies \mathbf{k = 1}
+\]
+When $k = 1$, row 3 is the sum of row 1 and row 2 ($v_3 = v_1 + v_2$).
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Determinant criterion for linear dependence: \textbf{2 Marks}\\
+$\bullet$ Accurate algebraic expansion of determinant: \textbf{2 Marks}\\
+$\bullet$ Final answer $k = 1$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+% Solution 6
+\begin{solutionbox}[Solution to Question 6 (5 Marks)]
+\textbf{Step 1: Complementary Function}
+Auxiliary equation: $m^2 - 3m + 2 = 0 \implies (m - 1)(m - 2) = 0 \implies m = 1, 2$.
+\[
+\mathbf{y_c = c_1 e^x + c_2 e^{2x}}
+\]
+\textbf{Step 2: Particular Integral}
+\[
+y_p = \frac{1}{D^2 - 3D + 2} (e^x \cos x)
+\]
+Apply the exponential shift rule:
+\[
+y_p = e^x \frac{1}{(D+1)^2 - 3(D+1) + 2} \cos x = e^x \frac{1}{(D^2 + 2D + 1) - 3D - 3 + 2} \cos x = e^x \frac{1}{D^2 - D} \cos x
+\]
+Now replace $D^2$ by $-1^2 = -1$:
+\[
+y_p = e^x \frac{1}{-1 - D} \cos x = -e^x \frac{1}{D + 1} \cos x
+\]
+Multiply numerator and denominator by $(D - 1)$:
+\[
+y_p = -e^x \frac{D - 1}{D^2 - 1} \cos x
+\]
+Again replace $D^2$ by $-1$:
+\[
+y_p = -e^x \frac{D - 1}{-1 - 1} \cos x = \frac{e^x}{2} (D - 1)\cos x = \frac{e^x}{2}(-\sin x - \cos x) = -\frac{e^x}{2}(\sin x + \cos x)
+\]
+\textbf{Step 3: General Solution}
+\[
+\mathbf{y(x) = c_1 e^x + c_2 e^{2x} - \frac{1}{2} e^x (\sin x + \cos x)}
+\]
+
+\begin{markingrubric}
+\textbf{Mark Distribution:}
+$\bullet$ Complementary function $y_c$: \textbf{1.5 Marks}\\
+$\bullet$ Exponential shift and replacement $D^2 = -1$: \textbf{2 Marks}\\
+$\bullet$ Conjugate multiplication and final general solution: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

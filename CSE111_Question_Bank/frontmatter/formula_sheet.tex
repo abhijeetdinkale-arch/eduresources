@@ -1,0 +1,89 @@
+\chapter*{Formula \& Quick Fact Sheet}
+\addcontentsline{toc}{chapter}{Formula \& Quick Fact Sheet}
+\label{chap:formula_sheet}
+
+\section*{1. Memory Units, Capacities \& Conversions}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Unit Name} & \textbf{Relationship / Equivalency} & \textbf{Total Exact Bytes} \\
+\midrule
+1 Bit ($b$) & Fundamental binary digit ($0$ or $1$) & $1/8\text{ Byte}$ \\
+1 Nibble & 4 consecutive bits & $0.5\text{ Byte}$ \\
+1 Byte ($B$) & 8 bits & $1\text{ Byte}$ \\
+1 Kilobyte (KB) & $10^3\text{ bytes}$ (decimal metric standard) & $1,000\text{ bytes}$ \\
+1 Kibibyte (KiB) & $2^{10}\text{ bytes}$ (binary IEC standard) & $1,024\text{ bytes}$ \\
+1 Mebibyte (MiB) & $2^{20}\text{ bytes} = 1,024\text{ KiB}$ & $1,048,576\text{ bytes}$ \\
+1 Gibibyte (GiB) & $2^{30}\text{ bytes} = 1,024\text{ MiB}$ & $1,073,741,824\text{ bytes}$ \\
+1 Tebibyte (TiB) & $2^{40}\text{ bytes} = 1,024\text{ GiB}$ & $1,099,511,627,776\text{ bytes}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2mm}
+\noindent
+\textbf{Standard Calculation Example:} A $4\text{ GiB}$ primary memory module contains:
+\[
+4 \times 1,024^3 = 4 \times 1,073,741,824 = 4,294,967,296\text{ bytes}.
+\]
+
+\section*{2. Number Systems Radix, Symbols \& Grouping}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l c l c}
+\toprule
+\textbf{System Name} & \textbf{Base ($b$)} & \textbf{Allowed Digits / Symbols} & \textbf{Direct Bit Grouping} \\
+\midrule
+\textbf{Binary} & 2 & 0, 1 & 1 bit \\
+\textbf{Octal} & 8 & 0, 1, 2, 3, 4, 5, 6, 7 & 3 bits ($2^3 = 8$) \\
+\textbf{Decimal} & 10 & 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 & --- \\
+\textbf{Hexadecimal} & 16 & 0--9, A(10), B(11), C(12), D(13), E(14), F(15) & 4 bits ($2^4 = 16$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{General Positional Formula:} $\text{Value}_{10} = \sum (d_i \times b^i)$ where $d_i$ is the digit at index $i$ and $b$ is the radix.
+    \item \textbf{Binary Fractional Weights:} $2^{-1} = 0.5$, $2^{-2} = 0.25$, $2^{-3} = 0.125$, $2^{-4} = 0.0625$.
+\end{itemize}
+
+\section*{3. Computer Generations Summary}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l l l p{6.5cm}}
+\toprule
+\textbf{Generation} & \textbf{Era} & \textbf{Primary Technology} & \textbf{Key Features \& Languages} \\
+\midrule
+\textbf{First} & 1940--1956 & Vacuum Tubes & ENIAC, magnetic drums, machine language \\
+\textbf{Second} & 1956--1963 & Transistors & Assembly language, early HLL (FORTRAN, COBOL) \\
+\textbf{Third} & 1964--1971 & Integrated Circuits (ICs) & Keyboards, monitors, early operating systems \\
+\textbf{Fourth} & 1971--Present & Microprocessors (LSI/VLSI) & Intel 4004 (1971), personal computers, GUI \\
+\textbf{Fifth} & Current/Emerging & Artificial Intelligence & Parallel processing, natural language, neural nets \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{4. Memory Hierarchy Speed \& Latency Rule}
+\[
+\text{Registers (CPU)} \;\longrightarrow\; \text{Cache (L1} > \text{L2} > \text{L3)} \;\longrightarrow\; \text{RAM (DRAM)} \;\longrightarrow\; \text{SSD} \;\longrightarrow\; \text{HDD} \;\longrightarrow\; \text{Tape / Cloud}
+\]
+\begin{itemize}[leftmargin=6mm]
+    \item \textbf{Fastest, Smallest \& Highest Cost per Byte:} CPU Registers \& L1 SRAM Cache.
+    \item \textbf{Slowest, Largest \& Lowest Cost per Byte:} Magnetic Tape \& Archival Cloud Storage.
+\end{itemize}
+
+\section*{5. Essential Git Terminal Commands}
+\begin{itemize}[leftmargin=6mm]
+    \item \texttt{git init} : Initializes a new Git repository (creates hidden \texttt{.git} metadata directory).
+    \item \texttt{git config -{}-global user.name "Name"} / \texttt{user.email "email"} : Sets global author identity.
+    \item \texttt{git status} : Displays tracked, untracked, modified, and staged files.
+    \item \texttt{git add <file>} or \texttt{git add .} : Moves changes from Working Directory to the Staging Area.
+    \item \texttt{git commit -m "msg"} : Captures a permanent staged snapshot into local repository history.
+    \item \texttt{git log -{}-oneline} : Views commit history condensed to one line per commit.
+    \item \texttt{git switch -c <name>} (or \texttt{git checkout -b <name>}) : Creates and switches to a new branch.
+    \item \texttt{git push -u origin <branch>} : Uploads local branch commits to the remote repository (GitHub).
+    \item \texttt{git pull} : Fetches and integrates changes from the remote tracking branch into local branch.
+\end{itemize}
+
+\newpage

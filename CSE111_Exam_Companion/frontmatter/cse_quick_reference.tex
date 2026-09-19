@@ -1,0 +1,89 @@
+\chapter*{Essential CS Reference Sheets \& Formulas}
+\addcontentsline{toc}{chapter}{Essential CS Reference Sheets \& Formulas}
+
+\section*{1. Memory Hierarchy \& Access Latencies}
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Level} & \textbf{Typical Technology} & \textbf{Typical Capacity} & \textbf{Typical Latency} \\
+\hline
+CPU Registers & Static Flip-Flops & $\le 1\text{ KB}$ & $< 1\text{ ns}$ (1 clock cycle) \\
+Level 1 Cache (L1) & On-die SRAM & $32\text{ KB} - 64\text{ KB}$ per core & $\approx 1 - 2\text{ ns}$ \\
+Level 2 Cache (L2) & On-die SRAM & $256\text{ KB} - 1\text{ MB}$ per core & $\approx 3 - 10\text{ ns}$ \\
+Level 3 Cache (L3) & Shared on-die SRAM & $8\text{ MB} - 64\text{ MB}$ & $\approx 10 - 20\text{ ns}$ \\
+Main Memory (RAM) & Synchronous DRAM & $8\text{ GB} - 64\text{ GB}$ & $\approx 50 - 100\text{ ns}$ \\
+Solid State Drive (SSD) & NVMe NAND Flash & $512\text{ GB} - 4\text{ TB}$ & $\approx 20 - 100\ \mu\text{s}$ \\
+Hard Disk Drive (HDD) & Magnetic platters & $1\text{ TB} - 16\text{ TB}$ & $\approx 5 - 15\text{ ms}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+
+\section*{2. RAID Levels Quick Summary}
+\begin{itemize}[leftmargin=8mm]
+    \item \textbf{RAID 0 (Striping):} Splits data across $\ge 2$ disks. Max performance, zero redundancy. If 1 disk fails, all data is lost.
+    \item \textbf{RAID 1 (Mirroring):} Duplicates data on 2 disks. 100\% redundancy, usable capacity is 50\%.
+    \item \textbf{RAID 5 (Block-level striping with distributed parity):} Minimum 3 disks. Can survive 1 disk failure. Usable capacity = $(N - 1) \times \text{Size}$.
+    \item \textbf{RAID 6 (Dual distributed parity):} Minimum 4 disks. Can survive 2 simultaneous disk failures. Usable capacity = $(N - 2) \times \text{Size}$.
+    \item \textbf{RAID 10 (1+0, Striped Mirrors):} Minimum 4 disks. High performance and redundancy.
+\end{itemize}
+
+\vspace{3mm}
+
+\section*{3. Software Compilation Lifecycle}
+$$\text{Source Code (.c)} \xrightarrow[\text{Macros, Header Inclusion}]{\textbf{Preprocessor}} \text{Expanded Code (.i)} \xrightarrow[\text{Syntax analysis, Optimization}]{\textbf{Compiler}} \text{Assembly Code (.s)}$$
+$$\xrightarrow[\text{Mnemonic to Machine code}]{\textbf{Assembler}} \text{Object Code (.o)} \xrightarrow[\text{Resolves external symbols \& libraries}]{\textbf{Linker}} \text{Executable (.exe / a.out)} \xrightarrow[\text{Allocates RAM, loads segments}]{\textbf{Loader}} \text{Running Process}$$
+
+\vspace{3mm}
+
+\section*{4. Linux Permissions \& Octal Notation}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c||c|c|l|}
+\hline
+\textbf{Binary} & \textbf{Octal} & \textbf{Permission} & \textbf{Special Bit} & \textbf{Octal Prefix} & \textbf{Function} \\
+\hline
+\texttt{000} & 0 & \texttt{---} (None) & SUID & \texttt{4000} & Runs with file owner privileges \\
+\texttt{100} & 4 & \texttt{r--} (Read) & SGID & \texttt{2000} & Runs with group privileges \\
+\texttt{010} & 2 & \texttt{-w-} (Write) & Sticky Bit & \texttt{1000} & Only owner can delete files in dir \\
+\texttt{001} & 1 & \texttt{--x} (Execute) & Example & \texttt{755} & \texttt{rwxr-xr-x} (Owner all, others read/exec) \\
+\texttt{110} & 6 & \texttt{rw-} (Read + Write) & Example & \texttt{644} & \texttt{rw-r--r--} (Standard file default) \\
+\texttt{111} & 7 & \texttt{rwx} (Read, Write, Exec) & Example & \texttt{700} & \texttt{rwx------} (Private directory) \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+
+\section*{5. OSI Reference Model vs. TCP/IP Suite}
+\begin{center}
+\small
+\begin{tabular}{|c|l|l|l|l|}
+\hline
+\textbf{Layer} & \textbf{OSI Layer Name} & \textbf{PDU} & \textbf{Key Protocols} & \textbf{Hardware Device} \\
+\hline
+7 & Application & Data & HTTP, HTTPS, DNS, FTP, SSH, SMTP & Gateway, L7 Proxy \\
+6 & Presentation & Data & TLS, SSL, JPEG, ASCII, MPEG & Gateway \\
+5 & Session & Data & RPC, NetBIOS, Sockets & Gateway \\
+4 & Transport & Segment / Datagram & TCP, UDP, SCTP & L4 Load Balancer \\
+3 & Network & Packet & IPv4, IPv6, ICMP, OSPF, BGP, ARP & Router, L3 Switch \\
+2 & Data Link & Frame & Ethernet (802.3), Wi-Fi (802.11), PPP & Bridge, L2 Switch, NIC \\
+1 & Physical & Bit & Manchester encoding, RJ-45, V.35 & Repeater, Hub, Cables \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+
+\section*{6. Git Three-Tree Architecture \& Key Commands}
+\begin{itemize}[leftmargin=8mm]
+    \item \textbf{Working Directory:} Files currently being edited on disk.
+    \item \textbf{Staging Area (Index):} Snapshot staged via \texttt{git add <file>} ready to be committed.
+    \item \textbf{Local Repository:} Committed snapshots saved into \texttt{.git/} directory via \texttt{git commit -m "msg"}.
+    \item \textbf{Remote Repository:} Central hosted repository (GitHub, GitLab) synced via \texttt{git push} and \texttt{git pull}.
+    \item \textbf{Key Commands:} \texttt{git status}, \texttt{git diff}, \texttt{git checkout -b <branch>}, \texttt{git merge <branch>}, \texttt{git rebase <branch>}, \texttt{git log --oneline --graph}.
+\end{itemize}
+
+\newpage

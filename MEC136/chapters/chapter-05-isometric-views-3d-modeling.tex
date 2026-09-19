@@ -1,0 +1,215 @@
+\chapter{Unit 5: Isometric Views \& 3D Modeling Fundamentals}
+
+\section{A. What You'll Learn}
+Isometric projection is a pictorial drawing method enabling a 3D object to be visualized on a 2D plane surface. In this unit, you will master:
+\begin{itemize}
+    \item Isometric principles, Isometric Axes ($120^\circ$ separation, $30^\circ$ receding axes), Isometric Lines, and Non-Isometric Lines.
+    \item Mathematical derivation of the **Isometric Scale Reduction Factor ($0.816$)**.
+    \item Differentiation between **Isometric View (Drawing)** (True Scale $1:1$) and **Isometric Projection** (Reduced Scale $0.816$).
+    \item The **Box Method** for constructing prisms, pyramids, and composite/stacked solids.
+    \item Isometric dimensioning rules and obliqued text angles ($-30^\circ / +30^\circ$).
+    \item AutoCAD 3D Modeling Coordinate Systems (`3P UCS`), 3D Solid Primitives (`BOX`, `CYLINDER`, `CONE`, `SPHERE`), Extrude (`EXTRUDE`), Revolve (`REVOLVE`), and Presspull (`PRESSPULL`).
+\end{itemize}
+
+---
+
+\section{B. Isometric Principles \& Terminology}
+
+\begin{definition}[Isometric Projection]
+A type of axonometric pictorial projection where three mutually perpendicular edges of a cube are equally inclined to the plane of projection. Consequently, all three axes are foreshortened by the exact same amount.
+\end{definition}
+
+\subsection{Key Isometric Characteristics}
+\begin{itemize}
+    \item \textbf{Isometric Axes:} Three principal lines meeting at a point and making an angle of **$120^\circ$** with each other.
+    \begin{itemize}
+        \item Vertical Axis: Represents height.
+        \item Right Axis ($30^\circ$ to horizontal): Represents length/width.
+        \item Left Axis ($30^\circ$ to horizontal): Represents width/length.
+    \end{itemize}
+    \item \textbf{Isometric Lines:} Any line parallel to an isometric axis. Dimensions along isometric lines can be measured directly.
+    \item \textbf{Non-Isometric Lines:} Any line NOT parallel to an isometric axis (e.g., slant edges of pyramids, diagonals of cubes). **Non-isometric lines cannot be measured directly**; their endpoints must be located using isometric coordinates.
+    \item \textbf{Isometric Planes:} The three faces of a cube formed by pairs of isometric axes (Top plane, Left vertical plane, Right vertical plane).
+\end{itemize}
+
+---
+
+\section{C. Isometric Scale Derivation \& Scale Factor}
+
+In a true isometric projection, edges are foreshortened because the cube is tilted relative to the projection plane.
+
+\begin{keyequation}[Mathematical Derivation of Isometric Scale Factor]
+Consider a cube top face tilted at $45^\circ$ to the true horizontal line and $30^\circ$ to the isometric axis line:
+\begin{equation}
+    \frac{\text{Isometric Length}}{\text{True Length}} = \frac{\cos 45^\circ}{\cos 30^\circ} = \frac{1/\sqrt{2}}{\sqrt{3}/2} = \sqrt{\frac{2}{3}} \approx \mathbf{0.8165}
+\end{equation}
+
+\begin{equation}
+    \mathbf{\text{Isometric Length} = 0.816 \times \text{True Length}}
+\end{equation}
+\end{keyequation}
+
+\subsection{Isometric View vs. Isometric Projection}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Parameter} & \textbf{Isometric View (Drawing)} & \textbf{Isometric Projection} \\
+\midrule
+\textbf{Scale Used} & **True Scale** ($1:1$, actual physical dimensions) & **Isometric Scale** ($0.816 \times \text{True Length}$) \\
+\textbf{Size} & Larger ($\approx 22.5\%$ larger than projection) & Real foreshortened size \\
+\textbf{Constructibility} & Fast and simple to construct directly & Requires constructing an isometric scale line \\
+\textbf{Standard Usage} & Standard practice in AutoCAD and CAD drafting & Theoretical descriptive geometry examinations \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Isometric View and Isometric Projection.}
+\label{tab:iso-view-vs-proj}
+\end{table}
+
+---
+
+\section{D. Construction Methods for Isometric Solids}
+
+\subsection{The Box Method (Enclosing Box Method)}
+Solids are constructed by imagining the object enclosed inside a rectangular box of overall Length ($L$), Width ($W$), and Height ($H$).
+
+\subsubsection{Procedure for Prisms}
+1. Draw the three isometric axes meeting at origin ($120^\circ$ apart, two receding at $30^\circ$).
+2. Construct the base polygon on the isometric plane inside an enclosing rectangle.
+3. Erect vertical isometric lines from all base corners equal to height $H$.
+4. Connect top points to form top face.
+
+\subsubsection{Procedure for Pyramids}
+1. Enclose base polygon in a rectangle on the bottom isometric plane.
+2. Draw diagonals across the base to locate center point $O$.
+3. From $O$, erect a vertical line equal to axis height $H$ to locate Apex $P$.
+4. Connect Apex $P$ to base corners. (Note: Slant edges are **non-isometric lines**).
+
+\subsection{Composite / Stacked Solids}
+For objects stacked on top of one another (e.g., a cylinder on a cube):
+1. Construct the bottom solid completely.
+2. Locate center point of top face of bottom solid using diagonals.
+3. Construct base of upper solid centered on that point.
+4. Draw upper solid and erase hidden obscured lines.
+
+---
+
+\section{E. AutoCAD 3D Modeling Commands}
+
+Transitioning from 2D drafting to 3D solid modeling requires mastering coordinate systems and 3D primitives.
+
+\begin{autocadcmd}[3P UCS (3-Point User Coordinate System)]
+Moves the coordinate system working plane to any face of a 3D object.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{UCS} $\to$ Type \texttt{3} (3 Point)
+    \item \textbf{Workflow:} Specify new Origin ($0,0,0$) $\to$ Specify point on positive X-axis $\to$ Specify point on positive Y-axis.
+\end{itemize}
+\end{autocadcmd}
+
+\subsection{3D Solid Primitives}
+\begin{itemize}
+    \item \texttt{BOX}: Creates a rectangular solid prism ($L, W, H$).
+    \item \texttt{CYLINDER}: Creates a cylinder with defined base radius and height.
+    \item \texttt{CONE}: Creates a cone with defined base radius and height.
+    \item \texttt{SPHERE}: Creates a solid ball with defined radius.
+\end{itemize}
+
+\begin{autocadcmd}[EXTRUDE]
+Converts closed 2D polylines, circles, or regions into 3D solids by stretching along Z-axis.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{EXTRUDE} or \texttt{EXT}
+    \item \textbf{Input:} Closed polyline, circle, or region.
+    \item \textbf{Workflow:} Select object $\to$ Enter height $\to$ Enter taper angle (optional).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[REVOLVE]
+Creates a solid by sweeping a 2D closed profile around an axis line.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{REVOLVE} or \texttt{REV}
+    \item \textbf{Workflow:} Select 2D profile $\to$ Select axis line $\to$ Enter angle of revolution (usually $360^\circ$).
+\end{itemize}
+\end{autocadcmd}
+
+\begin{autocadcmd}[PRESSPULL]
+Dynamically detects enclosed coplanar boundary areas and adds/subtracts 3D volume.
+\begin{itemize}
+    \item \textbf{Command:} \texttt{PRESSPULL}
+    \item \textbf{Advantage over Extrude:} Does not require a polyline; automatically detects enclosed areas bounded by coplanar lines.
+\end{itemize}
+\end{autocadcmd}
+
+---
+
+\section{F. Chapter 5 Practice Problems \& MCQs}
+
+\subsection{Practice Questions}
+
+\begin{vivaqa}[Question 1 (Basic)]
+What are non-isometric lines? Can dimensions be measured directly along them?\\[4pt]
+\textbf{Answer:} Non-isometric lines are lines that are NOT parallel to any of the three isometric axes (e.g., slant edges of a pyramid). Dimensions **cannot** be measured directly along them; endpoints must be plotted using isometric coordinates.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 2 (Moderate)]
+Derive the isometric scale factor ($0.816$).\\[4pt]
+\textbf{Answer:} Ratio of isometric length to true length $= \frac{\cos 45^\circ}{\cos 30^\circ} = \frac{1/\sqrt{2}}{\sqrt{3}/2} = \sqrt{\frac{2}{3}} \approx \mathbf{0.816}$.
+\end{vivaqa}
+
+\begin{vivaqa}[Question 3 (Exam Level)]
+Calculate the isometric length corresponding to a true length of $90\text{ mm}$.\\[4pt]
+\textbf{Answer:}  
+$$\text{Isometric Length} = 0.816 \times \text{True Length} = 0.816 \times 90\text{ mm} = \mathbf{73.44\text{ mm}}$$
+\end{vivaqa}
+
+\subsection{Multiple-Choice Questions (MCQs)}
+
+1. What is the angle between any two principal isometric axes?  
+   A. $30^\circ$  
+   B. $60^\circ$  
+   C. $90^\circ$  
+   D. $120^\circ$  
+   \textbf{Answer: D} — Isometric axes meet at $120^\circ$ intervals.
+
+2. The ratio of isometric length to true length is approximately:  
+   A. $0.577$  
+   B. $0.707$  
+   C. $0.816$  
+   D. $0.866$  
+   \textbf{Answer: C} — The ratio is $\sqrt{2/3} \approx 0.816$.
+
+3. In AutoCAD, an Isometric View (Drawing) is created using:  
+   A. Reduced Isometric Scale  
+   B. True Scale ($1:1$)  
+   C. Double Scale  
+   D. Architectural Scale  
+   \textbf{Answer: B} — Isometric Views use True Scale ($1:1$).
+
+4. Which 3D modeling command sweeps a closed 2D profile around an axis line?  
+   A. \texttt{EXTRUDE}  
+   B. \texttt{REVOLVE}  
+   C. \texttt{PRESSPULL}  
+   D. \texttt{SWEEP}  
+   \textbf{Answer: B} — \texttt{REVOLVE} sweeps profiles around an axis.
+
+5. What receding angle do horizontal isometric axes make with the true horizontal reference line?  
+   A. $15^\circ$  
+   B. $30^\circ$  
+   C. $45^\circ$  
+   D. $60^\circ$  
+   \textbf{Answer: B} — Receding isometric axes make a $30^\circ$ angle with horizontal.
+
+---
+
+\section{G. Unit 5 Quick Revision Checklist}
+\begin{revisionchecklist}
+\begin{itemize}
+    \item $\text{Isometric Axes Angle} = 120^\circ \text{ between axes}, \quad 30^\circ \text{ to horizontal}$.
+    \item $\text{Isometric Scale Ratio} = \sqrt{2/3} = \frac{\cos 45^\circ}{\cos 30^\circ} \approx 0.816$.
+    \item $\text{Isometric View} \to \text{True Scale (1:1)}$; $\text{Isometric Projection} \to \text{Reduced Scale (0.816)}$.
+    \item $\text{Non-Isometric Lines} \to \text{Cannot be measured directly; locate endpoints via box coordinates}$.
+    \item $\text{Box Method} \to \text{Enclose solid in L, W, H rectangular box}$.
+    \item $\text{AutoCAD 3D: } \texttt{EXTRUDE (linear stretch)}, \quad \texttt{REVOLVE (axis sweep)}, \quad \texttt{PRESSPULL (boundary detection)}$.
+\end{itemize}
+\end{revisionchecklist}

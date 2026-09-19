@@ -1,0 +1,205 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\LPUCSHeader{PRACTICAL WEB DESIGN \& STRUCTURAL CODING}{A}{50 Minutes}{30 Marks}{Units 1 \& 2 (HTML5 Fundamentals, Semantics, Tables, Forms)}
+
+\vspace{3mm}
+\noindent\textbf{Instructions:}
+\begin{itemize}[itemsep=1mm]
+  \item Write standard, valid, and accessible HTML5 code for both problems.
+  \item Adhere strictly to the requested semantic structure, table dimensions, form attributes, and accessibility constraints.
+\end{itemize}
+
+\vspace{4mm}
+\subsection*{Problem 1: University Department Web Portal Layout [15 Marks]}
+\noindent
+\textbf{Scenario}: You are assigned to design the single-page web portal for the \textit{"Department of Computer Science \& Engineering"} using clean HTML5 semantics.
+
+\noindent\textbf{Specific Requirements}:
+\begin{enumerate}[label=(\alph*), leftmargin=8mm]
+  \item Set up a complete HTML5 document structure with \texttt{<!DOCTYPE html>}, UTF-8 character encoding, viewport configuration, and descriptive meta headers.
+  \item Incorporate standard semantic landmark elements: \texttt{<header>}, \texttt{<nav>}, \texttt{<main>}, \texttt{<section>}, \texttt{<aside>}, and \texttt{<footer>}.
+  \item Provide navigation links jumping to internal bookmarks: \texttt{\#faculty}, \texttt{\#courses}, and \texttt{\#contact}.
+  \item Under the courses section, build a table with:
+    \begin{itemize}
+      \item A descriptive \texttt{<caption>}.
+      \item Header cells using \texttt{colspan="2"} to merge "Course Name \& Credits" and \texttt{rowspan="2"} to merge a shared department fee cell.
+      \item Use \texttt{scope="col"} and \texttt{scope="row"} for accessibility.
+    \end{itemize}
+  \item Embed an audio podcast of the Dean's welcome message with browser controls and an image link opening the campus map in a new tab with security attributes (\texttt{target="\_blank"}, \texttt{rel="noopener noreferrer"}).
+\end{enumerate}
+
+\subsection*{Problem 2: Comprehensive Course Registration Form [15 Marks]}
+\noindent
+\textbf{Scenario}: Develop a user registration form that sends data to \texttt{process\_enrollment.php} using the \texttt{POST} method with binary file upload capability.
+
+\noindent\textbf{Specific Requirements}:
+\begin{enumerate}[label=(\alph*), leftmargin=8mm]
+  \item Use a \texttt{<form>} tag configured with \texttt{action}, \texttt{method="POST"}, and \texttt{enctype="multipart/form-data"}.
+  \item Group personal details using a \texttt{<fieldset>} and a descriptive \texttt{<legend>}.
+  \item Implement inputs with appropriate HTML5 types and constraints:
+    \begin{itemize}
+      \item Full Name (\texttt{type="text"}, \texttt{required}, placeholder).
+      \item Email (\texttt{type="email"}, \texttt{required}).
+      \item Registration ID (\texttt{type="text"}, \texttt{pattern="[A-Z0-9]{8}"} restricting to 8 alphanumeric characters).
+      \item Gender Radio Buttons (3 options sharing identical \texttt{name="gender"}).
+      \item Document Upload (\texttt{type="file"}, \texttt{accept=".pdf,.docx"}).
+      \item Multi-line feedback \texttt{<textarea>} with visible rows and cols.
+      \item Dropdown menu \texttt{<select>} for Semester selection with a pre-selected option.
+    \end{itemize}
+  \item Ensure strict accessibility compliance: every control must have an explicitly linked \texttt{<label for="...">} tag matching the control's \texttt{id}.
+\end{enumerate}
+
+\newpage
+\subsection*{Official Solutions \& Model Code --- CA-1 Set A}
+
+\begin{solutionbox}[Model Code: Problem 1 (Department Portal)]
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSE Department Portal - LPU">
+  <title>Department of CSE | LPU</title>
+</head>
+<body>
+  <header>
+    <h1>School of Computer Science & Engineering</h1>
+    <p>Lovely Professional University</p>
+  </header>
+
+  <nav aria-label="Main Navigation">
+    <ul>
+      <li><a href="#faculty">Faculty Directory</a></li>
+      <li><a href="#courses">Curriculum & Fees</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="faculty">
+      <h2>Distinguished Faculty</h2>
+      <p>Our department hosts world-class researchers and industry mentors.</p>
+      <figure>
+        <a href="https://lpu.in/map.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="campus.jpg" alt="Aerial view of CSE Department Building" width="320" height="180">
+        </a>
+        <figcaption>Fig 1: CSE Block 34 (Click to enlarge map).</figcaption>
+      </figure>
+    </section>
+
+    <section id="courses">
+      <h2>Curriculum Matrix</h2>
+      <table border="1" cellpadding="8" style="border-collapse: collapse;">
+        <caption>Academic Year 2026-27 Course Matrix</caption>
+        <thead>
+          <tr>
+            <th scope="col" rowspan="2">Program</th>
+            <th scope="col" colspan="2">Details</th>
+          </tr>
+          <tr>
+            <th scope="col">Credits</th>
+            <th scope="col">Annual Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">B.Tech CSE</th>
+            <td>160 Credits</td>
+            <td rowspan="2">&#8377;1,20,000 (Subsidized)</td>
+          </tr>
+          <tr>
+            <th scope="row">B.Tech IT</th>
+            <td>158 Credits</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="contact">
+      <h2>Dean's Audio Welcome</h2>
+      <audio controls preload="metadata">
+        <source src="welcome.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </section>
+  </main>
+
+  <aside>
+    <h3>Important Announcement</h3>
+    <p>Mid-term registrations close on the 25th of this month.</p>
+  </aside>
+
+  <footer>
+    <p>&copy; 2026 School of CSE, LPU. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+\end{lstlisting}
+\end{solutionbox}
+
+\begin{solutionbox}[Model Code: Problem 2 (Course Registration Form)]
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Registration Form</title>
+</head>
+<body>
+  <h2>Semester Course Registration</h2>
+  <form action="process_enrollment.php" method="POST" enctype="multipart/form-data">
+    <fieldset>
+      <legend>Student Information</legend>
+      <p>
+        <label for="stdName">Full Name *:</label><br>
+        <input type="text" id="stdName" name="studentName" placeholder="e.g. John Doe" required>
+      </p>
+      <p>
+        <label for="stdEmail">Email Address *:</label><br>
+        <input type="email" id="stdEmail" name="studentEmail" placeholder="name@domain.com" required>
+      </p>
+      <p>
+        <label for="regId">Registration ID (8 Chars) *:</label><br>
+        <input type="text" id="regId" name="registrationId" pattern="[A-Z0-9]{8}" placeholder="1234ABCD" required>
+      </p>
+      <p>
+        <span>Gender *:</span><br>
+        <input type="radio" id="gMale" name="gender" value="male" required>
+        <label for="gMale">Male</label>
+        <input type="radio" id="gFemale" name="gender" value="female">
+        <label for="gFemale">Female</label>
+        <input type="radio" id="gOther" name="gender" value="other">
+        <label for="gOther">Other</label>
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Academic & File Upload</legend>
+      <p>
+        <label for="semSelect">Select Semester:</label><br>
+        <select id="semSelect" name="semester">
+          <option value="sem1">Semester 1</option>
+          <option value="sem2">Semester 2</option>
+          <option value="sem3" selected>Semester 3</option>
+          <option value="sem4">Semester 4</option>
+        </select>
+      </p>
+      <p>
+        <label for="gradeDoc">Upload Previous Grade Sheet (.pdf, .docx):</label><br>
+        <input type="file" id="gradeDoc" name="gradeDocument" accept=".pdf,.docx" required>
+      </p>
+      <p>
+        <label for="specialReq">Special Requests / Notes:</label><br>
+        <textarea id="specialReq" name="specialRequests" rows="4" cols="45" placeholder="Enter any notes..."></textarea>
+      </p>
+    </fieldset>
+
+    <br>
+    <button type="submit">Submit Registration</button>
+    <button type="reset">Reset Form</button>
+  </form>
+</body>
+</html>
+\end{lstlisting}
+\end{solutionbox}

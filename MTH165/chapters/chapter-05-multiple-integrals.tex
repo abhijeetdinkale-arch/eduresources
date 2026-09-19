@@ -1,0 +1,423 @@
+\chapter{Multiple Integrals \& Coordinate Transformations}
+\label{chap:multiple-integrals}
+
+% ==============================================================================
+% SECTION 5.1: OVERVIEW \& LEARNING OBJECTIVES
+% ==============================================================================
+\section{Unit Overview \& Learning Objectives}
+
+Multiple integrals extend the concepts of single-variable integration to two-dimensional planar regions and three-dimensional spatial volumes. This unit develops the theory and evaluation of double and triple integrals, the critical analytical technique of changing the order of integration, general coordinate transformations using Jacobians, cylindrical and spherical polar systems, and engineering applications to areas, volumes, masses, and centroids.
+
+\begin{important}[Core Learning Objectives]
+After mastering this unit, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Evaluate Double Integrals} over Cartesian rectangular and general $y$-simple / $x$-simple bounded regions.
+    \item \textbf{Master Change of Order of Integration} by sketching boundary curves and inverting integration strips.
+    \item \textbf{Transform Integrals into Polar Coordinates} ($dA = r\,dr\,d\theta$) to evaluate circular and cardioidal regions.
+    \item \textbf{Evaluate Triple Integrals} in Cartesian, \textbf{Cylindrical} ($dV = r\,dr\,d\theta\,dz$), and \textbf{Spherical Polar Coordinates} ($dV = \rho^2\sin\phi\,d\rho\,d\phi\,d\theta$).
+    \item \textbf{Apply Multiple Integrals} to calculate enclosed surface areas, 3D solid volumes, mass of variable-density laminas, and center of gravity coordinates $(\bar{x}, \bar{y})$.
+\end{enumerate}
+\end{important}
+
+% ==============================================================================
+% SECTION 5.2: DOUBLE INTEGRALS IN CARTESIAN COORDINATES
+% ==============================================================================
+\section{Double Integrals in Cartesian Coordinates}
+
+\subsection{Definition and Fubini's Theorem}
+
+\begin{definition}[Double Integral over a Plane Region]
+Let $f(x,y)$ be a bounded function defined on a closed bounded region $R \subset \mathbb{R}^2$. The double integral of $f(x,y)$ over $R$ is defined as the limit of Riemann sums:
+\begin{equation}
+    \iint_R f(x,y)\,dA = \lim_{\max(\Delta x_i, \Delta y_j)\to 0} \sum_{i=1}^m \sum_{j=1}^n f(x_i^*, y_j^*) \Delta x_i \Delta y_j
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Fubini's Theorem for Rectangular Regions]
+If $f(x,y)$ is continuous on the rectangle $R = [a,b] \times [c,d]$, then:
+\begin{equation}
+    \iint_R f(x,y)\,dA = \int_a^b \left[ \int_c^d f(x,y)\,dy \right] dx = \int_c^d \left[ \int_a^b f(x,y)\,dx \right] dy
+\end{equation}
+\end{theorem}
+
+\subsection{Double Integrals over General Non-Rectangular Regions}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Type I ($y$-Simple Region)}: Bounded by two continuous curves $y = g_1(x)$ (bottom) and $y = g_2(x)$ (top) between vertical lines $x = a$ and $x = b$:
+    \begin{equation}
+        \iint_R f(x,y)\,dA = \int_{x=a}^b \left[ \int_{y=g_1(x)}^{g_2(x)} f(x,y)\,dy \right] dx
+    \end{equation}
+    \item \textbf{Type II ($x$-Simple Region)}: Bounded by two continuous curves $x = h_1(y)$ (left) and $x = h_2(y)$ (right) between horizontal lines $y = c$ and $y = d$:
+    \begin{equation}
+        \iint_R f(x,y)\,dA = \int_{y=c}^d \left[ \int_{x=h_1(y)}^{h_2(y)} f(x,y)\,dx \right] dy
+    \end{equation}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.3: CHANGE OF ORDER OF INTEGRATION
+% ==============================================================================
+\section{Change of Order of Integration}
+
+\begin{methodbox}[Algorithmic 4-Step Procedure for Change of Order]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Step 1 (Extract Boundary Curves)}: Identify the inner variable limits and the outer constant limits from the given integral.
+    \item \textbf{Step 2 (Sketch the 2D Region)}: Graph the boundary curves in the $xy$-plane and identify all points of intersection (vertices).
+    \item \textbf{Step 3 (Invert Slicing Strips)}:
+    \begin{itemize}
+        \item If given as $\int dx \int dy$ (vertical strips), draw a representative \textbf{horizontal strip} parallel to the $x$-axis.
+        \item If given as $\int dy \int dx$ (horizontal strips), draw a representative \textbf{vertical strip} parallel to the $y$-axis.
+    \end{itemize}
+    \item \textbf{Step 4 (Formulate Transformed Limits)}: Determine the new inner curve boundaries (left-to-right or bottom-to-top) and the new outer constant limits (bottom-to-top or left-to-right), splitting the domain into sub-regions if boundary curves change.
+\end{enumerate}
+\end{methodbox}
+
+\begin{example}[Change of Order of Integration with Trigonometric Antiderivative]
+Change the order of integration and evaluate $I = \int_0^\infty \int_x^\infty \frac{e^{-y}}{y}\,dy dx$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Analytical Solution]
+\textbf{Initial Limits}: Inner $y$ runs from $y = x$ to $y = \infty$; Outer $x$ runs from $x = 0$ to $x = \infty$.
+The region $R$ is the infinite triangular wedge in the first quadrant bounded below by the line $y = x$, on the left by the $y$-axis ($x = 0$), and extending to $y \to \infty$.
+
+\textbf{Changing to Horizontal Strips} ($dx$ inner, $dy$ outer):
+\begin{itemize}
+    \item For a fixed $y$, $x$ varies from the $y$-axis ($x = 0$) to the line $x = y$.
+    \item The outer variable $y$ varies from $y = 0$ to $y = \infty$.
+\end{itemize}
+Transformed Integral:
+\begin{align*}
+    I &= \int_0^\infty \left[ \int_0^y \frac{e^{-y}}{y}\,dx \right] dy = \int_0^\infty \frac{e^{-y}}{y} \left[ x \right]_0^y dy \\
+    &= \int_0^\infty \frac{e^{-y}}{y} (y - 0)\,dy = \int_0^\infty e^{-y}\,dy = \left[ -e^{-y} \right]_0^\infty = -(0 - 1) = \mathbf{1}
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.4: DOUBLE INTEGRALS IN POLAR COORDINATES
+% ==============================================================================
+\section{Double Integrals in Polar Coordinates}
+
+\subsection{Coordinate Transformation \& Area Differential}
+
+\begin{theorem}[Polar Transformation]
+Substituting $x = r\cos\theta, y = r\sin\theta$:
+\begin{equation}
+    x^2 + y^2 = r^2, \quad dA = dx\,dy = \left| \frac{\partial(x,y)}{\partial(r,\theta)} \right| dr\,d\theta = r\,dr\,d\theta
+\end{equation}
+\end{theorem}
+
+\begin{example}[Evaluation of the Gaussian Integral via Polar Coordinates]
+Evaluate $I = \iint_R e^{-(x^2+y^2)}\,dx dy$ over the entire positive quadrant $x \ge 0, y \ge 0$, and deduce the value of $\int_0^\infty e^{-x^2}\,dx$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Solution]
+In the positive quadrant: $r$ varies from $0$ to $\infty$, and $\theta$ varies from $0$ to $\pi/2$.
+\begin{align*}
+    I &= \int_0^{\pi/2} \int_0^\infty e^{-r^2} (r\,dr\,d\theta) = \left(\int_0^{\pi/2} d\theta\right) \left(\int_0^\infty r e^{-r^2}\,dr\right) \\
+    &= [\theta]_0^{\pi/2} \left[ -\frac{1}{2} e^{-r^2} \right]_0^\infty = \left(\frac{\pi}{2}\right) \left[ -\frac{1}{2}(0 - 1) \right] = \mathbf{\frac{\pi}{4}}
+\end{align*}
+By Cartesian separation:
+\begin{equation*}
+    I = \int_0^\infty e^{-x^2}\,dx \times \int_0^\infty e^{-y^2}\,dy = \left(\int_0^\infty e^{-x^2}\,dx\right)^2 = \frac{\pi}{4}
+\end{equation*}
+Taking the positive square root:
+\begin{equation*}
+    \mathbf{\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}} \implies \mathbf{\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}}
+\end{equation*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.5: TRIPLE INTEGRALS \& 3D COORDINATE SYSTEMS
+% ==============================================================================
+\section{Triple Integrals \& 3D Coordinate Transformations}
+
+\subsection{Cylindrical and Spherical Polar Coordinate Systems}
+
+\begin{keyequation}[Master Volume Elements in 3D Coordinate Systems]
+\begin{align}
+    \textbf{Cartesian Coordinates}: \quad & dV = dx\,dy\,dz \\
+    \textbf{Cylindrical Coordinates}: \quad & dV = r\,dr\,d\theta\,dz \quad (x = r\cos\theta, \, y = r\sin\theta, \, z = z) \\
+    \textbf{Spherical Polar Coordinates}: \quad & dV = \rho^2 \sin\phi\,d\rho\,d\phi\,d\theta \quad \begin{cases} x = \rho\sin\phi\cos\theta \\ y = \rho\sin\phi\sin\theta \\ z = \rho\cos\phi \end{cases}
+\end{align}
+\end{keyequation}
+
+\begin{example}[Triple Integral in Spherical Polar Coordinates]
+Evaluate $\iiint_V \sqrt{x^2+y^2+z^2}\,dx dy dz$ throughout the volume of the sphere $x^2+y^2+z^2 \le a^2$.
+\end{example}
+
+\begin{solutionbox}[Step-by-Step Solution]
+In spherical polar coordinates: $\sqrt{x^2+y^2+z^2} = \rho$.
+For the complete solid sphere: $\rho \in [0, a]$, $\phi \in [0, \pi]$, $\theta \in [0, 2\pi]$.
+\begin{align*}
+    I &= \int_0^{2\pi} d\theta \int_0^\pi \sin\phi\,d\phi \int_0^a \rho \cdot (\rho^2 \sin\phi\,d\rho) = \left(\int_0^{2\pi} d\theta\right) \left(\int_0^\pi \sin\phi\,d\phi\right) \left(\int_0^a \rho^3\,d\rho\right) \\
+    &= [2\pi] \cdot [-\cos\phi]_0^\pi \cdot \left[ \frac{\rho^4}{4} \right]_0^a = (2\pi) \cdot (2) \cdot \left(\frac{a^4}{4}\right) = \mathbf{\pi a^4}
+\end{align*}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.6: APPLICATIONS: AREA, VOLUME \& CENTROIDS
+% ==============================================================================
+\section{Applications of Multiple Integrals}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Area of Plane Region $R$}:
+    \begin{equation}
+        A = \iint_R dx\,dy = \iint_R r\,dr\,d\theta
+    \end{equation}
+    \item \textbf{Volume of Solid $V$ under $z = f(x,y)$}:
+    \begin{equation}
+        V = \iiint_V dx\,dy\,dz = \iint_R [z_{\text{top}}(x,y) - z_{\text{bottom}}(x,y)]\,dx\,dy
+    \end{equation}
+    \item \textbf{Mass and Center of Gravity of Lamina with Density $\rho(x,y)$}:
+    \begin{equation}
+        M = \iint_R \rho(x,y)\,dA, \quad \bar{x} = \frac{1}{M}\iint_R x\rho(x,y)\,dA, \quad \bar{y} = \frac{1}{M}\iint_R y\rho(x,y)\,dA
+    \end{equation}
+\end{itemize}
+
+% ==============================================================================
+% SECTION 5.7: EXAM TIPS \& COMMON MISTAKES
+% ==============================================================================
+\section{Exam Tips \& Common Student Pitfalls}
+
+\begin{examtip}[Outer Limits Must ALWAYS Be Constants]
+In any iterated multiple integral (double or triple), the \textbf{outermost limits of integration must strictly be constants} ($a, b \in \mathbb{R}$). If your outer limits contain variables (e.g., $x$ or $y$), the evaluation is fundamentally incorrect!
+\end{examtip}
+
+\begin{commonmistake}[Forgetting the Jacobian Scale Factor]
+When converting Cartesian coordinates to Polar or Spherical coordinates, students frequently write $dx dy = dr d\theta$ or $dx dy dz = d\rho d\phi d\theta$.
+Always include the Jacobian multipliers:
+\begin{itemize}
+    \item Polar: $dx dy \to \mathbf{r}\,dr\,d\theta$
+    \item Cylindrical: $dx dy dz \to \mathbf{r}\,dr\,d\theta\,dz$
+    \item Spherical: $dx dy dz \to \mathbf{\rho^2 \sin\phi}\,d\rho\,d\phi\,d\theta$
+\end{itemize}
+\end{commonmistake}
+
+% ==============================================================================
+% SECTION 5.8: QUICK REVISION SUMMARY
+% ==============================================================================
+\section{Quick Revision \& High-Yield Summary}
+
+\begin{quickrevision}[Unit 5 Key Takeaways]
+\begin{itemize}
+    \item \textbf{Double Integrals}: $y$-simple $\int_a^b \int_{g_1(x)}^{g_2(x)} f dy dx$; $x$-simple $\int_c^d \int_{h_1(y)}^{h_2(y)} f dx dy$.
+    \item \textbf{Change of Order}: Sketch $R$, invert slicing strip (horizontal $\leftrightarrow$ vertical), update limits.
+    \item \textbf{Polar Coordinates}: $x = r\cos\theta, y = r\sin\theta, dx dy = r dr d\theta$.
+    \item \textbf{Cylindrical Coordinates}: $dV = r dr d\theta dz$.
+    \item \textbf{Spherical Coordinates}: $dV = \rho^2\sin\phi d\rho d\phi d\theta$ ($\rho \in [0, R], \phi \in [0, \pi], \theta \in [0, 2\pi]$).
+    \item \textbf{Centroid}: $\bar{x} = \frac{\iint x dA}{\iint dA}, \bar{y} = \frac{\iint y dA}{\iint dA}$.
+\end{itemize}
+\end{quickrevision}
+
+% ==============================================================================
+% SECTION 5.9: GRADED PRACTICE PROBLEMS
+% ==============================================================================
+\section{Graded Practice Problems}
+
+\begin{practiceset}[Level 1 to Level 4 Graded Problems]
+\noindent\textbf{Level 1: Fundamentals}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Evaluate $\int_0^1 \int_0^2 (x + 2y)\,dy dx$.
+    \item Evaluate $\iint_R r^2 \sin\theta\,dr d\theta$ over the region $0 \le r \le a, 0 \le \theta \le \pi$.
+    \item Evaluate $\int_0^1 \int_0^1 \int_0^1 (x + y + z)\,dz dy dx$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 2: Standard University Exam Problems}
+\begin{enumerate}[leftmargin=1.5em, start=4]
+    \item Change the order of integration and evaluate $\int_0^1 \int_{y^2}^1 y e^{x^2}\,dx dy$.
+    \item Change the order of integration and evaluate $\int_0^a \int_{\sqrt{ax}}^a \frac{y^2}{\sqrt{y^4 - a^2 x^2}}\,dy dx$.
+    \item Evaluate $\iint_R (x+y)^2\,dx dy$ over the region bounded by the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} \le 1$ using elliptic coordinates.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 3: Advanced Analytical Problems}
+\begin{enumerate}[leftmargin=1.5em, start=7]
+    \item Find the volume of the region bounded by the paraboloid $z = x^2 + y^2$ and the plane $z = 4$ using cylindrical coordinates.
+    \item Find the center of gravity of a uniform lamina bounded by the parabola $y^2 = 4ax$ and its latus rectum $x = a$.
+    \item Evaluate $\iiint_V \frac{1}{(x^2+y^2+z^2)^{3/2}}\,dx dy dz$ over the region between two concentric spheres of radii $a$ and $b$ ($b > a > 0$).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Level 4: Challenge Problems}
+\begin{enumerate}[leftmargin=1.5em, start=10]
+    \item Evaluate $\iint_R \frac{r}{\sqrt{a^2 - r^2}}\,dr d\theta$ over one complete loop of the lemniscate $r^2 = a^2 \cos 2\theta$.
+\end{enumerate}
+\end{practiceset}
+
+% ==============================================================================
+% SECTION 5.10: MULTIPLE CHOICE QUESTIONS (MCQs)
+% ==============================================================================
+\section{Multiple Choice Questions (MCQs)}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item The area differential $dA$ in polar coordinates is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $dr\,d\theta$
+        \item $r\,dr\,d\theta$
+        \item $r^2\,dr\,d\theta$
+        \item $\frac{1}{r}\,dr\,d\theta$
+    \end{enumerate}
+
+    \item The volume element $dV$ in spherical polar coordinates is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\rho\,d\rho\,d\phi\,d\theta$
+        \item $\rho^2\,d\rho\,d\phi\,d\theta$
+        \item $\rho^2 \sin\phi\,d\rho\,d\phi\,d\theta$
+        \item $\rho^2 \cos\phi\,d\rho\,d\phi\,d\theta$
+    \end{enumerate}
+
+    \item What is the value of $\int_0^1 \int_0^1 dx\,dy$?
+    \begin{enumerate}[label=(\alph*)]
+        \item 0
+        \item 1
+        \item 2
+        \item $1/2$
+    \end{enumerate}
+
+    \item When changing the order of integration of $\int_0^1 \int_x^1 f(x,y)\,dy dx$, the new limits become:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\int_0^1 \int_0^y f(x,y)\,dx dy$
+        \item $\int_0^1 \int_y^1 f(x,y)\,dx dy$
+        \item $\int_0^1 \int_0^x f(x,y)\,dx dy$
+        \item $\int_0^x \int_0^1 f(x,y)\,dx dy$
+    \end{enumerate}
+
+    \item The total volume of a sphere of radius $R$ evaluated via $\iiint dV$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\frac{4}{3}\pi R^3$
+        \item $4\pi R^2$
+        \item $\frac{2}{3}\pi R^3$
+        \item $\pi R^3$
+    \end{enumerate}
+
+    \item In cylindrical coordinates, the surface $r = c$ represents a:
+    \begin{enumerate}[label=(\alph*)]
+        \item Sphere
+        \item Circular cylinder
+        \item Plane
+        \item Cone
+    \end{enumerate}
+
+    \item In spherical polar coordinates, the angle $\phi$ (polar/colatitude angle) ranges between:
+    \begin{enumerate}[label=(\alph*)]
+        \item $0$ and $2\pi$
+        \item $-\pi$ and $\pi$
+        \item $0$ and $\pi$
+        \item $0$ and $\pi/2$
+    \end{enumerate}
+
+    \item The value of $\int_0^\infty \int_0^\infty e^{-(x^2+y^2)}\,dx dy$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\pi$
+        \item $\frac{\pi}{2}$
+        \item $\frac{\pi}{4}$
+        \item $\sqrt{\pi}$
+    \end{enumerate}
+
+    \item The center of gravity of a symmetric uniform semi-circular lamina $x^2+y^2 \le a^2, y \ge 0$ is at:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\left(0, \frac{4a}{3\pi}\right)$
+        \item $\left(0, \frac{3a}{4\pi}\right)$
+        \item $\left(0, \frac{a}{2}\right)$
+        \item $\left(\frac{4a}{3\pi}, 0\right)$
+    \end{enumerate}
+
+    \item For the integral $I = \int_0^a \int_0^{\sqrt{a^2-x^2}} dy dx$, transforming to polar coordinates gives:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\int_0^{\pi/2} \int_0^a r\,dr\,d\theta$
+        \item $\int_0^{2\pi} \int_0^a r\,dr\,d\theta$
+        \item $\int_0^\pi \int_0^a r\,dr\,d\theta$
+        \item $\int_0^{\pi/4} \int_0^a r\,dr\,d\theta$
+    \end{enumerate}
+\end{enumerate}
+
+\begin{solutionbox}[MCQ Answer Key \& Explanations]
+\begin{enumerate}
+    \item \textbf{(b) $r\,dr\,d\theta$} --- Scaled by Jacobian $J = r$.
+    \item \textbf{(c) $\rho^2 \sin\phi\,d\rho\,d\phi\,d\theta$} --- Standard spherical volume element.
+    \item \textbf{(b) 1} --- Area of unit square.
+    \item \textbf{(a) $\int_0^1 \int_0^y f(x,y)\,dx dy$} --- Region bounded by $y=x, y=1, x=0$.
+    \item \textbf{(a) $\frac{4}{3}\pi R^3$} --- Standard sphere volume.
+    \item \textbf{(b) Circular cylinder} --- Constant radial distance from the $z$-axis.
+    \item \textbf{(c) $0$ and $\pi$} --- Measured from the positive $z$-axis down to the negative $z$-axis.
+    \item \textbf{(c) $\frac{\pi}{4}$} --- Evaluated in polar coordinates as $(\pi/2)(1/2) = \pi/4$.
+    \item \textbf{(a) $\left(0, \frac{4a}{3\pi}\right)$} --- Standard centroid coordinates for a semicircle.
+    \item \textbf{(a) $\int_0^{\pi/2} \int_0^a r\,dr\,d\theta$} --- First quadrant of circle of radius $a$.
+\end{enumerate}
+\end{solutionbox}
+
+% ==============================================================================
+% SECTION 5.11: SELF-ASSESSMENT UNIT TEST
+% ==============================================================================
+\section{Self-Assessment Unit Test}
+
+\begin{chaptertest}[Unit 5: Multiple Integrals (Max Marks: 25 --- Time: 45 Minutes)]
+\noindent\textbf{Section A: Short Objective Questions ($5 \times 1 = 5\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State Fubini's Theorem for a double integral over a rectangle.
+    \item Write the volume element $dV$ in cylindrical coordinates.
+    \item Write the polar coordinate transformation equations for $x$ and $y$.
+    \item What is the value of $\iint_R dA$ if $R$ is a circle of radius $a$?
+    \item State the range of angles $\theta$ and $\phi$ in spherical polar coordinates for a full 3D sphere.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B: Analytical Problems ($2 \times 5 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+    \item Change the order of integration and evaluate $\int_0^a \int_0^{\sqrt{a^2-x^2}} \sqrt{a^2-y^2}\,dy dx$.
+    \item Evaluate $\iint_R (x^2+y^2)\,dx dy$ over the positive quadrant of the circle $x^2+y^2 \le a^2$ by converting to polar coordinates.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C: Comprehensive Volume \& Centroid ($1 \times 10 = 10\text{ Marks}$)}
+\begin{enumerate}[leftmargin=1.5em, start=8]
+    \item Spatial Integral Applications:
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the volume of the solid enclosed between the paraboloid $z = x^2+y^2$ and the plane $z = 4$ using cylindrical coordinates. (5 Marks)
+        \item Find the center of gravity $(\bar{x}, \bar{y})$ of a uniform lamina bounded by the parabola $y^2 = 4ax$ and the line $x = a$. (5 Marks)
+    \end{enumerate}
+\end{enumerate}
+\end{chaptertest}
+
+\begin{solutionbox}[Complete Unit Test Scoring Solutions]
+\noindent\textbf{Section A Solutions ($5 \times 1 = 5\text{ Marks}$)}:
+\begin{enumerate}
+    \item $\iint_R f(x,y)dA = \int_a^b \int_c^d f(x,y)dy dx = \int_c^d \int_a^b f(x,y)dx dy$. [1 Mark]
+    \item $dV = r\,dr\,d\theta\,dz$. [1 Mark]
+    \item $x = r\cos\theta, y = r\sin\theta$. [1 Mark]
+    \item $\pi a^2$. [1 Mark]
+    \item $\theta \in [0, 2\pi]$ (azimuthal), $\phi \in [0, \pi]$ (polar). [1 Mark]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section B Solutions ($2 \times 5 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=6]
+    \item \textbf{Change of Order}:
+    Given: $y \in [0, \sqrt{a^2-x^2}]$, $x \in [0, a]$ (First quadrant of circle $x^2+y^2 = a^2$). [1.5 Marks]
+    Reversing to horizontal strips: $x \in [0, \sqrt{a^2-y^2}]$, $y \in [0, a]$. [1.5 Marks]
+    $I = \int_0^a \left[ \int_0^{\sqrt{a^2-y^2}} \sqrt{a^2-y^2}\,dx \right] dy = \int_0^a \sqrt{a^2-y^2} [x]_0^{\sqrt{a^2-y^2}} dy$. [1 Mark]
+    $I = \int_0^a (a^2-y^2)\,dy = \left[ a^2 y - \frac{y^3}{3} \right]_0^a = a^3 - \frac{a^3}{3} = \mathbf{\frac{2a^3}{3}}$. [1 Mark]
+
+    \item \textbf{Polar Transformation}:
+    In polar coordinates: $x^2+y^2 = r^2, dx dy = r dr d\theta$. Limits: $r \in [0, a], \theta \in [0, \pi/2]$. [2 Marks]
+    $I = \int_0^{\pi/2} \int_0^a (r^2)(r\,dr\,d\theta) = \left(\int_0^{\pi/2} d\theta\right) \left(\int_0^a r^3\,dr\right)$. [1.5 Marks]
+    $I = [\theta]_0^{\pi/2} \left[ \frac{r^4}{4} \right]_0^a = \left(\frac{\pi}{2}\right)\left(\frac{a^4}{4}\right) = \mathbf{\frac{\pi a^4}{8}}$. [1.5 Marks]
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Section C Solutions ($1 \times 10 = 10\text{ Marks}$)}:
+\begin{enumerate}[start=8]
+    \item \textbf{Volume and Centroid}:
+    \begin{enumerate}[label=(\alph*)]
+        \item Cylindrical Coordinates: $z$ from $r^2$ to $4$, $r$ from $0$ to $2$ (since $r^2 = 4 \implies r = 2$), $\theta$ from $0$ to $2\pi$. [1.5 Marks]
+        $V = \int_0^{2\pi} d\theta \int_0^2 r\,dr \int_{r^2}^4 dz = 2\pi \int_0^2 r(4 - r^2)\,dr$. [1.5 Marks]
+        $V = 2\pi \int_0^2 (4r - r^3)\,dr = 2\pi \left[ 2r^2 - \frac{r^4}{4} \right]_0^2 = 2\pi [2(4) - 4] = 2\pi(4) = \mathbf{8\pi}$. [2 Marks]
+
+        \item Centroid $(\bar{x}, \bar{y})$ of $y^2 = 4ax$ and $x = a$:
+        By symmetry about $x$-axis, $\mathbf{\bar{y} = 0}$. [1 Mark]
+        Area $A = 2 \int_0^a 2\sqrt{ax}\,dx = 4\sqrt{a} \left[ \frac{2}{3}x^{3/2} \right]_0^a = \frac{8}{3}a^2$. [1.5 Marks]
+        $\iint_R x\,dA = 2 \int_0^a x (2\sqrt{ax})\,dx = 4\sqrt{a} \int_0^a x^{3/2}\,dx = 4\sqrt{a} \left[ \frac{2}{5}x^{5/2} \right]_0^a = \frac{8}{5}a^3$. [1.5 Marks]
+        $\bar{x} = \frac{\iint x dA}{A} = \frac{\frac{8}{5}a^3}{\frac{8}{3}a^2} = \frac{3}{5}a$. [1 Mark]
+        \textbf{Centroid Coordinates}: $\mathbf{(\bar{x}, \bar{y}) = \left(\frac{3}{5}a, 0\right)}$.
+    \end{enumerate}
+\end{enumerate}
+\end{solutionbox}

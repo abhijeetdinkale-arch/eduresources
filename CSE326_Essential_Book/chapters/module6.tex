@@ -1,0 +1,31 @@
+\chapter{Web Storage, Developer Tools, Version Control \& Deployment}
+
+\section{6.1 Web Storage API}
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Feature} & \textbf{\texttt{localStorage}} & \textbf{\texttt{sessionStorage}} & \textbf{Cookies} \\
+\midrule
+\textbf{Capacity} & 5--10 MB & $\sim 5$ MB & $\sim 4$ KB \\
+\textbf{Lifespan} & Permanent until cleared & Tab / Session lifetime & Expiration date \\
+\textbf{Network} & Never sent with HTTP & Never sent with HTTP & Sent on every request \\
+\textbf{Common Use} & User themes, cart drafts & Multi-step form session & Server sessions, auth \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{6.2 Browser Developer Tools (F12)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Elements}: Inspect DOM nodes and live CSS styles.
+    \item \textbf{Console}: JavaScript logging, errors, REPL testing.
+    \item \textbf{Sources}: Breakpoint debugging and line-by-line stepping.
+    \item \textbf{Network}: Request monitoring, file sizes, 404 tracking, latency simulation.
+    \item \textbf{Application}: Inspecting \texttt{localStorage}, \texttt{sessionStorage}, cookies.
+\end{itemize}
+
+\section{6.3 Git Version Control \& GitHub Pages Deployment}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Git Commands}: \texttt{git init} $\to$ \texttt{git add .} $\to$ \texttt{git commit -m "msg"} $\to$ \texttt{git push origin main}.
+    \item \textbf{GitHub Pages}: Free static hosting from \texttt{main} branch serving \texttt{index.html}.
+    \item \textbf{Relative Paths}: Always link assets with \texttt{./style.css} instead of \texttt{/style.css}.
+\end{itemize}
