@@ -10,24 +10,46 @@ export default function Navbar({
   darkMode,
   onToggleTheme,
   isSubscribed,
+  onLogoClick,
 }) {
   const { user, logout } = useAuth();
+  const [logoClicked, setLogoClicked] = React.useState(false);
+
+  const handleLogoClick = () => {
+    setLogoClicked(true);
+    setTimeout(() => setLogoClicked(false), 600);
+
+    if (onLogoClick) {
+      onLogoClick();
+    } else {
+      onNavigate('home');
+    }
+  };
 
   return (
     <header className="sticky top-4 z-40 max-w-7xl mx-auto px-4 sm:px-6">
       <div className="bg-paper-50/95 dark:bg-darkbg-900/95 backdrop-blur-md border border-paper-300/90 dark:border-darkbg-border rounded-full px-4 sm:px-6 py-2.5 shadow-pill dark:shadow-pill-dark flex items-center justify-between transition-all">
-        {/* Brand with Star Logo */}
+        {/* Brand with Minimalist Floating Star Logo */}
         <button
-          onClick={() => onNavigate('home')}
-          className="flex items-center gap-3 text-left focus:outline-none"
+          onClick={handleLogoClick}
+          className="group relative flex items-center gap-3 text-left focus:outline-none select-none"
+          title="Edu network"
         >
-          <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-ink-900 dark:bg-paper-50 border border-paper-300 dark:border-darkbg-border shadow-sm p-0.5">
+          {/* Logo Disc with clean small-to-big floating pop */}
+          <div
+            className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-ink-900 dark:bg-paper-50 border border-paper-300 dark:border-darkbg-border shadow-sm p-0.5 transition-all duration-300 ease-out ${
+              logoClicked
+                ? 'scale-125 -translate-y-1 shadow-lg ring-2 ring-[#E5C05B]'
+                : 'group-hover:scale-110 group-hover:-translate-y-0.5'
+            }`}
+          >
             <img
               src="/logo.png"
               alt="Edu network star logo"
               className="w-full h-full object-contain filter invert dark:invert-0"
             />
           </div>
+
           <div className="flex items-baseline gap-1.5">
             <span className="font-bold text-ink-900 dark:text-paper-50 text-base tracking-tight font-sans">
               Edu<span className="font-normal text-ink-600 dark:text-ink-400"> network</span>

@@ -51,7 +51,15 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 Edu network Server running on http://localhost:${PORT}`);
   console.log(`📚 Subject dossiers auto-indexed from repository root.`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`ℹ️ Port ${PORT} already in use. Connected to existing instance.`);
+  } else {
+    console.error('Server error:', err);
+  }
 });

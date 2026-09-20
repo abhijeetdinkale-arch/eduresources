@@ -6,11 +6,13 @@ import Viewer from './components/Viewer';
 import LoginModal from './components/LoginModal';
 import PlansModal from './components/PlansModal';
 import SecurityShield from './components/SecurityShield';
+import LogoSplash from './components/LogoSplash';
 import { useAuth } from './context/AuthContext';
 import { api } from './services/api';
 
 export default function App() {
   const { user, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
+  const [showSplash, setShowSplash] = useState(true);
   const [currentView, setCurrentView] = useState('home');
   const [materials, setMaterials] = useState([]);
   const [loadingMaterials, setLoadingMaterials] = useState(true);
@@ -178,6 +180,11 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${darkMode ? 'dark text-[#F5F2EB]' : 'text-[#18181B]'}`}>
+      {/* Launch / Refresh Celestial Logo Splash Animation */}
+      {showSplash && (
+        <LogoSplash onComplete={() => setShowSplash(false)} />
+      )}
+
       {/* Anti-Screen-Capture Focus Loss Protector */}
       <SecurityShield isViewingDocument={Boolean(activeDocument)} />
 
@@ -211,6 +218,7 @@ export default function App() {
                 if (view === 'home') handleNavigateHome();
                 else handleNavigateCatalog();
               }}
+              onLogoClick={handleNavigateHome}
               onOpenLogin={() => setIsLoginModalOpen(true)}
               onOpenPlans={() => setIsPlansModalOpen(true)}
               darkMode={darkMode}

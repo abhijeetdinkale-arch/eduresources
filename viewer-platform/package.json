@@ -1,14 +1,36 @@
 {
-  "name": "secure-book-viewer",
+  "name": "edunetwork-desktop",
   "version": "1.0.0",
-  "description": "Secure Book & Study Material Viewer with Google Auth, Dynamic Watermarking & Anti-Screenshot DRM",
-  "main": "server/index.js",
+  "description": "Edu network • Academic Material & Book Archives with Hardware-level DRM",
+  "main": "desktop/main.js",
   "scripts": {
     "server": "node server/index.js",
     "client": "npm --prefix client run dev",
     "build": "npm --prefix client run build",
-    "install:all": "npm install --omit=dev && npm --prefix client install",
+    "desktop:run": "electron desktop/main.js",
+    "desktop:build:mac": "npm run build && electron-builder --mac --arm64",
+    "desktop:build:win": "npm run build && electron-builder --win",
     "start": "node server/index.js"
+  },
+  "build": {
+    "appId": "com.edunetwork.desktop",
+    "productName": "EduNetwork",
+    "files": [
+      "desktop/**/*",
+      "server/**/*",
+      "client/dist/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.education",
+      "target": ["dmg", "zip"]
+    },
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "directories": {
+      "output": "release"
+    }
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -17,5 +39,9 @@
     "express": "^4.19.2",
     "google-auth-library": "^9.11.0",
     "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
   }
 }

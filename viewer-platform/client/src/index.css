@@ -94,3 +94,146 @@ img, canvas {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #E5C05B;
 }
+
+/* Celestial & Cinematic Logo Animations */
+@keyframes celestialPop {
+  0% {
+    transform: scale(0.3) rotate(-220deg);
+    opacity: 0;
+    filter: blur(12px) brightness(2);
+  }
+  50% {
+    transform: scale(1.18) rotate(15deg);
+    opacity: 1;
+    filter: blur(0px) brightness(1.3);
+  }
+  75% {
+    transform: scale(0.96) rotate(-4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0px) brightness(1);
+  }
+}
+
+@keyframes spin3D {
+  0% {
+    transform: perspective(800px) rotateY(0deg) scale(1);
+  }
+  40% {
+    transform: perspective(800px) rotateY(180deg) scale(1.3);
+    filter: drop-shadow(0 0 30px rgba(229, 192, 91, 0.9));
+  }
+  100% {
+    transform: perspective(800px) rotateY(360deg) scale(1);
+  }
+}
+
+@keyframes laserStreak {
+  0% {
+    width: 0%;
+    opacity: 0;
+  }
+  30% {
+    width: 100%;
+    opacity: 1;
+  }
+  80% {
+    width: 100%;
+    opacity: 0.8;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes goldSheen {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cinematicZoomIn {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitalWave {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkleDrift {
+  0% {
+    transform: translate(0, 0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+    transform: translate(var(--tx, 20px), var(--ty, -30px)) scale(1.4) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--tx, 20px) * 2), calc(var(--ty, -30px) * 2)) scale(0.2) rotate(180deg);
+  }
+}
+
+@keyframes shimmerGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(229, 192, 91, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 35px rgba(229, 192, 91, 0.95)) drop-shadow(0 0 60px rgba(229, 192, 91, 0.6));
+  }
+}
+
+.animate-celestial-pop {
+  animation: celestialPop 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-spin-3d {
+  animation: spin3D 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-laser-streak {
+  animation: laserStreak 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-gold-sheen {
+  background: linear-gradient(90deg, #F5F2EB 0%, #E5C05B 25%, #FFFFFF 50%, #E5C05B 75%, #F5F2EB 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: goldSheen 2.8s linear infinite;
+}
+
+.animate-orbital-wave {
+  animation: orbitalWave 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-shimmer-glow {
+  animation: shimmerGlow 2.2s ease-in-out infinite;
+}
+

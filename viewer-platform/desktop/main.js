@@ -1,17 +1,17 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
-const http = require('http');
 
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 850,
-    minWidth: 900,
-    minHeight: 600,
-    title: 'Secure Study Material Hub',
-    backgroundColor: '#0f172a',
+    width: 1360,
+    height: 900,
+    minWidth: 960,
+    minHeight: 650,
+    title: 'Edu network • Academic Material & Book Archives',
+    backgroundColor: '#F5F2EB',
+    icon: path.join(__dirname, '../client/public/logo.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -19,46 +19,67 @@ function createWindow() {
       devTools: process.env.NODE_ENV === 'development',
     },
     autoHideMenuBar: true,
+    show: false,
   });
 
-  // 🛡️ NATIVE OS SCREEN-CAPTURE BLOCKING:
+  // 🛡️ HARDWARE-LEVEL OS SCREEN-CAPTURE BLOCKING:
   // On Windows: calls SetWindowDisplayAffinity(WDA_MONITOR) -> Snipping Tool/OBS record black rectangle
-  // On macOS: calls NSWindowSharingNone -> Screen captures record empty black space
+  // On macOS: calls NSWindowSharingNone -> Screen captures & recording show empty black space
   mainWindow.setContentProtection(true);
 
+  // Determine URL (Local internal server or online Vercel sync)
   const startUrl = process.env.ELECTRON_START_URL || `http://localhost:5001`;
 
-  // Start internal server if running standalone
-  try {
-    require('../server/index.js');
-  } catch (e) {
-    console.log('Server already running or external.');
-  }
+  // Graceful show on ready
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 
-  // Load backend/frontend
-  setTimeout(() => {
-    mainWindow.loadURL(startUrl).catch(() => {
-      // Retry if server takes a moment to boot
-      setTimeout(() => mainWindow.loadURL(startUrl), 1500);
+  // Load URL with resilient retry
+  const loadWithRetry = (url, retries = 5) => {
+    mainWindow.loadURL(url).catch((err) => {
+      if (retries > 0) {
+        setTimeout(() => loadWithRetry(url, retries - 1), 1000);
+      } else {
+        // Fallback to cloud URL if local server port took too long
+        mainWindow.loadURL('https://edu-network.vercel.app');
+      }
     });
-  }, 1000);
+  };
 
-  // Prevent external navigation
+  // Check if server is already running before spawning
+  const http = require('http');
+  const req = http.get('http://localhost:5001/api/health', (res) => {
+    console.log('Connected to existing local server.');
+    loadWithRetry(startUrl);
+  });
+
+  req.on('error', () => {
+    try {
+      require('../server/index.js');
+    } catch (e) {
+      console.log('Server init:', e.message);
+    }
+    setTimeout(() => loadWithRetry(startUrl), 800);
+  });
+
+  // Prevent external popup navigations
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https:')) {
+    if (url.startsWith('https:') || url.startsWith('http:')) {
       shell.openExternal(url);
     }
     return { action: 'deny' };
   });
 
-  // Block DevTools shortcuts
+  // Block inspection shortcuts in production
   mainWindow.webContents.on('before-input-event', (event, input) => {
     if (
       (input.control || input.meta) &&
       (input.key.toLowerCase() === 'i' ||
         input.key.toLowerCase() === 'r' ||
         input.key.toLowerCase() === 's' ||
-        input.key.toLowerCase() === 'p')
+        input.key.toLowerCase() === 'p' ||
+        input.key.toLowerCase() === 'u')
     ) {
       if (process.env.NODE_ENV !== 'development') {
         event.preventDefault();
