@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Catalog from './components/Catalog';
 import HomePage from './components/HomePage';
@@ -14,6 +14,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState('home');
   const [materials, setMaterials] = useState([]);
   const [loadingMaterials, setLoadingMaterials] = useState(true);
+  const [activeFolder, setActiveFolder] = useState(null);
   const [activeDocument, setActiveDocument] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [isPlansModalOpen, setIsPlansModalOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function App() {
     setDarkMode((prev) => !prev);
   };
 
+  // Fetch all materials on mount
   useEffect(() => {
     async function fetchMaterials() {
       try {
@@ -56,20 +58,96 @@ export default function App() {
     fetchMaterials();
   }, []);
 
-  // When user logs in, set view to catalog (or check subscription)
+  // Check user subscription upon login
   useEffect(() => {
     async function checkUserSubscription() {
       if (user && user.email) {
         const subData = await api.checkSubscription(user.email);
         setIsSubscribed(subData.isSubscribed);
-        setCurrentView('catalog'); // Directly go to catalog on login
       } else {
         setIsSubscribed(false);
-        setCurrentView('home');
       }
     }
     checkUserSubscription();
   }, [user]);
+
+  // Synchronize URL Hash and Browser History (Back / Next button support)
+  const syncRouteFromHash = useCallback(() => {
+    const hash = window.location.hash || '';
+
+    if (hash.startsWith('#/viewer/')) {
+      const docId = decodeURIComponent(hash.replace('#/viewer/', ''));
+      if (materials.length > 0) {
+        const doc = materials.find((m) => m.id === docId);
+        if (doc) {
+          if (!user) {
+            setIsLoginModalOpen(true);
+            setCurrentView('catalog');
+            setActiveFolder(doc.courseCode);
+            setActiveDocument(null);
+          } else {
+            setActiveDocument(doc);
+            setActiveFolder(doc.courseCode);
+            setCurrentView('catalog');
+          }
+          return;
+        }
+      }
+    } else if (hash.startsWith('#/catalog/')) {
+      const folderCode = decodeURIComponent(hash.replace('#/catalog/', ''));
+      setActiveDocument(null);
+      setActiveFolder(folderCode);
+      setCurrentView('catalog');
+      return;
+    } else if (hash === '#/catalog') {
+      setActiveDocument(null);
+      setActiveFolder(null);
+      setCurrentView('catalog');
+      return;
+    } else if (hash === '#/' || hash === '' || hash === '#') {
+      setActiveDocument(null);
+      setActiveFolder(null);
+      if (user) {
+        setCurrentView('catalog');
+      } else {
+        setCurrentView('home');
+      }
+      return;
+    }
+  }, [materials, user, setIsLoginModalOpen]);
+
+  // Listen to browser Back/Forward (hashchange and popstate)
+  useEffect(() => {
+    syncRouteFromHash();
+    window.addEventListener('hashchange', syncRouteFromHash);
+    window.addEventListener('popstate', syncRouteFromHash);
+
+    return () => {
+      window.removeEventListener('hashchange', syncRouteFromHash);
+      window.removeEventListener('popstate', syncRouteFromHash);
+    };
+  }, [syncRouteFromHash]);
+
+  // Navigate actions that write to browser history
+  const handleNavigateHome = () => {
+    window.location.hash = '#/';
+  };
+
+  const handleNavigateCatalog = () => {
+    window.location.hash = '#/catalog';
+  };
+
+  const handleOpenFolder = (code) => {
+    window.location.hash = `#/catalog/${encodeURIComponent(code)}`;
+  };
+
+  const handleBackToFolders = () => {
+    if (window.history.length > 1 && window.location.hash.startsWith('#/catalog/')) {
+      window.history.back();
+    } else {
+      window.location.hash = '#/catalog';
+    }
+  };
 
   const handleSelectDocument = (doc) => {
     if (!user) {
@@ -82,11 +160,20 @@ export default function App() {
       return;
     }
 
-    setActiveDocument(doc);
+    window.location.hash = `#/viewer/${encodeURIComponent(doc.id)}`;
   };
 
-  const handleBackToCatalog = () => {
-    setActiveDocument(null);
+  const handleBackFromViewer = () => {
+    if (window.history.length > 1 && window.location.hash.startsWith('#/viewer/')) {
+      window.history.back();
+    } else {
+      const folder = activeDocument?.courseCode || activeFolder;
+      if (folder) {
+        window.location.hash = `#/catalog/${encodeURIComponent(folder)}`;
+      } else {
+        window.location.hash = '#/catalog';
+      }
+    }
   };
 
   return (
@@ -108,11 +195,11 @@ export default function App() {
       />
 
       {activeDocument ? (
-        /* Fullscreen Secure Document Viewer (No Watermarks) */
+        /* Fullscreen Secure Document Viewer with Adaptive Fitting and Laptop Keys */
         <Viewer
           material={activeDocument}
           user={user}
-          onBack={handleBackToCatalog}
+          onBack={handleBackFromViewer}
         />
       ) : (
         /* Web Application Interface */
@@ -121,8 +208,8 @@ export default function App() {
             <Navbar
               currentView={currentView}
               onNavigate={(view) => {
-                setCurrentView(view);
-                setActiveDocument(null);
+                if (view === 'home') handleNavigateHome();
+                else handleNavigateCatalog();
               }}
               onOpenLogin={() => setIsLoginModalOpen(true)}
               onOpenPlans={() => setIsPlansModalOpen(true)}
@@ -135,7 +222,7 @@ export default function App() {
           <main className="flex-1">
             {currentView === 'home' && !user ? (
               <HomePage
-                onBrowseBooks={() => setCurrentView('catalog')}
+                onBrowseBooks={handleNavigateCatalog}
                 onOpenPlans={() => setIsPlansModalOpen(true)}
                 onOpenLogin={() => setIsLoginModalOpen(true)}
                 user={user}
@@ -151,6 +238,9 @@ export default function App() {
                 onRequireLogin={() => setIsLoginModalOpen(true)}
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
+                activeFolder={activeFolder}
+                onOpenFolder={handleOpenFolder}
+                onBackToDossiers={handleBackToFolders}
               />
             )}
           </main>

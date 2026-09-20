@@ -47,13 +47,14 @@ export const api = {
     } catch (err) {
       // Offline fallback check
       const normalizedEmail = (email || '').toLowerCase().trim();
-      if (normalizedEmail === 'admin@edunetwork.com' && password === 'academic2026') {
+      const adminEmails = ['admin@edunetwork.com', 'arcnyz@gmail.com', 'abhijeetdinkale@gmail.com', 'admin@gmail.com'];
+      if (adminEmails.includes(normalizedEmail) && password === 'academic2026') {
         const offlineUser = {
           id: 'AUTH-OFFLINE',
-          email: 'admin@edunetwork.com',
-          name: 'Academic Scholar',
+          email: normalizedEmail,
+          name: normalizedEmail.includes('abhijeet') || normalizedEmail.includes('arcnyz') ? 'Abhijeet Dinkale' : 'Academic Scholar',
           picture: null,
-          role: 'member',
+          role: 'admin',
         };
         return { user: offlineUser, token: 'offline_token' };
       }
@@ -75,12 +76,16 @@ export const api = {
     await fetch(`${API_BASE}/auth/logout`, { method: 'POST' });
   },
 
-  // Materials & Books
   async getMaterials(params = {}) {
     try {
       const query = new URLSearchParams(params).toString();
       const res = await fetch(`${API_BASE}/materials?${query}`);
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.materials && data.materials.length > 0) {
+          return data;
+        }
+      }
     } catch {}
 
     // Offline / Bundled Local Fallback

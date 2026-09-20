@@ -48,11 +48,29 @@ router.get('/stream/:token', (req, res) => {
       return res.status(403).json({ error: 'Forbidden document path' });
     }
 
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: 'Document file not found on disk' });
+    let finalFilePath = filePath;
+    let contentType = 'application/pdf';
+
+    if (!fs.existsSync(finalFilePath)) {
+      // Check for bundled .dat book in client or server data
+      const bundledCandidates = [
+        path.resolve(__dirname, '../../client/public/books', `${doc.id}.dat`),
+        path.resolve(__dirname, '../../client/dist/books', `${doc.id}.dat`),
+        path.resolve(__dirname, '../data/books', `${doc.id}.dat`),
+      ];
+      for (const candidate of bundledCandidates) {
+        if (fs.existsSync(candidate)) {
+          finalFilePath = candidate;
+          break;
+        }
+      }
     }
 
-    const stat = fs.statSync(filePath);
+    if (!fs.existsSync(finalFilePath)) {
+      return res.status(404).json({ error: 'Document file not found on server' });
+    }
+
+    const stat = fs.statSync(finalFilePath);
 
     // Set anti-caching & secure headers
     res.writeHead(200, {
@@ -66,7 +84,7 @@ router.get('/stream/:token', (req, res) => {
       'X-Frame-Options': 'DENY',
     });
 
-    const readStream = fs.createReadStream(filePath);
+    const readStream = fs.createReadStream(finalFilePath);
     readStream.pipe(res);
   } catch (err) {
     console.error('Stream token verification error:', err);

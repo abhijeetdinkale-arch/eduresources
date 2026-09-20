@@ -68,7 +68,15 @@ router.post('/google', async (req, res) => {
 router.post('/secret-login', (req, res) => {
   const { email, password } = req.body || {};
   
-  const expectedEmail = (process.env.SECRET_LOGIN_EMAIL || 'admin@edunetwork.com').toLowerCase().trim();
+  const configuredEmail = (process.env.SECRET_LOGIN_EMAIL || 'admin@edunetwork.com').toLowerCase().trim();
+  const allowedAdminEmails = [
+    configuredEmail,
+    'arcnyz@gmail.com',
+    'abhijeetdinkale@gmail.com',
+    'admin@edunetwork.com',
+    'admin@gmail.com',
+  ].map((e) => e.toLowerCase().trim());
+
   const expectedPassword = process.env.SECRET_LOGIN_PASSWORD || 'academic2026';
 
   const inputEmail = (email || '').toLowerCase().trim();
@@ -78,16 +86,16 @@ router.post('/secret-login', (req, res) => {
     return res.status(400).json({ message: 'Please enter both secret email and passcode' });
   }
 
-  if (inputEmail !== expectedEmail || inputPassword !== expectedPassword) {
+  if (!allowedAdminEmails.includes(inputEmail) || inputPassword !== expectedPassword) {
     return res.status(401).json({ message: 'Invalid secret email or passcode. Access denied.' });
   }
 
   const user = {
     id: `AUTH-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-    email: expectedEmail,
-    name: 'Academic Scholar',
+    email: inputEmail,
+    name: inputEmail.includes('abhijeet') || inputEmail.includes('arcnyz') ? 'Abhijeet Dinkale' : 'Academic Scholar',
     picture: null,
-    role: 'member',
+    role: 'admin',
     ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1',
   };
 

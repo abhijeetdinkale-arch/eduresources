@@ -101,14 +101,39 @@ function scanPdfFiles(dir, baseDir = dir) {
 let cachedMaterials = null;
 let lastScanTime = 0;
 
+function loadManifestFallback() {
+  const manifestPaths = [
+    path.resolve(__dirname, '../data/books-manifest.json'),
+    path.resolve(__dirname, '../../client/public/books-manifest.json'),
+    path.resolve(__dirname, '../../client/dist/books-manifest.json'),
+  ];
+  for (const mPath of manifestPaths) {
+    try {
+      if (fs.existsSync(mPath)) {
+        const raw = JSON.parse(fs.readFileSync(mPath, 'utf-8'));
+        if (raw && raw.materials && raw.materials.length > 0) {
+          return raw.materials;
+        }
+      }
+    } catch (e) {
+      console.error('Error reading manifest at ' + mPath, e);
+    }
+  }
+  return [];
+}
+
 function getMaterialsList() {
   const now = Date.now();
   if (!cachedMaterials || now - lastScanTime > 30000) {
-    cachedMaterials = scanPdfFiles(WORKSPACE_ROOT);
-    cachedMaterials.sort((a, b) => {
+    let scanned = scanPdfFiles(WORKSPACE_ROOT);
+    if (!scanned || scanned.length === 0) {
+      scanned = loadManifestFallback();
+    }
+    scanned.sort((a, b) => {
       if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
       return a.title.localeCompare(b.title);
     });
+    cachedMaterials = scanned;
     lastScanTime = now;
   }
   return cachedMaterials;
