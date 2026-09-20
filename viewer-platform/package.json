@@ -23,10 +23,12 @@
     ],
     "mac": {
       "category": "public.app-category.education",
+      "icon": "desktop/icon.icns",
       "target": ["dmg", "zip"]
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "icon": "desktop/icon.ico",
+      "target": ["portable", "dir"]
     },
     "directories": {
       "output": "release"

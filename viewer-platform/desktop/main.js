@@ -4,6 +4,8 @@ const path = require('path');
 let mainWindow;
 
 function createWindow() {
+  const iconPath = path.join(__dirname, 'icon.png');
+
   mainWindow = new BrowserWindow({
     width: 1360,
     height: 900,
@@ -11,7 +13,7 @@ function createWindow() {
     minHeight: 650,
     title: 'Edu network • Academic Material & Book Archives',
     backgroundColor: '#F5F2EB',
-    icon: path.join(__dirname, '../client/public/logo.png'),
+    icon: iconPath,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -21,6 +23,12 @@ function createWindow() {
     autoHideMenuBar: true,
     show: false,
   });
+
+  if (process.platform === 'darwin' && app.dock) {
+    try {
+      app.dock.setIcon(iconPath);
+    } catch (e) {}
+  }
 
   // 🛡️ HARDWARE-LEVEL OS SCREEN-CAPTURE BLOCKING:
   // On Windows: calls SetWindowDisplayAffinity(WDA_MONITOR) -> Snipping Tool/OBS record black rectangle
