@@ -5,7 +5,7 @@ const PLANS = [
   {
     id: 'starter',
     name: 'Starter Pass',
-    price: '₹300',
+    price: '₹299',
     duration: 'Single Semester',
     badge: null,
     highlight: false,
@@ -20,7 +20,7 @@ const PLANS = [
   {
     id: 'pro',
     name: 'Pro All-Access Pass',
-    price: '₹500',
+    price: '₹499',
     duration: 'Full Academic Year',
     badge: '🔥 MOST POPULAR • BEST VALUE',
     highlight: true,
@@ -38,7 +38,7 @@ const PLANS = [
   {
     id: 'vip',
     name: 'Lifetime Degree Pass',
-    price: '₹1000',
+    price: '₹999',
     duration: 'Lifetime All Years',
     badge: '👑 ULTIMATE VIP',
     highlight: false,

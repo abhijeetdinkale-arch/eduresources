@@ -38,7 +38,7 @@ router.get('/status', (req, res) => {
     isSubscribed,
     email,
     plan: isSubscribed ? 'Semester Curriculum Pass' : 'Free Preview',
-    price: '₹300',
+    price: '₹299',
     upiId: 'abhijeetdinkale@oksbi',
     phone: '+91 7666937049',
     coordinator: 'Abhijeet Dinkale',

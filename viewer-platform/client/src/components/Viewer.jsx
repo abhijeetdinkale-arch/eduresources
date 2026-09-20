@@ -15,6 +15,7 @@ import {
   StretchHorizontal,
   Maximize,
   SlidersHorizontal,
+  X,
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -37,26 +38,52 @@ export default function Viewer({ material, user, onBack }) {
   const renderTaskRef = useRef(null);
   const rawPageViewportRef = useRef(null);
 
+  // Sync fullscreen state with native document fullscreen
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
   // Load PDF Document
   useEffect(() => {
     let isMounted = true;
 
     async function loadDocument() {
       try {
-        setLoading(true);
-        setError(null);
+        let doc;
+        try {
+          const tokenData = await api.getDocumentStreamToken(material.id);
+          const streamUrl = api.getDocumentStreamUrl(tokenData.token, material);
 
-        const tokenData = await api.getDocumentStreamToken(material.id);
-        const streamUrl = api.getDocumentStreamUrl(tokenData.token, material);
-
-        const loadingTask = pdfjsLib.getDocument({
-          url: streamUrl,
-          withCredentials: true,
-          disableAutoFetch: false,
-          disableStream: false,
-        });
-
-        const doc = await loadingTask.promise;
+          const loadingTask = pdfjsLib.getDocument({
+            url: streamUrl,
+            withCredentials: true,
+            disableAutoFetch: false,
+            disableStream: false,
+          });
+          doc = await loadingTask.promise;
+        } catch (streamErr) {
+          // Cloud/Serverless Edge fallback: load directly from pre-cached static book asset
+          try {
+            const fallbackUrl = `/books/${material.id}.dat`;
+            const fallbackTask = pdfjsLib.getDocument({
+              url: fallbackUrl,
+              withCredentials: true,
+            });
+            doc = await fallbackTask.promise;
+          } catch (fallbackErr) {
+            throw streamErr || fallbackErr;
+          }
+        }
         if (isMounted) {
           setPdfDoc(doc);
           setTotalPages(doc.numPages);
@@ -227,6 +254,13 @@ export default function Viewer({ material, user, onBack }) {
     }
   }, []);
 
+  const handleBackToArchives = useCallback(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {});
+    }
+    if (onBack) onBack();
+  }, [onBack]);
+
   // Keyboard navigation for Laptop / Hardware keys
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -332,15 +366,15 @@ export default function Viewer({ material, user, onBack }) {
   return (
     <div
       ref={viewerContainerRef}
-      className="flex flex-col h-screen bg-[#EFECE4] dark:bg-darkbg-950 text-ink-900 dark:text-paper-100 select-none overflow-hidden transition-colors"
+      className="flex flex-col h-screen bg-[#EFECE4] dark:bg-darkbg-950 text-ink-900 dark:text-paper-100 select-none overflow-hidden transition-colors relative"
     >
       {/* Top Header Toolbar */}
       <header className="h-16 bg-paper-50/95 dark:bg-darkbg-900/95 border-b border-paper-300 dark:border-darkbg-border px-3 sm:px-6 flex items-center justify-between z-30 shrink-0 backdrop-blur-md gap-2">
         {/* Left: Back + Book Title */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
-            onClick={onBack}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-100 transition text-xs font-mono font-semibold border border-paper-300/80 dark:border-darkbg-border shadow-xs shrink-0"
+            onClick={handleBackToArchives}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-100 transition text-xs font-mono font-semibold border border-paper-300/80 dark:border-darkbg-border shadow-xs shrink-0"
             title="Return to Subject Dossier"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -392,7 +426,7 @@ export default function Viewer({ material, user, onBack }) {
           </button>
         </div>
 
-        {/* Right Controls: Fit Width / Fit Page + Zoom + Fullscreen */}
+        {/* Right Controls: Fit Width / Fit Page + Zoom + Fullscreen / Exit Cross */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* Keyboard prompt badge on desktop */}
           <div className="hidden xl:flex items-center gap-1 bg-paper-200/60 dark:bg-darkbg-800/60 px-2.5 py-1 rounded-full border border-paper-300/80 dark:border-darkbg-border text-[9px] font-mono text-ink-500 dark:text-ink-400">
@@ -455,16 +489,49 @@ export default function Viewer({ material, user, onBack }) {
             </button>
           </div>
 
-          {/* Fullscreen Button */}
+          {/* Fullscreen / Exit Fullscreen Cross Button */}
           <button
             onClick={toggleFullscreen}
-            className="p-2 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-100 transition border border-paper-300 dark:border-darkbg-border"
-            title="Toggle Fullscreen (F key)"
+            className={`p-2 rounded-full transition border shadow-xs flex items-center gap-1.5 text-xs font-mono font-bold ${
+              isFullscreen
+                ? 'bg-terracotta-500/15 border-terracotta-500/40 text-terracotta-600 dark:text-terracotta-400 hover:bg-terracotta-500/25 px-3'
+                : 'bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-100 border-paper-300 dark:border-darkbg-border'
+            }`}
+            title={isFullscreen ? 'Exit Fullscreen (✕ / Esc / F)' : 'Toggle Fullscreen (F key)'}
           >
-            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            {isFullscreen ? (
+              <>
+                <X className="w-4 h-4 text-terracotta-600 dark:text-terracotta-400 shrink-0" />
+                <span className="hidden sm:inline">EXIT (✕)</span>
+              </>
+            ) : (
+              <Maximize2 className="w-3.5 h-3.5" />
+            )}
           </button>
         </div>
       </header>
+
+      {/* Floating Exit / Back Controls (Visible when in Fullscreen) */}
+      {isFullscreen && (
+        <div className="fixed top-20 right-4 sm:right-8 z-50 flex items-center gap-2 bg-paper-50/95 dark:bg-darkbg-850/95 backdrop-blur-md p-1.5 rounded-full border border-paper-300 dark:border-darkbg-border shadow-floating animate-in fade-in zoom-in duration-200">
+          <button
+            onClick={handleBackToArchives}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-750 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-900 dark:text-paper-100 text-xs font-mono font-semibold transition shadow-xs"
+            title="Return to Archives"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Archives</span>
+          </button>
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-terracotta-500/15 hover:bg-terracotta-500/25 text-terracotta-600 dark:text-terracotta-400 text-xs font-mono font-bold transition border border-terracotta-500/30 shadow-xs"
+            title="Exit Fullscreen Mode (✕ / Esc)"
+          >
+            <X className="w-4 h-4" />
+            <span>Exit Fullscreen</span>
+          </button>
+        </div>
+      )}
 
       {/* Main Canvas Document Area (Adaptive Responsive Fitting) */}
       <main
@@ -484,7 +551,7 @@ export default function Viewer({ material, user, onBack }) {
             <h3 className="text-base font-cinzel font-bold text-ink-900 dark:text-paper-50 mb-1">Pass Required</h3>
             <p className="text-xs text-ink-600 dark:text-ink-400 mb-4">{error}</p>
             <button
-              onClick={onBack}
+              onClick={handleBackToArchives}
               className="px-5 py-2.5 bg-ink-900 dark:bg-paper-100 text-paper-50 dark:text-ink-900 rounded-full text-xs font-semibold uppercase tracking-wider transition"
             >
               Return to Archives

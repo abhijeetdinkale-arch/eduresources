@@ -5,7 +5,7 @@ const PLANS = [
   {
     id: 'starter',
     name: 'Starter Pass',
-    price: '₹300',
+    price: '₹299',
     duration: 'Single Semester',
     badge: null,
     highlight: false,
@@ -20,7 +20,7 @@ const PLANS = [
   {
     id: 'pro',
     name: 'Pro All-Access Pass',
-    price: '₹500',
+    price: '₹499',
     duration: 'Full Academic Year',
     badge: '🔥 MOST POPULAR • BEST VALUE',
     highlight: true,
@@ -38,7 +38,7 @@ const PLANS = [
   {
     id: 'vip',
     name: 'Lifetime Degree Pass',
-    price: '₹1000',
+    price: '₹999',
     duration: 'Lifetime All Years',
     badge: '👑 ULTIMATE VIP',
     highlight: false,
@@ -137,7 +137,7 @@ export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, user
                 className="px-6 py-3.5 rounded-full bg-[#E5C05B] hover:bg-[#d8b34c] text-ink-900 text-xs font-bold tracking-wider uppercase transition shadow-md flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
-                <span>View Plans (from ₹300)</span>
+                <span>View Plans (from ₹299)</span>
               </button>
             )}
 

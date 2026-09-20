@@ -41,53 +41,47 @@ router.get('/stream/:token', (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const filePath = path.resolve(WORKSPACE_ROOT, decoded.relativePath);
 
-    // Path traversal check
-    if (!filePath.startsWith(WORKSPACE_ROOT)) {
-      return res.status(403).json({ error: 'Forbidden document path' });
+    // Check possible local and bundled paths
+    const candidatePaths = [];
+    if (decoded.relativePath) {
+      candidatePaths.push(path.resolve(WORKSPACE_ROOT, decoded.relativePath));
+      candidatePaths.push(path.resolve(__dirname, '../../../', decoded.relativePath));
+      candidatePaths.push(path.resolve(__dirname, '../../', decoded.relativePath));
+    }
+    if (decoded.materialId) {
+      candidatePaths.push(
+        path.resolve(__dirname, '../../client/public/books', `${decoded.materialId}.dat`),
+        path.resolve(__dirname, '../../client/dist/books', `${decoded.materialId}.dat`),
+        path.resolve(__dirname, '../data/books', `${decoded.materialId}.dat`)
+      );
     }
 
-    let finalFilePath = filePath;
-    let contentType = 'application/pdf';
+    const finalFilePath = candidatePaths.find((p) => p && fs.existsSync(p));
 
-    if (!fs.existsSync(finalFilePath)) {
-      // Check for bundled .dat book in client or server data
-      const bundledCandidates = [
-        path.resolve(__dirname, '../../client/public/books', `${doc.id}.dat`),
-        path.resolve(__dirname, '../../client/dist/books', `${doc.id}.dat`),
-        path.resolve(__dirname, '../data/books', `${doc.id}.dat`),
-      ];
-      for (const candidate of bundledCandidates) {
-        if (fs.existsSync(candidate)) {
-          finalFilePath = candidate;
-          break;
-        }
-      }
+    if (finalFilePath) {
+      const stat = fs.statSync(finalFilePath);
+      res.writeHead(200, {
+        'Content-Type': 'application/pdf',
+        'Content-Length': stat.size,
+        'Content-Disposition': 'inline; filename="protected-document.pdf"',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, private, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+      });
+      return fs.createReadStream(finalFilePath).pipe(res);
     }
 
-    if (!fs.existsSync(finalFilePath)) {
-      return res.status(404).json({ error: 'Document file not found on server' });
+    // On Serverless / Edge Cloud (e.g. Vercel), redirect to the CDN-cached dat file
+    if (decoded.materialId) {
+      return res.redirect(302, `/books/${decoded.materialId}.dat`);
     }
 
-    const stat = fs.statSync(finalFilePath);
-
-    // Set anti-caching & secure headers
-    res.writeHead(200, {
-      'Content-Type': 'application/pdf',
-      'Content-Length': stat.size,
-      'Content-Disposition': 'inline; filename="protected-document.pdf"',
-      'Cache-Control': 'no-store, no-cache, must-revalidate, private, proxy-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-    });
-
-    const readStream = fs.createReadStream(finalFilePath);
-    readStream.pipe(res);
+    return res.status(404).json({ error: 'Document file not found' });
   } catch (err) {
-    console.error('Stream token verification error:', err);
+    console.error('Stream verification error:', err);
     return res.status(403).json({ error: 'Stream token expired or invalid. Please re-open the document.' });
   }
 });
