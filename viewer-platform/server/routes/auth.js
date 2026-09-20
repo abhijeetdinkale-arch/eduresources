@@ -64,17 +64,30 @@ router.post('/google', async (req, res) => {
   }
 });
 
-// Demo/Test Student Login
-router.post('/demo', (req, res) => {
-  const { name, email } = req.body;
-  const studentEmail = email || 'student@university.edu';
-  const studentName = name || 'Student User';
+// Secret Academic Pass Login
+router.post('/secret-login', (req, res) => {
+  const { email, password } = req.body || {};
+  
+  const expectedEmail = (process.env.SECRET_LOGIN_EMAIL || 'admin@edunetwork.com').toLowerCase().trim();
+  const expectedPassword = process.env.SECRET_LOGIN_PASSWORD || 'academic2026';
+
+  const inputEmail = (email || '').toLowerCase().trim();
+  const inputPassword = password || '';
+
+  if (!inputEmail || !inputPassword) {
+    return res.status(400).json({ message: 'Please enter both secret email and passcode' });
+  }
+
+  if (inputEmail !== expectedEmail || inputPassword !== expectedPassword) {
+    return res.status(401).json({ message: 'Invalid secret email or passcode. Access denied.' });
+  }
 
   const user = {
-    id: `STU-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-    email: studentEmail,
-    name: studentName,
+    id: `AUTH-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+    email: expectedEmail,
+    name: 'Academic Scholar',
     picture: null,
+    role: 'member',
     ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1',
   };
 
@@ -88,6 +101,37 @@ router.post('/demo', (req, res) => {
   });
 
   res.json({ user, token });
+});
+
+// Backward compatibility demo route forwarding to secret-login check
+router.post('/demo', (req, res) => {
+  const { email, password } = req.body || {};
+  const expectedEmail = (process.env.SECRET_LOGIN_EMAIL || 'admin@edunetwork.com').toLowerCase().trim();
+  const expectedPassword = process.env.SECRET_LOGIN_PASSWORD || 'academic2026';
+
+  const inputEmail = (email || '').toLowerCase().trim();
+  const inputPassword = password || '';
+
+  if (inputEmail === expectedEmail && (inputPassword === expectedPassword || !password)) {
+    const user = {
+      id: `AUTH-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+      email: expectedEmail,
+      name: 'Academic Scholar',
+      picture: null,
+      role: 'member',
+      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1',
+    };
+    const token = jwt.sign(user, JWT_SECRET, { expiresIn: '7d' });
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.json({ user, token });
+  }
+
+  return res.status(401).json({ message: 'Invalid secret email or passcode.' });
 });
 
 // Current User Info

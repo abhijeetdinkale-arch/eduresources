@@ -20,9 +20,30 @@ export default function Catalog({
   onRequireLogin,
   activeCategory = 'All',
   onCategoryChange,
+  activeFolder: propActiveFolder,
+  onOpenFolder,
+  onBackToDossiers,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFolder, setActiveFolder] = useState(null);
+  const [internalActiveFolder, setInternalActiveFolder] = useState(null);
+  const activeFolder = propActiveFolder !== undefined ? propActiveFolder : internalActiveFolder;
+
+  const handleOpenFolder = (code) => {
+    if (onOpenFolder) {
+      onOpenFolder(code);
+    } else {
+      setInternalActiveFolder(code);
+    }
+  };
+
+  const handleBackToFolders = () => {
+    if (onBackToDossiers) {
+      onBackToDossiers();
+    } else {
+      setInternalActiveFolder(null);
+    }
+  };
+
   const selectedCategory = activeCategory;
 
   // Group materials by courseCode
@@ -106,7 +127,7 @@ export default function Catalog({
           <div className="flex items-center gap-3">
             {activeFolder ? (
               <button
-                onClick={() => setActiveFolder(null)}
+                onClick={handleBackToFolders}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-900 dark:text-paper-100 text-xs font-mono font-bold transition shadow-xs border border-paper-300 dark:border-darkbg-border"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -208,7 +229,7 @@ export default function Catalog({
                 courseCode={code}
                 materials={courseGroups[code] || []}
                 index={idx + 1}
-                onOpenFolder={(c) => setActiveFolder(c)}
+                onOpenFolder={(c) => handleOpenFolder(c)}
               />
             ))}
           </div>

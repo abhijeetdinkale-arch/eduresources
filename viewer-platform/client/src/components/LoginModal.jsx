@@ -1,14 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Lock, User, Mail, AlertCircle, ArrowRight } from 'lucide-react';
+import { X, Lock, KeyRound, Mail, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginModal({ isOpen, onClose }) {
-  const { googleClientId, loginWithGoogleCredential, loginWithDemo } = useAuth();
-  const [demoName, setDemoName] = useState('Alex Student');
-  const [demoEmail, setDemoEmail] = useState('alex.student@university.edu');
+  const { googleClientId, loginWithGoogleCredential, loginWithSecretPass } = useAuth();
+  const [secretEmail, setSecretEmail] = useState('');
+  const [secretPassword, setSecretPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const googleBtnRef = useRef(null);
+
+  // Clear inputs and errors whenever modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setError(null);
+      setSecretEmail('');
+      setSecretPassword('');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || !googleClientId) return;
@@ -42,15 +52,15 @@ export default function LoginModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const handleDemoSubmit = async (e) => {
+  const handleSecretSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       setError(null);
-      await loginWithDemo(demoName, demoEmail);
+      await loginWithSecretPass(secretEmail.trim(), secretPassword);
       onClose();
     } catch (err) {
-      setError(err.message || 'Login failed');
+      setError(err.message || 'Invalid secret email or passcode. Access denied.');
     } finally {
       setLoading(false);
     }
@@ -108,53 +118,63 @@ export default function LoginModal({ isOpen, onClose }) {
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                 </svg>
-                <span>Real Google Account Sign-In Ready</span>
+                <span>Google Gmail Sign-In</span>
               </div>
               <p className="text-[11px] text-ink-500 dark:text-ink-400 leading-relaxed">
-                Add your <code className="px-1 py-0.5 rounded bg-paper-200 dark:bg-darkbg-750 font-mono text-[10px]">GOOGLE_CLIENT_ID</code> in <code className="px-1 py-0.5 rounded bg-paper-200 dark:bg-darkbg-750 font-mono text-[10px]">.env</code> to activate live Google OAuth popup, or enter your Google email below.
+                Sign in securely with your Google / Gmail account or use your secret Member Keycard pass below.
               </p>
             </div>
           )}
           <div className="relative flex py-1 items-center">
             <div className="flex-grow border-t border-paper-300 dark:border-darkbg-border"></div>
-            <span className="flex-shrink mx-3 text-[10px] font-mono uppercase tracking-wider text-ink-400">OR DIRECT EMAIL PASS</span>
+            <span className="flex-shrink mx-3 text-[10px] font-mono uppercase tracking-wider text-ink-400">OR SECRET MEMBER PASS</span>
             <div className="flex-grow border-t border-paper-300 dark:border-darkbg-border"></div>
           </div>
         </div>
 
-        {/* Student Pass Form */}
-        <form onSubmit={handleDemoSubmit} className="space-y-3.5">
+        {/* Secret Pass Form */}
+        <form onSubmit={handleSecretSubmit} className="space-y-3.5">
           <div>
             <label className="block text-[11px] font-mono uppercase tracking-wider text-ink-600 dark:text-ink-400 mb-1">
-              Student Full Name
-            </label>
-            <div className="relative">
-              <User className="w-4 h-4 text-ink-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                required
-                value={demoName}
-                onChange={(e) => setDemoName(e.target.value)}
-                placeholder="Student Name"
-                className="w-full pl-10 pr-3.5 py-2.5 bg-paper-100 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-xl text-xs text-ink-900 dark:text-paper-100 placeholder-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900 dark:focus:ring-paper-200"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-[11px] font-mono uppercase tracking-wider text-ink-600 dark:text-ink-400 mb-1">
-              University Google Email
+              Authorized Member Email
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-ink-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
                 required
-                value={demoEmail}
-                onChange={(e) => setDemoEmail(e.target.value)}
-                placeholder="student@university.edu"
+                value={secretEmail}
+                onChange={(e) => setSecretEmail(e.target.value)}
+                placeholder="admin@edunetwork.com"
+                autoComplete="email"
                 className="w-full pl-10 pr-3.5 py-2.5 bg-paper-100 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-xl text-xs text-ink-900 dark:text-paper-100 placeholder-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900 dark:focus:ring-paper-200"
               />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-mono uppercase tracking-wider text-ink-600 dark:text-ink-400 mb-1">
+              Secret Passcode
+            </label>
+            <div className="relative">
+              <KeyRound className="w-4 h-4 text-ink-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={secretPassword}
+                onChange={(e) => setSecretPassword(e.target.value)}
+                placeholder="Enter secret passcode"
+                autoComplete="current-password"
+                className="w-full pl-10 pr-10 py-2.5 bg-paper-100 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-xl text-xs text-ink-900 dark:text-paper-100 placeholder-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900 dark:focus:ring-paper-200"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-400 hover:text-ink-700 dark:hover:text-paper-200 p-1"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              </button>
             </div>
           </div>
 
@@ -163,7 +183,7 @@ export default function LoginModal({ isOpen, onClose }) {
             disabled={loading}
             className="w-full py-3 px-4 bg-ink-900 dark:bg-paper-100 hover:bg-black dark:hover:bg-white text-paper-50 dark:text-ink-900 rounded-xl text-xs font-semibold tracking-wider uppercase transition shadow-md flex items-center justify-center gap-2 mt-4"
           >
-            <span>{loading ? 'Authenticating...' : 'Authorize Student Pass'}</span>
+            <span>{loading ? 'Verifying Passcode...' : 'Authorize Secret Pass'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

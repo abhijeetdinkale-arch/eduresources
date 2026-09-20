@@ -37,11 +37,15 @@ export function AuthProvider({ children }) {
     return data.user;
   };
 
-  const loginWithDemo = async (name, email) => {
-    const data = await api.loginDemo(name, email);
+  const loginWithSecretPass = async (email, password) => {
+    const data = await api.loginWithSecretPass(email, password);
     setUser(data.user);
     setIsLoginModalOpen(false);
     return data.user;
+  };
+
+  const loginWithDemo = async (name, email, password) => {
+    return loginWithSecretPass(email, password);
   };
 
   const logout = async () => {
@@ -58,6 +62,7 @@ export function AuthProvider({ children }) {
         isLoginModalOpen,
         setIsLoginModalOpen,
         loginWithGoogleCredential,
+        loginWithSecretPass,
         loginWithDemo,
         logout,
       }}
