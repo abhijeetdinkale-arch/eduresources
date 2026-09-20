@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, BookOpen, ArrowLeft, Folder, ShieldCheck } from 'lucide-react';
+import { Search, BookOpen, ArrowLeft, Folder, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import DocumentCard from './DocumentCard';
 import SubjectFolderCard from './SubjectFolderCard';
 
@@ -60,6 +60,15 @@ export default function Catalog({
   const courseCodes = useMemo(() => {
     return Object.keys(courseGroups).sort();
   }, [courseGroups]);
+
+  // Determine previous and next folders for back/forth subject navigation
+  const currentFolderIndex = useMemo(() => {
+    if (!activeFolder) return -1;
+    return courseCodes.indexOf(activeFolder);
+  }, [activeFolder, courseCodes]);
+
+  const prevFolderCode = currentFolderIndex > 0 ? courseCodes[currentFolderIndex - 1] : null;
+  const nextFolderCode = currentFolderIndex >= 0 && currentFolderIndex < courseCodes.length - 1 ? courseCodes[currentFolderIndex + 1] : null;
 
   // Filter materials inside opened folder
   const booksInActiveFolder = useMemo(() => {
@@ -122,32 +131,60 @@ export default function Catalog({
 
       {/* Navigation Breadcrumb & Search Bar */}
       <div className="space-y-4">
-        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-          {/* Breadcrumb / Back button */}
-          <div className="flex items-center gap-3">
-            {activeFolder ? (
+        {/* Back and Forth Subject Navigation Bar */}
+        {activeFolder ? (
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-paper-100/90 dark:bg-darkbg-850/90 backdrop-blur-xs p-3 sm:p-4 rounded-[28px] border border-paper-300 dark:border-darkbg-border shadow-xs">
+            {/* Left: Back to all dossiers */}
+            <button
+              onClick={handleBackToFolders}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-paper-200 dark:bg-darkbg-750 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-900 dark:text-paper-100 text-xs font-mono font-bold transition shadow-xs border border-paper-300 dark:border-darkbg-border"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>ALL SUBJECT DOSSIERS</span>
+            </button>
+
+            {/* Center: Current Dossier Pill */}
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 text-xs font-mono font-bold shadow-xs">
+              <Folder className="w-3.5 h-3.5" />
+              <span>DOSSIER: {activeFolder}</span>
+              {currentFolderIndex >= 0 && (
+                <span className="opacity-60 text-[10px]">({currentFolderIndex + 1}/{courseCodes.length})</span>
+              )}
+            </div>
+
+            {/* Right: Back & Forth Subject Switcher Buttons */}
+            <div className="flex items-center gap-2">
               <button
-                onClick={handleBackToFolders}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-900 dark:text-paper-100 text-xs font-mono font-bold transition shadow-xs border border-paper-300 dark:border-darkbg-border"
+                onClick={() => prevFolderCode && handleOpenFolder(prevFolderCode)}
+                disabled={!prevFolderCode}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-750 hover:bg-paper-300 dark:hover:bg-darkbg-700 disabled:opacity-25 text-ink-900 dark:text-paper-100 text-xs font-mono font-bold transition border border-paper-300 dark:border-darkbg-border shadow-xs"
+                title={prevFolderCode ? `Previous Subject: ${prevFolderCode}` : 'No previous dossier'}
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>ALL SUBJECT DOSSIERS</span>
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{prevFolderCode || 'Prev Subject'}</span>
+                <span className="sm:hidden">Prev</span>
               </button>
-            ) : (
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-ink-600 dark:text-ink-400 uppercase tracking-widest">
-                <Folder className="w-4 h-4 text-ochre-500" />
-                <span>SELECT A SUBJECT DOSSIER:</span>
-              </div>
-            )}
-
-            {activeFolder && (
-              <span className="text-xs font-mono px-3 py-1 rounded-full bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 font-bold">
-                DOSSIER: {activeFolder}
-              </span>
-            )}
+              <button
+                onClick={() => nextFolderCode && handleOpenFolder(nextFolderCode)}
+                disabled={!nextFolderCode}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-750 hover:bg-paper-300 dark:hover:bg-darkbg-700 disabled:opacity-25 text-ink-900 dark:text-paper-100 text-xs font-mono font-bold transition border border-paper-300 dark:border-darkbg-border shadow-xs"
+                title={nextFolderCode ? `Next Subject: ${nextFolderCode}` : 'No next dossier'}
+              >
+                <span className="hidden sm:inline">{nextFolderCode || 'Next Subject'}</span>
+                <span className="sm:hidden">Next</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
+        ) : (
+          <div className="flex items-center gap-2 text-xs font-mono text-ink-600 dark:text-ink-400 uppercase tracking-widest px-2">
+            <Folder className="w-4 h-4 text-ochre-500" />
+            <span>SELECT A SUBJECT DOSSIER:</span>
+          </div>
+        )}
 
-          {/* Search Input */}
+        {/* Search Bar */}
+        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           <div className="relative flex-1 max-w-md">
             <Search className="w-4 h-4 text-ink-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Catalog from './components/Catalog';
 import HomePage from './components/HomePage';
@@ -22,6 +22,13 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [isPlansModalOpen, setIsPlansModalOpen] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(true);
+
+  // History navigation stack for Back & Forward buttons
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoForward, setCanGoForward] = useState(false);
+  const historyStackRef = useRef([]);
+  const historyIndexRef = useRef(-1);
+  const isInternalNavRef = useRef(false);
 
   // Dark mode theme state
   const [darkMode, setDarkMode] = useState(() => {
@@ -76,7 +83,21 @@ export default function App() {
 
   // Synchronize URL Hash and Browser History (Back / Next button support)
   const syncRouteFromHash = useCallback(() => {
-    const hash = window.location.hash || '';
+    const hash = window.location.hash || '#/';
+
+    // Update history stack tracking
+    if (!isInternalNavRef.current) {
+      const currentStack = historyStackRef.current.slice(0, historyIndexRef.current + 1);
+      if (currentStack.length === 0 || currentStack[currentStack.length - 1] !== hash) {
+        currentStack.push(hash);
+        historyStackRef.current = currentStack;
+        historyIndexRef.current = currentStack.length - 1;
+      }
+    }
+    isInternalNavRef.current = false;
+
+    setCanGoBack(historyIndexRef.current > 0 || window.history.length > 1);
+    setCanGoForward(historyIndexRef.current < historyStackRef.current.length - 1);
 
     if (hash.startsWith('#/viewer/')) {
       const docId = decodeURIComponent(hash.replace('#/viewer/', ''));
@@ -179,6 +200,55 @@ export default function App() {
     }
   };
 
+  // Back & Forth History Handlers for Web Navbar
+  const handleHistoryBack = useCallback(() => {
+    if (historyIndexRef.current > 0) {
+      isInternalNavRef.current = true;
+      historyIndexRef.current -= 1;
+      const targetHash = historyStackRef.current[historyIndexRef.current];
+      window.location.hash = targetHash;
+      setCanGoBack(historyIndexRef.current > 0);
+      setCanGoForward(historyIndexRef.current < historyStackRef.current.length - 1);
+    } else if (window.history.length > 1) {
+      window.history.back();
+    }
+  }, []);
+
+  const handleHistoryForward = useCallback(() => {
+    if (historyIndexRef.current < historyStackRef.current.length - 1) {
+      isInternalNavRef.current = true;
+      historyIndexRef.current += 1;
+      const targetHash = historyStackRef.current[historyIndexRef.current];
+      window.location.hash = targetHash;
+      setCanGoBack(historyIndexRef.current > 0);
+      setCanGoForward(historyIndexRef.current < historyStackRef.current.length - 1);
+    } else {
+      window.history.forward();
+    }
+  }, []);
+
+  // Keyboard navigation for history (Alt + Left / Alt + Right)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
+        return;
+      }
+
+      if (e.altKey && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handleHistoryBack();
+      } else if (e.altKey && e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleHistoryForward();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleHistoryBack, handleHistoryForward]);
+
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${darkMode ? 'dark text-[#F5F2EB]' : 'text-[#18181B]'}`}>
       {/* Launch / Refresh Celestial Logo Splash Animation */}
@@ -203,7 +273,7 @@ export default function App() {
       />
 
       {activeDocument ? (
-        /* Fullscreen Secure Document Viewer with Adaptive Fitting and Laptop Keys */
+        /* Fullscreen Secure Document Viewer with Adaptive Fitting, Continuous Vertical PDF Scroll & Dock */
         <Viewer
           material={activeDocument}
           user={user}
@@ -225,6 +295,10 @@ export default function App() {
               darkMode={darkMode}
               onToggleTheme={toggleTheme}
               isSubscribed={isSubscribed}
+              canGoBack={canGoBack}
+              canGoForward={canGoForward}
+              onHistoryBack={handleHistoryBack}
+              onHistoryForward={handleHistoryForward}
             />
           </div>
 
