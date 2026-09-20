@@ -7,6 +7,7 @@ import LoginModal from './components/LoginModal';
 import PlansModal from './components/PlansModal';
 import SecurityShield from './components/SecurityShield';
 import LogoSplash from './components/LogoSplash';
+import MobileBottomNav from './components/MobileBottomNav';
 import { useAuth } from './context/AuthContext';
 import { api } from './services/api';
 
@@ -227,7 +228,7 @@ export default function App() {
             />
           </div>
 
-          <main className="flex-1">
+          <main className="flex-1 pb-16 sm:pb-0">
             {currentView === 'home' && !user ? (
               <HomePage
                 onBrowseBooks={handleNavigateCatalog}
@@ -253,7 +254,19 @@ export default function App() {
             )}
           </main>
 
-          <footer className="border-t border-paper-300/80 dark:border-darkbg-border bg-paper-100/90 dark:bg-darkbg-900/90 backdrop-blur-xs py-10 mt-16 text-center text-xs text-ink-600 dark:text-ink-400 transition-colors">
+          <MobileBottomNav
+            currentView={currentView}
+            onNavigateHome={handleNavigateHome}
+            onNavigateCatalog={handleNavigateCatalog}
+            onOpenPlans={() => setIsPlansModalOpen(true)}
+            onOpenLogin={() => setIsLoginModalOpen(true)}
+            user={user}
+            darkMode={darkMode}
+            onToggleTheme={toggleTheme}
+            isSubscribed={isSubscribed}
+          />
+
+          <footer className="border-t border-paper-300/80 dark:border-darkbg-border bg-paper-100/90 dark:bg-darkbg-900/90 backdrop-blur-xs py-10 mt-16 mb-14 sm:mb-0 text-center text-xs text-ink-600 dark:text-ink-400 transition-colors">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
               <div className="flex items-center justify-center gap-2">
                 <div className="w-5 h-5 rounded-full bg-ink-900 dark:bg-paper-50 flex items-center justify-center p-1">

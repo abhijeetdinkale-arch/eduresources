@@ -1,6 +1,6 @@
 {
-  "appId": "com.securesstudy.hub",
-  "appName": "SecureStudyHub",
+  "appId": "com.edunetwork.app",
+  "appName": "Edu Network",
   "webDir": "client/dist",
   "server": {
     "androidScheme": "https",
