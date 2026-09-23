@@ -136,17 +136,17 @@ export default function LoginModal({ isOpen, onClose }) {
         <form onSubmit={handleSecretSubmit} className="space-y-3.5">
           <div>
             <label className="block text-[11px] font-mono uppercase tracking-wider text-ink-600 dark:text-ink-400 mb-1">
-              Authorized Member Email
+              Authorized Member ID / Email
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-ink-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
-                type="email"
+                type="text"
                 required
                 value={secretEmail}
                 onChange={(e) => setSecretEmail(e.target.value)}
-                placeholder="admin@edunetwork.com"
-                autoComplete="email"
+                placeholder="e.g. stu101 or student1@edunetwork.com"
+                autoComplete="username"
                 className="w-full pl-10 pr-3.5 py-2.5 bg-paper-100 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-xl text-xs text-ink-900 dark:text-paper-100 placeholder-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900 dark:focus:ring-paper-200"
               />
             </div>

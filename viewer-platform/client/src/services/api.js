@@ -48,16 +48,43 @@ export const api = {
       // Offline fallback check
       const normalizedEmail = (email || '').toLowerCase().trim();
       const adminEmails = ['admin@edunetwork.com', 'arcnyz@gmail.com', 'abhijeetdinkale@gmail.com', 'admin@gmail.com'];
+      
+      const studentAccounts = {
+        'student1@edunetwork.com': { pass: 'Orb!t#9241', name: 'Student 01' },
+        'student2@edunetwork.com': { pass: 'N3t#8412', name: 'Student 02' },
+        'student3@edunetwork.com': { pass: 'Acad!5831', name: 'Student 03' },
+        'student4@edunetwork.com': { pass: 'Schol@6294', name: 'Student 04' },
+        'student5@edunetwork.com': { pass: 'V1ew#3719', name: 'Student 05' },
+        'stu101': { pass: 'Orb!t#9241', name: 'Student 01', email: 'student1@edunetwork.com' },
+        'stu102': { pass: 'N3t#8412', name: 'Student 02', email: 'student2@edunetwork.com' },
+        'stu103': { pass: 'Acad!5831', name: 'Student 03', email: 'student3@edunetwork.com' },
+        'stu104': { pass: 'Schol@6294', name: 'Student 04', email: 'student4@edunetwork.com' },
+        'stu105': { pass: 'V1ew#3719', name: 'Student 05', email: 'student5@edunetwork.com' },
+      };
+
       if (adminEmails.includes(normalizedEmail) && password === 'academic2026') {
         const offlineUser = {
-          id: 'AUTH-OFFLINE',
+          id: 'AUTH-OFFLINE-ADMIN',
           email: normalizedEmail,
-          name: normalizedEmail.includes('abhijeet') || normalizedEmail.includes('arcnyz') ? 'Abhijeet Dinkale' : 'Academic Scholar',
+          name: normalizedEmail.includes('abhijeet') || normalizedEmail.includes('arcnyz') ? 'Abhijeet Dinkale' : 'Administrator',
           picture: null,
           role: 'admin',
         };
         return { user: offlineUser, token: 'offline_token' };
       }
+
+      if (studentAccounts[normalizedEmail] && studentAccounts[normalizedEmail].pass === password) {
+        const s = studentAccounts[normalizedEmail];
+        const offlineUser = {
+          id: `AUTH-STU-${normalizedEmail}`,
+          email: s.email || normalizedEmail,
+          name: s.name,
+          picture: null,
+          role: 'student',
+        };
+        return { user: offlineUser, token: 'offline_token' };
+      }
+
       throw err;
     }
   },

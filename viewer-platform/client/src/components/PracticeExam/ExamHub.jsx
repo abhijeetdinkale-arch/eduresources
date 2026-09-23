@@ -9,7 +9,8 @@ import {
   HelpCircle,
   Zap,
   Layers,
-  Check
+  Check,
+  RotateCcw
 } from 'lucide-react';
 import { MTH165_MOCK_TESTS } from '../../data/mth165_mock_tests';
 
@@ -33,58 +34,58 @@ export default function ExamHub({ onStartExam, onBackToCatalog }) {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-10 animate-fadeIn font-sans bg-white text-[#0A1128]">
-      {/* 1. DARK NAVY BLUE HERO BANNER WITH CRISP WHITE TEXT */}
-      <div className="relative rounded-[32px] p-6 sm:p-12 overflow-hidden bg-[#0A1128] text-white border-2 border-[#0A1128] shadow-2xl">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-10 animate-fadeIn font-sans text-ink-900 dark:text-paper-50">
+      {/* 1. HERO BANNER */}
+      <div className="relative rounded-[36px] p-6 sm:p-12 overflow-hidden bg-paper-100/90 dark:bg-darkbg-900/90 backdrop-blur-xs border border-paper-300/80 dark:border-darkbg-border shadow-ticket dark:shadow-ticket-dark">
         <div className="relative z-10 max-w-3xl space-y-5">
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold tracking-widest uppercase">
-            <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-800 border border-paper-300 dark:border-darkbg-border text-ink-800 dark:text-paper-200 text-xs font-mono font-bold tracking-widest uppercase">
+            <span className="w-2 h-2 rounded-full bg-ochre-400 animate-ping"></span>
             <span>NEW FEATURE • PRACTICE EXAMS SUITE</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-cinzel font-black tracking-tight leading-[1.12]">
+          <h1 className="text-3xl sm:text-5xl font-cinzel font-black tracking-tight text-ink-900 dark:text-paper-50 leading-[1.12]">
             Midterm Examination <br />
-            <span className="font-serif italic font-normal text-slate-300">
+            <span className="font-serif italic font-normal text-ink-600 dark:text-ink-400">
               Timed Mock Mastery
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-2xl font-sans">
-            Simulate real university midterm conditions with authentic previous year papers, precise <span className="text-white font-bold underline underline-offset-4">+1.0 / -0.25 negative marking</span>, interactive 30-question progress grid, and <span className="text-white font-bold underline underline-offset-4">step-by-step animated solutions</span>.
+          <p className="text-sm sm:text-base text-ink-600 dark:text-ink-400 leading-relaxed max-w-2xl font-sans">
+            Simulate real university midterm conditions with authentic previous year papers, precise <span className="text-ink-900 dark:text-paper-50 font-bold underline underline-offset-4">+1.0 / -0.25 negative marking</span>, interactive 30-question progress grid, and <span className="text-ink-900 dark:text-paper-50 font-bold underline underline-offset-4">step-by-step animated solutions</span>.
           </p>
 
-          {/* Navy Badges */}
+          {/* Topic Badges */}
           <div className="flex flex-wrap items-center gap-2 pt-2 font-mono text-[11px]">
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-3 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border">
               #LinearAlgebra
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-3 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border">
               #Eigenvalues
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-3 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border">
               #RolleTheorem
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-3 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border">
               #TaylorSeries
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-3 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border">
               #DefiniteIntegrals
             </span>
           </div>
         </div>
       </div>
 
-      {/* 2. COURSE PICKER IN WHITE & DARK NAVY BLUE */}
+      {/* 2. COURSE PICKER */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-[#0A1128]" />
-            <h2 className="text-lg font-black text-[#0A1128] tracking-tight font-sans">
+            <Layers className="w-5 h-5 text-ink-900 dark:text-paper-50" />
+            <h2 className="text-lg font-bold text-ink-900 dark:text-paper-50 tracking-tight font-sans">
               Select Examination Course
             </h2>
           </div>
-          <span className="text-xs font-mono font-bold text-[#0A1128]/70">
+          <span className="text-xs font-mono font-bold text-ink-600 dark:text-ink-400">
             5 MOCK PAPERS ACTIVE
           </span>
         </div>
@@ -100,139 +101,128 @@ export default function ExamHub({ onStartExam, onBackToCatalog }) {
                 disabled={!c.active}
                 className={`text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 relative overflow-hidden cursor-pointer ${
                   isSelected
-                    ? 'bg-[#0A1128] text-white border-[#0A1128] shadow-xl scale-[1.02]'
+                    ? 'bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 border-ink-900 dark:border-paper-50 shadow-ticket scale-[1.02]'
                     : c.active
-                    ? 'bg-white border-[#0A1128]/25 text-[#0A1128] hover:border-[#0A1128]'
-                    : 'bg-[#0A1128]/5 border-dashed border-[#0A1128]/20 text-[#0A1128]/40 opacity-50 cursor-not-allowed'
+                    ? 'bg-paper-50 hover:bg-paper-100 dark:bg-darkbg-850 dark:hover:bg-darkbg-800 border-paper-300 dark:border-darkbg-border text-ink-900 dark:text-paper-50'
+                    : 'bg-paper-100/40 dark:bg-darkbg-900/40 border-dashed border-paper-300/50 dark:border-darkbg-border/50 text-ink-400 dark:text-ink-600 opacity-60 cursor-not-allowed'
                 }`}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <span className={`font-mono font-black text-xs px-2.5 py-0.5 rounded-lg border ${
+                  <span className={`font-mono font-bold text-xs px-2.5 py-0.5 rounded-lg border ${
                     isSelected
-                      ? 'bg-white/15 text-white border-transparent'
-                      : 'bg-[#0A1128]/5 text-[#0A1128] border-[#0A1128]/15'
+                      ? 'bg-paper-50/20 text-paper-50 dark:bg-ink-900/20 dark:text-ink-900 border-transparent'
+                      : 'bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border-paper-300 dark:border-darkbg-border'
                   }`}>
                     {c.code}
                   </span>
                   {isSelected && (
-                    <Check className="w-4 h-4 shrink-0" />
+                    <Check className="w-4 h-4 shrink-0 text-ochre-400 dark:text-ochre-500" />
                   )}
                 </div>
 
-                <p className="font-bold text-xs sm:text-sm leading-snug">
+                <div className="text-xs sm:text-sm font-bold truncate">
                   {c.name}
-                </p>
+                </div>
 
-                <p className={`text-[11px] font-mono mt-2 font-medium ${isSelected ? 'text-slate-300' : 'text-[#0A1128]/60'}`}>
-                  {c.tag}
-                </p>
+                <div className={`text-[11px] font-mono mt-2 ${
+                  isSelected ? 'text-paper-200 dark:text-ink-600' : 'text-ink-600 dark:text-ink-400'
+                }`}>
+                  {typeof c.testsCount === 'number' ? `${c.testsCount} Mock Exams` : c.testsCount}
+                </div>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 3. MTH165 MIDTERM MOCK PAPERS (WHITE CARD & DARK NAVY BLUE) */}
+      {/* 3. 5 MTH165 MOCK TESTS CARDS */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-[#0A1128]" />
-            <h2 className="text-lg font-black text-[#0A1128] tracking-tight font-sans">
-              MTH165 Midterm Mock Examination Papers
+            <BookOpen className="w-5 h-5 text-ink-900 dark:text-paper-50" />
+            <h2 className="text-lg font-bold text-ink-900 dark:text-paper-50 tracking-tight font-sans">
+              MTH165 Midterm Mock Examinations (5 Papers)
             </h2>
           </div>
-          <span className="text-xs font-mono font-bold text-[#0A1128]">
-            30 MCQS • 90 MINS • +1.0 / -0.25
+          <span className="text-xs font-mono font-semibold text-ink-600 dark:text-ink-400">
+            30 MCQs • 90 Mins • +1.00 / -0.25 Mark
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {MTH165_MOCK_TESTS.map((test, idx) => {
             const savedResult = getSavedResults(test.id);
 
             return (
               <div
                 key={test.id}
-                className="group relative bg-white border-2 border-[#0A1128]/20 hover:border-[#0A1128] rounded-[28px] p-6 shadow-sm hover:shadow-2xl transition-all duration-200 flex flex-col justify-between hover:-translate-y-0.5 text-[#0A1128]"
+                className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-[28px] p-6 sm:p-7 shadow-ticket dark:shadow-ticket-dark space-y-4 hover:shadow-floating transition-all flex flex-col justify-between"
               >
-                <div className="space-y-4">
-                  {/* Top Badge Row */}
+                <div className="space-y-3">
+                  {/* Top Row: Paper Code & Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono uppercase tracking-widest font-black px-3 py-1 rounded-full bg-[#0A1128] text-white">
-                      MOCK TEST 0{idx + 1}
-                    </span>
-                    <span className="text-[11px] font-mono text-[#0A1128]/70 font-bold">
+                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-lg bg-paper-200 dark:bg-darkbg-800 text-ink-900 dark:text-paper-50 border border-paper-300 dark:border-darkbg-border">
                       {test.code}
                     </span>
+
+                    {idx < 2 ? (
+                      <span className="px-2.5 py-0.5 rounded-full bg-ochre-400 text-ink-950 font-mono text-[10px] font-bold">
+                        OFFICIAL PYQ
+                      </span>
+                    ) : (
+                      <span className="px-2.5 py-0.5 rounded-full bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border font-mono text-[10px] font-semibold">
+                        MOCK TEST {idx + 1}
+                      </span>
+                    )}
                   </div>
 
                   {/* Title & Description */}
-                  <h3 className="text-base sm:text-lg font-bold text-[#0A1128] leading-snug">
-                    {test.title}
-                  </h3>
-                  <p className="text-xs text-[#0A1128]/70 leading-relaxed line-clamp-2">
-                    {test.description}
-                  </p>
+                  <div>
+                    <h3 className="font-cinzel font-bold text-base sm:text-lg text-ink-900 dark:text-paper-50 line-clamp-2">
+                      {test.title}
+                    </h3>
+                    <p className="text-xs text-ink-600 dark:text-ink-400 mt-1 line-clamp-2 leading-relaxed">
+                      {test.description}
+                    </p>
+                  </div>
 
-                  {/* Test Specs Grid in White & Dark Navy */}
-                  <div className="grid grid-cols-3 gap-2 py-3 border-y-2 border-[#0A1128]/10 text-center text-[#0A1128]">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center justify-center gap-1 text-[#0A1128]/60">
-                        <HelpCircle className="w-3.5 h-3.5" />
-                        <span className="text-[10px] font-mono font-bold">MCQS</span>
-                      </div>
-                      <p className="text-xs font-black text-[#0A1128]">
-                        {test.totalQuestions}
-                      </p>
+                  {/* Meta Pills */}
+                  <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-xl bg-paper-100 dark:bg-darkbg-850 border border-paper-300 dark:border-darkbg-border font-mono text-center">
+                    <div>
+                      <div className="text-[10px] text-ink-600 dark:text-ink-400">QUESTIONS</div>
+                      <div className="text-xs font-bold text-ink-900 dark:text-paper-50">{test.totalQuestions}</div>
                     </div>
-
-                    <div className="space-y-0.5 border-x-2 border-[#0A1128]/10">
-                      <div className="flex items-center justify-center gap-1 text-[#0A1128]/60">
-                        <Timer className="w-3.5 h-3.5" />
-                        <span className="text-[10px] font-mono font-bold">TIME</span>
-                      </div>
-                      <p className="text-xs font-black text-[#0A1128]">
-                        {test.durationMinutes}m
-                      </p>
+                    <div className="border-x border-paper-300 dark:border-darkbg-border">
+                      <div className="text-[10px] text-ink-600 dark:text-ink-400">TIME</div>
+                      <div className="text-xs font-bold text-ink-900 dark:text-paper-50">{test.durationMinutes}m</div>
                     </div>
-
-                    <div className="space-y-0.5">
-                      <div className="flex items-center justify-center gap-1 text-[#0A1128]/60">
-                        <Award className="w-3.5 h-3.5" />
-                        <span className="text-[10px] font-mono font-bold">MARKS</span>
-                      </div>
-                      <p className="text-xs font-black text-[#0A1128]">
-                        {test.maxMarks}
-                      </p>
+                    <div>
+                      <div className="text-[10px] text-ink-600 dark:text-ink-400">MAX SCORE</div>
+                      <div className="text-xs font-bold text-ink-900 dark:text-paper-50">{test.maxMarks}</div>
                     </div>
                   </div>
 
-                  {/* Saved Result pill if attempted */}
-                  {savedResult ? (
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-[#0A1128]/5 border border-[#0A1128]/20 text-[#0A1128] text-xs">
-                      <div className="flex items-center gap-1.5 font-bold">
-                        <Check className="w-4 h-4 stroke-[3]" />
-                        <span>Best Score:</span>
-                      </div>
-                      <span className="font-mono font-black text-sm text-[#0A1128]">
-                        {savedResult.totalScore.toFixed(2)} / {test.maxMarks} ({savedResult.accuracy}%)
+                  {/* Saved Result Indicator (if attempted) */}
+                  {savedResult && (
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono">
+                      <span className="text-emerald-700 dark:text-emerald-400 font-bold">
+                        Best: {savedResult.totalScore.toFixed(2)}/30 ({savedResult.accuracy}%)
                       </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#0A1128]/5 text-[#0A1128]/70 text-xs font-mono font-bold">
-                      <span>Marking: +1.0 / -0.25</span>
-                      <span>Ready</span>
+                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400">
+                        {savedResult.correctCount} Correct
+                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Launch Button in Dark Navy Blue */}
+                {/* Start Button */}
                 <button
                   onClick={() => onStartExam(test)}
-                  className="mt-6 w-full py-3.5 px-5 rounded-xl bg-[#0A1128] hover:bg-[#14214d] text-white font-extrabold text-xs sm:text-sm tracking-wider uppercase transition-all duration-150 flex items-center justify-center gap-2 shadow-lg active:scale-98 cursor-pointer group"
+                  className="w-full py-3.5 px-4 rounded-full bg-ink-900 hover:bg-black dark:bg-paper-50 dark:hover:bg-paper-200 text-paper-50 dark:text-ink-900 text-xs font-semibold tracking-wider uppercase transition shadow-md flex items-center justify-center gap-2 cursor-pointer mt-2"
                 >
-                  <span>{savedResult ? 'Retake Mock Exam' : 'Start Mock Exam'}</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <Sparkles className="w-4 h-4 text-ochre-400 dark:text-ochre-500" />
+                  <span>{savedResult ? 'Retake Examination' : 'Start Midterm Exam'}</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             );

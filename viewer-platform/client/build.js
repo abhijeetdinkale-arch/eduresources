@@ -41,10 +41,17 @@ await esbuild.build({
 console.log('✅ JavaScript bundle built successfully!');
 
 // 3. Build CSS with Tailwind styles and custom styles
-const existingTailwindCssPath = path.join(assetsDir, 'index-D7lTP-yx.css');
 let baseCss = '';
-if (fs.existsSync(existingTailwindCssPath)) {
-  baseCss = fs.readFileSync(existingTailwindCssPath, 'utf8');
+const cssFiles = fs.readdirSync(assetsDir).filter(f => f.startsWith('index-') && f.endsWith('.css'));
+if (cssFiles.length > 0) {
+  cssFiles.sort((a, b) => fs.statSync(path.join(assetsDir, b)).mtimeMs - fs.statSync(path.join(assetsDir, a)).mtimeMs);
+  baseCss = fs.readFileSync(path.join(assetsDir, cssFiles[0]), 'utf8');
+  console.log(`✅ Using latest compiled Tailwind CSS: ${cssFiles[0]} (${(baseCss.length / 1024).toFixed(1)} KB)`);
+} else {
+  const anyCss = fs.readdirSync(assetsDir).filter(f => f.endsWith('.css') && f !== 'app.css');
+  if (anyCss.length > 0) {
+    baseCss = fs.readFileSync(path.join(assetsDir, anyCss[0]), 'utf8');
+  }
 }
 
 // Ensure correct texture image paths in CSS
