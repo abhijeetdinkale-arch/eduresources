@@ -96,16 +96,16 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 font-sans animate-fadeIn text-black dark:text-white">
-      {/* 1. SCORECARD HERO CARD (BLACK & WHITE) */}
-      <div className="relative rounded-[32px] p-6 sm:p-10 bg-black text-white border-2 border-zinc-800 dark:border-white/20 shadow-2xl overflow-hidden">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 font-sans animate-fadeIn text-[#0A1128] bg-white">
+      {/* 1. SCORECARD HERO CARD IN DARK NAVY BLUE */}
+      <div className="relative rounded-[32px] p-6 sm:p-10 bg-[#0A1128] text-white border-2 border-[#0A1128] shadow-2xl overflow-hidden">
         <div className="relative z-10 space-y-6">
           {/* Header Tag */}
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-white/10 border border-white/20 uppercase tracking-wider">
               MOCK EXAMINATION SCORECARD
             </span>
-            <span className="text-xs font-mono text-zinc-400">
+            <span className="text-xs font-mono text-slate-300">
               Time: {formatTimeSpent(timeSpentSeconds)}
             </span>
           </div>
@@ -115,11 +115,11 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
             <div>
               <div className="text-4xl sm:text-6xl font-cinzel font-black tracking-tight text-white flex items-baseline gap-2">
                 <span>{totalScore.toFixed(2)}</span>
-                <span className="text-xl sm:text-2xl font-mono text-zinc-400 font-normal">
+                <span className="text-xl sm:text-2xl font-mono text-slate-300 font-normal">
                   / {test.maxMarks}.00
                 </span>
               </div>
-              <p className="text-xs font-mono text-zinc-300 mt-1">
+              <p className="text-xs font-mono text-slate-200 mt-1">
                 Marking Scheme: +1.00 Correct • -0.25 Wrong Deducted
               </p>
             </div>
@@ -128,30 +128,30 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               <div className="text-3xl sm:text-4xl font-bold font-mono text-white">
                 {accuracy}%
               </div>
-              <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-widest">
+              <div className="text-[11px] font-mono text-slate-300 uppercase tracking-widest">
                 Accuracy Rate
               </div>
             </div>
           </div>
 
-          {/* Stat Pills Grid in Black & White */}
+          {/* Stat Pills Grid */}
           <div className="grid grid-cols-3 gap-3 text-center font-mono">
             <div className="p-3.5 rounded-2xl bg-white/10 border border-white/20">
-              <div className="text-xs font-bold uppercase text-zinc-200">Correct</div>
+              <div className="text-xs font-bold uppercase text-slate-200">Correct</div>
               <div className="text-2xl font-black text-white mt-1">{correctCount}</div>
-              <div className="text-[10px] text-zinc-400">+{correctCount * 1} Marks</div>
+              <div className="text-[10px] text-slate-300">+{correctCount * 1} Marks</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/10 border border-white/20">
-              <div className="text-xs font-bold uppercase text-zinc-200">Wrong</div>
+              <div className="text-xs font-bold uppercase text-slate-200">Wrong</div>
               <div className="text-2xl font-black text-white mt-1">{wrongCount}</div>
-              <div className="text-[10px] text-zinc-400">-{(wrongCount * 0.25).toFixed(2)} Marks</div>
+              <div className="text-[10px] text-slate-300">-{(wrongCount * 0.25).toFixed(2)} Marks</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase text-zinc-400">Skipped</div>
-              <div className="text-2xl font-black text-zinc-300 mt-1">{unattemptedCount}</div>
-              <div className="text-[10px] text-zinc-500">0.00 Marks</div>
+              <div className="text-xs font-bold uppercase text-slate-300">Skipped</div>
+              <div className="text-2xl font-black text-slate-300 mt-1">{unattemptedCount}</div>
+              <div className="text-[10px] text-slate-400">0.00 Marks</div>
             </div>
           </div>
 
@@ -166,7 +166,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
             </button>
             <button
               onClick={onBackToHub}
-              className="flex-1 py-3 px-4 rounded-xl bg-white hover:bg-zinc-200 text-black font-extrabold text-xs font-mono tracking-wider uppercase transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              className="flex-1 py-3 px-4 rounded-xl bg-white hover:bg-slate-100 text-[#0A1128] font-extrabold text-xs font-mono tracking-wider uppercase transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
             >
               <span>Practice Exams Hub</span>
               <ArrowRight className="w-4 h-4" />
@@ -175,27 +175,27 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
         </div>
       </div>
 
-      {/* 2. ONE-BY-ONE STEP-BY-STEP ANIMATED SOLUTIONS (BLACK & WHITE) */}
+      {/* 2. ONE-BY-ONE STEP-BY-STEP ANIMATED SOLUTIONS (WHITE & DARK NAVY BLUE) */}
       <div className="space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-xl font-bold font-sans tracking-tight flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
+            <h2 className="text-xl font-black font-sans tracking-tight text-[#0A1128] flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-[#0A1128]" />
               <span>Step-by-Step Solution Walkthrough</span>
             </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+            <p className="text-xs text-[#0A1128]/70 mt-0.5">
               Review answers one by one with animated steps, formulas, and derivations.
             </p>
           </div>
 
-          {/* Filter Tabs in Black & White */}
-          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-2xl border-2 border-black/10 dark:border-white/10 self-start">
+          {/* Filter Tabs in White & Navy */}
+          <div className="flex items-center gap-1 bg-[#0A1128]/5 p-1 rounded-2xl border-2 border-[#0A1128]/15 self-start">
             <button
               onClick={() => setFilterMode('wrong')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition cursor-pointer ${
                 filterMode === 'wrong'
-                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
+                  ? 'bg-[#0A1128] text-white shadow-xs'
+                  : 'text-[#0A1128]/70 hover:text-[#0A1128]'
               }`}
             >
               Wrong ({wrongCount})
@@ -204,8 +204,8 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               onClick={() => setFilterMode('unattempted')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition cursor-pointer ${
                 filterMode === 'unattempted'
-                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
+                  ? 'bg-[#0A1128] text-white shadow-xs'
+                  : 'text-[#0A1128]/70 hover:text-[#0A1128]'
               }`}
             >
               Skipped ({unattemptedCount})
@@ -214,8 +214,8 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               onClick={() => setFilterMode('correct')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition cursor-pointer ${
                 filterMode === 'correct'
-                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
+                  ? 'bg-[#0A1128] text-white shadow-xs'
+                  : 'text-[#0A1128]/70 hover:text-[#0A1128]'
               }`}
             >
               Correct ({correctCount})
@@ -224,8 +224,8 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               onClick={() => setFilterMode('all')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition cursor-pointer ${
                 filterMode === 'all'
-                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
+                  ? 'bg-[#0A1128] text-white shadow-xs'
+                  : 'text-[#0A1128]/70 hover:text-[#0A1128]'
               }`}
             >
               All ({test.questions.length})
@@ -235,38 +235,38 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
 
         {/* 3. QUESTION REVIEW CARD */}
         {filteredQuestions.length === 0 ? (
-          <div className="p-12 text-center rounded-[28px] bg-zinc-50 dark:bg-zinc-950 border-2 border-black/10 dark:border-white/10 space-y-2">
+          <div className="p-12 text-center rounded-[28px] bg-[#0A1128]/5 border-2 border-[#0A1128]/15 space-y-2 text-[#0A1128]">
             <Check className="w-8 h-8 mx-auto" />
             <p className="font-bold text-sm">
               No questions found in this filter category!
             </p>
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-[#0A1128]/60">
               Select another filter tab above to continue reviewing.
             </p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-zinc-950 border-2 border-black dark:border-white/20 rounded-[28px] p-6 sm:p-8 shadow-ticket dark:shadow-ticket-dark space-y-6 transition-all duration-300 animate-fadeIn">
+          <div className="bg-white border-2 border-[#0A1128]/20 rounded-[28px] p-6 sm:p-8 shadow-lg space-y-6 transition-all duration-300 animate-fadeIn text-[#0A1128]">
             {/* Top Review Header */}
-            <div className="flex items-center justify-between border-b-2 border-black/10 dark:border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b-2 border-[#0A1128]/15 pb-4">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-900">
+                <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-[#0A1128]/5 text-[#0A1128]">
                   Question {reviewIdx + 1} of {filteredQuestions.length}
                 </span>
 
                 {isCorrect && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-black px-2.5 py-1 rounded-lg bg-black text-white dark:bg-white dark:text-black">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-black px-2.5 py-1 rounded-lg bg-[#0A1128] text-white">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                     <span>Correct (+1.00)</span>
                   </span>
                 )}
                 {isWrong && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-black px-2.5 py-1 rounded-lg border-2 border-black dark:border-white">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-black px-2.5 py-1 rounded-lg border-2 border-[#0A1128] text-[#0A1128]">
                     <X className="w-3.5 h-3.5 stroke-[3]" />
                     <span>Incorrect (-0.25)</span>
                   </span>
                 )}
                 {isSkipped && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-[#0A1128]/10 text-[#0A1128]">
                     <HelpCircle className="w-3.5 h-3.5" />
                     <span>Skipped (0.00)</span>
                   </span>
@@ -278,7 +278,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
                 <button
                   onClick={handlePrevSolution}
                   disabled={reviewIdx === 0}
-                  className="p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 disabled:opacity-20 transition cursor-pointer disabled:cursor-not-allowed"
+                  className="p-1.5 rounded-full hover:bg-[#0A1128]/10 disabled:opacity-20 transition cursor-pointer disabled:cursor-not-allowed text-[#0A1128]"
                   title="Previous Solution"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -286,7 +286,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
                 <button
                   onClick={handleNextSolution}
                   disabled={reviewIdx === filteredQuestions.length - 1}
-                  className="p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 disabled:opacity-20 transition cursor-pointer disabled:cursor-not-allowed"
+                  className="p-1.5 rounded-full hover:bg-[#0A1128]/10 disabled:opacity-20 transition cursor-pointer disabled:cursor-not-allowed text-[#0A1128]"
                   title="Next Solution"
                 >
                   <ChevronRight className="w-5 h-5" />
@@ -296,26 +296,26 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
 
             {/* Question Text */}
             <div className="space-y-2">
-              <div className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-widest">
+              <div className="text-xs font-mono font-bold text-[#0A1128]/70 uppercase tracking-widest">
                 Q.{currentQ.id} • {currentQ.topic}
               </div>
-              <div className="text-base sm:text-lg font-bold leading-relaxed">
+              <div className="text-base sm:text-lg font-bold leading-relaxed text-[#0A1128]">
                 <MathText text={currentQ.question} />
               </div>
             </div>
 
-            {/* Options with Crisp Monochrome Visual Markers */}
+            {/* Options with Crisp Markers */}
             <div className="grid grid-cols-1 gap-2.5 pt-2">
               {currentQ.options.map((opt, optIdx) => {
                 const isCorrectOption = optIdx === currentQ.correctIndex;
                 const isUserSelection = userChoice === optIdx;
                 const optionLetters = ['A', 'B', 'C', 'D'];
 
-                let style = 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200';
+                let style = 'bg-white border-[#0A1128]/20 text-[#0A1128]';
                 if (isCorrectOption) {
-                  style = 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white font-bold shadow-md';
+                  style = 'bg-[#0A1128] text-white border-[#0A1128] font-bold shadow-md';
                 } else if (isUserSelection && !isCorrectOption) {
-                  style = 'border-2 border-dashed border-black dark:border-white text-black dark:text-white font-bold';
+                  style = 'border-2 border-dashed border-[#0A1128] text-[#0A1128] font-bold bg-[#0A1128]/5';
                 }
 
                 return (
@@ -327,10 +327,10 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
                       <div
                         className={`w-6 h-6 rounded-full flex items-center justify-center font-mono text-xs font-bold ${
                           isCorrectOption
-                            ? 'bg-white text-black dark:bg-black dark:text-white'
+                            ? 'bg-white text-[#0A1128]'
                             : isUserSelection
-                            ? 'bg-black text-white dark:bg-white dark:text-black'
-                            : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                            ? 'bg-[#0A1128] text-white'
+                            : 'bg-[#0A1128]/10 text-[#0A1128]'
                         }`}
                       >
                         {optionLetters[optIdx]}
@@ -340,12 +340,12 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
 
                     <div className="flex items-center gap-2 shrink-0">
                       {isUserSelection && !isCorrectOption && (
-                        <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded border border-black dark:border-white">
+                        <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded border border-[#0A1128] text-[#0A1128]">
                           Your Choice (Wrong)
                         </span>
                       )}
                       {isCorrectOption && (
-                        <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded bg-white text-black dark:bg-black dark:text-white flex items-center gap-1">
+                        <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded bg-white text-[#0A1128] flex items-center gap-1">
                           <Check className="w-3 h-3 stroke-[3]" />
                           <span>Correct Answer</span>
                         </span>
@@ -356,18 +356,18 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               })}
             </div>
 
-            {/* 4. BASIC EXPLANATION IN BLACK & WHITE */}
+            {/* 4. BASIC EXPLANATION IN WHITE & DARK NAVY BLUE */}
             {currentQ.explanation && (
-              <div className="p-5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border-2 border-black/10 dark:border-white/10 space-y-3 mt-4">
-                <div className="flex items-center gap-2 font-mono font-black text-xs sm:text-sm uppercase tracking-wider">
+              <div className="p-5 rounded-2xl bg-[#0A1128]/5 border-2 border-[#0A1128]/15 space-y-3 mt-4 text-[#0A1128]">
+                <div className="flex items-center gap-2 font-mono font-black text-xs sm:text-sm uppercase tracking-wider text-[#0A1128]">
                   <Sparkles className="w-4 h-4" />
                   <span>Step-by-Step Explanation:</span>
                 </div>
 
-                <div className="space-y-2 text-xs sm:text-sm leading-relaxed font-sans">
+                <div className="space-y-2 text-xs sm:text-sm leading-relaxed font-sans text-[#0A1128]">
                   {currentQ.explanation.steps?.map((step, sIdx) => (
                     <div key={sIdx} className="flex items-start gap-2">
-                      <span className="font-mono font-black shrink-0">
+                      <span className="font-mono font-black shrink-0 text-[#0A1128]">
                         Step {sIdx + 1}:
                       </span>
                       <MathText text={step} />
@@ -376,7 +376,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
                 </div>
 
                 {currentQ.explanation.keyConcept && (
-                  <div className="pt-2 border-t border-black/10 dark:border-white/10 flex items-start gap-2 text-xs font-mono bg-white dark:bg-black p-3 rounded-xl border border-black/20 dark:border-white/20">
+                  <div className="pt-2 border-t border-[#0A1128]/15 flex items-start gap-2 text-xs font-mono bg-white p-3 rounded-xl border border-[#0A1128]/20 text-[#0A1128]">
                     <span className="font-black shrink-0">💡 Note:</span>
                     <span>{currentQ.explanation.keyConcept}</span>
                   </div>
@@ -389,7 +389,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               <button
                 onClick={handlePrevSolution}
                 disabled={reviewIdx === 0}
-                className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-25 text-xs font-mono font-bold transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed border border-black/20 dark:border-white/20"
+                className="px-4 py-2 rounded-xl bg-[#0A1128]/5 hover:bg-[#0A1128]/10 disabled:opacity-25 text-xs font-mono font-bold transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed border border-[#0A1128]/20 text-[#0A1128]"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Previous</span>
@@ -398,7 +398,7 @@ export default function ExamResults({ result, onRetakeExam, onBackToHub }) {
               <button
                 onClick={handleNextSolution}
                 disabled={reviewIdx === filteredQuestions.length - 1}
-                className="px-5 py-2 rounded-xl bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black disabled:opacity-25 text-xs font-mono font-black uppercase tracking-wider transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed shadow-md"
+                className="px-5 py-2 rounded-xl bg-[#0A1128] hover:bg-[#14214d] text-white disabled:opacity-25 text-xs font-mono font-black uppercase tracking-wider transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed shadow-md"
               >
                 <span>Next</span>
                 <ChevronRight className="w-4 h-4" />

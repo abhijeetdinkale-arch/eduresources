@@ -32,31 +32,31 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
   }, [onCountdownComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 select-none text-white animate-fadeIn font-sans">
-      <div className="relative z-10 max-w-lg w-full bg-black border-2 border-white/20 dark:border-white/30 rounded-[32px] p-6 sm:p-10 shadow-2xl text-center space-y-6">
+    <div className="fixed inset-0 z-50 bg-[#0A1128]/80 backdrop-blur-md flex items-center justify-center p-4 select-none font-sans animate-fadeIn">
+      <div className="relative z-10 max-w-lg w-full bg-white border-2 border-[#0A1128] rounded-[32px] p-6 sm:p-10 shadow-2xl text-center space-y-6 text-[#0A1128]">
         {/* Top Header Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold tracking-wider uppercase">
-          <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0A1128]/10 border border-[#0A1128]/20 text-[#0A1128] text-xs font-mono font-bold tracking-wider uppercase">
+          <span className="w-2 h-2 rounded-full bg-[#0A1128] animate-ping"></span>
           <span>STARTING EXAMINATION IN 3 SECONDS</span>
         </div>
 
-        {/* 3-2-1 Animated Black & White Ring */}
+        {/* 3-2-1 Animated Progress Ring in Dark Navy */}
         <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
             <circle
               cx="50"
               cy="50"
               r="44"
-              className="stroke-zinc-800"
-              strokeWidth="5"
+              className="stroke-[#0A1128]/10"
+              strokeWidth="6"
               fill="transparent"
             />
             <circle
               cx="50"
               cy="50"
               r="44"
-              className="stroke-white transition-all duration-75"
-              strokeWidth="5"
+              className="stroke-[#0A1128] transition-all duration-75"
+              strokeWidth="6"
               strokeLinecap="round"
               fill="transparent"
               strokeDasharray="276.46"
@@ -66,10 +66,10 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
 
           {/* Number Display */}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-4xl sm:text-5xl font-black font-cinzel text-white scale-110 transition-transform">
+            <span className="text-4xl sm:text-5xl font-black font-cinzel text-[#0A1128] scale-110 transition-transform">
               {count > 0 ? count : 'GO!'}
             </span>
-            <span className="text-[9px] font-mono text-zinc-400 font-bold uppercase tracking-widest">
+            <span className="text-[9px] font-mono text-[#0A1128]/70 font-bold uppercase tracking-widest">
               SECONDS
             </span>
           </div>
@@ -77,30 +77,30 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
 
         {/* Exam Metadata */}
         <div className="space-y-2 pt-1">
-          <div className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-widest">
+          <div className="text-xs font-mono font-bold text-[#0A1128]/70 uppercase tracking-widest">
             {test.courseCode} • {test.courseName}
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold font-cinzel text-white leading-snug">
+          <h2 className="text-xl sm:text-2xl font-black font-cinzel text-[#0A1128] leading-snug">
             {test.title}
           </h2>
-          <p className="text-xs text-zinc-300 font-sans leading-relaxed">
+          <p className="text-xs text-[#0A1128]/80 font-sans leading-relaxed">
             {test.description}
           </p>
         </div>
 
         {/* Exam Parameters Badges */}
-        <div className="grid grid-cols-3 gap-2 py-3 px-4 bg-zinc-950 rounded-2xl border border-zinc-800 font-mono text-center">
+        <div className="grid grid-cols-3 gap-2 py-3 px-4 bg-[#0A1128]/5 rounded-2xl border border-[#0A1128]/15 font-mono text-center">
           <div className="space-y-0.5">
-            <div className="text-[10px] text-zinc-400 uppercase">Questions</div>
-            <div className="text-sm font-bold text-white">{test.totalQuestions} MCQs</div>
+            <div className="text-[10px] text-[#0A1128]/60 uppercase font-bold">Questions</div>
+            <div className="text-sm font-black text-[#0A1128]">{test.totalQuestions} MCQs</div>
           </div>
-          <div className="space-y-0.5 border-x border-zinc-800">
-            <div className="text-[10px] text-zinc-400 uppercase">Duration</div>
-            <div className="text-sm font-bold text-white">{test.durationMinutes} Mins</div>
+          <div className="space-y-0.5 border-x border-[#0A1128]/15">
+            <div className="text-[10px] text-[#0A1128]/60 uppercase font-bold">Duration</div>
+            <div className="text-sm font-black text-[#0A1128]">{test.durationMinutes} Mins</div>
           </div>
           <div className="space-y-0.5">
-            <div className="text-[10px] text-zinc-400 uppercase">Marking</div>
-            <div className="text-sm font-bold text-white">+1.0 / -0.25</div>
+            <div className="text-[10px] text-[#0A1128]/60 uppercase font-bold">Marking</div>
+            <div className="text-sm font-black text-[#0A1128]">+1.0 / -0.25</div>
           </div>
         </div>
 
@@ -108,13 +108,13 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
         <div className="flex items-center justify-between pt-1">
           <button
             onClick={onCancel}
-            className="text-xs font-mono text-zinc-400 hover:text-white transition cursor-pointer"
+            className="text-xs font-mono font-bold text-[#0A1128]/60 hover:text-[#0A1128] transition cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={onCountdownComplete}
-            className="px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-black font-extrabold text-xs font-mono tracking-wide transition shadow-lg flex items-center gap-1.5 cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-[#0A1128] hover:bg-[#14214d] text-white font-extrabold text-xs font-mono tracking-wider uppercase transition shadow-lg flex items-center gap-1.5 cursor-pointer"
           >
             <span>Start Now</span>
             <ChevronRight className="w-3.5 h-3.5" />
