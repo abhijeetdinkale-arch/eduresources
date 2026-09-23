@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import ExamHub from './ExamHub';
+import ExamPrepCountdown from './ExamPrepCountdown';
 import ExamScreen from './ExamScreen';
 import ExamResults from './ExamResults';
 
 export default function PracticeExamContainer({ onBackToCatalog, onRequireLogin, user }) {
-  // view: 'hub' | 'exam' | 'results'
+  // view: 'hub' | 'prep' | 'exam' | 'results'
   const [examView, setExamView] = useState('hub');
   const [activeTest, setActiveTest] = useState(null);
   const [lastResult, setLastResult] = useState(null);
 
   const handleStartExam = (test) => {
     setActiveTest(test);
+    setExamView('prep'); // Show 3-second animated prep screen first!
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCountdownComplete = () => {
     setExamView('exam');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -23,7 +29,7 @@ export default function PracticeExamContainer({ onBackToCatalog, onRequireLogin,
 
   const handleRetakeExam = () => {
     if (activeTest) {
-      setExamView('exam');
+      setExamView('prep');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       setExamView('hub');
@@ -35,6 +41,16 @@ export default function PracticeExamContainer({ onBackToCatalog, onRequireLogin,
     setExamView('hub');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  if (examView === 'prep' && activeTest) {
+    return (
+      <ExamPrepCountdown
+        test={activeTest}
+        onCountdownComplete={handleCountdownComplete}
+        onCancel={handleBackToHub}
+      />
+    );
+  }
 
   if (examView === 'exam' && activeTest) {
     return (

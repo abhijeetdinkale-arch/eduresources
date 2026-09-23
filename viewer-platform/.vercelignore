@@ -1,0 +1,12 @@
+node_modules
+android
+ios
+desktop
+release
+*.apk
+*.dmg
+*.zip
+.env
+.env.*
+.DS_Store
+*.log

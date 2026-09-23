@@ -9,9 +9,7 @@ import {
   X,
   RotateCcw,
   Grid,
-  AlertTriangle,
-  CheckCircle2,
-  HelpCircle
+  Check
 } from 'lucide-react';
 import MathText from '../MathText';
 
@@ -119,34 +117,34 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
   const isTimeCritical = secondsRemaining < 600; // Under 10 minutes
 
   return (
-    <div className="min-h-screen bg-[#F8F6F0] dark:bg-[#09090B] text-ink-900 dark:text-paper-100 flex flex-col font-sans transition-colors">
-      {/* 1. TOP EXAM HEADER */}
-      <header className="sticky top-0 z-40 bg-paper-50/95 dark:bg-darkbg-900/95 backdrop-blur-md border-b border-paper-300 dark:border-darkbg-border px-4 sm:px-8 py-3 flex items-center justify-between shadow-xs">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col font-sans transition-colors">
+      {/* 1. TOP EXAM HEADER (BLACK & WHITE) */}
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b-2 border-black dark:border-white/20 px-4 sm:px-8 py-3 flex items-center justify-between shadow-xs">
         {/* Left: Test Code & Question Index */}
         <div className="flex items-center gap-3">
           <button
             onClick={onExitExam}
-            className="p-1.5 rounded-full hover:bg-paper-200 dark:hover:bg-darkbg-800 text-ink-600 dark:text-ink-300 transition"
+            className="p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition"
             title="Exit Exam"
           >
             <X className="w-5 h-5" />
           </button>
           <div>
-            <span className="font-mono text-xs font-bold text-ink-900 dark:text-paper-100">
+            <span className="font-mono text-xs font-black">
               {test.courseCode} • {test.code}
             </span>
-            <div className="text-[11px] font-mono text-ink-500 dark:text-ink-400">
+            <div className="text-[11px] font-mono text-zinc-500 font-bold">
               Question {currentIdx + 1} of {totalQuestions}
             </div>
           </div>
         </div>
 
-        {/* Center: Live Timer Countdown (Quzi & Quizzax style) */}
+        {/* Center: Live Timer Countdown */}
         <div
-          className={`flex items-center gap-2 px-4 py-1.5 rounded-full border font-mono font-bold text-xs sm:text-sm tracking-wide transition-all ${
+          className={`flex items-center gap-2 px-4 py-1.5 rounded-full border-2 font-mono font-black text-xs sm:text-sm tracking-widest ${
             isTimeCritical
-              ? 'bg-rose-500/15 border-rose-500 text-rose-600 dark:text-rose-400 animate-pulse ring-2 ring-rose-500/20'
-              : 'bg-paper-200/80 dark:bg-darkbg-800 border-paper-300 dark:border-darkbg-border text-ink-900 dark:text-paper-50'
+              ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white animate-pulse'
+              : 'bg-zinc-100 dark:bg-zinc-900 border-black dark:border-white/40 text-black dark:text-white'
           }`}
         >
           <Timer className="w-4 h-4" />
@@ -157,19 +155,19 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setIsGridModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border text-xs font-mono transition cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border-2 border-black dark:border-white/40 text-xs font-mono font-bold transition cursor-pointer"
             title="Open 30-Question Progress Grid"
           >
             <Grid className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Progress Grid</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-paper-300 dark:bg-darkbg-700 text-[10px]">
+            <span className="hidden sm:inline">Progress</span>
+            <span className="px-2 py-0.5 rounded-full bg-black text-white dark:bg-white dark:text-black font-black text-[10px]">
               {answeredCount}/{totalQuestions}
             </span>
           </button>
 
           <button
             onClick={() => setIsSubmitModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide transition shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black text-xs font-black tracking-wider uppercase transition shadow-md cursor-pointer"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Submit</span>
@@ -180,35 +178,35 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
       {/* 2. MAIN QUESTION CANVAS */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
         {/* Question Header Card */}
-        <div className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-3xl p-6 sm:p-8 shadow-ticket dark:shadow-ticket-dark relative overflow-hidden transition-colors">
+        <div className="bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-white/20 rounded-[28px] p-6 sm:p-9 shadow-ticket dark:shadow-ticket-dark relative overflow-hidden transition-colors">
           {/* Top Bar: Topic Badge & Bookmark */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-xs font-mono font-semibold">
-                {currentQ.topic || 'General Mathematics'}
+              <span className="px-3.5 py-1 rounded-full bg-black text-white dark:bg-white dark:text-black text-xs font-mono font-bold">
+                {currentQ.topic || 'Mathematics'}
               </span>
-              <span className="text-xs font-mono text-ink-400 dark:text-ink-500">
-                +1.0 / -0.25 Mark
+              <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-bold px-2 py-0.5 rounded-lg border border-black/20 dark:border-white/20">
+                +1.00 / -0.25 Mark
               </span>
             </div>
 
             <button
               onClick={handleToggleFlag}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono border transition ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border-2 transition cursor-pointer font-bold ${
                 flagged.has(currentQ.id)
-                  ? 'bg-amber-500 text-ink-950 border-amber-500 font-bold'
-                  : 'bg-paper-200 dark:bg-darkbg-800 text-ink-600 dark:text-ink-400 border-paper-300 dark:border-darkbg-border hover:text-ink-900'
+                  ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-xs'
+                  : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-300 dark:border-zinc-700'
               }`}
             >
               {flagged.has(currentQ.id) ? (
                 <>
                   <BookmarkCheck className="w-3.5 h-3.5 fill-current" />
-                  <span>Marked for Review</span>
+                  <span>Marked</span>
                 </>
               ) : (
                 <>
                   <Bookmark className="w-3.5 h-3.5" />
-                  <span>Mark for Review</span>
+                  <span>Review</span>
                 </>
               )}
             </button>
@@ -216,18 +214,18 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
 
           {/* Question Text */}
           <div className="space-y-4">
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-mono font-bold text-amber-600 dark:text-amber-400">
+            <div className="flex items-baseline gap-2.5">
+              <span className="text-sm font-mono font-black px-2.5 py-1 rounded-lg bg-black text-white dark:bg-white dark:text-black">
                 Q.{currentIdx + 1}
               </span>
-              <div className="text-base sm:text-lg font-medium text-ink-900 dark:text-paper-50 leading-relaxed">
+              <div className="text-base sm:text-lg font-bold text-black dark:text-white leading-relaxed font-sans">
                 <MathText text={currentQ.question} />
               </div>
             </div>
           </div>
 
-          {/* 3. OPTION CHOICES (Quizzax & Quzi pill style) */}
-          <div className="grid grid-cols-1 gap-3 pt-6">
+          {/* 3. OPTION CHOICES (Black & White Inversion Pills) */}
+          <div className="grid grid-cols-1 gap-3.5 pt-6">
             {currentQ.options.map((opt, optIdx) => {
               const isSelected = userAnswers[currentQ.id] === optIdx;
               const optionLetters = ['A', 'B', 'C', 'D'];
@@ -236,31 +234,33 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
                 <button
                   key={optIdx}
                   onClick={() => handleSelectOption(optIdx)}
-                  className={`group relative text-left p-4 rounded-2xl border transition-all duration-150 flex items-center justify-between cursor-pointer ${
+                  className={`group relative text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-150 flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 dark:border-emerald-400 text-emerald-950 dark:text-emerald-100 shadow-md ring-2 ring-emerald-500/20'
-                      : 'bg-paper-100/80 dark:bg-darkbg-800/80 border-paper-300 dark:border-darkbg-border text-ink-800 dark:text-paper-200 hover:border-amber-400 dark:hover:border-darkbg-700 hover:bg-paper-200/50 dark:hover:bg-darkbg-800'
+                      ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-xl scale-[1.01]'
+                      : 'bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-800 text-black dark:text-zinc-200 hover:border-black dark:hover:border-white'
                   }`}
                 >
-                  <div className="flex items-center gap-3.5 pr-4 flex-1">
+                  <div className="flex items-center gap-4 pr-4 flex-1">
                     {/* Circle Indicator */}
                     <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-colors shrink-0 ${
+                      className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-black transition-colors shrink-0 ${
                         isSelected
-                          ? 'bg-emerald-600 text-white shadow-xs'
-                          : 'bg-paper-200 dark:bg-darkbg-700 text-ink-700 dark:text-paper-300 group-hover:bg-amber-400 group-hover:text-ink-900'
+                          ? 'bg-white text-black dark:bg-black dark:text-white'
+                          : 'bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black'
                       }`}
                     >
                       {optionLetters[optIdx]}
                     </div>
 
-                    <div className="text-xs sm:text-sm font-medium leading-relaxed">
+                    <div className="text-xs sm:text-sm font-semibold leading-relaxed">
                       <MathText text={opt} />
                     </div>
                   </div>
 
                   {isSelected && (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <div className="w-6 h-6 rounded-full bg-white text-black dark:bg-black dark:text-white flex items-center justify-center shrink-0">
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </div>
                   )}
                 </button>
               );
@@ -270,14 +270,14 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
       </main>
 
       {/* 4. BOTTOM ACTION DOCK */}
-      <footer className="sticky bottom-0 z-30 bg-paper-50/95 dark:bg-darkbg-900/95 backdrop-blur-md border-t border-paper-300 dark:border-darkbg-border px-4 sm:px-8 py-3 shadow-2xl">
+      <footer className="sticky bottom-0 z-30 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t-2 border-black dark:border-white/20 px-4 sm:px-8 py-3.5 shadow-2xl">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
           {/* Left: Previous & Clear */}
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrev}
               disabled={currentIdx === 0}
-              className="px-3 py-2 rounded-xl bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 disabled:opacity-30 text-ink-800 dark:text-paper-200 text-xs font-mono font-semibold transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed"
+              className="px-3.5 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-25 text-xs font-mono font-bold transition flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed border border-black/20 dark:border-white/20"
             >
               <ChevronLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Previous</span>
@@ -286,7 +286,7 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
             {userAnswers[currentQ.id] !== undefined && (
               <button
                 onClick={handleClearResponse}
-                className="px-3 py-2 rounded-xl bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-600 dark:text-ink-400 text-xs font-mono transition flex items-center gap-1 cursor-pointer"
+                className="px-3 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-xs font-mono font-bold transition flex items-center gap-1 cursor-pointer border border-black/20 dark:border-white/20"
                 title="Clear selected option"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -296,11 +296,11 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
           </div>
 
           {/* Right: Skip & Save/Next */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={handleNext}
               disabled={currentIdx === totalQuestions - 1}
-              className="px-4 py-2 rounded-xl bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 disabled:opacity-30 text-ink-800 dark:text-paper-200 text-xs font-mono font-semibold transition cursor-pointer disabled:cursor-not-allowed"
+              className="px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-25 text-xs font-mono font-bold transition cursor-pointer disabled:cursor-not-allowed border border-black/20 dark:border-white/20"
             >
               Skip
             </button>
@@ -308,7 +308,7 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
             {currentIdx < totalQuestions - 1 ? (
               <button
                 onClick={handleNext}
-                className="px-5 py-2 rounded-xl bg-ink-900 dark:bg-paper-50 hover:bg-black dark:hover:bg-paper-200 text-paper-50 dark:text-ink-900 text-xs sm:text-sm font-bold tracking-wide transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black text-xs sm:text-sm font-black tracking-wider uppercase transition flex items-center gap-1.5 shadow-md active:scale-98 cursor-pointer"
               >
                 <span>Save & Next</span>
                 <ChevronRight className="w-4 h-4" />
@@ -316,7 +316,7 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
             ) : (
               <button
                 onClick={() => setIsSubmitModalOpen(true)}
-                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold tracking-wide transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black text-xs sm:text-sm font-black tracking-wider uppercase transition flex items-center gap-1.5 shadow-md active:scale-98 cursor-pointer"
               >
                 <span>Review & Submit</span>
                 <Send className="w-3.5 h-3.5" />
@@ -326,21 +326,20 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
         </div>
       </footer>
 
-      {/* 5. QUIZZAX-STYLE "QUIZ PROGRESS" GRID MODAL (Inspired by Reference Screenshot 2) */}
+      {/* 5. BLACK & WHITE PROGRESS GRID MODAL */}
       {isGridModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5 animate-fadeIn">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-paper-200 dark:border-darkbg-border">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 font-sans">
+          <div className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-[28px] p-6 max-w-md w-full shadow-2xl space-y-5 animate-fadeIn">
+            <div className="flex items-center justify-between pb-3 border-b-2 border-black/10 dark:border-white/10">
               <div className="flex items-center gap-2">
-                <Grid className="w-5 h-5 text-ink-800 dark:text-paper-200" />
-                <h3 className="font-bold text-base text-ink-900 dark:text-paper-50">
-                  Quiz Progress
+                <Grid className="w-5 h-5" />
+                <h3 className="font-black text-base">
+                  Quiz Progress Matrix
                 </h3>
               </div>
               <button
                 onClick={() => setIsGridModalOpen(false)}
-                className="p-1 rounded-full text-ink-500 hover:text-ink-900 dark:hover:text-paper-100"
+                className="p-1 rounded-full text-zinc-500 hover:text-black dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -353,16 +352,16 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
                 const isFlagged = flagged.has(q.id);
                 const isCurrent = qIdx === currentIdx;
 
-                let btnClass = 'bg-paper-200/80 dark:bg-darkbg-800 text-ink-600 dark:text-ink-400 border border-paper-300 dark:border-darkbg-border';
+                let btnClass = 'bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-700';
 
                 if (isAnswered) {
-                  btnClass = 'bg-emerald-500 text-white font-bold border border-emerald-600 shadow-xs';
+                  btnClass = 'bg-black text-white dark:bg-white dark:text-black font-black border-2 border-black dark:border-white shadow-md';
                 } else if (isFlagged) {
-                  btnClass = 'bg-amber-400 text-ink-950 font-bold border border-amber-500';
+                  btnClass = 'bg-zinc-300 dark:bg-zinc-700 text-black dark:text-white font-black border-2 border-dashed border-black dark:border-white';
                 }
 
                 if (isCurrent) {
-                  btnClass += ' ring-2 ring-ink-900 dark:ring-paper-50 scale-105';
+                  btnClass += ' ring-2 ring-black dark:ring-white scale-105';
                 }
 
                 return (
@@ -372,7 +371,7 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
                       setCurrentIdx(qIdx);
                       setIsGridModalOpen(false);
                     }}
-                    className={`h-11 rounded-xl flex items-center justify-center font-mono text-xs transition-transform active:scale-95 cursor-pointer ${btnClass}`}
+                    className={`h-11 rounded-xl flex items-center justify-center font-mono text-xs transition-all active:scale-95 cursor-pointer font-bold ${btnClass}`}
                   >
                     {qIdx + 1}
                   </button>
@@ -380,25 +379,25 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
               })}
             </div>
 
-            {/* Legend (Inspired by Quizzax screenshot) */}
-            <div className="grid grid-cols-3 gap-2 pt-2 border-t border-paper-200 dark:border-darkbg-border text-[11px] font-mono">
+            {/* Legend */}
+            <div className="grid grid-cols-3 gap-2 pt-2 border-t-2 border-black/10 dark:border-white/10 text-[11px] font-mono font-bold">
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-emerald-500"></span>
+                <span className="w-3.5 h-3.5 rounded-sm bg-black dark:bg-white"></span>
                 <span>Solved ({answeredCount})</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-paper-300 dark:bg-darkbg-700"></span>
+                <span className="w-3.5 h-3.5 rounded-sm bg-zinc-200 dark:bg-zinc-800"></span>
                 <span>Unsolved ({unansweredCount})</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-amber-400"></span>
+                <span className="w-3.5 h-3.5 rounded-sm bg-zinc-400 dark:bg-zinc-600"></span>
                 <span>Review ({flaggedCount})</span>
               </div>
             </div>
 
             <button
               onClick={() => setIsGridModalOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 font-bold text-xs"
+              className="w-full py-3 rounded-xl bg-black dark:bg-white text-white dark:text-black font-black text-xs font-mono uppercase tracking-wider shadow-md"
             >
               Continue Test
             </button>
@@ -408,49 +407,47 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
 
       {/* 6. SUBMISSION CONFIRMATION MODAL */}
       {isSubmitModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 animate-fadeIn">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 font-sans">
+          <div className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-[28px] p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 animate-fadeIn">
             <div className="text-center space-y-2">
-              <div className="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
-                <HelpCircle className="w-6 h-6" />
+              <div className="w-14 h-14 rounded-full bg-black text-white dark:bg-white dark:text-black flex items-center justify-center mx-auto">
+                <Send className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-ink-900 dark:text-paper-50 font-cinzel">
+              <h3 className="text-xl font-black font-cinzel">
                 Submit Examination?
               </h3>
-              <p className="text-xs text-ink-600 dark:text-ink-400">
-                Are you sure you want to conclude the mock examination? You will immediately see your score and step-by-step solutions.
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                Are you ready to submit? You will instantly see your score and the step-by-step animated solutions.
               </p>
             </div>
 
-            {/* Overview Summary */}
-            <div className="grid grid-cols-3 gap-2 p-3 bg-paper-200/60 dark:bg-darkbg-800/60 rounded-2xl text-center font-mono">
+            <div className="grid grid-cols-3 gap-2 p-3 bg-zinc-100 dark:bg-zinc-900 rounded-xl text-center font-mono border border-black/10 dark:border-white/10">
               <div className="space-y-0.5">
-                <div className="text-[10px] text-ink-500">ATTEMPTED</div>
-                <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{answeredCount}</div>
+                <div className="text-[10px] text-zinc-500 font-bold">ATTEMPTED</div>
+                <div className="text-base font-black">{answeredCount}</div>
               </div>
-              <div className="space-y-0.5 border-x border-paper-300 dark:border-darkbg-border">
-                <div className="text-[10px] text-ink-500">UNANSWERED</div>
-                <div className="text-sm font-bold text-rose-600 dark:text-rose-400">{unansweredCount}</div>
+              <div className="space-y-0.5 border-x border-black/10 dark:border-white/10">
+                <div className="text-[10px] text-zinc-500 font-bold">SKIPPED</div>
+                <div className="text-base font-black">{unansweredCount}</div>
               </div>
               <div className="space-y-0.5">
-                <div className="text-[10px] text-ink-500">MARKED</div>
-                <div className="text-sm font-bold text-amber-600 dark:text-amber-400">{flaggedCount}</div>
+                <div className="text-[10px] text-zinc-500 font-bold">FLAGGED</div>
+                <div className="text-base font-black">{flaggedCount}</div>
               </div>
             </div>
 
-            {/* Modal Actions */}
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsSubmitModalOpen(false)}
-                className="flex-1 py-3 rounded-2xl bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-200 font-bold text-xs font-mono transition"
+                className="flex-1 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 font-bold text-xs font-mono transition border border-black/20 dark:border-white/20"
               >
-                Return to Test
+                Return
               </button>
               <button
                 onClick={handleSubmit}
-                className="flex-1 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs tracking-wide transition shadow-sm"
+                className="flex-1 py-3 rounded-xl bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black font-black text-xs font-mono tracking-wider uppercase transition shadow-md"
               >
-                Confirm Submit
+                Submit Now
               </button>
             </div>
           </div>
