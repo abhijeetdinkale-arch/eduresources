@@ -66,7 +66,7 @@ const QUICK_COURSES = [
   { code: 'MEC136', name: 'Engineering Graphics & CAD PPTs', count: '2 Editions' },
 ];
 
-export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, user, isSubscribed, materialsCount = 37 }) {
+export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, onOpenExams, user, isSubscribed, materialsCount = 37 }) {
   const [selectedPlan, setSelectedPlan] = useState('pro');
   const [copiedUpi, setCopiedUpi] = useState(false);
   const upiId = 'abhijeetdinkale@oksbi';
@@ -130,14 +130,25 @@ export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, user
               <ArrowRight className="w-4 h-4" />
             </button>
 
+            {/* Practice Exam Launch Button */}
+            <button
+              onClick={onOpenExams}
+              className="px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-ink-950 text-xs font-bold tracking-wider uppercase transition shadow-md flex items-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Practice Exams (Midterm)</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-ink-950 text-amber-300 text-[9px] font-mono font-bold">
+                NEW
+              </span>
+            </button>
+
             {/* If NOT subscribed, show Plans button */}
             {!isSubscribed && (
               <button
                 onClick={onOpenPlans}
-                className="px-6 py-3.5 rounded-full bg-[#E5C05B] hover:bg-[#d8b34c] text-ink-900 text-xs font-bold tracking-wider uppercase transition shadow-md flex items-center gap-2"
+                className="px-5 py-3.5 rounded-full bg-paper-200 dark:bg-darkbg-800 hover:bg-paper-300 dark:hover:bg-darkbg-700 text-ink-900 dark:text-paper-100 text-xs font-bold tracking-wider uppercase transition border border-paper-300 dark:border-darkbg-border flex items-center gap-1.5"
               >
-                <Sparkles className="w-4 h-4" />
-                <span>View Plans (from ₹299)</span>
+                <span>Plans (from ₹299)</span>
               </button>
             )}
 
@@ -173,6 +184,43 @@ export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, user
             <span className="text-2xl font-cinzel font-bold text-ink-900 dark:text-paper-50">4.9 ★</span>
             <p className="text-[11px] font-sans text-ink-600 dark:text-ink-400 mt-0.5">Academic Faculty Rating</p>
           </div>
+        </div>
+      </section>
+
+      {/* 2. PRACTICE EXAM MIDTERM SPOTLIGHT (NEW FEATURE) */}
+      <section className="bg-gradient-to-br from-indigo-950 via-slate-900 to-zinc-950 text-white border border-indigo-500/20 rounded-[36px] p-6 sm:p-10 shadow-ticket relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <span>NEW FEATURE • MIDTERM EXAMINATION SUITE</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-cinzel font-black tracking-tight leading-snug">
+              Master Your MTH165 Midterms with 5 Timed Mock Exams
+            </h2>
+
+            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+              Experience the authentic university midterm environment with exact 90-minute timers, 30 MCQs, realistic +1.0 / -0.25 negative marking, 30-question progress grid, and step-by-step animated solutions for incorrect answers.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-mono text-zinc-400">
+              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-zinc-200">90 Minutes</span>
+              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-zinc-200">30 Questions</span>
+              <span className="px-2.5 py-1 rounded-lg bg-white/10 text-zinc-200">+1 / -0.25 Negative Marking</span>
+              <span className="px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-300 font-semibold">Animated Solutions</span>
+            </div>
+          </div>
+
+          <button
+            onClick={onOpenExams}
+            className="px-6 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-ink-950 font-bold text-xs sm:text-sm font-mono tracking-wide uppercase transition shadow-xl hover:scale-105 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer"
+          >
+            <span>Start Practice Exam</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </section>
 

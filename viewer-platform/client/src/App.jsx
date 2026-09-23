@@ -8,6 +8,7 @@ import PlansModal from './components/PlansModal';
 import SecurityShield from './components/SecurityShield';
 import LogoSplash from './components/LogoSplash';
 import MobileBottomNav from './components/MobileBottomNav';
+import PracticeExamContainer from './components/PracticeExam';
 import { useAuth } from './context/AuthContext';
 import { api } from './services/api';
 
@@ -117,6 +118,11 @@ export default function App() {
           return;
         }
       }
+    } else if (hash.startsWith('#/exams') || hash.startsWith('#/practice-exam')) {
+      setActiveDocument(null);
+      setActiveFolder(null);
+      setCurrentView('exams');
+      return;
     } else if (hash.startsWith('#/catalog/')) {
       const folderCode = decodeURIComponent(hash.replace('#/catalog/', ''));
       setActiveDocument(null);
@@ -159,6 +165,10 @@ export default function App() {
 
   const handleNavigateCatalog = () => {
     window.location.hash = '#/catalog';
+  };
+
+  const handleNavigateExams = () => {
+    window.location.hash = '#/exams';
   };
 
   const handleOpenFolder = (code) => {
@@ -287,6 +297,7 @@ export default function App() {
               currentView={currentView}
               onNavigate={(view) => {
                 if (view === 'home') handleNavigateHome();
+                else if (view === 'exams') handleNavigateExams();
                 else handleNavigateCatalog();
               }}
               onLogoClick={handleNavigateHome}
@@ -303,11 +314,18 @@ export default function App() {
           </div>
 
           <main className="flex-1 pb-16 sm:pb-0">
-            {currentView === 'home' && !user ? (
+            {currentView === 'exams' ? (
+              <PracticeExamContainer
+                onBackToCatalog={handleNavigateCatalog}
+                onRequireLogin={() => setIsLoginModalOpen(true)}
+                user={user}
+              />
+            ) : currentView === 'home' && !user ? (
               <HomePage
                 onBrowseBooks={handleNavigateCatalog}
                 onOpenPlans={() => setIsPlansModalOpen(true)}
                 onOpenLogin={() => setIsLoginModalOpen(true)}
+                onOpenExams={handleNavigateExams}
                 user={user}
                 isSubscribed={isSubscribed}
                 materialsCount={materials.length}
@@ -332,6 +350,7 @@ export default function App() {
             currentView={currentView}
             onNavigateHome={handleNavigateHome}
             onNavigateCatalog={handleNavigateCatalog}
+            onNavigateExams={handleNavigateExams}
             onOpenPlans={() => setIsPlansModalOpen(true)}
             onOpenLogin={() => setIsLoginModalOpen(true)}
             user={user}

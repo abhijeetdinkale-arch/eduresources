@@ -1,5 +1,5 @@
 {
-  "total": 37,
+  "total": 43,
   "materials": [
     {
       "id": "a5079d8b1256a90b",
@@ -143,6 +143,72 @@
       "size": 475468,
       "sizeFormatted": "464.3 KB",
       "lastModified": "2026-09-09T04:51:24.982Z"
+    },
+    {
+      "id": "b6d34e8b355859d6",
+      "title": "Academic Accuracy Certification Dossier",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "Academic_Accuracy_Certification_Dossier.pdf",
+      "bundledFile": "books/b6d34e8b355859d6.dat",
+      "size": 112775,
+      "sizeFormatted": "110.1 KB",
+      "lastModified": "2026-09-22T21:52:55.105Z"
+    },
+    {
+      "id": "51b47db4658ecc03",
+      "title": "edunetwork product showcase",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "edunetwork_product_showcase.pdf",
+      "bundledFile": "books/51b47db4658ecc03.dat",
+      "size": 73511,
+      "sizeFormatted": "71.8 KB",
+      "lastModified": "2026-09-21T09:05:20.802Z"
+    },
+    {
+      "id": "d02d68eb0bc9da61",
+      "title": "EduResources Master Academic Certification",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "EduResources_Master_Academic_Certification.pdf",
+      "bundledFile": "books/d02d68eb0bc9da61.dat",
+      "size": 123718,
+      "sizeFormatted": "120.8 KB",
+      "lastModified": "2026-09-22T22:41:51.994Z"
+    },
+    {
+      "id": "5378f254d0b41bf8",
+      "title": "EduResources Technologia Raport Architektoniczny",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "EduResources_Technologia_Raport_Architektoniczny.pdf",
+      "bundledFile": "books/5378f254d0b41bf8.dat",
+      "size": 383796,
+      "sizeFormatted": "374.8 KB",
+      "lastModified": "2026-09-22T22:32:40.809Z"
+    },
+    {
+      "id": "a9b175ca7c4e1af8",
+      "title": "EduResources Technology Architecture Dossier",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "EduResources_Technology_Architecture_Dossier.pdf",
+      "bundledFile": "books/a9b175ca7c4e1af8.dat",
+      "size": 366923,
+      "sizeFormatted": "358.3 KB",
+      "lastModified": "2026-09-22T22:33:41.629Z"
+    },
+    {
+      "id": "f1a661817fabe4a0",
+      "title": "institutional application dossier",
+      "courseCode": "GENERAL",
+      "category": "Study Material",
+      "relativePath": "institutional_application_dossier.pdf",
+      "bundledFile": "books/f1a661817fabe4a0.dat",
+      "size": 104145,
+      "sizeFormatted": "101.7 KB",
+      "lastModified": "2026-09-21T09:04:24.225Z"
     },
     {
       "id": "2f47093af3e3c020",

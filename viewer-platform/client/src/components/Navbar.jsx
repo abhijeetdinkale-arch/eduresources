@@ -99,7 +99,7 @@ export default function Navbar({
         </div>
 
         {/* Center Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-mono font-medium text-ink-600 dark:text-ink-400">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-6 text-xs font-mono font-medium text-ink-600 dark:text-ink-400">
           <button
             onClick={() => onNavigate('home')}
             className={`transition tracking-wide ${
@@ -120,6 +120,20 @@ export default function Navbar({
             }`}
           >
             SUBJECT DOSSIERS
+          </button>
+          <span className="text-paper-300 dark:text-ink-800">/</span>
+          <button
+            onClick={() => onNavigate('exams')}
+            className={`transition tracking-wide flex items-center gap-1.5 ${
+              currentView === 'exams'
+                ? 'text-amber-500 dark:text-amber-400 font-bold'
+                : 'hover:text-amber-600 dark:hover:text-amber-300'
+            }`}
+          >
+            <span>PRACTICE EXAM</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-ink-950 font-black text-[9px] tracking-tighter uppercase animate-pulse">
+              NEW
+            </span>
           </button>
 
           {/* Only show pricing link if NOT subscribed */}

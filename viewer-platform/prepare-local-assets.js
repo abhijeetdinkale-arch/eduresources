@@ -77,7 +77,16 @@ function scanAndBundlePdfs(dir, baseDir = dir) {
         item === '.git' ||
         item === 'viewer-platform' ||
         item === '.gemini' ||
-        item === 'pdf_verifier'
+        item === '.agents' ||
+        item === 'android-app' ||
+        item === 'release' ||
+        item === 'dist' ||
+        item === 'build' ||
+        item === '.gradle' ||
+        item === 'ios' ||
+        item === 'android' ||
+        item === 'pdf_verifier' ||
+        item.startsWith('.')
       ) {
         continue;
       }

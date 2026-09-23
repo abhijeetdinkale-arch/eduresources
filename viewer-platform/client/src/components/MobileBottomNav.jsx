@@ -5,6 +5,7 @@ export default function MobileBottomNav({
   currentView,
   onNavigateHome,
   onNavigateCatalog,
+  onNavigateExams,
   onOpenPlans,
   onOpenLogin,
   user,
@@ -44,30 +45,36 @@ export default function MobileBottomNav({
           )}
         </button>
 
+        {/* Practice Exams (NEW FEATURE) */}
+        <button
+          onClick={onNavigateExams}
+          className={`flex flex-col items-center justify-center py-1 rounded-lg transition-all relative ${
+            currentView === 'exams'
+              ? 'text-amber-500 dark:text-amber-400 font-bold scale-105'
+              : 'text-amber-600 dark:text-amber-400/80 hover:text-amber-500'
+          }`}
+        >
+          <div className="relative">
+            <span className="absolute -top-1 -right-2 px-1 py-0.2 rounded-full bg-amber-500 text-ink-950 font-black text-[7px] leading-tight animate-pulse">
+              NEW
+            </span>
+            <Sparkles className="w-5 h-5 mb-0.5" />
+          </div>
+          <span className="text-[10px] tracking-tight font-semibold">Exams</span>
+          {currentView === 'exams' && (
+            <span className="absolute -bottom-1 w-1 h-1 bg-amber-500 rounded-full"></span>
+          )}
+        </button>
+
         {/* Pass / Plans */}
         <button
           onClick={onOpenPlans}
-          className="flex flex-col items-center justify-center py-1 rounded-lg transition-all text-gold-600 dark:text-gold-400 relative"
+          className="flex flex-col items-center justify-center py-1 rounded-lg transition-all text-ink-500 dark:text-ink-400 relative"
         >
-          <div className="w-6 h-6 rounded-full bg-gold-500/15 dark:bg-gold-400/20 flex items-center justify-center mb-0.5">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-          </div>
+          <span className="text-xs font-mono font-bold mb-0.5">₹</span>
           <span className="text-[10px] font-medium tracking-tight">
             {isSubscribed ? 'Pro Pass' : 'Pass'}
           </span>
-        </button>
-
-        {/* Theme Switcher */}
-        <button
-          onClick={onToggleTheme}
-          className="flex flex-col items-center justify-center py-1 rounded-lg transition-all text-ink-500 dark:text-ink-400 hover:text-ink-900 dark:hover:text-paper-100"
-        >
-          {darkMode ? (
-            <Sun className="w-5 h-5 mb-0.5 text-gold-400" />
-          ) : (
-            <Moon className="w-5 h-5 mb-0.5" />
-          )}
-          <span className="text-[10px] tracking-tight">{darkMode ? 'Light' : 'Dark'}</span>
         </button>
 
         {/* Account / Login */}

@@ -35,6 +35,11 @@ function createWindow() {
   // On macOS: calls NSWindowSharingNone -> Screen captures & recording show empty black space
   mainWindow.setContentProtection(true);
 
+  // Clear cache on startup to ensure instant updates
+  try {
+    mainWindow.webContents.session.clearCache();
+  } catch (e) {}
+
   // Determine URL (Local internal server or online Vercel sync)
   const startUrl = process.env.ELECTRON_START_URL || `http://localhost:5001`;
 
