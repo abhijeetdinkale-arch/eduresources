@@ -93,7 +93,9 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
         <div className="grid grid-cols-3 gap-2 py-3 px-4 bg-paper-100 dark:bg-darkbg-800 rounded-2xl border border-paper-300 dark:border-darkbg-border font-mono text-center">
           <div className="space-y-0.5">
             <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Questions</div>
-            <div className="text-sm font-black text-ink-900 dark:text-paper-50">{test.totalQuestions} MCQs</div>
+            <div className="text-sm font-black text-ink-900 dark:text-paper-50">
+              {test.isDraftingExam ? 'Part A & B (8 Qs)' : `${test.totalQuestions} MCQs`}
+            </div>
           </div>
           <div className="space-y-0.5 border-x border-paper-300 dark:border-darkbg-border">
             <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Duration</div>
@@ -101,7 +103,9 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
           </div>
           <div className="space-y-0.5">
             <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Marking</div>
-            <div className="text-sm font-black text-ink-900 dark:text-paper-50">+1.0 / -0.25</div>
+            <div className="text-sm font-black text-ink-900 dark:text-paper-50">
+              {test.isDraftingExam ? `${test.maxMarks} Marks Max` : '+1.0 / -0.25'}
+            </div>
           </div>
         </div>
 

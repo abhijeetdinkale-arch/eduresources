@@ -327,13 +327,39 @@ Thus, the displacement current $I_d$ passing through the dielectric gap is \text
 \end{table}
 
 % ==============================================================================
-% SECTION 1.5: MAXWELL'S EQUATIONS
-% ==============================================================================
 \section{Maxwell's Equations in Differential \& Integral Forms}
 
 Maxwell's equations represent the complete governing set of classical electrodynamics. They encapsulate electrostatics, magnetostatics, induction, and wave radiation into four concise equations.
 
+\subsection{Fundamental Field Quantities, Notation \& SI Units}
+Before formulating the field equations, we explicitly define all electromagnetic vector and scalar quantities along with their standard SI dimensions:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Symbol} & \textbf{Physical Quantity} & \textbf{SI Unit} & \textbf{Physical Nature / Meaning} \\
+\midrule
+$\mathbf{E}$ & Electric Field Intensity & $\si{V/m}$ (or $\si{N/C}$) & Force experienced per unit stationary positive test charge. \\
+$\mathbf{D}$ & Electric Displacement Field & $\si{C/m^2}$ & Total electric flux density including dielectric polarization ($\mathbf{D} = \varepsilon_0 \mathbf{E} + \mathbf{P}$). \\
+$\mathbf{B}$ & Magnetic Flux Density & $\si{T}$ (or $\si{Wb/m^2}$) & Magnetic induction determining Lorentz magnetic force ($\mathbf{F} = q(\mathbf{v} \times \mathbf{B})$). \\
+$\mathbf{H}$ & Magnetic Field Intensity & $\si{A/m}$ & Magnetizing field produced by external conduction currents ($\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M})$). \\
+$\mathbf{J}$ & Conduction Current Density & $\si{A/m^2}$ & Macroscopic drift current flowing per unit cross-sectional area. \\
+$\mathbf{J}_d$ & Displacement Current Density & $\si{A/m^2}$ & Effective current density originating from time-varying electric flux ($\partial \mathbf{D}/\partial t$). \\
+$\rho_v$ & Volume Charge Density & $\si{C/m^3}$ & Net free electrostatic charge enclosed per unit volume. \\
+$\mathbf{S}$ & Poynting Vector & $\si{W/m^2}$ & Directional energy flux density of propagating electromagnetic wave ($\mathbf{S} = \mathbf{E} \times \mathbf{H}$). \\
+$u_{\text{em}}$ & Electromagnetic Energy Density & $\si{J/m^3}$ & Total localized energy stored per unit volume ($u = \frac{1}{2}\varepsilon E^2 + \frac{1}{2}\mu H^2$). \\
+$\eta_0$ & Intrinsic Vacuum Impedance & $\si{\Omega}$ & Ratio of electric to magnetic wave amplitudes in vacuum ($\eta_0 = \sqrt{\mu_0/\varepsilon_0} \approx 376.73\,\Omega$). \\
+\bottomrule
+\end{tabularx}
+\caption{Fundamental Electromagnetic Field Vectors, Symbols, and SI Units.}
+\label{tab:em-symbols-units}
+\end{table}
+
 \subsection{Master Table of Maxwell's Equations}
+
 
 \begin{table}[htbp]
 \centering

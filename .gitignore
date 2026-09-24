@@ -44,3 +44,7 @@ release/
 *.zip
 
 .github/
+.vercel
+.env*
+.gradle/
+**/build/
