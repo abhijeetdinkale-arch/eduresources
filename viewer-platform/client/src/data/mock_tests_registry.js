@@ -27,7 +27,7 @@ export const COURSES_CONFIG = [
     department: 'Mathematics',
     testsCount: MTH165_MOCK_TESTS.length,
     active: true,
-    tag: `${MTH165_MOCK_TESTS.length} Papers Active`,
+    tag: `${MTH165_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Matrices & Linear Algebra, Differential Calculus, Mean Value Theorems & Taylor Series.',
     accentColor: '#D97706', // Amber/Ochre
     isDrafting: false
@@ -38,7 +38,7 @@ export const COURSES_CONFIG = [
     department: 'Applied Sciences',
     testsCount: PHY110_MOCK_TESTS.length,
     active: true,
-    tag: `${PHY110_MOCK_TESTS.length} Official PYQs`,
+    tag: `${PHY110_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Vector Calculus & Maxwell Equations, Lasers & Holography, Fiber Optics & Numerical Aperture.',
     accentColor: '#2563EB', // Blue
     isDrafting: false
@@ -49,7 +49,7 @@ export const COURSES_CONFIG = [
     department: 'Electronics',
     testsCount: ECE249_MOCK_TESTS.length,
     active: true,
-    tag: 'Official PYQ Paper',
+    tag: `${ECE249_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: DC Network Theorems (Thevenin/Norton), AC Fundamentals & RLC Resonance, Transformers & Diodes.',
     accentColor: '#EA580C', // Orange
     isDrafting: false
@@ -60,7 +60,7 @@ export const COURSES_CONFIG = [
     department: 'Computer Science',
     testsCount: CSE111_MOCK_TESTS.length,
     active: true,
-    tag: 'University Blueprint',
+    tag: `${CSE111_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Computer Systems & Cache Architecture, OS Process Lifecycle & Scheduling, Linux CLI & FHS.',
     accentColor: '#059669', // Emerald
     isDrafting: false
@@ -71,7 +71,7 @@ export const COURSES_CONFIG = [
     department: 'Information Tech',
     testsCount: INT335_MOCK_TESTS.length,
     active: true,
-    tag: '30 High-Yield MCQs',
+    tag: `${INT335_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Foundations of Design Thinking, Empathy Mapping & Observation, POV & Ideation (SCAMPER).',
     accentColor: '#7C3AED', // Purple
     isDrafting: false
@@ -82,7 +82,7 @@ export const COURSES_CONFIG = [
     department: 'Applied Sciences',
     testsCount: PHY175_MOCK_TESTS.length,
     active: true,
-    tag: 'Formula & Lab Model',
+    tag: `${PHY175_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Solid State Physics & Fermi Energy, Rectifiers & BJT Transistors, Logic Gates & K-Maps.',
     accentColor: '#0284C7', // Sky Blue
     isDrafting: false
@@ -93,7 +93,7 @@ export const COURSES_CONFIG = [
     department: 'Computer Science',
     testsCount: CSE326_MOCK_TESTS.length,
     active: true,
-    tag: 'Exam Companion',
+    tag: `${CSE326_MOCK_TESTS.length} Full Papers Active`,
     description: 'Units 1-3: Semantic HTML5 Elements, CSS3 Specificity & Box Model, Flexbox & DOM Event Handling.',
     accentColor: '#E11D48', // Rose
     isDrafting: false
@@ -104,7 +104,7 @@ export const COURSES_CONFIG = [
     department: 'Mechanical',
     testsCount: MEC136_DRAFTING_TESTS.length,
     active: true,
-    tag: 'Subjective Drafting Studio',
+    tag: `${MEC136_DRAFTING_TESTS.length} Drafting Studios Active`,
     description: 'Units 1-3: Diagonal Scales (4.75 m), Line Projections with Traces (45°), 3D Isometric to Orthographic Views.',
     accentColor: '#475569', // Slate
     isDrafting: true

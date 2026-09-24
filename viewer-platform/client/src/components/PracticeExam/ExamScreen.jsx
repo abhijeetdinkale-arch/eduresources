@@ -176,37 +176,40 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
       </header>
 
       {/* 2. MAIN QUESTION CANVAS */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-9 space-y-6 sm:space-y-8">
         {/* Question Header Card */}
-        <div className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-[32px] p-6 sm:p-9 shadow-ticket dark:shadow-ticket-dark relative overflow-hidden text-ink-900 dark:text-paper-50">
+        <div className="bg-paper-50 dark:bg-darkbg-900 border border-paper-300/80 dark:border-darkbg-border rounded-[32px] p-6 sm:p-10 shadow-ticket dark:shadow-ticket-dark relative overflow-hidden text-ink-900 dark:text-paper-50 transition-all">
           {/* Top Bar: Topic Badge & Bookmark */}
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
-              <span className="px-3.5 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 border border-paper-300 dark:border-darkbg-border text-ink-900 dark:text-paper-50 text-xs font-mono font-bold">
-                {currentQ.topic || 'Mathematics'}
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-paper-200 dark:border-darkbg-800">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <span className="px-3.5 py-1 rounded-full bg-paper-200 dark:bg-darkbg-800 border border-paper-300 dark:border-darkbg-border text-ink-900 dark:text-paper-100 text-xs font-mono font-bold tracking-wide">
+                {currentQ.topic || 'Engineering Subject'}
               </span>
-              <span className="text-xs font-mono text-ink-800 dark:text-paper-200 font-semibold px-2.5 py-1 rounded-lg border border-paper-300 dark:border-darkbg-border bg-paper-100 dark:bg-darkbg-850">
-                +1.00 / -0.25 Mark
+              <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 font-bold px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10">
+                +1.00 Mark
+              </span>
+              <span className="text-[11px] font-mono text-terracotta-600 dark:text-terracotta-400 font-bold px-3 py-1 rounded-full border border-terracotta-500/20 bg-terracotta-500/10">
+                -0.25 Negative
               </span>
             </div>
 
             <button
               onClick={handleToggleFlag}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono border transition cursor-pointer font-semibold ${
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono border transition-all cursor-pointer font-bold ${
                 flagged.has(currentQ.id)
-                  ? 'bg-ochre-400 text-ink-950 border-ochre-500 shadow-xs font-bold'
-                  : 'bg-paper-100 hover:bg-paper-200 dark:bg-darkbg-800 dark:hover:bg-darkbg-700 text-ink-800 dark:text-paper-200 border-paper-300 dark:border-darkbg-border'
+                  ? 'bg-ochre-400 text-ink-950 border-ochre-500 shadow-xs ring-2 ring-ochre-400/30'
+                  : 'bg-paper-100 hover:bg-paper-200 dark:bg-darkbg-800 dark:hover:bg-darkbg-700 text-ink-700 dark:text-paper-300 border-paper-300 dark:border-darkbg-border'
               }`}
             >
               {flagged.has(currentQ.id) ? (
                 <>
                   <BookmarkCheck className="w-3.5 h-3.5 fill-current" />
-                  <span>Marked</span>
+                  <span>Flagged</span>
                 </>
               ) : (
                 <>
                   <Bookmark className="w-3.5 h-3.5" />
-                  <span>Review</span>
+                  <span>Review Later</span>
                 </>
               )}
             </button>
@@ -214,18 +217,18 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
 
           {/* Question Text */}
           <div className="space-y-4 pt-1">
-            <div className="flex items-baseline gap-3">
-              <span className="text-sm font-mono font-bold px-2.5 py-1 rounded-lg bg-paper-200 dark:bg-darkbg-800 text-ink-900 dark:text-paper-50 border border-paper-300 dark:border-darkbg-border shrink-0">
+            <div className="flex items-baseline gap-3.5">
+              <span className="text-xs sm:text-sm font-mono font-bold px-3 py-1.5 rounded-xl bg-ink-900 text-paper-50 dark:bg-paper-50 dark:text-ink-900 shrink-0 shadow-xs">
                 Q.{currentIdx + 1}
               </span>
-              <div className="text-base sm:text-xl font-bold text-ink-900 dark:text-paper-50 leading-relaxed font-sans">
+              <div className="text-base sm:text-xl font-bold text-ink-900 dark:text-paper-50 leading-relaxed font-sans tracking-tight">
                 <MathText text={currentQ.question} />
               </div>
             </div>
           </div>
 
-          {/* 3. OPTION CHOICES (Crisp Contrast in both Light and Dark modes) */}
-          <div className="grid grid-cols-1 gap-3.5 pt-6">
+          {/* 3. OPTION CHOICES (Enhanced Spacing, Contrast, and Hover Glow) */}
+          <div className="grid grid-cols-1 gap-4 pt-8">
             {currentQ.options.map((opt, optIdx) => {
               const isSelected = userAnswers[currentQ.id] === optIdx;
               const optionLetters = ['A', 'B', 'C', 'D'];
@@ -234,19 +237,19 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
                 <button
                   key={optIdx}
                   onClick={() => handleSelectOption(optIdx)}
-                  className={`group relative text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-150 flex items-center justify-between cursor-pointer ${
+                  className={`group relative text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-ink-900 dark:bg-paper-50 text-paper-50 dark:text-ink-900 border-ink-900 dark:border-paper-50 shadow-ticket scale-[1.01]'
-                      : 'bg-paper-50 hover:bg-paper-100 dark:bg-darkbg-850 dark:hover:bg-darkbg-800 border-paper-300 dark:border-darkbg-border text-ink-900 dark:text-paper-50'
+                      ? 'bg-ink-950 dark:bg-paper-50 text-paper-50 dark:text-ink-950 border-ink-950 dark:border-paper-50 shadow-ticket ring-2 ring-ink-900/15 dark:ring-paper-100/30 scale-[1.008]'
+                      : 'bg-paper-50/90 hover:bg-paper-100 dark:bg-darkbg-850/90 dark:hover:bg-darkbg-800 border-paper-300/80 dark:border-darkbg-border hover:border-ink-400/50 dark:hover:border-paper-300/40 text-ink-900 dark:text-paper-50 shadow-xs'
                   }`}
                 >
-                  <div className="flex items-center gap-4 pr-4 flex-1">
+                  <div className="flex items-center gap-4 sm:gap-5 pr-4 flex-1">
                     {/* Circle Indicator */}
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-colors shrink-0 ${
+                      className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all shrink-0 ${
                         isSelected
-                          ? 'bg-paper-50 dark:bg-ink-900 text-ink-900 dark:text-paper-50'
-                          : 'bg-paper-200 dark:bg-darkbg-800 text-ink-900 dark:text-paper-50 border border-paper-300 dark:border-darkbg-border group-hover:border-ink-900 dark:group-hover:border-paper-50'
+                          ? 'bg-paper-50 dark:bg-ink-950 text-ink-950 dark:text-paper-50 shadow-xs'
+                          : 'bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 border border-paper-300 dark:border-darkbg-border group-hover:border-ink-900 dark:group-hover:border-paper-50 group-hover:scale-105'
                       }`}
                     >
                       {optionLetters[optIdx]}
@@ -254,15 +257,15 @@ export default function ExamScreen({ test, onFinishExam, onExitExam }) {
 
                     <div className={`text-xs sm:text-sm leading-relaxed ${
                       isSelected
-                        ? 'font-bold text-paper-50 dark:text-ink-900'
-                        : 'font-semibold text-ink-900 dark:text-paper-50'
+                        ? 'font-bold text-paper-50 dark:text-ink-950'
+                        : 'font-medium text-ink-900 dark:text-paper-100'
                     }`}>
                       <MathText text={opt} />
                     </div>
                   </div>
 
                   {isSelected && (
-                    <div className="w-6 h-6 rounded-full bg-paper-50 dark:bg-ink-900 text-ink-900 dark:text-paper-50 flex items-center justify-center shrink-0 shadow-xs">
+                    <div className="w-6 h-6 rounded-full bg-paper-50 dark:bg-ink-950 text-ink-950 dark:text-paper-50 flex items-center justify-center shrink-0 shadow-xs">
                       <Check className="w-4 h-4 stroke-[3]" />
                     </div>
                   )}

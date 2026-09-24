@@ -228,13 +228,18 @@ export default function ExamHub({ onStartExam, onBackToCatalog }) {
                 <div className="space-y-4">
                   {/* Top Meta Row */}
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="px-2.5 py-1 rounded-md bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 font-bold border border-paper-300 dark:border-darkbg-border">
-                      {test.code}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-md bg-ink-900 text-paper-50 dark:bg-paper-50 dark:text-ink-900 font-bold text-[11px] shadow-xs">
+                        Paper {index + 1} of 5
+                      </span>
+                      <span className="px-2.5 py-1 rounded-md bg-paper-200 dark:bg-darkbg-800 text-ink-800 dark:text-paper-200 font-bold border border-paper-300 dark:border-darkbg-border">
+                        {test.code}
+                      </span>
+                    </div>
 
-                    <span className="text-ink-600 dark:text-ink-400 font-semibold flex items-center gap-1.5">
+                    <span className="text-ink-600 dark:text-ink-400 font-semibold flex items-center gap-1.5 bg-paper-200/60 dark:bg-darkbg-800/60 px-2.5 py-1 rounded-full border border-paper-300/40 dark:border-darkbg-border/40">
                       <Timer className="w-3.5 h-3.5 text-ochre-500" />
-                      <span>{test.durationMinutes} Minutes</span>
+                      <span>{test.durationMinutes} Mins</span>
                     </span>
                   </div>
 
@@ -250,7 +255,10 @@ export default function ExamHub({ onStartExam, onBackToCatalog }) {
 
                   {/* Topics Tags */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
-                    {test.topics.slice(0, 4).map((topic, i) => (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold">
+                      Units 1-3 Verified
+                    </span>
+                    {test.topics.slice(0, 3).map((topic, i) => (
                       <span
                         key={i}
                         className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-paper-200 dark:bg-darkbg-800 text-ink-700 dark:text-paper-300 border border-paper-300/60 dark:border-darkbg-border/60"

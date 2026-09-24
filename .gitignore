@@ -48,3 +48,10 @@ release/
 .env*
 .gradle/
 **/build/
+*.mp4
+*.m4a
+*.apk
+check_frames/
+final_verified_frames/
+sol_timeline/
+v1/

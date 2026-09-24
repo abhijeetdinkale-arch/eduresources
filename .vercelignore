@@ -1,0 +1,42 @@
+# Large media & external assets
+*.mp4
+*.m4a
+*.aiff
+*.apk
+*.dmg
+*.zip
+*.log
+*.m
+*.pdf
+*.tex
+*.pptx
+*.command
+
+# Source directories for books and mobile
+Physics/
+Chemistry/
+Maths/
+Mathematics/
+CSE/
+ECE/
+Mechanical/
+android-app/
+orbit-android/
+edunetwork-codelab/
+pdf_verifier/
+presentation/
+sol_timeline/
+final_verified_frames/
+check_frames/
+
+# Build and runtime caches
+node_modules/
+**/node_modules/
+.git/
+.gradle/
+release/
+viewer-platform/release/
+viewer-platform/android/
+viewer-platform/ios/
+viewer-platform/desktop/
+viewer-platform/EduNetwork-Android.apk
