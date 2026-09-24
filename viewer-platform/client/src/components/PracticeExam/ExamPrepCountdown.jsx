@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Timer,
   ChevronRight,
-  Sparkles,
+  Maximize2,
   X,
-  FileText,
-  AlertCircle
+  FileText
 } from 'lucide-react';
 
 export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel }) {
   const [count, setCount] = useState(3);
   const [progress, setProgress] = useState(100);
+  const completedRef = useRef(false);
+
+  const startExamWithFullscreen = () => {
+    if (completedRef.current) return;
+    completedRef.current = true;
+    try {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    } catch {}
+    onCountdownComplete();
+  };
 
   useEffect(() => {
     const startTime = Date.now();
@@ -25,30 +36,36 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
 
       if (elapsed >= duration) {
         clearInterval(interval);
-        onCountdownComplete();
+        startExamWithFullscreen();
       }
     }, 50);
 
     return () => clearInterval(interval);
-  }, [onCountdownComplete]);
+  }, []);
 
   return (
-    <div className="fixed inset-0 z-50 bg-ink-900/70 dark:bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 select-none font-sans">
-      <div className="relative z-10 max-w-lg w-full bg-paper-50 dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-[32px] p-6 sm:p-10 shadow-ticket dark:shadow-ticket-dark text-center space-y-6 text-ink-900 dark:text-paper-50 animate-fadeIn">
-        {/* Top Header Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-paper-200 dark:bg-darkbg-800 border border-paper-300 dark:border-darkbg-border text-ink-800 dark:text-paper-200 text-xs font-mono font-bold tracking-wider uppercase">
-          <span className="w-2 h-2 rounded-full bg-ochre-400 animate-ping"></span>
-          <span>STARTING EXAMINATION IN 3 SECONDS</span>
+    <div className="fixed inset-0 z-50 bg-ink-950/70 dark:bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 select-none font-sans">
+      <div className="relative z-10 max-w-md w-full bg-white dark:bg-darkbg-900 border border-paper-300 dark:border-darkbg-border rounded-[32px] p-6 sm:p-8 shadow-2xl text-center space-y-6 text-ink-900 dark:text-paper-50 animate-fadeIn">
+        
+        {/* Top Cancel Button */}
+        <div className="flex justify-end -mt-2 -mr-2">
+          <button
+            onClick={onCancel}
+            className="p-1.5 rounded-full hover:bg-paper-200 dark:hover:bg-darkbg-800 text-ink-600 dark:text-paper-300 transition cursor-pointer"
+            title="Cancel"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* 3-2-1 Animated Progress Ring in EduNetwork Ink / Ochre */}
-        <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
+        {/* 3-2-1 Animated Progress Ring in Pure Swiss Style */}
+        <div className="relative w-32 h-32 mx-auto flex items-center justify-center">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
             <circle
               cx="50"
               cy="50"
               r="44"
-              className="stroke-paper-300 dark:stroke-darkbg-border"
+              className="stroke-paper-200 dark:stroke-darkbg-800"
               strokeWidth="6"
               fill="transparent"
             />
@@ -56,7 +73,7 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
               cx="50"
               cy="50"
               r="44"
-              className="stroke-ink-900 dark:stroke-ochre-400 transition-all duration-75"
+              className="stroke-ink-950 dark:stroke-paper-50 transition-all duration-75"
               strokeWidth="6"
               strokeLinecap="round"
               fill="transparent"
@@ -67,64 +84,47 @@ export default function ExamPrepCountdown({ test, onCountdownComplete, onCancel 
 
           {/* Number Display */}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-4xl sm:text-5xl font-black font-cinzel text-ink-900 dark:text-paper-50 scale-110 transition-transform">
+            <span className="text-5xl font-black font-display text-ink-950 dark:text-paper-50 scale-110 transition-transform">
               {count > 0 ? count : 'GO!'}
             </span>
-            <span className="text-[9px] font-mono text-ink-600 dark:text-ink-400 font-bold uppercase tracking-widest">
+            <span className="text-[10px] font-mono text-ink-600 dark:text-ink-400 font-bold uppercase tracking-widest mt-0.5">
               SECONDS
             </span>
           </div>
         </div>
 
-        {/* Exam Metadata */}
-        <div className="space-y-2 pt-1">
+        {/* Exam Title & Code */}
+        <div className="space-y-1.5 pt-1">
           <div className="text-xs font-mono font-bold text-ink-600 dark:text-ink-400 uppercase tracking-widest">
-            {test.courseCode} • {test.courseName}
+            {test.courseCode} • {test.code}
           </div>
-          <h2 className="text-xl sm:text-2xl font-black font-cinzel text-ink-900 dark:text-paper-50 leading-snug">
+          <h2 className="text-xl sm:text-2xl font-black font-display text-ink-950 dark:text-paper-50 leading-snug">
             {test.title}
           </h2>
-          <p className="text-xs text-ink-600 dark:text-ink-400 font-sans leading-relaxed">
-            {test.description}
-          </p>
-        </div>
-
-        {/* Exam Parameters Badges */}
-        <div className="grid grid-cols-3 gap-2 py-3 px-4 bg-paper-100 dark:bg-darkbg-800 rounded-2xl border border-paper-300 dark:border-darkbg-border font-mono text-center">
-          <div className="space-y-0.5">
-            <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Questions</div>
-            <div className="text-sm font-black text-ink-900 dark:text-paper-50">
-              {test.isDraftingExam ? 'Part A & B (8 Qs)' : `${test.totalQuestions} MCQs`}
-            </div>
-          </div>
-          <div className="space-y-0.5 border-x border-paper-300 dark:border-darkbg-border">
-            <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Duration</div>
-            <div className="text-sm font-black text-ink-900 dark:text-paper-50">{test.durationMinutes} Mins</div>
-          </div>
-          <div className="space-y-0.5">
-            <div className="text-[10px] text-ink-600 dark:text-ink-400 uppercase font-bold">Marking</div>
-            <div className="text-sm font-black text-ink-900 dark:text-paper-50">
-              {test.isDraftingExam ? `${test.maxMarks} Marks Max` : '+1.0 / -0.25'}
-            </div>
+          <div className="flex items-center justify-center gap-2 text-xs font-mono text-ink-600 dark:text-ink-400 pt-1">
+            <span>{test.durationMinutes} Mins</span>
+            <span>•</span>
+            <span>{test.isDraftingExam ? 'Drafting Studio' : `${test.totalQuestions} Questions`}</span>
+            <span>•</span>
+            <span>Units 1-3</span>
           </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-between pt-1">
+        {/* Start Button (Ensures instant Fullscreen activation) */}
+        <div className="pt-2">
           <button
-            onClick={onCancel}
-            className="text-xs font-mono font-bold text-ink-600 hover:text-ink-900 dark:text-ink-400 dark:hover:text-paper-50 transition cursor-pointer"
+            onClick={startExamWithFullscreen}
+            className="w-full py-3.5 px-6 rounded-full bg-ink-950 hover:bg-black dark:bg-paper-50 dark:hover:bg-paper-200 text-paper-50 dark:text-ink-950 font-bold text-sm tracking-wide transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
-            Cancel
+            <Maximize2 className="w-4 h-4" />
+            <span>Start Exam in Fullscreen</span>
+            <ChevronRight className="w-4 h-4 ml-1" />
           </button>
-          <button
-            onClick={onCountdownComplete}
-            className="px-6 py-2.5 rounded-full bg-ink-900 dark:bg-paper-50 hover:bg-black dark:hover:bg-paper-200 text-paper-50 dark:text-ink-900 font-semibold text-xs tracking-wider uppercase transition shadow-md flex items-center gap-1.5 cursor-pointer"
-          >
-            <span>Start Now</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
+          <div className="text-[11px] font-mono text-ink-500 dark:text-ink-400 mt-2">
+            Auto-starting in {count}s or click to launch now
+          </div>
         </div>
+
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
-        cinzel: ['"Cinzel"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        mono: ['"Space Mono"', 'monospace'],
+        display: ['"Cabinet Grotesk"', 'sans-serif'],
+        cinzel: ['"Cabinet Grotesk"', 'sans-serif'],
+        serif: ['"Cabinet Grotesk"', 'sans-serif'],
+        sans: ['"Satoshi"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"Satoshi"', 'monospace'],
       },
       colors: {
         paper: {
