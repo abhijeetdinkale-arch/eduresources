@@ -104,43 +104,67 @@ export const api = {
   },
 
   async getMaterials(params = {}) {
+    let apiMaterials = [];
     try {
       const query = new URLSearchParams(params).toString();
       const res = await fetch(`${API_BASE}/materials?${query}`);
       if (res.ok) {
         const data = await res.json();
-        if (data.materials && data.materials.length > 0) {
-          return data;
+        if (data.materials && Array.isArray(data.materials)) {
+          apiMaterials = data.materials;
         }
       }
     } catch {}
 
-    // Offline / Bundled Local Fallback
+    let manifestMaterials = [];
     try {
-      const localRes = await fetch('/books-manifest.json');
+      const localRes = await fetch(`/books-manifest.json?v=${Date.now()}`);
       if (localRes.ok) {
         const data = await localRes.json();
-        let filtered = data.materials || [];
-        if (params.course && params.course !== 'All') {
-          filtered = filtered.filter((m) => m.courseCode.toLowerCase() === params.course.toLowerCase());
+        if (data.materials && Array.isArray(data.materials)) {
+          manifestMaterials = data.materials;
         }
-        if (params.category && params.category !== 'All') {
-          filtered = filtered.filter((m) => m.category.toLowerCase() === params.category.toLowerCase());
-        }
-        if (params.search) {
-          const q = params.search.toLowerCase();
-          filtered = filtered.filter(
-            (m) =>
-              m.title.toLowerCase().includes(q) ||
-              m.courseCode.toLowerCase().includes(q) ||
-              m.category.toLowerCase().includes(q)
-          );
-        }
-        return { total: filtered.length, materials: filtered };
       }
     } catch {}
 
-    throw new Error('Failed to fetch course materials');
+    // Merge by id so all 18 subjects are always present
+    const materialsMap = new Map();
+    for (const m of manifestMaterials) {
+      if (m && m.id) materialsMap.set(m.id, m);
+    }
+    for (const m of apiMaterials) {
+      if (m && m.id) {
+        if (materialsMap.has(m.id)) {
+          materialsMap.set(m.id, { ...materialsMap.get(m.id), ...m });
+        } else {
+          materialsMap.set(m.id, m);
+        }
+      }
+    }
+
+    let all = Array.from(materialsMap.values());
+    if (params.course && params.course !== 'All') {
+      all = all.filter((m) => m.courseCode.toLowerCase() === params.course.toLowerCase());
+    }
+    if (params.category && params.category !== 'All') {
+      all = all.filter((m) => m.category.toLowerCase() === params.category.toLowerCase());
+    }
+    if (params.search) {
+      const q = params.search.toLowerCase();
+      all = all.filter(
+        (m) =>
+          m.title.toLowerCase().includes(q) ||
+          m.courseCode.toLowerCase().includes(q) ||
+          m.category.toLowerCase().includes(q)
+      );
+    }
+
+    all.sort((a, b) => {
+      if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
+      return a.title.localeCompare(b.title);
+    });
+
+    return { total: all.length, materials: all };
   },
 
   async getMaterialById(id) {

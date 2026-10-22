@@ -184,7 +184,7 @@ export default function HomePage({ onBrowseBooks, onOpenPlans, onOpenLogin, onOp
           </div>
 
           <div className="bg-paper-50/90 dark:bg-darkbg-850/90 backdrop-blur-xs border border-paper-300 dark:border-darkbg-border rounded-2xl p-4">
-            <span className="text-2xl font-cinzel font-bold text-ink-900 dark:text-paper-50">10</span>
+            <span className="text-2xl font-cinzel font-bold text-ink-900 dark:text-paper-50">18</span>
             <p className="text-[11px] font-sans text-ink-600 dark:text-ink-400 mt-0.5">Course Code Dossiers</p>
           </div>
 

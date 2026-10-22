@@ -147,18 +147,27 @@ function loadManifestFallback() {
 function getMaterialsList() {
   const now = Date.now();
   if (!cachedMaterials || now - lastScanTime > 30000) {
+    const manifestMaterials = loadManifestFallback();
+    if (manifestMaterials && manifestMaterials.length > 0) {
+      manifestMaterials.sort((a, b) => {
+        if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
+        return a.title.localeCompare(b.title);
+      });
+      cachedMaterials = manifestMaterials;
+      lastScanTime = now;
+      return cachedMaterials;
+    }
+
     const coursesDir = path.join(WORKSPACE_ROOT, 'courses');
     let scanned = fs.existsSync(coursesDir)
       ? scanPdfFiles(coursesDir, WORKSPACE_ROOT)
       : scanPdfFiles(WORKSPACE_ROOT);
-    if (!scanned || scanned.length === 0) {
-      scanned = loadManifestFallback();
-    }
+
     scanned.sort((a, b) => {
       if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
       return a.title.localeCompare(b.title);
     });
-    cachedMaterials = scanned;
+    cachedMaterials = scanned || [];
     lastScanTime = now;
   }
   return cachedMaterials;
