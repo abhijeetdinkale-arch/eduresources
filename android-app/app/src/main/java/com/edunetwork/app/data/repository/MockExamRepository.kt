@@ -22,57 +22,57 @@ class MockExamRepository(private val context: Context) {
             code = "MTH165",
             name = "Engineering Mathematics I",
             department = "Mathematics",
-            syllabusSummary = "Units 1-3: Matrices & Linear Algebra, Eigenvalues, Differential Calculus, and Mean Value Theorems (-0.25 negative marking).",
+            syllabusSummary = "Units 1-3: Matrices & Linear Algebra, Eigenvalues, Differential Calculus, and Mean Value Theorems (5 Full Sets • -0.25 marking).",
+            paperCount = 5
+        ),
+        SubjectInfo(
+            code = "CSE111",
+            name = "Fundamentals of Computing",
+            department = "Computer Science",
+            syllabusSummary = "Units 1-3: Computer Systems & Architecture, OS Process Scheduling & Memory, Linux CLI & FHS (5 Full Sets • -0.25 marking).",
+            paperCount = 5
+        ),
+        SubjectInfo(
+            code = "CSE326",
+            name = "Web Development & Technologies",
+            department = "Computer Science",
+            syllabusSummary = "Units 1-3: Semantic HTML5 Elements, CSS3 Selectors & Box Model, Flexbox & Grid Layouts (5 Full Sets • -0.25 marking).",
+            paperCount = 5
+        ),
+        SubjectInfo(
+            code = "PHY175",
+            name = "Engineering Physics & Optics",
+            department = "Applied Sciences",
+            syllabusSummary = "Units 1-3: Electromagnetic Theory, Lasers & Holography, Fiber Optics & Attenuation (5 Full Sets • -0.25 marking).",
+            paperCount = 5
+        ),
+        SubjectInfo(
+            code = "INT335",
+            name = "Design Thinking & Web Dev",
+            department = "Information Tech",
+            syllabusSummary = "Units 1-3: Foundations of Design Thinking, Empathy Mapping & Observation, Problem Framing & SCAMPER (5 Full Sets • -0.25 marking).",
+            paperCount = 5
+        ),
+        SubjectInfo(
+            code = "ECE249",
+            name = "Basic Electrical & Electronics",
+            department = "Electronics",
+            syllabusSummary = "Units 1-3: DC Network Theorems (Thevenin/Norton), AC Circuits & Resonance, Transformers & Diodes (5 Full Sets • -0.25 marking).",
             paperCount = 5
         ),
         SubjectInfo(
             code = "PHY110",
             name = "Engineering Physics",
             department = "Applied Sciences",
-            syllabusSummary = "Units 1-3: Vector Calculus & Maxwell Equations, Lasers & Holography, and Fiber Optics (Official PYQs).",
-            paperCount = 2
-        ),
-        SubjectInfo(
-            code = "ECE249",
-            name = "Basic Electrical & Electronics",
-            department = "Electronics",
-            syllabusSummary = "Units 1-3: DC Network Theorems (Thevenin/Norton), AC Circuits & Resonance, Transformers & Diodes.",
-            paperCount = 1
-        ),
-        SubjectInfo(
-            code = "CSE111",
-            name = "Fundamentals of Computing",
-            department = "Computer Science",
-            syllabusSummary = "Units 1-3: Computer Architecture & Cache Memory, OS Process Lifecycle & Scheduling, Linux CLI & FHS.",
-            paperCount = 1
-        ),
-        SubjectInfo(
-            code = "CSE326",
-            name = "Web Development & Technologies",
-            department = "Computer Science",
-            syllabusSummary = "Units 1-3: Semantic HTML5 Elements, CSS3 Specificity & Box Model, Flexbox Layout & DOM Events.",
-            paperCount = 1
-        ),
-        SubjectInfo(
-            code = "INT335",
-            name = "Design Thinking & Innovation",
-            department = "Information Tech",
-            syllabusSummary = "Units 1-3: Foundations of Design Thinking, Empathy Mapping & Observation, Problem Framing & SCAMPER Ideation.",
-            paperCount = 1
-        ),
-        SubjectInfo(
-            code = "PHY175",
-            name = "Physics of Semiconductor Devices",
-            department = "Applied Sciences",
-            syllabusSummary = "Units 1-3: Solid State Physics & Fermi Energy, Rectifiers & BJT Transistors, Logic Gates & K-Maps.",
-            paperCount = 1
+            syllabusSummary = "Units 1-3: Vector Calculus & Maxwell Equations, Lasers & Holography, Fiber Optics (5 Full Sets • -0.25 marking).",
+            paperCount = 5
         ),
         SubjectInfo(
             code = "MEC136",
             name = "Engineering Graphics and CAD",
             department = "Mechanical",
-            syllabusSummary = "Units 1-3: Diagonal Scales (4.75 m), Line Projections & Traces (45°), 3D Isometric to Orthographic Views.",
-            paperCount = 1,
+            syllabusSummary = "Units 1-3: Diagonal Scales (4.75 m), Line Projections & Traces (45°), 3D Isometric to Orthographic Views (5 Studios).",
+            paperCount = 5,
             isDrafting = true
         )
     )

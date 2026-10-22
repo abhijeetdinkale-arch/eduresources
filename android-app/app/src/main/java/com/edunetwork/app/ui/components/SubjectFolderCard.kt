@@ -236,7 +236,7 @@ fun SubjectFolderCard(
                             color = if (isDark) Color.White else Color(0xFF18181B)
                         )
                         Text(
-                            text = " — 10",
+                            text = " — 18",
                             style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp),
                             color = if (isDark) Color(0xFFA1A1AA) else Color(0xFF71717A)
                         )
