@@ -1,0 +1,33 @@
+\section{Continuous Assessment 2 (CA-2) --- Set B}
+
+\LPUPaperHeader{Continuous Assessment 2 (CA-2)}{B}{60 Minutes}{25 Marks}{CO4 (Logic Gates \& Universality), CO5 (Adders \& Combinational)}
+
+\noindent\textbf{Instructions to Candidates:}
+\begin{enumerate*}[label=\textbf{\arabic*.}]
+    \item Answer any \textbf{FIVE} questions out of the six questions presented.
+    \item Each question carries \textbf{5 Marks}. Clearly state Boolean algebra steps.
+\end{enumerate*}
+
+\questionitem{1}{Draw the pinout diagram of IC 7402 (Quad 2-Input NOR). Highlight why its pin mapping differs from standard 7400/7408 ICs.}{5}{CO4}{L2}
+\questionitem{2}{Prove algebraically that the NOR gate is universal by demonstrating the synthesis of: (a) NOT gate, (b) OR gate, (c) AND gate using only 2-input NOR gates.}{5}{CO4}{L3}
+\questionitem{3}{Formulate the complete truth table of a 1-bit Full Adder with inputs $A, B, C_{\mathrm{in}}$ and outputs $S, C_{\mathrm{out}}$. Derive the minimal sum-of-products expression for $S$.}{5}{CO5}{L3}
+\questionitem{4}{Explain the architecture and carry propagation mechanism of the IC 7483 4-bit binary adder. What is the total delay if each stage has $t_{\mathrm{carry}} = 10\,\mathrm{ns}$?}{5}{CO5}{L3}
+\questionitem{5}{Design a Full Subtractor circuit with inputs $A, B, B_{\mathrm{in}}$. Derive minimal Boolean expressions for Difference ($D$) and Borrow ($B_{\mathrm{out}}$).}{5}{CO5}{L4}
+\questionitem{6}{What is a floating input in TTL digital circuits? Explain why floating inputs create erratic lab behavior and describe how pull-up/pull-down resistors eliminate this problem.}{5}{CO4}{L3}
+
+\subsection*{Model Solutions \& Marking Rubrics (Set B)}
+
+\begin{solutionbox}[Solution to Q.2]
+(a) NOT Gate: Tie both inputs together: $Y = \overline{A + A} = \overline{A}$ (1 NOR gate).\\
+(b) OR Gate: Invert the output of a NOR gate with a second NOR gate:
+\[ Y_1 = \overline{A + B}, \quad Y = \overline{Y_1 + Y_1} = \overline{\overline{A + B}} = A + B \quad (\text{2 NOR gates}) \]
+(c) AND Gate: Invert inputs individually and feed into a third NOR gate:
+\[ Y_1 = \overline{A}, \quad Y_2 = \overline{B} \]
+\[ Y = \overline{Y_1 + Y_2} = \overline{\overline{A} + \overline{B}} \]
+By De Morgan's theorem $\overline{X + Y} = \overline{X} \cdot \overline{Y}$:\\
+\[ Y = \overline{\overline{A}} \cdot \overline{\overline{B}} = A \cdot B \quad (\text{3 NOR gates}) \]
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.2):} NOT realization: 1 Mark $\bullet$ OR realization: 1.5 Marks $\bullet$ AND realization with De Morgan step: 2.5 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

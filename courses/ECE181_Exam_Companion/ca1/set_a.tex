@@ -1,0 +1,170 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\label{sec:ca1_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{A}{60 Minutes}{30 Marks}{CO1 (Foundations \& Variables), CO2 (Control Flow \& Functions)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt any five out of the six questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    Explain the difference between dynamic typing in Python and static typing in C/Java. Trace how the Python Virtual Machine (PVM) executes \texttt{x = 5} followed by \texttt{x = "ECE181"}, detailing heap object allocation and reference counting.
+}{6}{CO1}{L2 Understand}
+
+\questionitem{2}{
+    Evaluate the following arithmetic and bitwise expressions step by step, applying exact operator precedence and associativity rules:
+    \begin{enumerate*}[label=(\alph*)]
+        \item \texttt{2 ** 3 ** 2} \quad
+        \item \texttt{-17 // 5} \quad
+        \item \texttt{17 \% -5} \quad
+        \item \texttt{5 << 2 + 1}
+    \end{enumerate*}
+}{6}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Write a Python program that accepts a student's numerical marks $[0, 100]$ and outputs their letter grade using an optimized \texttt{if-elif-else} construct. Include defensive input validation that raises a \texttt{ValueError} if marks are outside the valid domain or of an invalid type.
+}{6}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Differentiate between \texttt{break} and \texttt{continue} statements. Write a Python snippet that prints all prime numbers between $10$ and $50$ using a \texttt{for-else} loop construct, explaining the exact condition under which the \texttt{else} block triggers.
+}{6}{CO2}{L3 Apply}
+
+\questionitem{5}{
+    Explain the \textbf{Mutable Default Argument} trap in Python function definitions. Provide a code example demonstrating how \texttt{def append\_to(element, target=[])} produces unexpected cross-call state retention, and write the corrected canonical idiom.
+}{6}{CO2}{L4 Analyze}
+
+\questionitem{6}{
+    Implement a recursive function \texttt{power(base, exp)} that computes $\text{base}^{\text{exp}}$ in $\mathcal{O}(\log \text{exp})$ time using the method of exponentiation by squaring. Write the recurrence relation and draw the call stack for \texttt{power(3, 5)}.
+}{6}{CO2}{L4 Analyze}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+In statically typed languages (C/Java), types are bound to \textbf{variable containers} at compile-time: \texttt{int x = 5;} allocates 4 bytes of stack memory. In Python, variables are untyped \textbf{names (pointers/references)} bound to heap objects:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{x = 5}: PVM allocates a \texttt{PyLongObject} on the heap storing value 5 with \texttt{ob\_refcnt = 1}. Name \texttt{x} in the local namespace dictionary maps to this address.
+    \item \texttt{x = "ECE181"}: PVM allocates a new \texttt{PyUnicodeObject} on the heap. Name \texttt{x} is rebound to the string. The integer object's \texttt{ob\_refcnt} is decremented to 0, triggering automatic deallocation by Python's garbage collector.
+\end{enumerate}
+\begin{markingrubric}
+$\bullet$ Distinction between variable-typed vs object-typed paradigms: \textbf{2 Marks}\\
+$\bullet$ Heap object representation (\texttt{PyObject}, reference pointer): \textbf{2 Marks}\\
+$\bullet$ Reference count modification and garbage collection mechanics: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+\begin{enumerate}[label=(\alph*), leftmargin=1.5em]
+    \item \texttt{2 ** 3 ** 2}: Exponentiation has right-to-left associativity: $2^{(3^2)} = 2^9 = \mathbf{512}$.
+    \item \texttt{-17 // 5}: Floor division rounds down toward negative infinity: $\lfloor -17/5 \rfloor = \lfloor -3.4 \rfloor = \mathbf{-4}$.
+    \item \texttt{17 \% -5}: Modulo identity $a \pmod b = a - b \times (a // b)$. Since $17 // -5 = -4$, $17 - (-5)(-4) = 17 - 20 = \mathbf{-3}$.
+    \item \texttt{5 << 2 + 1}: Addition has precedence 5 while left shift has precedence 6. Evaluates as $5 \ll (2 + 1) = 5 \ll 3 = 5 \times 2^3 = \mathbf{40}$.
+\end{enumerate}
+\begin{markingrubric}
+$\bullet$ Correct evaluation of (a) with right-associativity justification: \textbf{1.5 Marks}\\
+$\bullet$ Correct evaluation of (b) and (c) with floor rounding rule: \textbf{3.0 Marks}\\
+$\bullet$ Correct evaluation of (d) with operator precedence order: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\begin{pycode}
+def assign\_grade(marks):\\
+\_\_ESCTOKEN\_7\_\_ if not isinstance(marks, (int, float)):\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ raise TypeError("Marks must be an integer or float")\\
+\_\_ESCTOKEN\_7\_\_ if not (0 <= marks <= 100):\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ raise ValueError("Marks must reside within closed interval [0, 100]")\\
+~\\
+\_\_ESCTOKEN\_7\_\_ if marks >= 90:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "A"\\
+\_\_ESCTOKEN\_7\_\_ elif marks >= 80:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "B"\\
+\_\_ESCTOKEN\_7\_\_ elif marks >= 70:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "C"\\
+\_\_ESCTOKEN\_7\_\_ elif marks >= 60:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "D"\\
+\_\_ESCTOKEN\_7\_\_ elif marks >= 40:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "E"\\
+\_\_ESCTOKEN\_7\_\_ else:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return "F"
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Defensive type and boundary checking with explicit exceptions: \textbf{2 Marks}\\
+$\bullet$ Non-overlapping, mutually exclusive \texttt{elif} ladder: \textbf{3 Marks}\\
+$\bullet$ Correct return value syntax and cleanliness: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+\textbf{Difference}: \texttt{break} terminates the loop completely, skipping any associated loop \texttt{else} block. \texttt{continue} skips only the remaining instructions of the current iteration, proceeding to the next loop step.
+\begin{pycode}
+for num in range(10, 51):\\
+\_\_ESCTOKEN\_7\_\_ for d in range(2, int(num ** 0.5) + 1):\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ if num \% d == 0:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ break\\
+\_\_ESCTOKEN\_7\_\_ else:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ print(num, end=" ")
+\end{pycode}
+\textbf{Condition for \texttt{else} Triggering}: The \texttt{else} clause fires if and only if the inner loop finishes all iterations across $2 \dots \lfloor \sqrt{num} \rfloor$ without executing a \texttt{break} statement, confirming $num$ is prime.
+\begin{markingrubric}
+$\bullet$ Precise conceptual difference between \texttt{break} and \texttt{continue}: \textbf{2 Marks}\\
+$\bullet$ Correct prime checking logic utilizing \texttt{range(2, int(sqrt(num))+1)}: \textbf{2 Marks}\\
+$\bullet$ Explanation and implementation of loop \texttt{else} trigger: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+In Python, default parameter expressions are evaluated \textbf{once when the \texttt{def} statement is executed}, not each time the function is called.
+\begin{pycode}
+def append\_to(element, target=[]):\\
+\_\_ESCTOKEN\_7\_\_ target.append(element)\\
+\_\_ESCTOKEN\_7\_\_ return target\\
+~\\
+print(append\_to(1))  \# [1]\\
+print(append\_to(2))  \# [1, 2] -> Unexpected shared mutation!
+\end{pycode}
+\textbf{Canonical Solution}:
+\begin{pycode}
+def append\_to(element, target=None):\\
+\_\_ESCTOKEN\_7\_\_ if target is None:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ target = []\\
+\_\_ESCTOKEN\_7\_\_ target.append(element)\\
+\_\_ESCTOKEN\_7\_\_ return target
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Explanation of function object definition-time evaluation: \textbf{2 Marks}\\
+$\bullet$ Demonstration of shared list mutation bug: \textbf{2 Marks}\\
+$\bullet$ Correct implementation using \texttt{target=None} guard: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\begin{pycode}
+def power(base, exp):\\
+\_\_ESCTOKEN\_7\_\_ if exp == 0:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return 1.0\\
+\_\_ESCTOKEN\_7\_\_ elif exp < 0:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return 1.0 / power(base, -exp)\\
+\_\_ESCTOKEN\_7\_\_ half = power(base, exp // 2)\\
+\_\_ESCTOKEN\_7\_\_ if exp \% 2 == 0:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return half * half\\
+\_\_ESCTOKEN\_7\_\_ else:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return base * half * half
+\end{pycode}
+\textbf{Recurrence Relation}: $T(n) = T(n/2) + \mathcal{O}(1) \implies T(n) = \mathcal{O}(\log n)$.\\
+\textbf{Call Stack for \texttt{power(3, 5)}}:
+\begin{itemize}[leftmargin=1.5em]
+    \item Frame 1: \texttt{power(3, 5)} $\to$ calls \texttt{power(3, 2)}
+    \item Frame 2: \texttt{power(3, 2)} $\to$ calls \texttt{power(3, 1)}
+    \item Frame 3: \texttt{power(3, 1)} $\to$ calls \texttt{power(3, 0)}
+    \item Frame 4: \texttt{power(3, 0)} returns $1.0$ (base case)
+    \item Unwinding: Frame 3 returns $3 \times 1 \times 1 = 3$; Frame 2 returns $3 \times 3 = 9$; Frame 1 returns $3 \times 9 \times 9 = 243.0$.
+\end{itemize}
+\begin{markingrubric}
+$\bullet$ Logarithmic recursive implementation with negative exponent handling: \textbf{2 Marks}\\
+$\bullet$ Recurrence relation derivation via Master Theorem: \textbf{2 Marks}\\
+$\bullet$ Accurate call stack visualization and unwinding return values: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

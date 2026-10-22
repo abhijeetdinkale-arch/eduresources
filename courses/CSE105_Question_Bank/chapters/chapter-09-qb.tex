@@ -1,0 +1,95 @@
+\chapter{Unit 9: vi/vim Modal Text Editor Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{9.1}{What is the default operating mode when vi opens a document?}
+{Insert Mode}
+{Command (Normal) Mode}
+{Ex (Last-Line) Mode}
+{Visual Mode}
+
+\mcqitem{9.2}{Which command key enters Insert mode by opening a new blank line BELOW the current cursor line?}
+{\texttt{i}}
+{\texttt{a}}
+{\texttt{o}}
+{\texttt{O}}
+
+\mcqitem{9.3}{Which key deletes the single character directly beneath the cursor in Command mode?}
+{\texttt{d}}
+{\texttt{x}}
+{\texttt{r}}
+{\texttt{c}}
+
+\mcqitem{9.4}{How does an engineer save buffer modifications and exit vi in Ex mode?}
+{\texttt{:q!}}
+{\texttt{:wq}}
+{\texttt{:w}}
+{\texttt{:exit!}}
+
+\mcqitem{9.5}{Which keystroke combination jumps the cursor directly to the absolute first line of the document?}
+{\texttt{G}}
+{\texttt{gg}}
+{\texttt{0}}
+{\texttt{\^{}}}
+
+\mcqitem{9.6}{What does the vi command 5dd execute?}
+{Duplicates current line 5 times}
+{Deletes (cuts) 5 consecutive lines starting from cursor}
+{Jumps down 5 lines}
+{Searches for the number 5}
+
+\mcqitem{9.7}{Which Ex command globally replaces every occurrence of 'foo' with 'bar' across an entire file?}
+{\texttt{:s/foo/bar/g}}
+{\texttt{:\%s/foo/bar/g}}
+{\texttt{:replace foo bar}}
+{\texttt{:g/foo/bar}}
+
+\mcqitem{9.8}{What does the dot (.) command do in vi Command mode?}
+{Inserts a period character}
+{Repeats the most recent text editing modification}
+{Moves cursor to line center}
+{Quits the editor}
+
+\mcqitem{9.9}{Which key sequence copies (yanks) the entire current line into the default register?}
+{\texttt{yy}}
+{\texttt{cc}}
+{\texttt{dd}}
+{\texttt{pp}}
+
+\mcqitem{9.10}{Which command key pastes the contents of the paste buffer AFTER or BELOW the active cursor?}
+{\texttt{p}}
+{\texttt{P}}
+{\texttt{v}}
+{\texttt{y}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 9 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+9.1 & \textbf{(b)} & vi defaults to Command / Normal mode for rapid navigation. \\
+9.2 & \textbf{(c)} & The lowercase \texttt{o} command opens a new line below and enters insert mode. \\
+9.3 & \textbf{(b)} & \texttt{x} deletes the character under the cursor. \\
+9.4 & \textbf{(b)} & \texttt{:wq} writes buffer to disk and quits the session. \\
+9.5 & \textbf{(b)} & \texttt{gg} navigates to line 1; \texttt{G} jumps to the last line. \\
+9.6 & \textbf{(b)} & Count prefixes multiply action: \texttt{5dd} cuts 5 lines. \\
+9.7 & \textbf{(b)} & \texttt{\%} denotes full file range ($1,\$$); \texttt{g} denotes global across each line. \\
+9.8 & \textbf{(b)} & The dot (\texttt{.}) command repeats the last editing change. \\
+9.9 & \textbf{(a)} & \texttt{yy} (yank line) copies line to register. \\
+9.10 & \textbf{(a)} & Lowercase \texttt{p} puts after/below; uppercase \texttt{P} puts before/above. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the modal editing paradigm of vi and why it increases productivity.}
+\begin{vivasol}
+In modal editing, keys perform different operations depending on the current mode:
+1. **Command Mode:** Keystrokes act as navigational vectors and text operators (\texttt{h,j,k,l}, \texttt{dd}, \texttt{yy}). Hands never leave the home row to reach for mouse or arrow keys.
+2. **Insert Mode:** Keystrokes insert literal text.
+3. **Ex Mode:** Accessed via colon (\texttt{:}) for file I/O, regex substitutions, and settings.
+Separating text navigation/manipulation from text insertion drastically accelerates high-velocity programming.
+\end{vivasol}

@@ -1,0 +1,71 @@
+\chapter{Data Structure Complexity Tables, Dunder Methods \& OOP Hierarchies}
+\label{chap:data-structures-oop}
+
+\section{Asymptotic Complexity Analysis of Python Built-ins}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lccccX}
+\toprule
+\textbf{Data Structure} & \textbf{Index / Key} & \textbf{Append / Add} & \textbf{Insert / Delete} & \textbf{Lookup} & \textbf{CPython Internal Structure} \\
+\midrule
+\texttt{list} & $\mathcal{O}(1)$ & $\mathcal{O}(1)^*$ amortized & $\mathcal{O}(n)$ & $\mathcal{O}(n)$ & Dynamic array of \texttt{PyObject*} pointers. \\
+\texttt{tuple} & $\mathcal{O}(1)$ & N/A (immutable) & N/A & $\mathcal{O}(n)$ & Fixed-size array of \texttt{PyObject*} pointers. \\
+\texttt{dict} & $\mathcal{O}(1)$ average & $\mathcal{O}(1)$ average & $\mathcal{O}(1)$ average & $\mathcal{O}(1)$ average & Combined hash table with sparse hash array + dense indices array (PEP 468). \\
+\texttt{set} & N/A & $\mathcal{O}(1)$ average & $\mathcal{O}(1)$ average & $\mathcal{O}(1)$ average & Hash table with open addressing and perturbation collision resolution. \\
+\texttt{collections.deque} & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ both ends & $\mathcal{O}(1)$ at ends & $\mathcal{O}(n)$ & Doubly linked list of blocks (64 elements per node). \\
+\bottomrule
+\end{tabularx}
+\caption{CPython Core Data Structure Time Complexities ($^*$amortized over reallocation)}
+\end{table}
+
+\begin{formulabox}{List Growth Pattern in CPython}
+When a list exceeds its allocated capacity, CPython over-allocates according to:
+\begin{equation}
+\text{new\_allocated} = \text{newsize} + (\text{newsize} \gg 3) + (\text{newsize} < 9 \mathrel{?} 3 : 6)
+\end{equation}
+This geometric sequence ($0, 4, 8, 16, 24, 32, 40, 52, 64, \dots$) ensures amortized $\mathcal{O}(1)$ appends while bounding memory waste to approximately $12.5\%$.
+\end{formulabox}
+
+\section{Dunder (Magic) Methods Reference Table}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{llX}
+\toprule
+\textbf{Category} & \textbf{Method Signature} & \textbf{Trigger Operation / Protocol} \\
+\midrule
+\textbf{Lifecycle} & \texttt{\_\_new\_\_(cls, *args)} & Static allocator that creates and returns new instance. \\
+                   & \texttt{\_\_init\_\_(self, *args)} & Initializer called immediately after object creation. \\
+                   & \texttt{\_\_del\_\_(self)} & Finalizer invoked when reference count reaches 0. \\
+\midrule
+\textbf{String / Repr} & \texttt{\_\_repr\_\_(self)} & Unambiguous official representation for debugging (e.g. \texttt{eval(repr(x)) == x}). \\
+                      & \texttt{\_\_str\_\_(self)} & User-friendly string representation (\texttt{print(x)}). \\
+                      & \texttt{\_\_bytes\_\_(self)} & Invoked by \texttt{bytes(x)}. \\
+\midrule
+\textbf{Container} & \texttt{\_\_len\_\_(self)} & Invoked by \texttt{len(x)} (must return non-negative int). \\
+                   & \texttt{\_\_getitem\_\_(self, key)} & Subscript access \texttt{x[key]} or slice \texttt{x[i:j]}. \\
+                   & \texttt{\_\_setitem\_\_(self, key, val)} & Subscript assignment \texttt{x[key] = val}. \\
+                   & \texttt{\_\_delitem\_\_(self, key)} & Deletion \texttt{del x[key]}. \\
+                   & \texttt{\_\_contains\_\_(self, item)} & Membership testing \texttt{item in x}. \\
+\midrule
+\textbf{Iteration} & \texttt{\_\_iter\_\_(self)} & Returns iterator object implementing \texttt{\_\_next\_\_}. \\
+                   & \texttt{\_\_next\_\_(self)} & Returns next item or raises \texttt{StopIteration}. \\
+\midrule
+\textbf{Context}   & \texttt{\_\_enter\_\_(self)} & Acquires resource for \texttt{with} statement. \\
+                   & \texttt{\_\_exit\_\_(self, exc, val, tb)} & Cleans resource; suppresses exception if returns \texttt{True}. \\
+\midrule
+\textbf{Callable}  & \texttt{\_\_call\_\_(self, *args, **kw)} & Allows instance to be invoked as a function \texttt{obj()}. \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Python Dunder Methods}
+\end{table}
+
+\section{Multiple Inheritance \& C3 Linearization (MRO)}
+\begin{formulabox}{C3 Linearization Algorithm}
+For a class $C$ with base classes $B_1, B_2, \dots, B_n$, the Method Resolution Order $L(C)$ is:
+\begin{equation}
+L(C) = [C] + \operatorname{merge}\Big(L(B_1), L(B_2), \dots, L(B_n), [B_1, B_2, \dots, B_n]\Big)
+\end{equation}
+\textbf{Merge Rule:} Select the first head from candidate lists that does not appear in any candidate's tail. If found, extract that class, append to result, and repeat. If no head is valid, linearization fails with \texttt{TypeError: Cannot create a consistent method resolution order (MRO)}.
+\end{formulabox}

@@ -1,0 +1,122 @@
+\chapter{Digital Logic Gates \& Universal Gate Circuit Implementations}
+\label{chap:logic-gates}
+
+\section{Overview and Laboratory Learning Objectives}
+Binary logic operations form the mathematical infrastructure of contemporary digital processing, programmable logic, and computer architectures. In this laboratory unit, students verify truth tables of elementary logic gates (NOT, AND, OR, NAND, NOR, XOR, XNOR), understand Transistor-Transistor Logic (TTL) and CMOS electrical thresholds, and apply De Morgan's theorems to synthesize complex Boolean equations exclusively using universal logic gates.
+
+\begin{important}[Unit Learning Objectives]
+Upon completion of this chapter and lab experiments, the student will be proficient in:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Defining binary logic levels, noise margins, and standard TTL voltage thresholds ($V_{IH}, V_{IL}, V_{OH}, V_{OL}$).
+    \item Constructing and validating truth tables for standard 74-series logic gate integrated circuits.
+    \item Proving algebraically and experimentally that NAND and NOR gates are universal building blocks.
+    \item Synthesizing NOT, AND, OR, XOR, and XNOR operations using minimum configurations of NAND and NOR gates.
+    \item Wiring digital ICs safely on a trainer module with proper $+5\,\mathrm{V}$ VCC, ground, and decoupling capacitors.
+    \item Troubleshooting common digital workshop errors, including floating high-impedance inputs and inverted chip pinouts.
+\end{enumerate}
+\end{important}
+
+\section{Digital Logic Levels and TTL Specifications}
+Digital electronic systems encode binary information into discrete voltage bands. For the standard TTL 74LS series operating from a $+5.0\,\mathrm{V} \pm 0.25\,\mathrm{V}$ supply:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Logic Parameter} & \textbf{Symbol} & \textbf{Standard TTL Limit} \\
+\midrule
+Maximum Output Voltage for Logic LOW & $V_{OL,\max}$ & $0.4\,\mathrm{V}$ \\
+Minimum Output Voltage for Logic HIGH & $V_{OH,\min}$ & $2.4\,\mathrm{V}$ (typical $3.4\,\mathrm{V}$) \\
+Maximum Input Voltage recognized as LOW & $V_{IL,\max}$ & $0.8\,\mathrm{V}$ \\
+Minimum Input Voltage recognized as HIGH & $V_{IH,\min}$ & $2.0\,\mathrm{V}$ \\
+High-Level Noise Margin & $NM_H = V_{OH,\min} - V_{IH,\min}$ & $2.4 - 2.0 = 0.4\,\mathrm{V}$ \\
+Low-Level Noise Margin & $NM_L = V_{IL,\max} - V_{OL,\max}$ & $0.8 - 0.4 = 0.4\,\mathrm{V}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The intermediate region between $0.8\,\mathrm{V}$ and $2.0\,\mathrm{V}$ is the indeterminate forbidden state. Floating TTL inputs naturally drift into this region, acting as antennas for high-frequency electromagnetic noise.
+
+\section{Standard 74-Series Integrated Circuit Architectures}
+\begin{definition}[74-Series IC Pinout Mapping]
+Standard 74-series TTL logic gates are packaged in 14-pin Dual In-line Packages (DIP). In standard convention, \textbf{Pin 7} connects to Circuit Ground ($0\,\mathrm{V}$) and \textbf{Pin 14} connects to $+5.0\,\mathrm{V}$ ($V_{CC}$):
+\begin{itemize}
+    \item \textbf{7404 Hex Inverter}: Six independent NOT gates. Pin pairs: (1 in, 2 out), (3 in, 4 out), (5 in, 6 out), (9 in, 8 out), (11 in, 10 out), (13 in, 12 out).
+    \item \textbf{7408 Quad 2-Input AND}: Four independent AND gates. Pin pairs: (1,2 in, 3 out), (4,5 in, 6 out), (9,10 in, 8 out), (12,13 in, 11 out).
+    \item \textbf{7432 Quad 2-Input OR}: Four independent OR gates. Same pin mapping as 7408.
+    \item \textbf{7400 Quad 2-Input NAND}: Four independent NAND gates. Same pin mapping as 7408.
+    \item \textbf{7402 Quad 2-Input NOR}: Four independent NOR gates. \textbf{Caution}: Non-standard inverted pinout! Output on Pin 1, inputs on Pins 2 and 3; output on Pin 4, inputs on Pins 5 and 6!
+    \item \textbf{7486 Quad 2-Input XOR}: Four independent Exclusive-OR gates ($Y = A \oplus B = \overline{A}B + A\overline{B}$).
+\end{itemize}
+\end{definition}
+
+\section{Universal Gate Syntheses (NAND and NOR)}
+A logic gate family is classified as \textit{universal} if any arbitrary combinational Boolean function can be realized exclusively using that gate type without requiring other gate families.
+
+\begin{theorem}[De Morgan's Theorems]
+\[ \overline{A \cdot B} = \overline{A} + \overline{B} \]
+\[ \overline{A + B} = \overline{A} \cdot \overline{B} \]
+\end{theorem}
+
+\subsection{Realizations Using Only NAND Gates}
+\begin{enumerate}
+    \item \textbf{NOT Gate} ($\overline{A}$): Tie both inputs together:
+    \[ Y = \overline{A \cdot A} = \overline{A} \quad \text{(1 Gate)} \]
+    \item \textbf{AND Gate} ($A \cdot B$): Pass NAND output through a NAND inverter:
+    \[ Y = \overline{\overline{A \cdot B} \cdot \overline{A \cdot B}} = A \cdot B \quad \text{(2 Gates)} \]
+    \item \textbf{OR Gate} ($A + B$): Invert inputs individually and feed into a third NAND gate:
+    \[ Y = \overline{\overline{A} \cdot \overline{B}} = \overline{\overline{A}} + \overline{\overline{B}} = A + B \quad \text{(3 Gates)} \]
+    \item \textbf{XOR Gate} ($A \oplus B$): Realized using 4 NAND gates:
+    \[ Y = \overline{\overline{A \cdot \overline{AB}} \cdot \overline{B \cdot \overline{AB}}} = A\overline{B} + \overline{A}B \quad \text{(4 Gates)} \]
+\end{enumerate}
+
+\section{Laboratory Experiment 4: Universal Gate Implementations}
+\begin{experimentbox}[Laboratory Experiment 4 Protocol]
+\textbf{Objective}: To wire and experimentally verify the truth tables of NOT, AND, OR, and XOR gates synthesized exclusively from a 7400 Quad 2-Input NAND IC.\\
+\textbf{Apparatus Required}:
+\begin{enumerate}
+    \item Digital Logic Trainer Module with regulated $+5\,\mathrm{V}$ supply --- 1 unit
+    \item IC 7400 Quad 2-Input NAND gate --- 1 piece
+    \item Logic input toggle switches and logic monitor LEDs
+    \item Patch wires and breadboard
+\end{enumerate}
+\end{experimentbox}
+
+\begin{observationtable}[Observation Table 4.1: Truth Table Verification of NAND-Synthesized Gates]
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+\textbf{Input $A$} & \textbf{Input $B$} & \textbf{NOT ($\overline{A}$)} & \textbf{AND ($A \cdot B$)} & \textbf{OR ($A + B$)} & \textbf{XOR ($A \oplus B$)} & \textbf{Trainer Indicator State} \\
+\midrule
+0 & 0 & 1 & 0 & 0 & 0 & Matches Theory \\
+0 & 1 & 1 & 0 & 1 & 1 & Matches Theory \\
+1 & 0 & 0 & 0 & 1 & 1 & Matches Theory \\
+1 & 1 & 0 & 1 & 1 & 0 & Matches Theory \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{observationtable}
+
+\section{Worked Logic Design Problems}
+\begin{example}[Simplifying and Implementing a Logic Function with NAND Gates]
+Given the Boolean expression $F = A B + \overline{A} C$, synthesize this function using the minimum number of 2-input NAND gates.
+\end{example}
+\begin{solutionbox}
+Apply double negation to express $F$ in NAND-NAND form:
+\[ F = \overline{\overline{A B + \overline{A} C}} \]
+Applying De Morgan's theorem to the outer negation:
+\[ F = \overline{\overline{AB} \cdot \overline{\overline{A}C}} \]
+Gate implementation:
+\begin{itemize}
+    \item Gate 1 (Inverter): Invert $A$ to yield $\overline{A}$ using $1$ NAND gate: $\overline{A} = \overline{A \cdot A}$.
+    \item Gate 2: Compute $G_1 = \overline{A B}$ using $1$ NAND gate.
+    \item Gate 3: Compute $G_2 = \overline{\overline{A} C}$ using $1$ NAND gate.
+    \item Gate 4: Feed $G_1$ and $G_2$ into a final NAND gate: $F = \overline{G_1 \cdot G_2}$.
+\end{itemize}
+Total gate count: exactly \textbf{4 NAND gates} (one single 7400 IC!).
+\end{solutionbox}
+
+\section{Workshop Viva-Voce Questions \& Answers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Question}: Why is a $0.1\,\mu\mathrm{F}$ ceramic capacitor placed between Pin 14 ($V_{CC}$) and Pin 7 (GND) of logic ICs on a breadboard?\\
+    \textbf{Answer}: When internal TTL or CMOS transistors switch states, they briefly short power to ground for a few nanoseconds, drawing current spikes ($di/dt$). Due to breadboard lead inductance, this creates high-frequency voltage glitches on the power rail. The decoupling capacitor acts as a localized charge reservoir, shunting high-frequency noise directly to ground.
+    \item \textbf{Question}: What happens if you leave unused inputs floating on a CMOS 74HC00 IC?\\
+    \textbf{Answer}: CMOS inputs have virtually infinite gate resistance ($> 10^{12}\,\Omega$). A floating input will float unpredictably into the linear threshold region between $V_{IL}$ and $V_{IH}$, turning both the PMOS and NMOS internal transistors partially ON simultaneously. This causes excessive shoot-through current, overheating the IC and causing thermal destruction.
+\end{enumerate}

@@ -1,0 +1,91 @@
+\LPUPaperHeader{Midterm Examination (MTE)}{Set A}{120 Minutes}{60 Marks}{CO1, CO2, CO3, CO4}
+
+\begin{markingrubric}
+\textbf{Structure of the Examination Paper:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1pt]
+    \item \textbf{Section A:} 10 Objective / Diagnostic Questions $\times$ 2 Marks = \textbf{20 Marks}. All compulsory.
+    \item \textbf{Section B:} 4 System Administration \& Security Questions $\times$ 5 Marks = \textbf{20 Marks}.
+    \item \textbf{Section C:} 2 Advanced Shell Pipeline \& Regex Architecture Problems $\times$ 10 Marks = \textbf{20 Marks}.
+\end{itemize}
+\end{markingrubric}
+
+\section*{Section A: Diagnostic \& Fundamental Core [20 Marks]}
+
+\questionitem{1.1}{State the exit status code returned by POSIX commands upon successful completion.}{2}{CO1}{Remember}
+\begin{examsol}
+The exit status code is integer \textbf{0}. Any value between $1$ and $255$ indicates an error code.
+\end{examsol}
+
+\questionitem{1.2}{What is the difference between umask 022 and umask 027 for a newly created file?}{2}{CO3}{Understand}
+\begin{examsol}
+Under \texttt{022}, files receive mode \texttt{644} (\texttt{rw-r--r--}, world-readable). Under \texttt{027}, files receive mode \texttt{640} (\texttt{rw-r-----}, others have zero access).
+\end{examsol}
+
+\questionitem{1.3}{Convert the permission mode -rwxr-s--- into its 4-digit octal representation.}{2}{CO3}{Apply}
+\begin{examsol}
+Owner: \texttt{rwx} = 7; Group: \texttt{r-s} = 5 with SGID bit ($2000$); Others: \texttt{---} = 0. Octal value: \textbf{2750}.
+\end{examsol}
+
+\questionitem{1.4}{Which standard stream is assigned integer File Descriptor 2?}{2}{CO4}{Remember}
+\begin{examsol}
+Standard Error (\texttt{stderr}).
+\end{examsol}
+
+\questionitem{1.5}{Explain the function of the command: date -u "+\%s".}{2}{CO2}{Understand}
+\begin{examsol}
+Emits the current time as seconds elapsed since the Unix Epoch (1970-01-01 00:00:00 UTC) under Coordinated Universal Time.
+\end{examsol}
+
+\section*{Section B: Analytical System Administration [20 Marks]}
+
+\questionitem{2.1}{A project folder /opt/datascience requires team collaboration among members of group 'analysts'. Configure the folder such that: (a) owner root has full access, (b) group analysts has full read/write/enter access, (c) others have zero access, and (d) all newly created files automatically inherit the group 'analysts'.}{5}{CO3}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+$ sudo chown root:analysts /opt/datascience
+$ sudo chmod 2770 /opt/datascience
+$ ls -ld /opt/datascience
+drwxrws--- 2 root analysts 4096 Oct 22 08:30 /opt/datascience
+\end{examcli}
+\textbf{Analysis:} Setting the SGID bit (\texttt{2000}) ensures group inheritance; mode \texttt{770} grants full control to owner and group while excluding others entirely.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [5 Marks]:} Ownership assignment (1 Mark); Octal mode 2770 derivation (3 Marks); Verification (1 Mark).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2.2}{Explain why the SUID bit on an executable like /usr/bin/passwd is necessary for regular users, yet poses extreme security risks if assigned to an editor like /usr/bin/vim.}{5}{CO3}{Analyze}
+
+\begin{examsol}
+\textbf{1. Why SUID is Essential on passwd:}
+Regular users must update their authentication tokens stored in \texttt{/etc/shadow}. Because \texttt{/etc/shadow} is owned strictly by root (\texttt{chmod 640}), ordinary users cannot write to it. The SUID bit on \texttt{/usr/bin/passwd} elevates the executing process context to root privileges strictly for password hashing and writing.
+
+\textbf{2. Security Catastrophe on vim:}
+If SUID is assigned to \texttt{vim}, any non-privileged user can open \texttt{vim /etc/shadow} or \texttt{vim /etc/sudoers}, read restricted system hashes, edit administrative credentials, or spawn a root root shell using \texttt{:!bash}, achieving instant superuser privilege escalation.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [5 Marks]:} \texttt{passwd} operational need (2.5 Marks); \texttt{vim} shell escape vulnerability (2.5 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\section*{Section C: Stream Processing \& Regex Engineering [20 Marks]}
+
+\questionitem{3.1}{An engineering server produces an access log /var/log/nginx/access.log where each record follows: 'IP - - [DATE] "METHOD URI PROTO" STATUS BYTES'. Construct a pipeline that: (a) filters out all lines where STATUS is not 200, (b) extracts client IP addresses, (c) computes frequency counts, and (d) displays the top 5 most frequent client IPs.}{10}{CO4}{Create}
+
+\begin{examsol}
+\begin{examcli}
+$ awk '$9 == 200 {print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head -n 5
+\end{examcli}
+\textbf{Pipeline Stage Analysis:}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{awk '\$9 == 200 \{print \$1\}'}: Tests whether column 9 equals HTTP status 200, and emits only column 1 (Client IP).
+    \item \texttt{sort}: Organizes IP addresses into sorted alphabetical order, satisfying \texttt{uniq}'s adjacency prerequisite.
+    \item \texttt{uniq -c}: Groups identical adjacent IP addresses and prefixes lines with occurrence counts.
+    \item \texttt{sort -rn}: Sorts lines numerically (\texttt{-n}) in descending order (\texttt{-r}) based on the count prefix.
+    \item \texttt{head -n 5}: Restricts output to the top 5 heaviest client IP addresses.
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [10 Marks]:} Filtering status 200 (2.5 Marks); Sorting \& Uniq logic (2.5 Marks); Numerical reverse ordering (2.5 Marks); Top-5 selection (2.5 Marks).
+\end{markingrubric}
+\end{examsol}

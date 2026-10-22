@@ -1,0 +1,131 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\label{sec:ca1_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{A}{60 Minutes}{30 Marks}{CO1 (Matrix Algebra), CO2 (Homogeneous Differential Equations)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Reduce the matrix $A$ to Row Echelon Form and determine its rank:
+    \[
+    A = \begin{bmatrix} 1 & 2 & 3 & 2 \\ 2 & 3 & 5 & 1 \\ 1 & 3 & 4 & 5 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    Using Gauss-Jordan elimination, find the inverse of the matrix:
+    \[
+    A = \begin{bmatrix} 2 & 1 & 1 \\ 1 & 2 & 1 \\ 1 & 1 & 2 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Investigate the consistency of the system of equations for all real values of $\lambda$ and $\mu$:
+    \[
+    \begin{aligned}
+    x + y + z &= 6 \\
+    x + 2y + 3z &= 10 \\
+    x + 2y + \lambda z &= \mu
+    \end{aligned}
+    \]
+}{5}{CO1}{L4 Analyze}
+
+\questionitem{4}{
+    Find the eigenvalues and eigenvectors of the symmetric matrix:
+    \[
+    A = \begin{bmatrix} 3 & 1 & 1 \\ 1 & 3 & 1 \\ 1 & 1 & 3 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{5}{
+    Verify the Cayley-Hamilton theorem for the matrix $A = \begin{bmatrix} 1 & 2 \\ 2 & -1 \end{bmatrix}$ and compute $A^4$.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{6}{
+    Solve the homogeneous differential equation: $(D^3 - 6D^2 + 11D - 6)y = 0$.
+}{5}{CO2}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+Apply row operations: $R_2 \to R_2 - 2R_1$, $R_3 \to R_3 - R_1$:
+\[
+\begin{bmatrix} 1 & 2 & 3 & 2 \\ 0 & -1 & -1 & -3 \\ 0 & 1 & 1 & 3 \end{bmatrix} \xrightarrow{R_3 \to R_3 + R_2} \begin{bmatrix} 1 & 2 & 3 & 2 \\ 0 & -1 & -1 & -3 \\ 0 & 0 & 0 & 0 \end{bmatrix}
+\]
+The matrix has 2 non-zero rows in row echelon form. Therefore, $\mathbf{\operatorname{rank}(A) = 2}$.
+\begin{markingrubric}
+$\bullet$ Formulating row operations $R_2 - 2R_1$ and $R_3 - R_1$: \textbf{2 Marks}\\
+$\bullet$ Reaching echelon form: \textbf{2 Marks}\\
+$\bullet$ Concluding rank is 2: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+Set up $[A \mid I]$ and row reduce to $[I \mid A^{-1}]$. Determinant is $\det(A) = 2(3) - 1(1) + 1(-1) = 4 \neq 0$.
+Performing row reductions yields:
+\[
+A^{-1} = \frac{1}{4}\begin{bmatrix} 3 & -1 & -1 \\ -1 & 3 & -1 \\ -1 & -1 & 3 \end{bmatrix}
+\]
+\begin{markingrubric}
+$\bullet$ Correctly setting up augmented matrix: \textbf{1 Mark}\\
+$\bullet$ Pivot operations: \textbf{3 Marks}\\
+$\bullet$ Final inverse matrix: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+Augmented matrix:
+\[
+[A \mid B] = \begin{bmatrix} 1 & 1 & 1 & 6 \\ 1 & 2 & 3 & 10 \\ 1 & 2 & \lambda & \mu \end{bmatrix} \sim \begin{bmatrix} 1 & 1 & 1 & 6 \\ 0 & 1 & 2 & 4 \\ 0 & 0 & \lambda - 3 & \mu - 10 \end{bmatrix}
+\]
+\begin{enumerate}
+    \item \textbf{No Solution}: $\lambda = 3$ and $\mu \neq 10$ ($\operatorname{rank}(A) = 2 \neq \operatorname{rank}([A\mid B]) = 3$).
+    \item \textbf{Unique Solution}: $\lambda \neq 3$ ($\operatorname{rank}(A) = \operatorname{rank}([A\mid B]) = 3 = n$).
+    \item \textbf{Infinitely Many Solutions}: $\lambda = 3$ and $\mu = 10$ ($\operatorname{rank}(A) = \operatorname{rank}([A\mid B]) = 2 < 3$).
+\end{enumerate}
+\begin{markingrubric}
+$\bullet$ Echelon reduction: \textbf{2 Marks}\\
+$\bullet$ Clear analysis of each of the three parametric cases: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+Characteristic polynomial: $\lambda^3 - 9\lambda^2 + 24\lambda - 16 = 0 \implies (\lambda - 5)(\lambda - 2)^2 = 0$.
+Eigenvalues: $\lambda_1 = 5$, $\lambda_2 = \lambda_3 = 2$.
+Eigenvector for $\lambda = 5$: $X_1 = [1, 1, 1]^T$.
+Eigenvectors for $\lambda = 2$: $X_2 = [-1, 1, 0]^T$, $X_3 = [-1, 0, 1]^T$.
+\begin{markingrubric}
+$\bullet$ Characteristic equation \& roots: \textbf{2 Marks}\\
+$\bullet$ Eigenvector for $\lambda = 5$: \textbf{1.5 Marks}\\
+$\bullet$ Independent eigenvectors for $\lambda = 2$: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+Characteristic equation: $|A - \lambda I| = \lambda^2 - 5 = 0$.
+By Cayley-Hamilton: $A^2 - 5I = 0 \implies A^2 = 5I$.
+Therefore, $A^4 = (A^2)^2 = (5I)^2 = 25I = \begin{bmatrix} 25 & 0 \\ 0 & 25 \end{bmatrix}$.
+\begin{markingrubric}
+$\bullet$ Verifying Cayley-Hamilton identity: \textbf{2.5 Marks}\\
+$\bullet$ Computing $A^4 = 25I$: \textbf{2.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+Auxiliary equation: $m^3 - 6m^2 + 11m - 6 = 0$.
+Roots: $(m - 1)(m - 2)(m - 3) = 0 \implies m = 1, 2, 3$.
+Since roots are real and distinct:
+\[
+\mathbf{y(x) = c_1 e^x + c_2 e^{2x} + c_3 e^{3x}}
+\]
+\begin{markingrubric}
+$\bullet$ Writing auxiliary equation: \textbf{1.5 Marks}\\
+$\bullet$ Factoring roots $1, 2, 3$: \textbf{2 Marks}\\
+$\bullet$ General solution: \textbf{1.5 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

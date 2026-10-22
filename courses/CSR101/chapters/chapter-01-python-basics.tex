@@ -1,0 +1,90 @@
+\chapter{Python Environment Setup, Language Basics, and Computational Foundations}
+\label{chap:basics}
+
+\section{Introduction and Course Orientation}
+Python is a multi-paradigm, dynamically typed, garbage-collected programming language conceived by Guido van Rossum. In AI and Data Engineering, Python has emerged as the definitive lingua franca because of its clean syntax, expansive standard library, and high-performance native C/C++ bindings (NumPy, PyTorch, SciPy).
+
+\section{Python Virtual Machine (PVM) \& CPython Architecture}
+\begin{definition}[CPython Virtual Machine]
+CPython is the reference implementation of Python, written in ANSI C. Source code in a \texttt{.py} file is parsed into an Abstract Syntax Tree (AST), compiled into an intermediate bytecode format (\texttt{.pyc}), and interpreted by the Python Virtual Machine (PVM) via an evaluation loop in \texttt{Python/ceval.c}.
+\end{definition}
+
+\begin{keyequation}[CPython Object Representation (\texttt{PyObject})]
+In CPython, every variable is a pointer to a heap-allocated \texttt{PyObject} struct:
+\begin{equation}
+\text{struct \_object} = \Big\{ \text{ssize\_t ob\_refcnt}, \quad \text{struct \_typeobject *ob\_type} \Big\}
+\end{equation}
+$\bullet$ \textbf{ob\_refcnt:} The 64-bit reference counter manipulated by \texttt{Py\_INCREF()} and \texttt{Py\_DECREF()}.\\
+$\bullet$ \textbf{ob\_type:} Pointer to the type descriptor defining operator behaviors and memory size.
+\end{keyequation}
+
+\section{Variables, Dynamic Typing, and Memory Binding}
+Unlike statically typed languages (C, Java), where a variable represents a fixed memory address with a static type, Python variables are \textbf{names bound to objects in a namespace}.
+\begin{lstlisting}
+x = 42        # Allocates PyLongObject(42), binds identifier 'x' to it
+y = x         # Binds identifier 'y' to the SAME PyObject (increments ob_refcnt)
+print(id(x) == id(y))  # True: both share identical memory addresses
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\begin{tcolorbox}[colback=boxgraybg,colframe=boxgrayborder,title={CPython Heap Reference Binding}]
+\small
+Identifier \texttt{x} $\longrightarrow$ \fbox{\textbf{PyLongObject} \textbar\ refcnt: 2 \textbar\ type: int \textbar\ value: 42} $\longleftarrow$ Identifier \texttt{y}
+\end{tcolorbox}
+\caption{Visualizing Name Binding and Reference Counting}
+\end{figure}
+
+\section{Data Types and Primitive Precision}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{lllX}
+\toprule
+\textbf{Data Type} & \textbf{Mutability} & \textbf{Internal Representation} & \textbf{Operational Semantics} \\
+\midrule
+\texttt{int} & Immutable & Arbitrary-precision integer (\texttt{digit} array) & Handles numbers beyond $2^{64}-1$ automatically. \\
+\texttt{float} & Immutable & 64-bit IEEE 754 double precision & Approx 15 decimal digits; subject to rounding: \texttt{0.1 + 0.2 != 0.3}. \\
+\texttt{bool} & Immutable & Subclass of \texttt{int} (\texttt{True=1, False=0}) & Compatible with arithmetic operations: \texttt{True + 4 == 5}. \\
+\texttt{str} & Immutable & Compact Unicode array (PEP 393: 1, 2, or 4 bytes) & Indexed sequence; constant-time length calculation via \texttt{ob\_size}. \\
+\bottomrule
+\end{tabularx}
+\caption{Primary Python Primitive Types}
+\end{table}
+
+\section{Operators, Precedence, and Evaluation Rules}
+\begin{example}[Flooring Division on Negative Integers]
+Calculate the exact evaluation of \texttt{-19 // 4} and \texttt{-19 \% 4}.
+\end{example}
+\begin{solutionbox}
+In Python, integer division calculates:
+\begin{equation}
+q = \lfloor a / b \rfloor, \qquad r = a - (q \cdot b)
+\end{equation}
+Here $a = -19$ and $b = 4$. The exact real fraction is $-19 / 4 = -4.75$.
+The floor function rounds towards $-\infty$, so:
+\begin{equation}
+q = \lfloor -4.75 \rfloor = -5
+\end{equation}
+Then the remainder is:
+\begin{equation}
+r = -19 - (-5 \cdot 4) = -19 - (-20) = 1
+\end{equation}
+Thus, \texttt{-19 // 4 == -5} and \texttt{-19 \% 4 == 1}.
+\end{solutionbox}
+
+\begin{examtip}[Integer Interning Cache Trap]
+CPython pre-allocates and caches an array of small integer objects in the range $[-5, 256]$.
+\begin{lstlisting}
+a = 256; b = 256; print(a is b)  # True (same interned singleton)
+x = 257; y = 257; print(x is y)  # False (distinct heap allocations in REPL)
+\end{lstlisting}
+Always use \texttt{==} for value equality and reserve \texttt{is} exclusively for identity checks against singletons like \texttt{None}.
+\end{examtip}
+
+\section{Chapter Summary and Self-Test Questions}
+\begin{summarybox}
+$\bullet$ Python bytecode execution occurs inside the PVM via dynamic heap references.\\
+$\bullet$ Variables are reference tags; assignment rebinds the reference without copying data.\\
+$\bullet$ Small integers $[-5, 256]$ and short strings are interned for memory efficiency.
+\end{summarybox}

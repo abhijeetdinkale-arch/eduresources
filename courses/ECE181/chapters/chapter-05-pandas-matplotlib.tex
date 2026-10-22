@@ -1,0 +1,127 @@
+\chapter{Data Analysis with Pandas and Visualisation with Matplotlib}
+\label{ch:pandas_matplotlib}
+
+\section{Introduction to Tabular Data Analysis with Pandas}
+
+Pandas is the premier Python library for structured data manipulation. Built atop NumPy, Pandas introduces labeled, heterogeneous tabular structures that support relational database operations, time series analysis, and statistical processing.
+
+\subsection{Primary Data Structures: Series and DataFrame}
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Series:} A 1-dimensional labeled homogeneous array capable of holding any data type. It consists of an underlying data array and an associated \textbf{Index}.
+    \item \textbf{DataFrame:} A 2-dimensional tabular structure with labeled axes (rows and columns). It can be viewed as an ordered dictionary of \texttt{Series} sharing a common index.
+\end{enumerate}
+
+\begin{lstlisting}[caption={Creating and Manipulating DataFrames}]
+import pandas as pd
+import numpy as np
+
+# Constructing DataFrame from dictionary of lists
+data = {
+    'Timestamp': pd.date_range(start='2026-01-01', periods=5, freq='h'),
+    'Node_ID': ['N1', 'N2', 'N1', 'N3', 'N2'],
+    'Voltage_V': [3.31, 4.98, 3.28, np.nan, 5.02],
+    'Current_mA': [12.4, 45.1, 11.9, 8.5, 46.0]
+}
+df = pd.DataFrame(data)
+print(df.info())
+\end{lstlisting}
+
+\subsection{Selection and Indexing: \texttt{.loc[]} vs. \texttt{.iloc[]}}
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{\texttt{.loc[]}: Label-based indexing.} Slicing with \texttt{.loc} includes \textbf{both} the start and the stop endpoints!
+    \item \textbf{\texttt{.iloc[]}: Integer-position-based indexing.} Slicing follows standard Python sequence semantics (half-open interval $[start, stop)$, excluding the stop boundary).
+\end{itemize}
+
+\begin{lstlisting}[caption={Label vs Position Slicing}]
+# Select rows 0 to 2 and specific columns by label
+sub_loc = df.loc[0:2, ['Node_ID', 'Voltage_V']]
+
+# Select rows 0 to 2 (indices 0 and 1) and columns 1 to 3 by position
+sub_iloc = df.iloc[0:2, 1:3]
+\end{lstlisting}
+
+\subsection{Data Cleaning: Handling Missing Values}
+Real-world engineering sensor streams contain missing data resulting from packet drops or sensor failures:
+\begin{lstlisting}[caption={Handling Missing Data}]
+# Check missing counts
+print(df.isna().sum())
+
+# Drop rows with any NaN
+df_clean = df.dropna()
+
+# Impute missing values with group mean
+df['Voltage_V'] = df['Voltage_V'].fillna(df['Voltage_V'].mean())
+\end{lstlisting}
+
+\subsection{Aggregation and Grouping: Split-Apply-Combine}
+\begin{lstlisting}[caption={Group-by Aggregations}]
+summary = df.groupby('Node_ID').agg({
+    'Voltage_V': ['mean', 'std'],
+    'Current_mA': ['mean', 'max']
+})
+print(summary)
+\end{lstlisting}
+
+\section{Engineering Data Visualisation with Matplotlib}
+
+Matplotlib is a multi-platform data visualization library built on NumPy arrays. It provides full control over every graphic primitive on the canvas.
+
+\subsection{Matplotlib Object-Oriented Hierarchy}
+While the \texttt{pyplot} interface mimics MATLAB procedural commands, the object-oriented API provides robust control:
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{Figure:} The top-level container holding all canvas elements, subplots, titles, and legends.
+    \item \textbf{Axes:} The actual plotting region bounding the data coordinate system with $x/y$ scales, ticks, and labels.
+\end{itemize}
+
+\begin{lstlisting}[caption={Engineering Signal Visualization using the OO API}]
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Synthetic sensor telemetry
+t = np.linspace(0.0, 2.0, 500)
+freq = 5.0
+signal_clean = 3.3 * np.sin(2 * np.pi * freq * t)
+noise = 0.4 * np.random.randn(len(t))
+signal_noisy = signal_clean + noise
+
+# Create Figure and Axes
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True)
+
+# Subplot 1: Time domain waveform
+ax1.plot(t, signal_noisy, color='gray', alpha=0.6, label='Noisy ADC Signal')
+ax1.plot(t, signal_clean, color='crimson', lw=2, label='True Fundamental (5 Hz)')
+ax1.set_ylabel('Voltage (V)', fontsize=11)
+ax1.set_title('Sensor Telemetry Acquisition: Time Domain Waveform', fontsize=12, fontweight='bold')
+ax1.grid(True, linestyle='--', alpha=0.7)
+ax1.legend(loc='upper right')
+
+# Subplot 2: Error residual distribution
+residual = signal_noisy - signal_clean
+ax2.plot(t, residual, color='teal', lw=1.2, label='Noise Residual')
+ax2.axhline(0, color='black', linestyle=':', lw=1)
+ax2.set_xlabel('Time (s)', fontsize=11)
+ax2.set_ylabel('Residual (V)', fontsize=11)
+ax2.grid(True, linestyle='--', alpha=0.7)
+ax2.legend(loc='upper right')
+
+plt.tight_layout()
+# Save high-resolution vector graphic
+# plt.savefig('sensor_telemetry.pdf', dpi=300)
+\end{lstlisting}
+
+\section{Standard Statistical Plot Types}
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Line Plot (\texttt{ax.plot}):} Displays continuous time-series trajectories.
+    \item \textbf{Scatter Plot (\texttt{ax.scatter}):} Visualizes bi-variate correlation and clustering.
+    \item \textbf{Histogram (\texttt{ax.hist}):} Approximates continuous probability density functions.
+    \item \textbf{Bar Chart (\texttt{ax.bar}):} Compares discrete categorical quantities.
+    \item \textbf{Box Plot (\texttt{ax.boxplot}):} Visualizes 5-number summary (minimum, Q1, median, Q3, maximum) and outlier anomalies.
+\end{enumerate}
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Compare and contrast the endpoint indexing behavior of \texttt{.loc[]} versus \texttt{.iloc[]}.
+    \item Explain the three stages of the Split-Apply-Combine strategy implemented by Pandas \texttt{groupby()}.
+    \item Why is the Object-Oriented API (\texttt{fig, ax = plt.subplots()}) preferred over procedural state-machine calls (\texttt{plt.plot()}) in professional engineering workflows?
+    \item Given a DataFrame \texttt{df} with missing values in column \texttt{'temperature'}, write code to replace missing entries with the rolling median of the preceding 3 observations.
+\end{enumerate}

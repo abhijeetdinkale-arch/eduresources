@@ -1,0 +1,28 @@
+\chapter{Arithmetic Circuits \& Combinational Logic Formulas}
+
+\section{Half Adder \& Full Adder Equations}
+\begin{formulabox}{Adder Boolean Formulations}
+\begin{itemize}
+    \item \textbf{Half Adder (2 Inputs: $A, B$)}:
+    \[ \mathrm{Sum}\,(S) = A \oplus B = \overline{A}B + A\overline{B} \]
+    \[ \mathrm{Carry}\,(C) = A \cdot B \]
+    \item \textbf{Full Adder (3 Inputs: $A, B, C_{\mathrm{in}}$)}:
+    \[ \mathrm{Sum}\,(S) = A \oplus B \oplus C_{\mathrm{in}} \]
+    \[ C_{\mathrm{out}} = AB + BC_{\mathrm{in}} + AC_{\mathrm{in}} = AB + C_{\mathrm{in}}(A \oplus B) \]
+    \item \textbf{Half Subtractor}:
+    \[ \mathrm{Difference}\,(D) = A \oplus B, \quad \mathrm{Borrow}\,(B_{\mathrm{out}}) = \overline{A}B \]
+    \item \textbf{Full Subtractor}:
+    \[ D = A \oplus B \oplus B_{\mathrm{in}}, \quad B_{\mathrm{out}} = \overline{A}B + B_{\mathrm{in}}\overline{(A \oplus B)} \]
+\end{itemize}
+\end{formulabox}
+
+\section{IC 7483 4-Bit Binary Parallel Adder Pinout}
+\begin{formulabox}{IC 7483 16-Pin DIP Pin Configuration}
+\begin{itemize}
+    \item \textbf{Inputs}: $A_1$ (Pin 1), $B_1$ (Pin 3), $A_2$ (Pin 8), $B_2$ (Pin 11), $A_3$ (Pin 10), $B_3$ (Pin 7), $A_4$ (Pin 13), $B_4$ (Pin 16).
+    \item \textbf{Carry Input}: $C_0$ (Pin 13 on 74LS83A / Pin 7 on 7483).
+    \item \textbf{Outputs}: $\Sigma_1$ (Pin 4), $\Sigma_2$ (Pin 2), $\Sigma_3$ (Pin 6), $\Sigma_4$ (Pin 9).
+    \item \textbf{Carry Output}: $C_4$ (Pin 14).
+    \item \textbf{Power}: $V_{CC} = \text{Pin 5}$, $\mathrm{GND} = \text{Pin 12}$.
+\end{itemize}
+\end{formulabox}

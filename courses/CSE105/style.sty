@@ -1,0 +1,358 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/10/22 v1.0 CSE105 Linux and Shell Programming Textbook Style Package]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{inconsolata}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+\RequirePackage{amsmath,amssymb}
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\RequirePackage{booktabs,tabularx,longtable,array,multirow}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds}
+
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+
+% -----------------------------------------------------------------------------
+% Color Palette: Linux Terminal / Unix Academic Theme
+% -----------------------------------------------------------------------------
+\definecolor{brandnavy}{RGB}{15, 32, 67}       % Deep Linux Navy
+\definecolor{brandblue}{RGB}{28, 78, 140}      % Slate Command Blue
+\definecolor{brandteal}{RGB}{12, 115, 105}     % SysAdmin Teal
+\definecolor{brandaccent}{RGB}{185, 28, 28}    % Root / Alert Crimson
+\definecolor{brandamber}{RGB}{180, 83, 9}      % Shell Warning Amber
+\definecolor{brandpurple}{RGB}{109, 40, 217}   % Kernel Purple
+\definecolor{branddark}{RGB}{24, 24, 27}       % Terminal Dark Text
+\definecolor{terminalbg}{RGB}{24, 27, 34}      % Terminal Window Background
+\definecolor{terminalfg}{RGB}{240, 246, 252}   % Terminal Window Text
+
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+\definecolor{boxtealbg}{RGB}{240, 253, 250}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+
+% -----------------------------------------------------------------------------
+% Listings Setup
+% -----------------------------------------------------------------------------
+\lstdefinestyle{bashstyle}{
+    basicstyle=\small\ttfamily\color{terminalfg},
+    backgroundcolor=\color{terminalbg},
+    keywordstyle=\color{cyan}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{lime},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=flexible,
+    keepspaces=true,
+    showstringspaces=false,
+    showspaces=false,
+    frame=none
+}
+
+% -----------------------------------------------------------------------------
+% tcolorbox Environments
+% -----------------------------------------------------------------------------
+\newtcolorbox{definition}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=brandnavy,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Core Definition}{Definition: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{architecturebox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{System Architecture \& Kernel Mechanics}{Architecture: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandpurple,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{commandbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxtealbg,
+    colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Command Syntax \& Options}{Command Specification: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandteal,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcblisting{terminalbox}[1][]{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandnavy,
+    arc=3pt,
+    boxrule=1pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        basicstyle=\small\ttfamily\color{terminalfg},
+        breaklines=true,
+        columns=flexible,
+        keepspaces=true,
+        showstringspaces=false
+    },
+    title={\ifstrempty{#1}{\texttt{\$ Interactive Terminal Session}}{#1}}
+}
+
+\newtcblisting{scriptbox}[1][]{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandpurple,
+    arc=3pt,
+    boxrule=1pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        style=bashstyle
+    },
+    title={\ifstrempty{#1}{\texttt{Bash Script Execution}}{#1}}
+}
+
+\newtcolorbox{warningbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxrosebg,
+    colframe=brandaccent,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{System Pitfall \& Caution}{Warning: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandaccent,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{tipbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxamberbg,
+    colframe=brandamber,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{SysAdmin Pro Tip \& Shortcut}{Pro Tip: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandamber,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{examplebox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=brandblue,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example \& Demonstration}{Example: #1}},
+    boxrule=1.0pt,
+    leftrule=3.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandblue,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% -----------------------------------------------------------------------------
+% Headers and Footers
+% -----------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\small\nouppercase\leftmark}
+\fancyhead[R]{\sffamily\small CSE105: Linux \& Shell Programming}
+\fancyfoot[C]{\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandnavy,
+    citecolor=brandteal,
+    urlcolor=brandblue,
+    pdftitle={CSE105: Linux and Shell Programming Master Textbook},
+    pdfauthor={LPU Engineering Faculty & Academic Board}
+}
+
+% -----------------------------------------------------------------------------
+% Cover & Preliminary Pages
+% -----------------------------------------------------------------------------
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagecolor{white}
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.2cm]current page.north east);
+    \fill[brandteal] ([yshift=-4.2cm]current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN TEXTBOOK SERIES \textbullet\ WORKSHOP SUITE};
+    \node[anchor=north west, text=white!85, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Open-Source Academic Textbooks for Computer Science \& Engineering};
+
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandteal] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Academic Edition 2026--2027 \textbullet\ 11-Unit Complete University Manual};
+    \node[anchor=south east, text=white!85, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Creative Commons BY-NC-SA 4.0};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{32}{38}\selectfont\bfseries\sffamily\color{brandnavy} Linux \& Shell Programming\par}
+    \vspace{0.4cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} Creative Engineering Workshop $\cdot$ CSE105\par}
+    \vspace{0.4cm}
+    {\color{brandteal}\rule{0.65\linewidth}{2pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{A Rigorous 11-Unit Engineering Manual Covering OS Architecture, Core CLI Utilities, File Systems, Permission Security, Shell Mechanics, Filters, Administration, Process Management, vi/vim, Shell Scripting \& Development Toolchains}\par}
+
+    \vspace{1.8cm}
+
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.95\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1.2pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Subject Features \& Engineering Curriculum Highlights:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Comprehensive theoretical and practical guide for all 11 Units of the LPU CSE105 syllabus.
+            \item UNIX design principles, kernel-space vs user-space, system calls, and multi-platform installation (Ubuntu, Dual Boot, VMs, WSL 2).
+            \item System utilities grammar, time/calendar systems, arithmetic calculation engines, and man-page navigation.
+            \item Filesystem Hierarchy Standard (FHS), inode architecture, file operations, permission octal math, and special bits (SUID, SGID, Sticky bit).
+            \item Standard I/O redirection, pipeline chaining, regular expression theory (BRE vs ERE), and industrial text filter engineering (grep, cut, sort, uniq, tr).
+            \item Multi-user/group administration, process life cycles, Linux signal architecture, and comprehensive vi/vim modal editing mastery.
+            \item Complete Bash shell programming (variables, quoting, loops, conditionals, functions, arrays) and modern Git version control workflows.
+        \end{itemize}
+    \end{tcolorbox}
+
+    \vfill
+
+    {\sffamily\small\textbf{Editorial Team / Academic Publisher:}\\
+    Department of Computer Science \& Engineering \textbullet\ Academic Open Initiative\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large CSE105: Linux \& Shell Programming --- Master Academic Manual}\\
+\textit{\sffamily Creative Engineering Workshop \textbullet\ University Textbook Edition}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Publishing Initiative\\
+\textbf{\sffamily Academic Year:} 2026--2027 Edition\\
+\textbf{\sffamily Primary Source Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Authors and Contributors of LPU Engineering Open.\\
+This textbook, technical architectures, and instructional materials are licensed under the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To inspect a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\noindent
+The accompanying bash scripts, automation recipes, and terminal listings are distributed under the terms of the \textbf{MIT License}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Academic Faculty, \textit{CSE105: Linux \& Shell Programming --- Master Academic Manual}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{1.5cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=brandamber,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Academic Notice \& Institutional Disclaimer}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Academic Resource}\\
+This textbook is an independent, non-profit academic resource created to support students pursuing Bachelor of Technology (B.Tech) degrees in Computer Science and Engineering, Information Technology, and related disciplines in mastering operating system internals and shell programming.
+
+\textbf{2. Institutional Independence Notice}\\
+\textbf{This publication is independently developed and is not officially affiliated with, endorsed by, or sponsored by Lovely Professional University (LPU).} Course names and codes (e.g., CSE105) are referenced strictly under educational \textbf{fair use} doctrines to align the study material with syllabus topics.
+
+\textbf{3. Safety \& System Operations Notice}\\
+Certain commands documented in this volume (including \texttt{rm -rf}, \texttt{fdisk}, \texttt{chmod 777}, and user administrative privileges) have destructive capabilities if executed carelessly on production hardware. Readers are strongly instructed to perform all laboratory exercises within non-destructive virtual environments (VirtualBox, VMware, or disposable WSL containers).
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

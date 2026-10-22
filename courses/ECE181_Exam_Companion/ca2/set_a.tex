@@ -1,0 +1,155 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+\label{sec:ca2_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{A}{60 Minutes}{30 Marks}{CO4 (NumPy Arrays), CO5 (Pandas \& Matplotlib)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt any five out of the six questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    Differentiate between a Python \texttt{list} and a NumPy \texttt{ndarray} in terms of memory layout, type heterogeneity, and SIMD hardware acceleration.
+}{6}{CO4}{L2 Understand}
+
+\questionitem{2}{
+    Explain the \textbf{Three Universal Rules of NumPy Broadcasting}. Determine whether array shapes $(8, 1, 6, 1)$ and $(7, 1, 5)$ are broadcast-compatible, and calculate the resulting shape.
+}{6}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    Write a Python function using NumPy to compute the \textbf{moving average} of a 1D signal with window size $k$ using \texttt{np.convolve()}. Compare its asymptotic time complexity against a naive nested loop.
+}{6}{CO4}{L4 Analyze}
+
+\questionitem{4}{
+    Differentiate between label-based indexing (\texttt{.loc}) and integer-position indexing (\texttt{.iloc}) in Pandas. Explain the critical difference in slicing endpoint inclusion.
+}{6}{CO5}{L2 Understand}
+
+\questionitem{5}{
+    Write a Pandas pipeline that reads an employee dataset, handles missing values by imputing departmental median salaries, and creates a pivot table showing total payroll by department and employment tier.
+}{6}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    Using Matplotlib's object-oriented interface (\texttt{plt.subplots}), write a script to produce a 2-panel figure showing a line plot with error bars on the left and a normalized probability histogram on the right.
+}{6}{CO5}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-2 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Memory Architecture}: Python lists store arrays of 64-bit pointers to disjoint heap objects (\texttt{PyObject*}), requiring pointer dereferencing and causing CPU cache misses. NumPy \texttt{ndarray} stores a contiguous block of homogeneous binary data with fixed stride offsets.
+    \item \textbf{Type Enforcement}: Lists allow arbitrary mixed types; \texttt{ndarray} requires a single homogeneous \texttt{dtype}.
+    \item \textbf{Vectorization}: NumPy operations execute via compiled C/Fortran libraries leveraging CPU SIMD (Single Instruction, Multiple Data) registers, yielding 50x--100x speedups.
+\end{itemize}
+\begin{markingrubric}
+$\bullet$ Pointer array vs contiguous binary buffer: \textbf{2 Marks}\\
+$\bullet$ Homogeneous dtype requirement: \textbf{2 Marks}\\
+$\bullet$ SIMD hardware acceleration explanation: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+\textbf{The Three Broadcasting Rules}:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Prepend 1s to the shape of the array with fewer dimensions until rank matches.
+    \item Compare corresponding dimensions from right to left: they must either be equal, or one of them must be 1.
+    \item Arrays with dimension size 1 are stretched along that axis to match the other array.
+\end{enumerate}
+\textbf{Evaluation of $(8, 1, 6, 1)$ and $(7, 1, 5)$}:
+\begin{align*}
+\text{Array 1:} \quad & 8 & 1 & 6 & 1 \\
+\text{Array 2:} \quad & 1 & 7 & 1 & 5 \quad \text{(prepended with 1)} \\
+\midrule
+\text{Result:} \quad & \mathbf{8} & \mathbf{7} & \mathbf{6} & \mathbf{5}
+\end{align*}
+All dimensions are compatible ($8 \times 1 \to 8$, $1 \times 7 \to 7$, $6 \times 1 \to 6$, $1 \times 5 \to 5$). The resulting array shape is $\mathbf{(8, 7, 6, 5)}$.
+\begin{markingrubric}
+$\bullet$ Formulation of the 3 broadcasting rules: \textbf{3 Marks}\\
+$\bullet$ Right-to-left trailing dimension alignment: \textbf{2 Marks}\\
+$\bullet$ Final shape calculation $(8, 7, 6, 5)$: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\begin{pycode}
+import numpy as np\\
+~\\
+def moving\_average(signal, k):\\
+\_\_ESCTOKEN\_7\_\_ if k <= 0 or k > len(signal):\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ raise ValueError("Window k must satisfy 1 <= k <= len(signal)")\\
+\_\_ESCTOKEN\_7\_\_ kernel = np.ones(k) / k\\
+\_\_ESCTOKEN\_7\_\_ return np.convolve(signal, kernel, mode='valid')
+\end{pycode}
+\textbf{Complexity}: Naive nested Python loops take $\mathcal{O}(N \cdot k)$ time with dynamic interpretation overhead. NumPy's compiled FFT/C convolution executes in $\mathcal{O}(N)$ or $\mathcal{O}(N \log k)$ time with cache spatial locality.
+\begin{markingrubric}
+$\bullet$ Implementation via \texttt{np.convolve} with normalized kernel: \textbf{3 Marks}\\
+$\bullet$ Parameter validation and \texttt{mode='valid'} boundary: \textbf{1 Mark}\\
+$\bullet$ Asymptotic complexity comparison: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{.loc}: Label-based selector. Accepts string index labels, date timestamps, or boolean Series. \textbf{Endpoint is INCLUSIVE}: \texttt{df.loc['Jan':'Mar']} includes March.
+    \item \texttt{.iloc}: Integer position selector ($0 \dots N-1$). \textbf{Endpoint is EXCLUSIVE}: \texttt{df.iloc[0:3]} includes rows 0, 1, 2 only.
+\end{itemize}
+\begin{markingrubric}
+$\bullet$ Label vs integer coordinate distinction: \textbf{3 Marks}\\
+$\bullet$ Inclusive vs exclusive slicing endpoint explanation: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\begin{pycode}
+import pandas as pd\\
+~\\
+def process\_payroll(filepath):\\
+\_\_ESCTOKEN\_7\_\_ df = pd.read\_csv(filepath)\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_1\_\_ Impute missing salaries with departmental median\\
+\_\_ESCTOKEN\_7\_\_ df['salary'] = df.groupby('department')['salary'].transform(\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ lambda s: s.fillna(s.median())\\
+\_\_ESCTOKEN\_7\_\_ )\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_1\_\_ Pivot table for aggregated payroll\\
+\_\_ESCTOKEN\_7\_\_ pivot = pd.pivot\_table(\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ df, values='salary', index='department',\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ columns='tier', aggfunc='sum', fill\_value=0\\
+\_\_ESCTOKEN\_7\_\_ )\\
+\_\_ESCTOKEN\_7\_\_ return pivot
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Correct use of \texttt{.groupby().transform()} for median imputation: \textbf{3 Marks}\\
+$\bullet$ Parameterization of \texttt{pd.pivot\_table}: \textbf{2 Marks}\\
+$\bullet$ Handling missing values defensively: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\begin{pycode}
+import matplotlib.pyplot as plt\\
+import numpy as np\\
+~\\
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))\\
+~\\
+\# Left panel: Line plot with error bars\\
+x = np.linspace(0, 10, 20)\\
+y = np.sin(x)\\
+y\_err = 0.15 * np.ones\_like(x)\\
+ax1.errorbar(x, y, yerr=y\_err, fmt='-o', color='navy', capsize=3)\\
+ax1.set\_title("Signal Transmission")\\
+ax1.grid(True)\\
+~\\
+\# Right panel: Normalized histogram\\
+samples = np.random.normal(0, 1, 1000)\\
+ax2.hist(samples, bins=25, density=True, color='skyblue', edgecolor='black')\\
+ax2.set\_title("Density Distribution")\\
+~\\
+plt.tight\_\_ESCTOKEN\_0\_\_layout()\\
+plt.savefig("panel\_output.png", dpi=300)
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Object-oriented figure and axes instantiation: \textbf{2 Marks}\\
+$\bullet$ Correct errorbar plotting syntax: \textbf{2 Marks}\\
+$\bullet$ Histogram density normalization and layout export: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

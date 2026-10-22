@@ -1,0 +1,102 @@
+\chapter{Multivariate Differential Calculus and Optimization}
+\label{chap:multivariate-calculus}
+
+\section{Functions of Several Variables: Limits and Continuity}
+Physical systems inherently involve coupled parameters: thermodynamics ($P, V, T$), aerodynamics ($x, y, z, t$), and structural mechanics.
+A scalar function of two variables is a mapping $f: D \subset \mathbb{R}^2 \to \mathbb{R}$.
+
+\begin{definition}[Limit in $\mathbb{R}^2$]
+We say $\lim_{(x,y)\to(x_0,y_0)} f(x,y) = L$ if for every $\varepsilon > 0$, there exists $\delta > 0$ such that:
+\begin{equation}
+0 < \sqrt{(x - x_0)^2 + (y - y_0)^2} < \delta \implies |f(x,y) - L| < \varepsilon
+\end{equation}
+\textbf{Two-Path Test}: If $f(x,y)$ approaches different limits along two distinct directional paths approaching $(x_0, y_0)$, the limit does not exist.
+\end{definition}
+
+\section{Partial Derivatives and Chain Rules}
+\begin{definition}[Partial Derivatives]
+\begin{equation}
+\frac{\partial f}{\partial x} = \lim_{\Delta x \to 0} \frac{f(x + \Delta x, y) - f(x,y)}{\Delta x}, \quad \frac{\partial f}{\partial y} = \lim_{\Delta y \to 0} \frac{f(x, y + \Delta y) - f(x,y)}{\Delta y}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Multivariate Chain Rules]
+\begin{enumerate}
+    \item \textbf{Case 1 (One Independent Variable)}: If $z = f(u, v)$ where $u = g(t)$ and $v = h(t)$:
+    \begin{equation}
+    \frac{dz}{dt} = \frac{\partial z}{\partial u}\frac{du}{dt} + \frac{\partial z}{\partial v}\frac{dv}{dt}
+    \end{equation}
+    \item \textbf{Case 2 (Two Independent Variables)}: If $z = f(u, v)$ where $u = g(s, t)$ and $v = h(s, t)$:
+    \begin{equation}
+    \frac{\partial z}{\partial s} = \frac{\partial z}{\partial u}\frac{\partial u}{\partial s} + \frac{\partial z}{\partial v}\frac{\partial v}{\partial s}, \quad \frac{\partial z}{\partial t} = \frac{\partial z}{\partial u}\frac{\partial u}{\partial t} + \frac{\partial z}{\partial v}\frac{\partial v}{\partial t}
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\section{Euler's Theorem on Homogeneous Functions}
+\begin{definition}[Homogeneous Function]
+A function $f(x,y)$ is homogeneous of degree $n$ if for any real $t > 0$:
+\begin{equation}
+f(tx, ty) = t^n f(x,y)
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Euler's Theorem]
+If $u = f(x,y)$ is a homogeneous function of degree $n$ possessing continuous partial derivatives:
+\begin{equation}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n u
+\end{equation}
+\textbf{Second-Order Deduction}:
+\begin{equation}
+x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} = n(n - 1)u
+\end{equation}
+\end{theorem}
+
+\section{Jacobians and Transformations}
+\begin{definition}[Jacobian Determinant]
+If $u = u(x,y)$ and $v = v(x,y)$ are continuously differentiable, the Jacobian of $u, v$ with respect to $x, y$ is:
+\begin{equation}
+J = \frac{\partial(u,v)}{\partial(x,y)} = \begin{vmatrix}
+\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
+\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+\end{vmatrix}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Fundamental Properties of Jacobians]
+\begin{enumerate}
+    \item \textbf{Reciprocal Property}: If $J = \frac{\partial(u,v)}{\partial(x,y)}$ and $J' = \frac{\partial(x,y)}{\partial(u,v)}$, then $J \cdot J' = 1$.
+    \item \textbf{Chain Rule}: If $u, v$ depend on $r, s$, which in turn depend on $x, y$:
+    \begin{equation}
+    \frac{\partial(u,v)}{\partial(x,y)} = \frac{\partial(u,v)}{\partial(r,s)} \cdot \frac{\partial(r,s)}{\partial(x,y)}
+    \end{equation}
+    \item \textbf{Functional Dependence}: If $u$ and $v$ are functionally related ($F(u, v) = 0$), then $\frac{\partial(u,v)}{\partial(x,y)} = 0$.
+\end{enumerate}
+\end{theorem}
+
+\section{Maxima, Minima and the Second Derivative Test}
+\begin{definition}[Critical Point]
+A point $(a,b)$ is a critical point of $f(x,y)$ if $\frac{\partial f}{\partial x}(a,b) = 0$ and $\frac{\partial f}{\partial y}(a,b) = 0$.
+\end{definition}
+
+Let $r = \frac{\partial^2 f}{\partial x^2}$, $s = \frac{\partial^2 f}{\partial x \partial y}$, $t = \frac{\partial^2 f}{\partial y^2}$ evaluated at $(a,b)$, and discriminant $\Delta = rt - s^2$.
+\begin{theorem}[Second Derivative Test for Bivariate Extrema]
+\begin{enumerate}
+    \item If $rt - s^2 > 0$ and $r < 0$ (or $t < 0$): $f(a,b)$ is a \textbf{Local Maximum}.
+    \item If $rt - s^2 > 0$ and $r > 0$ (or $t > 0$): $f(a,b)$ is a \textbf{Local Minimum}.
+    \item If $rt - s^2 < 0$: $(a,b)$ is a \textbf{Saddle Point} (neither maximum nor minimum).
+    \item If $rt - s^2 = 0$: The test is \textbf{Inconclusive} (higher-order analysis required).
+\end{enumerate}
+\end{theorem}
+
+\section{Lagrange's Method of Undetermined Multipliers}
+To find the extrema of $f(x,y,z)$ subject to the constraint $g(x,y,z) = 0$:
+Construct the Lagrangian auxiliary function:
+\begin{equation}
+F(x, y, z, \lambda) = f(x, y, z) + \lambda g(x, y, z)
+\end{equation}
+Equate all first partial derivatives to zero:
+\begin{equation}
+\frac{\partial F}{\partial x} = 0, \quad \frac{\partial F}{\partial y} = 0, \quad \frac{\partial F}{\partial z} = 0, \quad \frac{\partial F}{\partial \lambda} = g(x,y,z) = 0
+\end{equation}
+Solving this simultaneous non-linear system provides the stationary points.

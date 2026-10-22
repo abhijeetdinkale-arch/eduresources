@@ -1,0 +1,89 @@
+\chapter{Unit 4: Fundamentals of Semiconductor Devices}
+
+\section{Semiconductor Physics and PN Junction}
+
+\begin{formulabox}{Carrier Concentrations and Built-in Potential}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mass Action Law}: $n \cdot p = n_i^2$ (under thermal equilibrium).
+    \item \textbf{Intrinsic Carrier Concentration}: $n_i = B T^{3/2} e^{-E_g / (2 k_B T)}$.
+    \item \textbf{Thermal Voltage}: $V_T = \frac{k_B T}{q} \approx 25.86\text{ mV} \approx 26\text{ mV}$ at $T = 300\text{ K}$.
+    \item \textbf{Built-in Contact Potential ($V_0$ or $V_{bi}$)}:
+    \[ V_0 = V_T \ln\left(\frac{N_A N_D}{n_i^2}\right) \]
+    Typical values: $0.7\text{ V}$ for Silicon (Si), $0.3\text{ V}$ for Germanium (Ge).
+    \item \textbf{Depletion Layer Width}:
+    \[ W = \sqrt{\frac{2 \varepsilon_s}{q}\left(\frac{1}{N_A} + \frac{1}{N_D}\right)(V_0 - V_D)} \]
+    \item \textbf{Shockley Ideal Diode Equation}:
+    \[ I_D = I_s \left( e^{V_D / (\eta V_T)} - 1 \right) \]
+    ($I_s$: reverse saturation current, $\eta$: ideality factor: $\approx 1$ for Ge, $\approx 1--2$ for Si).
+    \item \textbf{Dynamic (AC) Resistance}:
+    \[ r_d = \frac{d V_D}{d I_D} = \frac{\eta V_T}{I_D + I_s} \approx \frac{26\text{ mV}}{I_D\text{ (in mA)}} \]
+\end{itemize}
+\end{formulabox}
+
+\section{Special Diodes and Testing}
+
+\begin{formulabox}{Zener, Varactor, and Logic Gates}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Zener Diode Breakdown Mechanisms}:
+    \begin{itemize}
+        \item Zener Breakdown ($V_Z < 5\text{ V}$): Quantum mechanical tunneling in heavily doped, narrow depletion junctions. Has negative temperature coefficient.
+        \item Avalanche Breakdown ($V_Z > 6\text{ V}$): Impact ionization in lightly doped junctions. Has positive temperature coefficient.
+    \end{itemize}
+    \item \textbf{Zener Shunt Voltage Regulator Design}:
+    \[ R_S = \frac{V_{in,min} - V_Z}{I_{L,max} + I_{Z,min}} \]
+    where $I_{Z,min}$ is the knee current ensuring breakdown maintenance.
+    \item \textbf{Varactor Diode (Varicap)}:
+    Operates in reverse bias. Depletion layer acts as a voltage-variable dielectric:
+    \[ C_T = \frac{\varepsilon A}{W} \propto \frac{1}{(V_0 + V_R)^m} \quad (m \approx 0.5 \text{ for abrupt, } m \approx 0.33 \text{ for linearly graded}) \]
+    Resonant frequency tuning: $f_0(V_R) = \frac{1}{2\pi\sqrt{L C_T(V_R)}}$.
+    \item \textbf{Diode Logic}:
+    \begin{itemize}
+        \item Diode OR Gate: Anodes receive inputs $A, B$; cathodes tied to load resistor $R$ to ground. Output $Y = A + B$.
+        \item Diode AND Gate: Cathodes receive inputs $A, B$; anodes tied through pull-up resistor to $V_{CC}$. Output $Y = A \cdot B$.
+    \end{itemize}
+\end{itemize}
+\end{formulabox}
+
+\section{Rectifiers and Smoothing Filters}
+
+\begin{formulabox}{Rectifier Comparative Master Table}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{l X X X}
+\toprule
+\textbf{Parameter} & \textbf{Half-Wave} & \textbf{Full-Wave (Center-Tap)} & \textbf{Bridge Rectifier} \\
+\midrule
+Number of Diodes & 1 & 2 & 4 \\
+Peak Secondary Voltage & $V_m$ & $V_m$ (per half) & $V_m$ \\
+DC Output Voltage $V_{dc}$ & $\frac{V_m}{\pi} \approx 0.318 V_m$ & $\frac{2V_m}{\pi} \approx 0.637 V_m$ & $\frac{2V_m}{\pi} \approx 0.637 V_m$ \\
+RMS Output Voltage $V_{rms}$ & $\frac{V_m}{2} = 0.5 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707 V_m$ \\
+Ripple Factor $\gamma$ & $1.21$ & $0.482$ & $0.482$ \\
+Ripple Frequency $f_r$ & $f$ & $2f$ & $2f$ \\
+Max Efficiency $\eta_{max}$ & $\frac{4}{\pi^2} \approx 40.6\%$ & $\frac{8}{\pi^2} \approx 81.2\%$ & $\frac{8}{\pi^2} \approx 81.2\%$ \\
+Peak Inverse Voltage (PIV) & $V_m$ & $2V_m$ & $V_m$ \\
+Transformer Utilization (TUF) & $0.287$ & $0.672$ & $0.812$ \\
+\bottomrule
+\end{tabularx}
+\end{center}\vspace{2mm}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Ripple Factor Definition}: $\gamma = \frac{V_{ac,rms}}{V_{dc}} = \sqrt{\left(\frac{V_{rms}}{V_{dc}}\right)^2 - 1}$.
+    \item \textbf{Shunt Capacitor Filter Ripple}:
+    \[ \gamma_{C} = \frac{1}{4\sqrt{3} f C R_L} \quad \text{(Full-wave)}, \qquad V_{dc} = V_m - \frac{I_{dc}}{4 f C} \]
+\end{itemize}
+\end{formulabox}
+
+\section{MOSFET Fundamentals}
+
+\begin{formulabox}{MOSFET Current--Voltage Characteristics (N-Channel Enhancement)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Cutoff Region} ($V_{GS} < V_{th}$):
+    \[ I_D = 0 \]
+    \item \textbf{Triode / Ohmic Region} ($V_{GS} \ge V_{th}$ and $V_{DS} < V_{GS} - V_{th}$):
+    \[ I_D = k_n' \frac{W}{L} \left[ (V_{GS} - V_{th})V_{DS} - \frac{1}{2}V_{DS}^2 \right] \]
+    For small $V_{DS}$: $r_{DS} = \frac{1}{k_n' (W/L)(V_{GS} - V_{th})}$.
+    \item \textbf{Saturation Region} ($V_{GS} \ge V_{th}$ and $V_{DS} \ge V_{GS} - V_{th}$):
+    \[ I_D = \frac{1}{2} k_n' \frac{W}{L} (V_{GS} - V_{th})^2 (1 + \lambda V_{DS}) \]
+    where $k_n' = \mu_n C_{ox}$ is the process transconductance parameter and $\lambda$ is the channel-length modulation parameter.
+    \item \textbf{Transconductance ($g_m$)}:
+    \[ g_m = \left.\frac{\partial I_D}{\partial V_{GS}}\right|_{V_{DS}} = k_n' \frac{W}{L}(V_{GS} - V_{th}) = \sqrt{2 k_n' \frac{W}{L} I_D} = \frac{2 I_D}{V_{GS} - V_{th}} \]
+\end{itemize}
+\end{formulabox}

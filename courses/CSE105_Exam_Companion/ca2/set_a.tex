@@ -1,0 +1,87 @@
+\LPUPaperHeader{Continuous Assessment 2 (CA-2)}{Set A}{60 Minutes}{30 Marks}{CO5}
+
+\begin{markingrubric}
+\textbf{General Instructions:} Answer any \textbf{5 questions} out of 6 ($5 \times 6 = 30$ Marks).
+\end{markingrubric}
+
+\questionitem{1}{Decode the 7 fields of the following /etc/passwd record: 'appuser:x:1005:1005:Application Service Account,Block 3:/var/app:/bin/bash'. Why is the second field recorded as 'x'?}{6}{CO5}{Understand}
+
+\begin{examsol}
+\textbf{Field-by-Field Breakdown:}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{appuser}: Login username.
+    \item \texttt{x}: Password placeholder indicating the actual hashed credential resides in \texttt{/etc/shadow}.
+    \item \texttt{1005}: Numeric User ID (UID).
+    \item \texttt{1005}: Numeric Primary Group ID (GID).
+    \item \texttt{Application Service Account,Block 3}: GECOS comment field describing user role and location.
+    \item \texttt{/var/app}: Home directory path created for the user.
+    \item \texttt{/bin/bash}: Login shell invoked upon session startup.
+\end{enumerate}
+\textbf{Rationale for 'x':} Historically, encrypted passwords were stored directly in \texttt{/etc/passwd}. Because \texttt{/etc/passwd} must remain world-readable (\texttt{644}) so utilities like \texttt{ls -l} can map UIDs to names, malicious users could copy hashes and perform offline dictionary attacks. Moving the hashes into \texttt{/etc/shadow} (restricted to root, \texttt{640}) resolved this vulnerability.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} 7 fields explanation (4 Marks); Shadow file isolation rationale (2 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2}{A system administrator needs to terminate an unresponsive background process with PID 18450. Contrast sending SIGTERM (15) versus SIGKILL (9). Why should SIGKILL be used strictly as a last resort?}{6}{CO5}{Analyze}
+
+\begin{examsol}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{SIGTERM (Signal 15):} A graceful termination signal. It is trappable by the process, allowing it to flush memory buffers to disk, finish writing database transactions, close network sockets, and remove temporary PID lock files before exiting.
+    \item \textbf{SIGKILL (Signal 9):} An immediate, kernel-enforced termination. It cannot be caught, blocked, or handled by the process. The kernel instantaneously halts the thread and frees its memory pages.
+\end{itemize}
+\textbf{Why SIGKILL is a Last Resort:} Because SIGKILL does not permit the application to clean up, database tables may be left half-written in an inconsistent or corrupted state, temporary lock files (\texttt{.pid}) may remain on disk preventing subsequent daemon restarts, and network peers receive abrupt TCP RST packets rather than clean connection closures.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} SIGTERM mechanism (2 Marks); SIGKILL mechanism (2 Marks); Operational consequences on data integrity (2 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{3}{Formulate the exact vi/vim Ex mode commands required to: (a) globally replace every occurrence of '/usr/local/bin' with '/opt/bin' across an entire file, and (b) write changes to a new file named 'backup.conf' and exit without modifying the original file.}{6}{CO5}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+# Part A: Global substitution using custom delimiter (#) to avoid escaping slashes:
+:%s#/usr/local/bin#/opt/bin#g
+
+# Part B: Save buffer to a new file and exit original:
+:w backup.conf
+:q!
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} Global substitution syntax (3 Marks); Save As and exit sequence (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{4}{Explain the operational states of a process reported by ps: Running (R), Interruptible Sleep (S), Uninterruptible Sleep (D), and Zombie (Z). How does an administrator eliminate a Zombie process?}{6}{CO5}{Understand}
+
+\begin{examsol}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{R (Running):} Active process currently utilizing CPU cycles or queued on the ready scheduler list.
+    \item \textbf{S (Interruptible Sleep):} Waiting on an event, socket message, or timer. Responds immediately to signals.
+    \item \textbf{D (Uninterruptible Sleep):} Waiting on deep hardware operations (e.g. NFS disk I/O). Ignores signals.
+    \item \textbf{Z (Zombie / Defunct):} Execution complete; awaiting parent to invoke \texttt{wait()} to read exit status.
+\end{itemize}
+\textbf{Eliminating a Zombie:} Since the zombie is already dead, \texttt{kill -9} has no effect. The administrator must signal or terminate the \textbf{parent process}. Once the parent terminates, the zombie is inherited by PID 1 (\texttt{systemd}), which immediately issues \texttt{wait()} and cleans up the process table entry.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} Process states definitions (4 Marks); Parent signaling / init adoption mechanism (2 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{5}{Demonstrate the complete keystroke workflow in vi to yank (copy) 4 lines of code, navigate to line 50, paste the copied lines below line 50, and undo the operation.}{6}{CO5}{Apply}
+
+\begin{examsol}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{4yy}: In Command Mode, yanks (copies) 4 consecutive lines starting from active cursor into default register.
+    \item \texttt{50G}: Jumps directly to line number 50 in the document.
+    \item \texttt{p}: Puts (pastes) the register contents immediately below line 50.
+    \item \texttt{u}: Undoes the paste operation immediately.
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} 1.5 Marks per correct keystroke sequence.
+\end{markingrubric}
+\end{examsol}

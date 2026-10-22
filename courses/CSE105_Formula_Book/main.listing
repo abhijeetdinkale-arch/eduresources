@@ -1,0 +1,25 @@
+# 1. if-then-elif-else construct:
+if [ "$ENV" = "production" ] && [ -f "$CONF" ]; then
+    echo "Starting in Production mode..."
+elif [ "$ENV" = "staging" ]; then
+    echo "Starting in Staging mode..."
+else
+    echo "Defaulting to Development..."
+fi
+
+# 2. case-esac construct:
+case "$1" in
+    start) systemctl start app ;;
+    stop)  systemctl stop app ;;
+    *)     echo "Usage: $0 {start|stop}" ; exit 1 ;;
+esac
+
+# 3. for loop over collections:
+for server in web01 web02 db01; do
+    ping -c 1 "$server" >/dev/null && echo "$server is online"
+done
+
+# 4. while loop reading files line-by-line safely:
+while IFS= read -r line || [ -n "$line" ]; do
+    echo "Record: $line"
+done < data.csv

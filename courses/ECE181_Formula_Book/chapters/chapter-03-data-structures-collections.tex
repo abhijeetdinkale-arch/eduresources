@@ -1,0 +1,61 @@
+\chapter{Unit 3: Sequence Types, Dictionaries \& Asymptotic Complexities}
+
+\begin{formulabox}{Universal Slicing Invariant for Sequences}
+For any sequence $S$ of length $N$ with slice index $S[i:j:k]$:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Forward step ($k > 0$): Elements index starts at $i$ (default $0$) up to but not including $j$ (default $N$).
+    \item Reverse step ($k < 0$): Elements index starts at $i$ (default $N-1$) down to but not including $j$ (default $-\infty$).
+    \item Inversion idiom: \texttt{S[::-1]} reverses the entire sequence in $\mathcal{O}(N)$ time.
+    \item Negative indices conversion: If $idx < 0$, internal index $= N + idx$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Collection Time Complexity Comparison Table}
+\begin{center}
+\begin{tabularx}{0.96\textwidth}{l X c c}
+\toprule
+\textbf{Data Structure} & \textbf{Operation} & \textbf{Average Case} & \textbf{Worst Case} \\
+\midrule
+\textbf{List} & Index lookup: \texttt{lst[i]} & $\mathcal{O}(1)$ & $\mathcal{O}(1)$ \\
+& Append to end: \texttt{lst.append(x)} & $\mathcal{O}(1)$ amortized & $\mathcal{O}(N)$ (realloc) \\
+& Pop from end: \texttt{lst.pop()} & $\mathcal{O}(1)$ & $\mathcal{O}(1)$ \\
+& Insert/Pop at index: \texttt{lst.insert(0, x)} & $\mathcal{O}(N)$ & $\mathcal{O}(N)$ \\
+& Search membership: \texttt{x in lst} & $\mathcal{O}(N)$ & $\mathcal{O}(N)$ \\
+& Timsort: \texttt{lst.sort()} & $\mathcal{O}(N \log N)$ & $\mathcal{O}(N \log N)$ \\
+\midrule
+\textbf{Dictionary} & Key lookup: \texttt{d[k]} or \texttt{d.get(k)} & $\mathcal{O}(1)$ & $\mathcal{O}(N)$ (collision) \\
+& Key insertion / update: \texttt{d[k] = v} & $\mathcal{O}(1)$ amortized & $\mathcal{O}(N)$ \\
+& Key deletion: \texttt{del d[k]} & $\mathcal{O}(1)$ & $\mathcal{O}(N)$ \\
+& Key membership: \texttt{k in d} & $\mathcal{O}(1)$ & $\mathcal{O}(N)$ \\
+\midrule
+\textbf{Set} & Element add / remove & $\mathcal{O}(1)$ & $\mathcal{O}(N)$ \\
+& Union / Intersection: \texttt{s1 | s2} & $\mathcal{O}(|s_1| + |s_2|)$ & $\mathcal{O}(|s_1| + |s_2|)$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\begin{formulabox}{Essential String Methods Cheatsheet}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{s.strip([chars])}: Strips leading and trailing whitespace (or characters in \texttt{chars}).
+    \item \texttt{s.split(sep=None, maxsplit=-1)}: Returns a list of substrings split along \texttt{sep}.
+    \item \texttt{sep.join(iterable)}: Concatenates sequence of strings using \texttt{sep} as delimiter in $\mathcal{O}(N)$ time.
+    \item \texttt{s.find(sub[, start[, end]])}: Returns lowest index of substring, or \textbf{$-1$ on failure} (does not raise ValueError).
+    \item \texttt{s.index(sub)}: Returns lowest index; \textbf{raises ValueError} if not found.
+    \item \texttt{s.replace(old, new[, count])}: Replaces occurrences of \texttt{old} with \texttt{new}.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Dictionary Mutation \& Querying APIs}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{d.get(key, default=None)}: Safe lookup returning default value if key is missing (avoids \texttt{KeyError}).
+    \item \texttt{d.setdefault(key, default)}: Returns value if key in dict; otherwise sets \texttt{d[key] = default}.
+    \item \texttt{d.update(other\_dict)}: Merges key-value pairs in-place.
+    \item \texttt{d.pop(key[, default])}: Removes specified key and returns corresponding value.
+    \item View objects: \texttt{d.keys()}, \texttt{d.values()}, \texttt{d.items()} reflect dynamic changes to underlying dict.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Remember: List multiplication \texttt{[[0] * 3] * 3} produces three references to the \textbf{same identical inner list}! Modifying \texttt{a[0][0] = 1} modifies all 3 rows simultaneously! The correct idiom for a 2D matrix is list comprehension: \texttt{[[0 for \_ in range(3)] for \_ in range(3)]}.
+\end{memorytip}

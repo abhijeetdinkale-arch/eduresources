@@ -1,0 +1,138 @@
+\section{Mid-Term Examination --- Set B}
+\label{sec:midterm_set_b}
+
+\LPUPaperHeader{Mid-Term Examination}{B}{90 Minutes}{30 Marks}{CO1 (Foundations), CO2 (Problem Definition), CO3 (Analytical \& Critical Thinking)}
+
+\subsection*{Section A: Multiple Choice Questions [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt all ten questions. Each question carries 1 mark.}
+\end{center}
+
+\mcqitem{1}{Which of the following problems is an example of a well-structured engineering problem?}{Combating urban gentrification}{Calculating the eigenvalues of a $4 \times 4$ matrix}{Resolving ethical dilemmas in autonomous vehicle crashes}{Redesigning primary healthcare delivery}{1}
+
+\mcqitem{2}{What is the primary objective of the Double Diamond's Discover phase?}{To rapidly converge on code}{To diverge and gather broad contextual insights}{To deploy the final commercial product}{To calculate unit manufacturing costs}{1}
+
+\mcqitem{3}{Which quadrant of the Empathy Map captures non-verbal behaviors and physical pathways?}{Says}{Thinks}{Does}{Feels}{1}
+
+\mcqitem{4}{Which stakeholder group in Mendelow's Matrix possesses high power and high interest?}{Monitor}{Keep Informed}{Keep Satisfied}{Manage Closely}{1}
+
+\mcqitem{5}{What form of logical inference is known as ``Inference to the Best Explanation''?}{Deductive Reasoning}{Inductive Reasoning}{Abductive Reasoning}{Syllogistic Reasoning}{1}
+
+\mcqitem{6}{What cognitive bias leads teams to overvalue options framed as avoiding losses over gaining equivalent rewards?}{Loss Aversion / Framing Effect}{Availability Heuristic}{Anchoring Effect}{Dunning-Kruger Effect}{1}
+
+\mcqitem{7}{What does the acronym SMART stand for in project objective formulation?}{Speedy, Managed, Agile, Reliable, Timely}{Specific, Measurable, Achievable, Relevant, Time-bound}{Standardized, Modular, Actionable, Robust, Technical}{Strategic, Monetary, Analytical, Rigorous, Trackable}{1}
+
+\mcqitem{8}{In an Ishikawa diagram, the main problem or defect is positioned at:}{The tail of the fish}{The head (spine terminus) of the fish}{The ribs of the fish}{The scales of the fish}{1}
+
+\mcqitem{9}{Which sense-making domain in Cynefin involves emergent order and safe-to-fail experiments?}{Clear}{Complicated}{Complex}{Chaotic}{1}
+
+\mcqitem{10}{When an engineer blindly trusts an algorithmic diagnostic output over physical symptoms, they exhibit:}{Automation Bias}{Status Quo Bias}{Halo Effect}{Groupthink}{1}
+
+\newpage
+\subsection*{Section B: Applied Analytical Problems [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt both questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{11}{
+    A university is selecting an enterprise Cloud Learning Management System (LMS) from three shortlisted vendors. The evaluation criteria and weights are: Usability ($w_1 = 0.30$), API Extensibility ($w_2 = 0.25$), Information Security Compliance ($w_3 = 0.25$), and Annual Licensing Cost ($w_4 = 0.20$). Raw ratings (scale 1--10) are:
+    \begin{itemize}
+        \item \textbf{Vendor Alpha:} Usability = 9, APIs = 7, Security = 8, Cost = 5
+        \item \textbf{Vendor Beta:} Usability = 7, APIs = 9, Security = 9, Cost = 6
+        \item \textbf{Vendor Gamma:} Usability = 6, APIs = 8, Security = 7, Cost = 9
+    \end{itemize}
+    Execute an MCDA calculation to rank all three vendors and recommend the optimal selection.
+}{5}{CO3}{L3 Apply}
+
+\questionitem{12}{
+    Identify and analyze three distinct cognitive biases that typically distort software development estimations during sprint planning. Formulate an actionable debiasing heuristic for each.
+}{5}{CO3}{L4 Analyze}
+
+\newpage
+\subsection*{Section C: Comprehensive Design Case Scenario [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt the comprehensive case study below.}
+\end{center}
+
+\questionitem{13}{
+    \textbf{Case Context:} An agricultural cooperative seeks to minimize water wastage across 1,200 family-owned orchards. Currently, farmers rely on traditional flood irrigation every Thursday, causing 40\% water evaporation and soil salinization. A foreign drone vendor offered to sell thermal imaging drones to inspect orchards for \$150,000.\\
+    \textbf{Deliverables Required:}\\
+    (a) Analyze why purchasing surveillance drones fails to address the human root problem.\\
+    (b) Construct a 5-Whys diagnostic chain explaining why farmers flood their fields on Thursdays.\\
+    (c) Formulate a human-centered POV statement for orchard farmers.\\
+    (d) Derive three actionable HMW questions exploring affordable, low-tech, and behavioral interventions.
+}{10}{CO2}{L5 Evaluate}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- Mid-Term Set B}
+
+\begin{solutionbox}[Solutions to Section A: Objective MCQs]
+\textbf{1.} (B) Calculating the eigenvalues of a $4 \times 4$ matrix \quad
+\textbf{2.} (B) To diverge and gather broad contextual insights \quad
+\textbf{3.} (C) Does \quad
+\textbf{4.} (D) Manage Closely \quad
+\textbf{5.} (C) Abductive Reasoning \quad
+\textbf{6.} (A) Loss Aversion / Framing Effect \quad
+\textbf{7.} (B) Specific, Measurable, Achievable, Relevant, Time-bound \quad
+\textbf{8.} (B) The head (spine terminus) of the fish \quad
+\textbf{9.} (C) Complex \quad
+\textbf{10.} (A) Automation Bias
+\begin{markingrubric}
+1 Mark per correct MCQ = \textbf{10 Marks Total}.
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 11: MCDA Vendor Ranking]
+Calculate $S_i = \sum_{j=1}^4 w_j \cdot r_{ij}$:\\
+$\bullet$ \textbf{Vendor Alpha:}\\
+$S_\alpha = (0.30 \times 9) + (0.25 \times 7) + (0.25 \times 8) + (0.20 \times 5) = 2.70 + 1.75 + 2.00 + 1.00 = \mathbf{7.45}$\\
+$\bullet$ \textbf{Vendor Beta:}\\
+$S_\beta = (0.30 \times 7) + (0.25 \times 9) + (0.25 \times 9) + (0.20 \times 6) = 2.10 + 2.25 + 2.25 + 1.20 = \mathbf{7.80}$\\
+$\bullet$ \textbf{Vendor Gamma:}\\
+$S_\gamma = (0.30 \times 6) + (0.25 \times 8) + (0.25 \times 7) + (0.20 \times 9) = 1.80 + 2.00 + 1.75 + 1.80 = \mathbf{7.35}$\\
+\textbf{Recommendation:}\\
+Vendor Beta ranks first ($S_\beta = 7.80$), followed by Alpha ($7.45$) and Gamma ($7.35$). Beta provides superior API extensibility and security compliance while maintaining balanced usability.
+\begin{markingrubric}
+$\bullet$ Accurate calculation for all three vendors: \textbf{3 Marks}\\
+$\bullet$ Complete ranking and justified recommendation: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 12: Cognitive Biases in Sprint Planning]
+1. \textbf{Overconfidence / Planning Fallacy:}\\
+$\bullet$ \textit{Manifestation:} Developers consistently underestimate task completion time by 40--50\%, assuming zero interruptions or bugs.\\
+$\bullet$ \textit{Debiasing Heuristic:} Reference-Class Forecasting: base sprint estimates on historical velocity data from similar past tasks rather than optimistic mental projections.\\
+2. \textbf{Anchoring Effect:}\\
+$\bullet$ \textit{Manifestation:} The team lead mentions ``this looks like a 3-point story,'' anchoring the entire room around 3 points.\\
+$\bullet$ \textit{Debiasing Heuristic:} Planning Poker: all developers reveal story point cards simultaneously in secret, preventing anchor contamination.\\
+3. \textbf{Groupthink / Social Desirability:}\\
+$\bullet$ \textit{Manifestation:} Junior engineers withhold concerns regarding legacy dependencies to avoid conflict with senior architects.\\
+$\bullet$ \textit{Debiasing Heuristic:} Anonymous pre-sprint risk submission and required devil's advocate reviews.
+\begin{markingrubric}
+$\bullet$ Accurate analysis of 3 biases in sprint context: \textbf{3 Marks}\\
+$\bullet$ Concrete, realistic debiasing interventions: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 13: Orchard Irrigation Case Study]
+\textbf{(a) Critique of Drone Surveillance Fallacy (2 Marks):}\\
+Thermal imaging drones provide aerial data on soil temperature but do not automate water control, cannot change canal availability schedules, and cost more than the annual cooperative budget. It creates high technical overhead without resolving the physical and behavioral bottlenecks.\\
+\textbf{(b) 5-Whys Diagnostic Chain (3 Marks):}\\
+$\bullet$ \textit{Why 1:} Why do farmers flood their fields on Thursday? Because canal water is released into secondary ditches only on Thursdays.\\
+$\bullet$ \textit{Why 2:} Why is canal water released only on Thursdays? Because the irrigation department uses a fixed weekly rotation schedule.\\
+$\bullet$ \textit{Why 3:} Why do farmers apply excessive water? Because they fear canal water might be delayed next week, so they over-saturate soil as insurance.\\
+$\bullet$ \textit{Why 4:} Why do they lack real-time soil moisture knowledge? Because physical laboratory testing is slow and expensive.\\
+$\bullet$ \textit{Why 5 (Root Cause):} The system lacks on-site visual soil moisture feedback and flexible on-demand micro-irrigation scheduling.\\
+\textbf{(c) POV Statement (2 Marks):}\\
+``Family orchard farmers [User] need simple, trusted real-time soil moisture indicators and controlled water delivery [Need] because rigid canal schedules and fear of drought compel them to flood fields destructively [Insight].''\\
+\textbf{(d) Three Derived HMW Questions (3 Marks):}\\
+$\bullet$ \textit{HMW 1:} How might we provide low-cost mechanical color-changing soil moisture probes requiring zero batteries?\\
+$\bullet$ \textit{HMW 2:} How might we organize cooperative night-drip irrigation scheduling to eliminate daytime evaporation?\\
+$\bullet$ \textit{HMW 3:} How might we incentivize water conservation through shared pumping credits?
+\begin{markingrubric}
+$\bullet$ Part (a) Critical failure analysis: \textbf{2 Marks}\\
+$\bullet$ Part (b) 5-Whys diagnostic chain: \textbf{3 Marks}\\
+$\bullet$ Part (c) POV statement: \textbf{2 Marks}\\
+$\bullet$ Part (d) 3 actionable HMW questions: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}

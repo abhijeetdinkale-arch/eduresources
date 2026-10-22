@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+int timeout = 5000;
+=======
+int timeout = 10000;
+>>>>>>> feature-auth

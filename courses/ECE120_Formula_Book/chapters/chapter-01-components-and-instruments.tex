@@ -1,0 +1,66 @@
+\chapter{Electronic Components \& Laboratory Test Instruments}
+
+\section{Resistor Color Code Decoding Standards}
+\begin{formulabox}{4-Band, 5-Band and 6-Band Resistor Color Codes}
+For a standard 4-band resistor:
+\[ R = (D_1 \times 10 + D_2) \times 10^{\text{Multiplier}} \pm \text{Tolerance}\,\% \]
+For a precision 5-band resistor:
+\[ R = (D_1 \times 100 + D_2 \times 10 + D_3) \times 10^{\text{Multiplier}} \pm \text{Tolerance}\,\% \]
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Color} & \textbf{Significant Digit} & \textbf{Multiplier} & \textbf{Tolerance (\%)} & \textbf{Temp. Coeff. (ppm/K)} \\
+\midrule
+Black & 0 & $10^0 = 1$ & --- & 250 \\
+Brown & 1 & $10^1 = 10$ & $\pm 1\%$ (F) & 100 \\
+Red & 2 & $10^2 = 100$ & $\pm 2\%$ (G) & 50 \\
+Orange & 3 & $10^3 = 1\,\mathrm{k}$ & --- & 15 \\
+Yellow & 4 & $10^4 = 10\,\mathrm{k}$ & --- & 25 \\
+Green & 5 & $10^5 = 100\,\mathrm{k}$ & $\pm 0.5\%$ (D) & 20 \\
+Blue & 6 & $10^6 = 1\,\mathrm{M}$ & $\pm 0.25\%$ (C) & 10 \\
+Violet & 7 & $10^7 = 10\,\mathrm{M}$ & $\pm 0.1\%$ (B) & 5 \\
+Gray & 8 & $10^8 = 100\,\mathrm{M}$ & $\pm 0.05\%$ (A) & 1 \\
+White & 9 & $10^9 = 1\,\mathrm{G}$ & --- & --- \\
+Gold & --- & $10^{-1} = 0.1$ & $\pm 5\%$ (J) & --- \\
+Silver & --- & $10^{-2} = 0.01$ & $\pm 10\%$ (K) & --- \\
+None & --- & --- & $\pm 20\%$ (M) & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{Mnemonic for Resistor Color Bands:}\\
+\textbf{B}. \textbf{B}. \textbf{R}OY of \textbf{G}reat \textbf{B}ritain had a \textbf{V}ery \textbf{G}ood \textbf{W}ife wearing \textbf{G}old and \textbf{S}ilver.\\
+(Black=0, Brown=1, Red=2, Orange=3, Yellow=4, Green=5, Blue=6, Violet=7, Gray=8, White=9, Gold=5\%, Silver=10\%).
+\end{memorytip}
+
+\section{Capacitor Three-Digit EIA Markings}
+\begin{formulabox}{Three-Digit Ceramic Capacitor Markings}
+For a 3-digit marking code $D_1 D_2 M$:
+\[ C = (D_1 \times 10 + D_2) \times 10^M\,\mathrm{pF} \]
+\begin{itemize}
+    \item Marking \textbf{104}: $C = 10 \times 10^4\,\mathrm{pF} = 100{,}000\,\mathrm{pF} = 100\,\mathrm{nF} = 0.1\,\mu\mathrm{F}$.
+    \item Marking \textbf{473}: $C = 47 \times 10^3\,\mathrm{pF} = 47{,}000\,\mathrm{pF} = 47\,\mathrm{nF} = 0.047\,\mu\mathrm{F}$.
+    \item Marking \textbf{222}: $C = 22 \times 10^2\,\mathrm{pF} = 2200\,\mathrm{pF} = 2.2\,\mathrm{nF}$.
+    \item Letter suffix denotes tolerance: $\mathrm{J} = \pm 5\%$, $\mathrm{K} = \pm 10\%$, $\mathrm{M} = \pm 20\%$, $\mathrm{Z} = +80\% / -20\%$.
+\end{itemize}
+\end{formulabox}
+
+\section{Digital Multimeter (DMM) \& Oscilloscope (DSO) Quick Specifications}
+\begin{formulabox}{DMM \& DSO Core Equations}
+\begin{itemize}
+    \item \textbf{AC Sinusoidal Measurements}:
+    \[ V_{\mathrm{rms}} = \frac{V_{\mathrm{peak}}}{\sqrt{2}} \approx 0.7071\,V_m, \quad V_{p\text{-}p} = 2 V_m \]
+    \item \textbf{Signal Frequency from DSO Timebase}:
+    \[ T = (\text{Horizontal Divisions}) \times (\text{Time/Div Setting}), \quad f = \frac{1}{T} \]
+    \item \textbf{Peak-to-Peak Amplitude}:
+    \[ V_{p\text{-}p} = (\text{Vertical Divisions}) \times (\text{Volts/Div Setting}) \times (\text{Probe Attenuation Factor}) \]
+    \item \textbf{Lissajous Phase Difference Calculation}:
+    \[ \sin \phi = \frac{y_1}{y_2} \implies \phi = \arcsin\left(\frac{y_1}{y_2}\right) \]
+    where $y_1$ is the vertical intercept and $y_2$ is maximum vertical deflection.
+    \item \textbf{LED Forward Resistor Formula}:
+    \[ R_{\mathrm{limit}} = \frac{V_{CC} - V_F}{I_F} \]
+    where for Red LED: $V_F \approx 1.8\text{--}2.0\,\mathrm{V}$; Green/Blue LED: $V_F \approx 3.0\text{--}3.3\,\mathrm{V}$; $I_F \approx 10\text{--}20\,\mathrm{mA}$.
+\end{itemize}
+\end{formulabox}

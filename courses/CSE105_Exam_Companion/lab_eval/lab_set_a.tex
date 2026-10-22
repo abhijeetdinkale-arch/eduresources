@@ -1,0 +1,85 @@
+\LPUPaperHeader{Practical Lab Examination}{Set A}{120 Minutes}{50 Marks}{CO2, CO3, CO4, CO6}
+
+\begin{markingrubric}
+\textbf{Lab Examination Evaluation Breakdown:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1pt]
+    \item \textbf{Task 1: Core CLI, Navigation \& File Permissions} \hfill [15 Marks]
+    \item \textbf{Task 2: Stream Filter Pipeline \& Log Analytics} \hfill [15 Marks]
+    \item \textbf{Task 3: Automated Bash Scripting Challenge} \hfill [10 Marks]
+    \item \textbf{Task 4: Interactive Viva-Voce Defense} \hfill [10 Marks]
+\end{itemize}
+\end{markingrubric}
+
+\section*{Task 1: Filesystem Security \& Special Permissions [15 Marks]}
+\textbf{Task Description:} Create a directory hierarchy \texttt{/opt/secure\_vault/data}. Configure it so that owner is \texttt{root}, group is \texttt{auditors}, and assign permissions such that:
+\begin{enumerate}[label=(\alph*)]
+    \item Group members can create and read files.
+    \item Others have zero access.
+    \item New files created inherit group \texttt{auditors}.
+    \item Verify using \texttt{ls -ld} and test file creation.
+\end{enumerate}
+
+\begin{examcli}
+$ sudo groupadd auditors
+$ sudo usermod -aG auditors student
+$ sudo mkdir -p /opt/secure\_vault/data
+$ sudo chown root:auditors /opt/secure\_vault/data
+$ sudo chmod 2770 /opt/secure\_vault/data
+$ ls -ld /opt/secure\_vault/data
+drwxrws--- 2 root auditors 4096 Oct 22 08:50 /opt/secure\_vault/data
+\end{examcli}
+
+\section*{Task 2: Stream Filter Pipeline Engineering [15 Marks]}
+\textbf{Task Description:} Construct a single pipeline that extracts all user account names and their default login shells from \texttt{/etc/passwd}, excludes system accounts with shells ending in \texttt{nologin} or \texttt{false}, sorts them alphabetically, and writes the output to \texttt{/tmp/valid\_users.txt}.
+
+\begin{examcli}
+$ grep -vE "(nologin|false)$" /etc/passwd | cut -d: -f1,7 | sort > /tmp/valid\_users.txt
+$ head -n 4 /tmp/valid\_users.txt
+root:/bin/bash
+student:/bin/bash
+sync:/bin/sync
+\end{examcli}
+
+\section*{Task 3: Shell Automation Challenge [10 Marks]}
+\textbf{Task Description:} Write an automated Bash script that accepts a file name as argument, computes its SHA-256 hash, and verifies if it matches an expected hash string.
+
+\begin{examscript}
+#!/bin/bash
+set -euo pipefail
+
+FILE="${1:-}"
+EXPECTED_HASH="${2:-}"
+
+if [ -z "$FILE" ] || [ ! -f "$FILE" ]; then
+    echo "Usage: $0 <filename> <expected_sha256>" >&2
+    exit 1
+fi
+
+ACTUAL_HASH=$(sha256sum "$FILE" | awk '{print $1}')
+
+if [ "$ACTUAL_HASH" = "$EXPECTED_HASH" ]; then
+    echo "[SUCCESS] Hash verified: $ACTUAL_HASH"
+    exit 0
+else
+    echo "[FAILURE] Hash mismatch!"
+    echo "Expected: $EXPECTED_HASH"
+    echo "Actual:   $ACTUAL_HASH"
+    exit 2
+fi
+\end{examscript}
+
+\section*{Task 4: Viva-Voce Evaluation Grid [10 Marks]}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X c}
+\toprule
+\textbf{Viva Question} & \textbf{Evaluation Focus \& Expected Knowledge} & \textbf{Marks} \\
+\midrule
+\textbf{Q1. Inode Link Counts} & Explain why deleting a file does not destroy data if a hard link exists. & 2.5 \\
+\textbf{Q2. Redirection Semantics} & Explain the difference between \texttt{>} and \texttt{>>}. & 2.5 \\
+\textbf{Q3. Zombie Elimination} & How to kill a zombie process when \texttt{kill -9} fails. & 2.5 \\
+\textbf{Q4. Git Staging Area} & Explain what happens to the Git index when running \texttt{git add}. & 2.5 \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,55 @@
+\chapter{Unit 4: NumPy ndarray, Vectorization \& Broadcasting Invariants}
+
+\begin{formulabox}{NumPy Array Memory Attributes \& Creation Routines}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{C-Contiguous Memory}: Homogeneous buffer stored sequentially in row-major order with stride calculation:
+    \begin{equation*}
+    \text{Offset}(i_0, i_1, \dots, i_{k-1}) = \sum_{j=0}^{k-1} i_j \cdot \text{stride}_j
+    \end{equation*}
+    \item \texttt{arr.shape}: Tuple of array dimensions ($d_0, d_1, \dots, d_{k-1}$).
+    \item \texttt{arr.ndim}: Number of array axes ($\text{len}(\text{shape})$).
+    \item \texttt{arr.dtype}: Homogeneous element type (\texttt{int32}, \texttt{int64}, \texttt{float32}, \texttt{float64}, \texttt{bool\_}).
+    \item \texttt{np.arange(start, stop, step)}: Half-open interval with specified step.
+    \item \texttt{np.linspace(start, stop, num)}: Closed interval with $num$ evenly spaced samples ($\text{step} = \frac{stop - start}{num - 1}$).
+    \item \texttt{np.zeros(shape)}, \texttt{np.ones(shape)}, \texttt{np.eye(N)}: Fixed-value allocations.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Broadcasting Rules (Universal Vector Alignment Theorem)}
+Two shapes $(a_1, a_2, \dots, a_m)$ and $(b_1, b_2, \dots, b_n)$ are compatible for element-wise operations if, starting from trailing (rightmost) dimensions:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item The dimensions are equal ($a_i == b_i$), OR
+    \item One of the dimensions is exactly $1$ ($a_i == 1$ or $b_i == 1$), OR
+    \item One of the shapes is shorter, in which case dimensions of size 1 are prepended to the left.
+\end{enumerate}
+\textbf{Output Dimension Formula}: $\dim_{\text{out}} = \max(a_i, b_i)$.
+\begin{itemize}
+    \item Example 1: $(4, 3) + (3,) \implies (4, 3) + (1, 3) \implies (4, 3)$ (Row broadcast).
+    \item Example 2: $(4, 1) + (1, 3) \implies (4, 3)$ (Outer grid broadcast).
+    \item Example 3: $(4, 3) + (4,) \implies (4, 3) + (1, 4) \implies$ \textbf{ValueError: shapes (4,3) and (4,) not aligned}!
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Reshaping, Slicing \& Matrix Operations}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Basic Slicing (\texttt{arr[1:3, :]})}: Returns a \textbf{view} (shares memory with original array; modifications mutate original).
+    \item \textbf{Fancy Indexing (\texttt{arr[[0, 2], :]})}: Returns a \textbf{copy} (modifications do NOT affect original array).
+    \item \texttt{arr.reshape(m, -1)}: Infers dimension automatically from total element count.
+    \item \texttt{arr.ravel()} returns a flattened view; \texttt{arr.flatten()} returns a flattened copy.
+    \item Matrix Product: \texttt{A @ B} or \texttt{np.dot(A, B)} ($\mathcal{O}(m n p)$ for $m \times n$ and $n \times p$ matrices).
+    \item Element-wise Product: \texttt{A * B} (Hadamard product).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Statistical Reduction Functions by Axis}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{np.sum(A, axis=0)}: Collapses rows $\to$ computes \textbf{column sums} (shape $(M, N) \to (N,)$).
+    \item \texttt{np.sum(A, axis=1)}: Collapses columns $\to$ computes \textbf{row sums} (shape $(M, N) \to (M,)$).
+    \item Standard deviation: $\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2}$ (\texttt{np.std(A, ddof=0)} for population, \texttt{ddof=1} for sample).
+    \item NaN-safe variants: \texttt{np.nansum()}, \texttt{np.nanmean()}, \texttt{np.nanstd()}.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Axis intuition: The \texttt{axis} parameter specifies the axis that is \textbf{eliminated} during reduction! For a 2D array of shape $(100, 50)$, applying \texttt{axis=0} removes dimension 100, yielding output shape $(50,)$!
+\end{memorytip}

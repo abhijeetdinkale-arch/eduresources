@@ -1,0 +1,116 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\label{sec:ca1_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{A}{60 Minutes}{30 Marks}{CO1 (Foundations \& Wicked Problems), CO2 (Problem Definition \& Analysis)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Contrast well-structured (tame) problems with ill-structured wicked problems across four specific criteria defined by Rittel and Webber (1973). Provide one real-world engineering example of each.
+}{5}{CO1}{L2 Understand}
+
+\questionitem{2}{
+    Explain the non-linear relationship between the \textit{Prototype} and \textit{Empathize} stages in the Stanford d.school Design Thinking framework. How does testing a prototype generate fresh empathy?
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    A smart city municipal corporation observes severe resistance from taxi drivers following the rollout of an automated dispatch app. Construct a Mendelow Power-Interest Matrix classifying four distinct stakeholder groups and define the engagement strategy for each.
+}{5}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Apply the 5-Whys root cause diagnostic methodology to investigate why a university student registration portal crashed during peak course enrollment hours. Show each step of the causal chain.
+}{5}{CO2}{L4 Analyze}
+
+\questionitem{5}{
+    Construct an Ishikawa (Fishbone) diagram utilizing the 4P framework (People, Policy, Procedures, Plant/Technology) to analyze the causes of high medication dispensing errors in an outpatient pharmacy.
+}{5}{CO2}{L4 Analyze}
+
+\questionitem{6}{
+    Formulate a complete Point-of-View (POV) statement for a rural school teacher struggling to deliver hybrid digital lessons during recurring electrical blackouts. Derive three distinct ``How Might We'' (HMW) opportunity questions.
+}{5}{CO2}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+\textbf{1. Four Distinct Rittel \& Webber Criteria:}\\
+$\bullet$ \textit{Definitive Formulation:} Tame problems have clear, bounded equations (e.g., sorting an array). Wicked problems have no definitive formulation; describing the problem requires choosing an ideological stance.\\
+$\bullet$ \textit{Stopping Rule:} Tame problems terminate when an algorithm satisfies an invariant. Wicked problems terminate when resources, budget, or political patience expire.\\
+$\bullet$ \textit{Evaluation of Solutions:} Tame solutions are True/False or Correct/Incorrect. Wicked solutions are judged on a spectrum of Good/Bad or Better/Worse by competing stakeholders.\\
+$\bullet$ \textit{Reversibility:} Tame problems permit risk-free sandbox trial-and-error. Wicked problems are one-shot operations with irreversible societal consequences.\\
+\textbf{2. Engineering Examples:}\\
+$\bullet$ \textit{Tame Example:} Designing a CRC32 checksum verification function in network packet parsing.\\
+$\bullet$ \textit{Wicked Example:} Designing a congestion-pricing algorithm for a major metropolitan downtown corridor.
+\begin{markingrubric}
+$\bullet$ 4 Criteria accurately explained with theoretical grounding: \textbf{3 Marks}\\
+$\bullet$ 2 Distinct, relevant engineering examples: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+\textbf{Non-Linear Dynamics between Prototyping and Empathy:}\\
+Traditional engineering views prototyping as a one-way progression: Concept $\to$ Build $\to$ Final Delivery. In Design Thinking, a prototype is fundamentally an \textbf{empathy instrument}.
+\begin{itemize}
+    \item When an extreme user is handed a low-fidelity prototype (e.g., cardboard mock-up or paper wireframe), their natural interactions reveal unvoiced assumptions, emotional anxieties, and cognitive workarounds that passive interviews fail to surface.
+    \item Watching a user hesitate, express confusion, or misinterpret a label provides visceral observational empathy, sending the design team directly back into the \textit{Empathize} or \textit{Define} stage to reframe user needs.
+\end{itemize}
+\begin{markingrubric}
+$\bullet$ Explanation of prototype as an empathy-generation tool: \textbf{3 Marks}\\
+$\bullet$ Description of non-linear iterative loop (back to Empathize/Define): \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\textbf{Mendelow Stakeholder Classification for Taxi Dispatch System:}\\
+\begin{tabularx}{\linewidth}{|l|c|c|X|} \hline
+\textbf{Stakeholder} & \textbf{Power} & \textbf{Interest} & \textbf{Actionable Strategy} \\ \hline
+Municipal Transport Dept & High & High & \textbf{Manage Closely:} Partner in regulatory compliance and route policy. \\ \hline
+Taxi Fleet Owners Union & High & Low & \textbf{Keep Satisfied:} Maintain dialogue on revenue share to prevent strikes. \\ \hline
+Individual Taxi Drivers & Low & High & \textbf{Keep Informed:} Active user training, vernacular UI, transparent fares. \\ \hline
+Occasional Tourists & Low & Low & \textbf{Monitor:} Track app store reviews and download conversion. \\ \hline
+\end{tabularx}
+\begin{markingrubric}
+$\bullet$ Correct 2$\times$2 classification of 4 stakeholder groups: \textbf{2 Marks}\\
+$\bullet$ Distinct, realistic engagement strategy for each quadrant: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+\textbf{5-Whys Diagnostic Chain for Course Enrollment Crash:}\\
+$\bullet$ \textbf{Why 1:} Why did the portal crash? Because backend server CPU utilization pegged at 100\%, dropping HTTP requests.\\
+$\bullet$ \textbf{Why 2:} Why was CPU pegged at 100\%? Because 8,000 concurrent students were executing un-cached database queries simultaneously at 9:00 AM.\\
+$\bullet$ \textbf{Why 3:} Why were queries un-cached? Because the session cache TTL was set to zero to avoid stale enrollment counts.\\
+$\bullet$ \textbf{Why 4:} Why did all 8,000 students log in at exactly 9:00 AM? Because course registration opened simultaneously across all four academic batches.\\
+$\bullet$ \textbf{Why 5 (Root Cause):} The university enrollment policy lacked batch-wise staggered registration windows and queue-throttled admission gating.
+\begin{markingrubric}
+$\bullet$ Logical, unbroken causal chain connecting symptom to root cause: \textbf{4 Marks}\\
+$\bullet$ Identification of systemic/policy failure rather than mere scapegoating: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\textbf{Ishikawa 4P Breakdown of Medication Dispensing Errors:}\\
+$\bullet$ \textbf{People:} Pharmacist fatigue during 12-hour shifts; cognitive overload from phone calls; look-alike/sound-alike drug name confusion.\\
+$\bullet$ \textbf{Policy:} Absence of mandatory double-verification rules for high-potency drugs; punitive culture discouraging near-miss reporting.\\
+$\bullet$ \textbf{Procedures:} Handwritten illegible prescription routing; batch-dispensing during rush hours without individualized trays.\\
+$\bullet$ \textbf{Plant / Technology:} Outdated barcode scanner latency ($\ge 3$s delay); poor lighting in medication stockroom; cluttered inventory shelves.
+\begin{markingrubric}
+$\bullet$ Correct categorization into all 4P dimensions: \textbf{2 Marks}\\
+$\bullet$ Realistic, contextually specific failure causes under each branch: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\textbf{1. POV Statement:}\\
+``A dedicated rural school teacher [User] needs reliable, asynchronous interactive teaching tools [Need] because erratic daily grid outages create severe student learning disruption and emotional helplessness [Insight].''\\
+\textbf{2. Three Derived HMW Questions:}\\
+$\bullet$ \textit{HMW 1 (Leverage unexpected resource):} How might we utilize local solar battery storage or passive reflective chalkboards to maintain lesson continuity during power cuts?\\
+$\bullet$ \textit{HMW 2 (Remove the bad):} How might we eliminate the requirement for continuous real-time internet connectivity through offline peer-to-peer lesson caching?\\
+$\bullet$ \textit{HMW 3 (Amp up the good):} How might we transform sudden power cuts into interactive group problem-solving exercises that students anticipate with excitement?
+\begin{markingrubric}
+$\bullet$ Complete POV following [User] + [Need] + [Insight] formula: \textbf{2 Marks}\\
+$\bullet$ Three creative, diverse HMW questions: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}

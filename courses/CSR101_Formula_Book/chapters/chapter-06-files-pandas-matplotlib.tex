@@ -1,0 +1,65 @@
+\chapter{File Modes, Pandas Data Wrangling \& Matplotlib Visualization Cheat-Sheet}
+\label{chap:files-pandas-matplotlib}
+
+\section{File Open Modes \& Buffering Reference}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{clX}
+\toprule
+\textbf{Mode} & \textbf{Semantics} & \textbf{Stream Pointer Position \& Behavior} \\
+\midrule
+\texttt{'r'} & Read text (default) & Pointer at start. Raises \texttt{FileNotFoundError} if missing. \\
+\texttt{'w'} & Overwrite text & Truncates existing file to 0 bytes or creates new. Pointer at start. \\
+\texttt{'a'} & Append text & Pointer at end. Creates file if missing. Writes always append. \\
+\texttt{'r+'} & Read and Write & Pointer at start. Does not truncate file automatically. \\
+\texttt{'w+'} & Overwrite and Read & Truncates file immediately to 0 bytes, then allows read and write. \\
+\texttt{'a+'} & Append and Read & Pointer at end for writes. Initial read from end unless \texttt{seek(0)}. \\
+\texttt{'rb'}, \texttt{'wb'} & Binary variants & Read/write raw byte buffers without Unicode encoding translation. \\
+\bottomrule
+\end{tabularx}
+\caption{Standard File Access Modes}
+\end{table}
+
+\section{Pandas Core Operations Cheat-Sheet}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{llX}
+\toprule
+\textbf{Operation} & \textbf{Syntax} & \textbf{Operational Semantics} \\
+\midrule
+\textbf{Label Selection} & \texttt{df.loc[row\_lbl, col\_lbl]} & Selects rows/columns by exact index labels (inclusive slices). \\
+\textbf{Integer Selection} & \texttt{df.iloc[row\_idx, col\_idx]} & Selects rows/columns by integer positions $0 \dots N-1$ (exclusive end). \\
+\textbf{Boolean Filtering} & \texttt{df[(df['A'] > 0) \& (df['B'] == 'X')]} & Bitwise \texttt{\&} and \texttt{\textbar} with mandatory parentheses for condition grouping. \\
+\textbf{Missing Handling} & \texttt{df.dropna(subset=['col'])} & Drops rows where specified columns contain NaN. \\
+                          & \texttt{df['A'].fillna(df['A'].median())} & Imputes missing entries using median scalar. \\
+\textbf{Aggregation}      & \texttt{df.groupby('dept')['salary'].agg(['mean', 'std'])} & Split-apply-combine aggregation yielding multi-index columns. \\
+\textbf{Relational Merge} & \texttt{pd.merge(df1, df2, on='id', how='left')} & SQL-style left join on key column. \\
+\bottomrule
+\end{tabularx}
+\caption{Pandas High-Yield Data Wrangling Operations}
+\end{table}
+
+\section{Matplotlib Figure Architecture}
+\begin{formulabox}{The Object-Oriented Hierarchy}
+\textbf{Figure Canvas $\longrightarrow$ Figure $\longrightarrow$ Axes $\longrightarrow$ Artists (Lines, Text, Patches)}
+\begin{lstlisting}
+import matplotlib.pyplot as plt
+
+# 1. Instantiate Figure and Axes grid
+fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(12, 5), dpi=300)
+
+# 2. Plotting on Axes
+ax1.plot(x, y, color='#0F2043', lw=2, label='Signal')
+ax1.set_title('Time Domain Response')
+ax1.legend(loc='best')
+ax1.grid(True, linestyle='--', alpha=0.6)
+
+ax2.hist(data, bins=30, color='#E85A10', edgecolor='black', alpha=0.7)
+ax2.set_title('Frequency Distribution')
+
+plt.tight_layout()
+plt.savefig('output.pdf', bbox_inches='tight')
+\end{lstlisting}
+\end{formulabox}

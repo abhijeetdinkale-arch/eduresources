@@ -1,0 +1,42 @@
+\chapter{Unit 11: Git Version Control \& Development Tools Matrix}
+
+\begin{cheatbox}{The Three Trees \& States of Git}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Working Directory:} Untracked or modified files on disk.
+    \item \textbf{Staging Area (Index):} Snapshot prepared for next commit (\texttt{.git/index}).
+    \item \textbf{Repository (HEAD):} Permanently recorded commit history (\texttt{.git/objects}).
+\end{itemize}
+\end{cheatbox}
+
+\begin{syntaxbox}{Core Git Command Cheat Sheet}
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Command} & \textbf{Operational Action} \\
+\midrule
+\texttt{git init} & Initializes a new, empty Git repository in the current folder. \\
+\texttt{git config --global user.name "N"} & Configures committer author name. \\
+\texttt{git config --global user.email "E"} & Configures committer email address. \\
+\texttt{git status} & Inspects working tree and staged index changes. \\
+\texttt{git add <file>} & Stages modified or new files into the index. \\
+\texttt{git commit -m "msg"} & Records staged changes into repository history. \\
+\texttt{git log --oneline --graph} & Visualizes historical commit topology. \\
+\texttt{git diff} & Compares working directory against staged index. \\
+\texttt{git diff --staged} & Compares staged index against latest commit (\texttt{HEAD}). \\
+\texttt{git switch -c branch} & Creates and switches to a new branch atomically. \\
+\texttt{git merge branch} & Merges changes from \texttt{branch} into active branch. \\
+\texttt{git remote add origin url} & Binds local repository to remote server. \\
+\texttt{git push -u origin main} & Uploads commits and sets upstream tracking branch. \\
+\texttt{git pull origin main} & Fetches remote changes and merges into active branch. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{Resolving Git Merge Conflicts}
+When Git encounters overlapping edits, it injects conflict markers:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{<<<<<<< HEAD}: Content from currently checked-out branch.
+    \item \texttt{=======}: Center divider separating conflicting changes.
+    \item \texttt{>>>>>>> branch\_name}: Content from incoming branch being merged.
+    \item \textbf{Resolution Workflow:} Open file, manually reconcile lines, delete markers, execute \texttt{git add <file>}, and finalize with \texttt{git commit}.
+\end{itemize}
+\end{cheatbox}

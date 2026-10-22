@@ -1,0 +1,253 @@
+\chapter{Shell Programming, Automation Scripting \& Control Flow}
+\label{chap:shell-programming}
+
+\section{Anatomy of an Industrial Shell Script}
+A shell script is an executable ASCII text file housing a sequence of commands executed by the shell interpreter. Shell scripting transforms manual terminal commands into repeatable, deterministic, automated systems.
+
+\subsection{The Shebang (\texttt{\#!/bin/bash})}
+The very first line of a script must begin with the two-byte magic number \texttt{\#!} (shebang):
+\begin{scriptbox}[Basic Shell Script Skeleton]
+#!/bin/bash
+# Description: Automated system health check script
+# Author: DevOps Engineering Team
+
+echo "System Health Inspection: $(date)"
+\end{scriptbox}
+\begin{itemize}[leftmargin=1.5em]
+    \item When an executable script is loaded via the \texttt{execve()} system call, the Linux kernel inspects the first two bytes (\texttt{0x23 0x21}). If present, the kernel extracts the absolute path to the interpreter (\texttt{/bin/bash}) and executes it, passing the script path as an argument.
+    \item \textbf{Portability Pattern:} Using \texttt{\#!/usr/bin/env bash} resolves the interpreter path dynamically from the user's \texttt{\$PATH}.
+\end{itemize}
+
+\subsection{Script Execution Environments}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Invocation Method} & \textbf{Process Execution Model} & \textbf{Impact on Environment} \\
+\midrule
+\texttt{./script.sh} & Kernel spawns a child subshell. Requires read (\texttt{r}) and execute (\texttt{x}) permissions. & Variables and working directory changes expire upon script exit. \\
+\texttt{bash script.sh} & Shell explicitly executes binary. Requires read (\texttt{r}) permission only. & Isolated child subshell; parent environment unchanged. \\
+\texttt{source script.sh} or \texttt{. script.sh} & Executed directly \textbf{within the current shell process}. No child process is created. & Changes to variables, aliases, functions, and directory paths \textbf{persist} in the active shell. \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of Shell Script Execution Invocations.}
+\label{tab:script-exec}
+\end{table}
+
+\section{Variables, Quoting Rules \& Parameter Expansion}
+Variables in Bash are untyped character strings by default.
+
+\subsection{Assignment Syntax and Quoting}
+\begin{warningbox}[Variable Assignment Whitespace Rule]
+Variable assignment \textbf{must not contain spaces} around the equals sign:
+\begin{itemize}
+    \item \texttt{NAME="Linux"} $\to$ Valid variable assignment.
+    \item \texttt{NAME = "Linux"} $\to$ Shell interprets \texttt{NAME} as a command and \texttt{=} as an argument, causing a \texttt{command not found} runtime failure.
+\end{itemize}
+\end{warningbox}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Single Quotes (\texttt{'...'}):} Preserve the strict literal value of every character within. No variable expansion, escape sequence, or command substitution is performed.
+    \item \textbf{Double Quotes (\texttt{"..."}):} Preserve literal values of most characters while allowing parameter expansion (\texttt{\$VAR}), command substitution (\texttt{\$(...)}), and arithmetic evaluation (\texttt{\$(...)}).
+    \item \textbf{Command Substitution:} The syntax \texttt{\$(command)} captures the standard output stream of an external command into a variable (e.g., \texttt{UPTIME=\$(uptime -p)}).
+\end{itemize}
+
+\subsection{Positional Parameters \& Special Built-in Variables}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Variable} & \textbf{Semantics and Purpose} \\
+\midrule
+\texttt{\$0} & Name of the script currently executing (as invoked). \\
+\texttt{\$1 ... \$9} & First through ninth command-line positional arguments. \\
+\texttt{\$\{10\}} & Tenth positional argument (requires curly braces for two or more digits). \\
+\texttt{\$\#} & Total count of positional arguments passed to the script. \\
+\texttt{\$@} & All positional arguments as separate quoted words (\texttt{"\$1" "\$2" ...}). \\
+\texttt{\$*} & All positional arguments combined into a single word separated by \texttt{IFS}. \\
+\texttt{\$?} & Exit status code of the most recently executed foreground command. \\
+\texttt{\$\$} & Process ID (PID) of the currently running script instance. \\
+\texttt{\$!} & Process ID of the most recently spawned background job. \\
+\bottomrule
+\end{tabularx}
+\caption{POSIX and Bash Special Built-in Variables.}
+\label{tab:special-vars}
+\end{table}
+
+\section{Operators \& Conditional Testing: [ ] vs [[ ]]}
+Conditionals evaluate exit statuses. The \texttt{test} command and its alias \texttt{[ ... ]} are POSIX standards; \texttt{[[ ... ]]} is an enhanced Bash keyword that prevents word splitting and pathname expansion bugs.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Numeric Test} & \textbf{Condition Checked} & \textbf{String Test} & \textbf{Condition Checked} \\
+\midrule
+\texttt{-eq} & Equal to ($a = b$) & \texttt{=} or \texttt{==} & Strings are identical \\
+\texttt{-ne} & Not equal to ($a \neq b$) & \texttt{!=} & Strings are distinct \\
+\texttt{-lt} & Less than ($a < b$) & \texttt{-z str} & String length is zero (empty) \\
+\texttt{-le} & Less than or equal ($a \le b$) & \texttt{-n str} & String length is non-zero \\
+\texttt{-gt} & Greater than ($a > b$) & \texttt{<}, \texttt{>} & Lexicographic ASCII order \\
+\texttt{-ge} & Greater than or equal ($a \ge b$) & & \\
+\bottomrule
+\end{tabularx}
+\caption{Relational Operators for Numeric and String Comparisons.}
+\label{tab:rel-ops}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{File Operator} & \textbf{Condition Evaluated} & \textbf{File Operator} & \textbf{Condition Evaluated} \\
+\midrule
+\texttt{-e file} & Path exists (file, directory, socket) & \texttt{-r file} & File exists and is readable \\
+\texttt{-f file} & Path exists and is a \textbf{regular file} & \texttt{-w file} & File exists and is writable \\
+\texttt{-d dir} & Path exists and is a \textbf{directory} & \texttt{-x file} & File exists and is executable \\
+\texttt{-s file} & File exists and size is $> 0$ bytes & \texttt{-L file} & Path is a symbolic link \\
+\bottomrule
+\end{tabularx}
+\caption{Filesystem Attribute Test Operators.}
+\label{tab:file-ops}
+\end{table}
+
+\section{Control Structures \& Decision-Making Constructs}
+\subsection{The if-elif-else-fi Branching Construct}
+\begin{scriptbox}[Decision Branching Example]
+#!/bin/bash
+TARGET="/var/log/syslog"
+
+if [ ! -e "$TARGET" ]; then
+    echo "Error: File $TARGET does not exist." >&2
+    exit 1
+elif [ -r "$TARGET" ] && [ -s "$TARGET" ]; then
+    echo "Target is present, readable, and non-empty."
+    LINE_COUNT=$(wc -l < "$TARGET")
+    echo "Total log lines: $LINE_COUNT"
+else
+    echo "Warning: Target exists but is unreadable or empty."
+fi
+\end{scriptbox}
+
+\subsection{The case-esac Pattern Matching Construct}
+The \texttt{case} statement provides structured multi-way branching against globbing patterns:
+\begin{scriptbox}[Case Statement Example]
+#!/bin/bash
+case "$1" in
+    start)
+        echo "Starting application service daemon..."
+        ;;
+    stop)
+        echo "Stopping application service daemon..."
+        ;;
+    restart|reload)
+        echo "Restarting service..."
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}" >&2
+        exit 2
+        ;;
+esac
+\end{scriptbox}
+
+\section{Looping Constructs: for, while, until}
+\subsection{The for Loop}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Iterating over a collection:}
+\begin{scriptbox}[Iterating Collections]
+for file in /etc/*.conf; do
+    echo "Configuring file: $file"
+done
+\end{scriptbox}
+    \item \textbf{C-Style Three-Expression Loop:}
+\begin{scriptbox}[C-Style Loop]
+for (( i=1; i<=10; i++ )); do
+    printf "Square of \%d is \%d\n" "$i" "$(( i * i ))"
+done
+\end{scriptbox}
+\end{itemize}
+
+\subsection{The while Loop \& Streaming File Processing}
+The standard pattern for reading files line-by-line safely:
+\begin{scriptbox}[Line-by-Line File Processing]
+#!/bin/bash
+INPUT_FILE="/etc/hosts"
+
+while IFS= read -r line || [ -n "$line" ]; do
+    # Skip comment lines
+    [[ "$line" =~ ^# ]] && continue
+    echo "Processing host entry: $line"
+done < "$INPUT_FILE"
+\end{scriptbox}
+
+\section{Modular Programming: Functions and Arrays}
+\subsection{Bash Functions and Variable Scoping}
+Functions allow isolating logic and parameterizing scripts:
+\begin{scriptbox}[Modular Function Declaration]
+#!/bin/bash
+
+# Function definition
+backup_directory() {
+    local SRC="$1"
+    local DEST="$2"
+
+    if [ ! -d "$SRC" ]; then
+        echo "Source directory $SRC not found!" >&2
+        return 1
+    fi
+
+    tar -czf "$DEST/backup_$(date +\%Y\%m\%d).tar.gz" -C "$SRC" .
+    return 0
+}
+
+# Function invocation
+backup_directory "/var/www/html" "/backup"
+if [ $? -eq 0 ]; then
+    echo "Backup completed successfully."
+fi
+\end{scriptbox}
+
+\subsection{Bash Arrays: Indexed and Associative}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Indexed Arrays:}
+\begin{scriptbox}[Indexed Arrays]
+servers=("alpha" "beta" "gamma")
+echo "First server: ${servers[0]}"
+echo "Total servers: ${#servers[@]}"
+servers+=("delta")   # Append element
+\end{scriptbox}
+    \item \textbf{Associative Arrays (Hash Maps):}
+\begin{scriptbox}[Associative Arrays]
+declare -A ports
+ports["http"]=80
+ports["https"]=443
+ports["ssh"]=22
+echo "SSH Port is ${ports["ssh"]}"
+\end{scriptbox}
+\end{itemize}
+
+\section{Defensive Scripting Standards}
+Production scripts should enforce strict error handling at the entry point:
+\begin{scriptbox}[Defensive Entry Template]
+#!/bin/bash
+set -euo pipefail
+# -e: Exit immediately if any command exits with a non-zero status.
+# -u: Treat unset variables as an error and exit immediately.
+# -o pipefail: Pipeline fails if any command inside encounters an error.
+
+trap 'rm -rf "$TMP_DIR"; echo "Cleanup complete."' EXIT
+TMP_DIR=$(mktemp -d)
+\end{scriptbox}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the mechanics of the shebang line (\texttt{\#!/bin/bash}) and describe what occurs when it is omitted.
+    \item Why must variables be enclosed in double quotes when testing string equality (e.g., \texttt{[ "\$VAR" = "prod" ]})?
+    \item Distinguish between the special variables \texttt{\$@} and \texttt{\$*}.
+    \item Write a complete Bash script that accepts a directory path as argument, verifies it exists, and counts the number of regular files vs subdirectories inside.
+    \item Explain why \texttt{set -euo pipefail} is designated as the gold standard for reliable DevOps shell scripting.
+\end{enumerate}

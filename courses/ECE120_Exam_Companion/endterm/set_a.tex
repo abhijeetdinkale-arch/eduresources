@@ -1,0 +1,112 @@
+\section{End-Term Comprehensive Examination --- Set A}
+
+\LPUPaperHeader{End-Term Comprehensive Examination}{A}{180 Minutes (3 Hours)}{100 Marks}{CO1, CO2, CO3, CO4, CO5, CO6 (Full Syllabus)}
+
+\subsection*{Section A: Conceptual \& Short Analytical Questions (20 Marks, 2 Marks Each)}
+\noindent Answer all \textbf{TEN} questions:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item What is the significance of the 4th band on a carbon resistor?
+    \item Explain the term 'knee voltage' of a semiconductor diode.
+    \item State the dual relationship between the Voltage Divider Law and the Current Divider Law.
+    \item Why must unused TTL logic inputs not be left floating on a breadboard?
+    \item State the two De Morgan's theorems.
+    \item Write the Boolean expression for the Sum output of a Full Adder.
+    \item What is the resolution in millivolts of the 10-bit ADC in an Arduino Uno with a $5.0\,\mathrm{V}$ reference?
+    \item What logic level does an active-LOW LM393 IR sensor module produce when an obstacle is detected?
+    \item Calculate the nominal resistance for bands: Red, Violet, Yellow, Gold.
+    \item What is the function of a flyback diode connected across an inductive relay coil?
+\end{enumerate}
+
+\subsection*{Section B: Analytical Derivations \& Hardware Design (40 Marks, 10 Marks Each)}
+\noindent Answer any \textbf{FOUR} out of five questions:
+\questionitem{11}{(a) Derive the Voltage Divider Law for two series resistors $R_1$ and $R_2$ across $V_{\mathrm{in}}$. (b) A $12\,\mathrm{V}$ divider with $R_1 = 15\,\mathrm{k}\Omega$ and $R_2 = 15\,\mathrm{k}\Omega$ is loaded by an external $15\,\mathrm{k}\Omega$ resistor. Compute the loaded output voltage and the percentage loading error.}{10}{CO2}{L3}
+\questionitem{12}{(a) State the Shockley diode equation and define all physical terms. (b) A Silicon diode has $I_s = 2\,\mathrm{nA}$ at $300\,\mathrm{K}$ ($\eta = 1$). Calculate the diode forward current and dynamic resistance $r_d$ at $V_D = 0.65\,\mathrm{V}$. (c) Contrast static and dynamic resistance graphically.}{10}{CO3}{L3}
+\questionitem{13}{(a) Prove algebraically that NAND is a universal logic gate. (b) Synthesize a 2-input XOR gate using the minimum number of 2-input NAND gates. Provide the truth table and intermediate node Boolean expressions.}{10}{CO4}{L4}
+\questionitem{14}{(a) Formulate the complete truth table of a Full Adder. (b) Derive minimal Boolean expressions for Sum ($S$) and Carry Out ($C_{\mathrm{out}}$). (c) Draw the implementation schematic using two Half Adders and an OR gate, proving algebraic equivalence.}{10}{CO5}{L4}
+\questionitem{15}{Compare the performance of Half-Wave, Center-Tapped Full-Wave, and Bridge Rectifiers with respect to: (a) Number of diodes, (b) DC output voltage, (c) Ripple factor, (d) PIV rating per diode, (e) Rectification efficiency.}{10}{CO3}{L3}
+
+\subsection*{Section C: Laboratory Scenario \& Embedded Firmware Design (40 Marks, 20 Marks Each)}
+\noindent Answer both comprehensive practical system design problems:
+\questionitem{16}{\textbf{Industrial Automated Part Counter System Design}:\\
+You are tasked with engineering a conveyor belt object counter using an Arduino Uno, an active-LOW LM393 IR sensor module, a $16\times 2$ LCD or Serial telemetry monitor, and an alarm buzzer.\\
+(a) Draw the complete hardware interfacing schematic showing pin connections, power supplies, and current-limiting resistors [6 Marks].\\
+(b) Explain the working principle of the LM393 comparator circuit and how the distance threshold potentiometer is calibrated [4 Marks].\\
+(c) Write a robust Arduino C++ sketch incorporating software debounce to count passing items and trigger the buzzer for $500\,\mathrm{ms}$ whenever the batch count reaches 100 [10 Marks].}{20}{CO6}{L5}
+
+\questionitem{17}{\textbf{Workshop Breadboard Prototyping \& Diagnostic Audit}:\\
+During a laboratory evaluation, a student builds a combinational arithmetic circuit on a digital trainer module. However, the circuit exhibits severe anomalies: the outputs flicker erratically, the IC becomes uncomfortably hot to the touch, and the DMM voltage reading across the $+5\,\mathrm{V}$ rail sags to $2.8\,\mathrm{V}$.\\
+(a) Provide a structured step-by-step diagnostic fault-tree to isolate and identify the root causes of these three symptoms [8 Marks].\\
+(b) Explain the specific laboratory hazards of reversed IC power pinout ($V_{CC}$ and GND transposed) and floating CMOS inputs [6 Marks].\\
+(c) Outline three mandatory workshop best-practices (power-off wiring, decoupling capacitors, common ground bonding) that prevent such hardware failures [6 Marks].}{20}{CO1, CO4}{L4}
+
+\subsection*{Model Solutions \& Marking Rubrics (End-Term Set A)}
+
+\begin{solutionbox}[Solution to Q.11]
+(a) By KVL in series loop: $V_{\mathrm{in}} = I(R_1 + R_2) \implies I = \frac{V_{\mathrm{in}}}{R_1 + R_2}$.\\
+Voltage across $R_2$: $V_{\mathrm{out}} = I R_2 = V_{\mathrm{in}} \frac{R_2}{R_1 + R_2}$.\\
+(b) Numerical calculation:
+Unloaded voltage: $V_{\mathrm{unloaded}} = 12 \times \frac{15}{15 + 15} = 6.00\,\mathrm{V}$.\\
+When loaded by $R_L = 15\,\mathrm{k}\Omega$ across $R_2$:
+\[ R_{2,\mathrm{eq}} = 15\,\mathrm{k}\Omega \parallel 15\,\mathrm{k}\Omega = 7.5\,\mathrm{k}\Omega \]
+\[ V_{\mathrm{loaded}} = 12 \times \frac{7.5}{15 + 7.5} = 12 \times \frac{7.5}{22.5} = 4.00\,\mathrm{V} \]
+Loading error:
+\[ \%\text{ Error} = \frac{6.00 - 4.00}{6.00} \times 100\% = \frac{2.00}{6.00} \times 100\% = 33.33\% \]
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.11):} Derivation of VDL: 4 Marks $\bullet$ Unloaded voltage: 2 Marks $\bullet$ Loaded voltage and error calculation: 4 Marks. Total = 10 Marks.
+\end{markingrubric}
+
+\begin{solutionbox}[Solution to Q.16 (Firmware Implementation)]
+\begin{verbatim}
+// Industrial Conveyor Object Counter with Software Debounce
+const int IR_PIN = 2;       // IR sensor digital output (active LOW)
+const int BUZZER_PIN = 8;   // Buzzer actuator output
+const int LED_PIN = 13;     // Status LED indicator
+
+volatile unsigned long totalCount = 0;
+unsigned long lastTriggerTime = 0;
+const unsigned long DEBOUNCE_TIME = 150; // ms lockout window
+
+void setup() {
+  pinMode(IR_PIN, INPUT_PULLUP);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(BUZZER_PIN, LOW);
+  digitalWrite(LED_PIN, LOW);
+  
+  Serial.begin(9600);
+  Serial.println("--- INDUSTRIAL CONVEYOR BATCH COUNTER ACTIVE ---");
+}
+
+void loop() {
+  int sensorState = digitalRead(IR_PIN);
+  
+  if (sensorState == LOW) { // Obstacle breaks IR beam
+    unsigned long now = millis();
+    if (now - lastTriggerTime > DEBOUNCE_TIME) {
+      totalCount++;
+      lastTriggerTime = now;
+      digitalWrite(LED_PIN, HIGH);
+      
+      Serial.print("Batch Counter: ");
+      Serial.println(totalCount);
+      
+      // Batch alert at every 100 units
+      if (totalCount % 100 == 0) {
+        Serial.println("ALERT: Batch of 100 reached! Activating buzzer.");
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(500);
+        digitalWrite(BUZZER_PIN, LOW);
+      }
+      
+      delay(30);
+      digitalWrite(LED_PIN, LOW);
+    }
+  }
+}
+\end{verbatim}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.16):} (a) Interfacing schematic: 6 Marks $\bullet$ (b) LM393 operational theory: 4 Marks $\bullet$ (c) Debounced firmware implementation with threshold condition: 10 Marks. Total = 20 Marks.
+\end{markingrubric}
+\newpage

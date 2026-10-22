@@ -1,0 +1,538 @@
+\chapter{Unit 5: Matrices, Vectorized Computing, and Linear Algebra}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent\textbf{Q1.} Which Python module is commonly used to generate random numbers? \hfill [Tag: Random number generation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {random}
+    \item {mathrandom}
+    \item {generate}
+    \item {numbers}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q2.} What does np.random.randint(1, 5) generate? \hfill [Tag: Random number generation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A random integer from 1 to 5}
+    \item {A random integer from 1 to 4}
+    \item {A fixed integer equal to 5}
+    \item {A random float from 1 to 5}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q3.} What is the main purpose of NumPy in Python? \hfill [Tag: NumPy | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Working with numerical arrays}
+    \item {Creating web pages}
+    \item {Managing text files}
+    \item {Sending email messages}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q4.} Which statement correctly imports NumPy using the common alias? \hfill [Tag: NumPy | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {using numpy as np}
+    \item {include numpy as np}
+    \item {import numpy as np}
+    \item {import np as numpy}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q5.} If a = np.array([10, 20, 30]) , what is the value of a[1] ? \hfill [Tag: Indexing and slicing | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {1}
+    \item {30}
+    \item {20}
+    \item {10}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q6.} For a two-dimensional array A , what does A[0, 1] select? \hfill [Tag: Indexing and slicing | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {First row, second column}
+    \item {Second row, first column}
+    \item {Second row, second column}
+    \item {First row, first column}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q7.} What elements are selected by a[1:4] for a one-dimensional NumPy array? \hfill [Tag: Indexing and slicing | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Indices 1 through 4}
+    \item {Only index 4}
+    \item {Indices 0 through 3}
+    \item {Indices 1 through 3}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q8.} Which NumPy array attribute gives the number of dimensions? \hfill [Tag: Attributes of a NumPy array | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {size}
+    \item {dtype}
+    \item {shape}
+    \item {ndim}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q9.} What information does the shape attribute provide? \hfill [Tag: Attributes of a NumPy array | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Element data type}
+    \item {Total memory usage}
+    \item {Largest array value}
+    \item {Array dimensions}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q10.} Which attribute returns the total number of elements in a NumPy array? \hfill [Tag: Attributes of a NumPy array | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {size}
+    \item {shape}
+    \item {item}
+    \item {ndim}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q11.} If a = np.array([1, 2]) and b = np.array([3, 4]) , what is a + b ? \hfill [Tag: Basic mathematical operations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[2, 2]}
+    \item {[4, 6]}
+    \item {[3, 8]}
+    \item {[1, 2, 3, 4]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q12.} Which operator performs element-wise multiplication for NumPy arrays? \hfill [Tag: Basic mathematical operations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {//}
+    \item {@}
+    \item {*}
+    \item {**}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q13.} Which NumPy function calculates the sum of array elements? \hfill [Tag: Basic mathematical operations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.sum()}
+    \item {np.plus()}
+    \item {np.addall()}
+    \item {np.total()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q14.} Which function changes the shape of an array without changing its data? \hfill [Tag: Array manipulation functions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {sort()}
+    \item {reverse()}
+    \item {flatten\_rows()}
+    \item {reshape()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q15.} What does np.concatenate() generally do? \hfill [Tag: Array manipulation functions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Deletes arrays}
+    \item {Sorts numbers}
+    \item {Generates random values}
+    \item {Joins arrays}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q16.} What is the main purpose of matrix decomposition? \hfill [Tag: Matrix decomposition | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Converting numbers into strings}
+    \item {Removing every matrix row}
+    \item {Changing all values to zero}
+    \item {Representing a matrix as simpler matrices}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q17.} In an LU decomposition, what do the letters L and U usually represent? \hfill [Tag: Matrix decomposition | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Large and uniform matrices}
+    \item {Lower and upper triangular matrices}
+    \item {Linear and unit vectors}
+    \item {Left and upper rows}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q18.} What is a sparse matrix? \hfill [Tag: Sparse matrices and associated data structures | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A matrix containing only text}
+    \item {A matrix with one row}
+    \item {A matrix with no zero elements}
+    \item {A matrix with many zero elements}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q19.} Which SciPy submodule provides sparse matrix structures? \hfill [Tag: Sparse matrices and associated data structures | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {scipy.random}
+    \item {scipy.files}
+    \item {scipy.sparse}
+    \item {scipy.text}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q20.} What is SciPy mainly used for? \hfill [Tag: SciPy | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Building HTML layouts}
+    \item {Managing operating system users}
+    \item {Designing slide presentations}
+    \item {Scientific and technical computing}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q21.} What is the main purpose of setting a seed before generating random numbers with NumPy? \hfill [Tag: Random number generation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To force all values to be identical}
+    \item {To increase the number of generated values}
+    \item {To convert random values into integers}
+    \item {To make generated values reproducible}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q22.} What is the shape of the array returned by np.random.default\_rng(3).uniform(size=(2, 4)) ? \hfill [Tag: Random number generation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(4, 2)}
+    \item {(2, 4)}
+    \item {(8,)}
+    \item {(2, 4, 1)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q23.} What is the result of np.array([1, 2, 3]) + np.array([4, 5, 6]) ? \hfill [Tag: NumPy | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[4, 5, 6, 1, 2, 3]}
+    \item {[4, 10, 18]}
+    \item {[1, 2, 3, 4, 5, 6]}
+    \item {[5, 7, 9]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q24.} Which expression creates a 3 x 3 NumPy array containing zeros with floating-point data type? \hfill [Tag: NumPy | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.zeros(3, 3, dtype=float)}
+    \item {np.ones((3, 3), dtype=float)}
+    \item {np.zeros((3, 3), dtype=float)}
+    \item {np.empty((3, 3), dtype=int)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q25.} Given A = np.array([[2, 4, 6], [8, 10, 12], [14, 16, 18]]) , what does A[1:, :2] return? \hfill [Tag: Indexing and slicing | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[[8, 10], [14, 16]]}
+    \item {[[4, 6], [10, 12]]}
+    \item {[[2, 4], [8, 10]]}
+    \item {[[8, 10, 12], [14, 16, 18]]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q26.} For A = np.arange(12).reshape(3, 4) , which expression selects the last column as a one-dimensional array? \hfill [Tag: Indexing and slicing | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A[-1, -1]}
+    \item {A[:, :-1]}
+    \item {A[-1, :]}
+    \item {A[:, -1]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q27.} If A = np.zeros((2, 3, 4), dtype=np.int32) , what are A.ndim and A.size ? \hfill [Tag: Attributes of a NumPy array | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {ndim is 3 and size is 24}
+    \item {ndim is 2 and size is 24}
+    \item {ndim is 4 and size is 24}
+    \item {ndim is 3 and size is 9}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q28.} An array has shape == (5, 2) and dtype == np.float64 . Which statement about A.itemsize is correct? \hfill [Tag: Attributes of a NumPy array | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It is 2 bytes}
+    \item {It is 10 bytes}
+    \item {It is 8 bytes}
+    \item {It is 5 bytes}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q29.} Given A = np.array([[1, 2], [3, 4]]) , what is the result of A @ A ? \hfill [Tag: Basic mathematical operations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[[5, 5], [5, 5]]}
+    \item {[[2, 4], [6, 8]]}
+    \item {[[1, 4], [9, 16]]}
+    \item {[[7, 10], [15, 22]]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q30.} For A = np.array([[1, 2], [3, 4]]) , what is the result of A * 2 + 1 ? \hfill [Tag: Basic mathematical operations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[[4, 6], [8, 10]]}
+    \item {[[3, 4], [5, 6]]}
+    \item {[[3, 5], [7, 9]]}
+    \item {[[2, 4], [6, 8]]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q31.} What does np.sum(A, axis=0) calculate for a two-dimensional array A ? \hfill [Tag: Basic mathematical operations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The sum of each row}
+    \item {The sum of all elements as a matrix}
+    \item {The sum of the main diagonal}
+    \item {The sum of each column}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q32.} What is the shape of np.arange(12).reshape(4, 3).T ? \hfill [Tag: Array manipulation functions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(4, 3)}
+    \item {(3, 4)}
+    \item {(12, 1)}
+    \item {(1, 12)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q33.} If a = np.array([1, 2]) and b = np.array([3, 4]) , which expression produces [[1, 2], [3, 4]] ? \hfill [Tag: Array manipulation functions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.hstack((a, b))}
+    \item {np.column\_stack((a, b))}
+    \item {np.vstack((a, b))}
+    \item {np.concatenate((a, b), axis=1)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q34.} What is the effect of np.where(A $>$ 5, A, 0) on an array A ? \hfill [Tag: Array manipulation functions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It replaces values less than or equal to 5 with 0}
+    \item {It returns the indices of values greater than 5}
+    \item {It replaces values greater than 5 with 0}
+    \item {It removes values less than or equal to 5}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q35.} For a square matrix A , which equation describes an LU decomposition when P is included for pivoting? \hfill [Tag: Matrix decomposition | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A =}
+    \item {A =}
+    \item {A =}
+    \item {P A =}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q36.} Which decomposition is most directly associated with expressing a matrix as A = QR , where Q has orthonormal columns? \hfill [Tag: Matrix decomposition | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {LU decomposition}
+    \item {QR decomposition}
+    \item {Cholesky decomposition}
+    \item {Singular value decomposition}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q37.} Which sparse matrix format is generally efficient for matrix-vector multiplication and row slicing? \hfill [Tag: Sparse matrices and associated data structures | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {CSR}
+    \item {COO}
+    \item {CSC}
+    \item {DOK}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q38.} A sparse matrix has shape ( 1000 , 1000 ) and only 200 nonzero values. What is a key advantage of storing it in a sparse format? \hfill [Tag: Sparse matrices and associated data structures | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It guarantees faster performance for every operation}
+    \item {It changes all missing values into random values}
+    \item {It stores mainly nonzero values and their positions}
+    \item {It converts the matrix into a one-dimensional array}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q39.} Which SciPy function is appropriate for solving a square linear system A x = b ? \hfill [Tag: SciPy | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {scipy.linalg.solve(A, b)}
+    \item {scipy.linalg.inv(b, A)}
+    \item {scipy.linalg.eig(A, b)}
+    \item {scipy.linalg.det(A, b)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q40.} Which vectorized expression returns the squares of all elements in a NumPy array x without an explicit Python loop? \hfill [Tag: Vectorization of code | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {x // 2}
+    \item {x \textasciicircum{} 2}
+    \item {x ** 2}
+    \item {x @ x}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q41.} Given rng = np.random.default\_rng(123) , which statement best explains why calling rng.integers(0, 10, 5) twice generally produces different arrays, while creating a new np.random.default\_rng(123) before each call produces identical arrays? \hfill [Tag: Random number generation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The upper bound becomes inclusive after the first draw.}
+    \item {The generator updates its internal state after each draw.}
+    \item {The array shape changes the generator's seed automatically.}
+    \item {The generator changes its probability distribution after each draw.}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q42.} What is the shape of the result of rng.normal(size=(2, 1, 3)) + rng.normal(size=(1, 4, 1)) , assuming both calls use the same Generator but independent draws? \hfill [Tag: Random number generation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(2, 4, 3)}
+    \item {(2, 1, 3)}
+    \item {(1, 4, 3)}
+    \item {The operation raises a broadcasting error.}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q43.} Let a = np.array([[1, 2], [3, 4]]) and b = np.array([[5, 6], [7, 8]]) . Which expression produces the matrix product ab rather than elementwise multiplication? \hfill [Tag: NumPy | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {a @ b}
+    \item {a * b}
+    \item {np.multiply(a, b)}
+    \item {np.broadcast\_to(a, b.shape)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q44.} What is the dtype of np.array([1, 2], dtype=np.int8) + np.array([300], dtype=np.int16) on standard NumPy type-promotion rules? \hfill [Tag: NumPy | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {int8}
+    \item {int16}
+    \item {int32}
+    \item {float64}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q45.} Consider a = np.arange(12).reshape(3, 4) . Which statement is correct about x = a[:, 1:3] and y = a[:, [1, 2]] ? \hfill [Tag: Indexing and slicing | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both are always views sharing memory with a .}
+    \item {x is an advanced-indexing copy, whereas y is usually a view.}
+    \item {x is usually a view, whereas y is an advanced-indexing copy.}
+    \item {Both are always independent copies of a .}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q46.} For a = np.arange(20).reshape(4, 5) , what is the shape of a[[0, 2], 1:4] ? \hfill [Tag: Indexing and slicing | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(2, 3)}
+    \item {(2, 4)}
+    \item {(4, 3)}
+    \item {(3, 2)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q47.} Given a = np.array([10, 20, 30, 40]) and idx = np.array([1, 1, 3]) , what is the result of a[idx] += 5 ? \hfill [Tag: Indexing and slicing | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {[10, 25, 30, 45]}
+    \item {[10, 25, 30, 50]}
+    \item {[10, 20, 30, 45]}
+    \item {[10, 30, 30, 45]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q48.} For a = np.arange(24, dtype=np.float64).reshape(2, 3, 4) , which tuple gives (a.ndim, a.shape, a.size, a.itemsize) ? \hfill [Tag: Attributes of a NumPy array | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(3, (2, 3, 4), 24, 8)}
+    \item {(3, (2, 3, 4), 48, 8)}
+    \item {(3, (2, 3, 4), 24, 64)}
+    \item {(2, (3, 4), 24, 8)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q49.} For a C-contiguous array a = np.arange(12).reshape(3, 4) , what is the expected value of a.strides on a platform where an integer occupies 8 bytes? \hfill [Tag: Attributes of a NumPy array | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(8, 32)}
+    \item {(32, 8)}
+    \item {(24, 8)}
+    \item {(32, 4)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q50.} For x = np.array([1.0, 2.0, 4.0]) , which expression computes the Euclidean norm without explicitly forming x @ x ? \hfill [Tag: Basic mathematical operations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.sum(x ** 0.5) ** 2}
+    \item {np.sqrt(np.sum(x) ** 2)}
+    \item {np.sqrt(np.sum(x ** 2))}
+    \item {np.sum(np.sqrt(x ** 2))}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q51.} Let A have shape (3, 4) and b have shape (4,) . Which expression subtracts the column vector represented by b from every row of A using broadcasting? \hfill [Tag: Basic mathematical operations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A - A.T @ b}
+    \item {A - b[:, None]}
+    \item {A - b[None, :]}
+    \item {A - b}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q52.} For a numerically stable computation of log(exp(x).sum()) when x may contain very large values, which expression is preferred? \hfill [Tag: Basic mathematical operations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.exp(np.log(x).sum())}
+    \item {scipy.special.logsumexp(x)}
+    \item {np.log(np.exp(x).sum())}
+    \item {np.log10(np.exp(x).sum())}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q53.} Let a = np.arange(6) . What is the key difference between a.reshape(2, 3) and np.resize(a, (2, 4)) ? \hfill [Tag: Array manipulation functions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {reshape changes dtype; resize preserves the original dtype.}
+    \item {reshape always copies; resize always returns a view.}
+    \item {reshape sorts values; resize preserves only unique values.}
+    \item {reshape requires the same element count; resize may repeat or truncate data.}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q54.} For a = np.array([[1, 2], [3, 4]]) , what is the shape of np.concatenate([a, a], axis=0) compared with np.concatenate([a, a], axis=1) ? \hfill [Tag: Array manipulation functions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {(2, 2) and (2, 2)}
+    \item {(4, 4) and (4, 4)}
+    \item {(4, 2) and (2, 4)}
+    \item {(2, 4) and (4, 2)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q55.} Which operation converts a two-dimensional array A into a one-dimensional view when the memory layout permits it, without changing the element order? \hfill [Tag: Array manipulation functions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A.flatten()}
+    \item {A.transpose()}
+    \item {A.ravel()}
+    \item {A.squeeze(axis=0)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q56.} If an m x n matrix A has singular values sigma 1 $>$= ... $>$= sigma r $>$ 0 , which truncated SVD gives the best rank- k approximation in the Frobenius norm? \hfill [Tag: Matrix decomposition | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {U[:, :k] @ np.diag(s[:k]) @ Vt[:k, :]}
+    \item {U[:, k:] @ np.diag(s[k:]) @ Vt[k:, :]}
+    \item {U[:k, :] @ np.diag(s[:k]) @ Vt[:, :k]}
+    \item {U @ np.diag(s) @ Vt[:k, :]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q57.} For a nonsingular matrix A , which SciPy operation is generally preferable to explicitly computing np.linalg.inv(A) when solving A x = b ? \hfill [Tag: Matrix decomposition | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {np.linalg.eig(A) @ b}
+    \item {scipy.linalg.norm(A) @ b}
+    \item {scipy.linalg.solve(A, b)}
+    \item {scipy.linalg.det(A) * b}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q58.} A COO sparse matrix is constructed with row indices [0, 0] , column indices [1, 1] , and data [2, 3] . After conversion to CSR format, what value is stored at position (0, 1) under standard duplicate-handling behavior? \hfill [Tag: Sparse matrices and associated data structures | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The conversion raises an error.}
+    \item {2}
+    \item {3}
+    \item {5}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q59.} Which sparse format is usually most suitable for efficient row slicing and matrix-vector multiplication after construction? \hfill [Tag: Sparse matrices and associated data structures | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {DOK}
+    \item {CSR}
+    \item {CSC}
+    \item {COO}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q60.} For a symmetric positive-definite matrix A , which factorization is most appropriate and commonly more efficient than a general LU factorization? \hfill [Tag: SciPy | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Cholesky factorization}
+    \item {Schur decomposition}
+    \item {Generalized eigenvalue decomposition}
+    \item {Singular value decomposition}
+\end{enumerate}
+\vspace{2mm}
+
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{5}{1}
+Implement a vectorized Principal Component Analysis (PCA) algorithm using pure NumPy without Scikit-learn. The function \texttt{pca\_fit\_transform(X, n\_components)} must center the data matrix, compute the covariance matrix, perform eigendecomposition, sort eigenvalues descending, and project $X$ onto the principal subspace. Verify Cholesky decomposition validity on the covariance matrix.
+\end{subjectiveq}
+
+\begin{solbox}
+\begin{lstlisting}
+import numpy as np
+
+def pca_fit_transform(X: np.ndarray, n_components: int):
+    # Step 1: Center data (mean 0)
+    mu = np.mean(X, axis=0)
+    X_centered = X - mu
+    
+    # Step 2: Covariance matrix (N-1 normalization)
+    N = X.shape[0]
+    cov_matrix = (X_centered.T @ X_centered) / (N - 1)
+    
+    # Step 3: Check positive definiteness via Cholesky
+    try:
+        L = np.linalg.cholesky(cov_matrix)
+        is_pos_def = True
+    except np.linalg.LinAlgError:
+        is_pos_def = False
+        
+    # Step 4: Eigendecomposition
+    eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+    
+    # Step 5: Sort descending
+    idx = np.argsort(eigenvalues)[::-1]
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:, idx]
+    
+    # Step 6: Projection onto top components
+    top_components = eigenvectors[:, :n_components]
+    X_projected = X_centered @ top_components
+    
+    explained_variance_ratio = eigenvalues[:n_components] / np.sum(eigenvalues)
+    return X_projected, explained_variance_ratio, is_pos_def
+\end{lstlisting}
+\textbf{Vectorized Complexity \& Matrix Insights:}\\
+$\bullet$ \textbf{Matrix Multiplication:} \texttt{X\_centered.T @ X\_centered} executes in highly optimized BLAS/LAPACK routines, avoiding $\mathcal{O}(N \cdot D^2)$ Python interpreted loop overhead.\\
+$\bullet$ \texttt{np.linalg.eigh} leverages symmetry of the covariance matrix for stable $\mathcal{O}(D^3)$ decomposition.
+\end{solbox}
+
+\begin{examinertip}
+$\bullet$ \textbf{Rubric Breakdown (10 Marks Total):}\\
+1. Algorithmic Formulation \& Theoretical Correctness: \textbf{3 Marks}\\
+2. Production Python Syntax \& Idiomatic Standards (PEP 8): \textbf{3 Marks}\\
+3. Boundary Case \& Exception Robustness: \textbf{2 Marks}\\
+4. Asymptotic Time \& Auxiliary Space Complexity Derivation: \textbf{2 Marks}
+\end{examinertip}

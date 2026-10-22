@@ -1,0 +1,41 @@
+\section{Mid-Term Examination --- Set B}
+
+\LPUPaperHeader{Mid-Term Examination}{B}{90 Minutes}{30 Marks}{CO1, CO2, CO3 (Units 1, 2, 3)}
+
+\subsection*{Part I: Multiple-Choice Questions (10 Marks, 1 Mark Each)}
+\mcqitem{1}{Which passive component stores energy in an electrostatic field?}{Resistor}{Inductor}{Capacitor}{Thermistor}{1}
+\mcqitem{2}{A resistor with color bands Red, Red, Orange, Gold has nominal value:}{$2.2\,\mathrm{k}\Omega$}{$22\,\mathrm{k}\Omega$}{$220\,\mathrm{k}\Omega$}{$22\,\Omega$}{1}
+\mcqitem{3}{When an ammeter is connected into a circuit to measure branch current, it must be wired in:}{Parallel}{Series}{Bridge}{Star}{1}
+\mcqitem{4}{The purpose of a potentiometer in an electronic workshop is:}{Store charge}{Provide an adjustable voltage divider}{Amplify small AC signals}{Step down AC mains}{1}
+\mcqitem{5}{In a parallel circuit of two resistors $R_1$ and $R_2$, if $R_1 \ll R_2$, most of the incoming current flows through:}{$R_2$}{$R_1$}{Equally through both}{Neither}{1}
+\mcqitem{6}{The barrier potential of a Germanium diode at room temperature is approximately:}{$0.7\,\mathrm{V}$}{$0.3\,\mathrm{V}$}{$1.2\,\mathrm{V}$}{$0.026\,\mathrm{V}$}{1}
+\mcqitem{7}{As junction temperature increases, the reverse saturation current $I_s$ of a diode:}{Decreases exponentially}{Remains perfectly constant}{Doubles approximately every $10^\circ\mathrm{C}$ rise}{Drops to zero}{1}
+\mcqitem{8}{The maximum theoretical rectification efficiency of a half-wave rectifier is:}{$40.6\%$}{$81.2\%$}{$50.0\%$}{$100\%$}{1}
+\mcqitem{9}{In a center-tapped full-wave rectifier with peak secondary winding voltage $V_m$ across each half, the required diode PIV is:}{$V_m$}{$2 V_m$}{$4 V_m$}{$V_m / 2$}{1}
+\mcqitem{10}{A shorted diode tested with a DMM in diode check mode displays:}{OL in both directions}{$\approx 0.00\,\mathrm{V}$ in both directions}{$0.7\,\mathrm{V}$ forward and OL reverse}{$10\,\mathrm{V}$}{1}
+
+\subsection*{Part II: Analytical \& Design Problems (20 Marks, 5 Marks Each)}
+\questionitem{11}{A series voltage divider consists of $V_{\mathrm{in}} = 10\,\mathrm{V}$ and two $50\,\mathrm{k}\Omega$ resistors. Calculate: (a) Unloaded output voltage across $R_2$, (b) Output voltage measured by a DMM with $10\,\mathrm{M}\Omega$ input resistance, (c) Output voltage measured by an old analog meter with $100\,\mathrm{k}\Omega$ input resistance.}{5}{CO2}{L3}
+\questionitem{12}{A Silicon diode conducts $5\,\mathrm{mA}$ at $V_D = 0.65\,\mathrm{V}$ and $20\,\mathrm{mA}$ at $V_D = 0.71\,\mathrm{V}$. Calculate: (a) Dynamic resistance $r_d$ between these two operating points, (b) Static resistance at the $20\,\mathrm{mA}$ operating point.}{5}{CO3}{L3}
+\questionitem{13}{A center-tapped full-wave rectifier delivers power to a $500\,\Omega$ load. If the AC voltage across each half of the secondary is $12\,\mathrm{V}_{\mathrm{rms}}$, calculate: (a) Peak voltage $V_m$, (b) DC load voltage $V_{dc}$, (c) Average DC load current $I_{dc}$, (d) Ripple voltage frequency for $50\,\mathrm{Hz}$ input.}{5}{CO3}{L4}
+\questionitem{14}{A capacitor with code \textbf{104K} is placed in parallel with a resistor of $10\,\mathrm{k}\Omega$. (a) Determine the capacitance in microfarads. (b) Calculate the circuit time constant $\tau = R C$.}{5}{CO1}{L3}
+
+\subsection*{Model Solutions \& Marking Rubrics (Mid-Term Set B)}
+
+\begin{answerkeytable}{Part I: MCQ Answer Key}
+1: C \quad 2: B \quad 3: B \quad 4: B \quad 5: B \quad 6: B \quad 7: C \quad 8: A \quad 9: B \quad 10: B
+\end{answerkeytable}
+
+\begin{solutionbox}[Solution to Q.11]
+(a) Unloaded output: $V_{\mathrm{out}} = 10 \times \frac{50}{50 + 50} = 5.00\,\mathrm{V}$.\\
+(b) With DMM ($R_m = 10\,\mathrm{M}\Omega = 10{,}000\,\mathrm{k}\Omega$):
+\[ R_{2,\mathrm{eq}} = \frac{50 \times 10000}{50 + 10000} = 49.75\,\mathrm{k}\Omega \]
+\[ V_{\mathrm{meas}} = 10 \times \frac{49.75}{50 + 49.75} = 4.987\,\mathrm{V} \quad (\text{Error } = 0.25\%) \]
+(c) With analog meter ($R_m = 100\,\mathrm{k}\Omega$):
+\[ R_{2,\mathrm{eq}} = \frac{50 \times 100}{50 + 100} = 33.33\,\mathrm{k}\Omega \]
+\[ V_{\mathrm{meas}} = 10 \times \frac{33.33}{50 + 33.33} = 4.00\,\mathrm{V} \quad (\text{Error } = 20.0\%) \]
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.11):} Unloaded voltage calculation: 1 Mark $\bullet$ DMM loading calculation: 2 Marks $\bullet$ Analog meter severe loading calculation: 2 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

@@ -1,0 +1,105 @@
+\chapter{Linear Differential Equations --- Order and Homogeneous Systems}
+\label{chap:lde-1}
+
+\section{Overview and Foundations}
+Differential equations are the fundamental language governing physical dynamic phenomena: harmonic oscillators, structural resonances, RLC electrical circuits, heat diffusion, and orbital dynamics. This chapter investigates linear ordinary differential equations (LDEs), establishing conditions for linearity, existence and uniqueness of solutions, linear independence via the Wronskian determinant, and the algebraic theory of solving homogeneous linear equations with constant coefficients.
+
+\begin{definition}[Linear Differential Equation]
+An ordinary differential equation of order $n$ is linear if it can be written in the form:
+\begin{equation}
+a_n(x) \frac{d^n y}{dx^n} + a_{n-1}(x) \frac{d^{n-1} y}{dx^{n-1}} + \dots + a_1(x) \frac{dy}{dx} + a_0(x)y = X(x)
+\end{equation}
+where the dependent variable $y$ and its derivatives occur strictly to the first degree, and there are no product terms involving $y$ or its derivatives. If $X(x) = 0$, the equation is \textbf{homogeneous}; otherwise, it is \textbf{non-homogeneous}.
+\end{definition}
+
+\section{Linear Independence and the Wronskian}
+\begin{definition}[Linear Independence of Functions]
+A set of functions $\{y_1(x), y_2(x), \dots, y_n(x)\}$ is linearly dependent on an interval $I$ if there exist constants $c_1, c_2, \dots, c_n$ (not all zero) such that:
+\begin{equation}
+c_1 y_1(x) + c_2 y_2(x) + \dots + c_n y_n(x) = 0, \quad \forall x \in I
+\end{equation}
+If this identity holds only when $c_1 = c_2 = \dots = c_n = 0$, the functions are linearly independent.
+\end{definition}
+
+\begin{definition}[The Wronskian Determinant]
+For $n$ differentiable functions, the Wronskian $W(y_1, y_2, \dots, y_n)(x)$ is:
+\begin{equation}
+W(y_1, y_2, \dots, y_n) = \begin{vmatrix}
+y_1 & y_2 & \dots & y_n \\
+y_1' & y_2' & \dots & y_n' \\
+\vdots & \vdots & \ddots & \vdots \\
+y_1^{(n-1)} & y_2^{(n-1)} & \dots & y_n^{(n-1)}
+\end{vmatrix}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Wronskian Test for Solutions]
+If $y_1(x), y_2(x), \dots, y_n(x)$ are solutions to a homogeneous linear differential equation with continuous coefficients on an open interval $I$:
+\begin{enumerate}
+    \item If $W(y_1, \dots, y_n)(x) \neq 0$ at any point $x_0 \in I$, the solutions are linearly independent on $I$, and $W(x) \neq 0$ for all $x \in I$.
+    \item If $W(x) = 0$ at any point in $I$, it is identically zero everywhere on $I$, and the solutions are linearly dependent.
+\end{enumerate}
+\end{theorem}
+
+\section{Differential Operator Notation}
+We introduce the differential operator $D \equiv \frac{d}{dx}$, $D^2 \equiv \frac{d^2}{dx^2}$, and in general $D^k \equiv \frac{d^k}{dx^k}$.
+An $n$-th order linear equation with constant coefficients $a_i \in \mathbb{R}$ can be expressed concisely as:
+\begin{equation}
+f(D)y = 0, \quad \text{where } f(D) = D^n + a_{n-1}D^{n-1} + \dots + a_1 D + a_0
+\end{equation}
+
+\section{The Auxiliary Equation and Complementary Function}
+Substituting the trial solution $y = e^{mx}$ into $f(D)y = 0$ yields:
+\begin{equation}
+f(m)e^{mx} = 0 \implies f(m) = m^n + a_{n-1}m^{n-1} + \dots + a_1 m + a_0 = 0
+\end{equation}
+This algebraic polynomial equation $f(m) = 0$ is termed the \textbf{Auxiliary Equation (A.E.)}.
+
+\begin{theorem}[Classification of Complementary Function (C.F.) Rules]
+Let $m_1, m_2, \dots, m_n$ denote the roots of the auxiliary equation $f(m) = 0$:
+\begin{center}
+\centering
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Case} & \textbf{Nature of Roots} & \textbf{Complementary Function ($y_{c}$)} \\
+\midrule
+\textbf{Case I} & Real and Distinct: $m_1 \neq m_2 \neq \dots$ & $y_c = c_1 e^{m_1 x} + c_2 e^{m_2 x} + \dots + c_n e^{m_n x}$ \\
+\addlinespace
+\textbf{Case II} & Real and Repeated ($k$ times): $m_1 = \dots = m_k$ & $y_c = (c_1 + c_2 x + c_3 x^2 + \dots + c_k x^{k-1})e^{m_1 x}$ \\
+\addlinespace
+\textbf{Case III} & Complex Conjugate Pairs: $\alpha \pm i\beta$ & $y_c = e^{\alpha x}(c_1 \cos \beta x + c_2 \sin \beta x)$ \\
+\addlinespace
+\textbf{Case IV} & Repeated Complex Pairs: $\alpha \pm i\beta$ ($k$ times) & $y_c = e^{\alpha x}[(c_1 + c_2 x)\cos \beta x + (c_3 + c_4 x)\sin \beta x]$ \\
+\bottomrule
+\end{tabularx}
+\textbf{Table: Standard Solutions for Complementary Functions}
+\end{center}
+\end{theorem}
+
+\begin{example}[Second-Order Constant Coefficients Homogeneous Problem]
+Solve: $\frac{d^2 y}{dx^2} - 6\frac{dy}{dx} + 9y = 0$, with initial conditions $y(0) = 2$, $y'(0) = 7$.
+
+\textbf{Solution:}
+Write in operator form: $(D^2 - 6D + 9)y = 0$.
+Auxiliary equation:
+\begin{equation*}
+m^2 - 6m + 9 = 0 \implies (m - 3)^2 = 0 \implies m = 3, 3 \quad \text{(repeated roots)}
+\end{equation*}
+The general solution is:
+\begin{equation*}
+y(x) = (c_1 + c_2 x)e^{3x}
+\end{equation*}
+Differentiating:
+\begin{equation*}
+y'(x) = c_2 e^{3x} + 3(c_1 + c_2 x)e^{3x} = [3c_1 + c_2 + 3c_2 x]e^{3x}
+\end{equation*}
+Applying initial conditions:
+\begin{itemize}
+    \item $y(0) = c_1 = 2$.
+    \item $y'(0) = 3c_1 + c_2 = 3(2) + c_2 = 7 \implies c_2 = 1$.
+\end{itemize}
+Thus, the unique particular solution is:
+\begin{equation*}
+y(x) = (2 + x)e^{3x}
+\end{equation*}
+\end{example}

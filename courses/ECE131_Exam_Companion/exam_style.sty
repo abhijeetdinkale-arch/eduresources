@@ -1,0 +1,133 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exam_style}[2026/10/22 Professional ECE131 Exam Companion Style]
+
+\RequirePackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,headheight=14pt]{geometry}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\RequirePackage{booktabs,tabularx,array,multicol,multirow}
+\RequirePackage[inline]{enumitem}
+\RequirePackage{xcolor}
+\RequirePackage[many]{tcolorbox}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+\definecolor{LPUOrange}{RGB}{210, 75, 20}
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{LightGrayBg}{RGB}{248, 249, 250}
+\definecolor{BorderGray}{RGB}{215, 222, 230}
+\definecolor{SolBg}{RGB}{245, 248, 255}
+\definecolor{AlertRed}{RGB}{200, 30, 30}
+
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    breakable,
+    colback=SolBg,
+    colframe=LPUNavy,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small Step-by-Step Mathematical Solution \hfill #1},
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=LPUNavy, arc=2mm},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=4mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=8pt, after skip=10pt
+}
+
+\newtcolorbox{examinertip}[1][Examiner's Warning \& Common Pitfall]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=LPUOrange,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    title={#1},
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=LPUOrange, arc=2mm},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=8pt
+}
+
+\newtcolorbox{markingrubric}{
+    enhanced,
+    breakable,
+    colback=LightGrayBg,
+    colframe=BorderGray,
+    boxrule=0.6pt,
+    arc=1.5mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    fontupper=\small\sffamily,
+    before skip=4pt, after skip=6pt
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{LPUNavy} ECE131: Basic Electrical \& Electronics Engineering}
+\fancyhead[R]{\small\sffamily\color{gray} Exam Companion \& Solved Model Papers}
+\fancyfoot[C]{\sffamily\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\LPUPaperHeader}[5]{
+    \noindent
+    \begin{tcolorbox}[enhanced, colback=white, colframe=LPUNavy, boxrule=1pt, arc=1.5mm, left=2mm, right=2mm, top=2mm, bottom=2mm]
+    \begin{tabularx}{\textwidth}{@{}X r@{}}
+        \begin{tabular}{@{}l@{}}
+            {\Large\bfseries\color{LPUNavy} LOVELY PROFESSIONAL UNIVERSITY} \\[1mm]
+            {\footnotesize\sffamily\color{gray} School of Electronics and Electrical Engineering} \\[2mm]
+            {\textbf{Course Code:}} ECE131 \quad {\textbf{Course Title:}} Basic Electrical \& Electronics Engineering \\
+            {\textbf{Examination:}} #1 \quad {\textbf{Set:}} \textbf{\color{LPUOrange}#2} \\
+            {\textbf{Maximum Marks:}} #4 \quad {\textbf{Time Allowed:}} #3
+        \end{tabular}
+        &
+        \begin{tabular}{|p{4.2cm}|}
+            \hline
+            {\footnotesize\textbf{Roll No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Reg. No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Section:}} \dotfill \\
+            \hline
+        \end{tabular}
+    \end{tabularx}
+    \vspace{1mm}
+    \hrule height 0.5pt
+    \vspace{1.5mm}
+    \noindent{\footnotesize\sffamily\textbf{Course Outcomes Evaluated:} #5}
+    \end{tcolorbox}
+    \vspace{2mm}
+}
+
+\newcommand{\questionitem}[5]{
+    \noindent
+    \begin{minipage}{\textwidth}
+    \vspace{2mm}
+    \begin{tcolorbox}[enhanced, colback=white, colframe=BorderGray, boxrule=0.6pt, arc=1mm, top=2mm, bottom=2mm, left=2.5mm, right=2.5mm]
+    \begin{tabularx}{\textwidth}{@{}p{1.2cm} X p{2.2cm} p{1.6cm} p{1.4cm}@{}}
+        \textbf{Q.#1} & #2 & {\footnotesize\color{LPUNavy}\textbf{#4}} & {\footnotesize\color{DarkSlate}#5} & {\bfseries\color{LPUOrange}#3 Marks}
+    \end{tabularx}
+    \end{tcolorbox}
+    \end{minipage}
+}
+
+\newcommand{\mcqitem}[7]{
+    \noindent
+    \parbox{\textwidth}{
+        \vspace{2mm}
+        \textbf{Q.#1} \quad #2 \hfill {\footnotesize\color{LPUOrange}\bfseries [#7 Mark\ifnum#7>1s\fi]}
+        \vspace{1mm}
+        \begin{multicols}{2}
+        \begin{enumerate}[label=(\Alph*), leftmargin=6mm, itemsep=1pt]
+            \item #3
+            \item #4
+            \item #5
+            \item #6
+        \end{enumerate}
+        \end{multicols}
+    }
+}

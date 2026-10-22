@@ -1,0 +1,99 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 60 Minutes\\
+\textbf{Instructions:} Answer any \textbf{5} out of the following 6 questions (Units 4 \& 5). Each carries \textbf{6 marks}.
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\noindent\textbf{Question 1 [Unit 4]:} Explain Python's module import resolution algorithm. What steps does CPython follow from the moment \texttt{import mymodule} is executed?
+\begin{solutionbox}
+1. \textbf{Module Cache Check:} Checks \texttt{sys.modules['mymodule']}. If cached, returns reference.\\
+2. \textbf{Built-in Modules:} Searches \texttt{sys.builtin\_module\_names}.\\
+3. \textbf{Search in \texttt{sys.path}:} Searches script directory, \texttt{PYTHONPATH}, standard library, and site-packages.\\
+4. \textbf{Compilation:} Compiles source to bytecode (\texttt{.pyc}) if not already updated.\\
+5. \textbf{Execution:} Executes top-level module code in a fresh module namespace and stores reference in \texttt{sys.modules}.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Cache check in \texttt{sys.modules} (1.5M); Built-in lookup (1.5M); \texttt{sys.path} directories search (1.5M); Module execution and caching (1.5M).
+\end{markingrubric}
+
+\noindent\textbf{Question 2 [Unit 4]:} Design a custom exception class \texttt{InvalidModelConfigurationError} with attributes \texttt{model\_name} and \texttt{param\_name}. Show how to raise and catch it with custom error messages.
+\begin{solutionbox}
+\begin{lstlisting}
+class InvalidModelConfigurationError(Exception):
+    def __init__(self, model_name: str, param_name: str, message: str = "Invalid config parameter"):
+        self.model_name = model_name
+        self.param_name = param_name
+        super().__init__(f"[{model_name}] {message}: '{param_name}'")
+
+# Demonstration
+try:
+    raise InvalidModelConfigurationError("Transformer-XL", "learning_rate", "Must be positive")
+except InvalidModelConfigurationError as err:
+    print(f"Handled error: {err}")
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Subclassing \texttt{Exception} and \texttt{\_\_init\_\_} super call (3M); Custom attributes and formatted message (2M); Try-except handling syntax (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 3 [Unit 5]:} What is NumPy broadcasting? State the exact conditions required for two arrays of arbitrary dimensions to be broadcast-compatible. Illustrate with an example.
+\begin{solutionbox}
+Broadcasting allows element-wise operations between arrays of different shapes without copying data.
+\textbf{Conditions (evaluated right-to-left):}\\
+1. Dimensions are equal, OR\\
+2. One of the dimensions is 1.\\
+\textbf{Example:} Array $A$ of shape $(4, 1, 8)$ and Array $B$ of shape $(5, 8)$ broadcast to result shape $(4, 5, 8)$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Broadcasting definition and zero-copy concept (2M); Two compatibility conditions (2M); Concrete shape alignment example (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 4 [Unit 5]:} Implement a vectorized Python function \texttt{pairwise\_euclidean\_distance(X, Y)} using pure NumPy broadcasting without Python loops.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+def pairwise_euclidean_distance(X: np.ndarray, Y: np.ndarray) -> np.ndarray:
+    # X shape: (M, D) -> reshape to (M, 1, D)
+    # Y shape: (N, D) -> reshape to (1, N, D)
+    diff = X[:, np.newaxis, :] - Y[np.newaxis, :, :]
+    # diff shape: (M, N, D)
+    return np.sqrt(np.sum(diff ** 2, axis=-1))
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Dimension expansion via \texttt{np.newaxis} (3M); Vectorized difference and squared summation (2M); Return shape $(M, N)$ (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 5 [Unit 5]:} Explain Cholesky decomposition ($A = L L^T$). Why is it preferred over standard Gaussian elimination for symmetric positive-definite linear systems?
+\begin{solutionbox}
+Cholesky decomposes a symmetric positive-definite matrix $A$ into a lower triangular matrix $L$ such that $A = L L^T$.
+\textbf{Advantages:}\\
+1. \textbf{Efficiency:} Requires $\frac{1}{3} n^3$ floating-point operations compared to $\frac{2}{3} n^3$ for general LU factorization (twice as fast).\\
+2. \textbf{Numerical Stability:} No pivoting is required, eliminating row swapping overhead.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Mathematical definition and triangular form (2M); Complexity comparison ($n^3/3$ vs $2n^3/3$) (2M); Numerical stability without pivoting (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 6 [Unit 4]:} What is a context manager? Implement a custom context manager class \texttt{ExecutionTimer} that measures and logs the elapsed time of any code block.
+\begin{solutionbox}
+\begin{lstlisting}
+import time
+
+class ExecutionTimer:
+    def __enter__(self):
+        self.start = time.perf_counter()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        elapsed = time.perf_counter() - self.start
+        print(f"Code block executed in {elapsed:.6f} seconds.")
+        return False  # Do not suppress exceptions
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Definition of PEP 343 context protocol (2M); Implementation of \texttt{\_\_enter\_\_} (2M); Implementation of \texttt{\_\_exit\_\_} and exception propagation (2M).
+\end{markingrubric}

@@ -1,0 +1,77 @@
+\chapter{Core Syntax, Types, Operators \& Built-in Functions Reference}
+\label{chap:syntax-types}
+
+\section{Python Virtual Machine Architecture \& Memory Models}
+\begin{formulabox}{CPython Execution Pipeline}
+\textbf{Pipeline Stages:}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Lexical Analysis \& Parsing:} Source code (\texttt{.py}) is tokenized into an Abstract Syntax Tree (AST).
+    \item \textbf{Bytecode Compilation:} The AST is compiled into platform-independent CPython bytecode (\texttt{.pyc} stored in \texttt{\_\_pycache\_\_}).
+    \item \textbf{Evaluation Loop (PVM):} The Python Virtual Machine executes bytecode instructions via a massive switch statement in C (\texttt{ceval.c}).
+\end{enumerate}
+\vspace{2mm}
+\textbf{CPython Object Model (\texttt{PyObject}):}
+Every value in Python is a dynamically allocated C structure on the heap:
+\begin{equation}
+\text{PyObject} = \{\text{refcnt: 8 bytes}, \quad \text{type: 8 bytes}\}
+\end{equation}
+For variable-length objects (e.g., \texttt{str}, \texttt{list}, \texttt{tuple}), \texttt{PyVarObject} adds an 8-byte \texttt{ob\_size} header.
+\end{formulabox}
+
+\section{Primitive Data Types \& Representation Limits}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l p{3.2cm} p{2.8cm} X}
+\toprule
+\textbf{Type} & \textbf{Internal C Struct} & \textbf{Precision / Limits} & \textbf{Mutability \& Key Semantics} \\
+\midrule
+\texttt{int} & \texttt{PyLongObject} & Arbitrary precision (memory-bound) & Immutable. Small integers $[-5, 256]$ are pre-allocated singletons in CPython. \\
+\texttt{float} & \texttt{PyFloatObject} & 64-bit IEEE 754 double precision & Immutable. 53-bit mantissa, 11-bit exponent, approx 15--17 decimal digits. \\
+\texttt{complex} & \texttt{PyComplexObject} & Two 64-bit doubles (\texttt{real + imag*1j}) & Immutable. Conjugate accessible via \texttt{z.conjugate()}. \\
+\texttt{bool} & \texttt{PyBoolObject} & Subclass of \texttt{int} (\texttt{True == 1, False == 0}) & Immutable singleton. Arithmetic allowed: \texttt{True + True == 2}. \\
+\texttt{str} & \texttt{PyASCIIObject} / \texttt{PyCompactUnicode} & 1, 2, or 4 bytes per char (PEP 393) & Immutable sequence of Unicode code points. \\
+\texttt{bytes} & \texttt{PyBytesObject} & Raw 8-bit unsigned bytes ($[0, 255]$) & Immutable binary buffer. \\
+\texttt{NoneType}& \texttt{\_PyNone\_Type} & Singleton object (\texttt{None}) & Truth value is always \texttt{False}. \\
+\bottomrule
+\end{tabularx}
+\caption{Primitive Python Built-in Data Types}
+\end{table}
+
+\section{Operator Precedence Matrix (Highest to Lowest)}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{cllX}
+\toprule
+\textbf{Level} & \textbf{Operator} & \textbf{Associativity} & \textbf{Description \& Architectural Notes} \\
+\midrule
+1 & \texttt{(...)}, \texttt{[...]}, \texttt{\{...\}} & Left-to-right & Parentheses, list displays, dict/set comprehensions \\
+2 & \texttt{x[index]}, \texttt{x[i:j]}, \texttt{x(...)}, \texttt{x.attr} & Left-to-right & Subscripting, slicing, function call, attribute reference \\
+3 & \texttt{**} & \textbf{Right-to-left} & Exponentiation: \texttt{2 ** 3 ** 2 == 2 ** (3 ** 2) == 512} \\
+4 & \texttt{+x}, \texttt{-x}, \texttt{\textasciitilde{}x} & Right-to-left & Unary positive, unary negative, bitwise NOT (\texttt{\textasciitilde{}x == -(x+1)}) \\
+5 & \texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%} & Left-to-right & Multiplication, true float division, floor division, modulo \\
+6 & \texttt{+}, \texttt{-} & Left-to-right & Addition, subtraction (or sequence concatenation) \\
+7 & \texttt{<<}, \texttt{>>} & Left-to-right & Bitwise left shift, bitwise right shift \\
+8 & \texttt{\&} & Left-to-right & Bitwise AND (set intersection) \\
+9 & \texttt{\textasciicircum{}} & Left-to-right & Bitwise XOR (symmetric difference) \\
+10 & \texttt{\textbar} & Left-to-right & Bitwise OR (set union, dict merge in 3.9+) \\
+11 & \texttt{in}, \texttt{not in}, \texttt{is}, \texttt{is not}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}, \texttt{!=}, \texttt{==} & Chained & Comparison operators (chaining: \texttt{1 < x < 5} $\iff$ \texttt{1 < x and x < 5}) \\
+12 & \texttt{not x} & Right-to-left & Boolean NOT \\
+13 & \texttt{and} & Left-to-right & Short-circuit Boolean AND (evaluates second operand only if first is truthy) \\
+14 & \texttt{or} & Left-to-right & Short-circuit Boolean OR (evaluates second operand only if first is falsy) \\
+15 & \texttt{if -- else} & Right-to-left & Conditional expression (Ternary operator: \texttt{x if C else y}) \\
+16 & \texttt{:=} & Right-to-left & Walrus assignment expression (PEP 572) \\
+\bottomrule
+\end{tabularx}
+\caption{Python Operator Precedence \& Associativity}
+\end{table}
+
+\begin{memorytip}
+\textbf{The Floor Division \& Modulo Invariant:}\\
+In Python, integer division satisfies:
+\begin{equation}
+a = (a // b) \cdot b + (a \pmod b)
+\end{equation}
+Because Python uses \textit{flooring division} (towards $-\infty$) rather than truncation towards zero, \texttt{-7 // 3 == -3} and \texttt{-7 \% 3 == 2}. The sign of \texttt{a \% b} always matches the sign of divisor $b$!
+\end{memorytip}

@@ -1,0 +1,176 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exam_style}[2026/10/22 v1.0 CSE105 Exam Companion Style]
+
+\RequirePackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,headheight=15pt]{geometry}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{inconsolata}
+\RequirePackage{microtype}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{booktabs,tabularx,array,multicol,multirow}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+
+% Palette
+\definecolor{brandnavy}{RGB}{15, 32, 67}
+\definecolor{brandblue}{RGB}{28, 78, 140}
+\definecolor{brandteal}{RGB}{12, 115, 105}
+\definecolor{brandamber}{RGB}{180, 83, 9}
+\definecolor{brandaccent}{RGB}{185, 28, 28}
+\definecolor{brandpurple}{RGB}{109, 40, 217}
+\definecolor{terminalbg}{RGB}{24, 27, 34}
+\definecolor{terminalfg}{RGB}{240, 246, 252}
+
+\definecolor{LightGrayBg}{RGB}{248, 249, 250}
+\definecolor{BorderGray}{RGB}{220, 225, 230}
+\definecolor{SolBg}{RGB}{245, 248, 254}
+
+% Headers and Footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\bfseries\color{brandnavy} CSE105: Linux \& Shell Programming}
+\fancyhead[R]{\small\sffamily\color{brandteal}\textbf{\leftmark}}
+\fancyfoot[C]{\sffamily\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{brandnavy}}{\chaptertitlename\ \thechapter}{10pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{brandnavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{brandteal}}{\thesubsection}{1em}{}
+
+% Listings
+\lstdefinestyle{bashstyle}{
+    basicstyle=\small\ttfamily\color{terminalfg},
+    backgroundcolor=\color{terminalbg},
+    keywordstyle=\color{cyan}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{lime},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    columns=flexible,
+    keepspaces=true,
+    showstringspaces=false
+}
+
+% Solution Box
+\newtcolorbox{examsol}[1][Step-by-Step Analytical Solution \& Output]{
+    enhanced,
+    breakable,
+    colback=SolBg,
+    colframe=brandnavy,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\small,
+    title={#1},
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=brandnavy, arc=1.5mm},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=4mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=8pt
+}
+
+% Marking Rubric Box
+\newtcolorbox{markingrubric}{
+    enhanced,
+    colback=LightGrayBg,
+    colframe=BorderGray,
+    boxrule=0.6pt,
+    arc=1.5mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    fontupper=\small\sffamily,
+    before skip=4pt, after skip=6pt
+}
+
+% Terminal listing
+\newtcblisting{examcli}{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandnavy,
+    arc=1.5mm,
+    boxrule=0.8pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        basicstyle=\small\ttfamily\color{terminalfg},
+        breaklines=true,
+        columns=flexible,
+        keepspaces=true,
+        showstringspaces=false
+    },
+    title={\texttt{\$ Terminal Execution \& Output}}
+}
+
+% Script listing
+\newtcblisting{examscript}{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandpurple,
+    arc=1.5mm,
+    boxrule=0.8pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        style=bashstyle
+    },
+    title={\texttt{Shell Script Implementation}}
+}
+
+% Paper Header Macro
+\newcommand{\LPUPaperHeader}[5]{
+    \noindent
+    \begin{tcolorbox}[enhanced, colback=white, colframe=brandnavy, boxrule=1pt, arc=1.5mm, left=2.5mm, right=2.5mm, top=2mm, bottom=2mm]
+    \begin{tabularx}{\textwidth}{@{}X r@{}}
+        \begin{tabular}{@{}l@{}}
+            {\Large\bfseries\color{brandnavy} LOVELY PROFESSIONAL UNIVERSITY} \\[1mm]
+            {\footnotesize\sffamily\color{gray} School of Computer Science \& Engineering \textbullet\ Academic Assessment} \\[2mm]
+            {\textbf{Course Code:}} CSE105 \quad {\textbf{Course Title:}} Linux \& Shell Programming \\
+            {\textbf{Evaluation Type:}} #1 \quad {\textbf{Paper Set:}} \textbf{\color{brandteal}#2} \\
+            {\textbf{Maximum Marks:}} #4 \quad {\textbf{Time Allowed:}} #3
+        \end{tabular}
+        &
+        \begin{tabular}{|p{4.2cm}|}
+            \hline
+            {\footnotesize\textbf{Roll No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Reg. No.:}} \dotfill \\[2mm]
+            {\footnotesize\textbf{Section:}} \dotfill \\
+            \hline
+        \end{tabular}
+    \end{tabularx}
+    \vspace{1mm}
+    \hrule height 0.5pt
+    \vspace{1.5mm}
+    \noindent{\footnotesize\sffamily\textbf{Target Learning Outcomes (COs):} #5}
+    \end{tcolorbox}
+    \vspace{2mm}
+}
+
+% Question Item Macro
+\newcommand{\questionitem}[5]{
+    \noindent
+    \begin{minipage}{\textwidth}
+    \vspace{2mm}
+    \begin{tcolorbox}[enhanced, colback=white, colframe=BorderGray, boxrule=0.6pt, arc=1mm, top=2mm, bottom=2mm, left=2.5mm, right=2.5mm]
+    \begin{tabularx}{\textwidth}{@{}p{1.2cm} X p{2.2cm} p{1.6cm} p{1.4cm}@{}}
+        \textbf{Q.#1} & #2 & {\footnotesize\color{brandnavy}\textbf{#4}} & {\footnotesize\color{brandteal}#5} & {\bfseries\color{brandaccent}#3 Marks}
+    \end{tabularx}
+    \end{tcolorbox}
+    \end{minipage}
+}
+
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=brandnavy,urlcolor=brandblue,citecolor=brandteal]{hyperref}

@@ -1,0 +1,560 @@
+\chapter{Unit 2: Linear Differential Equations --- Homogeneous Systems}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent\textbf{Q1. What defines a linear differential equation?} \hfill [Tag: introduction to linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The independent variable has a degree of 1.}}
+    \item {{The equation contains transcendental functions of the dependent variable.}}
+    \item {{The dependent variable and its derivatives have a degree of 1.}}
+    \item {{The dependent variable and its derivatives are multiplied together.}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2. Which of the following represents the standard form of a first-order linear differential equation?} \hfill [Tag: introduction to linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{d x}}
+    \item {{d x}}
+    \item {{d x}}
+    \item {{(}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3. Is the equation y d x d y + x = 0 a linear differential equation?} \hfill [Tag: introduction to linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{No, because the dependent variable y}}
+    \item {{No, because it does not have constant coefficients.}}
+    \item {{Yes, because the degree of x}}
+    \item {{Yes, because the highest derivative is of order 1.}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4. How many arbitrary constants does the general solution of an n -th order linear differential equation contain?} \hfill [Tag: solution of linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{1}}
+    \item {{n -}}
+    \item {{n +}}
+    \item {{n}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5. For a non-homogeneous linear differential equation, the complete solution is the sum of:} \hfill [Tag: solution of linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Dependent and Independent variables}}
+    \item {{Auxiliary Equation and Wronskian}}
+    \item {{General Solution and Singular Solution}}
+    \item {{Complementary Function and Particular Integral}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6. If the right-hand side of a linear differential equation f ( D ) y = X is zero (i.e., X = 0 ), what is its Particular Integral (PI)?} \hfill [Tag: solution of linear differential equation | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{1}}
+    \item {{Undefined}}
+    \item {{e x}}
+    \item {{0}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7. What mathematical determinant is primarily used to check the linear dependence or independence of solutions?} \hfill [Tag: linear dependence and linear independence of solution | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Hessian}}
+    \item {{Jacobian}}
+    \item {{Wronskian}}
+    \item {{Laplacian}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8. If the Wronskian W ( y 1 , y 2 ) of two solutions is non-zero for all x in an interval, then the solutions y 1 and y 2 are:} \hfill [Tag: linear dependence and linear independence of solution | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Identical}}
+    \item {{Constants}}
+    \item {{Linearly independent}}
+    \item {{Linearly dependent}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9. If two solutions y 1 and y 2 are linearly dependent, what can be said about their ratio y 1 / y 2 ?} \hfill [Tag: linear dependence and linear independence of solution | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It is undefined everywhere.}}
+    \item {{It is identically zero.}}
+    \item {{It is a constant.}}
+    \item {{It is a non-constant function of x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10. In the context of differential equations, what does the differential operator D represent?} \hfill [Tag: method of solution of linear differential equation- differential operator | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{$\int$ d x}}
+    \item {{d x 2}}
+    \item {{$\partial$ y}}
+    \item {{d x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11. What is the equivalent meaning of the operator D 2 y ?} \hfill [Tag: method of solution of linear differential equation- differential operator | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y d x}}
+    \item {{d x 2}}
+    \item {{(}}
+    \item {{2 d x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12. What is the inverse operator D 1 equivalent to?} \hfill [Tag: method of solution of linear differential equation- differential operator | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Integration}}
+    \item {{Differentiation}}
+    \item {{Division by x}}
+    \item {{Multiplication by x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13. When converting the equation a d x 2 d 2 y + b d x d y + cy = 0 into operator form, it becomes:} \hfill [Tag: method of solution of linear differential equation- differential operator | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( a D +}}
+    \item {{( D 2}}
+    \item {{( a D 2}}
+    \item {{( a D 2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14. For a second-order linear homogeneous ODE, if the auxiliary equation has real and distinct roots m 1 and m 2 , what is the complementary function?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15. If the auxiliary equation of a second-order homogeneous ODE has a repeated real root m , the general solution is:} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16. How is the auxiliary (or characteristic) equation formed for A y '' + B y ' + C y = 0 ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{By replacing y ''}}
+    \item {{By integrating the entire equation.}}
+    \item {{By taking the derivative of the entire equation.}}
+    \item {{By replacing y ''}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17. If the auxiliary equation yields complex roots $\alpha$ $\pm$ i $\beta$ , what is the form of the solution?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18. What is the degree of the auxiliary equation for a linear homogeneous ODE of order n ?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{n}}
+    \item {{2 n}}
+    \item {{n -}}
+    \item {{n +}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19. If a real root m is repeated 3 times in the auxiliary equation of a higher-order ODE, what is its corresponding part in the complementary function?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( c 1}}
+    \item {{( c 1}}
+    \item {{( c 1}}
+    \item {{c 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20. Which of the following describes the complementary function for an equation whose auxiliary equation has roots 0 , 0 , 1 ?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21. Which of the following represents a linear differential equation?} \hfill [Tag: introduction to linear differential equation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{x 2}}
+    \item {{y ''}}
+    \item {{e y}}
+    \item {{y y '}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22. If y 1 ( x ) and y 2 ( x ) are solutions of a homogeneous linear differential equation, which of the following is also a guaranteed solution?} \hfill [Tag: solution of linear differential equation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( y 1}}
+    \item {{c 1}}
+    \item {{y 1}}
+    \item {{y 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23. The Wronskian of two solutions y 1 ( x ) = e 2 x and y 2 ( x ) = x e 2 x evaluated at x = 0 is:} \hfill [Tag: linear dependence and linear independence of solution | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{0}}
+    \item {{2}}
+    \item {{e 2}}
+    \item {{1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24. If the Wronskian of n solutions of a linear homogeneous differential equation is identically zero on an interval I , then the solutions are:} \hfill [Tag: linear dependence and linear independence of solution | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Linearly dependent on I}}
+    \item {{Constants}}
+    \item {{Not valid solutions}}
+    \item {{Linearly independent on I}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25. Using the differential operator D = d x d , how can the expression y '' - 4 y ' + 4 y = 0 be written?} \hfill [Tag: method of solution of linear differential equation- differential operator | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( D -}}
+    \item {{( D -}}
+    \item {{( D 2}}
+    \item {{( D +}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26. What is the value of D - a 1 e b x where a  = b ?} \hfill [Tag: method of solution of linear differential equation- differential operator | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{b - a}}
+    \item {{a - b}}
+    \item {{b - a}}
+    \item {{a + b}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27. What is the general solution of the differential equation y '' - 5 y ' + 6 y = 0 ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28. Find the general solution of y '' + 4 y ' + 4 y = 0 .} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29. Which of the following is the general solution of y '' + 9 y = 0 ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30. If the roots of the auxiliary equation are m = 1 $\pm$ 2 i , what is the general solution of the differential equation?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31. What is the general solution to y ''' - 3 y '' + 3 y ' - y = 0 ?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32. Find the roots of the auxiliary equation for y ( 4 ) - 16 y = 0 .} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{2 , - 2 , 2 , - 2}}
+    \item {{4 , - 4 , 4 i , - 4 i}}
+    \item {{2 i , - 2 i , 2 i , - 2 i}}
+    \item {{2 , - 2 , 2 i , - 2 i}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33. For a differential equation with auxiliary roots 0 , 0 , 3 , what is the form of the general solution?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34. Which set of functions is linearly independent on ( - $\infty$ , $\infty$ ) ?} \hfill [Tag: linear dependence and linear independence of solution | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{ sin 2}}
+    \item {{ e x}}
+    \item {{ 1 , x , x 2}}
+    \item {{ x , 3 x }}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35. Evaluate D 2 ( sin 3 x ) where D = d x d .} \hfill [Tag: method of solution of linear differential equation- differential operator | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{- 9 sin 3 x}}
+    \item {{3 sin 3 x}}
+    \item {{- 3 cos 3 x}}
+    \item {{9 cos 3 x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36. The order of the differential equation d x 3 d 3 y + 4 x ( d x d y ) 2 - y = e x is:} \hfill [Tag: introduction to linear differential equation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{2}}
+    \item {{3}}
+    \item {{1}}
+    \item {{4}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37. A fundamental set of solutions for a second-order linear homogeneous differential equation requires:} \hfill [Tag: solution of linear differential equation | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Two linearly independent solutions}}
+    \item {{Two linearly dependent solutions}}
+    \item {{Exactly one non-trivial solution}}
+    \item {{Three solutions}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38. The roots of the auxiliary equation for a second-order differential equation are real and distinct: m 1 and m 2 . As x $\to$ $\infty$ , the solution y $\to$ 0 for all initial conditions. What must be true?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{m 1}}
+    \item {{They are complex roots}}
+    \item {{Both m 1}}
+    \item {{One is positive, one is negative}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39. The auxiliary equation for a linear differential equation is ( m 2 + 1 ) 2 = 0 . What is the general solution?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{y =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40. If f ( D ) = D 2 + D - 2 , what is f ( D ) ( e 2 x ) ?} \hfill [Tag: method of solution of linear differential equation- differential operator | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{6 e 2 x}}
+    \item {{4 e 2 x}}
+    \item {{2 e 2 x}}
+    \item {{0}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41. Which of the following transformations converts the non-linear differential equation x 2 y '' + 2 x y ' + a y = 0 into a linear differential equation with constant coefficients?} \hfill [Tag: introduction to linear differential equation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{x =}}
+    \item {{y =}}
+    \item {{y =}}
+    \item {{x =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42. Consider the differential equation A ( x ) y '' + B ( x ) y ' + C ( x ) y = F ( x , y , y ' ) . For the equation to be strictly linear, which of the following conditions MUST hold for F ?} \hfill [Tag: introduction to linear differential equation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{F}}
+    \item {{F}}
+    \item {{F}}
+    \item {{F}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43. Let y 1 ( x ) and y 2 ( x ) be two linearly independent solutions of y '' + P ( x ) y ' + Q ( x ) y = 0 on an interval I . If y 1 ( x ) has a local maximum at x 0 $\in$ I , what can be said about y 2 ( x ) at x 0 assuming Q ( x 0 ) > 0 ?} \hfill [Tag: solution of linear differential equation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y 2}}
+    \item {{y 2}}
+    \item {{The Wronskian at x 0}}
+    \item {{y 2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44. Given the equation y '' + $\lambda$ y = 0 with boundary conditions y ( 0 ) + y ' ( 0 ) = 0 and y ( 1 ) = 0 . For which type of values of $\lambda$ do non-trivial solutions exist?} \hfill [Tag: solution of linear differential equation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{For discrete positive values of $\lambda$}}
+    \item {{Only for $\lambda$ =}}
+    \item {{For discrete positive values of $\lambda$}}
+    \item {{Only for $\lambda$ <}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45. Consider the equation y ''' - y ' = 0 subject to y ( 0 ) = 0 , y ' ( 0 ) = 1 , y ( $\infty$ ) = 0 . What is the value of y '' ( 0 ) ?} \hfill [Tag: solution of linear differential equation | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{1}}
+    \item {{0}}
+    \item {{Does not exist}}
+    \item {{-1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46. Let y 1 , y 2 be solutions of x 2 y '' + x y ' + ( x 2 - $\nu$ 2 ) y = 0 . By Abel's identity, the Wronskian W ( y 1 , y 2 ) ( x ) is proportional to:} \hfill [Tag: linear dependence and linear independence of solution | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{e - x}}
+    \item {{x}}
+    \item {{x 2}}
+    \item {{1/ x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47. Which of the following statements about the Wronskian W of two functions f ( x ) and g ( x ) is analytically correct for functions defined on R ?} \hfill [Tag: linear dependence and linear independence of solution | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{If W ( f , g ) }}
+    \item {{If W ( f , g ) =}}
+    \item {{If f}}
+    \item {{If f}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48. Suppose y 1 , y 2 , y 3 are fundamental solutions to y ''' + p ( x ) y '' + q ( x ) y ' + r ( x ) y = 0 . If the Wronskian W ( y 1 , y 2 , y 3 ) ( 0 ) = 5 and p ( x ) = 2 x , what is W ( y 1 , y 2 , y 3 ) ( 2 ) ?} \hfill [Tag: linear dependence and linear independence of solution | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{5 e 4}}
+    \item {{0}}
+    \item {{5 e - 8}}
+    \item {{5 e - 4}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49. Let S = { e a x , x e a x , x 2 e a x } . What is the Wronskian of the set S ?} \hfill [Tag: linear dependence and linear independence of solution | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{2 a e 3 a x}}
+    \item {{e 3 a x}}
+    \item {{a 3}}
+    \item {{2 e 3 a x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50. Evaluate the particular integral of the differential equation ( D 2 + 4 ) y = x sin 2 x using operator methods.} \hfill [Tag: method of solution of linear differential equation- differential operator | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{8}}
+    \item {{- 4}}
+    \item {{- 8}}
+    \item {{- 4}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51. When finding the particular integral for ( D - a ) n y = e a x , the correct application of the shifting theorem gives:} \hfill [Tag: method of solution of linear differential equation- differential operator | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{x n}}
+    \item {{n !}}
+    \item {{n}}
+    \item {{( n - 1 )!}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52. For the operator equation L ( D ) y = cosh ( a x ) , if L ( a ) = 0 but L ( - a )  = 0 , what is the form of the particular integral?} \hfill [Tag: method of solution of linear differential equation- differential operator | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{L '}}
+    \item {{L '}}
+    \item {{L '}}
+    \item {{2 L '}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53. What is the inverse differential operator D 2 - 2 D + 1 1 applied to x e x ln x ?} \hfill [Tag: method of solution of linear differential equation- differential operator | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{e x}}
+    \item {{e x}}
+    \item {{e x}}
+    \item {{e x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54. Consider the equation y '' + 2 $\alpha$ y ' + ( $\alpha$ 2 + $\beta$ 2 ) y = 0 , where $\alpha$ > 0 . As x $\to$ $\infty$ , what is the behavior of the solution y ( x ) ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y ( x ) $\to$}}
+    \item {{y ( x ) $\to$}}
+    \item {{y ( x )}}
+    \item {{y ( x )}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55. Find the general solution to y '' - 2 k y ' + k 2 y = 0 . If y ( 0 ) = 1 and y ( 1 ) = 0 , what is the global maximum value of y ( x ) for x $\ge$ 0 assuming k > 1 ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{k e - k}}
+    \item {{e k}}
+    \item {{1/ ( 1 -}}
+    \item {{1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56. The second-order differential equation y '' + p y ' + q y = 0 has solutions that form closed loops in the phase plane ( y , y ' ) . What must be true about the constants p and q ?} \hfill [Tag: solution of second order homogeneous linear differential equation with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{p =}}
+    \item {{p >}}
+    \item {{p =}}
+    \item {{p <}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57. What is the general solution to the 4th order equation y ( 4 ) + 2 y '' + y = 0 ?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( C 1}}
+    \item {{C 1}}
+    \item {{( C 1}}
+    \item {{e x}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58. Find the lowest order linear homogeneous differential equation with constant real coefficients that has y ( x ) = x e 2 x sin ( 3 x ) as a solution.} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{6th order}}
+    \item {{4th order}}
+    \item {{2nd order}}
+    \item {{3rd order}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59. A third-order homogeneous LDE with constant coefficients has roots r 1 = - 1 and r 2 , 3 = $\pm$ 2 i . If y ( 0 ) = 2 , y ' ( 0 ) = 0 , y '' ( 0 ) = - 4 , what is the coefficient of e - x in the particular solution?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{-1}}
+    \item {{2}}
+    \item {{0}}
+    \item {{1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60. Let L ( D ) y = 0 be a differential equation of order n with constant coefficients. If all roots of the characteristic equation have strictly negative real parts, which of the following is absolutely guaranteed for any solution y ( x ) ?} \hfill [Tag: solution of higher order homogeneous linear differential equations with constant coefficient | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{y ( x )}}
+    \item {{lim x $\to$ $\infty$}}
+    \item {{$\int$ 0}}
+    \item {{y ( x )}}
+\end{enumerate}
+\vspace{2mm}
+
+
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{2}{1}
+Solve the third-order initial value problem $(D^3 - 3D^2 + 4)y = 0$ with $y(0) = 1$, $y'(0) = 8$, $y''(0) = 0$.
+\end{subjectiveq}
+
+\begin{solbox}
+The auxiliary equation is $m^3 - 3m^2 + 4 = 0$. By inspection, $m = -1$ is a root. Factoring: $(m + 1)(m^2 - 4m + 4) = (m + 1)(m - 2)^2 = 0$. Hence the roots are $m_1 = -1$, $m_{2,3} = 2$ (repeated). The general solution is $y(x) = c_1 e^{-x} + (c_2 + c_3 x)e^{2x}$. Applying initial conditions yields $c_1 = 2$, $c_2 = -1$, $c_3 = 5$, giving $y(x) = 2e^{-x} + (5x - 1)e^{2x}$.
+\end{solbox}
+
+\begin{examinertip}
+Step 1: Identify the foundational definition and state governing theorems.\\
+Step 2: Clearly write each algebraic transformation and boundary substitution.\\
+Step 3: State the final numerical/algebraic invariant clearly in a concluding box.
+\end{examinertip}

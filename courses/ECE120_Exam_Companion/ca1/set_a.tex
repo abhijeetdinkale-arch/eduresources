@@ -1,0 +1,41 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+
+\LPUPaperHeader{Continuous Assessment 1 (CA-1)}{A}{60 Minutes}{25 Marks}{CO1 (Components \& Instruments), CO2 (Divider Laws)}
+
+\noindent\textbf{Instructions to Candidates:}
+\begin{enumerate*}[label=\textbf{\arabic*.}]
+    \item Answer any \textbf{FIVE} questions out of the six questions presented.
+    \item Each question carries \textbf{5 Marks}. Clearly state governing circuit theorems.
+\end{enumerate*}
+
+\questionitem{1}{A carbon resistor has four colored bands: Brown, Black, Orange, and Gold. Determine: (a) Nominal resistance, (b) Maximum allowable resistance, (c) Minimum allowable resistance.}{5}{CO1}{L2}
+\questionitem{2}{Explain the operating principle of a Digital Multimeter when measuring resistance. Why must the circuit power be turned off before connecting DMM ohmmeter test leads?}{5}{CO1}{L2}
+\questionitem{3}{A voltage divider is constructed with $V_{\mathrm{in}} = 15\,\mathrm{V}$, $R_1 = 3.3\,\mathrm{k}\Omega$, and $R_2 = 6.8\,\mathrm{k}\Omega$. Calculate: (a) The unloaded output voltage across $R_2$, (b) The loaded output voltage when a load resistor $R_L = 10\,\mathrm{k}\Omega$ is connected across $R_2$.}{5}{CO2}{L3}
+\questionitem{4}{State the Current Divider Law. For a parallel circuit with $I_T = 24\,\mathrm{mA}$ entering two branches with $R_1 = 4\,\mathrm{k}\Omega$ and $R_2 = 12\,\mathrm{k}\Omega$, calculate the current in each branch.}{5}{CO2}{L3}
+\questionitem{5}{A student measures a sinusoidal voltage on a DSO. The peak-to-peak waveform occupies 6 vertical divisions at $2.0\,\mathrm{V/div}$, and one cycle spans 4 horizontal divisions at $0.5\,\mathrm{ms/div}$. Determine: (a) Peak voltage $V_m$, (b) RMS voltage $V_{\mathrm{rms}}$, (c) Signal frequency $f$.}{5}{CO1}{L3}
+\questionitem{6}{A $5\,\mathrm{mm}$ red LED has a forward voltage drop of $V_F = 1.9\,\mathrm{V}$ at $I_F = 15\,\mathrm{mA}$. Design a current-limiting resistor to drive this LED safely from a $+5.0\,\mathrm{V}$ digital logic output. Select the nearest standard $5\%$ resistor and compute the actual LED current.}{5}{CO1}{L4}
+
+\subsection*{Model Solutions \& Marking Rubrics (Set A)}
+
+\begin{solutionbox}[Solution to Q.1]
+(a) Brown = 1, Black = 0, Orange = $10^3$, Gold = $\pm 5\%$.\\
+Nominal resistance: $R = 10 \times 10^3\,\Omega = 10\,\mathrm{k}\Omega$.\\
+(b) Maximum limit: $R_{\max} = 10\,\mathrm{k}\Omega + (0.05 \times 10\,\mathrm{k}\Omega) = 10.5\,\mathrm{k}\Omega$.\\
+(c) Minimum limit: $R_{\min} = 10\,\mathrm{k}\Omega - (0.05 \times 10\,\mathrm{k}\Omega) = 9.5\,\mathrm{k}\Omega$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.1):} Decoding band values: 2 Marks $\bullet$ Calculating nominal $10\,\mathrm{k}\Omega$: 1 Mark $\bullet$ Calculating $R_{\max}$ and $R_{\min}$: 2 Marks. Total = 5 Marks.
+\end{markingrubric}
+
+\begin{solutionbox}[Solution to Q.3]
+(a) Unloaded output voltage:
+\[ V_{\mathrm{out,unloaded}} = V_{\mathrm{in}} \frac{R_2}{R_1 + R_2} = 15 \times \frac{6.8}{3.3 + 6.8} = 15 \times \frac{6.8}{10.1} = 10.099\,\mathrm{V} \]
+(b) When $R_L = 10\,\mathrm{k}\Omega$ is attached in parallel with $R_2$:
+\[ R_{2,\mathrm{eq}} = \frac{6.8 \times 10}{6.8 + 10} = \frac{68}{16.8} = 4.048\,\mathrm{k}\Omega \]
+Loaded voltage:
+\[ V_{\mathrm{out,loaded}} = 15 \times \frac{4.048}{3.3 + 4.048} = 15 \times \frac{4.048}{7.348} = 8.263\,\mathrm{V} \]
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.3):} Correct unloaded divider formula and result ($10.10\,\mathrm{V}$): 2 Marks $\bullet$ Calculation of parallel equivalent $R_2 \parallel R_L$: 1.5 Marks $\bullet$ Loaded output computation ($8.26\,\mathrm{V}$): 1.5 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

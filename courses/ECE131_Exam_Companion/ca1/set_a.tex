@@ -1,0 +1,70 @@
+\section{Continuous Assessment 1 (CA-1) --- Model Paper Set A}
+\LPUPaperHeader{Continuous Assessment 1 (CA-1)}{Set A}{60 Minutes}{30 Marks}{CO1 (DC Circuits), CO2 (AC Circuits)}
+
+\begin{center}
+\sffamily\textbf{\color{LPUOrange}Note: Answer any FIVE questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    In a bridge circuit, determine the current through the detector branch using Thevenin's Theorem. Given: Source voltage $V = 100\text{ V}$, branch resistors $R_1 = 10\,\Omega$, $R_2 = 20\,\Omega$, $R_3 = 30\,\Omega$, $R_4 = 40\,\Omega$, and detector load resistance $R_L = 50\,\Omega$.
+}{6}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    State and prove the Maximum Power Transfer Theorem for a resistive DC circuit. Derive the condition $R_L = R_{th}$ and show that the maximum theoretical transfer efficiency is strictly $50\%$.
+}{6}{CO1}{L2 Understand}
+
+\questionitem{3}{
+    A star-connected network has branch resistances $R_A = 6\,\Omega$, $R_B = 12\,\Omega$, and $R_C = 18\,\Omega$. Convert this network into an equivalent delta ($\Delta$) network.
+}{6}{CO1}{L3 Apply}
+
+\questionitem{4}{
+    A sinusoidal voltage is represented by $v(t) = 325 \sin(314 t - 30^\circ)\text{ V}$. Compute: (a) Peak amplitude, (b) RMS value, (c) Frequency, (d) Periodic time, (e) Form factor, and (f) Value of voltage at $t = 5\text{ ms}$.
+}{6}{CO2}{L3 Apply}
+
+\questionitem{5}{
+    A series $RLC$ circuit with $R = 8\,\Omega$, $L = 0.2\text{ H}$, and $C = 50\,\mu\text{F}$ is energized by a $230\text{ V}$, $50\text{ Hz}$ supply. Compute: (a) Inductive reactance $X_L$, (b) Capacitive reactance $X_C$, (c) Total circuit impedance $\mathbf{Z}$, (d) Circuit current magnitude and phase, and (e) Active power absorbed.
+}{6}{CO2}{L3 Apply}
+
+\questionitem{6}{
+    In a balanced three-phase star-connected system, derive the mathematical relation between line voltage and phase voltage ($V_L = \sqrt{3}V_{ph}$ with a $30^\circ$ phase lead). Construct the complete phasor diagram.
+}{6}{CO2}{L4 Analyze}
+
+\newpage
+\subsection*{Solutions and Detailed Marking Rubrics --- CA-1 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+\textbf{Step 1: Open-Circuit Thevenin Voltage ($V_{th}$)}\\
+Terminals $A$ and $B$ are across the detector branch. With detector removed:
+\[ V_A = V \cdot \frac{R_2}{R_1 + R_2} = 100 \cdot \frac{20}{10 + 20} = \frac{2000}{30} = 66.67\text{ V} \]
+\[ V_B = V \cdot \frac{R_4}{R_3 + R_4} = 100 \cdot \frac{40}{30 + 40} = \frac{4000}{70} = 57.14\text{ V} \]
+\[ V_{th} = V_A - V_B = 66.67 - 57.14 = 9.52\text{ V} \]
+\textbf{Step 2: Thevenin Resistance ($R_{th}$)}\\
+Deactivate independent voltage source (short circuit):
+\[ R_{th} = (R_1 \parallel R_2) + (R_3 \parallel R_4) = \frac{10 \times 20}{10 + 20} + \frac{30 \times 40}{30 + 40} = 6.67 + 17.14 = 23.81\,\Omega \]
+\textbf{Step 3: Load Current Calculation}\\
+\[ I_L = \frac{V_{th}}{R_{th} + R_L} = \frac{9.52}{23.81 + 50} = \frac{9.52}{73.81} \approx 0.129\text{ A} = 129\text{ mA} \]
+\begin{markingrubric}
+$\bullet$ Open circuit voltage $V_{th}$ derivation and nodal values: \textbf{2.0 Marks}\\
+$\bullet$ Source deactivation and equivalent resistance $R_{th}$: \textbf{2.0 Marks}\\
+$\bullet$ Thevenin circuit synthesis and final detector current: \textbf{2.0 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\textbf{Step 1: Component Reactances at $f = 50\text{ Hz}$}\\
+\[ X_L = 2\pi f L = 2\pi \times 50 \times 0.2 = 62.83\,\Omega \]
+\[ X_C = \frac{1}{2\pi f C} = \frac{1}{2\pi \times 50 \times 50 \times 10^{-6}} = \frac{10^6}{5000\pi} \approx 63.66\,\Omega \]
+\textbf{Step 2: Impedance and Current}\\
+Net reactance $X = X_L - X_C = 62.83 - 63.66 = -0.83\,\Omega$ (slightly capacitive).\\
+Impedance: $\mathbf{Z} = 8 - j0.83\,\Omega \implies |\mathbf{Z}| = \sqrt{8^2 + 0.83^2} = \sqrt{64.69} \approx 8.043\,\Omega$.\\
+Phase angle: $\phi = \arctan(-0.83/8) = -5.92^\circ$.\\
+Current magnitude: $I = \frac{V}{Z} = \frac{230}{8.043} \approx 28.60\text{ A}$ (leads voltage by $5.92^\circ$).\\
+\textbf{Step 3: Power Absorbed}\\
+\[ P = I^2 R = (28.60)^2 \times 8 = 817.96 \times 8 \approx 6543.7\text{ W} = 6.54\text{ kW} \]
+\begin{markingrubric}
+$\bullet$ Correct calculation of $X_L$ and $X_C$: \textbf{2.0 Marks}\\
+$\bullet$ Impedance magnitude $|\mathbf{Z}|$ and phase angle: \textbf{2.0 Marks}\\
+$\bullet$ Current magnitude and active power calculation: \textbf{2.0 Marks}
+\end{markingrubric}
+\end{solutionbox}
+\newpage

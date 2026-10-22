@@ -1,0 +1,314 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/10/22 v1.0 ECE181 Python Programming Textbook Style Package]
+
+% 1. Core Encoding, Typography & Geometry
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% 2. Mathematics, Tables & Listings
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning}
+
+% Unicode mapping for safe compilation
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{200E}{}
+\DeclareUnicodeCharacter{200F}{}
+\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03D5}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2014}{---}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2019}{'}
+\DeclareUnicodeCharacter{2018}{'}
+\DeclareUnicodeCharacter{201C}{``}
+\DeclareUnicodeCharacter{201D}{''}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{00F7}{\ensuremath{\div}}
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2223}{|}
+\DeclareUnicodeCharacter{00E9}{\'{e}}
+\DeclareUnicodeCharacter{00A9}{\copyright}
+
+% 3. Color Palette
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{brandnavy}{RGB}{15, 32, 67}         % LPU Navy #0F2043
+\definecolor{brandblue}{RGB}{234, 88, 12}        % LPU Orange #EA580C
+\definecolor{brandslate}{RGB}{71, 85, 105}       % Muted Slate
+\definecolor{branddark}{RGB}{15, 23, 42}         % Slate Dark
+\definecolor{brandpurple}{RGB}{126, 34, 206}     % Purple
+\definecolor{brandteal}{RGB}{13, 148, 136}       % Teal Green
+
+\definecolor{boxnavyborder}{RGB}{15, 32, 67}
+\definecolor{boxnavybg}{RGB}{245, 248, 255}
+\definecolor{boxamberborder}{RGB}{217, 119, 6}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+\definecolor{boxgreenborder}{RGB}{13, 148, 136}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+\definecolor{boxgrayborder}{RGB}{205, 215, 225}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+% Listings Configuration
+\RequirePackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{boxgraybg},
+    frame=single,
+    rulecolor=\color{boxgrayborder},
+    keywordstyle=\color{brandblue}\bfseries,
+    commentstyle=\color{brandslate}\itshape,
+    stringstyle=\color{brandnavy},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false,
+    captionpos=b
+}
+
+% 4. Callout Environments
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{definition}[1][]{
+    enhanced, breakable,
+    colback=boxnavybg, colframe=boxnavyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Definition}{Definition: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{theorem}[1][]{
+    enhanced, breakable,
+    colback=boxpurplebg, colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Computational Principle / Law}{Principle: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{keyequation}[1][]{
+    enhanced, breakable,
+    colback=boxgoldbg, colframe=boxamberborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Core Formula / Specification}{#1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=branddark
+}
+
+\newtcolorbox{methodbox}[1][]{
+    enhanced, breakable,
+    colback=boxgreenbg, colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Algorithmic Method / Design Heuristic}{Method: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{warningbox}[1][]{
+    enhanced, breakable,
+    colback=boxrosebg, colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Examiner Trap / Common Bug}{Trap: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{examplebox}[1][]{
+    enhanced, breakable,
+    colback=boxgraybg, colframe=brandslate,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example}{Example: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+% 5. Page Layout & Headers
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\footnotesize\thepage}
+\fancyhead[RE]{\sffamily\footnotesize\nouppercase{\leftmark}}
+\fancyhead[LO]{\sffamily\footnotesize\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Section styling
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{brandnavy}}
+  {\chaptertitlename\ \thechapter}{15pt}{\Huge\color{brandnavy}}
+\titlespacing*{\chapter}{0pt}{10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{brandnavy}}
+  {\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+
+\titleformat{\subsection}
+  {\normalfont\sffamily\large\bfseries\color{brandblue}}
+  {\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{5pt}
+
+% Hyperref
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=brandnavy,urlcolor=brandblue,citecolor=brandnavy]{hyperref}
+
+% Frontmatter macros
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ MASTER TEXTBOOK SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {University Curriculum \textbullet\ Electronics \& Computer Engineering};
+    
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Academic Editorial Initiative \textbullet\ 2026--2027 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Educational License (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{32}{38}\selectfont\bfseries\sffamily\color{brandnavy} Introduction to Python\par}
+    \vspace{0.4cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} Comprehensive Engineering Textbook (ECE181)\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    
+    {\fontsize{13}{17}\selectfont\sffamily\color{branddark}
+    \textbf{Course Code:} ECE181 \quad\textbullet\quad \textbf{Credit Distribution:} 3-0-2 (4 Credits)\\
+    \textbf{Curriculum:} Basic Python, NumPy Vectorization, Pandas \& Data Visualization\\
+    \textbf{Target Audience:} B.Tech Electronics and Computer Engineering Undergraduates\par}
+    
+    \vspace{1.5cm}
+    
+    \begin{tcolorbox}[enhanced, colback=boxnavybg, colframe=boxnavyborder, width=0.85\linewidth, arc=2mm]
+        \sffamily\small
+        \textbf{Authoritative Pedagogical Coverage:}\\
+        \textbullet\ Unit 1: Introduction, Variables, Operators, Expressions \& I/O\\
+        \textbullet\ Unit 2: Conditionals, Iterations, Functions \& Recursion\\
+        \textbullet\ Unit 3: Strings, Lists, Tuples, Dictionaries \& Sets\\
+        \textbullet\ Unit 4: Vectorized Computing \& Matrix Operations with NumPy\\
+        \textbullet\ Unit 5: Data Analysis with Pandas \& Visualization with Matplotlib\\
+        \textbullet\ Unit 6: Object-Oriented Design, File I/O, Exceptions \& Applications
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Course Director \& Faculty Board:}\\
+    LPU School of Electronics and Electrical Engineering\\
+    Department of Embedded Systems and Computational Engineering}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large ECE181: Introduction to Python}\\
+\textit{\sffamily Master University Textbook \& Practical Engineering Manual}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Edition:} 2026--2027 Academic Year Edition\\
+\textbf{\sffamily Primary Curriculum Code:} ECE181 (Introduction to Python)\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Copyright \& Intellectual Property:}\\
+\textcopyright\ 2026 The Faculty and Academic Editorial Board of LPU Engineering Open.\\
+This work is released under the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} license.\\
+All source code listings and computational benchmarks are distributed under the \textbf{MIT License}.\\
+
+\vspace{0.4cm}
+\noindent
+\textbf{\sffamily Academic Advisory Statement:}\\
+This publication is authored in accordance with the official course syllabus of Lovely Professional University for ECE181. It serves as both an instructional textbook and an authoritative reference manual for scientific computing, vectorized numerical modeling, and data pipelines.
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    {\Large\sffamily\bfseries\color{brandnavy} Pedagogical Architecture \& How to Use This Book}
+\end{center}
+\vspace{1cm}
+\noindent
+This textbook is structured around the six rigorous units of the ECE181 curriculum:
+\begin{enumerate}[leftmargin=1.8em, itemsep=6pt]
+    \item \textbf{Formal Computational Principles:} Every concept begins with formal semantics, memory references, CPython execution models, and asymptotic time complexities.
+    \item \textbf{Clean Idiomatic Code:} High-yield code examples illustrate idiomatic Python 3 standards following PEP 8 conventions.
+    \item \textbf{Step-by-Step Worked Problems:} Practical algorithms with execution traces, variable state transitions, and memory layout diagrams.
+    \item \textbf{Examiner Traps \& Edge Cases:} Callout warnings highlighting standard examination traps, operator precedence gotchas, and indexing subtleties.
+\end{enumerate}
+\newpage
+}

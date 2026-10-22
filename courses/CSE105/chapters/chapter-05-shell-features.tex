@@ -1,0 +1,150 @@
+\chapter{Shell Architecture, Wildcard Globbing \& I/O Redirection}
+\label{chap:shell-features}
+
+\section{The Shell as an Interactive Command Interpreter}
+The Unix shell is both an interactive command language and a powerful scripting execution environment. When a command line is submitted, the shell executes a deterministic evaluation pipeline:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Tokenization:} Parsing raw characters into words delimited by whitespace.
+    \item \textbf{History Expansion:} Replacing \texttt{!} expansions.
+    \item \textbf{Alias Replacement:} Checking command aliases.
+    \item \textbf{Parameter \& Variable Expansion:} Replacing \texttt{\$VAR} expressions.
+    \item \textbf{Command Substitution:} Executing \texttt{\$(cmd)} and capturing output.
+    \item \textbf{Pathname Expansion (Globbing):} Expanding wildcard patterns into matching file paths.
+    \item \textbf{Quote Removal:} Stripping non-escaped quotation marks.
+    \item \textbf{I/O Redirection Setup:} Connecting standard streams to files, descriptors, or pipes.
+    \item \textbf{Fork \& Execve:} Spawning a child process and loading the executable image.
+\end{enumerate}
+
+\section{Pattern Matching via Wildcards (Globbing)}
+Pathname expansion (globbing) is performed exclusively by the shell \textit{before} the command receives its argument array. The program invoked never sees the wildcard characters if matches exist.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X l}
+\toprule
+\textbf{Wildcard Pattern} & \textbf{Matching Semantics} & \textbf{Representative Matching Examples} \\
+\midrule
+\texttt{*} & Matches zero or more arbitrary characters (excluding leading dot \texttt{.}). & \texttt{*.c}, \texttt{log*}, \texttt{report*2026.pdf} \\
+\texttt{?} & Matches exactly one single arbitrary character. & \texttt{data?.csv} (matches \texttt{data1.csv}, not \texttt{data10.csv}) \\
+\texttt{[characters]} & Matches any one character contained within the bracket set. & \texttt{file[abc].txt} (matches \texttt{filea.txt}, \texttt{fileb.txt}) \\
+\texttt{[a-z], [0-9]} & Matches any character within the alphanumeric ASCII range. & \texttt{image[0-9].png}, \texttt{ch[1-5].tex} \\
+\texttt{[!characters]} & Negation: matches any character \textbf{not} in the specified set. & \texttt{log[!0-9].txt} \\
+\texttt{\{str1,str2\}} & Brace expansion: generates literal permutations (not globbing). & \texttt{backup.\{tar,gz,bz2\}} $\to$ \texttt{backup.tar backup.gz} \\
+\bottomrule
+\end{tabularx}
+\caption{Shell Wildcard Globbing Patterns and Matching Semantics.}
+\label{tab:globbing}
+\end{table}
+
+\begin{terminalbox}[Wildcard Globbing in Action]
+$ ls
+data.log  err1.log  err2.log  err10.log  notes.txt  test.c
+
+$ ls err?.log
+err1.log  err2.log
+
+$ ls err[0-9]*.log
+err1.log  err2.log  err10.log
+
+$ ls *[!0-9].log
+data.log
+\end{terminalbox}
+
+\section{Standard Streams \& I/O Redirection}
+Every process launched by the shell initializes with three fundamental POSIX integer \textbf{File Descriptors (FDs)}:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{0: Standard Input (\texttt{stdin})} --- Bound by default to the keyboard.
+    \item \textbf{1: Standard Output (\texttt{stdout})} --- Bound by default to the display terminal.
+    \item \textbf{2: Standard Error (\texttt{stderr})} --- Bound by default to the display terminal for diagnostic error messages.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw=brandnavy, fill=boxnavybg, font=\sffamily\bfseries, minimum height=1.2cm, align=center, rounded corners=3pt},
+    stream/.style={thick, ->, >=stealth, draw=brandblue}
+]
+    \node[box, fill=boxtealbg, draw=brandteal] (proc) {Executing Process\\(File Descriptors 0, 1, 2)};
+    \node[box, left=2.5cm of proc] (stdin) {Standard Input (FD 0)\\Keyboard / Input File};
+    \node[box, above right=0.3cm and 2.5cm of proc] (stdout) {Standard Output (FD 1)\\Terminal / Output File};
+    \node[box, below right=0.3cm and 2.5cm of proc, fill=boxrosebg, draw=brandaccent] (stderr) {Standard Error (FD 2)\\Terminal / Error Log};
+
+    \draw[stream] (stdin) -- node[above, font=\small\ttfamily] {< / <<} (proc);
+    \draw[stream] (proc) -- node[above, font=\small\ttfamily] {> / >>} (stdout);
+    \draw[stream, draw=brandaccent] (proc) -- node[below, font=\small\ttfamily] {2> / 2>>} (stderr);
+\end{tikzpicture}
+\caption{The Three Standard Streams and Kernel Redirection Architecture.}
+\label{fig:streams}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Operator} & \textbf{Redirection Behavior \& Stream Association} \\
+\midrule
+\texttt{> file} & Redirects \texttt{stdout} to \texttt{file}, truncating/overwriting existing content. \\
+\texttt{>> file} & Redirects \texttt{stdout} to \texttt{file}, appending to the end of the file. \\
+\texttt{< file} & Redirects \texttt{stdin} so the command reads input bytes from \texttt{file}. \\
+\texttt{2> file} & Redirects \texttt{stderr} exclusively to \texttt{file}, isolating error traces. \\
+\texttt{2>> file} & Appends \texttt{stderr} diagnostic messages to an error log file. \\
+\texttt{> out.log 2> err.log} & Splits output: valid stdout to \texttt{out.log}, error messages to \texttt{err.log}. \\
+\texttt{> all.log 2>\&1} & Merges \texttt{stderr} into the same stream as \texttt{stdout} (traditional POSIX syntax). \\
+\texttt{\&> all.log} & Bash shortcut: redirects both \texttt{stdout} and \texttt{stderr} into \texttt{all.log}. \\
+\texttt{2> /dev/null} & Discards error messages silently into the system bit-bucket. \\
+\texttt{<< DELIMITER} & \textbf{Here-Document:} Feeds inline multi-line text blocks directly to stdin. \\
+\texttt{<<< "string"} & \textbf{Here-String:} Feeds a single string variable directly into stdin. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive Shell I/O Redirection Operators.}
+\label{tab:redirection}
+\end{table}
+
+\begin{terminalbox}[I/O Redirection Demonstrations]
+# Isolating stderr from stdout:
+$ find /etc -name "*.conf" > conf_files.txt 2> find_errors.log
+
+# Discarding errors into /dev/null:
+$ grep "secret" /var/log/* 2>/dev/null
+
+# Here-Document to create configuration files:
+$ cat << 'EOF' > /tmp/server.conf
+host=127.0.0.1
+port=8080
+threads=4
+EOF
+\end{terminalbox}
+
+\section{Inter-Process Communication: Pipes \& Pipe Chaining}
+A pipeline is created utilizing the vertical bar operator (\texttt{|}). It establishes an anonymous FIFO buffer in kernel memory that connects the \texttt{stdout} of the left-hand command directly to the \texttt{stdin} of the right-hand command.
+
+\begin{definition}[Pipeline Mechanics \& Concurrency]
+In a pipeline \texttt{cmd1 | cmd2 | cmd3}:
+\begin{enumerate}[leftmargin=1.5em]
+    \item All commands are launched \textbf{concurrently} as asynchronous sibling processes by the shell.
+    \item The operating system manages synchronization via a circular memory buffer (typically 64 KB). If the buffer fills, \texttt{cmd1} pauses until \texttt{cmd2} reads bytes.
+    \item The exit status of the pipeline is by default the exit status of the \textit{last} command (\texttt{cmd3}). Setting \texttt{set -o pipefail} ensures the pipeline fails if \textit{any} intermediate command encounters an error.
+\end{enumerate}
+\end{definition}
+
+\begin{terminalbox}[Pipeline Chaining Examples]
+# Count the number of active logged-in users:
+$ who | wc -l
+
+# Identify top 5 memory consuming processes:
+$ ps aux --sort=-\%mem | head -n 6
+
+# Tap a pipeline without interrupting flow using tee:
+$ ls -la /usr/bin | tee file_list.txt | wc -l
+\end{terminalbox}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Contrast wildcard globbing with regular expressions. Which software component expands glob patterns?
+    \item Formulate a single shell command that executes a backup script, writing standard output to \texttt{backup.log} and error messages to \texttt{backup.err}.
+    \item Explain why \texttt{cmd > file 2>\&1} produces different results than \texttt{cmd 2>\&1 > file}.
+    \item Describe the operational role of the virtual device node \texttt{/dev/null}.
+    \item What is the function of the \texttt{tee} command in an automated data pipeline?
+\end{enumerate}

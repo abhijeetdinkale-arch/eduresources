@@ -1,0 +1,366 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/10/22 v1.0 ECE131 Electrical & Electronics Textbook Style Package]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,amsthm}
+\RequirePackage{bm}
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty = true, inter-unit-product = \ensuremath{{}\cdot{}}}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+
+\definecolor{brandnavy}{RGB}{15, 44, 89}
+\definecolor{brandblue}{RGB}{30, 86, 160}
+\definecolor{brandslate}{RGB}{71, 85, 105}
+\definecolor{branddark}{RGB}{15, 23, 42}
+\definecolor{brandaccent}{RGB}{185, 28, 28}
+\definecolor{brandgold}{RGB}{180, 83, 9}
+\definecolor{brandteal}{RGB}{15, 118, 110}
+\definecolor{brandpurple}{RGB}{109, 40, 217}
+
+\definecolor{boxnavyborder}{RGB}{15, 44, 89}
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+\definecolor{boxamberborder}{RGB}{180, 83, 9}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+\definecolor{boxgreenborder}{RGB}{15, 118, 110}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+\definecolor{boxroseborder}{RGB}{185, 28, 28}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+\definecolor{boxpurpleborder}{RGB}{109, 40, 217}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+\definecolor{boxgrayborder}{RGB}{148, 163, 184}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxslatebg}{RGB}{241, 245, 249}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,hooks}
+
+% Definition Box
+\newtcolorbox{definition}[1][]{
+    enhanced, breakable,
+    colback=boxnavybg, colframe=boxnavyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Definition}{Definition: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Theorem Box
+\newtcolorbox{theorem}[1][]{
+    enhanced, breakable,
+    colback=boxpurplebg, colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Theorem / Law}{Theorem / Law: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandpurple,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Key Formula Box
+\newtcolorbox{keyequation}[1][]{
+    enhanced, breakable,
+    colback=boxgoldbg, colframe=boxamberborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Key Formula / Governing Principle}{#1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandgold,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Worked Example Box
+\newtcolorbox{example}[1][]{
+    enhanced, breakable,
+    colback=boxskybg, colframe=boxskyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example}{Worked Example: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=boxskyborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Solution Box
+\newtcolorbox{solutionbox}[1][]{
+    enhanced, breakable,
+    colback=boxgraybg, colframe=boxgrayborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Step-by-Step Analytical Solution}{#1}},
+    boxrule=1.0pt, leftrule=3.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=branddark,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Exam Tip Box
+\newtcolorbox{examtip}[1][]{
+    enhanced, breakable,
+    colback=boxgreenbg, colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Exam Strategy \& Shortcut Technique}{Exam Strategy: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandteal,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Common Mistake Box
+\newtcolorbox{commonmistake}[1][]{
+    enhanced, breakable,
+    colback=boxrosebg, colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Common Student Pitfall / Exam Trap}{Common Pitfall: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=boxroseborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+% Important Box
+\newtcolorbox{important}[1][]{
+    enhanced, breakable,
+    colback=boxpurplebg, colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Important Theoretical Core}{#1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandpurple,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,decorations.pathmorphing,patterns,backgrounds,fit}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\setlist{itemsep=3pt, topsep=4pt, parsep=1pt}
+
+\RequirePackage[breakall]{truncate}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhead[L]{\small\sffamily\color{brandslate}\textbf{ECE131} \textbar\ Basic Electrical \& Electronics Engineering}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\truncate{0.55\linewidth}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+    \fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{brandslate}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=brandteal,
+    urlcolor=brandblue,
+    pdfauthor={LPU Engineering Open Contributors},
+    pdftitle={ECE131: Basic Electrical and Electronics Engineering},
+    pdfsubject={Comprehensive University Master Textbook},
+    pdfkeywords={ECE131, DC Circuits, AC Circuits, Transformers, DC Motors, Induction Motors, Diodes, BJT, MOSFET, Op-Amp, Filters, Embedded Systems, Arduino, IoT},
+    plainpages=false,
+    bookmarksnumbered=true,
+    pdfpagelayout=OneColumn,
+    pdfpagemode=UseOutlines
+}
+
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ MASTER TEXTBOOK SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Comprehensive Academic Textbooks for Engineering Undergraduates};
+    
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Student-Led Educational Initiative \textbullet\ 2026 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Access (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{32}{38}\selectfont\bfseries\sffamily\color{brandnavy} Basic Electrical and Electronics Engineering\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} ECE131 $\cdot$ Comprehensive University Master Textbook\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Circuits \textbullet\ Theorems \textbullet\ Polyphase Systems \textbullet\ Machines \textbullet\ Semiconductor Devices \textbullet\ Op-Amps \textbullet\ Embedded Systems}\par}
+    
+    \vspace{2.0cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Textbook Curriculum Modules:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item \textbf{Unit 1}: DC Network Analysis, Kirchhoff's Laws, Node/Mesh, Thevenin, Norton, Superposition.
+            \item \textbf{Unit 2}: AC Circuits, Phasors, Impedance, Series RLC Resonance, 3-Phase Polyphase Systems.
+            \item \textbf{Unit 3}: Magnetic Coupling, Transformers, DC Motors \& Generators, AC Induction Machines.
+            \item \textbf{Unit 4}: Semiconductor Physics, PN Junction, Diodes, Zener Regulators, Rectifiers, MOSFETs.
+            \item \textbf{Unit 5}: Passive \& Active Filters, Operational Amplifiers, Integrator, Comparator, ABS.
+            \item \textbf{Unit 6}: Microprocessor vs Microcontroller, Arduino ATmega328P, Sensors Interfacing, IoT Architecture.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Board / Faculty Contributors:}\\
+    LPU Engineering Open Academic Publishing Group\\
+    \url{https://github.com/LPU-Engineering-Open}}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large ECE131: Basic Electrical and Electronics Engineering --- Master Textbook}\\
+\textit{\sffamily An Open-Source University Academic Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Edition:} 2026 Academic Year Edition\\
+\textbf{\sffamily Repository:} \url{https://github.com/LPU-Engineering-Open}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Contributors of LPU Engineering Open.\\
+Distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Engineering Open Faculty \& Contributors, \textit{ECE131: Basic Electrical and Electronics Engineering --- Master Textbook}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxamberbg,
+    colframe=boxamberborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Important Disclaimer \& Institutional Non-Affiliation}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Independent Open Educational Resource}\\
+This textbook is an independent, non-profit academic resource created to support students in mastering electrical circuits, electromagnetic machines, semiconductor electronics, and microcontroller interfacing.
+
+\textbf{2. Non-Affiliation Notice}\\
+\textbf{LPU Engineering Open is an independent academic collective not formally affiliated with, sponsored by, or endorsed by Lovely Professional University (LPU).} Lovely Professional University is not liable for editorial statements, interpretations, or pedagogical structures herein.
+
+\textbf{3. Trademark \& Fair Use}\\
+Course codes (such as ECE131), curriculum descriptions, and exam structures are referenced under educational \textbf{fair use} principles to align study material with university syllabus frameworks.
+
+\textbf{4. Technical Accuracy \& Electrical Safety}\\
+Every analytical derivation, schematic diagram, and worked example has been verified. However, physical experiments involving mains voltages, rotating machinery, and semiconductor breadboarding carry electrical and mechanical hazards. All practical lab work must adhere to standard laboratory safety protocols.
+\end{tcolorbox}
+\vfill
+\newpage
+}

@@ -1,0 +1,104 @@
+\chapter{Fundamentals of Semiconductor Devices}
+\label{chap:semiconductors}
+
+\section{Introduction and Energy Band Principles}
+Semiconductor physics enables the active control of charge carriers that defines modern solid-state electronics. Conduction in semiconductors depends on both negative electrons and positive holes. By selectively doping pure intrinsic tetravalent crystals (Silicon, Germanium) with pentavalent donors (P, As) or trivalent acceptors (B, In), $n$-type and $p$-type materials are formed.
+
+\section{The PN Junction Diode}
+
+\subsection{Equilibrium and Bias Conditions}
+When $p$-type and $n$-type semiconductors are metallurgically joined, diffusion of electrons into the $p$-region and holes into the $n$-region creates a \textbf{depletion region} stripped of mobile carriers, leaving exposed uncompensated donor ($N_D^+$) and acceptor ($N_A^-$) ions. This establishes a built-in contact potential:
+\begin{equation}
+V_0 = V_T \ln\left( \frac{N_A N_D}{n_i^2} \right), \qquad V_T = \frac{k_B T}{q} \approx 26\text{ mV at } 300\text{ K}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Forward Bias} ($V_D > 0$): External electric field opposes the built-in barrier, shrinking the depletion width and permitting massive majority carrier diffusion:
+    \begin{equation}
+    I_D = I_s \left( e^{V_D / (\eta V_T)} - 1 \right) \quad \text{(Shockley Equation)}
+    \end{equation}
+    where $I_s$ is the reverse saturation current ($\approx \text{pA}$ for Si, $\approx \mu\text{A}$ for Ge), and $\eta$ is the ideality factor. Cut-in (knee) voltages: $\approx 0.7\text{ V}$ for Si, $\approx 0.3\text{ V}$ for Ge.
+    \item \textbf{Reverse Bias} ($V_D < 0$): External field widens the depletion width, halting majority diffusion; only a tiny thermally generated minority leakage current $I_s$ flows ($I_D \approx -I_s$).
+\end{itemize}
+
+\subsection{Reverse Breakdown: Zener vs Avalanche}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Zener Breakdown ($V_Z < 5\text{ V}$)}: Occurs in heavily doped junctions with narrow depletion regions ($< 10\text{ nm}$). Intense electric fields ($> 10^6\text{ V/m}$) cause quantum mechanical tunneling of valence electrons into the conduction band. Exhibits a \textbf{negative temperature coefficient}.
+    \item \textbf{Avalanche Breakdown ($V_Z > 6\text{ V}$)}: Occurs in lightly doped junctions with wide depletion regions. Accelerated minority carriers gain kinetic energy to impact-ionize covalent lattice bonds, generating an exponential carrier cascade. Exhibits a \textbf{positive temperature coefficient}.
+\end{itemize}
+
+\section{Specialized Diodes and Testing Procedures}
+
+\subsection{Zener Diode as a Voltage Regulator}
+Operating in the reverse breakdown regime, a Zener diode maintains an almost constant voltage $V_Z$ over wide variations of input voltage and load current. The design of the series current-limiting resistor $R_S$ satisfies:
+\begin{equation}
+R_S = \frac{V_{in,min} - V_Z}{I_{L,max} + I_{Z,min}}
+\end{equation}
+where $I_{Z,min}$ is the minimum knee current ensuring stable operation.
+
+\subsection{Varactor Diode (Varicap)}
+Under reverse bias, the depletion layer acts as a dielectric between the conductive $p$ and $n$ regions, forming a voltage-variable transition capacitance:
+\begin{equation}
+C_T(V_R) = \frac{\varepsilon_s A}{W} = \frac{C_0}{(1 + V_R / V_0)^m} \quad (m \approx 0.5 \text{ for abrupt junctions})
+\end{equation}
+Widely deployed in voltage-controlled oscillators (VCOs), phase-locked loops (PLLs), and RF frequency synthesis.
+
+\subsection{Digital Multimeter (DMM) Testing of Diodes and BJTs}
+Using the diode-check function of a DMM:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Healthy Diode}: Forward bias displays the barrier potential ($0.6--0.7\text{ V}$ for Si, $0.2--0.3\text{ V}$ for Ge). Reverse bias displays over-range (`OL' or `1').
+    \item \textbf{Faulty Diode}: Reading near zero in both directions indicates an internal short; reading `OL' in both directions indicates an open circuit.
+    \item \textbf{BJT Testing}: Modeled as two back-to-back PN junctions (Base-Emitter and Base-Collector). For an NPN transistor, placing the red (+) probe on the base should show $0.6--0.7\text{ V}$ drop to both emitter and collector.
+\end{itemize}
+
+\section{Rectifier Circuits and Power Conversion}
+
+\subsection{Topological Comparison of Rectifiers}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{l X X X}
+\toprule
+\textbf{Metric} & \textbf{Half-Wave} & \textbf{Center-Tap Full-Wave} & \textbf{Bridge Rectifier} \\
+\midrule
+Number of Diodes & 1 & 2 & 4 \\
+DC Output Voltage $V_{dc}$ & $\frac{V_m}{\pi} \approx 0.318 V_m$ & $\frac{2V_m}{\pi} \approx 0.637 V_m$ & $\frac{2V_m}{\pi} \approx 0.637 V_m$ \\
+Ripple Factor $\gamma$ & $1.21$ & $0.482$ & $0.482$ \\
+Ripple Frequency & $f$ & $2f$ & $2f$ \\
+Max Efficiency $\eta_{max}$ & $40.6\%$ & $81.2\%$ & $81.2\%$ \\
+Peak Inverse Voltage (PIV) & $V_m$ & $2V_m$ & $V_m$ \\
+Transformer Utilization & $0.287$ & $0.672$ & $0.812$ \\
+\bottomrule
+\end{tabularx}
+\end{center}\vspace{2mm}
+\noindent
+With a shunt capacitor filter $C$, the ripple factor drops significantly:
+\begin{equation}
+\gamma = \frac{1}{4\sqrt{3} f C R_L} \quad \text{(Full-wave)}, \qquad V_{dc} = V_m - \frac{I_{dc}}{4 f C}
+\end{equation}
+
+\section{The MOSFET: Metal-Oxide-Semiconductor Field-Effect Transistor}
+
+\subsection{Structure and Operational Regimes (N-Channel Enhancement)}
+The MOSFET is a unipolar, voltage-controlled device where an electric field applied to an insulated polysilicon gate modulates the conductivity of an inverted electron channel between source and drain.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Cutoff Regime} ($V_{GS} < V_{th}$): No inversion channel forms; $I_D = 0$.
+    \item \textbf{Triode / Ohmic Regime} ($V_{GS} \ge V_{th}$ and $V_{DS} < V_{GS} - V_{th}$): Channel connects source to drain continuously:
+    \begin{equation}
+    I_D = \mu_n C_{ox} \frac{W}{L} \left[ (V_{GS} - V_{th})V_{DS} - \frac{1}{2}V_{DS}^2 \right]
+    \end{equation}
+    \item \textbf{Saturation Regime} ($V_{GS} \ge V_{th}$ and $V_{DS} \ge V_{GS} - V_{th}$): The channel pinches off at the drain end, and current saturates independently of $V_{DS}$:
+    \begin{equation}
+    I_D = \frac{1}{2} \mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{th})^2 (1 + \lambda V_{DS})
+    \end{equation}
+    where $\lambda$ represents channel-length modulation.
+    \item \textbf{Transconductance}:
+    \begin{equation}
+    g_m = \left.\frac{\partial I_D}{\partial V_{GS}}\right|_{V_{DS}} = \mu_n C_{ox}\frac{W}{L}(V_{GS} - V_{th}) = \frac{2 I_D}{V_{GS} - V_{th}}
+    \end{equation}
+\end{itemize}
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Diode current: $I_D = I_s (e^{V_D / (\eta V_T)} - 1)$, $V_T \approx 26\text{ mV}$.
+    \item Zener breakdown ($<5\text{ V}$, tunneling, negative temp coeff); Avalanche ($>6\text{ V}$, impact ionization, positive temp coeff).
+    \item Full-wave bridge rectifier: $\eta_{max} = 81.2\%$, $\gamma = 0.482$, $\text{PIV} = V_m$.
+    \item MOSFET saturation current: $I_D = \frac{1}{2} k_n' (W/L)(V_{GS} - V_{th})^2$.
+\end{itemize}

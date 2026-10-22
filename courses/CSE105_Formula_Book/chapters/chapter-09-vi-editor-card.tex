@@ -1,0 +1,42 @@
+\chapter{Unit 9: vi/vim Modal Keystroke \& Ex Commands Card}
+
+\begin{cheatbox}{Navigation Keys in Command Mode}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Key} & \textbf{Cursor Movement} & \textbf{Key} & \textbf{Cursor Movement} \\
+\midrule
+\texttt{h, j, k, l} & Left, Down, Up, Right & \texttt{gg} & Jump to absolute line 1 \\
+\texttt{w, b, e} & Next word, previous word, end of word & \texttt{G} & Jump to absolute last line \\
+\texttt{0, \^{}, \$} & Line start, first non-blank, line end & \texttt{50G} & Jump to line number 50 \\
+\texttt{Ctrl+f, Ctrl+b} & Full page forward / backward & \texttt{\%} & Jump to matching bracket \texttt{()}, \texttt{\{\}}, \texttt{[]} \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{Insert, Alteration \& Deletion Operators}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Key} & \textbf{Editing Operation} & \textbf{Key} & \textbf{Editing Operation} \\
+\midrule
+\texttt{i, a} & Insert before cursor / Append after cursor & \texttt{x} & Delete single character under cursor \\
+\texttt{I, A} & Insert at line start / Append at line end & \texttt{dw} & Delete (cut) word from cursor \\
+\texttt{o, O} & Open blank line below / above & \texttt{dd} & Delete (cut) entire current line \\
+\texttt{r, R} & Replace single char / Overwrite mode & \texttt{5dd} & Delete 5 consecutive lines \\
+\texttt{cw} & Change word (deletes word, enters insert) & \texttt{yy, p} & Yank (copy) current line / Paste below \\
+\texttt{u, Ctrl+r} & Undo last edit / Redo & \texttt{.} & Repeat last editing command \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{Ex Command-Line Mode Reference}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{:w}: Save buffer to disk. \texttt{:w filename}: Save As.
+    \item \texttt{:wq} or \texttt{:x} or \texttt{ZZ}: Save changes and exit editor.
+    \item \texttt{:q!}: Force quit immediately, discarding unsaved modifications.
+    \item \texttt{/pattern}: Search forward for regex pattern (\texttt{n} next, \texttt{N} previous).
+    \item \texttt{?pattern}: Search backward for regex pattern.
+    \item \texttt{:\%s/old/new/g}: Global replacement across the entire file.
+    \item \texttt{:\%s/old/new/gc}: Global replacement with interactive confirmation prompt.
+    \item \texttt{:set number} / \texttt{:set nonu}: Toggle line numbering.
+\end{itemize}
+\end{cheatbox}

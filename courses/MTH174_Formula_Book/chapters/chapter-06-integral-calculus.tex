@@ -1,0 +1,32 @@
+\chapter{Unit 6: Multiple Integrals \& Coordinate Transformation Formulas}
+
+\begin{formulabox}{Double Integrals in Polar Coordinates}
+\begin{align*}
+x &= r\cos\theta, \quad y = r\sin\theta, \quad x^2 + y^2 = r^2 \\
+dx \, dy &= r \, dr \, d\theta \\
+\iint_R f(x,y) \, dx \, dy &= \iint_{R'} f(r\cos\theta, r\sin\theta) \, r \, dr \, d\theta
+\end{align*}
+\end{formulabox}
+
+\begin{formulabox}{Triple Integrals in Cylindrical \& Spherical Systems}
+\begin{itemize}
+    \item \textbf{Cylindrical Coordinates}:
+    \begin{equation*}
+    x = r\cos\theta, \quad y = r\sin\theta, \quad z = z, \quad dV = r \, dr \, d\theta \, dz
+    \end{equation*}
+    \item \textbf{Spherical Coordinates}:
+    \begin{equation*}
+    x = \rho\sin\phi\cos\theta, \quad y = \rho\sin\phi\sin\theta, \quad z = \rho\cos\phi
+    \end{equation*}
+    \begin{equation*}
+    dV = \rho^2 \sin\phi \, d\rho \, d\phi \, d\theta \quad (\rho \ge 0, \, 0 \le \phi \le \pi, \, 0 \le \theta \le 2\pi)
+    \end{equation*}
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Beta and Gamma Function Shortcuts for Integrals}
+\begin{align*}
+\int_0^{\pi/2} \sin^p\theta \cos^q\theta \, d\theta &= \frac{\Gamma\left(\frac{p+1}{2}\right)\Gamma\left(\frac{q+1}{2}\right)}{2\Gamma\left(\frac{p+q+2}{2}\right)} \\
+\Gamma(n+1) &= n! \quad (n \in \mathbb{N}), \quad \Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}
+\end{align*}
+\end{formulabox}

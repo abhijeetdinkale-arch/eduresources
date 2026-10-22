@@ -1,0 +1,61 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+\label{sec:ca2_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{A}{60 Minutes}{30 Marks}{CO4 (Environmental Pollution \& Waste), CO5 (Disaster Management)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Detail the working principle and collection mechanisms of an Electrostatic Precipitator (ESP). Explain why high-voltage corona discharge is employed and state the collection efficiency achievable for sub-micron fly ash particles.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{2}{
+    State the Streeter-Phelps oxygen sag equation. Define the deoxygenation rate constant ($k_d$) and atmospheric reaeration constant ($k_r$). If $k_d = 0.25\text{ day}^{-1}$ and $k_r = 0.65\text{ day}^{-1}$, explain why the dissolved oxygen deficit initially increases before recovering downstream.
+}{5}{CO4}{L4 Analyze}
+
+\questionitem{3}{
+    Outline the ambient noise limits under the Noise Pollution (Regulation and Control) Rules, 2000 for Industrial, Commercial, Residential, and Silence Zones. What constitutes a Silence Zone?
+}{5}{CO4}{L2 Understand}
+
+\questionitem{4}{
+    Describe the segregation and treatment protocols under the Biomedical Waste Management Rules, 2016 for Yellow, Red, White (Translucent), and Blue waste categories.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{5}{
+    Formulate the Disaster Risk Equation ($\text{Risk} = [H \times E \times V] / C$). Explain how structural mitigation and automated early warning systems reduce the overall risk quotient.
+}{5}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    State the Gutenberg-Richter earthquake energy formulation ($\log_{10} E = 4.8 + 1.5 M$). Calculate the ratio of seismic strain energy released by an earthquake of Richter magnitude $8.0$ compared to one of magnitude $6.0$.
+}{5}{CO5}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-2 Set A}
+
+\begin{solutionbox}[Solution to Question 2 --- Streeter-Phelps Kinetics]
+\textbf{1. Equation Formulation (2 Marks):}\\
+The oxygen sag deficit equation is:
+\[
+D(t) = \frac{k_d L_0}{k_r - k_d} \left( e^{-k_d t} - e^{-k_r t} \right) + D_0 e^{-k_r t}
+\]
+where $k_d$ is bacterial deoxygenation rate and $k_r$ is atmospheric surface reaeration rate.\\
+\textbf{2. Physical Mechanism (2 Marks):}\\
+Immediately downstream of effluent discharge, the organic substrate concentration ($L_t$) is high, so the rate of microbial deoxygenation ($k_d L_t$) exceeds the rate of atmospheric reaeration ($k_r D_t$), causing the DO deficit to grow until it reaches critical point $t_c$.\\
+\textbf{3. Recovery Phase (1 Mark):}\\
+Beyond $t_c$, organic matter is depleted, making reaeration exceed deoxygenation ($k_r D > k_d L$), which restores DO levels back toward saturation.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6 --- Seismic Energy Ratio]
+\textbf{1. Energy Formula (2 Marks):}\\
+$\log_{10} E = 4.8 + 1.5 M \implies E(M) = 10^{4.8} \times 10^{1.5 M}$.\\
+\textbf{2. Energy Ratio Calculation (2 Marks):}\\
+For $M_1 = 8.0$ and $M_2 = 6.0$ ($\Delta M = 2.0$):
+\[
+\frac{E(8.0)}{E(6.0)} = \frac{10^{4.8 + 1.5(8.0)}}{10^{4.8 + 1.5(6.0)}} = 10^{1.5(8.0 - 6.0)} = 10^{1.5 \times 2.0} = 10^{3.0} = 1{,}000
+\]
+\textbf{3. Conclusion (1 Mark):}\\
+A magnitude $8.0$ earthquake releases exactly $1{,}000$ times more seismic strain energy than a magnitude $6.0$ event.
+\end{solutionbox}
+\newpage

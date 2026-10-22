@@ -1,0 +1,67 @@
+\chapter{Unit 3: Analytical and Critical Thinking Toolkits}
+\label{chap:unit3-analytical-toolkit}
+
+\section{Epistemological Reasoning Typology}
+
+\begin{frameworkbox}{Deductive vs. Inductive vs. Abductive Reasoning in Engineering}
+\begin{tabularx}{\linewidth}{|l|X|X|X|} \hline
+\textbf{Dimension} & \textbf{Deductive Reasoning} & \textbf{Inductive Reasoning} & \textbf{Abductive Reasoning} \\ \hline
+\textbf{Direction} & General Rule $\to$ Specific Case & Specific Observations $\to$ General Pattern & Surprising Fact $\to$ Best Plausible Hypothesis \\ \hline
+\textbf{Logic} & If premises are true, conclusion \textit{must} be true (Certainty). & If premises are true, conclusion is \textit{probable} (Probability). & Creative leap to explain anomalous observation (Plausibility). \\ \hline
+\textbf{Role in Design} & Verifying constraints, safety bounds, compliance rules. & Analyzing user interview trends, telemetry logs. & Generating novel solution hypotheses during ideation. \\ \hline
+\textbf{Formula} & All $A$ are $B$; $x$ is $A$; $\therefore x$ is $B$. & $x_1, x_2, \dots, x_n$ are $B$; $\therefore$ All $X$ are $B$. & Fact $C$ is observed; If $H$ were true, $C$ is natural; $\therefore H$ is likely. \\ \hline
+\end{tabularx}
+\end{frameworkbox}
+
+\section{The 12 Core Cognitive Biases in Complex Problem Solving}
+
+\begin{frameworkbox}{Cognitive Biases \& Operational Debiasing Mechanisms}
+\begin{tabularx}{\linewidth}{|l|X|X|} \hline
+\textbf{Cognitive Bias} & \textbf{Manifestation in Problem Solving} & \textbf{Debiasing Heuristic} \\ \hline
+\textbf{Confirmation Bias} & Seeking data supporting pre-existing hypothesis; discarding contrary signals. & Appoint a designated ``Red Team'' / Devil's Advocate to argue falsification. \\ \hline
+\textbf{Availability Heuristic} & Overweighting recent vivid events or memorable customer anecdotes. & Demand empirical telemetry and stratified statistical sampling. \\ \hline
+\textbf{Anchoring Effect} & Fixating on the first number or specification proposed in discussions. & Establish objective reference-class forecasting before negotiations. \\ \hline
+\textbf{Framing Effect} & Changing decisions based solely on whether choices are framed as gains vs. losses. & Re-articulate all options in neutral, dual-frame economic balances. \\ \hline
+\textbf{Sunk Cost Fallacy} & Continuing failing projects because heavy funds or effort were already spent. & Zero-based budgeting: Evaluate project as if inheriting it today for the first time. \\ \hline
+\textbf{Status Quo Bias} & Defaulting to existing operational routines due to loss aversion. & Invert default options; require affirmative justification for doing nothing. \\ \hline
+\textbf{Overconfidence Bias} & Underestimating project completion times and error probabilities. & Perform a Project Pre-Mortem: ``Assume we failed 1 year from now; why?'' \\ \hline
+\textbf{Halo Effect} & Assuming an executive's technical idea is brilliant because of their general prestige. & Anonymize ideation voting; judge concepts blind to author identity. \\ \hline
+\textbf{Dunning-Kruger Effect} & Incompetent performers drastically overestimating their domain mastery. & Standardized peer code/design reviews and objective rubric benchmarking. \\ \hline
+\textbf{Groupthink} & Suppressing dissent in pursuit of harmonious consensus. & Silent Brainwriting before speaking; round-robin critique requirements. \\ \hline
+\textbf{In-Group Favoritism} & Favoring solutions from one's own department over external options. & Cross-functional review squads; external user-testing panels. \\ \hline
+\textbf{Automation Bias} & Blindly trusting algorithms or AI outputs without validation. & Mandate Human-in-the-Loop decision verification for critical thresholds. \\ \hline
+\end{tabularx}
+\end{frameworkbox}
+
+\section{Multi-Criteria Decision Analysis (MCDA) Mathematical Model}
+
+\begin{metricbox}{MCDA Weighted Scoring Formulation}
+Given $n$ alternative candidate solutions $A = \{A_1, A_2, \dots, A_n\}$ evaluated against $m$ decision criteria $C = \{C_1, C_2, \dots, C_m\}$:
+\[
+S_i = \sum_{j=1}^m w_j \cdot r_{ij} \quad \text{subject to} \quad \sum_{j=1}^m w_j = 1.0, \quad w_j \ge 0
+\]
+Where:
+\begin{itemize}
+    \item $w_j$ is the normalized importance weight of criterion $C_j$.
+    \item $r_{ij}$ is the normalized rating score of alternative $A_i$ on criterion $C_j$ ($r_{ij} \in [0, 10]$).
+    \item $S_i$ is the aggregate performance index of alternative $A_i$. The optimal candidate satisfies $A^* = \arg\max_{i} S_i$.
+\end{itemize}
+\end{metricbox}
+
+\section{Decision Tree Analysis \& Expected Value (EV)}
+
+\begin{metricbox}{Expected Monetary / Utility Value Formula}
+\[
+\operatorname{EV}(d_k) = \sum_{s=1}^S P(s) \cdot V(d_k, s) - C(d_k)
+\]
+Where $P(s)$ is the probability of environmental state $s$, $V(d_k, s)$ is the gross payoff of decision $d_k$ under state $s$, and $C(d_k)$ is the upfront execution cost.
+\end{metricbox}
+
+\section{The MECE Principle (Mutually Exclusive, Collectively Exhaustive)}
+
+\begin{frameworkbox}{Barbara Minto's MECE Decomposition Rule}
+\begin{itemize}
+    \item \textbf{Mutually Exclusive (ME):} No two categories overlap. Every discrete element belongs to exactly one category. Eliminates double-counting and boundary confusion.
+    \item \textbf{Collectively Exhaustive (CE):} The sum of all categories covers 100\% of the problem space. No blind spots or unclassified outliers remain.
+\end{itemize}
+\end{frameworkbox}

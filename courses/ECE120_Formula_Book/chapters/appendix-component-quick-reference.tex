@@ -1,0 +1,19 @@
+\chapter{Appendix: Master Workshop Component Reference Table}
+
+\begin{formulabox}{Laboratory Quick-Lookup Summary Table}
+\begin{center}
+\begin{tabular}{p{2.5cm}cp{3.5cm}p{5.5cm}}
+\toprule
+\textbf{Component} & \textbf{Circuit Symbol} & \textbf{Standard SI Unit} & \textbf{Common Workshop Failure Mode} \\
+\midrule
+Carbon Resistor & Zig-zag line & Ohm ($\Omega$, $\mathrm{k}\Omega$, $\mathrm{M}\Omega$) & Open circuit from excessive power dissipation ($I^2 R > 0.25\,\mathrm{W}$). \\
+Electrolytic Capacitor & Parallel plates (curved cathode) & Microfarad ($\mu\mathrm{F}$) & Reverse polarity explosion / leakage dielectric breakdown. \\
+Ceramic Capacitor & Parallel straight plates & Picofarad ($\mathrm{pF}$), Nanofarad ($\mathrm{nF}$) & Cracked ceramic dielectric from lead bending strain. \\
+1N4007 Diode & Triangle pointing to bar & Volts ($V_F$), Amperes ($I_F$) & Short circuit breakdown due to reverse overvoltage surge. \\
+LED & Diode with outgoing arrows & Forward drop ($1.8\text{--}3.3\,\mathrm{V}$) & Burned open due to omission of series limiting resistor. \\
+74xx Logic IC & Rectangular block & Logic levels (0V / 5V) & VCC/GND reversal burning internal substrate diodes. \\
+Arduino Uno & Board symbol & 5V Logic, 16 MHz Clock & Back-powering 5V rail or shorting digital pin to $+12\text{V}$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}

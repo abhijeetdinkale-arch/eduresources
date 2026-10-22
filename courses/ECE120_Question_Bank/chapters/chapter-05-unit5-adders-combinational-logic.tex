@@ -1,0 +1,602 @@
+\chapter{Unit 5: Combinational Arithmetic \& Logic Circuits: Half/Full Adders \& Subtractors}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent The following 60 multiple-choice questions reflect the official workshop evaluation bank, categorized by fundamental learning outcome and laboratory testing difficulty.\vspace{3mm}
+
+\noindent\textbf{Q1. How many input bits are used in a half adder?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Two input bits}
+    \item {Three input bits}
+    \item {One input bit}
+    \item {Four input bits}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2. What are the two outputs of a half adder?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Input and output}
+    \item {Enable and select}
+    \item {Clock and reset}
+    \item {Sum and carry}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3. Which logic gate produces the Sum output of a half adder?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {NOT gate}
+    \item {XOR gate}
+    \item {AND gate}
+    \item {OR gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4. Which logic gate produces the Carry output of a half adder?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {OR gate}
+    \item {AND gate}
+    \item {XOR gate}
+    \item {NOT gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5. What is the Sum output of a half adder when A = 0 and B = 0 ?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {2}
+    \item {Undefined}
+    \item {1}
+    \item {0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6. What is the Carry output of a half adder when A = 1 and B = 1 ?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Undefined}
+    \item {1}
+    \item {2}
+    \item {0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7. Which operation does a half adder perform?} \hfill [Tag: Design of a half adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Bit comparison}
+    \item {Decimal multiplication}
+    \item {Binary subtraction}
+    \item {Single-bit addition}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8. How many input bits are used in a full adder?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Three input bits}
+    \item {Two input bits}
+    \item {One input bit}
+    \item {Four input bits}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9. What is the additional input of a full adder compared with a half adder?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Clock signal}
+    \item {Input carry}
+    \item {Output carry}
+    \item {Output sum}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10. What are the outputs of a full adder?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Clock and sum}
+    \item {Select and enable}
+    \item {Sum and carry}
+    \item {Input and carry}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11. Which expression represents the Sum output of a full adder?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A + B + C in}
+    \item {A B C in}
+    \item {A $\cdot$ B $\cdot$ C in}
+    \item {A $\oplus$ B $\oplus$ C in}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12. What is the Sum output of a full adder when A = 1 , B = 0 , and C in = 0 ?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {2}
+    \item {0}
+    \item {1}
+    \item {Undefined}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13. What is the Carry output of a full adder when A = 1 , B = 1 , and C in = 0 ?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {1}
+    \item {2}
+    \item {Undefined}
+    \item {0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14. A full adder can be constructed using how many half adders and one OR gate?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {One half adder}
+    \item {Three half adders}
+    \item {Two half adders}
+    \item {Four half adders}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15. What does C in represent in a full adder?} \hfill [Tag: Design of a full adder | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Input clock}
+    \item {Input carry}
+    \item {Output control}
+    \item {Output carry}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16. Which tool is commonly used to list all input and output combinations of a logic circuit?} \hfill [Tag: Validation of combinational logic | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Timing clock}
+    \item {Connection chart}
+    \item {Power table}
+    \item {Truth table}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17. What should be compared when validating a combinational logic circuit?} \hfill [Tag: Validation of combinational logic | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Gate sizes and labels}
+    \item {Expected and observed outputs}
+    \item {Input and wire colors}
+    \item {Power and ground lengths}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18. How many input combinations are possible for a circuit with three binary inputs?} \hfill [Tag: Validation of combinational logic | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Eight combinations}
+    \item {Six combinations}
+    \item {Nine combinations}
+    \item {Three combinations}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19. What is a combinational logic circuit's output based on?} \hfill [Tag: Validation of combinational logic | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Previous output values}
+    \item {Clock frequency values}
+    \item {Present input values}
+    \item {Stored memory values}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20. Which method can be used to validate an adder circuit in a workshop?} \hfill [Tag: Validation of combinational logic | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Measuring wire length}
+    \item {Changing the circuit color}
+    \item {Removing all input signals}
+    \item {Testing input combinations}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21. A half adder receives inputs A = 1 and B = 1 . What are its sum and carry outputs?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Sum = 1, Carry = 1}
+    \item {Sum = 1, Carry = 0}
+    \item {Sum = 0, Carry = 0}
+    \item {Sum = 0, Carry = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22. Which combination of logic gates correctly implements a half adder?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {AND gate for sum and XOR gate for carry}
+    \item {OR gate for sum and AND gate for carry}
+    \item {NOR gate for sum and XOR gate for carry}
+    \item {XOR gate for sum and AND gate for carry}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23. A half adder has a sum output of 1 and a carry output of 0 . Which input condition must be present?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both B and C are possible}
+    \item {A = 0 , B = 1}
+    \item {A = 1 , B = 0}
+    \item {A = 0 , B = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24. If the AND gate in a half-adder circuit is replaced by an OR gate while the XOR gate remains unchanged, which output behavior is affected?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both outputs become complements}
+    \item {Both outputs remain unchanged}
+    \item {Only the carry output is affected}
+    \item {Only the sum output is affected}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25. Which input combination produces a carry but no sum in a half adder?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 0}
+    \item {A = 1 , B = 1}
+    \item {A = 0 , B = 1}
+    \item {A = 0 , B = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26. A half adder is used to add two single-bit numbers. For inputs A = 1 and B = 0 , what binary value is represented by the combined carry and sum outputs?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {0 0 2}
+    \item {1 1 2}
+    \item {0 1 2}
+    \item {1 0 2}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27. A designer wants to implement the half-adder sum using only basic AND, OR, and NOT gates. Which Boolean expression should be used?} \hfill [Tag: Design of a half adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A + B}
+    \item {A B + A B}
+    \item {A B + A B}
+    \item {A B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28. A full adder receives A = 1 , B = 0 , and carry-in C in = 1 . What are the sum and carry-out?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Sum = 1, Carry-out = 0}
+    \item {Sum = 1, Carry-out = 1}
+    \item {Sum = 0, Carry-out = 0}
+    \item {Sum = 0, Carry-out = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29. Which Boolean expression represents the sum output of a full adder?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A B + A C in + B C in}
+    \item {A + B + C in}
+    \item {A $\oplus$ B $\oplus$ C in}
+    \item {A $\oplus$ B $\oplus$ C in}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30. Which expression correctly represents the carry-out of a full adder?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A B + A C in + B C in}
+    \item {A + B + C in}
+    \item {A $\oplus$ B $\oplus$ C in}
+    \item {A B + C in}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31. How can a full adder be constructed using half adders and an OR gate?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Two half adders and one AND gate}
+    \item {Two half adders and one OR gate}
+    \item {One half adder and one OR gate}
+    \item {Three half adders and one XOR gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32. For a full adder, the sum output is 1 and the carry-out is 1 . Which input condition is possible?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 1 , C in = 0}
+    \item {A = 0 , B = 1 , C in = 0}
+    \item {A = 0 , B = 0 , C in = 1}
+    \item {A = 1 , B = 1 , C in = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33. A full adder has inputs A = 0 , B = 1 , and C in = 0 . What is the decimal value represented by its outputs?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Zero}
+    \item {Two}
+    \item {Three}
+    \item {One}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34. A full-adder circuit is designed with two XOR gates, two AND gates, and one OR gate. Which signal is normally connected to the second XOR gate along with the first XOR output?} \hfill [Tag: Design of a full adder | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Carry-out C o u t}
+    \item {Input A}
+    \item {Input B}
+    \item {Carry-in C in}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35. What is the most appropriate method for validating a newly built full-adder circuit?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Compare measured outputs with the complete truth table}
+    \item {Test only the all-zero input}
+    \item {Measure only the supply voltage}
+    \item {Check the circuit only when the sum is one}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36. During testing of a half adder, the carry output is always 0 , including for A = 1 and B = 1 . Which fault is most likely?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The output indicator is connected to ground}
+    \item {The supply frequency is too high}
+    \item {The AND gate or its wiring is faulty}
+    \item {The XOR input is shorted}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37. A full-adder test gives the correct sum for all input combinations but an incorrect carry-out. Which part should be checked first?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The carry-generation network}
+    \item {The circuit's clock source}
+    \item {The input switches for A only}
+    \item {The XOR network for the sum}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38. When validating combinational logic on a breadboard, why should unused logic inputs not be left floating?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Floating inputs always force the output to zero}
+    \item {Floating inputs can produce unpredictable logic levels}
+    \item {Floating inputs increase the circuit's clock speed}
+    \item {Floating inputs permanently damage every logic gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39. A measured full-adder output disagrees with the truth table only when A = 1 , B = 1 , and C in = 1 . What output should be expected for this test?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Sum = 0, Carry-out = 0}
+    \item {Sum = 1, Carry-out = 0}
+    \item {Sum = 1, Carry-out = 1}
+    \item {Sum = 0, Carry-out = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40. A logic probe shows an undefined reading at the sum output while testing a half adder. Which action is most suitable before concluding that the design is incorrect?} \hfill [Tag: Validation of combinational logic | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Ignore the reading and test only carry}
+    \item {Verify power, ground, and input connections}
+    \item {Replace the XOR gate with a NOT gate}
+    \item {Tie the sum output directly to supply}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41. A half adder is implemented using only NAND gates. Which minimized two-output realization correctly produces sum S and carry C for inputs A and B ?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {S = ( A N A N D A ) N A N D ( B N A N D B ) , C = ( A N A N D B ) N A N D ( A N A N D B )}
+    \item {S = ( A N A N D B ) N A N D (( A N A N D ( A N A N D B )) N A N D ( B N A N D ( A N A N D B ))) , C = ( A N A N D B ) N A N D ( A N A N D B )}
+    \item {S = ( A N A N D B ) N A N D (( A N A N D ( A N A N D B )) N A N D ( B N A N D ( A N A N D B ))) , C = A N A N D B}
+    \item {S = ( A N A N D B ) N A N D ( A N A N D B ) , C = ( A N A N D A ) N A N D ( B N A N D B )}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42. A half adder uses active-high inputs and outputs. Its sum output is accidentally connected to an AND gate while its carry output is connected to an XOR gate. Which input condition exposes both wiring errors simultaneously?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 0 , B = 0}
+    \item {A = 0 , B = 1}
+    \item {A = 1 , B = 0}
+    \item {A = 1 , B = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43. A half-adder sum is specified as S = A $\oplus$ B , but the available gates are one 2-input OR gate and one 2-input AND gate. An inverter is also available. Which expression implements the sum with the fewest additional gates?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {S = ( A + B ) A + B}
+    \item {S = ( A + B ) A B}
+    \item {S = A + B + A B}
+    \item {S = A B + A + B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44. A half adder is described by the canonical sum-of-products expression for its carry output. Which expression is correct, and why is no minterm required for the sum output at input A B = 11 ?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {C = $\Sigma$ m ( 3 ) ; the sum is one when both inputs are one}
+    \item {C = $\Sigma$ m ( 0 , 3 ) ; the sum is zero when both inputs are equal}
+    \item {C = $\Sigma$ m ( 2 , 3 ) ; the sum is one whenever A is one}
+    \item {C = $\Sigma$ m ( 1 , 2 ) ; the sum is zero when both inputs are one}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45. Two half adders are cascaded incorrectly by feeding the first half-adder carry into the second half-adder along with an external bit X . For A = 1 , B = 1 , and X = 1 , what are the final sum and carry outputs of this cascade?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {S = 1 , C = 1}
+    \item {S = 1 , C = 0}
+    \item {S = 0 , C = 1}
+    \item {S = 0 , C = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46. A half-adder circuit uses positive-logic XOR and AND gates, but its inputs are active-low signals A L and B L . Which output equations represent active-high versions of the arithmetic sum and carry?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {S = A L $\oplus$ B L , C = A L B L}
+    \item {S = A L $\oplus$ B L , C = A L B L}
+    \item {S = A L $\oplus$ B L , C = A L + B L}
+    \item {S = A L + B L , C = A L B L}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47. A half-adder implementation has propagation delays of 8 ns through its XOR path and 5 ns through its AND path. If both inputs change simultaneously from 00 to 11 , which transient behavior is expected under an inertial-delay model?} \hfill [Tag: Design of a half adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The sum remains low and the carry rises after 5 ns}
+    \item {The sum rises after 8 ns and the carry remains low}
+    \item {The sum pulses high before returning low, while carry rises}
+    \item {The sum and carry rise together after the XOR delay}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48. Which Boolean expression gives the carry output of a full adder in terms of augend A , addend B , and carry-in C in ?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {C o u t = A B + C in ( A $\oplus$ B )}
+    \item {C o u t = A B + A C in + B C in}
+    \item {C o u t = A $\oplus$ B $\oplus$ C in}
+    \item {C o u t = ( A + B ) C in + A B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49. A full adder is constructed from two half adders and an OR gate. If the first half adder produces ( S 1 , C 1 ) from A , B and the second produces ( S , C 2 ) from S 1 , C in , which carry equation results?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {C o u t = C 1 + C 2 = A + B + C in}
+    \item {C o u t = C 1 C 2 = A B C in}
+    \item {C o u t = C 1 $\oplus$ C 2 = A B $\oplus$ C in}
+    \item {C o u t = C 1 + C 2 = A B + C in ( A $\oplus$ B )}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50. For a full adder with inputs A = 1 , B = 0 , and C in = 1 , which output pair is correct and what arithmetic condition does it represent?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {S = 1 , C o u t = 1 ; the total is binary 11}
+    \item {S = 0 , C o u t = 1 ; the total is binary 10}
+    \item {S = 1 , C o u t = 0 ; the total is binary 01}
+    \item {S = 0 , C o u t = 0 ; the total is binary 00}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51. A full-adder sum output is implemented as S = ( A $\oplus$ B ) $\oplus$ C in . If the first XOR gate has a stuck-at-zero output, for which input set is the observed sum incorrect?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 0 , B = 1 , C in = 1}
+    \item {A = 1 , B = 1 , C in = 1}
+    \item {A = 0 , B = 0 , C in = 0}
+    \item {A = 1 , B = 0 , C in = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52. A ripple-carry adder is formed from four full adders. The carry propagation delay of each stage is 12 ns , and the final sum logic settles 7 ns after its carry-in settles. What is the worst-case delay from a carry-in change at the least significant stage to the most significant sum output?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {43 ns}
+    \item {48 ns}
+    \item {36 ns}
+    \item {19 ns}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53. A full adder must be designed using only 2-input XOR, AND, and OR gates. Which gate-count combination implements both outputs with no shared intermediate node?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Two XOR, three AND, one OR}
+    \item {Two XOR, two AND, one OR}
+    \item {One XOR, two AND, two OR}
+    \item {Three XOR, two AND, two OR}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54. For a full adder, the carry output is required to be independent of C in for a particular pair ( A , B ) . Which pair satisfies this condition, and what is the resulting carry value?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {( 1 , 0 ) ; C o u t = 1 for either carry-in}
+    \item {( 0 , 0 ) ; C o u t = 0 for either carry-in}
+    \item {( 0 , 1 ) ; C o u t = 0 for either carry-in}
+    \item {( 1 , 1 ) ; C o u t = C in for either carry-in}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55. A full adder is used to add three one-bit operands. If the sum output is correct but the carry output is replaced by C o u t ' = A B + A C in , which input combination produces an incorrect carry?} \hfill [Tag: Design of a full adder | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 0 , C in = 1}
+    \item {A = 0 , B = 0 , C in = 1}
+    \item {A = 0 , B = 1 , C in = 1}
+    \item {A = 1 , B = 1 , C in = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56. A combinational circuit has three inputs, and its output is one for minterms m ( 1 , 2 , 5 , 7 ) . Which input sequence provides complete functional validation when all possible static input combinations are tested?} \hfill [Tag: Validation of combinational logic | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {111 , 110 , 101 , 100 , 011 , 010 , 001 , 000}
+    \item {000 , 011 , 100 , 110}
+    \item {000 , 001 , 010 , 011 , 100 , 101 , 110 , 111}
+    \item {001 , 010 , 101 , 111}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57. A measured full-adder truth table shows the correct outputs for all cases except A = 1 , B = 0 , C in = 1 , where the measured result is S = 1 , C o u t = 0 . Which fault best explains this isolated error?} \hfill [Tag: Validation of combinational logic | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The input B is permanently held at one}
+    \item {The sum XOR network is stuck at zero}
+    \item {The carry output is stuck at zero}
+    \item {The carry term A C in is missing}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58. During validation of a two-level combinational circuit, the output briefly pulses when input A changes from 0 to 1 while B = 1 . The steady-state function is F = A + B . Which explanation is most appropriate?} \hfill [Tag: Validation of combinational logic | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The circuit has a static-1 hazard caused by unequal path delays}
+    \item {The truth table is invalid because OR gates cannot produce pulses}
+    \item {The circuit is sequential because the output depends on prior inputs}
+    \item {The circuit has a static-0 hazard because both inputs are zero}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59. A logic analyzer samples a full-adder output at the exact instant inputs change. Why can this method falsely suggest an incorrect truth-table entry?} \hfill [Tag: Validation of combinational logic | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Truth tables apply only when inputs change asynchronously}
+    \item {Logic analyzers automatically invert carry outputs}
+    \item {Combinational outputs may be transient before propagation settles}
+    \item {Full adders retain the previous output until reset}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60. A half-adder testbench checks only input pairs 00 and 11 and observes correct outputs. Which conclusion is justified?} \hfill [Tag: Validation of combinational logic | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both functions are fully validated because equal inputs were tested}
+    \item {The sum function is validated, but the carry function is not validated}
+    \item {The carry function is validated, but the sum function is not fully validated}
+    \item {Neither function is validated because unequal inputs were omitted}
+\end{enumerate}
+\vspace{2mm}
+
+
+\newpage
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{5}{1}
+(a) Formulate the truth table for a 1-bit Full Adder with inputs $A, B, C_{\mathrm{in}}$ and outputs $\mathrm{Sum} (S)$ and $\mathrm{Carry} (C_{\mathrm{out}})$. (b) Derive the minimal Boolean expressions for $S$ and $C_{\mathrm{out}}$. (c) Draw the block-level logic realization using two Half Adders and one OR gate, and prove algebraic equivalence.
+\end{subjectiveq}
+
+\begin{solbox}
+\textbf{(a) Full Adder Truth Table:}\\
+\[ \begin{array}{ccc|cc} A \& B \& C_{\mathrm{in}} \& \mathrm{Sum}\,(S) \& C_{\mathrm{out}} \\ \hline 0 \& 0 \& 0 \& 0 \& 0 \\ 0 \& 0 \& 1 \& 1 \& 0 \\ 0 \& 1 \& 0 \& 1 \& 0 \\ 0 \& 1 \& 1 \& 0 \& 1 \\ 1 \& 0 \& 0 \& 1 \& 0 \\ 1 \& 0 \& 1 \& 0 \& 1 \\ 1 \& 1 \& 0 \& 0 \& 1 \\ 1 \& 1 \& 1 \& 1 \& 1 \end{array} \]
+\textbf{(b) Minimal Boolean Expressions:}\\
+From the minterms of Sum:\\
+\[ S = \sum m(1, 2, 4, 7) = \overline{A}\overline{B}C_{\mathrm{in}} + \overline{A}B\overline{C_{\mathrm{in}}} + A\overline{B}\overline{C_{\mathrm{in}}} + ABC_{\mathrm{in}} \]
+Factoring:\\
+\[ S = C_{\mathrm{in}}(\overline{A}\overline{B} + AB) + \overline{C_{\mathrm{in}}}(\overline{A}B + A\overline{B}) = C_{\mathrm{in}}\overline{(A \oplus B)} + \overline{C_{\mathrm{in}}}(A \oplus B) = A \oplus B \oplus C_{\mathrm{in}} \]
+From the minterms of Carry:\\
+\[ C_{\mathrm{out}} = \sum m(3, 5, 6, 7) = AB + BC_{\mathrm{in}} + AC_{\mathrm{in}} = AB + C_{\mathrm{in}}(A + B) = AB + C_{\mathrm{in}}(A \oplus B) \]
+\textbf{(c) Implementation Using Two Half Adders and OR Gate:}\\
+Half Adder 1: Inputs $A, B \implies S_1 = A \oplus B$, $C_1 = AB$.\\
+Half Adder 2: Inputs $S_1, C_{\mathrm{in}} \implies S = S_1 \oplus C_{\mathrm{in}} = (A \oplus B) \oplus C_{\mathrm{in}}$, $C_2 = S_1 \cdot C_{\mathrm{in}} = (A \oplus B)C_{\mathrm{in}}$.\\
+The final carry is formed by an OR gate: $C_{\mathrm{out}} = C_1 + C_2 = AB + (A \oplus B)C_{\mathrm{in}}$.\\
+This matches the simplified Full Adder carry expression identically.
+\end{solbox}
+
+\begin{examinertip}
+Examiner Rubric (10 Marks):\\
+- Complete and accurate truth table: 2 Marks\\
+- Algebraic extraction and simplification of Sum $S = A \oplus B \oplus C_{\mathrm{in}}$: 3 Marks\\
+- Minimal derivation of Carry $C_{\mathrm{out}} = AB + C_{\mathrm{in}}(A \oplus B)$: 3 Marks\\
+- Two Half-Adder block diagram and cascading proof: 2 Marks
+\end{examinertip}
+
+
+\section{Section C: Laboratory Viva-Voce Questions with Authoritative Solutions}
+
+\noindent\textbf{Viva Question:} Why cannot a Half Adder alone be used to cascade multi-bit binary addition?\\
+\textbf{Technical Answer:} A Half Adder only accepts two single-bit inputs ($A$ and $B$). In multi-bit addition, every stage except the least significant bit (LSB) must also incorporate an incoming carry ($C_{\mathrm{in}}$) generated by the preceding bit stage. Therefore, Full Adders are required.
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} What is a ripple-carry adder and what is its primary performance limitation?\\
+\textbf{Technical Answer:} A ripple-carry adder connects $n$ Full Adders in series, where each stage passes its carry-out to the next stage's carry-in. Its limitation is propagation delay: the most significant bit (MSB) cannot produce its valid sum until the carry ripples through all preceding stages ($t_{\mathrm{total}} = n \cdot t_{\mathrm{carry}}$).
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} How can a 4-bit binary adder (IC 7483) be converted into an Adder/Subtractor?\\
+\textbf{Technical Answer:} Connect the $B$ inputs to the outputs of four XOR gates. The second input of each XOR gate is connected to an $\text{Add}/\overline{\text{Sub}}$ control line, which is also fed into the adder's initial carry input $C_0$. When $\text{Mode} = 0$, $B$ passes un-inverted and $C_0 = 0$ (Addition). When $\text{Mode} = 1$, $B$ is inverted (1's complement) and $C_0 = 1$ adds 1, performing 2's complement subtraction: $A + \overline{B} + 1 = A - B$.
+\vspace{3mm}
+
+
+\section{Section D: Workshop Troubleshooting \& Fault Diagnostic Case Study}
+
+\textbf{Troubleshooting Scenario: Sum Output Inverted on Breadboard}\\
+A student wires a Full Adder circuit using a 7486 XOR IC and a 7408 AND IC. Testing with inputs $A=1, B=1, C_{\mathrm{in}}=0$ gives $S=1$ and $C_{\mathrm{out}}=0$, which is the exact inverse of the true output ($S=0, C_{\mathrm{out}}=1$).\\\\
+\textbf{Diagnosis:} Pin miswiring on the 7486 quad XOR chip. The student connected the output probe to Pin 4 (an input to gate 2) instead of Pin 3 (the output of gate 1), leaving the sum line driven by an undefined high-impedance state.\\
+\textbf{Fix:} Verify IC orientation notch and match schematic node labels with absolute DIP pin numbers before powering the trainer.
+\vspace{4mm}

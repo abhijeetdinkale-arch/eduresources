@@ -1,0 +1,234 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/10/22 v1.0 CSR102 Master Textbook Style Package]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,amsthm}
+\RequirePackage{bm}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{multicol}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage[many]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% Colors
+\definecolor{brandnavy}{RGB}{15, 32, 67}
+\definecolor{brandorange}{RGB}{232, 90, 16}
+\definecolor{brandslate}{RGB}{70, 80, 95}
+\definecolor{branddark}{RGB}{25, 30, 40}
+\definecolor{boxbg}{RGB}{246, 248, 252}
+\definecolor{boxborder}{RGB}{205, 215, 225}
+\definecolor{accentbg}{RGB}{255, 250, 240}
+\definecolor{accentborder}{RGB}{232, 90, 16}
+\definecolor{greenbg}{RGB}{240, 253, 244}
+\definecolor{greenborder}{RGB}{22, 163, 74}
+
+\RequirePackage[
+    colorlinks=true,
+    linkcolor=brandnavy,
+    citecolor=brandnavy,
+    urlcolor=brandorange,
+    bookmarksnumbered=true
+]{hyperref}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\sffamily\bfseries\color{brandnavy}\thepage}
+\fancyhead[RE]{\small\sffamily\color{brandslate}\nouppercase{\leftmark}}
+\fancyhead[LO]{\small\sffamily\color{brandslate}\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Section Titles
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{brandnavy}}
+  {\chaptertitlename\ \thechapter}{14pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{brandnavy}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\large\bfseries\color{brandorange}}
+  {\thesubsection}{1em}{}
+
+% tcolorboxes
+\newtcolorbox{definition}[1][]{
+    enhanced, breakable,
+    colback=boxbg, colframe=brandnavy,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Conceptual Definition \hfill #1},
+    boxrule=1pt, arc=2mm, top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{methodbox}[1][]{
+    enhanced, breakable,
+    colback=white, colframe=brandnavy,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Methodological Architecture \& Process \hfill #1},
+    boxrule=1pt, arc=2mm, top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{casestudy}[1][]{
+    enhanced, breakable,
+    colback=greenbg, colframe=greenborder,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Real-World Case Study \& Applied Analysis \hfill #1},
+    boxrule=1pt, arc=2mm, top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{important}[1][]{
+    enhanced, breakable,
+    colback=accentbg, colframe=accentborder,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Fundamental Invariant \& Design Principle \hfill #1},
+    boxrule=1pt, arc=2mm, top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{examtip}[1][]{
+    enhanced, breakable,
+    colback=accentbg, colframe=brandorange,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Examiner's Perspective \& Common Pitfall \hfill #1},
+    boxrule=0.8pt, arc=2mm, top=2.5mm, bottom=2.5mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{quickrevision}[1][]{
+    enhanced, breakable,
+    colback=boxbg, colframe=brandslate,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Chapter Synthesis \& Key Takeaways \hfill #1},
+    boxrule=0.8pt, arc=2mm, top=2.5mm, bottom=2.5mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{practiceset}[1][]{
+    enhanced, breakable,
+    colback=white, colframe=brandslate,
+    coltitle=white, fonttitle=\bfseries\sffamily,
+    title={Review Questions \& Practice Challenges \hfill #1},
+    boxrule=0.8pt, arc=2mm, top=2.5mm, bottom=2.5mm, left=3mm, right=3mm
+}
+
+% Book Cover & Frontmatter Macros
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{flushleft}
+    \vspace*{1.5cm}
+    {\Huge\sffamily\bfseries\color{brandnavy} CSR102: DESIGN THINKING AND COMPLEX PROBLEM SOLVING\par}
+    \vspace{0.6cm}
+    {\LARGE\sffamily\color{brandorange} \textbf{Comprehensive Master University Textbook}\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.7\linewidth}{2pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Foundations \textbullet\ Problem Definition \textbullet\ Analytical Thinking \textbullet\ Ideation \textbullet\ Workflow \& Testing \textbullet\ Reflection}\par}
+    
+    \vspace{2.0cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxbg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Curriculum Features \& Pedagogical Architecture:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=3pt, topsep=3pt]
+            \item Comprehensive syllabus coverage across all 6 Units of the LPU CSR102 curriculum.
+            \item Rigorous grounding in both classic and contemporary design thinking methodologies.
+            \item Systems-level analysis of ill-structured and wicked socio-technical problems.
+            \item End-to-end toolkits: Empathy Maps, Journey Maps, Root Cause Analysis, MCDA, SCAMPER, Service Blueprints, and Minto SCQA.
+            \item Solved real-world case studies and university-level practice problem sets.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Team / Publisher:}\\
+    Lovely Professional University Academic Publishing Initiative\\
+    Department of Computer Science and Engineering\\
+    \url{https://notes.lpuverto.xyz}}
+\end{flushleft}
+\end{titlepage}
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large CSR102: Design Thinking and Complex Problem Solving --- Master Textbook}\\
+\textit{\sffamily An Open University Educational Publication}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Open Academic Resources Initiative\\
+\textbf{\sffamily Release Edition:} 2026 Academic Edition\\
+\textbf{\sffamily Course Code:} CSR102 (B.Tech Computer Science and Engineering)\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing:}\\
+\textcopyright\ 2026 The Authors and Contributors.\\
+This manuscript and pedagogical materials are distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+LPU Academic Editorial Board, \textit{CSR102: Design Thinking and Complex Problem Solving --- Master Textbook}, 2026 ed. Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=accentbg,
+    colframe=accentborder,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Academic Disclaimer \& Course Context}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Pedagogical Objective}\\
+This textbook provides a rigorous, human-centered, and systems-engineering treatment of complex problem solving, tailored specifically for computer science and engineering undergraduates facing non-deterministic real-world challenges.
+
+\textbf{2. Academic Rigor}\\
+All methodologies, from Stanford d.school frameworks and Double Diamond models to Multi-Criteria Decision Analysis (MCDA) and Service Blueprinting, are presented with both qualitative empathy and analytical rigor.
+
+\textbf{3. Continuous Improvement}\\
+Engineering education thrives on feedback. Readers and instructors are encouraged to submit case study expansions and feedback to the academic curriculum cell.
+\end{tcolorbox}
+\vfill
+\newpage
+}

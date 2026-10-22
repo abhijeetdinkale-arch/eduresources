@@ -1,0 +1,89 @@
+\chapter{Unit 2: Problem Definition and Analysis Toolkits}
+\label{chap:unit2-canvases}
+
+\section{Stakeholder Mapping \& Power-Interest Matrix}
+
+\begin{canvasbox}{Mendelow's Power-Interest Matrix}
+\begin{tabularx}{\linewidth}{|l|X|X|} \hline
+ & \textbf{Low Interest} & \textbf{High Interest} \\ \hline
+\textbf{High Power} & \textbf{Keep Satisfied:} Minimal engagement required for operations, but crucial veto power. Brief periodically with executive summaries. & \textbf{Manage Closely (Key Partners):} Essential co-creators. Involve actively in co-design, steering committees, and decision gates. \\ \hline
+\textbf{Low Power} & \textbf{Monitor (Minimum Effort):} Track for shifts in power or interest; update via general passive channels. & \textbf{Keep Informed:} High passion, low direct leverage. Cultivate as grassroots advocates, beta testers, and qualitative feedback sources. \\ \hline
+\end{tabularx}
+\end{canvasbox}
+
+\section{The Empathy Map Canvas}
+
+\begin{canvasbox}{Dave Gray's Empathy Map Architecture}
+\begin{tabularx}{\linewidth}{|X|X|} \hline
+\textbf{Says (Verbatim Expressions):} & \textbf{Thinks (Internal Mental Model):} \\
+$\bullet$ Exact quotes from user interviews. & $\bullet$ Beliefs, assumptions, mental models. \\
+$\bullet$ Stated goals and self-described justifications. & $\bullet$ Unvoiced worries, private expectations. \\ \hline
+\textbf{Does (Observable Behaviors):} & \textbf{Feels (Emotional States):} \\
+$\bullet$ Physical actions, workarounds, body language. & $\bullet$ Emotions: anxiety, frustration, delight, apathy. \\
+$\bullet$ Specific pathways chosen in existing workflows. & $\bullet$ Subtle non-verbal cues and physiological signs. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Pains (Fears, Frustrations, Obstacles, Risks):}} \\
+\multicolumn{2}{|X|}{What stands between the user and success? Where does friction occur? What are the high-consequence failure modes?} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Gains (Hopes, Aspirations, Desired Outcomes, Measures of Success):}} \\
+\multicolumn{2}{|X|}{What does success look like for the user? What would genuinely delight them beyond minimal expectations?} \\ \hline
+\end{tabularx}
+\end{canvasbox}
+
+\section{Customer Journey Mapping Framework}
+
+\begin{canvasbox}{Core Columns of a High-Fidelity Journey Map}
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+\textbf{Journey Stage} & Chronological phases: Awareness $\to$ Research $\to$ Onboarding $\to$ Core Usage $\to$ Support $\to$ Offboarding. \\ \hline
+\textbf{Touchpoints} & Channels of interaction (Mobile app, desktop kiosk, customer desk, SMS, hardware terminal). \\ \hline
+\textbf{User Actions} & What the user concretely does at each discrete milestone. \\ \hline
+\textbf{Thoughts \& Mental State} & Questions asked, doubts raised, expectations formed during the transition. \\ \hline
+\textbf{Emotional Curve} & Bipolar emotional valence mapped visually from $+2$ (Delight) to $-2$ (Crisis/Frustration). \\ \hline
+\textbf{Pain Points / Friction} & Bottlenecks, cognitive overload, latency, errors, unexpected prerequisites. \\ \hline
+\textbf{Design Opportunities} & Specific HMW intervention points derived directly from emotional troughs. \\ \hline
+\end{tabularx}
+\end{canvasbox}
+
+\section{Root Cause Diagnostic Toolkits}
+
+\begin{frameworkbox}{1. The 5-Whys Method (Sakichi Toyoda)}
+\textit{Iterative interrogative technique to peel away superficial symptoms and expose the fundamental process/policy breakdown.}\\
+Rule: Every answer must link logically to the preceding question through demonstrable causality, not conjecture.
+\end{frameworkbox}
+
+\begin{frameworkbox}{2. Ishikawa (Fishbone / Cause-and-Effect) 6M \& 4P Frameworks}
+\begin{itemize}
+    \item \textbf{Manufacturing / Technical 6M:} Manpower, Methods, Machines, Materials, Measurements, Mother Nature (Environment).
+    \item \textbf{Service / Knowledge Work 4P:} People, Policies, Procedures, Plant / Technology.
+\end{itemize}
+\end{frameworkbox}
+
+\section{Point-of-View (POV) Formula \& ``How Might We'' (HMW) Generators}
+
+\begin{metricbox}{The Stanford d.school POV Formula}
+\[
+\text{\textbf{POV Statement}} = \underbrace{[\text{Specific User / Persona}]}_{\text{Who}} + \text{ needs } \underbrace{[\text{Deep Human Need}]}_{\text{What (Verb-driven)}} + \text{ because } \underbrace{[\text{Surprising Insight}]}_{\text{Root Emotional Driver}}
+\]
+\end{metricbox}
+
+\begin{frameworkbox}{HMW Expansion Strategies (From 1 POV Statement)}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2em]
+    \item \textbf{Amp up the good:} How might we amplify the user's existing delight during step $X$?
+    \item \textbf{Remove the bad:} How might we completely eliminate the need to wait in line?
+    \item \textbf{Explore the opposite:} How might we make waiting in line the most enjoyable part of the day?
+    \item \textbf{Question assumptions:} How might we eliminate the physical office entirely?
+    \item \textbf{Leverage an unexpected resource:} How might we use idle bystander smartphones to accelerate verification?
+    \item \textbf{Analogy to another domain:} How might we make hospital check-in feel like Disney theme-park boarding?
+\end{enumerate}
+\end{frameworkbox}
+
+\section{SMART Objective Setting Framework}
+
+\begin{canvasbox}{SMART Verification Architecture}
+\begin{tabularx}{\linewidth}{|l|X|l|} \hline
+\textbf{Criterion} & \textbf{Evaluation Standard} & \textbf{Example Non-Compliant vs. Compliant} \\ \hline
+\textbf{S - Specific} & Clear, focused, answers Who, What, Where. & ``Improve speed'' $\to$ ``Reduce patient registration time'' \\ \hline
+\textbf{M - Measurable} & Quantifiable metrics and verification telemetry. & ``Make better'' $\to$ ``Reduce median time from 18 to 4 minutes'' \\ \hline
+\textbf{A - Achievable} & Realistic within technical and resource limits. & ``Zero errors forever'' $\to$ ``$\le 0.5\%$ error rate'' \\ \hline
+\textbf{R - Relevant} & Directly aligned with core human and business goals. & Tracking meaningless page clicks vs. successful consultations. \\ \hline
+\textbf{T - Time-bound} & Unambiguous milestone and final deadlines. & ``Soon'' $\to$ ``Within 90 calendar days of pilot launch'' \\ \hline
+\end{tabularx}
+\end{canvasbox}

@@ -1,0 +1,188 @@
+\chapter{Fundamentals of A.C. Circuits}
+\label{chap:ac-circuits}
+
+\section{Introduction and Theoretical Scope}
+Alternating Current (AC) waveforms represent the standard medium for global energy generation, high-voltage transmission, industrial distribution, and electronic signal processing. The inherent advantage of sinusoidal alternating signals lies in their mathematical preservation under linear differentiation and integration, as well as the ease of voltage transformation via electromagnetic induction. This chapter develops sinusoidal time-domain descriptors, phasor algebra, complex impedance, resonance in series $RLC$ circuits, power factor optimization, and balanced polyphase three-phase systems.
+
+\section{Sinusoidal Waveform Fundamentals}
+
+\subsection{Time-Domain Characterization}
+A general time-varying sinusoidal voltage is expressed as:
+\begin{equation}
+v(t) = V_m \sin(\omega t + \theta)
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Peak Amplitude ($V_m$)}: Maximum deviation from the zero-reference axis.
+    \item \textbf{Peak-to-Peak Amplitude ($V_{p-p}$)}: $V_{p-p} = 2 V_m$.
+    \item \textbf{Angular Frequency ($\omega$)}: $\omega = 2\pi f = \frac{2\pi}{T}$ in radians per second ($\text{rad/s}$).
+    \item \textbf{Cyclic Frequency ($f$)}: $f = 1/T$ in Hertz ($\text{Hz}$), where $T$ is the periodic time in seconds.
+    \item \textbf{Phase Angle ($\theta$)}: Angular argument at time $t = 0$.
+\end{itemize}
+
+\subsection{Effective (RMS) and Average Values}
+\begin{definition}[Root Mean Square (RMS) Value]
+The Root Mean Square (RMS or effective) value of an alternating current represents the equivalent DC current that produces the identical heating effect ($I^2 R$) in an ohmic resistance over one complete period:
+\begin{equation}
+V_{rms} = \sqrt{\frac{1}{T}\int_0^T v(t)^2 dt}
+\end{equation}
+For a pure sinusoidal signal $v(t) = V_m \sin(\omega t)$:
+\begin{equation}
+V_{rms} = \sqrt{\frac{1}{2\pi}\int_0^{2\pi} V_m^2 \sin^2(\theta) d\theta} = \sqrt{\frac{V_m^2}{2\pi}\int_0^{2\pi} \frac{1 - \cos(2\theta)}{2} d\theta} = \frac{V_m}{\sqrt{2}} \approx 0.7071 V_m
+\end{equation}
+\end{definition}
+
+\begin{definition}[Average Value, Form Factor, and Crest Factor]
+For symmetrical alternating waveforms, the average over a full period is zero. Hence, the \textbf{average value} is evaluated over one half-cycle:
+\begin{equation}
+V_{avg} = \frac{1}{\pi}\int_0^\pi V_m \sin(\theta) d\theta = \frac{V_m}{\pi}[-\cos\theta]_0^\pi = \frac{2 V_m}{\pi} \approx 0.6366 V_m
+\end{equation}
+The \textbf{Form Factor} ($k_f$) characterizes waveform shape:
+\begin{equation}
+k_f = \frac{V_{rms}}{V_{avg}} = \frac{V_m / \sqrt{2}}{2 V_m / \pi} = \frac{\pi}{2\sqrt{2}} \approx 1.11 \quad \text{(Pure Sine Wave)}
+\end{equation}
+The \textbf{Peak (Crest) Factor} ($k_p$) characterizes peak stress:
+\begin{equation}
+k_p = \frac{V_m}{V_{rms}} = \frac{V_m}{V_m / \sqrt{2}} = \sqrt{2} \approx 1.414 \quad \text{(Pure Sine Wave)}
+\end{equation}
+\end{definition}
+
+\section{Phasor Representation and Complex Impedance}
+By Euler's identity, $e^{j\theta} = \cos\theta + j\sin\theta$. A sinusoidal signal $v(t) = V_m \cos(\omega t + \theta)$ can be viewed as the real projection of a counter-clockwise rotating vector:
+\begin{equation}
+v(t) = \operatorname{Re}\left\{ V_m e^{j(\omega t + \theta)} \right\} = \operatorname{Re}\left\{ \sqrt{2} \mathbf{V} e^{j\omega t} \right\}
+\end{equation}
+where $\mathbf{V} = V_{rms}\angle \theta = V_{rms}(\cos\theta + j\sin\theta)$ is the complex \textbf{phasor}. Differentiation in the time domain corresponds to multiplication by $j\omega$ in the frequency domain: $\frac{d}{dt} \longleftrightarrow j\omega$.
+
+\begin{definition}[Complex Impedance and Admittance]
+Impedance $\mathbf{Z} = R + jX$ represents the frequency-domain generalization of resistance:
+\begin{align}
+\text{Pure Resistance: } & \mathbf{Z}_R = R \angle 0^\circ = R + j0 \\
+\text{Pure Inductance: } & \mathbf{Z}_L = j\omega L = \omega L \angle 90^\circ \implies X_L = \omega L = 2\pi f L \quad \text{[$\Omega$]} \\
+\text{Pure Capacitance: } & \mathbf{Z}_C = \frac{1}{j\omega C} = -j\frac{1}{\omega C} = \frac{1}{\omega C} \angle -90^\circ \implies X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C} \quad \text{[$\Omega$]}
+\end{align}
+In a series $RLC$ circuit:
+\begin{equation}
+\mathbf{Z} = R + j(X_L - X_C) = |\mathbf{Z}|\angle \phi, \quad |\mathbf{Z}| = \sqrt{R^2 + (X_L - X_C)^2}, \quad \phi = \arctan\left(\frac{X_L - X_C}{R}\right)
+\end{equation}
+\end{definition}
+
+\section{Resonance in Series RLC Circuits}
+\begin{definition}[Resonant State]
+Resonance occurs in an AC circuit containing reactive elements when the net terminal reactance is identically zero ($X_L = X_C$). Under this condition, the input voltage and current are in phase ($\phi = 0$), the power factor is unity ($\cos\phi = 1.0$), and the circuit impedance attains its absolute minimum: $\mathbf{Z}_0 = R$.
+\end{definition}
+
+\begin{theorem}[Resonance Parameters: Frequency, Quality Factor, Bandwidth]
+\begin{enumerate}
+    \item \textbf{Resonant Frequency}:
+    \begin{equation}
+    \omega_0 L = \frac{1}{\omega_0 C} \implies \omega_0 = \frac{1}{\sqrt{LC}} \text{ [rad/s]}, \qquad f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ [Hz]}
+    \end{equation}
+    \item \textbf{Quality Factor ($Q_0$)}: Ratio of reactive energy stored to energy dissipated per cycle:
+    \begin{equation}
+    Q_0 = \frac{\omega_0 L}{R} = \frac{1}{\omega_0 C R} = \frac{1}{R}\sqrt{\frac{L}{C}} = \frac{V_L(\omega_0)}{V} = \frac{V_C(\omega_0)}{V}
+    \end{equation}
+    Since $Q_0 > 1$ in typical communication and tuning circuits, series resonance produces voltage magnification across $L$ and $C$ ($V_L = V_C = Q_0 V_{source}$).
+    \item \textbf{Bandwidth ($BW$)}: Frequency span between half-power ($-3\text{ dB}$) points where current drops to $I_0 / \sqrt{2}$:
+    \begin{equation}
+    BW = \Delta f = f_2 - f_1 = \frac{f_0}{Q_0} = \frac{R}{2\pi L} \text{ [Hz]}, \qquad \Delta \omega = \frac{R}{L} \text{ [rad/s]}
+    \end{equation}
+    \item \textbf{Half-Power Frequencies}:
+    \begin{equation}
+    \omega_1, \omega_2 = \mp \frac{R}{2L} + \sqrt{\omega_0^2 + \left(\frac{R}{2L}\right)^2}
+    \end{equation}
+    For high-$Q$ circuits ($Q_0 \ge 10$): $f_1 \approx f_0 - \frac{BW}{2}$ and $f_2 \approx f_0 + \frac{BW}{2}$.
+\end{enumerate}
+\end{theorem}
+
+\section{Power in AC Circuits and Power Factor Correction}
+
+\subsection{The Complex Power Framework}
+In AC networks, instantaneous power pulsates at twice the supply frequency ($2\omega$). Decomposing this response yields active, reactive, and apparent components:
+\begin{equation}
+\mathbf{S} = \mathbf{V}\mathbf{I}^* = P + jQ = S \angle \phi
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Active / Real Power ($P$)}: The average rate of energy transferred and converted into useful mechanical, thermal, or optical work:
+    \begin{equation}
+    P = V_{rms} I_{rms} \cos\phi \quad \text{[Watts, W]}
+    \end{equation}
+    \item \textbf{Reactive Power ($Q$)}: The peak rate of energy oscillating between electromagnetic fields and the generator without doing net work:
+    \begin{equation}
+    Q = V_{rms} I_{rms} \sin\phi \quad \text{[Volt-Amperes Reactive, VAR]}
+    \end{equation}
+    \item \textbf{Apparent Power ($S$)}: The total product of RMS voltage and current:
+    \begin{equation}
+    S = V_{rms} I_{rms} = \sqrt{P^2 + Q^2} \quad \text{[Volt-Amperes, VA]}
+    \end{equation}
+    \item \textbf{Power Factor ($pf$)}: The ratio of real power to apparent power:
+    \begin{equation}
+    \cos\phi = \frac{P}{S} = \frac{R}{|\mathbf{Z}|}
+    \end{equation}
+    Lagging for inductive circuits (current lags voltage); leading for capacitive circuits (current leads voltage).
+\end{itemize}
+
+\subsection{Power Factor Correction}
+Low lagging power factors draw excessive line current ($I = P / (V \cos\phi)$), inducing higher $I^2 R$ transmission line losses and voltage drop. To correct the power factor from $\cos\phi_1$ to $\cos\phi_2$ without altering active power $P$, a shunt capacitor bank is installed:
+\begin{equation}
+Q_C = P(\tan\phi_1 - \tan\phi_2) \implies C = \frac{P(\tan\phi_1 - \tan\phi_2)}{\omega V_{rms}^2}
+\end{equation}
+
+\section{Three-Phase Balanced Systems}
+
+\subsection{Star (Wye, Y) and Delta ($\Delta$) Topologies}
+Three-phase generators produce three equal sinusoidal voltages displaced mutually by $120^\circ$ ($2\pi/3\text{ rad}$):
+\begin{equation}
+v_A(t) = \sqrt{2}V_{ph}\sin(\omega t), \quad v_B(t) = \sqrt{2}V_{ph}\sin(\omega t - 120^\circ), \quad v_C(t) = \sqrt{2}V_{ph}\sin(\omega t - 240^\circ)
+\end{equation}
+
+\begin{theorem}[Star ($\text{Y}$) Relations]
+In a balanced three-phase star system with phase voltages $V_{AN}, V_{BN}, V_{CN}$:
+\begin{equation}
+\mathbf{V}_{AB} = \mathbf{V}_{AN} - \mathbf{V}_{BN} = V_{ph}\angle 0^\circ - V_{ph}\angle -120^\circ = \sqrt{3}V_{ph}\angle 30^\circ
+\end{equation}
+Hence:
+\begin{equation}
+V_L = \sqrt{3} V_{ph}, \qquad I_L = I_{ph}
+\end{equation}
+The line voltage \textbf{leads} the phase voltage by $30^\circ$. For balanced loads, the neutral current is zero: $I_N = I_A + I_B + I_C = 0$.
+\end{theorem}
+
+\begin{theorem}[Delta ($\Delta$) Relations]
+In a balanced three-phase delta system:
+\begin{equation}
+V_L = V_{ph}, \qquad I_L = \sqrt{3} I_{ph}
+\end{equation}
+The line current \textbf{lags} the corresponding phase current by $30^\circ$.
+\end{theorem}
+
+\subsection{Three-Phase Power and the Two-Wattmeter Method}
+For both star and delta balanced configurations:
+\begin{equation}
+P_{3\phi} = \sqrt{3} V_L I_L \cos\phi = 3 V_{ph} I_{ph} \cos\phi, \qquad Q_{3\phi} = \sqrt{3} V_L I_L \sin\phi, \qquad S_{3\phi} = \sqrt{3} V_L I_L
+\end{equation}
+By Blondel's Theorem, the active power in an $n$-wire system requires $n-1$ wattmeters. In a 3-phase, 3-wire system, \textbf{two wattmeters} suffice:
+\begin{equation}
+W_1 = V_L I_L \cos(30^\circ - \phi), \qquad W_2 = V_L I_L \cos(30^\circ + \phi)
+\end{equation}
+Sum of readings:
+\begin{equation}
+W_1 + W_2 = V_L I_L [\cos(30^\circ - \phi) + \cos(30^\circ + \phi)] = \sqrt{3} V_L I_L \cos\phi = P_{3\phi}
+\end{equation}
+Difference of readings:
+\begin{equation}
+W_1 - W_2 = V_L I_L [\cos(30^\circ - \phi) - \cos(30^\circ + \phi)] = V_L I_L \sin\phi
+\end{equation}
+Dividing the difference by the sum:
+\begin{equation}
+\frac{W_1 - W_2}{W_1 + W_2} = \frac{\sin\phi}{\sqrt{3}\cos\phi} = \frac{\tan\phi}{\sqrt{3}} \implies \tan\phi = \sqrt{3}\frac{W_1 - W_2}{W_1 + W_2}
+\end{equation}
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Sine wave measures: $V_{rms} = V_m / \sqrt{2}$, $V_{avg} = 2V_m / \pi$, $k_f = 1.11$, $k_p = 1.414$.
+    \item Impedances: $X_L = \omega L$, $X_C = 1/(\omega C)$, $\mathbf{Z} = R + j(X_L - X_C)$.
+    \item Resonance: $\omega_0 = 1/\sqrt{LC}$, $Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{L/C}$, $BW = f_0 / Q = R / (2\pi L)$.
+    \item Power: $P = V I \cos\phi$, $Q = V I \sin\phi$, $S = V I = \sqrt{P^2 + Q^2}$.
+    \item 3-Phase: Star ($V_L = \sqrt{3}V_{ph}, I_L = I_{ph}$); Delta ($V_L = V_{ph}, I_L = \sqrt{3}I_{ph}$).
+    \item Two-wattmeter: $P = W_1 + W_2$, $\tan\phi = \sqrt{3}(W_1 - W_2)/(W_1 + W_2)$.
+\end{itemize}

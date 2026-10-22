@@ -54,6 +54,14 @@ const PLANS = [
 ];
 
 const QUICK_COURSES = [
+  { code: 'MTH174', name: 'Engineering Mathematics (Linear Algebra & Calculus)', count: '4 Editions' },
+  { code: 'CHE110', name: 'Environmental Studies & Sustainability', count: '4 Editions' },
+  { code: 'ECE120', name: 'Basic Electronics Engineering Workshop', count: '4 Editions' },
+  { code: 'CSR101', name: 'Python Programming (AI & Data Engineering)', count: '4 Editions' },
+  { code: 'CSR102', name: 'Design Thinking & Complex Problem Solving', count: '4 Editions' },
+  { code: 'ECE131', name: 'Basic Electrical & Electronics Engineering', count: '4 Editions' },
+  { code: 'CSE105', name: 'Creative Engineering Workshop (Linux/Shell)', count: '4 Editions' },
+  { code: 'ECE181', name: 'Introduction to Python & Scientific Computing', count: '4 Editions' },
   { code: 'PHY110', name: 'Engineering Physics & Derivations', count: '4 Editions' },
   { code: 'PHY175', name: 'Physics Question Bank & Formulas', count: '4 Editions' },
   { code: 'CSE111', name: 'Fundamentals of Computing & IT', count: '5 Editions' },

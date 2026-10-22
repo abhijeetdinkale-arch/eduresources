@@ -1,0 +1,609 @@
+\chapter{Unit 4: Digital Logic Gates \& Universal Gate Circuit Implementations}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent The following 60 multiple-choice questions reflect the official workshop evaluation bank, categorized by fundamental learning outcome and laboratory testing difficulty.\vspace{3mm}
+
+\noindent\textbf{Q1. What is the main purpose of using a truth table while validating a logic gate?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To compare expected and observed outputs}
+    \item {To calculate the power supply frequency}
+    \item {To measure the physical size of the gate}
+    \item {To identify the color of connecting wires}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2. How many possible input combinations must be tested for a two-input logic gate?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Two combinations}
+    \item {Eight combinations}
+    \item {Four combinations}
+    \item {Three combinations}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3. For a two-input AND gate, which input combination produces a HIGH output?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 1}
+    \item {A = 1 , B = 0}
+    \item {A = 0 , B = 0}
+    \item {A = 0 , B = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4. For a two-input OR gate, which input combination produces a LOW output?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 0}
+    \item {A = 0 , B = 0}
+    \item {A = 0 , B = 1}
+    \item {A = 1 , B = 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5. If the input of a NOT gate is HIGH, what should its output be during validation?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {LOW}
+    \item {Unchanged}
+    \item {Floating}
+    \item {HIGH}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6. When does a two-input NAND gate produce a LOW output?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {When both inputs are LOW}
+    \item {When the inputs are different}
+    \item {When either input is LOW}
+    \item {When both inputs are HIGH}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7. When does a two-input NOR gate produce a HIGH output?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {When both inputs are LOW}
+    \item {When the inputs are different}
+    \item {When either input is HIGH}
+    \item {When both inputs are HIGH}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8. What is the output of a two-input XOR gate when its inputs are different?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Always unchanged}
+    \item {Always HIGH}
+    \item {Always floating}
+    \item {Always LOW}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9. Which instrument can be used to check whether a digital signal is HIGH or LOW?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Logic probe}
+    \item {Solder sucker}
+    \item {Wire stripper}
+    \item {Screwdriver}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10. Why should unused logic-gate inputs not be left floating during validation?} \hfill [Tag: Implementation and validation of logic gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {They may cause unpredictable outputs}
+    \item {They may increase the wire length}
+    \item {They may change the gate symbol}
+    \item {They may reduce the input count}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11. Which pair consists entirely of universal logic gates?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {NAND and NOR}
+    \item {AND and OR}
+    \item {OR and XOR}
+    \item {NOT and XOR}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12. How can a two-input NAND gate be used as a NOT gate for input A ?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Connect A to both inputs}
+    \item {Connect the output to ground}
+    \item {Leave both inputs unconnected}
+    \item {Connect one input to ground}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13. Which arrangement implements an AND gate using only NAND gates?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {One NAND gate followed by a NAND inverter}
+    \item {One NAND gate followed by a NOR inverter}
+    \item {One OR gate followed by a NOR inverter}
+    \item {One NOR gate followed by a NAND inverter}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14. To implement an OR gate using NAND gates, what is done before applying the inputs to the final NAND gate?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both inputs are grounded}
+    \item {Both inputs are inverted}
+    \item {Both inputs are disconnected}
+    \item {Both inputs are added}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15. How can a two-input NOR gate be used as a NOT gate for input A ?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Leave both inputs floating}
+    \item {Connect A to both inputs}
+    \item {Connect one input to HIGH}
+    \item {Connect the output to HIGH}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16. Which arrangement implements an OR gate using only NOR gates?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {One AND gate followed by a NAND inverter}
+    \item {One NOR gate followed by a NAND inverter}
+    \item {One NOR gate followed by a NOR inverter}
+    \item {One NAND gate followed by a NOR inverter}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17. To implement an AND gate using NOR gates, what is done to inputs A and B before the final NOR operation?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both inputs are shorted}
+    \item {Both inputs are grounded}
+    \item {Both inputs are inverted}
+    \item {Both inputs are removed}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18. Which expression represents an OR gate implemented with NAND operations?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = A $\cdot$ B}
+    \item {Y = A + B}
+    \item {Y = A $\cdot$ B}
+    \item {Y = A $\cdot$ B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19. What does the term "universal gate" mean?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A gate that always produces a HIGH output}
+    \item {A gate that accepts only one input signal}
+    \item {A gate that can build any Boolean function}
+    \item {A gate that operates without a power supply}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20. What is the minimum number of two-input NAND gates needed to implement a NOT gate?} \hfill [Tag: Design of logic gates using universal gates | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Four gates}
+    \item {Two gates}
+    \item {Three gates}
+    \item {One gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21. During the validation of a two-input XOR gate, which output sequence should be observed for inputs A B = 00 , 01 , 10 , 11 ?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {0 , 0 , 0 , 1}
+    \item {1 , 1 , 1 , 0}
+    \item {0 , 1 , 1 , 0}
+    \item {1 , 0 , 0 , 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22. A two-input NAND gate produces HIGH for every tested input combination, including A = B = 1 . Which fault best explains this result?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Both inputs are shorted together}
+    \item {The output is stuck HIGH}
+    \item {The gate behaves as an XOR gate}
+    \item {The output is stuck LOW}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23. An AND gate is tested with inputs A = 1 and B = 0 , but its output is measured as HIGH. What should the expected output be?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {LOW, because both inputs are not LOW}
+    \item {LOW, because both inputs are not HIGH}
+    \item {HIGH, because one input is HIGH}
+    \item {HIGH, because the inputs are different}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24. A logic circuit gives the output sequence 1 , 0 , 0 , 1 for inputs A B = 00 , 01 , 10 , 11 . Which gate has been implemented?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {XOR gate}
+    \item {XNOR gate}
+    \item {NAND gate}
+    \item {NOR gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25. While validating a NOT gate, the input is changed from LOW to HIGH. What output transition confirms correct operation?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {HIGH to HIGH}
+    \item {HIGH to LOW}
+    \item {LOW to HIGH}
+    \item {LOW to LOW}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26. Two switches provide the inputs to an OR gate. An LED connected to the output should turn on under which condition?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {At least one switch is ON}
+    \item {Both switches have equal states}
+    \item {Both switches are OFF}
+    \item {Exactly one switch is OFF}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27. A two-input NOR gate is operating correctly. For which input combination should its output LED turn on?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A = 1 , B = 1}
+    \item {A = 1 , B = 0}
+    \item {A = 0 , B = 1}
+    \item {A = 0 , B = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28. A circuit intended to implement Y = A + B produces LOW only for A = B = 0 . What does this observation indicate?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The AND gate is functioning correctly}
+    \item {The XOR gate is functioning correctly}
+    \item {The NAND gate is functioning correctly}
+    \item {The OR gate is functioning correctly}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29. When checking a logic-gate truth table experimentally, why should every possible input combination be applied?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To verify the complete logical behavior}
+    \item {To increase the output voltage level}
+    \item {To reduce the circuit propagation delay}
+    \item {To determine the package pin count}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30. An XOR gate has inputs A and B . If B is permanently connected to logic HIGH, how does the output depend on A ?} \hfill [Tag: Implementation and validation of logic gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The output is always LOW}
+    \item {The output is A}
+    \item {The output is equal to A}
+    \item {The output is always HIGH}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31. How can a two-input NAND gate be connected to function as a NOT gate?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Connect the output back to one input}
+    \item {Connect both inputs to the same signal}
+    \item {Connect the two inputs to complementary signals}
+    \item {Connect one input permanently to LOW}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32. What is the minimum number of two-input NAND gates required to implement a two-input AND gate?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Three NAND gates}
+    \item {Four NAND gates}
+    \item {Two NAND gates}
+    \item {One NAND gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33. Which NAND-only arrangement implements the OR function Y = A + B ?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Invert one input, then NAND both inputs}
+    \item {Invert both inputs, then NAND them}
+    \item {NAND both inputs, then invert the result}
+    \item {NAND both inputs through a single gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34. How can a NOR gate be used as an inverter?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Apply complementary signals to the inputs}
+    \item {Connect one input permanently to HIGH}
+    \item {Connect both inputs to the same signal}
+    \item {Connect the output to both inputs}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35. What is the minimum number of two-input NOR gates required to implement a two-input OR gate?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Two NOR gates}
+    \item {Three NOR gates}
+    \item {Four NOR gates}
+    \item {One NOR gate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36. The outputs of two NOR gates are P = A + B and Q = C + D . If P and Q are applied to another NOR gate, what is the final expression?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {( A + B ) + ( C + D )}
+    \item {( A + B ) + ( C + D )}
+    \item {( A + B ) ( C + D )}
+    \item {( A + B ) ( C + D )}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37. A NAND-only circuit first generates B and then applies A and B to a NAND gate. Which function is produced?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A + B}
+    \item {A + B}
+    \item {A + B}
+    \item {A + B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38. A standard two-input XOR circuit is constructed using only two-input NAND gates. How many NAND gates are required?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Three NAND gates}
+    \item {Five NAND gates}
+    \item {Two NAND gates}
+    \item {Four NAND gates}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39. A designer must implement F = A B + C D using only NAND gates. Which simplification is most useful?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {F = A BC D}
+    \item {F = A B + C D}
+    \item {F = ( A + B ) ( C + D )}
+    \item {F = A + B + C + D}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40. Why are NAND and NOR gates described as universal gates?} \hfill [Tag: Design of logic gates using universal gates | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Either type can implement any Boolean function}
+    \item {Both types always use only two inputs}
+    \item {Both types produce identical truth tables}
+    \item {Either type eliminates propagation delay}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41. A NAND-gate implementation is tested with inputs A = 1 and B = 1 . The measured output remains at logic 1 for approximately 40 ns before changing to logic 0. Which conclusion is most appropriate?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The circuit has an invalid truth table}
+    \item {The circuit has a propagation delay of 40 ns}
+    \item {The circuit implements an XOR gate}
+    \item {The circuit is permanently stuck at logic 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42. Using only 2-input NAND gates, which expression correctly implements the function Y = A + B ?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = ( A NAND A ) NAND ( B NAND B )}
+    \item {Y = ( A NAND B ) NAND ( A NAND B )}
+    \item {Y = A NAND ( B NAND B )}
+    \item {Y = ( A NAND A ) NAND B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43. A NOR-based circuit is intended to implement Y = A + B . During validation, the output is measured as logic 1 for ( A , B ) = ( 0 , 0 ) and logic 0 for all other input combinations. What is the best diagnosis?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The measured behavior matches a NOR gate}
+    \item {The input terminals are electrically shorted}
+    \item {The circuit is behaving as an AND gate}
+    \item {The output should be logic 1 for ( 1 , 1 ) only}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44. What is the minimum number of 2-input NAND gates required to implement Y = A $\oplus$ B without using any other gate type?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Four}
+    \item {Three}
+    \item {Six}
+    \item {Five}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45. A 3-input NAND gate is validated by connecting its unused input permanently to logic 1 while applying signals to the other two inputs. Which 2-input function is observed at the output?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A + B}
+    \item {A $\cdot$ B}
+    \item {A + B}
+    \item {A $\cdot$ B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46. A NOR-only design must implement Y = A $\cdot$ B . Which expression is correct?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = A NOR ( B NOR B )}
+    \item {Y = ( A NOR B ) NOR ( A NOR B )}
+    \item {Y = ( A NOR A ) NOR ( B NOR B )}
+    \item {Y = ( A NOR A ) NOR B}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47. Two cascaded inverters are used to validate logic-level restoration. The first inverter has t P L H = 18 ns and t P H L = 22 ns ; the second has t P L H = 25 ns and t P H L = 20 ns . What is the maximum rise-or-fall propagation delay through the chain?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {47 ns}
+    \item {38 ns}
+    \item {42 ns}
+    \item {45 ns}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48. Using NAND gates, which implementation realizes a 2:1 multiplexer with select input S , data inputs D 0 , D 1 , and output Y = S D 0 + S D 1 ?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = NAND ( NAND ( S , D 0 ) , NAND ( S , D 1 ))}
+    \item {Y = NAND ( NAND ( S , D 0 ) , NAND ( S , D 1 ))}
+    \item {Y = NAND ( NAND ( S , D 0 ) , NAND ( S , D 1 ))}
+    \item {Y = NAND ( NAND ( S , D 0 ) , NAND ( S , D 1 ))}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49. A NAND gate output is connected to an LED through a resistor to ground. The LED turns on when the output is high. Which input sequence tests all logically distinct output transitions most efficiently?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {( 1 , 0 ) $\to$ ( 0 , 1 ) $\to$ ( 1 , 1 ) $\to$ ( 0 , 0 )}
+    \item {( 1 , 1 ) $\to$ ( 1 , 0 ) $\to$ ( 0 , 0 ) $\to$ ( 0 , 1 )}
+    \item {( 0 , 0 ) $\to$ ( 0 , 1 ) $\to$ ( 1 , 1 ) $\to$ ( 1 , 0 )}
+    \item {( 0 , 0 ) $\to$ ( 1 , 0 ) $\to$ ( 1 , 1 ) $\to$ ( 0 , 1 )}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50. A NAND-only implementation of Y = A + B + C is required using only 2-input NAND gates. What is the minimum number of gates?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Five}
+    \item {Seven}
+    \item {Six}
+    \item {Four}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51. A CMOS NAND input is accidentally left floating during validation. The observed output changes when a nearby jumper wire is moved. Which explanation is most accurate?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The floating input picks up noise and has an undefined logic level}
+    \item {The output is guaranteed to remain high because CMOS inputs are ideal}
+    \item {The nearby wire changes the Boolean expression of the NAND gate}
+    \item {The NAND gate automatically converts the floating input to logic 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52. A NOR-only circuit implements Y = ( A + B ) ( C + D ) . Which structural approach is valid using De Morgan transformations?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Invert each input, then NOR all four inverted inputs}
+    \item {NOR each pair, then NOR the two pair outputs}
+    \item {NOR all four inputs, then invert only input A}
+    \item {NOR each pair, then OR the two pair outputs directly}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53. A NAND gate is powered from 5 V . Its input thresholds are V I L ( ma x ) = 1.5 V and V I H ( min ) = 3.5 V . A measured input is 2.4 V . How should this input be classified?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Undefined logic level}
+    \item {Short-circuit current state}
+    \item {Valid logic 1}
+    \item {Valid logic 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54. A function is given by F ( A , B , C ) = $\Sigma$ m ( 1 , 2 , 5 , 6 ) . Which simplified expression can be implemented efficiently with NAND gates?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {F = A B + A C}
+    \item {F = A B + BC}
+    \item {F = A B + B C}
+    \item {F = B C + B C}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55. A combinational circuit output briefly glitches when inputs change from 011 to 100 , even though both stable states should produce the same intended output. Which validation method best identifies the cause?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Measure propagation delays along reconvergent paths}
+    \item {Replace every gate with an inverter}
+    \item {Test only the all-zero input combination}
+    \item {Increase the supply voltage until the glitch disappears}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56. A NAND-only implementation of Y = A $\cdot$ ( B + C ) is required. Which expression uses the correct NAND arrangement?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = NAND ( NAND ( A , B ) , NAND ( A , C ))}
+    \item {Y = NAND ( NAND ( A , A ) , NAND ( B , B ) NAND NAND ( C , C ))}
+    \item {Y = NAND ( A , NAND ( B , C ))}
+    \item {Y = NAND ( NAND ( A , A ) , NAND ( B , C ))}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57. A 2-input NOR gate is connected with both inputs tied together to signal A . What function should be verified at the output, and what test distinguishes it from an inverter wiring error?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = A ; test both A = 0 and A = 1}
+    \item {Y = A + A ; test both inputs independently}
+    \item {Y = A ; test only A = 1}
+    \item {Y = A + A ; test only A = 0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58. Which NAND-only expression implements the 3-input majority function, where the output is 1 when at least two inputs are 1?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Y = NAND ( NAND ( A , B ) , NAND ( A , C ))}
+    \item {Y = NAND ( NAND ( A , B ) , NAND ( A , C ) , NAND ( B , C ))}
+    \item {Y = NAND ( A , NAND ( B , C ))}
+    \item {Y = NAND ( NAND ( A , A ) , NAND ( B , B ) , NAND ( C , C ))}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59. When validating a gate, an oscilloscope shows the output high level at 4.6 V with no load but only 3.1 V after connecting four gate inputs. Which parameter is most directly implicated?} \hfill [Tag: Implementation and validation of logic gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Input truth-table ordering}
+    \item {Unused input inversion}
+    \item {Output drive capability and fan-out}
+    \item {Boolean absorption law}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60. A NOR gate is to be built using NAND gates only. Which sequence correctly preserves the required polarity?} \hfill [Tag: Design of logic gates using universal gates | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Invert the NAND output once, then invert both inputs}
+    \item {Invert A and B with NANDs, then NAND the inverted signals}
+    \item {NAND A and B , then connect the result directly to the output}
+    \item {NAND A and B , then invert the NAND output twice}
+\end{enumerate}
+\vspace{2mm}
+
+
+\newpage
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{4}{1}
+Prove algebraically using De Morgan's theorems that the NAND gate is a universal logic gate. Show complete gate-level realization diagrams and Boolean proofs for: (a) NOT, (b) AND, (c) OR, and (d) XOR gates using only 2-input NAND gates.
+\end{subjectiveq}
+
+\begin{solbox}
+\textbf{Universal Logic Proof via NAND Realizations:}\\
+A NAND gate produces $Y = \overline{A \cdot B}$.\\\\
+\textbf{(a) NOT Gate Realization (1 NAND Gate):}\\
+Tie both inputs together: $B = A$.\\
+\[ Y = \overline{A \cdot A} = \overline{A} \]
+\textbf{(b) AND Gate Realization (2 NAND Gates):}\\
+Invert the output of a NAND gate using a second NAND configured as an inverter:\\
+\[ Y_1 = \overline{A \cdot B}, \quad Y = \overline{Y_1 \cdot Y_1} = \overline{\overline{A \cdot B}} = A \cdot B \]
+\textbf{(c) OR Gate Realization (3 NAND Gates):}\\
+Invert inputs $A$ and $B$ individually, then feed into a third NAND gate:\\
+\[ Y_1 = \overline{A}, \quad Y_2 = \overline{B} \]
+\[ Y = \overline{Y_1 \cdot Y_2} = \overline{\overline{A} \cdot \overline{B}} \]
+Applying De Morgan's theorem $\overline{X \cdot Y} = \overline{X} + \overline{Y}$:\\
+\[ Y = \overline{\overline{A}} + \overline{\overline{B}} = A + B \]
+\textbf{(d) XOR Gate Realization (4 NAND Gates):}\\
+Boolean identity for XOR: $A \oplus B = \overline{A}B + A\overline{B} = A\overline{A \cdot B} + B\overline{A \cdot B}$.\\
+Let $G_1 = \overline{A \cdot B}$.\\
+Feed $A$ and $G_1$ into $G_2$: $Y_2 = \overline{A \cdot G_1} = \overline{A \cdot \overline{AB}}$.\\
+Feed $B$ and $G_1$ into $G_3$: $Y_3 = \overline{B \cdot G_1} = \overline{B \cdot \overline{AB}}$.\\
+Feed $Y_2$ and $Y_3$ into $G_4$:\\
+\[ Y = \overline{Y_2 \cdot Y_3} = \overline{\overline{A\overline{AB}} \cdot \overline{B\overline{AB}}} = A\overline{AB} + B\overline{AB} = A(\overline{A}+\overline{B}) + B(\overline{A}+\overline{B}) = A\overline{B} + \overline{A}B = A \oplus B \]
+\end{solbox}
+
+\begin{examinertip}
+Examiner Rubric (10 Marks):\\
+- Statement and explanation of universality definition: 2 Marks\\
+- Inverter and AND realizations with proofs: 2 Marks\\
+- OR realization with De Morgan's theorem step: 3 Marks\\
+- 4-NAND XOR realization with algebraic derivation: 3 Marks
+\end{examinertip}
+
+
+\section{Section C: Laboratory Viva-Voce Questions with Authoritative Solutions}
+
+\noindent\textbf{Viva Question:} What is the difference between TTL and CMOS digital ICs regarding unused inputs?\\
+\textbf{Technical Answer:} In standard TTL (74LS series), an open/floating input behaves as a logic HIGH due to internal emitter pull-up, though it acts as an antenna susceptible to noise. In CMOS (74HC/CD4000 series), input impedance is $> 10^{12}\,\Omega$; floating inputs drift unpredictably between logic thresholds, causing excessive shoot-through current and oscillation. All unused CMOS inputs MUST be tied to $V_{CC}$ or GND.
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} What is the propagation delay of a logic gate and how is it measured on a DSO?\\
+\textbf{Technical Answer:} Propagation delay is the finite time required for an output transition to occur after an input stimulus. It is measured on a DSO between the $50\%$ amplitude point of the input waveform and the $50\%$ amplitude point of the resulting output waveform ($t_{pLH}$ and $t_{pHL}$).
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} Why are NAND and NOR gates preferred in semiconductor fabrication over AND and OR gates?\\
+\textbf{Technical Answer:} In CMOS technology, an inverting gate (NAND or NOR) requires only 4 transistors. Non-inverting gates (AND, OR) require an internal inverting stage, requiring 6 transistors. Hence, NAND/NOR gates are smaller, faster, and consume less dynamic power.
+\vspace{3mm}
+
+
+\section{Section D: Workshop Troubleshooting \& Fault Diagnostic Case Study}
+
+\textbf{Troubleshooting Scenario: Floating Inputs Produce Random Output States}\\
+A student builds an AND gate circuit using a 74LS08 IC. One input is wired to a toggle switch, while the second input is left unconnected on the breadboard. The output LED turns ON when the switch is HIGH and OFF when LOW, behaving like a buffer.\\\\
+\textbf{Diagnosis:} The ungrounded TTL input floated to logic HIGH ($V > 2.0\\text{V}$). Consequently, $Y = A \\cdot 1 = A$. However, touching the breadboard or bringing a hand near the IC causes erratic flickering due to static capacitive pickup.\\
+\textbf{Fix:} Always pull unused logic inputs explicitly to $V_{CC}$ (through a $1\\,\\mathrm{k}\\Omega$ pull-up resistor) or ground.
+\vspace{4mm}

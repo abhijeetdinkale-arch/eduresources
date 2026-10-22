@@ -1,0 +1,77 @@
+\chapter{File I/O, Structured Data Processing (Pandas), and Statistical Visualization}
+\label{chap:files-pandas-viz}
+
+\section{Persistent Data I/O Architecture}
+Python provides built-in file streams interfaced via POSIX system calls (\texttt{read}, \texttt{write}, \texttt{lseek}).
+\begin{lstlisting}
+# Context-managed streaming line processing (O(1) memory for arbitrarily large files)
+with open("massive_dataset.csv", mode="r", encoding="utf-8") as f:
+    for line_idx, line in enumerate(f):
+        if line_idx >= 5: break
+        process_line(line.strip())
+\end{lstlisting}
+
+\section{Pandas Architecture: Series and DataFrames}
+\begin{definition}[DataFrame Internals]
+A Pandas \textbf{DataFrame} is a 2D labeled tabular data structure whose columns are homogeneous NumPy arrays managed by a \texttt{BlockManager}.
+\end{definition}
+
+\begin{keyequation}[Indexing: Label vs Position]
+$\bullet$ \texttt{df.loc[row\_label, col\_label]}: Inclusive endpoint slicing based on index labels.\\
+$\bullet$ \texttt{df.iloc[row\_pos, col\_pos]}: Exclusive endpoint slicing ($0 \dots N-1$) based on integer offsets.
+\end{keyequation}
+
+\section{Split-Apply-Combine Strategy (GroupBy)}
+\begin{lstlisting}
+import pandas as pd
+
+df = pd.DataFrame({
+    'category': ['AI', 'Data', 'AI', 'Cloud', 'Data', 'AI'],
+    'latency_ms': [12.4, 45.1, 8.9, 102.3, 38.6, 11.2],
+    'throughput': [1200, 450, 1500, 210, 490, 1350]
+})
+
+# Aggregating multiple metrics across groups
+summary = df.groupby('category').agg({
+    'latency_ms': ['mean', 'std'],
+    'throughput': 'max'
+})
+\end{lstlisting}
+
+\section{Statistical Visualization with Matplotlib}
+\begin{lstlisting}
+import matplotlib.pyplot as plt
+
+categories = ['AI Model', 'Data Pipeline', 'Cloud Worker']
+latencies = [10.8, 41.8, 102.3]
+
+fig, ax = plt.subplots(figsize=(8, 4.5), dpi=300)
+bars = ax.bar(categories, latencies, color='#0F2043', width=0.5, edgecolor='#EA580C', linewidth=1.5)
+
+ax.set_ylabel('Mean Latency (ms)', fontweight='bold')
+ax.set_title('Production Service Benchmark (CSR101 Lab)', fontweight='bold')
+ax.grid(axis='y', linestyle='--', alpha=0.5)
+
+# Annotate value labels on top of bars
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2, yval + 2, f"{yval:.1f} ms", ha='center', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig("benchmark.pdf")
+\end{lstlisting}
+
+\section{Complete End-to-End Data Pipeline Architecture}
+\begin{methodbox}[Robust ETL Ingestion Architecture]
+1. \textbf{Extraction:} Read heterogeneous raw files (CSV, Parquet, JSON) with schema validation.\\
+2. \textbf{Transformation:} Vectorized cleaning, type casting, median imputation for missing records, and outlier bounding.\\
+3. \textbf{Feature Engineering:} Window aggregations, datetime parsing, one-hot encoding.\\
+4. \textbf{Visualization \& Loading:} Export clean tables to database and save performance audit charts.
+\end{methodbox}
+
+\section{Chapter Summary}
+\begin{summarybox}
+$\bullet$ Pandas operates on NumPy blocks; avoid iterating with \texttt{for row in df.iterrows()}.\\
+$\bullet$ Always set explicit encoding (e.g., \texttt{encoding='utf-8'}) to ensure cross-platform reproducibility.\\
+$\bullet$ Matplotlib's Object-Oriented API (\texttt{fig, ax = plt.subplots()}) enables complete layout customization.
+\end{summarybox}

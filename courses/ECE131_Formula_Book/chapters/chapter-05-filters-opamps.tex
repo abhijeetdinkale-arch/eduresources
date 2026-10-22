@@ -1,0 +1,73 @@
+\chapter{Unit 5: Fundamentals of Filters and Operational Amplifier}
+
+\section{Passive Filters}
+
+\begin{formulabox}{First-Order RC and RL Passive Filters}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Low-Pass RC Filter}:
+    \[ H(j\omega) = \frac{1}{1 + j\omega RC} \implies f_c = \frac{1}{2\pi RC}, \quad |H(f)| = \frac{1}{\sqrt{1 + (f/f_c)^2}}, \quad \angle H(f) = -\arctan\left(\frac{f}{f_c}\right) \]
+    At $f = f_c$: $|H| = \frac{1}{\sqrt{2}} = -3\text{ dB}$, $\angle H = -45^\circ$. \quad High frequency roll-off: $-20\text{ dB/decade}$.
+    \item \textbf{High-Pass RC Filter}:
+    \[ H(j\omega) = \frac{j\omega RC}{1 + j\omega RC} \implies f_c = \frac{1}{2\pi RC}, \quad |H(f)| = \frac{f/f_c}{\sqrt{1 + (f/f_c)^2}}, \quad \angle H(f) = 90^\circ - \arctan\left(\frac{f}{f_c}\right) \]
+    At $f = f_c$: $|H| = \frac{1}{\sqrt{2}} = -3\text{ dB}$, $\angle H = +45^\circ$.
+    \item \textbf{RL Cutoff Frequency}: $f_c = \frac{R}{2\pi L}$.
+    \item \textbf{Band-Pass Filter}: Cascade of high-pass ($f_{c1}$) and low-pass ($f_{c2}$) where $f_{c1} < f_{c2}$:
+    \[ BW = f_{c2} - f_{c1}, \qquad f_0 = \sqrt{f_{c1} f_{c2}} \]
+\end{itemize}
+\end{formulabox}
+
+\section{Ideal Operational Amplifier Abstraction}
+
+\begin{formulabox}{Golden Rules and Ideal Characteristics}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Open-Loop Gain}: $A_{OL} \to \infty$.
+    \item \textbf{Input Impedance}: $R_{in} \to \infty \implies$ Input bias currents $I^+ = I^- = 0$.
+    \item \textbf{Output Impedance}: $R_{out} = 0$.
+    \item \textbf{Bandwidth}: $BW \to \infty$.
+    \item \textbf{Common-Mode Rejection Ratio}: $\text{CMRR} = 20\log_{10}\left|\frac{A_d}{A_{cm}}\right| \to \infty$.
+    \item \textbf{Slew Rate}: $SR = \left.\frac{dv_o}{dt}\right|_{max} \to \infty$ [$\text{V}/\mu\text{s}$].
+    \item \textbf{Virtual Ground / Short Principle}: With negative feedback and unsaturated output:
+    \[ V^+ - V^- = \frac{V_o}{A_{OL}} \to 0 \implies V^- \approx V^+ \]
+\end{itemize}
+\end{formulabox}
+
+\section{Standard Linear Op-Amp Circuits}
+
+\begin{formulabox}{Amplifiers, Adders, and Difference Amplifiers}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Inverting Amplifier}:
+    \[ v_o = -\frac{R_f}{R_1} v_{in}, \qquad A_v = -\frac{R_f}{R_1}, \qquad R_{in} = R_1 \]
+    \item \textbf{Non-Inverting Amplifier}:
+    \[ v_o = \left( 1 + \frac{R_f}{R_1} \right) v_{in}, \qquad A_v = 1 + \frac{R_f}{R_1}, \qquad R_{in} \to \infty \]
+    \item \textbf{Voltage Follower / Unity-Gain Buffer}: $R_f = 0, R_1 = \infty \implies v_o = v_{in}, \quad A_v = 1$.
+    \item \textbf{Inverting Summing Amplifier}:
+    \[ v_o = -\left( \frac{R_f}{R_1} v_1 + \frac{R_f}{R_2} v_2 + \cdots + \frac{R_f}{R_n} v_n \right) \]
+    \item \textbf{Difference Amplifier (Subtractor)}:
+    \[ v_o = \frac{R_2}{R_1}(v_2 - v_1) \quad \text{provided } \frac{R_4}{R_3} = \frac{R_2}{R_1} \]
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Op-Amp Dynamic RC Circuits}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Ideal Integrator} (Capacitor in feedback path):
+    \[ v_o(t) = -\frac{1}{R C}\int_0^t v_{in}(\tau) d\tau + v_o(0), \qquad H(s) = -\frac{1}{s R C} \]
+    Practical integrator includes shunt resistor $R_f$ across $C$ to limit DC gain.
+    \item \textbf{Ideal Differentiator} (Capacitor in series with input):
+    \[ v_o(t) = -R C \frac{dv_{in}(t)}{dt}, \qquad H(s) = -s R C \]
+    Practical differentiator includes series resistor $R_s$ with $C$ to suppress high-frequency noise.
+\end{itemize}
+\end{formulabox}
+
+\section{Active Filters and Non-Linear Applications}
+
+\begin{formulabox}{Active Filters and Comparator ABS Application}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Active 1st-Order Low-Pass Filter (Sallen-Key / Non-inverting)}:
+    \[ f_c = \frac{1}{2\pi R C}, \qquad A_{v0} = 1 + \frac{R_f}{R_1} \]
+    \item \textbf{Open-Loop Comparator}:
+    \[ v_o = \begin{cases} +V_{sat} \approx V_{CC} - 1.5\text{ V} & \text{if } v^+ > v^- \\ -V_{sat} \approx -V_{EE} + 1.5\text{ V} & \text{if } v^+ < v^- \end{cases} \]
+    \item \textbf{ABS Wheel Slip Detection Threshold}:
+    Wheel speed voltage $v_{wheel}$ compared with dynamic vehicle velocity threshold $V_{ref}$:
+    \[ \text{If } v_{wheel} < V_{ref} \implies \text{Comparator output swings HIGH } (+V_{sat}) \implies \text{Release Brake Valve} \]
+\end{itemize}
+\end{formulabox}

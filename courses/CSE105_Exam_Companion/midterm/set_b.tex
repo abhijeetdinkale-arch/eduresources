@@ -1,0 +1,64 @@
+\LPUPaperHeader{Midterm Examination (MTE)}{Set B}{120 Minutes}{60 Marks}{CO1, CO2, CO3, CO4}
+
+\begin{markingrubric}
+\textbf{Structure:} Section A (20 Marks), Section B (20 Marks), Section C (20 Marks).
+\end{markingrubric}
+
+\section*{Section A: Diagnostic Fundamentals [20 Marks]}
+
+\questionitem{1.1}{State the distinction between short options (-la) and long options (--all) in Linux command grammar.}{2}{CO2}{Understand}
+\begin{examsol}
+Short options use a single hyphen and single letters which can be grouped together; long options use double hyphens and descriptive words for clarity.
+\end{examsol}
+
+\questionitem{1.2}{What does the regex anchor \$ match?}{2}{CO4}{Remember}
+\begin{examsol}
+Asserts position at the absolute end of a text line.
+\end{examsol}
+
+\questionitem{1.3}{Explain the function of the tee command.}{2}{CO4}{Understand}
+\begin{examsol}
+Reads standard input and writes simultaneously to standard output and to one or more files.
+\end{examsol}
+
+\section*{Section B: Analytical Security \& Permissions [20 Marks]}
+
+\questionitem{2.1}{A security audit reports that a directory /var/shared has permission string drwxrwxrwx. Explain the security vulnerabilities present and demonstrate how to restrict it using chmod and the Sticky Bit.}{5}{CO3}{Evaluate}
+
+\begin{examsol}
+\textbf{Vulnerability Analysis:} Mode \texttt{777} allows any non-privileged user on the operating system to create, modify, rename, and permanently delete any file inside the directory regardless of who owns it.
+\textbf{Hardening Implementation:}
+\begin{examcli}
+# Grant write access to all but protect against rogue file deletion via Sticky bit:
+$ sudo chmod 1777 /var/shared
+$ ls -ld /var/shared
+drwxrwxrwt 2 root root 4096 Oct 22 08:35 /var/shared
+\end{examcli}
+The Sticky Bit ensures that only the file owner or root can delete files within \texttt{/var/shared}.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [5 Marks]:} 777 vulnerability critique (2 Marks); Sticky bit octal 1777 command and explanation (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\section*{Section C: Advanced Filter Engineering [20 Marks]}
+
+\questionitem{3.1}{Construct a single regular expression pipeline that scans a system configuration file /etc/ssh/sshd\_config, strips all comment lines (commencing with \#) and all blank lines, and displays the remaining active directives with line numbers.}{10}{CO4}{Create}
+
+\begin{examsol}
+\begin{examcli}
+$ grep -n -vE "^[[:space:]]*(#|$)" /etc/ssh/sshd\_config
+\end{examcli}
+\textbf{Regex Component Analysis:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-n}: Prefixes each matching output line with its original 1-based file line number.
+    \item \texttt{-v}: Invert match (excludes lines matching the pattern).
+    \item \texttt{-E}: Activates Extended Regular Expressions.
+    \item \texttt{\^{}[[:space:]]*}: Matches optional leading whitespace at line start.
+    \item \texttt{(\#|\$)}: Alternation matching either a hash symbol (comments) or the end of the line (blank lines).
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [10 Marks]:} Inverted matching flag \texttt{-v} (2 Marks); Whitespace handling (3 Marks); Alternation grouping (3 Marks); Line numbering \texttt{-n} (2 Marks).
+\end{markingrubric}
+\end{examsol}

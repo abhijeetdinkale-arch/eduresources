@@ -1,0 +1,116 @@
+\chapter{Unit 1: Linux Basics \& OS Architecture Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{1.1}{Which of the following components in a Linux system executes directly in privileged CPU Ring 0?}
+{The GNU C Library (glibc)}
+{The Linux Monolithic Kernel}
+{The Bourne-Again Shell (bash)}
+{The X11 Windowing Server}
+
+\mcqitem{1.2}{The system call interface serves primarily as:}
+{A compiler optimization pipeline for user applications}
+{The controlled boundary through which user-space processes invoke kernel services}
+{A direct communication protocol between web browsers and network routers}
+{The bootloader mechanism responsible for loading the kernel image into RAM}
+
+\mcqitem{1.3}{Which Linux distribution uses the DNF/RPM package management framework?}
+{Ubuntu}
+{Arch Linux}
+{Red Hat Enterprise Linux (RHEL)}
+{Alpine Linux}
+
+\mcqitem{1.4}{Under the modern UEFI specification, what filesystem format is strictly required for the EFI System Partition (ESP)?}
+{ext4}
+{NTFS}
+{FAT32}
+{Btrfs}
+
+\mcqitem{1.5}{What is the primary architectural improvement of WSL 2 compared to WSL 1?}
+{WSL 2 translates system calls to Windows NT APIs directly}
+{WSL 2 incorporates a complete, real Linux kernel running in a lightweight Hyper-V VM}
+{WSL 2 eliminates the need for any hypervisor virtualization extensions}
+{WSL 2 operates strictly as a remote SSH client to cloud instances}
+
+\mcqitem{1.6}{Which display server architecture eliminates tear artifacts by integrating compositor and window manager functions?}
+{X11}
+{Wayland}
+{Xorg}
+{Mir}
+
+\mcqitem{1.7}{Which hypervisor type runs directly on bare-metal physical hardware without an underlying host OS?}
+{Type-1 Bare-Metal Hypervisor}
+{Type-2 Hosted Hypervisor}
+{VirtualBox}
+{VMware Workstation}
+
+\mcqitem{1.8}{Why must Windows Fast Startup be disabled when configuring an Ubuntu dual-boot system?}
+{Fast Startup permanently disables UEFI secure boot}
+{Fast Startup leaves Windows NTFS partitions in a locked hibernation state that causes corruption if mounted in Linux}
+{Fast Startup prevents the network card from acquiring an IP address in Linux}
+{Fast Startup deletes the GRUB bootloader partition on reboot}
+
+\mcqitem{1.9}{What is the fundamental philosophy of Unix composability popularized by Doug McIlroy?}
+{Monolithic applications handling all user requests simultaneously}
+{Programs that do one thing well and communicate through universal text streams}
+{Proprietary binary protocols between user applications}
+{Executing all processes with superuser root privileges}
+
+\mcqitem{1.10}{Which partition acts as virtual memory overflow when physical RAM is fully saturated?}
+{\texttt{/boot}}
+{\texttt{/dev}}
+{\texttt{swap}}
+{\texttt{/etc}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 1 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+1.1 & \textbf{(b)} & The Linux kernel operates in CPU Ring 0 (supervisor mode); applications run in Ring 3. \\
+1.2 & \textbf{(b)} & System calls provide the formal gateway transitioning execution from user to kernel mode. \\
+1.3 & \textbf{(c)} & RHEL and Fedora utilize the RPM package format with DNF/YUM package managers. \\
+1.4 & \textbf{(c)} & UEFI firmware requires the ESP partition to be formatted as FAT32/FAT16. \\
+1.5 & \textbf{(b)} & WSL 2 runs a customized real Linux kernel in a lightweight Hyper-V utility VM. \\
+1.6 & \textbf{(b)} & Wayland eliminates tearing by ensuring every frame rendered by clients is fully composited. \\
+1.7 & \textbf{(a)} & Type-1 hypervisors (Xen, ESXi, KVM) execute directly on physical silicon. \\
+1.8 & \textbf{(b)} & Fast Startup locks NTFS filesystem metadata; write operations from Linux cause data loss. \\
+1.9 & \textbf{(b)} & Unix modularity: small, focused utilities composable via standard text pipes. \\
+1.10 & \textbf{(c)} & The swap partition or swap file holds inactive memory pages paged out of physical RAM. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the architectural boundary between User Space and Kernel Space in Linux.}
+\begin{vivasol}
+The CPU enforces hardware privilege rings (Ring 0 to Ring 3 on x86). Ring 0 represents **Kernel Space**, wherein the operating system kernel executes with unrestricted access to physical memory, CPU control registers, and raw peripheral hardware. Ring 3 represents **User Space**, wherein unprivileged user applications, shells, and daemons run in sandboxed virtual address spaces. Whenever an application needs disk access, network transmission, or memory allocation, it must execute a hardware trap or software interrupt (via system calls like \texttt{read()} or \texttt{write()}), switching CPU context to Ring 0.
+\end{vivasol}
+
+\subsection*{Q2. Differentiate between Type-1 and Type-2 Hypervisors in virtualization.}
+\begin{vivasol}
+**Type-1 Hypervisors (Bare-Metal):** Run directly upon the physical host hardware without an intermediate operating system (e.g., VMware ESXi, Proxmox VE, KVM). They deliver near-native performance and lower latency.
+**Type-2 Hypervisors (Hosted):** Run as software applications atop an existing host operating system (e.g., Oracle VM VirtualBox, VMware Workstation). Hardware requests from guest operating systems traverse both the hypervisor and the host OS kernel, introducing minor virtualization overhead.
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{1.1 --- Hardware Architecture \& Virtualization Diagnostics}
+\textbf{Objective:} Interrogate the underlying hardware CPU architecture, inspect whether hardware virtualization extensions (VT-x/AMD-V) are active, and evaluate kernel release specifications.
+\begin{clibox}
+$ uname -srm
+Linux 6.8.0-45-generic x86_64
+
+$ lscpu | grep -E "Model name|Virtualization|Architecture"
+Architecture:             x86_64
+Model name:               Intel(R) Core(TM) i7-12700H
+Virtualization:           VT-x
+
+$ grep -E -c "(vmx|svm)" /proc/cpuinfo
+20
+\end{clibox}
+\textbf{Technical Verification:} The return of \texttt{VT-x} from \texttt{lscpu} and a count $>0$ from \texttt{/proc/cpuinfo} confirms that Intel VT-x hardware-assisted virtualization is enabled in UEFI firmware, allowing VirtualBox or WSL 2 to operate.
+\end{practicalbox}

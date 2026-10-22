@@ -1,0 +1,66 @@
+\LPUPaperHeader{Practical Lab Examination}{Set B}{120 Minutes}{50 Marks}{CO2, CO4, CO5, CO6}
+
+\begin{markingrubric}
+\textbf{Lab Examination Evaluation Breakdown:} Task 1 (15 Marks), Task 2 (15 Marks), Task 3 (10 Marks), Task 4 (10 Marks).
+\end{markingrubric}
+
+\section*{Task 1: Process Signals \& Job Control [15 Marks]}
+\textbf{Task Description:} Launch a simulated background compute job that sleeps for 200 seconds, list active jobs, suspend it with SIGSTOP, resume it with SIGCONT, and terminate it gracefully via SIGTERM.
+
+\begin{examcli}
+$ sleep 200 &
+[1] 31204
+$ kill -STOP 31204
+[1]+  Stopped                 sleep 200
+$ kill -CONT 31204
+$ jobs -l
+[1]+ 31204 Running                 sleep 200 &
+$ kill -TERM 31204
+[1]+  Terminated              sleep 200
+\end{examcli}
+
+\section*{Task 2: Advanced Regex and Log Aggregation [15 Marks]}
+\textbf{Task Description:} Extract all IPv4 addresses from a system authentication log \texttt{/var/log/auth.log} where failed password attempts were recorded, count occurrences per IP, and output the top 3 offending IPs.
+
+\begin{examcli}
+$ grep "Failed password" /var/log/auth.log | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | sort | uniq -c | sort -rn | head -n 3
+\end{examcli}
+
+\section*{Task 3: Shell Automation Script [10 Marks]}
+\textbf{Task Description:} Write a script that checks whether a specified daemon (passed as argument, e.g. \texttt{nginx}) is actively running using \texttt{pgrep}; if not running, attempts to restart it and logs an alert.
+
+\begin{examscript}
+#!/bin/bash
+set -euo pipefail
+
+SERVICE="${1:-}"
+if [ -z "$SERVICE" ]; then
+    echo "Usage: $0 <service_name>" >&2
+    exit 1
+fi
+
+if pgrep -x "$SERVICE" > /dev/null; then
+    echo "[OK] Service $SERVICE is active."
+    exit 0
+else
+    echo "[WARN] Service $SERVICE is DOWN! Attempting restart..." >&2
+    sudo systemctl restart "$SERVICE"
+    exit 2
+fi
+\end{examscript}
+
+\section*{Task 4: Viva-Voce Evaluation Grid [10 Marks]}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X c}
+\toprule
+\textbf{Viva Question} & \textbf{Evaluation Focus \& Expected Knowledge} & \textbf{Marks} \\
+\midrule
+\textbf{Q1. Signal 9 vs 15} & Why SIGTERM allows buffer flush and SIGKILL destroys immediately. & 2.5 \\
+\textbf{Q2. SUID Bit on Scripts} & Why modern Linux kernels ignore the SUID bit on shell scripts. & 2.5 \\
+\textbf{Q3. Inode Numbers} & How to view inode numbers with \texttt{ls -i} and what they index. & 2.5 \\
+\textbf{Q4. Git Fast-Forward} & When Git can fast-forward and when a merge commit is required. & 2.5 \\
+\bottomrule
+\end{tabularx}
+\end{table}

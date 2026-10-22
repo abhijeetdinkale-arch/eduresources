@@ -1,0 +1,68 @@
+\section{Continuous Assessment 2 (CA-2) --- Set B}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 60 Minutes\\
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\noindent\textbf{Question 1 [Unit 4]:} Differentiate between compile-time syntax errors and runtime exceptions. Describe the role of the \texttt{finally} block in enterprise Python applications.
+\begin{solutionbox}
+$\bullet$ \textbf{Syntax Errors:} Detected during AST parsing before bytecode execution starts.\\
+$\bullet$ \textbf{Runtime Exceptions:} Raised during execution when invalid operations occur (e.g., \texttt{ZeroDivisionError}, \texttt{IndexError}).\\
+$\bullet$ \textbf{\texttt{finally} block:} Guarantees cleanup execution (closing database connections, releasing mutexes) regardless of whether an exception occurred, was caught, or propagated.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Syntax vs Runtime distinction (3M); Guarantee semantics of \texttt{finally} block (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 2 [Unit 4]:} How does Python distinguish between importing a module and running it directly? Explain the role of \texttt{\_\_name\_\_ == "\_\_main\_\_"}.
+\begin{solutionbox}
+CPython sets the built-in variable \texttt{\_\_name\_\_} to \texttt{"\_\_main\_\_"} when the script is executed directly from the command line. When the file is imported by another module, \texttt{\_\_name\_\_} is set to the module's filename. This guard allows a file to serve as both an importable library and an executable CLI tool.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Explanation of \texttt{\_\_name\_\_} assignment (3M); Standalone vs import usage pattern (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 3 [Unit 5]:} Explain array strides in NumPy. How does NumPy perform matrix transposition without allocating new memory?
+\begin{solutionbox}
+Strides represent the byte step necessary to advance one index along an axis. For an array of shape $(M, N)$ with 8-byte elements, default C-strides are $(8N, 8)$. Transposition simply swaps the strides to $(8, 8N)$ and shape to $(N, M)$. This metadata-only operation runs in $\mathcal{O}(1)$ time with zero data copying.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Stride definition and byte math (3M); Transposition as metadata stride swap (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 4 [Unit 5]:} Solve the linear system $A x = b$ using NumPy, where $A = \begin{bmatrix} 4 & 2 \\ 2 & 5 \end{bmatrix}$ and $b = \begin{bmatrix} 8 \\ 10 \end{bmatrix}$. Compute the condition number of $A$.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+A = np.array([[4.0, 2.0], [2.0, 5.0]])
+b = np.array([8.0, 10.0])
+
+x = np.linalg.solve(A, b)
+cond = np.linalg.cond(A)
+print(f"Solution x: {x}, Condition Number: {cond:.4f}")
+\end{lstlisting}
+Analytical solution: $\det(A) = 20 - 4 = 16$. $x_1 = (40 - 20)/16 = 1.25$, $x_2 = (40 - 16)/16 = 1.5$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Matrix setup and solve API (3M); Condition number interpretation (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 5 [Unit 5]:} Compare standard dense arrays with SciPy sparse matrices (\texttt{csr\_matrix}). In what AI scenarios are sparse matrices essential?
+\begin{solutionbox}
+Dense arrays store every value, requiring $\mathcal{O}(M \times N)$ memory. Compressed Sparse Row (CSR) stores only non-zero values using three arrays: \texttt{data}, \texttt{indices}, and \texttt{indptr}, saving gigabytes of memory.
+\textbf{Applications:} NLP TF-IDF matrices, graph adjacency matrices, recommendation collaborative filtering.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Memory representation comparison (3M); CSR structure and AI applications (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 6 [Unit 4]:} What is exception chaining? Explain the difference between \texttt{raise new\_exc from original\_exc} and \texttt{raise new\_exc from None}.
+\begin{solutionbox}
+$\bullet$ \texttt{raise new\_exc from original\_exc}: Explicitly links exceptions, setting \texttt{\_\_cause\_\_} and preserving root-cause traceback.\\
+$\bullet$ \texttt{raise new\_exc from None}: Suppresses the context, setting \texttt{\_\_suppress\_context\_\_ = True} to hide internal implementation details from end users.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Explanation of \texttt{\_\_cause\_\_} chaining (3M); Use cases for suppressing context with \texttt{from None} (3M).
+\end{markingrubric}

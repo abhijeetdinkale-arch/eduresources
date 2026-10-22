@@ -1,0 +1,92 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 60 Minutes\\
+\textbf{Instructions:} Answer any \textbf{5} out of the following 6 questions. Each carries \textbf{6 marks}.
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\noindent\textbf{Question 1 [Unit 1]:} What is PEP 8? Discuss four crucial guidelines prescribed by PEP 8 concerning indentation, variable naming conventions, imports, and maximum line length.
+\begin{solutionbox}
+PEP 8 is the official Python Enhancement Proposal establishing the style guide for Python code.
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Indentation:} 4 spaces per indentation level. Never mix tabs and spaces.
+    \item \textbf{Naming Conventions:} \texttt{snake\_case} for functions and variables, \texttt{PascalCase} for classes, \texttt{ALL\_CAPS} for constants.
+    \item \textbf{Imports:} Separate lines at top of file, grouped in 3 sections: Standard library, third-party libraries, local application imports.
+    \item \textbf{Line Length:} Maximum limit of 79 characters for code and 72 characters for docstrings/comments.
+\end{enumerate}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Definition of PEP 8 (1M); Explanation of 4 rules with correct syntax examples (5M).
+\end{markingrubric}
+
+\noindent\textbf{Question 2 [Unit 1]:} Explain the difference between identity operator \texttt{is} and equality operator \texttt{==}. When can \texttt{a is b} evaluate to \texttt{True} for two integer variables?
+\begin{solutionbox}
+$\bullet$ \texttt{==} compares \textbf{values} by calling \texttt{a.\_\_eq\_\_(b)}.\\
+$\bullet$ \texttt{is} compares \textbf{memory identities} (\texttt{id(a) == id(b)}).\\
+For integers, \texttt{a is b} is True when both refer to an interned integer in the range $[-5, 256]$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Difference between value equality and memory identity (3M); Explanation of CPython integer interning cache $[-5, 256]$ (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 3 [Unit 2]:} Implement a function \texttt{flatten\_nested\_list(nested)} using recursion that takes an arbitrarily deeply nested list of integers and returns a flat 1D list.
+\begin{solutionbox}
+\begin{lstlisting}
+def flatten_nested_list(nested):
+    flat = []
+    for item in nested:
+        if isinstance(item, list):
+            flat.extend(flatten_nested_list(item))
+        else:
+            flat.append(item)
+    return flat
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Base case detection via \texttt{isinstance} (2M); Recursive flattening and list concatenation (3M); Testing with empty/deep inputs (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 4 [Unit 2]:} Write a Python function that uses the \texttt{re} module to validate a strong password (minimum 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character).
+\begin{solutionbox}
+\begin{lstlisting}
+import re
+
+def validate_password(pwd: str) -> bool:
+    pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
+    return bool(pattern.match(pwd))
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Use of lookahead assertions \texttt{(?=...)} (4M); Character set and length boundary constraints (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 5 [Unit 2]:} Explain the loop \texttt{else} block invariant in Python. Give a worked example demonstrating how loop \texttt{else} avoids boolean flag variables.
+\begin{solutionbox}
+The \texttt{else} clause of a loop executes if and only if the loop completes normally without encountering a \texttt{break} statement.
+\begin{lstlisting}
+def find_item(target, items):
+    for item in items:
+        if item == target:
+            print("Item found!")
+            break
+    else:
+        print("Target not found in collection.")
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Exact condition triggering \texttt{else} block (3M); Code implementation without boolean flag (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 6 [Unit 2]:} Describe Python's \texttt{*args} and \texttt{**kwargs} mechanics. Write a function \texttt{pipeline\_logger(*args, **kwargs)} that prints formatted positional and keyword parameters.
+\begin{solutionbox}
+\begin{lstlisting}
+def pipeline_logger(*args, **kwargs):
+    print(f"Positional arguments ({len(args)}): {args}")
+    for k, v in kwargs.items():
+        print(f"Keyword argument: {k} -> {v}")
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Tuple packing for \texttt{*args} (2M); Dict packing for \texttt{**kwargs} (2M); Code implementation (2M).
+\end{markingrubric}

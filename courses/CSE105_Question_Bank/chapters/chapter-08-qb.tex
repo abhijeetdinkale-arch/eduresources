@@ -1,0 +1,118 @@
+\chapter{Unit 8: Process Management \& Signal Architecture Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{8.1}{What is the process identifier (PID) of the systemd / init ancestor process in Linux?}
+{\texttt{0}}
+{\texttt{1}}
+{\texttt{-1}}
+{\texttt{100}}
+
+\mcqitem{8.2}{Which system call creates a duplicate child process with an identical address space?}
+{\texttt{fork()}}
+{\texttt{execve()}}
+{\texttt{clone()}}
+{\texttt{spawn()}}
+
+\mcqitem{8.3}{What is a Zombie (defunct) process?}
+{A process stuck in an infinite CPU loop}
+{A terminated process whose exit status has not yet been collected by its parent via wait()}
+{A background daemon executing without a controlling terminal}
+{A process whose memory has been paged out to swap}
+
+\mcqitem{8.4}{Why cannot a Zombie process be destroyed by sending: kill -9 <PID>?}
+{Zombie processes run in Ring 0 with elevated immunity}
+{The process has already terminated and released its memory; only its table entry remains}
+{The root user lacks permission to signal defunct processes}
+{\texttt{kill -9} only targets foreground jobs}
+
+\mcqitem{8.5}{Which POSIX signal cannot be intercepted, blocked, or caught by an application?}
+{\texttt{SIGINT (2)}}
+{\texttt{SIGTERM (15)}}
+{\texttt{SIGKILL (9)}}
+{\texttt{SIGHUP (1)}}
+
+\mcqitem{8.6}{Which keyboard shortcut sends the SIGTSTP signal, suspending a foreground process?}
+{\texttt{Ctrl+C}}
+{\texttt{Ctrl+Z}}
+{\texttt{Ctrl+\textbackslash}}
+{\texttt{Ctrl+D}}
+
+\mcqitem{8.7}{Which command resumes a stopped process running in the background?}
+{\texttt{bg}}
+{\texttt{fg}}
+{\texttt{resume}}
+{\texttt{continue}}
+
+\mcqitem{8.8}{What does the STAT code 'D' in the output of the ps command indicate?}
+{Defunct / Zombie state}
+{Uninterruptible sleep (typically waiting on disk device I/O)}
+{Detached daemon}
+{Debug tracing state}
+
+\mcqitem{8.9}{Which command signals processes matching a specified pattern name?}
+{\texttt{killall}}
+{\texttt{pkill}}
+{\texttt{pskill}}
+{\texttt{term}}
+
+\mcqitem{8.10}{What is the function of the nohup command?}
+{Runs a process with maximum CPU scheduling priority}
+{Executes a command immune to SIGHUP terminal disconnect signals}
+{Prevents memory allocation errors}
+{Disables child subshell creation}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 8 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+8.1 & \textbf{(b)} & The \texttt{systemd} or \texttt{init} process is the root of the process tree (PID 1). \\
+8.2 & \textbf{(a)} & \texttt{fork()} duplicates the calling process; \texttt{execve()} overwrites it with new code. \\
+8.3 & \textbf{(b)} & A zombie has exited, but remains in the process table until parent reaps its status. \\
+8.4 & \textbf{(b)} & Zombies are already deceased; signals cannot terminate dead processes. \\
+8.5 & \textbf{(c)} & \texttt{SIGKILL (9)} and \texttt{SIGSTOP (19)} cannot be trapped or ignored. \\
+8.6 & \textbf{(b)} & \texttt{Ctrl+Z} generates \texttt{SIGTSTP} (signal 20), placing the job into stopped state. \\
+8.7 & \textbf{(a)} & \texttt{bg \%N} restarts a stopped job in background mode. \\
+8.8 & \textbf{(b)} & State \texttt{D} is uninterruptible sleep, awaiting hardware I/O completion. \\
+8.9 & \textbf{(b)} & \texttt{pkill} matches processes by regex pattern and user attributes. \\
+8.10 & \textbf{(b)} & \texttt{nohup} catches \texttt{SIGHUP}, ensuring background execution continues after logout. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the life cycle of a process from fork() through zombie state and reaping.}
+\begin{vivasol}
+1. **Creation:** A parent process invokes \texttt{fork()}, creating an identical child process with a unique PID.
+2. **Execution:** The child calls \texttt{execve()}, replacing its memory space with a new program image.
+3. **Termination:** Upon completing execution, the process calls \texttt{exit(code)}. The kernel frees its virtual memory, open file descriptors, and heap pages.
+4. **Zombie Phase:** The kernel retains a minimal entry in the process table holding its PID and exit status code.
+5. **Reaping:** The parent invokes \texttt{wait()} or \texttt{waitpid()}, reading the child's exit status. Upon completion of \texttt{wait()}, the kernel removes the process table entry entirely.
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{8.1 --- Terminal Job Control Workflow}
+\textbf{Objective:} Launch a long-running simulation job, pause it via keyboard signal, verify background status, and return it to foreground.
+\begin{clibox}
+$ python3 -c 'import time; [time.sleep(1) for _ in range(300)]'
+^Z
+[1]+  Stopped                 python3 -c '...'
+
+$ jobs -l
+[1]+ 24512 Stopped                 python3 -c '...'
+
+$ bg %1
+[1]+ python3 -c '...' &
+
+$ jobs -l
+[1]+ 24512 Running                 python3 -c '...' &
+
+$ kill -15 24512
+[1]+  Terminated              python3 -c '...'
+\end{clibox}
+\end{practicalbox}

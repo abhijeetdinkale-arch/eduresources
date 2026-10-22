@@ -1,0 +1,36 @@
+\chapter{Unit 1: Architecture, Booting \& Virtualization Cheat Sheet}
+
+\begin{cheatbox}{The Layered Linux Model \& System Call Interface}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Privilege Domains:} User Space (CPU Ring 3, unprivileged) vs Kernel Space (CPU Ring 0, privileged).
+    \item \textbf{System Calls:} Gateway from user space to kernel space (\texttt{read()}, \texttt{write()}, \texttt{open()}, \texttt{close()}, \texttt{fork()}, \texttt{execve()}).
+    \item \textbf{Hardware Abstraction:} The kernel abstracts CPU (scheduler), Memory (page tables/MMU), Disks (VFS), and Network (TCP/IP stack).
+\end{itemize}
+\end{cheatbox}
+
+\begin{syntaxbox}{Partitioning Schemes \& UEFI / BIOS Standards}
+\begin{tabularx}{\linewidth}{l l X}
+\toprule
+\textbf{Standard} & \textbf{Partition Style} & \textbf{Key Characteristics \& ESP Requirements} \\
+\midrule
+\textbf{Modern UEFI} & GPT (GUID Partition Table) & Requires FAT32 EFI System Partition (ESP) at \texttt{/boot/efi} (512 MB). Supports $>2$ TB drives. \\
+\textbf{Legacy BIOS} & MBR (Master Boot Record) & 512-byte boot sector; max 4 primary partitions; limit 2 TB per drive. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{syntaxbox}{Virtualization Networking Modes Matrix}
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Mode} & \textbf{Host-to-Guest Access} & \textbf{Guest-to-External Internet Access} \\
+\midrule
+\textbf{NAT} & Inaccessible directly (requires port forwarding). & Accessible via host IP translation. \\
+\textbf{Bridged} & Fully accessible as separate local IP on LAN router. & Direct access with independent DHCP lease. \\
+\textbf{Host-Only} & Accessible exclusively between host and guest VMs. & Zero access to external internet. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{tipbox}
+When dual-booting with Windows 11/10, always disable \textbf{Fast Startup} in Windows Control Panel. Fast Startup hibernates the NTFS filesystem kernel driver, causing permanent filesystem corruption if mounted read-write in Linux.
+\end{tipbox}

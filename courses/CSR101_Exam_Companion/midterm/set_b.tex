@@ -1,0 +1,105 @@
+\section{Mid-Term Examination --- Set B (Units 1, 2 \& 3)}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 90 Minutes\\
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\subsection*{Part A: Multiple Choice Questions (15 Marks)}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item What is the output of \texttt{bool("False")}? \hfill \textbf{[Ans: \texttt{True} (non-empty string)]}
+    \item Which built-in function returns an iterator yielding $(index, value)$ pairs? \hfill \textbf{[Ans: \texttt{enumerate()}]}
+    \item How are keyword-only arguments denoted in a parameter list? \hfill \textbf{[Ans: After a bare \texttt{*} or \texttt{*args}]}
+    \item What is the space complexity of a generator expression compared to a list comprehension? \hfill \textbf{[Ans: $\mathcal{O}(1)$ vs $\mathcal{O}(n)$]}
+    \item In a class, how are class methods declared? \hfill \textbf{[Ans: With the \texttt{@classmethod} decorator and \texttt{cls} parameter]}
+    \item What is the output of \texttt{[1, 2] * 2}? \hfill \textbf{[Ans: \texttt{[1, 2, 1, 2]}]}
+    \item What is printed by \texttt{set([1, 2, 2, 3])}? \hfill \textbf{[Ans: \texttt{\{1, 2, 3\}}]}
+    \item What is the purpose of \texttt{\_\_slots\_\_}? \hfill \textbf{[Ans: Prevents dynamic \texttt{\_\_dict\_\_} creation, saving memory]}
+    \item What does \texttt{re.split(r'\textbackslash s+', text)} do? \hfill \textbf{[Ans: Splits string on one or more whitespace characters]}
+    \item Can a tuple containing a list be used as a dictionary key? \hfill \textbf{[Ans: No, raises \texttt{TypeError: unhashable type: 'list'}]}
+    \item What is the output of \texttt{10 // -3}? \hfill \textbf{[Ans: \texttt{-4}]}
+    \item What does \texttt{zip([1, 2], ['a', 'b'])} return? \hfill \textbf{[Ans: Iterator yielding tuples: \texttt{(1, 'a'), (2, 'b')}]}
+    \item Which dunder method is called when an object is used in a \texttt{with} statement? \hfill \textbf{[Ans: \texttt{\_\_enter\_\_()}]}
+    \item What does \texttt{isinstance(True, int)} evaluate to? \hfill \textbf{[Ans: \texttt{True} (\texttt{bool} subclasses \texttt{int})]}
+    \item What does \texttt{re.sub(r'cat', 'dog', text)} do? \hfill \textbf{[Ans: Replaces all occurrences of 'cat' with 'dog']}
+\end{enumerate}
+
+\subsection*{Part B: Subjective Coding \& Design Problems (15 Marks)}
+
+\noindent\textbf{Question 16 [Unit 3, 5 Marks]:} Implement a custom iterator class \texttt{PrimeIterator(limit)} that yields consecutive prime numbers up to \texttt{limit} implementing the \texttt{\_\_iter\_\_} and \texttt{\_\_next\_\_} protocol.
+\begin{solutionbox}
+\begin{lstlisting}
+class PrimeIterator:
+    def __init__(self, limit: int):
+        self.limit = limit
+        self.current = 2
+
+    def __iter__(self):
+        return self
+
+    def _is_prime(self, n: int) -> bool:
+        for d in range(2, int(n**0.5) + 1):
+            if n % d == 0: return False
+        return True
+
+    def __next__(self):
+        while self.current <= self.limit:
+            n = self.current
+            self.current += 1
+            if self._is_prime(n):
+                return n
+        raise StopIteration
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Class initialization and \texttt{\_\_iter\_\_} returning self (1M); Prime checking logic (2M); \texttt{\_\_next\_\_} state mutation and \texttt{StopIteration} raising (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 17 [Unit 3, 5 Marks]:} Implement a custom Vector class in 3D space supporting vector addition (\texttt{+}), dot product (\texttt{@}), and magnitude representation.
+\begin{solutionbox}
+\begin{lstlisting}
+import math
+
+class Vector3D:
+    def __init__(self, x: float, y: float, z: float):
+        self.x, self.y, self.z = x, y, z
+
+    def __add__(self, other):
+        return Vector3D(self.x + other.x, self.y + other.y, self.z + other.z)
+
+    def __matmul__(self, other):
+        return self.x * other.x + self.y * other.y + self.z * other.z
+
+    def magnitude(self) -> float:
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
+    def __repr__(self):
+        return f"Vector3D({self.x}, {self.y}, {self.z})"
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} \texttt{\_\_add\_\_} operator overload (1.5M); \texttt{\_\_matmul\_\_} dot product (1.5M); Magnitude and representation (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 18 [Unit 2, 5 Marks]:} Write a generator function \texttt{sliding\_window(iterable, k)} that yields consecutive sliding windows of length $k$ from a sequence.
+\begin{solutionbox}
+\begin{lstlisting}
+from collections import deque
+
+def sliding_window(iterable, k: int):
+    it = iter(iterable)
+    window = deque(maxlen=k)
+    for _ in range(k):
+        try:
+            window.append(next(it))
+        except StopIteration:
+            return
+    yield tuple(window)
+    for elem in it:
+        window.append(elem)
+        yield tuple(window)
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Proper use of generator \texttt{yield} (2M); Efficient $\mathcal{O}(1)$ window updates using \texttt{deque} (2M); Edge cases handling (1M).
+\end{markingrubric}

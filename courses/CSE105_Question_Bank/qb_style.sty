@@ -1,0 +1,156 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qb_style}[2026/10/22 v1.0 CSE105 Question Bank Style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{inconsolata}
+\RequirePackage[margin=18mm,top=22mm,bottom=22mm,headheight=20pt]{geometry}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\RequirePackage{booktabs,tabularx,longtable,array,multirow}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{microtype}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+
+% Palette
+\definecolor{brandnavy}{RGB}{15, 32, 67}
+\definecolor{brandblue}{RGB}{28, 78, 140}
+\definecolor{brandteal}{RGB}{12, 115, 105}
+\definecolor{brandamber}{RGB}{180, 83, 9}
+\definecolor{brandaccent}{RGB}{185, 28, 28}
+\definecolor{brandpurple}{RGB}{109, 40, 217}
+\definecolor{terminalbg}{RGB}{24, 27, 34}
+\definecolor{terminalfg}{RGB}{240, 246, 252}
+
+\definecolor{boxnavybg}{RGB}{245, 248, 255}
+\definecolor{boxtealbg}{RGB}{240, 253, 250}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+\definecolor{LightBg}{RGB}{248, 250, 252}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{brandnavy}\textbf{CSE105: Linux \& Shell Programming --- Master Question Bank}}
+\fancyhead[R]{\small\color{brandteal}\textbf{\leftmark}}
+\fancyfoot[C]{\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{brandnavy}}{\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{brandnavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{brandteal}}{\thesubsection}{1em}{}
+
+% Listings
+\lstdefinestyle{bashstyle}{
+    basicstyle=\small\ttfamily\color{terminalfg},
+    backgroundcolor=\color{terminalbg},
+    keywordstyle=\color{cyan}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{lime},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    columns=flexible,
+    keepspaces=true,
+    showstringspaces=false
+}
+
+% Boxes
+\newtcolorbox{vivasol}[1][]{
+    enhanced,
+    breakable,
+    colback=LightBg,
+    colframe=brandteal,
+    boxrule=0.9pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    title={\textbf{\color{brandteal}Comprehensive Model Answer \& Technical Explanation:}},
+    #1
+}
+
+\newtcolorbox{practicalbox}[2][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=brandnavy,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={Lab Practical Exercise #2 \hfill [Hands-On Implementation]},
+    boxrule=1pt,
+    arc=3mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcolorbox{scenariobox}[2][]{
+    enhanced,
+    breakable,
+    colback=boxpurplebg,
+    colframe=brandpurple,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={DevOps \& Shell Scripting Challenge #2 \hfill [Industrial Scenario]},
+    boxrule=1pt,
+    arc=3mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcblisting{clibox}{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandnavy,
+    arc=2mm,
+    boxrule=1pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        basicstyle=\small\ttfamily\color{terminalfg},
+        breaklines=true,
+        columns=flexible,
+        keepspaces=true,
+        showstringspaces=false
+    },
+    title={\texttt{\$ Interactive Terminal Verification}}
+}
+
+\newtcblisting{scriptlisting}{
+    enhanced,
+    breakable,
+    colback=terminalbg,
+    colframe=brandpurple,
+    arc=2mm,
+    boxrule=1pt,
+    coltext=terminalfg,
+    listing only,
+    listing options={
+        style=bashstyle
+    },
+    title={\texttt{Production Bash Script}}
+}
+
+\newcommand{\mcqitem}[6]{
+    \noindent\textbf{Q#1. #2}
+    \begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+        \item #3
+        \item #4
+        \item #5
+        \item #6
+    \end{enumerate}
+    \vspace{2mm}
+}
+
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=brandnavy,urlcolor=brandblue,citecolor=brandteal]{hyperref}

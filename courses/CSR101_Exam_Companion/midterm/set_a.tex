@@ -1,0 +1,89 @@
+\section{Mid-Term Examination --- Set A (Units 1, 2 \& 3)}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 90 Minutes\\
+\textbf{Rules:} Part A contains 15 MCQs (1 Mark each, $-0.25$ negative marking). Part B contains 3 Subjective Coding problems of 5 Marks each.
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\subsection*{Part A: Multiple Choice Questions (15 Marks)}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Which tool is commonly used to write and run Python code? \hfill \textbf{[Ans: Jupyter Notebook / VS Code]}
+    \item What is the time complexity of appending an element to a Python list? \hfill \textbf{[Ans: Amortized $\mathcal{O}(1)$]}
+    \item What is printed by \texttt{print(type(lambda x: x))}? \hfill \textbf{[Ans: \texttt{<class 'function'>}]}
+    \item Which data structure uses hash tables in CPython? \hfill \textbf{[Ans: Dictionary and Set]}
+    \item What does \texttt{re.match(r'\textbackslash d+', 'abc123')} return? \hfill \textbf{[Ans: \texttt{None} (matches only at start)]}
+    \item Which method is invoked by the built-in \texttt{len()} function? \hfill \textbf{[Ans: \texttt{\_\_len\_\_()}]}
+    \item What is the value of \texttt{bool([])}? \hfill \textbf{[Ans: \texttt{False}]}
+    \item What does the \texttt{nonlocal} keyword do? \hfill \textbf{[Ans: Binds identifier to nearest enclosing scope]}
+    \item Which algorithm resolves Python's Method Resolution Order (MRO)? \hfill \textbf{[Ans: C3 Linearization]}
+    \item What is the result of \texttt{2 ** 3 ** 2}? \hfill \textbf{[Ans: 512 (Right-to-left associativity)]}
+    \item How does Python handle name mangling for \texttt{\_\_x} in class \texttt{Foo}? \hfill \textbf{[Ans: \texttt{\_Foo\_\_x}]}
+    \item What is returned by a generator function containing \texttt{yield}? \hfill \textbf{[Ans: A generator iterator object]}
+    \item What is the default return value of a function lacking a \texttt{return} statement? \hfill \textbf{[Ans: \texttt{None}]}
+    \item In CPython, which integers are cached as singletons? \hfill \textbf{[Ans: $[-5, 256]$]}
+    \item Which operator performs set intersection? \hfill \textbf{[Ans: \texttt{\&}]}
+\end{enumerate}
+
+\subsection*{Part B: Subjective Coding \& Design Problems (15 Marks)}
+
+\noindent\textbf{Question 16 [Unit 3, 5 Marks]:} Design a Python class \texttt{Polynomial} representing univariate polynomials using a dictionary of $\{ \text{degree}: \text{coefficient} \}$. Implement \texttt{\_\_add\_\_} and \texttt{\_\_call\_\_} (evaluation at $x$).
+\begin{solutionbox}
+\begin{lstlisting}
+class Polynomial:
+    def __init__(self, terms: dict):
+        self.terms = {deg: coef for deg, coef in terms.items() if coef != 0}
+
+    def __add__(self, other):
+        res = self.terms.copy()
+        for deg, coef in other.terms.items():
+            res[deg] = res.get(deg, 0) + coef
+        return Polynomial(res)
+
+    def __call__(self, x: float) -> float:
+        return sum(coef * (x ** deg) for deg, coef in self.terms.items())
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Data representation in dictionary (1M); Implementation of \texttt{\_\_add\_\_} operator overload (2M); Implementation of \texttt{\_\_call\_\_} evaluation (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 17 [Unit 2, 5 Marks]:} Implement a memoization decorator \texttt{@memoize} from scratch without using \texttt{functools.lru\_cache} and demonstrate it on the Fibonacci sequence.
+\begin{solutionbox}
+\begin{lstlisting}
+def memoize(func):
+    cache = {}
+    def wrapper(*args):
+        if args not in cache:
+            cache[args] = func(*args)
+        return cache[args]
+    return wrapper
+
+@memoize
+def fib(n):
+    if n < 2: return n
+    return fib(n - 1) + fib(n - 2)
+\end{lstlisting}
+\textbf{Complexity Improvement:} Transforms naive Fibonacci from $\mathcal{O}(2^n)$ to $\mathcal{O}(n)$ time.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Closure with cache dictionary (2M); Key check and conditional computation (2M); Asymptotic complexity explanation (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 18 [Unit 3, 5 Marks]:} Explain C3 Linearization. Compute the MRO for the inheritance hierarchy: class A, class B(A), class C(A), class D(B, C).
+\begin{solutionbox}
+The MRO formula is $L(D) = [D] + \operatorname{merge}(L(B), L(C), [B, C])$.
+\begin{align*}
+L(A) &= [A, O] \\
+L(B) &= [B, A, O] \\
+L(C) &= [C, A, O] \\
+L(D) &= [D] + \operatorname{merge}([B, A, O], [C, A, O], [B, C]) \\
+     &= [D, B] + \operatorname{merge}([A, O], [C, A, O], [C]) \\
+     &= [D, B, C] + \operatorname{merge}([A, O], [A, O]) \\
+     &= [D, B, C, A, O]
+\end{align*}
+Result: \texttt{D -> B -> C -> A -> object}.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Statement of C3 merge algorithm (2M); Step-by-step resolution of candidate lists (2M); Final correct MRO sequence (1M).
+\end{markingrubric}

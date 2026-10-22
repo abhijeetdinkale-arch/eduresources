@@ -1,0 +1,941 @@
+\chapter{Unit 3: Strings, Lists, Tuples and Dictionaries}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent This section contains 60 rigorous multiple-choice questions extracted from university course examination assessments. Review each question, test edge-case syntax, and verify code execution mechanics.
+\vspace{3mm}
+
+\noindent\textbf{Q1.} \hfill {\small\color{LPUOrange}\textbf{[string a compound data type | Easy]}}\\[2pt]
+Why is a string considered a compound data type in Python?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Because it is made up of smaller pieces called characters
+    \item \relax Because it always contains exactly one element that must be a letter of the alphabet from A to Z
+    \item \relax Because it can only store numbers
+    \item \relax Because it can be modified in place
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2.} \hfill {\small\color{LPUOrange}\textbf{[length | Easy]}}\\[2pt]
+Which function returns the number of characters in a string?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{length()}
+    \item \relax \texttt{len()}
+    \item \relax \texttt{count()}
+    \item \relax \texttt{size()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3.} \hfill {\small\color{LPUOrange}\textbf{[accessing elements | Easy]}}\\[2pt]
+What is the index of the first character in a Python string?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{0}
+    \item \relax \texttt{length}
+    \item \relax \texttt{1}
+    \item \relax \texttt{-1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4.} \hfill {\small\color{LPUOrange}\textbf{[string slices | Easy]}}\\[2pt]
+What is the result of \texttt{"python"[0:3]}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{"pyth"}
+    \item \relax \texttt{"pyt"}
+    \item \relax \texttt{"tho"}
+    \item \relax \texttt{"python"}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5.} \hfill {\small\color{LPUOrange}\textbf{[string traversal | Easy]}}\\[2pt]
+Which loop is commonly used to traverse each character of a string?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{if} statement
+    \item \relax \texttt{try} block
+    \item \relax \texttt{for} loop
+    \item \relax \texttt{with} statement
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6.} \hfill {\small\color{LPUOrange}\textbf{[comparison | Easy]}}\\[2pt]
+What does the expression \texttt{"apple" == "apple"} evaluate to?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{False}
+    \item \relax \texttt{True}
+    \item \relax \texttt{None}
+    \item \relax \texttt{0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7.} \hfill {\small\color{LPUOrange}\textbf{[find function | Easy]}}\\[2pt]
+What does \texttt{"hello".find("l")} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{3}
+    \item \relax \texttt{2}
+    \item \relax \texttt{1}
+    \item \relax \texttt{-1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8.} \hfill {\small\color{LPUOrange}\textbf{[find function | Easy]}}\\[2pt]
+What does the \texttt{find()} method return when the substring is not present?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{None}
+    \item \relax \texttt{-1}
+    \item \relax An error is raised because the searched substring could not be located anywhere in the string
+    \item \relax \texttt{0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9.} \hfill {\small\color{LPUOrange}\textbf{[looping and counting | Easy]}}\\[2pt]
+What is a common use of a counter variable while looping through a string?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax To convert the string to uppercase
+    \item \relax To reverse the string
+    \item \relax To count occurrences of a character
+    \item \relax To delete characters from the string
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10.} \hfill {\small\color{LPUOrange}\textbf{[list values | Easy]}}\\[2pt]
+Which of the following correctly creates a list of three numbers?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(1, 2, 3)}
+    \item \relax \texttt{[1, 2, 3]}
+    \item \relax \texttt{\{1, 2, 3\}}
+    \item \relax \texttt{<1, 2, 3>}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11.} \hfill {\small\color{LPUOrange}\textbf{[length | Easy]}}\\[2pt]
+What does \texttt{len([10, 20, 30, 40])} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{3}
+    \item \relax \texttt{4}
+    \item \relax \texttt{5}
+    \item \relax \texttt{0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12.} \hfill {\small\color{LPUOrange}\textbf{[membership | Easy]}}\\[2pt]
+What does the expression \texttt{3 in [1, 2, 3]} evaluate to?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{False}
+    \item \relax \texttt{3}
+    \item \relax \texttt{True}
+    \item \relax \texttt{None}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13.} \hfill {\small\color{LPUOrange}\textbf{[operations | Easy]}}\\[2pt]
+What is the result of \texttt{[1, 2] + [3, 4]}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1, 2, [3, 4]]}
+    \item \relax \texttt{[4, 6]}
+    \item \relax \texttt{[1, 2, 3, 4]}
+    \item \relax \texttt{[3, 4, 1, 2]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14.} \hfill {\small\color{LPUOrange}\textbf{[slices | Easy]}}\\[2pt]
+What is the result of \texttt{[10, 20, 30, 40][1:3]}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[20, 30, 40]}
+    \item \relax \texttt{[20, 30]}
+    \item \relax \texttt{[30, 40]}
+    \item \relax \texttt{[10, 20]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15.} \hfill {\small\color{LPUOrange}\textbf{[deletion | Easy]}}\\[2pt]
+Which keyword is used to remove an item from a list by its index?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{del}
+    \item \relax \texttt{remove}
+    \item \relax \texttt{erase}
+    \item \relax \texttt{drop}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16.} \hfill {\small\color{LPUOrange}\textbf{[list and for loops | Easy]}}\\[2pt]
+What is printed by \texttt{for x in [1, 2, 3]: print(x)}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax The list \texttt{[1, 2, 3]}
+    \item \relax The sum \texttt{6}
+    \item \relax The length \texttt{3}
+    \item \relax Each element \texttt{1}, \texttt{2}, \texttt{3} on separate lines
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17.} \hfill {\small\color{LPUOrange}\textbf{[list parameters and nested list | Easy]}}\\[2pt]
+What is a nested list?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax A list with only numbers
+    \item \relax A list that contains one or more lists as elements
+    \item \relax A list stored in a file
+    \item \relax A list that cannot be changed
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18.} \hfill {\small\color{LPUOrange}\textbf{[tuples | Easy]}}\\[2pt]
+Which symbol pair is typically used to create a tuple?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Parentheses \texttt{()}
+    \item \relax Square brackets \texttt{[]}
+    \item \relax Curly braces \texttt{\{\}}
+    \item \relax Angle brackets \texttt{<>}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19.} \hfill {\small\color{LPUOrange}\textbf{[operations on tuples | Easy]}}\\[2pt]
+What key property makes tuples different from lists?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Tuples are immutable and cannot be changed after creation
+    \item \relax Tuples use square brackets
+    \item \relax Tuples can only hold strings
+    \item \relax Tuples cannot be indexed
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20.} \hfill {\small\color{LPUOrange}\textbf{[creating dictionary | Easy]}}\\[2pt]
+Which of the following correctly creates a dictionary?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{\{"a", 1, "b", 2\}}
+    \item \relax \texttt{["a": 1, "b": 2]}
+    \item \relax \texttt{\{"a": 1, "b": 2\}}
+    \item \relax \texttt{("a", 1, "b", 2)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21.} \hfill {\small\color{LPUOrange}\textbf{[string slices | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+s = "Programming"\\
+print(s[2:8:2])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{oai}
+    \item \relax \texttt{rgamn}
+    \item \relax \texttt{ogam}
+    \item \relax \texttt{orm}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22.} \hfill {\small\color{LPUOrange}\textbf{[string traversal | Medium]}}\\[2pt]
+What does the following loop print? 
+
+\begin{pycode}
+word = "abc"\\
+for ch in word:\\
+print(ch * 2, end="")
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{aaabbbccc}
+    \item \relax \texttt{abcabc}
+    \item \relax \texttt{aabbcc}
+    \item \relax \texttt{abc}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23.} \hfill {\small\color{LPUOrange}\textbf{[find function | Medium]}}\\[2pt]
+What is the result of the following code? 
+
+\begin{pycode}
+s = "banana"\\
+print(s.find("na"))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{4}
+    \item \relax \texttt{-1}
+    \item \relax \texttt{3}
+    \item \relax \texttt{2}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24.} \hfill {\small\color{LPUOrange}\textbf{[comparison | Medium]}}\\[2pt]
+What is the output of the following comparison? 
+
+\begin{pycode}
+print("apple" < "banana")
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{0}
+    \item \relax \texttt{False}
+    \item \relax \texttt{True}
+    \item \relax \texttt{Error}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25.} \hfill {\small\color{LPUOrange}\textbf{[looping and counting | Medium]}}\\[2pt]
+How many times does the letter \texttt{s} appear based on this code? 
+
+\begin{pycode}
+text = "mississippi"\\
+count = 0\\
+for c in text:\\
+if c == "s":\\
+count += 1\\
+print(count)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{3}
+    \item \relax \texttt{2}
+    \item \relax \texttt{4}
+    \item \relax \texttt{5}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26.} \hfill {\small\color{LPUOrange}\textbf{[length | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+s = "Hello, World!"\\
+print(len(s))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{11}
+    \item \relax \texttt{14}
+    \item \relax \texttt{13}
+    \item \relax \texttt{12}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27.} \hfill {\small\color{LPUOrange}\textbf{[string a compound data type | Medium]}}\\[2pt]
+Which statement about Python strings is correct?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Strings are stored as a list of integers
+    \item \relax Strings can only store alphabetic characters
+    \item \relax Strings are immutable, so \texttt{s[0] = "X"} raises an error
+    \item \relax Strings are mutable and support item assignment
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28.} \hfill {\small\color{LPUOrange}\textbf{[operations | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+result = [1, 2] + [3, 4] * 2\\
+print(result)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1, 2, 6, 8]}
+    \item \relax \texttt{[1, 2, 3, 4, 1, 2, 3, 4]}
+    \item \relax \texttt{[4, 8, 3, 4]}
+    \item \relax \texttt{[1, 2, 3, 4, 3, 4]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29.} \hfill {\small\color{LPUOrange}\textbf{[slices | Medium]}}\\[2pt]
+What does the following code print? 
+
+\begin{pycode}
+nums = [10, 20, 30, 40, 50]\\
+print(nums[-3:-1])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[20, 30]}
+    \item \relax \texttt{[40, 50]}
+    \item \relax \texttt{[30, 40, 50]}
+    \item \relax \texttt{[30, 40]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30.} \hfill {\small\color{LPUOrange}\textbf{[membership | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+data = [[1, 2], [3, 4]]\\
+print(3 in data)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[3, 4]}
+    \item \relax \texttt{True}
+    \item \relax \texttt{Error}
+    \item \relax \texttt{False}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31.} \hfill {\small\color{LPUOrange}\textbf{[deletion | Medium]}}\\[2pt]
+What is the value of \texttt{nums} after this code runs? 
+
+\begin{pycode}
+nums = [1, 2, 3, 4, 5]\\
+del nums[1:3]\\
+print(nums)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1, 3, 4, 5]}
+    \item \relax \texttt{[1, 4, 5]}
+    \item \relax \texttt{[2, 3, 4, 5]}
+    \item \relax \texttt{[1, 2, 5]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32.} \hfill {\small\color{LPUOrange}\textbf{[accessing elements | Medium]}}\\[2pt]
+What does the following code print? 
+
+\begin{pycode}
+matrix = [[1, 2, 3], [4, 5, 6]]\\
+print(matrix[1][2])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{5}
+    \item \relax \texttt{3}
+    \item \relax \texttt{6}
+    \item \relax \texttt{4}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33.} \hfill {\small\color{LPUOrange}\textbf{[list and for loops | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+nums = [1, 2, 3, 4]\\
+total = 0\\
+for n in nums:\\
+total += n * n\\
+print(total)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{30}
+    \item \relax \texttt{100}
+    \item \relax \texttt{10}
+    \item \relax \texttt{20}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34.} \hfill {\small\color{LPUOrange}\textbf{[list parameters and nested list | Medium]}}\\[2pt]
+What does the following code print? 
+
+\begin{pycode}
+def modify(lst):\\
+lst.append(99)\\
+~\\
+nums = [1, 2, 3]\\
+modify(nums)\\
+print(nums)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[99, 1, 2, 3]}
+    \item \relax \texttt{[1, 2, 3, 99]}
+    \item \relax \texttt{[1, 2, 3]}
+    \item \relax \texttt{[99]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35.} \hfill {\small\color{LPUOrange}\textbf{[tuples | Medium]}}\\[2pt]
+What happens when the following code is executed? 
+
+\begin{pycode}
+t = (1, 2, 3)\\
+t[0] = 10\\
+print(t)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Prints \texttt{(10, 2, 3)}
+    \item \relax Prints \texttt{[10, 2, 3]}
+    \item \relax Prints \texttt{(1, 2, 3)}
+    \item \relax Raises a \texttt{TypeError}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36.} \hfill {\small\color{LPUOrange}\textbf{[operations on tuples | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+t = (1, 2) * 3\\
+print(len(t))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{5}
+    \item \relax \texttt{6}
+    \item \relax \texttt{2}
+    \item \relax \texttt{3}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37.} \hfill {\small\color{LPUOrange}\textbf{[creating dictionary | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+d = dict([("a", 1), ("b", 2)])\\
+print(d["b"])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{1}
+    \item \relax \texttt{2}
+    \item \relax \texttt{b}
+    \item \relax \texttt{("b", 2)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38.} \hfill {\small\color{LPUOrange}\textbf{[adding-modifying-retrieving dictionary values | Medium]}}\\[2pt]
+What does the following code print? 
+
+\begin{pycode}
+d = \{"x": 1\}\\
+d["y"] = 2\\
+d["x"] = 5\\
+print(d)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{\{'x': 1, 'y': 2\}}
+    \item \relax \texttt{\{'x': 5\}}
+    \item \relax \texttt{\{'x': 5, 'y': 2\}}
+    \item \relax \texttt{\{'x': 1, 'y': 2, 'x': 5\}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39.} \hfill {\small\color{LPUOrange}\textbf{[deleting items | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+d = \{"a": 1, "b": 2, "c": 3\}\\
+del d["b"]\\
+print(list(d.keys()))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{['a', 'c']}
+    \item \relax \texttt{['b']}
+    \item \relax \texttt{['a', 'b', 'c']}
+    \item \relax \texttt{['a', 'c', 'b']}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40.} \hfill {\small\color{LPUOrange}\textbf{[dictionary methods | Medium]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+d = \{"a": 1, "b": 2\}\\
+print(d.get("c", 0))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{Error}
+    \item \relax \texttt{0}
+    \item \relax \texttt{None}
+    \item \relax \texttt{c}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41.} \hfill {\small\color{LPUOrange}\textbf{[string slices | Hard]}}\\[2pt]
+What is the output of the following code? 
+
+\begin{pycode}
+s = "programming"\\
+print(s[::-2])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{gimrgm}
+    \item \relax \texttt{gimargo}
+    \item \relax \texttt{pormig}
+    \item \relax \texttt{gnimargorp}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42.} \hfill {\small\color{LPUOrange}\textbf{[comparison | Hard]}}\\[2pt]
+Which expression evaluates to \texttt{True} in Python 3?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{"Z" < "A"}
+    \item \relax \texttt{"apple" < "Apple"}
+    \item \relax \texttt{"ABC" > "abc"}
+    \item \relax \texttt{"Apple" < "apple"}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43.} \hfill {\small\color{LPUOrange}\textbf{[find function | Hard]}}\\[2pt]
+What does the following print? 
+
+\begin{pycode}
+s = "mississippi"\\
+print(s.find("ss", 3))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{5}
+    \item \relax \texttt{2}
+    \item \relax \texttt{4}
+    \item \relax \texttt{-1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44.} \hfill {\small\color{LPUOrange}\textbf{[looping and counting | Hard]}}\\[2pt]
+What is the value of \texttt{count} after this loop? 
+
+\begin{pycode}
+s = "aAbBcCaA"\\
+count = 0\\
+for ch in s:\\
+if ch.lower() == 'a':\\
+count += 1\\
+print(count)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{4}
+    \item \relax \texttt{2}
+    \item \relax \texttt{3}
+    \item \relax \texttt{8}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45.} \hfill {\small\color{LPUOrange}\textbf{[string traversal | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+s = "abcde"\\
+result = ""\\
+for i in range(len(s)):\\
+result += s[i] * i\\
+print(result)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{abbcccdddd}
+    \item \relax \texttt{aabbbcccc}
+    \item \relax \texttt{abcde}
+    \item \relax \texttt{bccdddeeee}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46.} \hfill {\small\color{LPUOrange}\textbf{[operations | Hard]}}\\[2pt]
+What is printed? 
+
+\begin{pycode}
+a = [1, 2, 3]\\
+b = a * 2\\
+b[0] = 99\\
+print(a[0], b[0])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{1 1}
+    \item \relax \texttt{99 99}
+    \item \relax \texttt{1 99}
+    \item \relax \texttt{99 1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47.} \hfill {\small\color{LPUOrange}\textbf{[list parameters and nested list | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+def modify(lst):\\
+lst = lst + [4]\\
+lst.append(5)\\
+x = [1, 2, 3]\\
+modify(x)\\
+print(x)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1, 2, 3, 5]}
+    \item \relax \texttt{[1, 2, 3, 4]}
+    \item \relax \texttt{[1, 2, 3]}
+    \item \relax \texttt{[1, 2, 3, 4, 5]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48.} \hfill {\small\color{LPUOrange}\textbf{[slices | Hard]}}\\[2pt]
+What is the result? 
+
+\begin{pycode}
+lst = [0, 1, 2, 3, 4, 5]\\
+lst[1:4] = [10, 20]\\
+print(lst)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[0, 10, 20, 3, 4, 5]}
+    \item \relax \texttt{[0, 10, 20, 4, 5]}
+    \item \relax \texttt{[0, 10, 20, 2, 3, 4, 5]}
+    \item \relax \texttt{[10, 20, 3, 4, 5]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49.} \hfill {\small\color{LPUOrange}\textbf{[deletion | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+lst = [10, 20, 30, 40, 50]\\
+del lst[1:4:2]\\
+print(lst)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[10, 30, 40, 50]}
+    \item \relax \texttt{[10, 30, 50]}
+    \item \relax \texttt{[10, 40, 50]}
+    \item \relax \texttt{[20, 40]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50.} \hfill {\small\color{LPUOrange}\textbf{[list and for loops | Hard]}}\\[2pt]
+What does this print? 
+
+\begin{pycode}
+matrix = [[1, 2], [3, 4], [5, 6]]\\
+total = 0\\
+for row in matrix:\\
+total += row[-1]\\
+print(total)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{9}
+    \item \relax \texttt{12}
+    \item \relax \texttt{21}
+    \item \relax \texttt{6}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51.} \hfill {\small\color{LPUOrange}\textbf{[membership | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+nested = [[1, 2], [3, 4]]\\
+print(3 in nested, [3, 4] in nested)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{False True}
+    \item \relax \texttt{True False}
+    \item \relax \texttt{False False}
+    \item \relax \texttt{True True}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52.} \hfill {\small\color{LPUOrange}\textbf{[accessing elements | Hard]}}\\[2pt]
+What is printed? 
+
+\begin{pycode}
+grid = [[0]*3]*3\\
+grid[0][0] = 1\\
+print(grid)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[[1, 0, 0], [0, 0, 0], [1, 0, 0]]}
+    \item \relax \texttt{[[1, 0, 0], [1, 0, 0], [1, 0, 0]]}
+    \item \relax \texttt{[[1, 1, 1], [0, 0, 0], [0, 0, 0]]}
+    \item \relax \texttt{[[1, 0, 0], [0, 0, 0], [0, 0, 0]]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53.} \hfill {\small\color{LPUOrange}\textbf{[tuples | Hard]}}\\[2pt]
+Which of the following creates a tuple containing a single integer element?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{t = tuple(5)}
+    \item \relax \texttt{t = (5,)}
+    \item \relax \texttt{t = (5)}
+    \item \relax \texttt{t = 5}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54.} \hfill {\small\color{LPUOrange}\textbf{[operations on tuples | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+t = (1, [2, 3], 4)\\
+t[1].append(5)\\
+print(t)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(1, [2, 3, 5], 4)}
+    \item \relax \texttt{(1, [2, 3], 4)}
+    \item \relax \texttt{TypeError raised}
+    \item \relax \texttt{(1, [2, 3], 4, 5)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55.} \hfill {\small\color{LPUOrange}\textbf{[creating dictionary | Hard]}}\\[2pt]
+What does the following produce? 
+
+\begin{pycode}
+d = dict(zip("abc", [1, 2, 3, 4]))\\
+print(d)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{\{'a': 1, 'b': 2, 'c': 3, None: 4\}}
+    \item \relax \texttt{ValueError raised}
+    \item \relax \texttt{\{'a': 1, 'b': 2, 'c': 3, 'd': 4\}}
+    \item \relax \texttt{\{'a': 1, 'b': 2, 'c': 3\}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56.} \hfill {\small\color{LPUOrange}\textbf{[adding-modifying-retrieving dictionary values | Hard]}}\\[2pt]
+What is printed? 
+
+\begin{pycode}
+d = \{'x': 1\}\\
+print(d.get('y', 0) + d.setdefault('y', 5))\\
+print(d)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{5} then \texttt{\{'x': 1\}}
+    \item \relax \texttt{5} then \texttt{\{'x': 1, 'y': 5\}}
+    \item \relax \texttt{0} then \texttt{\{'x': 1\}}
+    \item \relax \texttt{10} then \texttt{\{'x': 1, 'y': 5\}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57.} \hfill {\small\color{LPUOrange}\textbf{[deleting items | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+d = \{'a': 1, 'b': 2, 'c': 3\}\\
+val = d.pop('b')\\
+res = d.pop('z', -1)\\
+print(val, res, len(d))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{2 -1 2}
+    \item \relax \texttt{2 None 2}
+    \item \relax \texttt{2 -1 3}
+    \item \relax \texttt{None -1 2}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58.} \hfill {\small\color{LPUOrange}\textbf{[dictionary methods | Hard]}}\\[2pt]
+What does this print? 
+
+\begin{pycode}
+d = \{'a': 1, 'b': 2\}\\
+d.update(\{'b': 20, 'c': 30\})\\
+print(sum(d.values()))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{51}
+    \item \relax \texttt{53}
+    \item \relax \texttt{33}
+    \item \relax \texttt{23}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59.} \hfill {\small\color{LPUOrange}\textbf{[operations on dictionary | Hard]}}\\[2pt]
+What is the output? 
+
+\begin{pycode}
+d = \{1: 'a', 2: 'b'\}\\
+for k in list(d.keys()):\\
+d[k*10] = d[k]\\
+print(len(d))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{4}
+    \item \relax \texttt{6}
+    \item \relax \texttt{RuntimeError raised}
+    \item \relax \texttt{2}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60.} \hfill {\small\color{LPUOrange}\textbf{[length | Hard]}}\\[2pt]
+What is printed? 
+
+\begin{pycode}
+s = "a\textbackslash\{\}tb\textbackslash\{\}nc"\\
+print(len(s))
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{5}
+    \item \relax \texttt{7}
+    \item \relax \texttt{3}
+    \item \relax \texttt{6}
+\end{enumerate}
+\vspace{2mm}
+
+
+\newpage
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{3}{1}
+Design an industrial-grade string manipulation and nested data structure algorithm for inventory and text parsing:
+\begin{enumerate}[label=(\alph*)]
+    \item Write a function \texttt{word\_frequency\_matrix(corpus)} that cleans text (removing punctuation, case normalization), counts token frequency, and returns a sorted descending dictionary.
+    \item Write a function \texttt{merge\_inventories(warehouse\_a, warehouse\_b)} that merges two nested dictionaries containing item codes, quantities, and unit prices, computing the aggregated inventory value and updating total quantities.
+\end{enumerate}
+\end{subjectiveq}
+
+\begin{solbox}
+\textbf{Python Solution:}
+\begin{pycode}
+import string\\
+~\\
+def word\_frequency\_matrix(corpus):\\
+\quad clean\_tokens = corpus.lower().translate(str.maketrans("", "", string.punctuation)).split()\\
+\quad freq = \{\}\\
+\quad for tok in clean\_tokens:\\
+\quad \quad freq[tok] = freq.get(tok, 0) + 1\\
+\quad sorted\_freq = dict(sorted(freq.items(), key=lambda item: item[1], reverse=True))\\
+\quad return sorted\_freq\\
+~\\
+def merge\_inventories(w1, w2):\\
+\quad merged = \{\}\\
+\quad all\_keys = set(w1.keys()) | set(w2.keys())\\
+\quad for k in all\_keys:\\
+\quad \quad q1 = w1.get(k, \{\}).get("qty", 0)\\
+\quad \quad q2 = w2.get(k, \{\}).get("qty", 0)\\
+\quad \quad p1 = w1.get(k, \{\}).get("price", 0.0)\\
+\quad \quad p2 = w2.get(k, \{\}).get("price", 0.0)\\
+\quad \quad price = max(p1, p2)\\
+\quad \quad merged[k] = \{"qty": q1 + q2, "price": price, "total\_val": (q1 + q2) * price\}\\
+\quad return merged
+\end{pycode}
+\textbf{Complexity Analysis:} Dictionary lookups and insertions operate in average $\mathcal{O}(1)$ time. Set union executes in $\mathcal{O}(|w_1| + |w_2|)$, ensuring complete $\mathcal{O}(N \log N)$ complexity dominated by dictionary sorting.
+\end{solbox}
+
+\begin{examinertip}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Algorithmic Formulation (3 Marks):} Correct problem decomposition, function signatures, and parameter documentation.
+    \item \textbf{Syntactic Rigor \& Implementation (4 Marks):} Valid Python syntax, proper error handling, defensive input validation, and avoidance of anti-patterns.
+    \item \textbf{Complexity \& Edge Analysis (3 Marks):} Accurate time and space asymptotic analysis $\mathcal{O}(n)$ and testing edge conditions (null inputs, zero division, empty collections).
+\end{itemize}
+\end{examinertip}

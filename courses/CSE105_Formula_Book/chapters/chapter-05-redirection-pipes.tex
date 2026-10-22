@@ -1,0 +1,45 @@
+\chapter{Unit 5: Wildcard Globbing, Redirection \& Pipe Chaining}
+
+\begin{cheatbox}{Shell Wildcard Globbing Master Table}
+\begin{tabularx}{\linewidth}{l X l}
+\toprule
+\textbf{Pattern} & \textbf{Matching Rule} & \textbf{Example Pattern Matches} \\
+\midrule
+\texttt{*} & Matches zero or more arbitrary characters. & \texttt{*.tar.gz}, \texttt{report*2026.pdf} \\
+\texttt{?} & Matches exactly one single character. & \texttt{data?.csv} (matches \texttt{data1.csv}, not \texttt{data10.csv}) \\
+\texttt{[abc]} & Matches any one character in the set. & \texttt{log[123].txt} (matches \texttt{log1}, \texttt{log2}, \texttt{log3}) \\
+\texttt{[a-z], [0-9]} & Matches any character in the character range. & \texttt{part[0-9].iso}, \texttt{section[A-C].doc} \\
+\texttt{[!abc]} & Negation: matches any character \textbf{not} in set. & \texttt{test[!0-9].py} (matches \texttt{testa.py}, excludes \texttt{test1.py}) \\
+\texttt{\{a,b,c\}} & Brace Expansion: generates string combinations. & \texttt{mkdir -p project/\{src,bin,docs,test\}} \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{File Descriptors \& Redirection Operators Matrix}
+\begin{tabularx}{\linewidth}{l l X}
+\toprule
+\textbf{Operator} & \textbf{Stream Targeted} & \textbf{Operational Behavior} \\
+\midrule
+\texttt{> file} & \texttt{stdout} (FD 1) & Overwrites / truncates target file with output. \\
+\texttt{>> file} & \texttt{stdout} (FD 1) & Appends output to the end of target file. \\
+\texttt{< file} & \texttt{stdin} (FD 0) & Reads command input from target file. \\
+\texttt{2> file} & \texttt{stderr} (FD 2) & Redirects error messages exclusively to target file. \\
+\texttt{2>> file} & \texttt{stderr} (FD 2) & Appends error diagnostics to error log. \\
+\texttt{> out 2> err} & \texttt{stdout} \& \texttt{stderr} & Segregates valid output and errors into separate files. \\
+\texttt{> file 2>\&1} & Merged streams & Merges \texttt{stderr} into the same descriptor as \texttt{stdout}. \\
+\texttt{\&> file} & Merged streams & Bash shorthand: redirects both \texttt{stdout} and \texttt{stderr} to file. \\
+\texttt{2> /dev/null} & \texttt{stderr} & Silently discards all error diagnostics into the bit-bucket. \\
+\texttt{<< 'EOF'} & \texttt{stdin} & \textbf{Here-Document:} Feeds multi-line text directly to command stdin. \\
+\texttt{<<< "text"} & \texttt{stdin} & \textbf{Here-String:} Feeds variable string directly to command stdin. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{Pipes \& Pipeline Operators}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{cmd1 | cmd2}: Connects \texttt{stdout} of \texttt{cmd1} directly to \texttt{stdin} of \texttt{cmd2} via kernel memory pipe.
+    \item \texttt{cmd1 | tee file | cmd2}: Writes stream to \texttt{file} on disk while concurrently forwarding it to \texttt{cmd2}.
+    \item \texttt{tee -a file}: Appends to file during pipeline flow.
+    \item \texttt{set -o pipefail}: Configures shell pipeline to fail if \textit{any} constituent command fails.
+\end{itemize}
+\end{cheatbox}

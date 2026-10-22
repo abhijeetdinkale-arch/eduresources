@@ -1,0 +1,43 @@
+\chapter{Unit 8: Process States, Signal Numbers \& Job Control}
+
+\begin{cheatbox}{Process STAT Codes in ps Snapshot Output}
+\begin{tabularx}{\linewidth}{c X c X}
+\toprule
+\textbf{Code} & \textbf{Kernel Process State} & \textbf{Code} & \textbf{Kernel Process State} \\
+\midrule
+\textbf{R} & Running or runnable on CPU queue & \textbf{s} & Session leader process \\
+\textbf{S} & Interruptible sleep (waiting on I/O) & \textbf{l} & Multi-threaded process \\
+\textbf{D} & Uninterruptible sleep (disk wait; unkillable) & \textbf{+} & Foreground process group \\
+\textbf{T} & Stopped / Paused by signal (\texttt{Ctrl+Z}) & \textbf{<} & High-priority (favorable nice value) \\
+\textbf{Z} & \textbf{Zombie / Defunct} (waiting on parent \texttt{wait()}) & \textbf{N} & Low-priority (unfavorable nice value) \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{Standard POSIX Signals Matrix}
+\begin{tabularx}{\linewidth}{c l l X}
+\toprule
+\textbf{Signal \#} & \textbf{Signal Name} & \textbf{Default Action} & \textbf{Description \& Trap Status} \\
+\midrule
+\texttt{1} & \texttt{SIGHUP} & Terminate & Hangup of controlling terminal; daemon config reload. \\
+\texttt{2} & \texttt{SIGINT} & Terminate & Terminal Interrupt via keyboard \texttt{Ctrl+C}. Trappable. \\
+\texttt{3} & \texttt{SIGQUIT} & Core Dump & Terminal Quit via \texttt{Ctrl+\textbackslash}. Dumps memory core. \\
+\texttt{9} & \textbf{SIGKILL} & \textbf{Immediate Kill} & \textbf{Uncatchable!} Kernel kills process immediately. \\
+\texttt{15} & \textbf{SIGTERM} & Terminate & Graceful termination request (default for \texttt{kill}). Trappable. \\
+\texttt{18} & \texttt{SIGCONT} & Continue & Resumes execution of a paused process. \\
+\texttt{19} & \textbf{SIGSTOP} & \textbf{Pause Execution} & \textbf{Uncatchable!} Suspends process scheduling. \\
+\texttt{20} & \texttt{SIGTSTP} & Stop & Terminal stop signal via keyboard \texttt{Ctrl+Z}. Trappable. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{Terminal Job Control Commands}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{cmd \&}: Spawns command directly into the background.
+    \item \texttt{jobs -l}: Lists active shell jobs with job numbers and PIDs.
+    \item \texttt{Ctrl+Z}: Sends \texttt{SIGTSTP}, stopping the active foreground job.
+    \item \texttt{bg \%N}: Resumes stopped job $N$ running in the background.
+    \item \texttt{fg \%N}: Restores background job $N$ into the active foreground terminal.
+    \item \texttt{nohup cmd \&}: Detaches command from terminal; ignores \texttt{SIGHUP}.
+\end{itemize}
+\end{cheatbox}

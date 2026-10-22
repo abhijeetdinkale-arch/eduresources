@@ -1,6 +1,95 @@
 {
-  "total": 43,
+  "total": 69,
+  "generatedAt": 1792636013653,
   "materials": [
+    {
+      "id": "447d41c25b5b868f",
+      "title": "CHE110",
+      "courseCode": "CHE110",
+      "category": "Textbook",
+      "relativePath": "CHE110/main.pdf",
+      "bundledFile": "books/447d41c25b5b868f.dat",
+      "size": 398397,
+      "sizeFormatted": "389.1 KB",
+      "lastModified": 1792634558070
+    },
+    {
+      "id": "4c1ed5b1d2ed083e",
+      "title": "CHE110 Exam Companion",
+      "courseCode": "CHE110",
+      "category": "Exam Companion",
+      "relativePath": "CHE110_Exam_Companion/main.pdf",
+      "bundledFile": "books/4c1ed5b1d2ed083e.dat",
+      "size": 449120,
+      "sizeFormatted": "438.6 KB",
+      "lastModified": 1792634679483
+    },
+    {
+      "id": "d76e6efb90433327",
+      "title": "CHE110 Formula Book",
+      "courseCode": "CHE110",
+      "category": "Formula Book",
+      "relativePath": "CHE110_Formula_Book/main.pdf",
+      "bundledFile": "books/d76e6efb90433327.dat",
+      "size": 364023,
+      "sizeFormatted": "355.5 KB",
+      "lastModified": 1792634399502
+    },
+    {
+      "id": "1bf55f41794ed39c",
+      "title": "CHE110 Question Bank",
+      "courseCode": "CHE110",
+      "category": "Question Bank",
+      "relativePath": "CHE110_Question_Bank/main.pdf",
+      "bundledFile": "books/1bf55f41794ed39c.dat",
+      "size": 550799,
+      "sizeFormatted": "537.9 KB",
+      "lastModified": 1792634292409
+    },
+    {
+      "id": "2f6b01073df3db20",
+      "title": "CSE105",
+      "courseCode": "CSE105",
+      "category": "Textbook",
+      "relativePath": "CSE105/main.pdf",
+      "bundledFile": "books/2f6b01073df3db20.dat",
+      "size": 511972,
+      "sizeFormatted": "500.0 KB",
+      "lastModified": 1792634513995
+    },
+    {
+      "id": "b5e191fea75224f8",
+      "title": "CSE105 Exam Companion",
+      "courseCode": "CSE105",
+      "category": "Exam Companion",
+      "relativePath": "CSE105_Exam_Companion/main.pdf",
+      "bundledFile": "books/b5e191fea75224f8.dat",
+      "size": 553101,
+      "sizeFormatted": "540.1 KB",
+      "lastModified": 1792635175423
+    },
+    {
+      "id": "d04f0a4345298835",
+      "title": "CSE105 Formula Book",
+      "courseCode": "CSE105",
+      "category": "Formula Book",
+      "relativePath": "CSE105_Formula_Book/main.pdf",
+      "bundledFile": "books/d04f0a4345298835.dat",
+      "size": 345630,
+      "sizeFormatted": "337.5 KB",
+      "lastModified": 1792634634239
+    },
+    {
+      "id": "c82a9b3d456da47d",
+      "title": "CSE105 Question Bank",
+      "courseCode": "CSE105",
+      "category": "Question Bank",
+      "relativePath": "CSE105_Question_Bank/main.pdf",
+      "bundledFile": "books/c82a9b3d456da47d.dat",
+      "size": 381280,
+      "sizeFormatted": "372.3 KB",
+      "lastModified": 1792634932821
+    },
     {
       "id": "a5079d8b1256a90b",
       "title": "CSE111",
@@ -10,7 +99,7 @@
       "bundledFile": "books/a5079d8b1256a90b.dat",
       "size": 528127,
       "sizeFormatted": "515.7 KB",
-      "lastModified": "2026-09-15T22:47:40.638Z"
+      "lastModified": 1789512460638
     },
     {
       "id": "823807c7b3a95369",
@@ -21,7 +110,7 @@
       "bundledFile": "books/823807c7b3a95369.dat",
       "size": 693756,
       "sizeFormatted": "677.5 KB",
-      "lastModified": "2026-09-15T08:22:36.346Z"
+      "lastModified": 1789460556346
     },
     {
       "id": "896dd1de90aff4d6",
@@ -32,7 +121,7 @@
       "bundledFile": "books/896dd1de90aff4d6.dat",
       "size": 428810,
       "sizeFormatted": "418.8 KB",
-      "lastModified": "2026-09-15T22:30:56.817Z"
+      "lastModified": 1789511456817
     },
     {
       "id": "e99ae8b48b78d7ac",
@@ -43,7 +132,7 @@
       "bundledFile": "books/e99ae8b48b78d7ac.dat",
       "size": 497113,
       "sizeFormatted": "485.5 KB",
-      "lastModified": "2026-09-15T22:21:43.488Z"
+      "lastModified": 1789510903487
     },
     {
       "id": "688fa6095f857094",
@@ -54,7 +143,7 @@
       "bundledFile": "books/688fa6095f857094.dat",
       "size": 500367,
       "sizeFormatted": "488.6 KB",
-      "lastModified": "2026-09-15T22:24:26.311Z"
+      "lastModified": 1789511066310
     },
     {
       "id": "7de4eab5c253437c",
@@ -64,8 +153,8 @@
       "relativePath": "CSE326/main.pdf",
       "bundledFile": "books/7de4eab5c253437c.dat",
       "size": 911373,
-      "sizeFormatted": "890 KB",
-      "lastModified": "2026-09-16T00:01:02.840Z"
+      "sizeFormatted": "890.0 KB",
+      "lastModified": 1789516862840
     },
     {
       "id": "228988e7d346c8a4",
@@ -76,7 +165,7 @@
       "bundledFile": "books/228988e7d346c8a4.dat",
       "size": 324915,
       "sizeFormatted": "317.3 KB",
-      "lastModified": "2026-09-16T04:28:38.868Z"
+      "lastModified": 1789532918868
     },
     {
       "id": "fa53812083804f88",
@@ -87,7 +176,7 @@
       "bundledFile": "books/fa53812083804f88.dat",
       "size": 347548,
       "sizeFormatted": "339.4 KB",
-      "lastModified": "2026-09-15T23:43:18.930Z"
+      "lastModified": 1789515798929
     },
     {
       "id": "749491c0fb53b136",
@@ -98,7 +187,7 @@
       "bundledFile": "books/749491c0fb53b136.dat",
       "size": 342866,
       "sizeFormatted": "334.8 KB",
-      "lastModified": "2026-09-15T23:38:42.915Z"
+      "lastModified": 1789515522915
     },
     {
       "id": "09559e8263001954",
@@ -109,7 +198,7 @@
       "bundledFile": "books/09559e8263001954.dat",
       "size": 431979,
       "sizeFormatted": "421.9 KB",
-      "lastModified": "2026-09-15T23:54:45.306Z"
+      "lastModified": 1789516485306
     },
     {
       "id": "54c7204103e38220",
@@ -119,8 +208,228 @@
       "relativePath": "CSE326/CSE326_TEXTBOOK.pdf",
       "bundledFile": "books/54c7204103e38220.dat",
       "size": 911373,
-      "sizeFormatted": "890 KB",
-      "lastModified": "2026-09-16T00:01:02.846Z"
+      "sizeFormatted": "890.0 KB",
+      "lastModified": 1789516862846
+    },
+    {
+      "id": "397b0df864fd1b23",
+      "title": "CSR101",
+      "courseCode": "CSR101",
+      "category": "Textbook",
+      "relativePath": "CSR101/main.pdf",
+      "bundledFile": "books/397b0df864fd1b23.dat",
+      "size": 407799,
+      "sizeFormatted": "398.2 KB",
+      "lastModified": 1792634667914
+    },
+    {
+      "id": "17534e3347fb52d9",
+      "title": "CSR101 Exam Companion",
+      "courseCode": "CSR101",
+      "category": "Exam Companion",
+      "relativePath": "CSR101_Exam_Companion/main.pdf",
+      "bundledFile": "books/17534e3347fb52d9.dat",
+      "size": 519211,
+      "sizeFormatted": "507.0 KB",
+      "lastModified": 1792634915034
+    },
+    {
+      "id": "db6640a63ebb9124",
+      "title": "CSR101 Formula Book",
+      "courseCode": "CSR101",
+      "category": "Formula Book",
+      "relativePath": "CSR101_Formula_Book/main.pdf",
+      "bundledFile": "books/db6640a63ebb9124.dat",
+      "size": 508938,
+      "sizeFormatted": "497.0 KB",
+      "lastModified": 1792634528778
+    },
+    {
+      "id": "188893c0746a5f24",
+      "title": "CSR101 Question Bank",
+      "courseCode": "CSR101",
+      "category": "Question Bank",
+      "relativePath": "CSR101_Question_Bank/main.pdf",
+      "bundledFile": "books/188893c0746a5f24.dat",
+      "size": 518016,
+      "sizeFormatted": "505.9 KB",
+      "lastModified": 1792634411416
+    },
+    {
+      "id": "2c2d19223fe3a280",
+      "title": "CSR102",
+      "courseCode": "CSR102",
+      "category": "Textbook",
+      "relativePath": "CSR102/main.pdf",
+      "bundledFile": "books/2c2d19223fe3a280.dat",
+      "size": 331814,
+      "sizeFormatted": "324.0 KB",
+      "lastModified": 1792634595190
+    },
+    {
+      "id": "4d956a0a428e7629",
+      "title": "CSR102 Exam Companion",
+      "courseCode": "CSR102",
+      "category": "Exam Companion",
+      "relativePath": "CSR102_Exam_Companion/main.pdf",
+      "bundledFile": "books/4d956a0a428e7629.dat",
+      "size": 472313,
+      "sizeFormatted": "461.2 KB",
+      "lastModified": 1792634879712
+    },
+    {
+      "id": "38023621c3b7359a",
+      "title": "CSR102 Formula Book",
+      "courseCode": "CSR102",
+      "category": "Formula Book",
+      "relativePath": "CSR102_Formula_Book/main.pdf",
+      "bundledFile": "books/38023621c3b7359a.dat",
+      "size": 289712,
+      "sizeFormatted": "282.9 KB",
+      "lastModified": 1792634469358
+    },
+    {
+      "id": "b407a1219127d13a",
+      "title": "CSR102 Question Bank",
+      "courseCode": "CSR102",
+      "category": "Question Bank",
+      "relativePath": "CSR102_Question_Bank/main.pdf",
+      "bundledFile": "books/b407a1219127d13a.dat",
+      "size": 410255,
+      "sizeFormatted": "400.6 KB",
+      "lastModified": 1792634318218
+    },
+    {
+      "id": "84b562efee766e7b",
+      "title": "ECE120",
+      "courseCode": "ECE120",
+      "category": "Textbook",
+      "relativePath": "ECE120/main.pdf",
+      "bundledFile": "books/84b562efee766e7b.dat",
+      "size": 431177,
+      "sizeFormatted": "421.1 KB",
+      "lastModified": 1792634685720
+    },
+    {
+      "id": "1bcb3a91744031b9",
+      "title": "ECE120 Exam Companion",
+      "courseCode": "ECE120",
+      "category": "Exam Companion",
+      "relativePath": "ECE120_Exam_Companion/main.pdf",
+      "bundledFile": "books/1bcb3a91744031b9.dat",
+      "size": 473248,
+      "sizeFormatted": "462.2 KB",
+      "lastModified": 1792634826432
+    },
+    {
+      "id": "ac66d4ca33d5d842",
+      "title": "ECE120 Formula Book",
+      "courseCode": "ECE120",
+      "category": "Formula Book",
+      "relativePath": "ECE120_Formula_Book/main.pdf",
+      "bundledFile": "books/ac66d4ca33d5d842.dat",
+      "size": 361517,
+      "sizeFormatted": "353.0 KB",
+      "lastModified": 1792634482438
+    },
+    {
+      "id": "df3c29f692ec9df8",
+      "title": "ECE120 Question Bank",
+      "courseCode": "ECE120",
+      "category": "Question Bank",
+      "relativePath": "ECE120_Question_Bank/main.pdf",
+      "bundledFile": "books/df3c29f692ec9df8.dat",
+      "size": 516173,
+      "sizeFormatted": "504.1 KB",
+      "lastModified": 1792634393474
+    },
+    {
+      "id": "4bd0c368e7355e5b",
+      "title": "ECE131",
+      "courseCode": "ECE131",
+      "category": "Textbook",
+      "relativePath": "ECE131/main.pdf",
+      "bundledFile": "books/4bd0c368e7355e5b.dat",
+      "size": 479457,
+      "sizeFormatted": "468.2 KB",
+      "lastModified": 1792635079497
+    },
+    {
+      "id": "6c90c0ffcf494b20",
+      "title": "ECE131 Exam Companion",
+      "courseCode": "ECE131",
+      "category": "Exam Companion",
+      "relativePath": "ECE131_Exam_Companion/main.pdf",
+      "bundledFile": "books/6c90c0ffcf494b20.dat",
+      "size": 451742,
+      "sizeFormatted": "441.2 KB",
+      "lastModified": 1792634842199
+    },
+    {
+      "id": "35a0b08cde6b6b46",
+      "title": "ECE131 Formula Book",
+      "courseCode": "ECE131",
+      "category": "Formula Book",
+      "relativePath": "ECE131_Formula_Book/main.pdf",
+      "bundledFile": "books/35a0b08cde6b6b46.dat",
+      "size": 484645,
+      "sizeFormatted": "473.3 KB",
+      "lastModified": 1792634702133
+    },
+    {
+      "id": "a46aeeb1dc523fec",
+      "title": "ECE131 Question Bank",
+      "courseCode": "ECE131",
+      "category": "Question Bank",
+      "relativePath": "ECE131_Question_Bank/main.pdf",
+      "bundledFile": "books/a46aeeb1dc523fec.dat",
+      "size": 514710,
+      "sizeFormatted": "502.6 KB",
+      "lastModified": 1792634579147
+    },
+    {
+      "id": "352bb52d5d618399",
+      "title": "ECE181",
+      "courseCode": "ECE181",
+      "category": "Textbook",
+      "relativePath": "ECE181/main.pdf",
+      "bundledFile": "books/352bb52d5d618399.dat",
+      "size": 454427,
+      "sizeFormatted": "443.8 KB",
+      "lastModified": 1792635483707
+    },
+    {
+      "id": "40626a8e8d8fd274",
+      "title": "ECE181 Exam Companion",
+      "courseCode": "ECE181",
+      "category": "Exam Companion",
+      "relativePath": "ECE181_Exam_Companion/main.pdf",
+      "bundledFile": "books/40626a8e8d8fd274.dat",
+      "size": 528784,
+      "sizeFormatted": "516.4 KB",
+      "lastModified": 1792635257201
+    },
+    {
+      "id": "83ade2a5d004ece2",
+      "title": "ECE181 Formula Book",
+      "courseCode": "ECE181",
+      "category": "Formula Book",
+      "relativePath": "ECE181_Formula_Book/main.pdf",
+      "bundledFile": "books/83ade2a5d004ece2.dat",
+      "size": 349943,
+      "sizeFormatted": "341.7 KB",
+      "lastModified": 1792634785921
+    },
+    {
+      "id": "82c33ef7e33fbf25",
+      "title": "ECE181 Question Bank",
+      "courseCode": "ECE181",
+      "category": "Question Bank",
+      "relativePath": "ECE181_Question_Bank/main.pdf",
+      "bundledFile": "books/82c33ef7e33fbf25.dat",
+      "size": 470427,
+      "sizeFormatted": "459.4 KB",
+      "lastModified": 1792634692333
     },
     {
       "id": "a5d68057d836006f",
@@ -131,7 +440,7 @@
       "bundledFile": "books/a5d68057d836006f.dat",
       "size": 900996,
       "sizeFormatted": "879.9 KB",
-      "lastModified": "2026-09-09T04:49:45.717Z"
+      "lastModified": 1788929385717
     },
     {
       "id": "c3414ad2ed57a503",
@@ -142,150 +451,7 @@
       "bundledFile": "books/c3414ad2ed57a503.dat",
       "size": 475468,
       "sizeFormatted": "464.3 KB",
-      "lastModified": "2026-09-09T04:51:24.982Z"
-    },
-    {
-      "id": "b6d34e8b355859d6",
-      "title": "Academic Accuracy Certification Dossier",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "Academic_Accuracy_Certification_Dossier.pdf",
-      "bundledFile": "books/b6d34e8b355859d6.dat",
-      "size": 112775,
-      "sizeFormatted": "110.1 KB",
-      "lastModified": "2026-09-22T21:52:55.105Z"
-    },
-    {
-      "id": "51b47db4658ecc03",
-      "title": "edunetwork product showcase",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "edunetwork_product_showcase.pdf",
-      "bundledFile": "books/51b47db4658ecc03.dat",
-      "size": 73511,
-      "sizeFormatted": "71.8 KB",
-      "lastModified": "2026-09-21T09:05:20.802Z"
-    },
-    {
-      "id": "d02d68eb0bc9da61",
-      "title": "EduResources Master Academic Certification",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "EduResources_Master_Academic_Certification.pdf",
-      "bundledFile": "books/d02d68eb0bc9da61.dat",
-      "size": 123718,
-      "sizeFormatted": "120.8 KB",
-      "lastModified": "2026-09-22T22:41:51.994Z"
-    },
-    {
-      "id": "5378f254d0b41bf8",
-      "title": "EduResources Technologia Raport Architektoniczny",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "EduResources_Technologia_Raport_Architektoniczny.pdf",
-      "bundledFile": "books/5378f254d0b41bf8.dat",
-      "size": 383796,
-      "sizeFormatted": "374.8 KB",
-      "lastModified": "2026-09-22T22:32:40.809Z"
-    },
-    {
-      "id": "a9b175ca7c4e1af8",
-      "title": "EduResources Technology Architecture Dossier",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "EduResources_Technology_Architecture_Dossier.pdf",
-      "bundledFile": "books/a9b175ca7c4e1af8.dat",
-      "size": 366923,
-      "sizeFormatted": "358.3 KB",
-      "lastModified": "2026-09-22T22:33:41.629Z"
-    },
-    {
-      "id": "f1a661817fabe4a0",
-      "title": "institutional application dossier",
-      "courseCode": "GENERAL",
-      "category": "Study Material",
-      "relativePath": "institutional_application_dossier.pdf",
-      "bundledFile": "books/f1a661817fabe4a0.dat",
-      "size": 104145,
-      "sizeFormatted": "101.7 KB",
-      "lastModified": "2026-09-21T09:04:24.225Z"
-    },
-    {
-      "id": "2f47093af3e3c020",
-      "title": "PHY175",
-      "courseCode": "GENERAL",
-      "category": "Textbook",
-      "relativePath": "PHY175/main.pdf",
-      "bundledFile": "books/2f47093af3e3c020.dat",
-      "size": 756619,
-      "sizeFormatted": "738.9 KB",
-      "lastModified": "2026-09-18T08:09:51.140Z"
-    },
-    {
-      "id": "1a30c13db1cd6edf",
-      "title": "PHY175 Formula Book",
-      "courseCode": "GENERAL",
-      "category": "Formula Book",
-      "relativePath": "PHY175_Formula_Book/main.pdf",
-      "bundledFile": "books/1a30c13db1cd6edf.dat",
-      "size": 262139,
-      "sizeFormatted": "256 KB",
-      "lastModified": "2026-09-18T00:08:46.228Z"
-    },
-    {
-      "id": "81d31ef07b04a935",
-      "title": "PHY175 Handwritten Notes",
-      "courseCode": "GENERAL",
-      "category": "Handwritten Notes",
-      "relativePath": "PHY175_Handwritten_Notes/main.pdf",
-      "bundledFile": "books/81d31ef07b04a935.dat",
-      "size": 279845,
-      "sizeFormatted": "273.3 KB",
-      "lastModified": "2026-09-18T00:10:07.622Z"
-    },
-    {
-      "id": "fd38631dbe1935f5",
-      "title": "PHY175 Question Bank",
-      "courseCode": "GENERAL",
-      "category": "Question Bank",
-      "relativePath": "PHY175_Question_Bank/main.pdf",
-      "bundledFile": "books/fd38631dbe1935f5.dat",
-      "size": 502758,
-      "sizeFormatted": "491 KB",
-      "lastModified": "2026-09-18T00:38:07.799Z"
-    },
-    {
-      "id": "56fcdb9bb372cebd",
-      "title": "PHY175 Revision Book",
-      "courseCode": "GENERAL",
-      "category": "Textbook",
-      "relativePath": "PHY175_Revision_Book/main.pdf",
-      "bundledFile": "books/56fcdb9bb372cebd.dat",
-      "size": 271519,
-      "sizeFormatted": "265.2 KB",
-      "lastModified": "2026-09-18T00:07:12.145Z"
-    },
-    {
-      "id": "49f038119359824b",
-      "title": "PHY175 Sample Question Papers",
-      "courseCode": "GENERAL",
-      "category": "Sample Question Papers",
-      "relativePath": "PHY175_Sample_Question_Papers/main.pdf",
-      "bundledFile": "books/49f038119359824b.dat",
-      "size": 301273,
-      "sizeFormatted": "294.2 KB",
-      "lastModified": "2026-09-18T00:38:48.374Z"
-    },
-    {
-      "id": "7dea8a61f9b0578a",
-      "title": "INT108",
-      "courseCode": "INT108",
-      "category": "Study Material",
-      "relativePath": "INT108/INT108.pdf",
-      "bundledFile": "books/7dea8a61f9b0578a.dat",
-      "size": 1416566,
-      "sizeFormatted": "1.4 MB",
-      "lastModified": "2026-09-09T04:39:48.067Z"
+      "lastModified": 1788929484982
     },
     {
       "id": "9e12fb2c190fb244",
@@ -296,7 +462,18 @@
       "bundledFile": "books/9e12fb2c190fb244.dat",
       "size": 1416566,
       "sizeFormatted": "1.4 MB",
-      "lastModified": "2026-09-09T04:39:48.062Z"
+      "lastModified": 1788928788062
+    },
+    {
+      "id": "7dea8a61f9b0578a",
+      "title": "INT108",
+      "courseCode": "INT108",
+      "category": "Study Material",
+      "relativePath": "INT108/INT108.pdf",
+      "bundledFile": "books/7dea8a61f9b0578a.dat",
+      "size": 1416566,
+      "sizeFormatted": "1.4 MB",
+      "lastModified": 1788928788067
     },
     {
       "id": "a43f9241251b5619",
@@ -307,7 +484,7 @@
       "bundledFile": "books/a43f9241251b5619.dat",
       "size": 454892,
       "sizeFormatted": "444.2 KB",
-      "lastModified": "2026-09-16T20:17:57.385Z"
+      "lastModified": 1789589877384
     },
     {
       "id": "6e075a6c92779b72",
@@ -318,7 +495,7 @@
       "bundledFile": "books/6e075a6c92779b72.dat",
       "size": 347838,
       "sizeFormatted": "339.7 KB",
-      "lastModified": "2026-09-16T20:20:42.569Z"
+      "lastModified": 1789590042569
     },
     {
       "id": "e9dca77437bd91a8",
@@ -329,7 +506,7 @@
       "bundledFile": "books/e9dca77437bd91a8.dat",
       "size": 319705,
       "sizeFormatted": "312.2 KB",
-      "lastModified": "2026-09-16T20:21:26.211Z"
+      "lastModified": 1789590086210
     },
     {
       "id": "af9121c7d08fe9c1",
@@ -340,7 +517,7 @@
       "bundledFile": "books/af9121c7d08fe9c1.dat",
       "size": 595551,
       "sizeFormatted": "581.6 KB",
-      "lastModified": "2026-09-09T04:52:38.613Z"
+      "lastModified": 1788929558612
     },
     {
       "id": "72e4961e96ab7c56",
@@ -351,18 +528,7 @@
       "bundledFile": "books/72e4961e96ab7c56.dat",
       "size": 503983,
       "sizeFormatted": "492.2 KB",
-      "lastModified": "2026-09-16T07:26:14.187Z"
-    },
-    {
-      "id": "3fcae40310905df4",
-      "title": "MTH165 Exam Companion",
-      "courseCode": "MTH165",
-      "category": "Exam Companion",
-      "relativePath": "MTH165_Exam_Companion/MTH165_Exam_Companion.pdf",
-      "bundledFile": "books/3fcae40310905df4.dat",
-      "size": 840722,
-      "sizeFormatted": "821 KB",
-      "lastModified": "2026-09-16T07:28:45.700Z"
+      "lastModified": 1789543574186
     },
     {
       "id": "a386ce4c3b36f4b9",
@@ -372,8 +538,19 @@
       "relativePath": "MTH165_Exam_Companion/main.pdf",
       "bundledFile": "books/a386ce4c3b36f4b9.dat",
       "size": 840722,
-      "sizeFormatted": "821 KB",
-      "lastModified": "2026-09-16T07:27:58.877Z"
+      "sizeFormatted": "821.0 KB",
+      "lastModified": 1789543678876
+    },
+    {
+      "id": "3fcae40310905df4",
+      "title": "MTH165 Exam Companion",
+      "courseCode": "MTH165",
+      "category": "Exam Companion",
+      "relativePath": "MTH165_Exam_Companion/MTH165_Exam_Companion.pdf",
+      "bundledFile": "books/3fcae40310905df4.dat",
+      "size": 840722,
+      "sizeFormatted": "821.0 KB",
+      "lastModified": 1789543725699
     },
     {
       "id": "bf471027398543ad",
@@ -383,8 +560,8 @@
       "relativePath": "MTH165_Formula_Book/main.pdf",
       "bundledFile": "books/bf471027398543ad.dat",
       "size": 226287,
-      "sizeFormatted": "221 KB",
-      "lastModified": "2026-09-16T07:28:49.479Z"
+      "sizeFormatted": "221.0 KB",
+      "lastModified": 1789543729478
     },
     {
       "id": "36559950fe8a1c38",
@@ -395,7 +572,7 @@
       "bundledFile": "books/36559950fe8a1c38.dat",
       "size": 266517,
       "sizeFormatted": "260.3 KB",
-      "lastModified": "2026-09-16T07:28:47.884Z"
+      "lastModified": 1789543727883
     },
     {
       "id": "ee6de70ee5a8a62e",
@@ -405,8 +582,52 @@
       "relativePath": "MTH165_Sample_Question_Papers/main.pdf",
       "bundledFile": "books/ee6de70ee5a8a62e.dat",
       "size": 601038,
-      "sizeFormatted": "587 KB",
-      "lastModified": "2026-09-16T08:05:26.174Z"
+      "sizeFormatted": "587.0 KB",
+      "lastModified": 1789545926173
+    },
+    {
+      "id": "8912c53d676fc883",
+      "title": "MTH174",
+      "courseCode": "MTH174",
+      "category": "Textbook",
+      "relativePath": "MTH174/main.pdf",
+      "bundledFile": "books/8912c53d676fc883.dat",
+      "size": 411046,
+      "sizeFormatted": "401.4 KB",
+      "lastModified": 1792633099673
+    },
+    {
+      "id": "51816207284ab0f2",
+      "title": "MTH174 Exam Companion",
+      "courseCode": "MTH174",
+      "category": "Exam Companion",
+      "relativePath": "MTH174_Exam_Companion/main.pdf",
+      "bundledFile": "books/51816207284ab0f2.dat",
+      "size": 447411,
+      "sizeFormatted": "436.9 KB",
+      "lastModified": 1792633606585
+    },
+    {
+      "id": "220fd4ff619f4906",
+      "title": "MTH174 Formula Book",
+      "courseCode": "MTH174",
+      "category": "Formula Book",
+      "relativePath": "MTH174_Formula_Book/main.pdf",
+      "bundledFile": "books/220fd4ff619f4906.dat",
+      "size": 298084,
+      "sizeFormatted": "291.1 KB",
+      "lastModified": 1792633148814
+    },
+    {
+      "id": "606bb64b1c3de0b7",
+      "title": "MTH174 Question Bank",
+      "courseCode": "MTH174",
+      "category": "Question Bank",
+      "relativePath": "MTH174_Question_Bank/main.pdf",
+      "bundledFile": "books/606bb64b1c3de0b7.dat",
+      "size": 430207,
+      "sizeFormatted": "420.1 KB",
+      "lastModified": 1792633432281
     },
     {
       "id": "6e92ff85e21cdcb8",
@@ -416,8 +637,8 @@
       "relativePath": "Physics/main.pdf",
       "bundledFile": "books/6e92ff85e21cdcb8.dat",
       "size": 1097603,
-      "sizeFormatted": "1 MB",
-      "lastModified": "2026-08-28T21:50:42.713Z"
+      "sizeFormatted": "1.0 MB",
+      "lastModified": 1787953842712
     },
     {
       "id": "f82e1a734ca622df",
@@ -428,18 +649,7 @@
       "bundledFile": "books/f82e1a734ca622df.dat",
       "size": 588311,
       "sizeFormatted": "574.5 KB",
-      "lastModified": "2026-09-16T09:18:40.530Z"
-    },
-    {
-      "id": "606f20ef973b2acd",
-      "title": "Physics Exam Companion",
-      "courseCode": "PHY110",
-      "category": "Exam Companion",
-      "relativePath": "Physics_Exam_Companion/Physics_Exam_Companion.pdf",
-      "bundledFile": "books/606f20ef973b2acd.dat",
-      "size": 627185,
-      "sizeFormatted": "612.5 KB",
-      "lastModified": "2026-09-16T09:18:35.379Z"
+      "lastModified": 1789550320530
     },
     {
       "id": "09d63d4170518299",
@@ -450,7 +660,84 @@
       "bundledFile": "books/09d63d4170518299.dat",
       "size": 627185,
       "sizeFormatted": "612.5 KB",
-      "lastModified": "2026-09-16T09:11:33.212Z"
+      "lastModified": 1789549893212
+    },
+    {
+      "id": "606f20ef973b2acd",
+      "title": "Physics Exam Companion",
+      "courseCode": "PHY110",
+      "category": "Exam Companion",
+      "relativePath": "Physics_Exam_Companion/Physics_Exam_Companion.pdf",
+      "bundledFile": "books/606f20ef973b2acd.dat",
+      "size": 627185,
+      "sizeFormatted": "612.5 KB",
+      "lastModified": 1789550315378
+    },
+    {
+      "id": "2f47093af3e3c020",
+      "title": "PHY175",
+      "courseCode": "PHY175",
+      "category": "Textbook",
+      "relativePath": "PHY175/main.pdf",
+      "bundledFile": "books/2f47093af3e3c020.dat",
+      "size": 756619,
+      "sizeFormatted": "738.9 KB",
+      "lastModified": 1789718991140
+    },
+    {
+      "id": "1a30c13db1cd6edf",
+      "title": "PHY175 Formula Book",
+      "courseCode": "PHY175",
+      "category": "Formula Book",
+      "relativePath": "PHY175_Formula_Book/main.pdf",
+      "bundledFile": "books/1a30c13db1cd6edf.dat",
+      "size": 262139,
+      "sizeFormatted": "256.0 KB",
+      "lastModified": 1789690126228
+    },
+    {
+      "id": "81d31ef07b04a935",
+      "title": "PHY175 Handwritten Notes",
+      "courseCode": "PHY175",
+      "category": "Handwritten Notes",
+      "relativePath": "PHY175_Handwritten_Notes/main.pdf",
+      "bundledFile": "books/81d31ef07b04a935.dat",
+      "size": 279845,
+      "sizeFormatted": "273.3 KB",
+      "lastModified": 1789690207622
+    },
+    {
+      "id": "fd38631dbe1935f5",
+      "title": "PHY175 Question Bank",
+      "courseCode": "PHY175",
+      "category": "Question Bank",
+      "relativePath": "PHY175_Question_Bank/main.pdf",
+      "bundledFile": "books/fd38631dbe1935f5.dat",
+      "size": 502758,
+      "sizeFormatted": "491.0 KB",
+      "lastModified": 1789691887798
+    },
+    {
+      "id": "56fcdb9bb372cebd",
+      "title": "PHY175 Revision Book",
+      "courseCode": "PHY175",
+      "category": "Textbook",
+      "relativePath": "PHY175_Revision_Book/main.pdf",
+      "bundledFile": "books/56fcdb9bb372cebd.dat",
+      "size": 271519,
+      "sizeFormatted": "265.2 KB",
+      "lastModified": 1789690032145
+    },
+    {
+      "id": "49f038119359824b",
+      "title": "PHY175 Sample Question Papers",
+      "courseCode": "PHY175",
+      "category": "Sample Question Papers",
+      "relativePath": "PHY175_Sample_Question_Papers/main.pdf",
+      "bundledFile": "books/49f038119359824b.dat",
+      "size": 301273,
+      "sizeFormatted": "294.2 KB",
+      "lastModified": 1789691928374
     },
     {
       "id": "12b45de7d991e02b",
@@ -461,7 +748,7 @@
       "bundledFile": "books/12b45de7d991e02b.dat",
       "size": 307633,
       "sizeFormatted": "300.4 KB",
-      "lastModified": "2026-09-16T09:18:37.688Z"
+      "lastModified": 1789550317688
     },
     {
       "id": "2d584d8e5632e50c",
@@ -472,7 +759,7 @@
       "bundledFile": "books/2d584d8e5632e50c.dat",
       "size": 1431842,
       "sizeFormatted": "1.4 MB",
-      "lastModified": "2026-09-16T19:47:37.969Z"
+      "lastModified": 1789588057969
     }
   ]
 }

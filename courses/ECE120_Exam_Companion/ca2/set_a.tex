@@ -1,0 +1,34 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+
+\LPUPaperHeader{Continuous Assessment 2 (CA-2)}{A}{60 Minutes}{25 Marks}{CO4 (Logic Gates \& Universality), CO5 (Adders \& Combinational)}
+
+\noindent\textbf{Instructions to Candidates:}
+\begin{enumerate*}[label=\textbf{\arabic*.}]
+    \item Answer any \textbf{FIVE} questions out of the six questions presented.
+    \item Each question carries \textbf{5 Marks}. Clearly state Boolean algebra steps.
+\end{enumerate*}
+
+\questionitem{1}{Draw the pinout diagram of IC 7400 (Quad 2-Input NAND) showing VCC, GND, and the four gates. State the complete truth table.}{5}{CO4}{L2}
+\questionitem{2}{Prove using De Morgan's theorems that a 2-input OR gate can be realized using three 2-input NAND gates. Draw the gate schematic.}{5}{CO4}{L3}
+\questionitem{3}{Formulate the truth table of a Half Adder. Derive the minimal Boolean equations for Sum ($S$) and Carry ($C$). Draw the circuit using discrete XOR and AND gates.}{5}{CO5}{L3}
+\questionitem{4}{Draw the logic diagram of a Full Adder constructed using two Half Adders and an OR gate. Prove algebraically that the Carry output is $C_{\mathrm{out}} = AB + C_{\mathrm{in}}(A \oplus B)$.}{5}{CO5}{L4}
+\questionitem{5}{Synthesize a 2-input XOR gate using exactly four 2-input NAND gates. Provide the Boolean proof for the output expression.}{5}{CO4}{L4}
+\questionitem{6}{Design a Half Subtractor circuit. Provide its truth table, Boolean equations for Difference ($D$) and Borrow ($B_{\mathrm{out}}$), and breadboard implementation schematic.}{5}{CO5}{L3}
+
+\subsection*{Model Solutions \& Marking Rubrics (Set A)}
+
+\begin{solutionbox}[Solution to Q.2]
+De Morgan's Theorem states: $\overline{X \cdot Y} = \overline{X} + \overline{Y}$.\\
+To implement $Y = A + B$ using NAND gates:\\
+1. Invert inputs $A$ and $B$ individually using two NAND gates configured as inverters:
+\[ Y_1 = \overline{A \cdot A} = \overline{A}, \quad Y_2 = \overline{B \cdot B} = \overline{B} \]
+2. Feed $Y_1$ and $Y_2$ into a third NAND gate:
+\[ Y = \overline{Y_1 \cdot Y_2} = \overline{\overline{A} \cdot \overline{B}} \]
+Applying De Morgan's theorem to the outer inversion:
+\[ Y = \overline{\overline{A}} + \overline{\overline{B}} = A + B \]
+This realizes the OR operation using exactly 3 NAND gates.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.2):} Statement of De Morgan's theorem: 1 Mark $\bullet$ Algebraic derivation: 2 Marks $\bullet$ Clean schematic diagram with pin connections: 2 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

@@ -1,0 +1,164 @@
+\chapter{System Utilities \& Core Command-Line Fundamentals}
+\label{chap:system-utilities}
+
+\section{The Command-Line Grammar \& Execution Anatomy}
+The command-line interface (CLI) is a formal language interpreter. Commands conform to a standard syntactic structure:
+\begin{equation}
+\texttt{command}\quad [\texttt{options/switches}]\quad [\texttt{arguments}]
+\end{equation}
+
+\begin{definition}[Anatomy of a CLI Invocation]
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Command:} The binary executable file name (e.g., \texttt{ls}, \texttt{grep}) or shell builtin function (e.g., \texttt{cd}, \texttt{echo}).
+    \item \textbf{Short Options:} Single hyphen followed by single letters (e.g., \texttt{-l}, \texttt{-a}, or combined as \texttt{-la}).
+    \item \textbf{Long Options:} Double hyphen followed by descriptive words (e.g., \texttt{--all}, \texttt{--human-readable}).
+    \item \textbf{Arguments:} The targets upon which the command operates, such as file paths, usernames, or text strings.
+    \item \textbf{Exit Status (\$POSIX \$?):} An integer returned to the shell upon completion; \texttt{0} denotes successful execution, while any non-zero value ($1$--$255$) indicates a failure code.
+\end{itemize}
+\end{definition}
+
+\section{Time, Calendar \& Clock Utilities}
+Managing system time is vital for filesystem timestamps, logging daemons, and cryptographic protocol integrity.
+
+\begin{commandbox}{cal --- Display Calendar}
+\textbf{Syntax:} \texttt{cal [options] [[[day] month] year]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{cal}: Displays the calendar for the current month.
+    \item \texttt{cal -3}: Displays the previous, current, and subsequent months.
+    \item \texttt{cal -y [year]}: Displays the complete calendar for the specified year.
+    \item \texttt{cal -j}: Displays Julian days (day of the year numbered 1--366).
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{date --- Print or Set System Date and Time}
+\textbf{Syntax:} \texttt{date [options] [+FORMAT]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{+\%Y-\%m-\%d}: ISO 8601 standard date format (\texttt{YYYY-MM-DD}).
+    \item \texttt{+\%H:\%M:\%S}: Standard 24-hour time notation.
+    \item \texttt{+\%s}: Unix Epoch timestamp (seconds elapsed since January 1, 1970 00:00:00 UTC).
+    \item \texttt{date -u}: Displays Coordinated Universal Time (UTC).
+    \item \texttt{date -d "@1700000000"}: Converts a Unix epoch timestamp back to human-readable format.
+\end{itemize}
+\end{commandbox}
+
+\begin{terminalbox}[Calendar and Date Operations]
+$ cal -3
+   September 2026         October 2026          November 2026   
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+       1  2  3  4  5               1  2  3   1  2  3  4  5  6  7
+ 6  7  8  9 10 11 12   4  5  6  7  8  9 10   8  9 10 11 12 13 14
+13 14 15 16 17 18 19  11 12 13 14 15 16 17  15 16 17 18 19 20 21
+20 21 22 23 24 25 26  18 19 20 21 22 23 24  22 23 24 25 26 27 28
+27 28 29 30           25 26 27 28 29 30 31  29 30
+
+$ date "+Log Entry: %Y-%m-%d %T %Z | Epoch: %s"
+Log Entry: 2026-10-22 07:35:12 UTC | Epoch: 1792654512
+\end{terminalbox}
+
+\section{Formatted Standard Output: echo \& printf}
+Emitting text to the standard output stream is handled by \texttt{echo} and \texttt{printf}.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{echo:} Outputs strings followed by a trailing newline. The \texttt{-n} switch suppresses the trailing newline; the \texttt{-e} switch activates the interpretation of backslash escape sequences (e.g., \texttt{\textbackslash n} newline, \texttt{\textbackslash t} horizontal tab, \texttt{\textbackslash e[31m} ANSI red text).
+    \item \textbf{printf:} Implements the ANSI C formatting standard. Unlike \texttt{echo}, \texttt{printf} does not emit an automatic trailing newline and supports precision format specifiers (\texttt{\%s} string, \texttt{\%d} decimal integer, \texttt{\%f} floating-point).
+\end{itemize}
+
+\begin{terminalbox}[Formatted Output Demonstrations]
+$ echo -e "Module\tStatus\nAuth\t[OK]\nNetwork\t[ACTIVE]"
+Module  Status
+Auth    [OK]
+Network [ACTIVE]
+
+$ printf "| %-12s | %8.2f MB |\n" "kernel.img" 14.852 "rootfs.ext4" 1024.50
+| kernel.img   |    14.85 MB |
+| rootfs.ext4  |  1024.50 MB |
+\end{terminalbox}
+
+\section{Command-Line Arithmetic: bc \& expr}
+Standard shell environments perform integer arithmetic via \texttt{expr} or the native shell syntax \texttt{\$(( ... ))}. Floating-point calculations necessitate \textbf{bc} (Basic Calculator).
+
+\begin{commandbox}{expr --- Evaluate Expressions}
+\textbf{Syntax:} \texttt{expr ARG1 OPERATOR ARG2}
+\begin{itemize}[leftmargin=1.5em]
+    \item Operates strictly on integers.
+    \item Every operator and operand must be isolated by spaces.
+    \item The multiplication symbol \texttt{*} is a shell globbing character and must be escaped: \texttt{expr 15 \textbackslash* 4}.
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{bc --- Arbitrary Precision Calculator Language}
+\textbf{Syntax:} \texttt{echo "expression" | bc}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{scale=N}: Configures the exact number of decimal places for division.
+    \item Supports trigonometry, logarithms, exponential powers, and arbitrary precision arithmetic.
+\end{itemize}
+\end{commandbox}
+
+\begin{terminalbox}[Shell Arithmetic Demonstrations]
+$ expr 100 + 45
+145
+$ expr 12 \* 8
+96
+$ echo "scale=4; 355 / 113" | bc
+3.1415
+$ echo "sqrt(65536)" | bc
+256
+\end{terminalbox}
+
+\section{Session Recording \& Credential Management}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{script:} Spawns a pseudo-terminal (pty) to record every keystroke and output character into a session log. Invoking \texttt{script -t=time.log session.log} allows exact temporal playback using \texttt{scriptreplay time.log session.log}.
+    \item \textbf{passwd:} Updates user authentication tokens. Passwords are encrypted utilizing modern hashing algorithms (e.g., SHA-512 \texttt{\$6\$} or yescrypt \texttt{\$y\$}) and stored in the restricted \texttt{/etc/shadow} file.
+\end{itemize}
+
+\section{Identity \& System Inspection Utilities}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X l}
+\toprule
+\textbf{Command} & \textbf{Diagnostic Functionality} & \textbf{Common Options} \\
+\midrule
+\texttt{whoami} & Prints effective user identifier name. & None \\
+\texttt{id} & Reports numeric UID, GID, and supplementary group memberships. & \texttt{-u}, \texttt{-g}, \texttt{-Gn} \\
+\texttt{who} & Displays all currently authenticated terminal sessions. & \texttt{-H} (headers), \texttt{-b} (boot time) \\
+\texttt{w} & Shows logged in users and their current executing commands. & \texttt{-s} (short format) \\
+\texttt{uname} & Displays operating system, kernel, and hardware architecture. & \texttt{-a} (all), \texttt{-r} (release), \texttt{-m} (arch) \\
+\texttt{uptime} & Shows system uptime, logged in users, and 1, 5, 15-min load averages. & \texttt{-p} (pretty print), \texttt{-s} (since) \\
+\texttt{tty} & Prints the absolute device file path of the current terminal. & None (returns e.g. \texttt{/dev/pts/2}) \\
+\texttt{stty} & Inquires or alters terminal line discipline settings. & \texttt{-echo} (disable echo for passwords) \\
+\bottomrule
+\end{tabularx}
+\caption{System Identity, Hardware Architecture, and Session Diagnostic Utilities.}
+\label{tab:sys-id}
+\end{table}
+
+\section{The Manual Page System (man) \& Documentation Architecture}
+Linux documentation is categorized into 8 numbered manual sections:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Section 1 (User Commands):} Regular shell executables accessible by all users (\texttt{ls}, \texttt{grep}, \texttt{cal}).
+    \item \textbf{Section 2 (System Calls):} Linux kernel entry points and functions (\texttt{fork}, \texttt{read}, \texttt{open}).
+    \item \textbf{Section 3 (C Library Functions):} Standard C runtime functions (\texttt{printf}, \texttt{malloc}, \texttt{strcpy}).
+    \item \textbf{Section 4 (Special Files):} Hardware device nodes in \texttt{/dev} (\texttt{null}, \texttt{tty}, \texttt{sda}).
+    \item \textbf{Section 5 (File Formats):} Configuration files and syntax conventions (\texttt{passwd}, \texttt{fstab}, \texttt{hosts}).
+    \item \textbf{Section 6 (Games):} Demonstrations and entertainment programs.
+    \item \textbf{Section 7 (Miscellaneous):} Conventions, protocols, and macro packages (\texttt{regex}, \texttt{standards}, \texttt{man}).
+    \item \textbf{Section 8 (System Administration Commands):} Superuser maintenance utilities (\texttt{useradd}, \texttt{fdisk}, \texttt{iptables}).
+\end{enumerate}
+
+\begin{terminalbox}[Navigating Man Pages and Keyword Search]
+$ man 1 printf       # Opens user command printf
+$ man 3 printf       # Opens C standard library function printf
+$ apropos "calendar" # Searches man page descriptions (equivalent to man -k)
+cal (1)              - display a calendar
+$ whatis ls          # One-line summary description
+ls (1)               - list directory contents
+\end{terminalbox}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Distinguish between short switches and long options in POSIX command syntax.
+    \item Why does \texttt{expr 4 * 5} yield a syntax error in a standard bash terminal, and how is it resolved?
+    \item Formulate a \texttt{date} command string that outputs the timestamp formatted as \texttt{Year=2026/Month=10/Day=22}.
+    \item Explain the meaning of the three floating-point values presented by \texttt{uptime}.
+    \item Identify which manual page section contains the configuration format for \texttt{/etc/passwd}.
+\end{enumerate}

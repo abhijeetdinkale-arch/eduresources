@@ -1,0 +1,92 @@
+\chapter{Data Structures, Object-Oriented Programming, and Functional Tools}
+\label{chap:data-structures-oop}
+
+\section{Built-in Sequences: Lists and Tuples}
+\begin{definition}[List vs Tuple Architectural Differences]
+$\bullet$ \textbf{List (\texttt{list}):} A mutable dynamic array storing contiguous \texttt{PyObject*} pointers. Resizes dynamically via over-allocation.\\
+$\bullet$ \textbf{Tuple (\texttt{tuple}):} An immutable fixed-size sequence allocated as a single continuous memory block. Incur less overhead and cannot be modified after construction.
+\end{definition}
+
+\section{Associative Mappings: Dictionaries and Hash Tables}
+\begin{keyequation}[Hash Table Addressing Equation]
+CPython dicts use open addressing with perturbation indexing:
+\begin{equation}
+i = (\text{hash}(k) \pmod{2^n}), \qquad \text{perturb} \gg= 5, \qquad i = (5 \cdot i + \text{perturb} + 1) \pmod{2^n}
+\end{equation}
+This perturbation mechanism prevents catastrophic clustering under imperfect hash functions.
+\end{keyequation}
+
+\section{Comprehensions and Functional Generators}
+\begin{lstlisting}
+# List comprehension (eager allocation of all elements)
+squares = [x**2 for x in range(1000) if x % 2 == 0]
+
+# Generator expression (lazy evaluation, O(1) auxiliary space)
+square_gen = (x**2 for x in range(1000) if x % 2 == 0)
+print(next(square_gen))  # Yields 0 on demand
+\end{lstlisting}
+
+\section{Object-Oriented Design and Encapsulation}
+\begin{lstlisting}
+class NeuralLayer:
+    '''Base neural network computational layer.'''
+    def __init__(self, in_features: int, out_features: int):
+        self._in_features = in_features      # Protected attribute
+        self._out_features = out_features
+        self.__weights = self._init_weights() # Name mangled private attribute
+
+    def _init_weights(self):
+        return [0.0] * (self._in_features * self._out_features)
+
+    @property
+    def output_dimension(self) -> int:
+        return self._out_features
+
+    def forward(self, x):
+        raise NotImplementedError("Subclasses must implement forward pass.")
+
+class DenseLayer(NeuralLayer):
+    '''Dense linear transformation layer.'''
+    def forward(self, x):
+        return [sum(x[i] * 0.5 for i in range(len(x))) for _ in range(self.output_dimension)]
+\end{lstlisting}
+
+\section{Multiple Inheritance and C3 Linearization (MRO)}
+\begin{example}[Diamond Inheritance Resolution]
+\begin{lstlisting}
+class A: pass
+class B(A): pass
+class C(A): pass
+class D(B, C): pass
+
+print(D.__mro__)
+# Output: (<class 'D'>, <class 'B'>, <class 'C'>, <class 'A'>, <class 'object'>)
+\end{lstlisting}
+\end{example}
+
+\section{Decorators and Function Transformation}
+\begin{lstlisting}
+import time
+from functools import wraps
+
+def execution_timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        duration = time.perf_counter() - start
+        print(f"[{func.__name__}] executed in {duration:.6f}s")
+        return result
+    return wrapper
+
+@execution_timer
+def compute_heavy_sum(n: int) -> int:
+    return sum(i * i for i in range(n))
+\end{lstlisting}
+
+\section{Chapter Summary}
+\begin{summarybox}
+$\bullet$ Dictionaries provide average $\mathcal{O}(1)$ lookup, insertion, and deletion via hash table index arrays.\\
+$\bullet$ Name mangling (\texttt{\_\_var}) transforms identifiers to \texttt{\_ClassName\_\_var} to prevent accidental subclass collisions.\\
+$\bullet$ Decorators wrap functions using closures to inject non-invasive cross-cutting concerns (logging, timing, auth).
+\end{summarybox}

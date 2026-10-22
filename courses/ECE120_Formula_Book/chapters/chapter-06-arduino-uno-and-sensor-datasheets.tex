@@ -1,0 +1,64 @@
+\chapter{Arduino Uno \& Embedded Sensor Datasheets}
+
+\section{ATmega328P Hardware Electrical Specifications}
+\begin{formulabox}{Arduino Uno Specifications Cheat-Sheet}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Specification / Value} \\
+\midrule
+Microcontroller Core & Microchip / Atmel ATmega328P (8-bit AVR RISC) \\
+Operating Voltage & 5.0 V DC \\
+Recommended Input Voltage ($V_{\mathrm{in}}$) & 7.0 V to 12.0 V DC (via 2.1mm barrel jack) \\
+Digital I/O Pins & 14 (Pins 0 to 13) \\
+PWM Output Channels & 6 (Pins 3, 5, 6, 9, 10, 11 marked with $\sim$) \\
+Analog Input Channels & 6 (Pins A0 to A5) \\
+ADC Resolution & 10-bit ($2^{10} = 1024$ levels, $0$ to $1023$) \\
+ADC Voltage Step Size ($V_{LSB}$) & $\frac{5.0\,\mathrm{V}}{1024} \approx 4.8828\,\mathrm{mV}$ per count \\
+DC Current per I/O Pin & 40 mA absolute max ($20\,\mathrm{mA}$ recommended) \\
+DC Current for 3.3V Pin & 50 mA max \\
+Flash Memory & 32 KB (of which 0.5 KB used by bootloader) \\
+SRAM & 2 KB \\
+EEPROM & 1 KB \\
+Clock Frequency & 16.0 MHz external quartz crystal oscillator \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}
+
+\section{LM393 Infrared Proximity Sensor Module}
+\begin{formulabox}{IR Obstacle Sensor Module Interface}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Sensor Pin} & \textbf{Connected To} & \textbf{Functional Description} \\
+\midrule
+VCC & +5V DC rail & Powers internal IR LED and LM393 comparator \\
+GND & Circuit Ground & Common system ground reference \\
+OUT & Arduino Digital Pin 2 & Active LOW digital output (LOW = Obstacle, HIGH = Clear) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Operating Equations}:
+\begin{itemize}
+    \item Output logic equation:
+    \[ V_{\mathrm{OUT}} = \begin{cases} 0\,\mathrm{V}\,\,(\text{LOW}), & \text{if } V_{\mathrm{photo}} > V_{\mathrm{ref}}\,\,(\text{Obstacle present, IR reflected}) \\ 5\,\mathrm{V}\,\,(\text{HIGH}), & \text{if } V_{\mathrm{photo}} \le V_{\mathrm{ref}}\,\,(\text{Path clear}) \end{cases} \]
+    \item Threshold sensitivity adjustment via 10-turn Cermet trimmer potentiometer ($10\,\mathrm{k}\Omega$).
+    \item Effective sensing range: $2\,\mathrm{cm}$ to $30\,\mathrm{cm}$ (dependent on obstacle surface reflectivity).
+\end{itemize}
+\end{formulabox}
+
+\section{Arduino C/C++ Embedded API Reference}
+\begin{formulabox}{Core Workshop Functions}
+\begin{verbatim}
+pinMode(pin, mode);          // mode: INPUT, OUTPUT, INPUT_PULLUP
+digitalWrite(pin, value);     // value: HIGH, LOW
+int val = digitalRead(pin);   // returns HIGH or LOW
+int adc = analogRead(A0);     // returns 0 to 1023
+analogWrite(pin, duty);       // duty: 0 to 255 (PWM 490Hz or 980Hz)
+unsigned long ms = millis();  // milliseconds since boot (overflows ~50 days)
+delay(ms);                    // blocking delay in milliseconds
+Serial.begin(9600);           // initialize UART serial at 9600 baud
+Serial.println(data);         // transmit data with newline
+\end{verbatim}
+\end{formulabox}

@@ -1,0 +1,127 @@
+\chapter{Unit 10: Shell Programming \& Automation Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{10.1}{What is the primary role of the shebang line (\#!/bin/bash) at the beginning of a script?}
+{It acts as a comment documenting author contact}
+{It instructs the kernel execve() loader which interpreter binary to spawn}
+{It sets root execution privileges}
+{It compiles the script into C bytecode}
+
+\mcqitem{10.2}{Which special variable holds the total count of positional arguments passed to a script?}
+{\texttt{\$*}}
+{\texttt{\$@}}
+{\texttt{\$\#}}
+{\texttt{\$\$}}
+
+\mcqitem{10.3}{Which test operator evaluates whether a specified path exists and is a REGULAR FILE?}
+{\texttt{-e}}
+{\texttt{-f}}
+{\texttt{-d}}
+{\texttt{-s}}
+
+\mcqitem{10.4}{What is the output of the Bash snippet: echo \$(( 14 \% 4 ))?}
+{\texttt{3.5}}
+{\texttt{2}}
+{\texttt{3}}
+{\texttt{0}}
+
+\mcqitem{10.5}{Which quoting style preserves the strict literal value of every enclosed character without exception?}
+{Double Quotes (\texttt{"..."})}
+{Single Quotes (\texttt{'...'})}
+{Backticks (\texttt{`...`})}
+{Parentheses (\texttt{(...)})}
+
+\mcqitem{10.6}{How are all elements of an indexed Bash array 'servers' expanded as separate words?}
+{\texttt{\$\{servers\}}}
+{\texttt{\$\{servers[0]\}}}
+{\texttt{\$\{servers[@]\}}}
+{\texttt{\$\#servers}}
+
+\mcqitem{10.7}{Which control flow keyword terminates an entire loop immediately?}
+{\texttt{continue}}
+{\texttt{break}}
+{\texttt{return}}
+{\texttt{exit}}
+
+\mcqitem{10.8}{What does the Bash defensive flag 'set -u' enforce?}
+{Executes commands in unprivileged mode}
+{Treats unset / uninitialized variables as fatal errors and exits immediately}
+{Disables Unicode formatting}
+{Forces unbuffered output}
+
+\mcqitem{10.9}{What is the correct syntax for testing whether integer variable \$A is greater than or equal to \$B?}
+{\texttt{[ \$A >= \$B ]}}
+{\texttt{[ \$A -ge \$B ]}}
+{\texttt{[ \$A .GE. \$B ]}}
+{\texttt{( \$A => \$B )}}
+
+\mcqitem{10.10}{Which command shifts positional parameters leftward (\$2 becomes \$1, \$3 becomes \$2)?}
+{\texttt{pop}}
+{\texttt{shift}}
+{\texttt{rotate}}
+{\texttt{next}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 10 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+10.1 & \textbf{(b)} & The kernel extracts interpreter binary path from the magic number \texttt{\#!}. \\
+10.2 & \textbf{(c)} & \texttt{\$\#} stores the integer count of arguments passed. \\
+10.3 & \textbf{(b)} & \texttt{-f} checks whether target exists and is a regular file. \\
+10.4 & \textbf{(b)} & \texttt{\%}: modulo operator returns remainder of division ($14 \pmod 4 = 2$). \\
+10.5 & \textbf{(b)} & Single quotes prevent all variable expansions and escapes. \\
+10.6 & \textbf{(c)} & \texttt{\$\{arr[@]\}} expands all elements safely preserving whitespace. \\
+10.7 & \textbf{(b)} & \texttt{break} breaks out of loops; \texttt{continue} skips to next iteration. \\
+10.8 & \textbf{(b)} & \texttt{set -u} prevents catastrophic bugs caused by misspelled variable names. \\
+10.9 & \textbf{(b)} & Relational operator for greater-than-or-equal in \texttt{[ ... ]} is \texttt{-ge}. \\
+10.10 & \textbf{(b)} & \texttt{shift} discards \texttt{\$1} and shifts arguments to the left. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Shell Scripting \& DevOps Automation Challenges}
+
+\begin{scenariobox}{10.1 --- Automated Server Log Archival Engine}
+\textbf{Scenario:} Design a complete, production-grade Bash script that parses a log directory, compresses files older than 7 days into a dated tarball, deletes original logs upon successful compression, and logs all operations with timestamps.
+\begin{scriptlisting}
+#!/bin/bash
+set -euo pipefail
+
+LOG_DIR="/var/log/app"
+BACKUP_DIR="/backup/logs"
+DATE_STAMP=$(date +%Y%m%d_%H%M%S)
+ARCHIVE_NAME="logs_archive_${DATE_STAMP}.tar.gz"
+
+# 1. Input Validation
+if [ ! -d "$LOG_DIR" ]; then
+    echo "[ERROR] Log directory $LOG_DIR does not exist." >&2
+    exit 1
+fi
+mkdir -p "$BACKUP_DIR"
+
+# 2. Identify and Archive Old Logs
+OLD_FILES=$(find "$LOG_DIR" -type f -name "*.log" -mtime +7)
+
+if [ -z "$OLD_FILES" ]; then
+    echo "[INFO] No log files older than 7 days identified. Exiting."
+    exit 0
+fi
+
+echo "[INFO] Commencing archival into $BACKUP_DIR/$ARCHIVE_NAME..."
+tar -czf "$BACKUP_DIR/$ARCHIVE_NAME" -T <(echo "$OLD_FILES")
+
+# 3. Verify Archive Integrity Before Deletion
+if [ -s "$BACKUP_DIR/$ARCHIVE_NAME" ]; then
+    echo "[INFO] Archive generated successfully. Removing archived logs..."
+    echo "$OLD_FILES" | xargs rm -f
+    echo "[SUCCESS] Archival cycle concluded successfully."
+else
+    echo "[FATAL] Archive file was empty! Aborting deletion." >&2
+    exit 2
+fi
+\end{scriptlisting}
+\end{scenariobox}

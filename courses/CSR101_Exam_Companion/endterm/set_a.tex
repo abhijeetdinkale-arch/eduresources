@@ -1,0 +1,211 @@
+\section{End-Term Comprehensive Examination --- Set A (Units 1 to 6)}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 70\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 3 Hours\\
+\textbf{Structure:} Part A: 15 Objective Questions (15 Marks); Part B: 5 Analytical Questions (25 Marks); Part C: 3 Comprehensive Pipeline Design Problems (30 Marks).
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\subsection*{Part A: Objective Conceptual Questions (15 Marks)}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item What is the role of \texttt{\_\_pycache\_\_} in Python projects? \hfill \textbf{[Ans: Stores compiled bytecode files (\texttt{.pyc})]}
+    \item What is the output of \texttt{type(1 / 1)}? \hfill \textbf{[Ans: \texttt{<class 'float'>}]}
+    \item Which regex quantifier matches between 2 and 5 occurrences? \hfill \textbf{[Ans: \texttt{\{2,5\}}]}
+    \item What is the difference between \texttt{list.append()} and \texttt{list.extend()}? \hfill \textbf{[Ans: \texttt{append} adds object as single item; \texttt{extend} iterates]}
+    \item Can a Python function return multiple values? How? \hfill \textbf{[Ans: Yes, packed automatically into an immutable tuple]}
+    \item What does \texttt{re.findall(r'\textbackslash d+', 'h3ll0 42')} return? \hfill \textbf{[Ans: \texttt{['3', '0', '42']}]}
+    \item What is the time complexity of searching a key in a dict? \hfill \textbf{[Ans: Average $\mathcal{O}(1)$, worst-case $\mathcal{O}(n)$]}
+    \item What is the difference between a shallow copy and a deep copy? \hfill \textbf{[Ans: Shallow copies outer container; deep recursively clones nested objects]}
+    \item What is the purpose of \texttt{sys.path}? \hfill \textbf{[Ans: List of directory paths searched during module imports]}
+    \item What exception is raised when dividing by zero in floating point math? \hfill \textbf{[Ans: \texttt{ZeroDivisionError}]}
+    \item In NumPy, what attribute returns the tuple of array dimensions? \hfill \textbf{[Ans: \texttt{shape}]}
+    \item What does \texttt{np.eye(3)} create? \hfill \textbf{[Ans: A $3 \times 3$ identity matrix]}
+    \item In Pandas, how does \texttt{.loc} differ from \texttt{.iloc}? \hfill \textbf{[Ans: \texttt{.loc} is label-based; \texttt{.iloc} is integer position-based]}
+    \item Which file mode opens a file for writing binary data, truncating existing content? \hfill \textbf{[Ans: \texttt{'wb'}]}
+    \item What method saves an active Matplotlib figure to disk? \hfill \textbf{[Ans: \texttt{plt.savefig()}]}
+\end{enumerate}
+
+\subsection*{Part B: Analytical \& Coding Problems (25 Marks)}
+
+\noindent\textbf{Question 16 [5 Marks]:} Explain CPython's memory management model, distinguishing between stack frames, heap allocation, and the GIL (Global Interpreter Lock).
+\begin{solutionbox}
+$\bullet$ \textbf{Stack Frames:} Store local variable references, instruction pointers, and evaluation stacks for active function invocations.\\
+$\bullet$ \textbf{Heap Allocation:} All Python objects (\texttt{PyObject}) reside on the private heap managed by PyMalloc.\\
+$\bullet$ \textbf{GIL (Global Interpreter Lock):} A mutex preventing multiple native OS threads from executing CPython bytecode simultaneously, ensuring thread-safe reference counting.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Stack frame execution role (1.5M); Heap allocation and PyMalloc (1.5M); GIL mechanics and CPU-bound concurrency impact (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 17 [5 Marks]:} Implement a class \texttt{PolynomialRegressionPipeline} in pure Python and NumPy that takes coordinates $(x, y)$, fits an $n$-degree polynomial using normal equations, and evaluates predictions.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+class PolynomialRegressionPipeline:
+    def __init__(self, degree: int):
+        self.degree = degree
+        self.weights = None
+
+    def fit(self, x: np.ndarray, y: np.ndarray):
+        # Construct Vandermonde matrix X
+        X = np.vander(x, N=self.degree + 1, increasing=True)
+        # Normal equations: (X^T X) w = X^T y
+        self.weights = np.linalg.solve(X.T @ X, X.T @ y)
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        X = np.vander(x, N=self.degree + 1, increasing=True)
+        return X @ self.weights
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Vandermonde matrix formulation (2M); Normal equation solve via \texttt{np.linalg.solve} (2M); Prediction matrix multiplication (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 18 [5 Marks]:} Compare list comprehensions, generator expressions, and map/filter functions in terms of execution latency and memory allocation.
+\begin{solutionbox}
+$\bullet$ \textbf{List Comprehension:} Eagerly allocates entire list in heap memory. Optimized in C loop; fast for small collections ($\mathcal{O}(n)$ memory).\\
+$\bullet$ \textbf{Generator Expression:} Lazily computes elements on demand via iterator protocol ($\mathcal{O}(1)$ memory).\\
+$\bullet$ \textbf{Map/Filter:} Returns an iterator in Python 3. Slightly slower than comprehension due to Python function call overhead unless using built-in C functions.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Eager vs lazy memory allocation comparison (2M); Complexity analysis (2M); Performance trade-offs (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 19 [5 Marks]:} Write a Python script using Pandas that loads a CSV with missing values, imputes missing numerical columns with their median, creates a normalized column, and outputs summary statistics.
+\begin{solutionbox}
+\begin{lstlisting}
+import pandas as pd
+
+def clean_and_normalize(filepath: str) -> pd.DataFrame:
+    df = pd.read_csv(filepath)
+    num_cols = df.select_dtypes(include=['float64', 'int64']).columns
+    for col in num_cols:
+        df[col] = df[col].fillna(df[col].median())
+        min_v, max_v = df[col].min(), df[col].max()
+        if max_v > min_v:
+            df[f"{col}_norm"] = (df[col] - min_v) / (max_v - min_v)
+    return df
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Reading CSV and selecting numeric columns (1M); Median imputation (2M); Min-max normalization (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 20 [5 Marks]:} Explain method overloading and method overriding in Python. How does Python support overloading without multiple method signatures?
+\begin{solutionbox}
+$\bullet$ \textbf{Overriding:} A subclass provides a specific implementation of a method defined in its superclass using identical names.\\
+$\bullet$ \textbf{Overloading:} Python does NOT support traditional C++/Java method signature overloading because functions are first-class objects (last definition overwrites earlier ones). Overloading is achieved via default arguments (\texttt{arg=None}), variable arguments (\texttt{*args, **kwargs}), or \texttt{functools.singledispatch}.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Clear definition of overriding (2M); Explanation of why Python lacks signature-based overloading and workarounds (3M).
+\end{markingrubric}
+
+\subsection*{Part C: In-Depth Engineering Systems \& Pipeline Problems (30 Marks)}
+
+\noindent\textbf{Question 21 [10 Marks]:} Design and implement a complete Object-Oriented Financial Transaction Ledger System supporting atomic transfers, audit logs, and custom exceptions.
+\begin{solutionbox}
+\begin{lstlisting}
+class LedgerException(Exception): pass
+class BalanceError(LedgerException): pass
+
+class Account:
+    def __init__(self, owner: str, initial_balance: float):
+        self.owner = owner
+        self.balance = float(initial_balance)
+
+    def deposit(self, amount: float):
+        if amount <= 0: raise ValueError("Deposit must be positive")
+        self.balance += amount
+
+    def withdraw(self, amount: float):
+        if amount > self.balance:
+            raise BalanceError(f"Insufficient funds: Balance={self.balance}, Request={amount}")
+        self.balance -= amount
+
+class TransactionEngine:
+    def __init__(self):
+        self.audit_log = []
+
+    def transfer(self, source: Account, destination: Account, amount: float):
+        if amount <= 0: raise ValueError("Amount must be positive")
+        # Atomic transfer execution
+        source.withdraw(amount)
+        try:
+            destination.deposit(amount)
+        except Exception as err:
+            # Rollback
+            source.deposit(amount)
+            raise LedgerException(f"Transfer failed: {err}")
+        self.audit_log.append(f"Transferred {amount} from {source.owner} to {destination.owner}")
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Custom exception classes (2M); Account encapsulation and balance validation (3M); TransactionEngine with atomic rollback logic (3M); Audit logging (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 22 [10 Marks]:} Implement Singular Value Decomposition (SVD) based dimensionality reduction and image compression using NumPy.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+def compress_matrix(A: np.ndarray, k: int):
+    '''
+    Compresses 2D matrix A using top k singular values.
+    A = U @ diag(Sigma) @ Vt
+    '''
+    U, s, Vt = np.linalg.svd(A, full_matrices=False)
+    # Truncate to top k singular vectors
+    U_k = U[:, :k]
+    s_k = s[:k]
+    Vt_k = Vt[:k, :]
+    
+    A_compressed = U_k @ np.diag(s_k) @ Vt_k
+    original_size = A.size
+    compressed_size = U_k.size + s_k.size + Vt_k.size
+    compression_ratio = compressed_size / original_size
+    return A_compressed, compression_ratio
+\end{lstlisting}
+\textbf{Mathematical Explanation:} Eckart-Young-Mirsky Theorem guarantees that truncated SVD provides the optimal rank-$k$ approximation minimizing Frobenius norm $\|A - A_k\|_F$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} SVD decomposition call via \texttt{np.linalg.svd} (3M); Truncation of $U, \Sigma, V^T$ to $k$ components (3M); Matrix reconstruction product (2M); Compression ratio derivation (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 23 [10 Marks]:} Build an end-to-end automated ETL and reporting pipeline using Pandas and Matplotlib for an IoT temperature sensor dataset.
+\begin{solutionbox}
+\begin{lstlisting}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def execute_iot_pipeline(csv_file: str, report_plot: str):
+    # 1. Ingestion & Cleaning
+    df = pd.read_csv(csv_file, parse_dates=['timestamp'])
+    df = df.dropna(subset=['temperature'])
+    
+    # 2. Resampling & Feature Extraction
+    df.set_index('timestamp', inplace=True)
+    hourly = df['temperature'].resample('1H').agg(['mean', 'max', 'min']).dropna()
+    
+    # 3. Multi-panel Visualization
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), dpi=300, sharex=True)
+    ax1.plot(hourly.index, hourly['mean'], color='#0F2043', label='Hourly Mean Temp')
+    ax1.fill_between(hourly.index, hourly['min'], hourly['max'], color='#EA580C', alpha=0.2, label='Min-Max Range')
+    ax1.set_ylabel('Temperature (C)')
+    ax1.legend()
+    ax1.grid(True, linestyle='--')
+    
+    ax2.hist(df['temperature'], bins=30, color='#0F2043', edgecolor='white')
+    ax2.set_xlabel('Temperature Distribution')
+    ax2.set_ylabel('Observation Count')
+    ax2.grid(True, linestyle='--')
+    
+    plt.tight_layout()
+    plt.savefig(report_plot)
+    plt.close()
+    return hourly
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Timestamp parsing and missing value imputation (2.5M); Temporal resampling with aggregation (2.5M); Dual-panel Matplotlib dashboard generation (3M); Code style, comments, and PEP 8 standards (2M).
+\end{markingrubric}

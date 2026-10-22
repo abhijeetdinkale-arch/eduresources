@@ -1,0 +1,135 @@
+\section{Mid-Term Examination --- Set A}
+\label{sec:midterm_set_a}
+
+\LPUPaperHeader{Mid-Term Examination}{A}{90 Minutes}{30 Marks}{CO1 (Foundations), CO2 (Problem Definition), CO3 (Analytical \& Critical Thinking)}
+
+\subsection*{Section A: Multiple Choice Questions [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt all ten questions. Each question carries 1 mark.}
+\end{center}
+
+\mcqitem{1}{What is the primary hallmark of a wicked problem according to Rittel and Webber?}{It can be definitively formulated}{It has no stopping rule}{It is easily solved by algorithms}{It has zero social impact}{1}
+
+\mcqitem{2}{In the Stanford d.school framework, which stage directly precedes Ideation?}{Empathize}{Define}{Prototype}{Test}{1}
+
+\mcqitem{3}{Which quadrant of the Empathy Map captures direct quotes spoken by users during field interviews?}{Thinks}{Does}{Says}{Feels}{1}
+
+\mcqitem{4}{In Mendelow's Matrix, what is the strategy for high power, low interest stakeholders?}{Manage Closely}{Keep Satisfied}{Monitor}{Keep Informed}{1}
+
+\mcqitem{5}{What type of reasoning proceeds from specific empirical observations to general probabilistic principles?}{Deductive}{Inductive}{Abductive}{Reductive}{1}
+
+\mcqitem{6}{Which cognitive bias involves selectively seeking data that validates pre-existing architectural beliefs?}{Availability Bias}{Anchoring Effect}{Confirmation Bias}{Framing Effect}{1}
+
+\mcqitem{7}{What is the primary purpose of Barbara Minto's MECE principle?}{To maximize code execution speed}{To eliminate overlap and ensure zero blind spots}{To generate rapid paper prototypes}{To reduce server memory usage}{1}
+
+\mcqitem{8}{In an Ishikawa diagram for services, what do the 4Ps stand for?}{Plan, Price, Product, Promotion}{People, Policy, Procedures, Plant/Tech}{Past, Present, Pending, Progress}{Physics, Principles, Proofs, Protocols}{1}
+
+\mcqitem{9}{In an MCDA model, what must the sum of all normalized criteria weights $\sum w_j$ equal?}{0.0}{1.0}{10.0}{100.0}{1}
+
+\mcqitem{10}{A team continues funding a failing tech stack because \$500k was spent. This illustrates:}{Sunk Cost Fallacy}{Halo Effect}{Overconfidence Bias}{Automation Bias}{1}
+
+\newpage
+\subsection*{Section B: Applied Analytical Problems [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt both questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{11}{
+    A hospital diagnostic laboratory is evaluating three competing blood biochemistry analyzer machines using Multi-Criteria Decision Analysis (MCDA). The evaluation criteria and normalized weights are: Testing Speed ($w_1 = 0.35$), Accuracy ($w_2 = 0.30$), Capital Cost ($w_3 = 0.20$), and Vendor SLA Support ($w_4 = 0.15$). The raw performance ratings (scale 1--10) are:
+    \begin{itemize}
+        \item \textbf{Machine A:} Speed = 8, Accuracy = 9, Cost = 6, Support = 7
+        \item \textbf{Machine B:} Speed = 9, Accuracy = 8, Cost = 8, Support = 6
+        \item \textbf{Machine C:} Speed = 6, Accuracy = 10, Cost = 5, Support = 9
+    \end{itemize}
+    Calculate the composite performance score for each machine and determine the optimal selection.
+}{5}{CO3}{L3 Apply}
+
+\questionitem{12}{
+    Deconstruct the systemic risks of introducing mandatory biometric facial recognition for campus dormitories using the MECE framework across four distinct categories.
+}{5}{CO3}{L4 Analyze}
+
+\newpage
+\subsection*{Section C: Comprehensive Design Case Scenario [10 Marks]}
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Attempt the comprehensive case study below.}
+\end{center}
+
+\questionitem{13}{
+    \textbf{Case Context:} An urban municipal library system notices a 55\% decline in adolescent and young adult visits over three years, while local youth report high academic anxiety and lack of collaborative community workspace. City council proposed spending \$2.5 million to purchase 300 VR gaming headsets to ``attract kids back.''\\
+    \textbf{Deliverables Required:}\\
+    (a) Analyze why purchasing VR headsets commits the ``Solution in Search of a Problem'' fallacy.\\
+    (b) Formulate a human-centered Point-of-View (POV) statement for urban youth.\\
+    (c) Derive three actionable ``How Might We'' (HMW) opportunity questions.\\
+    (d) Construct a 5-Whys diagnostic chain examining why youth avoid traditional libraries.
+}{10}{CO2}{L5 Evaluate}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- Mid-Term Set A}
+
+\begin{solutionbox}[Solutions to Section A: Objective MCQs]
+\textbf{1.} (B) It has no stopping rule \quad
+\textbf{2.} (B) Define \quad
+\textbf{3.} (C) Says \quad
+\textbf{4.} (B) Keep Satisfied \quad
+\textbf{5.} (B) Inductive \quad
+\textbf{6.} (C) Confirmation Bias \quad
+\textbf{7.} (B) To eliminate overlap and ensure zero blind spots \quad
+\textbf{8.} (B) People, Policy, Procedures, Plant/Tech \quad
+\textbf{9.} (B) 1.0 \quad
+\textbf{10.} (A) Sunk Cost Fallacy
+\begin{markingrubric}
+1 Mark per correct MCQ = \textbf{10 Marks Total}.
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 11: MCDA Scoring Calculation]
+Apply the MCDA formula $S_i = \sum_{j=1}^4 w_j \cdot r_{ij}$:\\
+$\bullet$ \textbf{Machine A Score:}\\
+$S_A = (0.35 \times 8) + (0.30 \times 9) + (0.20 \times 6) + (0.15 \times 7) = 2.80 + 2.70 + 1.20 + 1.05 = \mathbf{7.75}$\\
+$\bullet$ \textbf{Machine B Score:}\\
+$S_B = (0.35 \times 9) + (0.30 \times 8) + (0.20 \times 8) + (0.15 \times 6) = 3.15 + 2.40 + 1.60 + 0.90 = \mathbf{8.05}$\\
+$\bullet$ \textbf{Machine C Score:}\\
+$S_C = (0.35 \times 6) + (0.30 \times 10) + (0.20 \times 5) + (0.15 \times 9) = 2.10 + 3.00 + 1.00 + 1.35 = \mathbf{7.45}$\\
+\textbf{Selection Conclusion:}\\
+Machine B achieves the highest composite performance score ($S_B = 8.05$), primarily driven by superior operational speed and balanced cost-effectiveness.
+\begin{markingrubric}
+$\bullet$ Correct mathematical formulation and weight application: \textbf{2 Marks}\\
+$\bullet$ Accurate arithmetic computation for Machines A, B, C: \textbf{2 Marks}\\
+$\bullet$ Clear analytical justification and final selection: \textbf{1 Mark}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 12: MECE Risk Deconstruction]
+\textbf{Four MECE Dimensions for Dormitory Facial Recognition:}\\
+1. \textbf{Technical \& Reliability Risks (ME Category 1):} Lighting variations causing false rejections; network latency during peak curfew hours; sensor degradation in winter conditions.\\
+2. \textbf{Data Privacy \& Cybersecurity Risks (ME Category 2):} Centralized biometric database exposure to breach; third-party vendor data retention; lack of biometric encryption-at-rest.\\
+3. \textbf{Regulatory \& Legal Compliance Risks (ME Category 3):} Violation of personal data protection statutes; absence of explicit opt-in informed consent; liability for misidentification.\\
+4. \textbf{Social \& Inclusion Risks (ME Category 4):} Algorithmic bias and disparate error rates across demographics; student psychological feelings of constant institutional surveillance.
+\begin{markingrubric}
+$\bullet$ Demonstrated compliance with MECE (zero overlap, exhaustive coverage): \textbf{2 Marks}\\
+$\bullet$ Comprehensive, realistic risk identification under all 4 branches: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 13: Library System Design Challenge]
+\textbf{(a) Critique of the VR Headset Fallacy (2 Marks):}\\
+The council leaped directly to an expensive technological artifact without understanding underlying user needs. VR gaming headsets address entertainment, not collaborative study, community belonging, or academic anxiety. It commits the classic ``gadget-first'' engineering trap.\\
+\textbf{(b) POV Statement (2 Marks):}\\
+``Urban high school and college students [User] need a modern, psychological-safe, and collaborative co-working third place [Need] because rigid silence rules and isolated home study foster acute academic anxiety and loneliness [Insight].''\\
+\textbf{(c) Three Derived HMW Questions (3 Marks):}\\
+$\bullet$ \textit{HMW 1:} How might we zone libraries into dynamic collaborative makerspaces without alienating traditional silent readers?\\
+$\bullet$ \textit{HMW 2:} How might we empower students to co-create their own peer tutoring and social events inside the library?\\
+$\bullet$ \textit{HMW 3:} How might we integrate cafe and charging amenities to support extended hybrid group study?\\
+\textbf{(d) 5-Whys Diagnostic Chain (3 Marks):}\\
+$\bullet$ \textit{Why 1:} Why do youth avoid the library? Because staff shush them when collaborating.\\
+$\bullet$ \textit{Why 2:} Why do staff shush them? Because library policy mandates strict acoustic silence throughout the building.\\
+$\bullet$ \textit{Why 3:} Why is silence mandated everywhere? Because the facility layout was built in 1965 with open unpartitioned reading halls.\\
+$\bullet$ \textit{Why 4:} Why has the layout not changed? Because past funding was allocated to books rather than modular collaborative furniture.\\
+$\bullet$ \textit{Why 5 (Root Cause):} The library operating charter treats libraries as passive book warehouses rather than active community collaboration hubs.
+\begin{markingrubric}
+$\bullet$ Part (a) Critical analysis: \textbf{2 Marks}\\
+$\bullet$ Part (b) POV statement: \textbf{2 Marks}\\
+$\bullet$ Part (c) 3 HMW questions: \textbf{3 Marks}\\
+$\bullet$ Part (d) 5-Whys chain: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}

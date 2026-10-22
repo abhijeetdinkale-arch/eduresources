@@ -1,0 +1,143 @@
+\chapter{Fundamentals of Electrical Machines}
+\label{chap:machines}
+
+\section{Electromagnetic Foundations and Coupling}
+Electrical machines convert energy between the electrical and mechanical domains, or transform AC electrical power across voltage levels via magnetic coupling. The underlying physics rests on Faraday's law of electromagnetic induction, Lenz's law, Ampere's circuital law, and the Lorentz force principle.
+
+\subsection{Magnetic Coupling and Dot Convention}
+When two coils share a mutual magnetic flux:
+\begin{equation}
+e_1 = -L_1 \frac{di_1}{dt} \mp M \frac{di_2}{dt}, \qquad e_2 = -L_2 \frac{di_2}{dt} \mp M \frac{di_1}{dt}
+\end{equation}
+where $M = k\sqrt{L_1 L_2}$ is the mutual inductance and $k \in [0, 1]$ is the coupling coefficient.
+\begin{definition}[Dot Convention]
+\begin{itemize}
+    \item If currents enter both dotted terminals, the mutually induced voltages \textbf{aid} the self-induced voltages ($L_{eq} = L_1 + L_2 + 2M$).
+    \item If current enters one dotted terminal and leaves the other, the mutual coupling \textbf{opposes} the self-inductance ($L_{eq} = L_1 + L_2 - 2M$).
+\end{itemize}
+\end{definition}
+
+\section{The Single-Phase Transformer}
+
+\subsection{Construction and Principle of Operation}
+A transformer is a static electromagnetic device transferring electrical power between two or more circuits without a change in frequency. It consists of high-permeability silicon steel laminated cores and insulated copper windings.
+
+\begin{theorem}[EMF Equation of a Transformer]
+Let the core flux vary sinusoidally: $\Phi(t) = \Phi_m \sin(\omega t) = B_m A \sin(2\pi f t)$. By Faraday's Law, the induced EMF in a coil of $N$ turns is:
+\begin{equation}
+e(t) = -N \frac{d\Phi}{dt} = -N \omega \Phi_m \cos(\omega t) = 2\pi f N \Phi_m \sin(\omega t - 90^\circ)
+\end{equation}
+The maximum induced EMF is $E_m = 2\pi f N \Phi_m$. The RMS value of induced EMF is:
+\begin{equation}
+E_{rms} = \frac{E_m}{\sqrt{2}} = \frac{2\pi}{\sqrt{2}} f N \Phi_m = \sqrt{2}\pi f N \Phi_m \approx 4.44 f N \Phi_m
+\end{equation}
+Hence, for primary and secondary windings:
+\begin{equation}
+E_1 = 4.44 f N_1 \Phi_m, \qquad E_2 = 4.44 f N_2 \Phi_m \implies \frac{E_2}{E_1} = \frac{N_2}{N_1} = k
+\end{equation}
+\end{theorem}
+
+\subsection{Losses, Efficiency, and Voltage Regulation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Core / Iron Losses ($P_i$)}: Independent of load current, measured via the Open-Circuit (OC) test:
+    \begin{align}
+        P_i &= P_h + P_e \\
+        P_h &= k_h f B_m^{1.6} V \quad \text{(Hysteresis loss, minimized by high-silicon grain-oriented steel)} \\
+        P_e &= k_e f^2 B_m^2 t^2 V \quad \text{(Eddy current loss, minimized by laminations of thickness } t \approx 0.35\text{ mm)}
+    \end{align}
+    \item \textbf{Copper / Ohmic Losses ($P_{cu}$)}: Variable $I^2 R$ loss, measured via the Short-Circuit (SC) test:
+    \begin{equation}
+    P_{cu}(x) = x^2 P_{cu,FL} \quad \text{where } x = \frac{I_2}{I_{2,FL}}
+    \end{equation}
+    \item \textbf{Transformer Efficiency ($\eta$)}:
+    \begin{equation}
+    \eta = \frac{\text{Output Power}}{\text{Output Power} + \text{Losses}} = \frac{x S \cos\phi}{x S \cos\phi + P_i + x^2 P_{cu,FL}} \times 100\%
+    \end{equation}
+    \item \textbf{Condition for Maximum Efficiency}:
+    Differentiating $\eta$ with respect to load current and setting to zero yields:
+    \begin{equation}
+    P_i = x^2 P_{cu,FL} \implies x = \sqrt{\frac{P_i}{P_{cu,FL}}}
+    \end{equation}
+    Maximum efficiency occurs when the variable copper loss equals the constant core loss.
+    \item \textbf{Voltage Regulation}:
+    \begin{equation}
+    \%VR = \frac{V_{2,NL} - V_{2,FL}}{V_{2,FL}} \times 100\% \approx \frac{I_2(R_{e2}\cos\phi \pm X_{e2}\sin\phi)}{V_{2,FL}} \times 100\%
+    \end{equation}
+    ($+$ for lagging power factor, $-$ for leading power factor).
+\end{itemize}
+
+\subsection{Transformer on D.C. and Auto-Transformers}
+\begin{important}[Why Transformers Fail on D.C.]
+In a steady DC circuit, $\frac{d\Phi}{dt} = 0$, so no counter-EMF ($E_1 = 0$) is generated. The primary current is limited solely by tiny winding resistance: $I_{dc} = V / R_1$. This draws massive destructive currents ($20--50\times$ rated), driving the iron core into deep magnetic saturation and incinerating the primary windings within seconds.
+\end{important}
+
+\begin{definition}[Auto-Transformer]
+An auto-transformer utilizes a single continuous tapped winding common to both primary and secondary circuits. The weight of copper in an auto-transformer compared to a conventional two-winding transformer is:
+\begin{equation}
+\frac{W_{\text{auto}}}{W_{\text{2-wdg}}} = 1 - k \quad \left(k = \frac{V_2}{V_1} < 1\right) \implies \text{Copper Saved} = k \cdot W_{\text{2-wdg}}
+\end{equation}
+\end{definition}
+
+\section{Direct Current (DC) Machines}
+
+\subsection{Operating Principles and Fleming's Rules}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Generator Action}: Governed by \textbf{Fleming's Right-Hand Rule} (Thumb: Motion, First finger: Field, Second finger: Induced current).
+    \item \textbf{Motor Action}: Governed by \textbf{Fleming's Left-Hand Rule} (Thumb: Force, First finger: Field, Second finger: Current).
+    \item \textbf{Back-EMF Equation}:
+    \begin{equation}
+    E_b = \frac{P \Phi Z N}{60 A}
+    \end{equation}
+    ($P$: poles, $\Phi$: flux/pole, $Z$: armature conductors, $N$: speed in rpm, $A$: parallel paths, $A=2$ for wave, $A=P$ for lap).
+    \item \textbf{Electromagnetic Torque}:
+    \begin{equation}
+    T_e = \frac{1}{2\pi} \left(\frac{P \Phi Z I_a}{A}\right) = 0.159 \cdot \frac{P \Phi Z I_a}{A} \propto \Phi I_a \quad \text{[N}\cdot\text{m]}
+    \end{equation}
+    \item \textbf{Speed Equation}:
+    \begin{equation}
+    N = \frac{60 A}{P Z} \frac{E_b}{\Phi} \propto \frac{V - I_a R_a}{\Phi}
+    \end{equation}
+\end{itemize}
+
+\subsection{Classification and Starting of DC Motors}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{DC Shunt Motor}: Field in parallel with armature. Nearly constant speed from no-load to full-load. Used for machine tools, lathes, centrifugal pumps.
+    \item \textbf{DC Series Motor}: Field in series with armature ($I_a = I_{se} \implies T \propto I_a^2$). High starting torque. Never run without load because at no load $\Phi \to 0 \implies N \to \infty$ (catastrophic runaway). Used for cranes, hoists, traction.
+    \item \textbf{Motor Starters}: At standstill ($N = 0 \implies E_b = 0$), $I_{start} = V / R_a \approx 25 \times I_{FL}$. A \textbf{3-point} or \textbf{4-point starter} inserts series resistors during acceleration to protect commutator brushes.
+\end{itemize}
+
+\section{Three-Phase and Single-Phase AC Induction Motors}
+
+\subsection{Rotating Magnetic Field (RMF) and Operating Principle}
+When balanced three-phase currents flow through windings displaced by $120^\circ$ in space, they establish a rotating magnetic field of constant magnitude $B_R = \frac{3}{2} B_m$ rotating at synchronous speed:
+\begin{equation}
+N_s = \frac{120 f}{P} \quad \text{[rpm]}
+\end{equation}
+This field sweeps across rotor conductors, inducing currents that generate rotor torque in the direction of the field (Lenz's Law).
+
+\subsection{Slip and Torque--Speed Characteristics}
+The relative motion is quantified by the \textbf{slip} ($s$):
+\begin{equation}
+s = \frac{N_s - N}{N_s} \iff N = N_s(1 - s)
+\end{equation}
+At standstill ($N = 0$): $s = 1.0$. At synchronous speed ($N = N_s$): $s = 0$.
+The rotor frequency is $f_r = s f$. The electromagnetic torque is:
+\begin{equation}
+T \propto \frac{s E_2^2 R_2}{R_2^2 + (s X_2)^2}
+\end{equation}
+Maximum torque ($T_{max}$) occurs at slip $s_{mT} = R_2 / X_2$:
+\begin{equation}
+T_{max} \propto \frac{E_2^2}{2 X_2}
+\end{equation}
+$T_{max}$ is independent of rotor resistance $R_2$, but increasing $R_2$ shifts the peak torque toward starting ($s = 1$).
+
+\subsection{Single-Phase Induction Motors}
+A single-phase pulsating magnetic field can be resolved by \textbf{Double Revolving Field Theory} into two counter-rotating fields of equal magnitude $\frac{1}{2}\Phi_m$. At standstill, forward and backward torques are identical ($T_f = T_b$), yielding zero starting torque ($T_{start} = 0$). To initiate rotation, an auxiliary winding with a series capacitor is added to create a temporary two-phase rotating field (capacitor-start, split-phase, or shaded-pole motors).
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Transformer EMF: $E = 4.44 f N \Phi_m$, turns ratio $k = V_2/V_1 = I_1/I_2$.
+    \item Max efficiency condition: $P_i = x^2 P_{cu,FL}$.
+    \item DC motors: $E_b = P\Phi Z N / (60A)$, $T \propto \Phi I_a$, $N \propto E_b / \Phi$.
+    \item Induction motors: Synchronous speed $N_s = 120f/P$, slip $s = (N_s - N)/N_s$, $f_r = s f$.
+\end{itemize}

@@ -1,0 +1,72 @@
+\chapter{Unit 5: Prototyping, Workflow Design, and Validation}
+\label{chap:unit5-prototyping-validation}
+
+\section{The Multi-Tier Service Blueprint Architecture}
+
+\begin{canvasbox}{G. Lynn Shostack's Service Blueprint Matrix}
+\begin{tabularx}{\linewidth}{|l|X|} \hline
+\textbf{Tier} & \textbf{Operational Components} \\ \hline
+\textbf{Physical Evidence} & Receipts, signage, mobile screen UI, hardware enclosures, automated emails. \\ \hline
+\textbf{Customer Actions} & Every discrete action performed by the user across the service timeline. \\ \hline
+\multicolumn{2}{|c|}{\textbf{--- Line of Interaction ---}} \\ \hline
+\textbf{Frontstage Contact} & Direct user-facing actions performed by service staff or interactive web kiosks. \\ \hline
+\multicolumn{2}{|c|}{\textbf{--- Line of Visibility ---}} \\ \hline
+\textbf{Backstage Contact} & Behind-the-scenes actions triggered by frontstage events (e.g., barista brewing coffee). \\ \hline
+\multicolumn{2}{|c|}{\textbf{--- Line of Internal Interaction ---}} \\ \hline
+\textbf{Support Processes} & Enterprise databases, third-party payment gateways, cloud microservices, logistics. \\ \hline
+\textbf{Failure Points [!]} & High-risk failure nodes requiring automated fallback redundancies. \\ \hline
+\textbf{Wait Points [T]} & Customer bottleneck zones requiring progress disclosure or queue mitigation. \\ \hline
+\end{tabularx}
+\end{canvasbox}
+
+\section{Validation Experiment Typology}
+
+\begin{frameworkbox}{Spectrum of MVP Archetypes}
+\begin{tabularx}{\linewidth}{|l|X|l|} \hline
+\textbf{Experiment Type} & \textbf{Mechanism} & \textbf{Validates} \\ \hline
+\textbf{Smoke Test / Fake Door} & A landing page with product description and a ``Sign Up'' button before backend exists. & Market demand and customer intent. \\ \hline
+\textbf{Wizard of Oz} & Front-end looks fully autonomous; back-end tasks are executed manually by humans. & User workflow, layout, and perceived value. \\ \hline
+\textbf{Concierge MVP} & The service is delivered 100\% manually, explicitly disclosing human labor. & Deep qualitative needs and willingness to pay. \\ \hline
+\textbf{Prototype Spike} & Bare minimum functional software built solely to test technical feasibility. & API latency, algorithm convergence, memory load. \\ \hline
+\end{tabularx}
+\end{frameworkbox}
+
+\section{Quantitative Usability Metrics}
+
+\begin{metricbox}{1. System Usability Scale (SUS) Score (Brooke, 1986)}
+10-item Likert scale (1 = Strongly Disagree to 5 = Strongly Agree). Let $R_i$ be response to question $i$:
+\[
+\text{SUS Score} = 2.5 \times \left[ \sum_{i \in \text{odd}} (R_i - 1) + \sum_{i \in \text{even}} (5 - R_i) \right]
+\]
+Interpretation: $\text{SUS} \ge 68.0$ represents average industry benchmark; $\text{SUS} \ge 80.3$ indicates grade A usability.
+\end{metricbox}
+
+\begin{metricbox}{2. Task Completion Rate (TCR) \& Single Ease Question (SEQ)}
+\[
+\text{TCR} = \frac{\text{Number of successfully completed test tasks}}{\text{Total task attempts}} \times 100\%
+\]
+\[
+\text{SEQ Score} = \text{Average single 1-to-7 rating on: ``Overall, how easy was this task?''}
+\]
+\end{metricbox}
+
+\section{The Feedback Capture Grid}
+
+\begin{canvasbox}{4-Quadrant Feedback Synthesis}
+\begin{tabularx}{\linewidth}{|X|X|} \hline
+\textbf{Likes / What Worked ($\oplus$):} & \textbf{Criticisms / Friction Points ($\triangle$):} \\
+$\bullet$ Features that generated unprompted praise. & $\bullet$ Confusion, hesitation, error loops. \\
+$\bullet$ Interactions perceived as fast or intuitive. & $\bullet$ Missing functionality or unclear affordances. \\ \hline
+\textbf{Questions Asked (?):} & \textbf{New Ideas / Suggestions ($\star$):} \\
+$\bullet$ Doubts regarding pricing, security, storage. & $\bullet$ Feature variations proposed by users. \\
+$\bullet$ Ambiguities in labels or instructions. & $\bullet$ Unexpected use cases discovered during test. \\ \hline
+\end{tabularx}
+\end{canvasbox}
+
+\section{Continuous Iteration Engines: PDCA \& Agile Sprints}
+
+\begin{frameworkbox}{Deming's PDCA Continuous Improvement Cycle}
+\[
+\textbf{Plan} \xrightarrow{\text{Hypothesis}} \textbf{Do} \xrightarrow{\text{Prototype Pilot}} \textbf{Check} \xrightarrow{\text{Measure Telemetry}} \textbf{Act} \xrightarrow{\text{Standardize/Pivot}} \textbf{Plan}
+\]
+\end{frameworkbox}

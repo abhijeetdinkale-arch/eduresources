@@ -1,0 +1,169 @@
+\chapter{File Permissions, Ownership Administration \& Security Hardening}
+\label{chap:permissions-ownership}
+
+\section{The Linux Multi-Tenant Security Architecture}
+Linux is an intrinsically multi-user, multi-tenant operating system. Security is maintained at the filesystem level by attributing every file and directory to an \textbf{Owner (User)}, an owning \textbf{Group}, and everyone else (\textbf{Others / World}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw=brandnavy, fill=boxnavybg, font=\ttfamily\bfseries, minimum height=0.9cm, text centered},
+    lbl/.style={font=\sffamily\small, text centered}
+]
+    \node[box, fill=boxpurplebg, draw=brandpurple, text width=0.8cm] (type) {-};
+    \node[box, fill=boxtealbg, draw=brandteal, right=0.1cm of type, text width=1.8cm] (user) {r w x};
+    \node[box, fill=boxamberbg, draw=brandamber, right=0.1cm of user, text width=1.8cm] (group) {r - x};
+    \node[box, fill=boxrosebg, draw=brandaccent, right=0.1cm of group, text width=1.8cm] (others) {r - -};
+
+    \node[lbl, above=0.3cm of type] {Type};
+    \node[lbl, above=0.3cm of user] {Owner (u)};
+    \node[lbl, above=0.3cm of group] {Group (g)};
+    \node[lbl, above=0.3cm of others] {Others (o)};
+
+    \node[lbl, below=0.3cm of user] {Octal: 7};
+    \node[lbl, below=0.3cm of group] {Octal: 5};
+    \node[lbl, below=0.3cm of others] {Octal: 4};
+\end{tikzpicture}
+\caption{The 10-Character Permission String Dissection (Mode \texttt{-rwxr-xr--} = \texttt{754}).}
+\label{fig:perm-triplets}
+\end{figure}
+
+\section{Permission Semantics: Regular Files vs Directories}
+The semantics of the three permission bits (\texttt{r}, \texttt{w}, \texttt{x}) differ fundamentally depending on whether the filesystem target is a regular file or a directory.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Bit} & \textbf{Semantics on Regular Files} & \textbf{Semantics on Directories (Inodes)} \\
+\midrule
+\textbf{Read (\texttt{r}, 4)} & Inspect, read, or stream the data bytes of the file (e.g., \texttt{cat}, \texttt{less}). & Read the directory index table to enumerate file names (e.g., \texttt{ls}). \\
+\textbf{Write (\texttt{w}, 2)} & Modify, truncate, or append data bytes into the file content. & Add new directory entries, delete existing files, or rename files within the directory. \\
+\textbf{Execute (\texttt{x}, 1)} & Load the binary into RAM and execute as an OS process (or run script). & \textbf{Traverse / Enter} the directory (e.g., \texttt{cd dir}) and access file inodes within it. \\
+\bottomrule
+\end{tabularx}
+\caption{Comparative Semantics of Permission Bits across Files and Directories.}
+\label{tab:perm-semantics}
+\end{table}
+
+\begin{warningbox}[The Directory Deletion Paradox]
+The ability to delete a file is governed by the \textbf{write} permission on the \textit{parent directory}, not the permissions of the file itself! Even if a file is marked read-only (\texttt{r--r--r--}) and owned by root, a standard user with write and execute permissions on the containing directory can permanently delete that file.
+\end{warningbox}
+
+\section{Modifying Permissions with chmod}
+Permissions are altered using the \textbf{chmod} (change mode) command via two formal modes: Symbolic and Numeric (Octal).
+
+\subsection{Symbolic Notation Mode}
+Symbolic notation specifies targets (\texttt{u}=user, \texttt{g}=group, \texttt{o}=others, \texttt{a}=all), operators (\texttt{+}=grant, \texttt{-}=revoke, \texttt{=}=assign exact), and permission flags (\texttt{r}, \texttt{w}, \texttt{x}):
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{chmod u+x script.sh}: Adds execute bit for the file owner.
+    \item \texttt{chmod go-w report.txt}: Revokes write permission from group and others.
+    \item \texttt{chmod a=r public.txt}: Sets read-only permission for all entities.
+    \item \texttt{chmod u=rwx,go=rx deploy.sh}: Assigns full access to owner, and read+execute to group and others.
+\end{itemize}
+
+\subsection{Numeric (Octal) Mode}
+Octal mode represents each triplet as the arithmetic sum of its active binary bits:
+\begin{equation}
+\text{Triad Value} = (r \times 4) + (w \times 2) + (x \times 1)
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{chmod 755 app}: Owner gets \texttt{rwx} ($4+2+1=7$), Group gets \texttt{r-x} ($4+0+1=5$), Others get \texttt{r-x} ($4+0+1=5$). Standard mode for shared executables and web root directories.
+    \item \texttt{chmod 644 document.pdf}: Owner gets \texttt{rw-} ($4+2+0=6$), Group gets \texttt{r--} ($4+0+0=4$), Others get \texttt{r--} ($4+0+0=4$). Standard mode for non-executable documents.
+    \item \texttt{chmod 600 id\_rsa}: Owner gets \texttt{rw-}, Group and Others get \texttt{---} ($0$). Mandatory permission for private SSH keys.
+    \item \texttt{chmod 700 private\_dir}: Owner gets \texttt{rwx}, Group and Others get \texttt{---}. Completely restricts directory traversal to the owner.
+    \item \texttt{chmod -R 755 /opt/app}: Recursively applies mode 755 to all child subdirectories and files.
+\end{itemize}
+
+\section{Ownership Administration: chown and chgrp}
+Only the superuser (root) is authorized to reassign the ownership of files.
+\begin{commandbox}{chown --- Change File Owner and Group}
+\textbf{Syntax:} \texttt{chown [options] [owner][:group] file...}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{chown student report.txt}: Reassigns ownership to user \texttt{student}.
+    \item \texttt{chown student:developers project/}: Reassigns owner to \texttt{student} and group to \texttt{developers}.
+    \item \texttt{chown :devops deploy.sh}: Reassigns group ownership without changing user owner.
+    \item \texttt{chown -R www-data:www-data /var/www/html}: Recursively updates ownership across a directory tree.
+    \item \texttt{chgrp developers code.c}: Specifically updates group ownership.
+\end{itemize}
+\end{commandbox}
+
+\section{Default Permission Masking: The umask Subsystem}
+When a process creates a new regular file or directory, the operating system assigns base default permissions:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Base File Permissions:} \texttt{666} (\texttt{rw-rw-rw-}) --- Execution is deliberately disabled by default for security.
+    \item \textbf{Base Directory Permissions:} \texttt{777} (\texttt{rwxrwxrwx}) --- Directory traversal requires the execute bit.
+\end{itemize}
+
+\begin{definition}[The umask Subtraction / Inversion Rule]
+The \textbf{umask} (user file-creation mask) specifies which permission bits \textbf{must be stripped away} during file creation:
+\begin{equation}
+\text{Initial File Mode} = \text{Base File (666)} - \text{umask}
+\end{equation}
+\begin{equation}
+\text{Initial Directory Mode} = \text{Base Dir (777)} - \text{umask}
+\end{equation}
+\textit{Note on Bitwise Math:} Strictly speaking, the kernel performs bitwise AND with the bitwise complement: $\text{Mode} = \text{Base} \ \& \ (\sim \text{umask})$.
+\end{definition}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{c c c X}
+\toprule
+\textbf{umask} & \textbf{Created File Mode} & \textbf{Created Dir Mode} & \textbf{Operational Security Posture} \\
+\midrule
+\texttt{022} & \texttt{644} (\texttt{rw-r--r--}) & \texttt{755} (\texttt{rwxr-xr-x}) & Standard Linux default; world readable, owner writable. \\
+\texttt{027} & \texttt{640} (\texttt{rw-r-----}) & \texttt{750} (\texttt{rwxr-x---}) & Secured multi-tenant; others have zero access. \\
+\texttt{077} & \texttt{600} (\texttt{rw-------}) & \texttt{700} (\texttt{rwx------}) & High security / private; group and others completely excluded. \\
+\bottomrule
+\end{tabularx}
+\caption{Common umask Settings and Resulting Permission Modes.}
+\label{tab:umask}
+\end{table}
+
+\section{Special Permission Bits: SUID, SGID, and Sticky Bit}
+Standard permissions are augmented by three specialized 4th-order permission bits:
+
+\subsection{Set User ID (SUID, Octal 4000)}
+\begin{itemize}[leftmargin=1.5em]
+    \item When applied to an executable binary, any user running the program temporarily assumes the privileges of the file's \textbf{owner} (frequently root) rather than their own identity.
+    \item Represented by an \texttt{s} (or \texttt{S} if execute is missing) in the user execute position: \texttt{-rwsr-xr-x}.
+    \item \textit{Classic Example:} \texttt{/usr/bin/passwd}. Regular users must modify \texttt{/etc/shadow} (owned by root) to update passwords. The SUID bit elevates their execution context strictly for the duration of the \texttt{passwd} process.
+\end{itemize}
+
+\subsection{Set Group ID (SGID, Octal 2000)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{On Binaries:} Executes with the effective permissions of the owning group.
+    \item \textbf{On Directories:} Any new file or subdirectory created inside automatically inherits the \textbf{group ownership} of the parent directory rather than the creator's primary group. Indispensable for shared group collaboration workspaces.
+    \item Represented by an \texttt{s} in the group position: \texttt{drwxrwsr-x}.
+\end{itemize}
+
+\subsection{Sticky Bit (Octal 1000)}
+\begin{itemize}[leftmargin=1.5em]
+    \item When applied to a directory, files within can only be deleted, renamed, or modified by the \textbf{file's owner} or the superuser, even if all users have write permissions on the directory.
+    \item Represented by a \texttt{t} in the others execute position: \texttt{drwxrwxrwt}.
+    \item \textit{Classic Example:} The shared temporary directory \texttt{/tmp}.
+\end{itemize}
+
+\begin{terminalbox}[Configuring and Auditing Special Permissions]
+$ sudo chmod 4755 /usr/local/bin/custom\_auth    # Configures SUID
+$ sudo chmod 2775 /var/shared\_projects          # Configures SGID on folder
+$ sudo chmod 1777 /var/tmp\_scratch              # Configures Sticky bit
+
+# Auditing all SUID binaries across the filesystem:
+$ find / -perm /4000 -type f 2>/dev/null
+/usr/bin/passwd
+/usr/bin/sudo
+/usr/bin/chsh
+\end{terminalbox}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Given the permission string \texttt{-rwxr-x---}, state the exact octal value and identify the permissions granted to group members.
+    \item Why does a user require execute (\texttt{x}) permission on a directory to run \texttt{cat /data/file.txt}, even if \texttt{file.txt} has permissions \texttt{777}?
+    \item If the system \texttt{umask} is set to \texttt{033}, calculate the exact permissions of a newly created file and directory.
+    \item Explain the security disaster that occurs if an administrator mistakenly grants SUID permissions to \texttt{/usr/bin/vim} or \texttt{/bin/bash}.
+    \item How does the Sticky Bit protect files in the \texttt{/tmp} directory from malicious tampering by competing users?
+\end{enumerate}

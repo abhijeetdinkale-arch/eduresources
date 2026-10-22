@@ -1,0 +1,73 @@
+\chapter{Unit 1: Variables, Types, Operators \& Evaluation Rules}
+
+\begin{formulabox}{Core Primitive Data Types \& Memory Attributes}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Integer (\texttt{int})}: Arbitrary-precision signed integers in Python 3. No overflow limit; dynamically grows with available heap memory.
+    \item \textbf{Floating-Point (\texttt{float})}: 64-bit IEEE 754 double precision (53 bits significand, $\approx 15$--$17$ decimal digits precision, exponent range $10^{-308}$ to $10^{308}$).
+    \item \textbf{Complex (\texttt{complex})}: Cartesian pairs $a + bj$ where $a, b \in \mathbb{R}$. Access real part with \texttt{z.real} and imaginary with \texttt{z.imag}.
+    \item \textbf{Boolean (\texttt{bool})}: Subtype of \texttt{int}. \texttt{True == 1} and \texttt{False == 0}.
+    \item \textbf{String (\texttt{str})}: Immutable Unicode character sequence encoded via UTF-8/UTF-16/UTF-32 internally (PEP 393 flexible string representation).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Operator Precedence Hierarchy (Highest to Lowest)}
+\begin{center}
+\begin{tabularx}{0.96\textwidth}{l l X l}
+\toprule
+\textbf{Rank} & \textbf{Operator} & \textbf{Description} & \textbf{Associativity} \\
+\midrule
+1 & \texttt{(...)}, \texttt{[...]}, \texttt{\{...\}} & Grouping, indexing, subscription & Left-to-right \\
+2 & \texttt{**} & Exponentiation ($a^b$) & \textbf{Right-to-left} \\
+3 & \texttt{+x}, \texttt{-x}, \texttt{\textasciitilde{}x} & Unary plus, minus, bitwise NOT & Right-to-left \\
+4 & \texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%} & Multiplication, true div, floor div, modulo & Left-to-right \\
+5 & \texttt{+}, \texttt{-} & Binary addition, subtraction & Left-to-right \\
+6 & \texttt{<<}, \texttt{>>} & Bitwise left shift, right shift & Left-to-right \\
+7 & \texttt{\&} & Bitwise AND & Left-to-right \\
+8 & \texttt{\textasciicircum{}} & Bitwise XOR & Left-to-right \\
+9 & \texttt{|} & Bitwise OR & Left-to-right \\
+10 & \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=} & Comparison, identity (\texttt{is}), membership (\texttt{in}) & Chained \\
+11 & \texttt{not} & Boolean logical NOT & Right-to-left \\
+12 & \texttt{and} & Boolean logical AND (short-circuit) & Left-to-right \\
+13 & \texttt{or} & Boolean logical OR (short-circuit) & Left-to-right \\
+14 & \texttt{if -- else} & Conditional ternary expression & Right-to-left \\
+15 & \texttt{=}, \texttt{+=}, \texttt{-=}, \dots & Assignment and augmented assignments & Right-to-left \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\begin{formulabox}{Floor Division \& Modulo Invariants}
+For any dividend $a$ and non-zero divisor $b \in \mathbb{R}$:
+\begin{equation}
+a // b = \lfloor a / b \rfloor, \qquad a \pmod b = a - b \times (a // b)
+\end{equation}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Sign Rule: $a \pmod b$ always carries the \textbf{same algebraic sign as the divisor $b$}.
+    \item Examples:
+    \begin{itemize}
+        \item $7 // 2 = 3$, \quad $7 \pmod 2 = 7 - 2(3) = 1$.
+        \item $-7 // 2 = -4$, \quad $-7 \pmod 2 = -7 - 2(-4) = +1$.
+        \item $7 // -2 = -4$, \quad $7 \pmod{-2} = 7 - (-2)(-4) = -1$.
+        \item $-7 // -2 = 3$, \quad $-7 \pmod{-2} = -7 - (-2)(3) = -1$.
+    \end{itemize}
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Rounding \& Precision Rules}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Banker's Rounding (\texttt{round(x, n)})}: Rounds to the nearest even number when equidistant:
+    \begin{equation*}
+    \texttt{round(2.5) == 2}, \qquad \texttt{round(3.5) == 4}, \qquad \texttt{round(4.5) == 4}
+    \end{equation*}
+    \item \textbf{Truncation vs Floor}:
+    \begin{itemize}
+        \item \texttt{math.trunc(-2.7) == -2} (discards fractional part toward zero).
+        \item \texttt{math.floor(-2.7) == -3} (greatest integer $\le x$).
+        \item \texttt{math.ceil(-2.7) == -2} (least integer $\ge x$).
+    \end{itemize}
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Remember: \texttt{**} is evaluated right-to-left: \texttt{2 ** 3 ** 2 == 2 ** (3 ** 2) == 2 ** 9 == 512}, NOT \texttt{(2 ** 3) ** 2 == 64}! Chained comparisons evaluate simultaneously: \texttt{1 < x < 5} is strictly equivalent to \texttt{(1 < x) and (x < 5)}, but \texttt{x} is evaluated only once!
+\end{memorytip}

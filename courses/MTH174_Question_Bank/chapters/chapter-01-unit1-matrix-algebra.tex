@@ -1,0 +1,560 @@
+\chapter{Unit 1: Matrix Algebra and Spectral Theory}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent\textbf{Q1. Which of the following is a valid elementary row operation on a matrix?} \hfill [Tag: elementary operations and their use in getting the rank | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Interchanging any two rows}}
+    \item {{Multiplying a row by zero}}
+    \item {{Squaring all elements of a row}}
+    \item {{Adding a constant to all elements of a row}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2. The rank of a matrix in row echelon form is equal to the number of:} \hfill [Tag: elementary operations and their use in getting the rank | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Columns}}
+    \item {{Non-zero rows}}
+    \item {{Zero rows}}
+    \item {{Total rows}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3. What is the rank of a null (zero) matrix of order 3 $\times$ 3 ?} \hfill [Tag: elementary operations and their use in getting the rank | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{0}}
+    \item {{3}}
+    \item {{Undefined}}
+    \item {{1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4. Do elementary operations change the rank of a matrix?} \hfill [Tag: elementary operations and their use in getting the rank | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{No, elementary operations do not alter the rank.}}
+    \item {{Yes, they always change the rank.}}
+    \item {{Yes, but only column operations change it.}}
+    \item {{No, unless the operation involves multiplying by a negative number.}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5. A square matrix A has an inverse if and only if its determinant is:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Not equal to 0}}
+    \item {{Equal to 1}}
+    \item {{Equal to 0}}
+    \item {{Negative}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6. What is the inverse of the identity matrix I ?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{- I}}
+    \item {{The identity matrix I}}
+    \item {{The null matrix 0}}
+    \item {{It does not exist}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7. For two invertible matrices A and B , which of the following is true for the inverse of their product, ( A B ) - 1 ?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{B - 1}}
+    \item {{A - 1}}
+    \item {{( B A ) - 1}}
+    \item {{A - 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8. If A is an invertible matrix and A - 1 is its inverse, what does the product A A - 1 yield?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The null matrix 0}}
+    \item {{The identity matrix I}}
+    \item {{The matrix A 2}}
+    \item {{A diagonal matrix with zeroes on the diagonal}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9. A system of linear equations A X = B is called a homogeneous system if:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{B =}}
+    \item {{X =}}
+    \item {{B =}}
+    \item {{A =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10. In a system of linear equations A X = B , the system is called inconsistent if:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It has no solution}}
+    \item {{It has infinite solutions}}
+    \item {{It has a unique solution}}
+    \item {{The matrix A}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11. A homogeneous system of linear equations A X = 0 always has at least one solution. What is this solution called?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The trivial solution}}
+    \item {{The singular solution}}
+    \item {{The dominant solution}}
+    \item {{The inconsistent solution}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12. For a system of n equations in n variables A X = B , if | A |  = 0 , the system has:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{No solution}}
+    \item {{Infinite solutions}}
+    \item {{A unique solution}}
+    \item {{Exactly two solutions}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13. The characteristic equation of a square matrix A is given by:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{| A -}}
+    \item {{A -}}
+    \item {{| A +}}
+    \item {{| A | -}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14. The sum of the eigenvalues of a square matrix is always equal to:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The determinant of the matrix}}
+    \item {{One}}
+    \item {{Zero}}
+    \item {{The trace of the matrix (sum of principal diagonal elements)}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15. The product of the eigenvalues of a square matrix A is equal to:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The inverse of matrix A}}
+    \item {{The determinant of matrix A}}
+    \item {{The trace of matrix A}}
+    \item {{The rank of matrix A}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16. For a lower triangular matrix, the eigenvalues are simply the elements on its:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{First column}}
+    \item {{Last row}}
+    \item {{Secondary diagonal}}
+    \item {{Principal diagonal}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17. The Cayley-Hamilton theorem states that every square matrix satisfies its own:} \hfill [Tag: Cayley-Hamilton theorem | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Determinant}}
+    \item {{Transpose}}
+    \item {{Characteristic equation}}
+    \item {{Inverse}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18. Which of the following matrices does the Cayley-Hamilton theorem apply to?} \hfill [Tag: Cayley-Hamilton theorem | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Only singular matrices}}
+    \item {{Only 2 $\times$}}
+    \item {{Any rectangular matrix}}
+    \item {{Any square matrix}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19. If the characteristic equation of a matrix A is $\lambda$ 2 - 5 $\lambda$ + 6 = 0 , then according to the Cayley-Hamilton theorem:} \hfill [Tag: Cayley-Hamilton theorem | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{A 2}}
+    \item {{A 2}}
+    \item {{A 2}}
+    \item {{A 2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20. The Cayley-Hamilton theorem is commonly used in matrix algebra to efficiently find:} \hfill [Tag: Cayley-Hamilton theorem | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The trace of a matrix}}
+    \item {{The rank of a matrix}}
+    \item {{The transpose of a matrix}}
+    \item {{The inverse and higher powers of a matrix}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21. Which of the following statements is true regarding the rank of a matrix when subjected to elementary row operations?} \hfill [Tag: elementary operations and their use in getting the rank | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Elementary row operations can increase the rank of a matrix.}}
+    \item {{The rank becomes zero after a finite number of elementary operations.}}
+    \item {{Elementary row operations do not alter the rank of a matrix.}}
+    \item {{Elementary row operations can decrease the rank of a matrix.}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22. If a 3 $\times$ 3 matrix A has all its elements equal to 1, what is the rank of A ?} \hfill [Tag: elementary operations and their use in getting the rank | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{3}}
+    \item {{1}}
+    \item {{2}}
+    \item {{0}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23. For a square matrix A of order n , if the determinant | A | = 0 , what can be said about its rank r ?} \hfill [Tag: elementary operations and their use in getting the rank | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{r <}}
+    \item {{r =}}
+    \item {{r >}}
+    \item {{r =}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24. If the rank of a 4 $\times$ 5 matrix is 3 , how many linearly independent rows does it have?} \hfill [Tag: elementary operations and their use in getting the rank | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{4}}
+    \item {{5}}
+    \item {{3}}
+    \item {{2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25. When finding the inverse of a matrix A using Gauss-Jordan elimination, we apply elementary row operations to the augmented matrix [ A | I ] until it becomes:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{[ I | A ]}}
+    \item {{[ 0| A - 1}}
+    \item {{[ A - 1}}
+    \item {{[ I | A - 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26. If matrices A and B are invertible matrices of the same order, then ( A B ) - 1 is equal to:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{A - 1}}
+    \item {{A B - 1}}
+    \item {{B - 1}}
+    \item {{B A - 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27. Consider a system of linear equations A X = B with n variables. If the rank of the coefficient matrix A is equal to the rank of the augmented matrix [ A | B ] but less than n , the system has:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{No solution}}
+    \item {{A unique solution}}
+    \item {{Infinitely many solutions}}
+    \item {{Only the trivial solution}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28. For a homogeneous system of linear equations A X = 0 of order n $\times$ n , the system has non-trivial solutions if and only if:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{| A | =}}
+    \item {{Rank of A =}}
+    \item {{| A | =}}
+    \item {{| A | }}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29. If $\lambda$ is an eigenvalue of a non-singular matrix A , then an eigenvalue of A - 1 is:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{$\lambda$}}
+    \item {{1/ $\lambda$}}
+    \item {{- $\lambda$}}
+    \item {{0}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30. The sum of the eigenvalues of a matrix is equal to:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The trace of the matrix}}
+    \item {{The determinant of the matrix}}
+    \item {{The product of its diagonal elements}}
+    \item {{Zero}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31. The product of all the eigenvalues of a square matrix A is equal to:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The determinant of A}}
+    \item {{The trace of A}}
+    \item {{1}}
+    \item {{0}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32. If a 2 $\times$ 2 matrix has eigenvalues 3 and 4 , what is the trace and determinant of the matrix, respectively?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Trace = 1}}
+    \item {{Trace = 7}}
+    \item {{Trace = 7}}
+    \item {{Trace = 12}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33. Which of the following is true for the eigenvalues of a real symmetric matrix?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{They are always purely imaginary.}}
+    \item {{They are always real numbers.}}
+    \item {{They are always zero.}}
+    \item {{They are always complex conjugates.}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34. The Cayley-Hamilton theorem states that every square matrix satisfies its own:} \hfill [Tag: Cayley-Hamilton theorem | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Transposed matrix}}
+    \item {{Identity matrix}}
+    \item {{Inverse function}}
+    \item {{Characteristic equation}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35. If the characteristic equation of a 2 $\times$ 2 matrix A is $\lambda$ 2 - 5 $\lambda$ + 6 = 0 , then according to the Cayley-Hamilton theorem:} \hfill [Tag: Cayley-Hamilton theorem | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{A 2}}
+    \item {{A 2}}
+    \item {{A 2}}
+    \item {{A 2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36. Using the characteristic equation A 3 - 4 A 2 + 5 A - 2 I = 0 obtained from the Cayley-Hamilton theorem, the inverse A - 1 can be expressed as:} \hfill [Tag: Cayley-Hamilton theorem | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{2 ( A 2}}
+    \item {{2}}
+    \item {{A 2}}
+    \item {{2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37. One of the primary applications of the Cayley-Hamilton theorem is finding:} \hfill [Tag: Cayley-Hamilton theorem | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{The trace of a non-square matrix}}
+    \item {{The rank of a rectangular matrix}}
+    \item {{The exact eigenvalues of a matrix without solving polynomials}}
+    \item {{Higher powers and the inverse of a square matrix}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38. If a system of n linear equations in n variables has a singular coefficient matrix ( | A | = 0 ), the system can be:} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Only having a trivial solution}}
+    \item {{Only consistent with a unique solution}}
+    \item {{Either inconsistent or having infinitely many solutions}}
+    \item {{Always inconsistent}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39. Which of the following operations is NOT considered a valid elementary row operation?} \hfill [Tag: elementary operations and their use in getting the rank | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Squaring all the elements of a row}}
+    \item {{Multiplying a row by a non-zero scalar}}
+    \item {{Interchanging two rows}}
+    \item {{Adding a scalar multiple of one row to another row}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40. If X is an eigenvector corresponding to the eigenvalue $\lambda$ of a matrix A , then for any non-zero scalar k , the vector k X is:} \hfill [Tag: eigen-values and eigenvectors of a matrix | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{An eigenvector corresponding to the eigenvalue $\lambda$ / k}}
+    \item {{An eigenvector corresponding to the eigenvalue $\lambda$}}
+    \item {{Not an eigenvector}}
+    \item {{An eigenvector corresponding to the eigenvalue k$\lambda$}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41. Let A be a 3 $\times$ 3 real matrix with eigenvalues 1 , - 1 , and 2 . Which of the following statements about A 100 - A 98 + A 2 is definitely true?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It has eigenvalues 1 , 1 , 3 $\times$}}
+    \item {{Its trace is 1 +}}
+    \item {{It is similar to a diagonal matrix with diagonal entries 1 , 1 , 4}}
+    \item {{Its eigenvalues are 1 , 1 , 4}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42. If A = ( 1 3 2 4 ) , what is the value of the matrix expression A 3 - 6 A 2 + 5 A + I ?} \hfill [Tag: Cayley-Hamilton theorem | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{7 A -}}
+    \item {{7 A +}}
+    \item {{3 A -}}
+    \item {{6 A -}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43. Let A be an n $\times$ n matrix of rank r < n . If B is a matrix obtained by performing a sequence of row operations on A , and C is formed by replacing the last row of B with a linear combination of its other rows, what is the maximum possible rank of C ?} \hfill [Tag: elementary operations and their use in getting the rank | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{r -}}
+    \item {{r}}
+    \item {{r +}}
+    \item {{n -}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44. Consider a system of linear equations A X = B where A is an m $\times$ n matrix ( m < n ) of full row rank. Which of the following is true regarding the solutions to this system?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It has infinitely many solutions for any B}}
+    \item {{The solution space forms a subspace of dimension m}}
+    \item {{It has a unique solution for any B}}
+    \item {{It is inconsistent for some B}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45. Let A be a 4 $\times$ 4 nilpotent matrix of index 3 (i.e., A 3 = 0 , A 2  = 0 ). What is the algebraic multiplicity and geometric multiplicity of the eigenvalue 0 ?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Algebraic: 4, Geometric: 1}}
+    \item {{Algebraic: 4, Geometric: 3}}
+    \item {{Algebraic: 4, Geometric: 2}}
+    \item {{Algebraic: 3, Geometric: 2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46. Let A be an invertible n $\times$ n matrix with characteristic polynomial P ( $\lambda$ ) = $\lambda$ n + c n - 1 $\lambda$ n - 1 + $\dots$ + c 1 $\lambda$ + c 0 . What is the trace of A - 1 in terms of the coefficients c i ?} \hfill [Tag: Cayley-Hamilton theorem | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{- c n - 1}}
+    \item {{- c 1}}
+    \item {{- c 0}}
+    \item {{c 1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47. Let A be an n $\times$ n matrix of rank n - 1 . Let adj ( A ) be the adjugate matrix of A . What is the rank of adj ( A ) ?} \hfill [Tag: elementary operations and their use in getting the rank | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{n -}}
+    \item {{0}}
+    \item {{n}}
+    \item {{1}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48. For what values of k does the system x + y + z = 1 , x + 2 y + 4 z = k , x + 4 y + 10 z = k 2 have a solution?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{Only k =}}
+    \item {{k =}}
+    \item {{The system has a unique solution for any k}}
+    \item {{For all real k}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49. If v is an eigenvector of a matrix A corresponding to eigenvalue $\lambda$ , and A is non-singular, which of the following is an eigenvector of A 2 + A - 1 + I ?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{$\lambda$ 2}}
+    \item {{It cannot be determined.}}
+    \item {{( $\lambda$ 2}}
+    \item {{v}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50. Given a 2 $\times$ 2 matrix A such that tr ( A ) = 3 and det ( A ) = 2 . What is A 4 expressed as a linear combination of A and I ?} \hfill [Tag: Cayley-Hamilton theorem | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{10 A -}}
+    \item {{81 A -}}
+    \item {{15 A -}}
+    \item {{31 A -}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51. Let A and B be two n $\times$ n matrices. Which of the following inequalities regarding rank is always true?} \hfill [Tag: elementary operations and their use in getting the rank | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{rank}}
+    \item {{rank}}
+    \item {{rank}}
+    \item {{rank}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52. Let A be a 3 $\times$ 3 matrix such that A 3 + 2 A 2 - A - 2 I = 0 . Which of the following represents A - 1 ?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{2}}
+    \item {{A 2}}
+    \item {{2}}
+    \item {{2}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53. Let A be an orthogonal matrix with purely real entries and det ( A ) = - 1 . Which of the following must be an eigenvalue of A ?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{0}}
+    \item {{- 1}}
+    \item {{1}}
+    \item {{i}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54. Let A be a 3 $\times$ 3 matrix with characteristic equation $\lambda$ 3 - 6 $\lambda$ 2 + 11 $\lambda$ - 6 = 0 . What is the trace of A 2 ?} \hfill [Tag: Cayley-Hamilton theorem | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{36}}
+    \item {{14}}
+    \item {{22}}
+    \item {{25}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55. Consider a block matrix M = ( A 0 B C ) , where A and C are square matrices. Which of the following statements about the rank of M is always true?} \hfill [Tag: elementary operations and their use in getting the rank | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{rank}}
+    \item {{rank}}
+    \item {{rank}}
+    \item {{rank}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56. Let A be a 3 $\times$ 3 matrix such that the system of equations A X = 0 has a non-trivial solution. Which of the following systems A T X = B (where B  = 0 ) can have a unique solution?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It is impossible for any B}}
+    \item {{Only if B}}
+    \item {{Only if B}}
+    \item {{Only if B}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57. If A is a real skew-symmetric matrix of odd order n , what can be said about its eigenvalues and determinant?} \hfill [Tag: eigen-values and eigenvectors of a matrix | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{It has at least one real non-zero eigenvalue, and det ( A ) >}}
+    \item {{It has 0 as an eigenvalue, and det ( A ) =}}
+    \item {{All eigenvalues are real, and det ( A ) =}}
+    \item {{All eigenvalues are purely imaginary, and det ( A ) >}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58. For a matrix A with minimal polynomial m ( x ) = x 2 - 4 x + 3 , what is the inverse of ( A - 2 I ) ?} \hfill [Tag: Cayley-Hamilton theorem | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{( 2 I -}}
+    \item {{A -}}
+    \item {{I -}}
+    \item {{( A +}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59. Let u and v be non-zero n $\times$ 1 column vectors. What is the rank of the matrix I - u v T , assuming v T u  = 1 ?} \hfill [Tag: elementary operations and their use in getting the rank | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{1}}
+    \item {{n -}}
+    \item {{Depends on the values of u}}
+    \item {{n}}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60. If A and B are non-singular matrices such that A + B is also non-singular, which of the following expressions is equivalent to ( A - 1 + B - 1 ) - 1 ?} \hfill [Tag: inverse of a matrix and solution of linear simultaneous equations | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {{A +}}
+    \item {{A - 1}}
+    \item {{A ( A +}}
+    \item {{B ( A +}}
+\end{enumerate}
+\vspace{2mm}
+
+
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{1}{1}
+Find the rank and reduce to normal form $[I_r, 0; 0, 0]$ for the matrix $A = \begin{bmatrix} 1 & 2 & -1 & 4 \\ 2 & 4 & 3 & 4 \\ 1 & 2 & 3 & 4 \end{bmatrix}$.
+\end{subjectiveq}
+
+\begin{solbox}
+Perform elementary row operations: $R_2 \to R_2 - 2R_1$, $R_3 \to R_3 - R_1$, yielding non-zero pivots. After column operations $C_2 \to C_2 - 2C_1$, $C_3 \to C_3 + C_1$, $C_4 \to C_4 - 4C_1$, the matrix reduces to $\begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix} = \begin{bmatrix} I_2 & 0 \\ 0 & 0 \end{bmatrix}$. Thus, the rank is $\operatorname{rank}(A) = 2$.
+\end{solbox}
+
+\begin{examinertip}
+Step 1: Identify the foundational definition and state governing theorems.\\
+Step 2: Clearly write each algebraic transformation and boundary substitution.\\
+Step 3: State the final numerical/algebraic invariant clearly in a concluding box.
+\end{examinertip}

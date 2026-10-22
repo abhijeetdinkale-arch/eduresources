@@ -1,0 +1,543 @@
+\chapter{Unit 6: File Handling, Data Loading, and Visualization}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent\textbf{Q1.} Which Python function is commonly used to open a file? \hfill [Tag: Reading files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {load()}
+    \item {open()}
+    \item {read()}
+    \item {file()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q2.} Which file method reads the entire contents of a text file? \hfill [Tag: Reading files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {append()}
+    \item {write()}
+    \item {read()}
+    \item {close()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q3.} Which file mode is used to write new content to a file? \hfill [Tag: Writing files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {x}
+    \item {w}
+    \item {rb}
+    \item {r}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q4.} Which method writes a string to an open file? \hfill [Tag: Writing files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {write()}
+    \item {put()}
+    \item {send()}
+    \item {insert()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q5.} Which Python module provides functions for working with folders and file paths? \hfill [Tag: Interacting with file systems | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {math}
+    \item {random}
+    \item {turtle}
+    \item {os}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q6.} Which function checks whether a path exists when using the os.path module? \hfill [Tag: Interacting with file systems | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {os.path.exists()}
+    \item {os.path.check()}
+    \item {os.path.valid()}
+    \item {os.path.find()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q7.} Which file mode opens a file for reading binary data? \hfill [Tag: Binary data | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {rb}
+    \item {w}
+    \item {rt}
+    \item {r}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q8.} Which type represents binary data in Python? \hfill [Tag: Binary data | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {dict}
+    \item {float}
+    \item {str}
+    \item {bytes}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q9.} Which Python module is commonly used to access command-line arguments? \hfill [Tag: Command-line arguments and files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {csv}
+    \item {re}
+    \item {time}
+    \item {sys}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q10.} Where are command-line arguments stored in Python when using the sys module? \hfill [Tag: Command-line arguments and files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {sys.argv}
+    \item {sys.command}
+    \item {sys.inputs}
+    \item {sys.args}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q11.} What is a main advantage of using the with statement when working with files? \hfill [Tag: with statement | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It downloads the file automatically}
+    \item {It sorts the file contents}
+    \item {It converts files to CSV}
+    \item {It closes the file automatically}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q12.} Which statement correctly opens data.txt for reading using a context manager? \hfill [Tag: with statement | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {using open("data.txt") file:}
+    \item {with read("data.txt") as file:}
+    \item {open with "data.txt" as file:}
+    \item {with open("data.txt", "r") as file:}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q13.} What does CSV stand for? \hfill [Tag: Comma-separated values files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Common System Variables}
+    \item {Comma-Separated Values}
+    \item {Column Storage Version}
+    \item {Computer-Saved Values}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q14.} Which Python module is designed for reading and writing CSV files? \hfill [Tag: Comma-separated values files | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {json}
+    \item {sqlite}
+    \item {html}
+    \item {csv}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q15.} Which Python library is commonly used to send HTTP requests and download web resources? \hfill [Tag: Getting files from the Internet | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {statistics}
+    \item {calendar}
+    \item {requests}
+    \item {decimal}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q16.} What does a URL identify? \hfill [Tag: Getting files from the Internet | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A Python loop}
+    \item {A web resource location}
+    \item {A database column}
+    \item {A file compression type}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q17.} Which pandas function loads a CSV file into a DataFrame? \hfill [Tag: Loading data | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {pd.read\_csv()}
+    \item {pd.open\_csv()}
+    \item {pd.import\_data()}
+    \item {pd.load\_table()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q18.} What does filtering a DataFrame usually do? \hfill [Tag: Selecting and filtering | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Changes numbers into images}
+    \item {Downloads a new dataset}
+    \item {Selects rows meeting a condition}
+    \item {Deletes every column}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q19.} Which pair of libraries is commonly used for data visualization in Python? \hfill [Tag: Visualizing data with Matplotlib and Seaborn | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Matplotlib and Seaborn}
+    \item {Tkinter and unittest}
+    \item {Flask and Django}
+    \item {NumPy and pathlib}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q20.} Which type of plot is useful for showing change over time? \hfill [Tag: Line plots | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Histogram}
+    \item {Line plot}
+    \item {Pie chart}
+    \item {Box-only plot}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q21.} What is printed by the following code if data.txt contains three lines, each ending with a newline character? \hfill [Tag: Reading files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The number of words in the file}
+    \item {The number of characters in the file}
+    \item {The number of lines in the file}
+    \item {The number of newline characters plus one}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q22.} A program should add a new log entry to events.log without deleting existing entries. Which file mode should be used? \hfill [Tag: Writing files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {"x"}
+    \item {"w"}
+    \item {"a"}
+    \item {"r"}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q23.} Which statement correctly checks whether a path refers to an existing directory? \hfill [Tag: Interacting with file systems | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {os.path.exists(file)}
+    \item {os.path.folder(path)}
+    \item {os.path.isfile(path)}
+    \item {os.path.isdir(path)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q24.} Why should an image file usually be opened with mode "rb" rather than "r" ? \hfill [Tag: Binary data | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It converts the image into text}
+    \item {It reads the file as raw bytes}
+    \item {It prevents the file from being closed}
+    \item {It automatically compresses the image}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q25.} Suppose a script is run as python report.py input.csv . Which expression gives the string input.csv ? \hfill [Tag: Command-line arguments and files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {sys.argv[0]}
+    \item {sys.argv[2]}
+    \item {sys.argv[1]}
+    \item {sys.file[1]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q26.} What is the main advantage of using the following structure? \hfill [Tag: with statement | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The file is automatically encrypted}
+    \item {The file is automatically closed}
+    \item {The file can only be read once}
+    \item {The file is automatically duplicated}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q27.} A CSV file contains a header row and numeric values. Which pandas statement loads it and treats the first row as column names? \hfill [Tag: Comma-separated values files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {pd.read\_csv("data.csv", header=None)}
+    \item {pd.read\_csv("data.csv", index\_col=0)}
+    \item {pd.read\_text("data.csv", header=0)}
+    \item {pd.read\_csv("data.csv", header=0)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q28.} Which code correctly downloads the contents of a URL and saves them to a local file in binary mode? \hfill [Tag: Getting files from the Internet | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {urllib.read(url, "file.bin")}
+    \item {open(url, "wb").write(requests.get(url).text)}
+    \item {requests.get(url).save("file.bin")}
+    \item {response = requests.get(url); open("file.bin", "wb").write(response.content)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q29.} After executing df = pd.read\_csv("scores.csv") , which expression returns the first five rows of the DataFrame? \hfill [Tag: Loading data | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {df.head()}
+    \item {df.rows(0, 5)}
+    \item {df.first(5)}
+    \item {df.sample(5, first=True)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q30.} Given a DataFrame df with a numeric column named age , which expression selects rows for people aged at least 18? \hfill [Tag: Selecting and filtering | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {df[df["age"] $>$= 18]}
+    \item {df["age" $>$= 18]}
+    \item {df.filter(age $>$= 18)}
+    \item {df[df["age"] $>$ 18]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q31.} Which statement best describes a typical difference between Matplotlib and Seaborn? \hfill [Tag: Visualizing data with Matplotlib and Seaborn | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Matplotlib requires a database connection}
+    \item {Matplotlib works only with image files}
+    \item {Seaborn provides higher-level statistical visualizations}
+    \item {Seaborn cannot create statistical plots}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q32.} Which plot is most appropriate for showing how a city's temperature changes over 30 consecutive days? \hfill [Tag: Line plots | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A line plot with day on the x-axis}
+    \item {A pie chart with day as categories}
+    \item {A histogram with temperature labels}
+    \item {A scatter plot with no ordered axis}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q33.} A DataFrame contains one row per department and a column containing total sales. Which chart best compares sales among departments? \hfill [Tag: Bar charts | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A line chart with departments as continuous values}
+    \item {A scatter plot using one point only}
+    \item {A bar chart with departments as categories}
+    \item {A histogram of department names}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q34.} What does changing bins=5 to bins=20 in a histogram generally do? \hfill [Tag: Histograms | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It creates narrower value intervals}
+    \item {It converts counts into percentages}
+    \item {It removes all extreme values}
+    \item {It changes the sample size}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q35.} A scatter plot shows points forming a strong upward pattern from left to right. What does this most directly suggest? \hfill [Tag: Scatter plots | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A strong positive association}
+    \item {That both variables are categorical}
+    \item {No relationship between variables}
+    \item {A guaranteed causal relationship}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q36.} Which expression reads all text from a file and removes leading and trailing whitespace from the entire result? \hfill [Tag: Reading files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {read(file).whitespace()}
+    \item {file.readlines().trim()}
+    \item {file.strip().read()}
+    \item {file.read().strip()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q37.} What happens when a file is opened with mode "w" and the file already exists? \hfill [Tag: Writing files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {An error always occurs before opening}
+    \item {The existing contents are truncated}
+    \item {The file is opened only for reading}
+    \item {New text is added after existing text}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q38.} Which code creates a directory named output only if it does not already exist? \hfill [Tag: Interacting with file systems | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {os.path.create("output")}
+    \item {os.mkdir("output", exist\_ok=True)}
+    \item {os.makedirs("output", exist\_ok=True)}
+    \item {os.create\_dir("output", safe=True)}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q39.} A CSV column named price is loaded as strings because some entries contain currency symbols. Which operation is most appropriate before calculating the mean? \hfill [Tag: Comma-separated values files | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Convert the values to numeric after removing symbols}
+    \item {Sort the strings alphabetically}
+    \item {Rename the column without changing its values}
+    \item {Use value\_counts() as the mean}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q40.} Which pandas expression selects only the name and score columns for rows where score is greater than 75? \hfill [Tag: Selecting and filtering | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {df[df["score"]]["name", "score"] $>$ 75}
+    \item {df.select("name", "score", where=75)}
+    \item {df["name", "score", df["score"] $>$ 75]}
+    \item {df[["name", "score"]][df["score"] $>$ 75]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q41.} A UTF-8 text file contains a multibyte character split across two byte chunks. Which approach reliably decodes the complete stream without risking a decoding error at the chunk boundary? \hfill [Tag: Reading files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Decode chunks with errors="ignore" and join the results}
+    \item {Concatenate all chunks and decode once after reading}
+    \item {Decode each chunk with errors="replace" before processing}
+    \item {Decode each chunk independently with chunk.decode("utf-8")}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q42.} A program must update a large configuration file so that a crash never leaves a partially written replacement visible. Which strategy provides the strongest basic atomicity guarantee on the same filesystem? \hfill [Tag: Writing files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Open the original in append mode and write the changes}
+    \item {Open the original in text mode and truncate it before writing}
+    \item {Write a temporary file, flush it, then replace the original}
+    \item {Write the changes directly and call os.fsync() afterward}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q43.} Why is Path("uploads") / user\_supplied\_name unsafe as a final destination when the name may contain .. components? \hfill [Tag: Interacting with file systems | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It always converts the path into an absolute path}
+    \item {It prevents access to files on case-sensitive systems}
+    \item {It can resolve outside uploads after normalization}
+    \item {It silently changes all path separators to spaces}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q44.} A binary file stores unsigned 16-bit integers in little-endian order. Which expression correctly interprets the first four bytes as two values using Python's struct module? \hfill [Tag: Binary data | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {struct.unpack("=2h", data[:4])}
+    \item {struct.unpack("$<$4H", data[:4])}
+    \item {struct.unpack("$>$2H", data[:4])}
+    \item {struct.unpack("$<$2H", data[:4])}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q45.} A command-line program accepts an input path that may begin with - . Which design most reliably prevents the path from being interpreted as an option? \hfill [Tag: Command-line arguments and files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Read the path with input() after parsing all options}
+    \item {Remove every hyphen from the path before opening it}
+    \item {Convert the path to uppercase before passing it to argparse}
+    \item {Require the path after a -- separator or use a named argument}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q46.} What is the main reason with open(path) as f: is preferred over manually calling open() and close() around file operations? \hfill [Tag: with statement | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It automatically converts binary data into Unicode text}
+    \item {It guarantees that every read returns a complete line}
+    \item {It closes the resource even when the block raises an exception}
+    \item {It prevents every possible filesystem permission error}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q47.} A CSV field contains "Smith, Jane" , and another field contains an embedded newline inside quotes. Which method correctly preserves both fields? \hfill [Tag: Comma-separated values files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Replace commas with semicolons before splitting each line}
+    \item {Use csv.reader with the file opened using newline=""}
+    \item {Use str.splitlines() followed by whitespace splitting}
+    \item {Split each physical line with line.split(",")}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q48.} A script downloads a large file over HTTP and must avoid silently accepting an error page returned with status code 404. Which sequence is most appropriate? \hfill [Tag: Getting files from the Internet | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use response.content and assume nonempty data means success}
+    \item {Call response.raise\_for\_status() before streaming the body}
+    \item {Read response.text and test whether it contains HTML}
+    \item {Save the body first and inspect its filename afterward}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q49.} A dataset has a numeric column containing values such as "1,250" , "---" , and "980" . Which loading strategy best preserves numeric analysis while treating the dash as missing? \hfill [Tag: Loading data | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Load all values as strings and sort them lexicographically}
+    \item {Specify the thousands separator and map the dash to missing}
+    \item {Remove every comma from the entire raw file before loading}
+    \item {Convert the column to integers without handling special values}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q50.} In pandas, df contains a nullable integer column age . Which filter retains rows where age is at least 18 while excluding missing ages without relying on ambiguous Boolean NA behavior? \hfill [Tag: Selecting and filtering | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {df[df["age"].ge(18).fillna(False)]}
+    \item {df[df["age"] $>$= 18]}
+    \item {df[df["age"].isna() | (df["age"] $<$ 18)]}
+    \item {df.loc[df["age"].astype(str) $>$= "18"]}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q51.} A Seaborn plot is created inside a loop, and each iteration adds another axes to the same figure. Which practice prevents accidental overlay or accumulation across iterations? \hfill [Tag: Visualizing data with Matplotlib and Seaborn | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Call sns.set\_theme() before every plotting command}
+    \item {Call plt.figure() only after the loop has completed}
+    \item {Create or clear the figure and axes for each iteration}
+    \item {Increase the figure DPI after each iteration}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q52.} A time-series line plot appears to connect observations in a visually misleading order. What is the most direct correction when the timestamps are valid but unsorted? \hfill [Tag: Line plots | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Sort the data by timestamp before plotting}
+    \item {Replace the timestamps with their row indices}
+    \item {Use a logarithmic y-axis for the measurements}
+    \item {Increase the line width to emphasize the trend}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q53.} A bar chart compares category totals, but one category has no observations and must still appear with a zero-height bar. Which preparation is most appropriate? \hfill [Tag: Bar charts | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Reindex the aggregated counts with the complete category list and fill zeros}
+    \item {Drop categories with missing counts before aggregation}
+    \item {Replace the absent category with the mean of observed counts}
+    \item {Plot the raw observations and let the axis infer categories}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q54.} Two histograms are compared using different bin edges. Why can their bar heights not be compared directly, even if both use the same y-axis label? \hfill [Tag: Histograms | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Different bins represent different intervals and possibly different widths}
+    \item {Histograms cannot display more than one dataset on a figure}
+    \item {The y-axis of every histogram must always be logarithmic}
+    \item {Different colors automatically normalize the distributions differently}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q55.} A scatter plot contains one extremely large outlier that compresses nearly all other points into a small region. Which change improves visibility while preserving the outlier? \hfill [Tag: Scatter plots | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Replace the outlier with the column median}
+    \item {Delete the outlier before plotting}
+    \item {Use logarithmic scaling on the affected axis when appropriate}
+    \item {Increase marker transparency only on the outlier}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q56.} A text file may use either UTF-8 or a platform-specific encoding, and decoding errors must not silently corrupt data. Which policy is safest for a data-processing pipeline? \hfill [Tag: Reading files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Declare or detect the encoding and fail explicitly when decoding is invalid}
+    \item {Always decode with ASCII and discard non-ASCII characters}
+    \item {Use errors="ignore" so processing never stops}
+    \item {Decode with the system default and assume it is stable}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q57.} A program writes text intended to be consumed consistently on Windows and Linux. Which choice best avoids accidental platform-dependent newline transformations? \hfill [Tag: Writing files | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Write with print() and rely on the operating system default}
+    \item {Specify the desired newline behavior when opening the text file}
+    \item {Use binary mode and manually encode every character as ASCII}
+    \item {Replace every newline with a space before writing}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q58.} A file contains a sequence of raw 32-bit floating-point values, and performance matters when analyzing the entire file. Which approach avoids unnecessary Python-level unpacking loops? \hfill [Tag: Binary data | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Convert each byte to hexadecimal before constructing floats}
+    \item {Read one byte at a time and call float() repeatedly}
+    \item {Decode the bytes as UTF-8 and split on whitespace}
+    \item {Use numpy.fromfile with the correct dtype and byte order}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q59.} A dataset is split into training and test files, but preprocessing includes computing the mean used for standardization. Where should that mean be computed? \hfill [Tag: Loading data | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Independently from each set to maximize local accuracy}
+    \item {From the test data because it is evaluated last}
+    \item {From the combined training and test data}
+    \item {From the training data only, then applied to both sets}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q60.} A pandas DataFrame has duplicate timestamps for several sensors. The requirement is to retain the latest record per sensor and timestamp according to an updated\_at column. Which operation expresses this reliably? \hfill [Tag: Selecting and filtering | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Drop duplicates first, then sort the remaining rows by updated\_at}
+    \item {Sort by updated\_at , then drop duplicates on sensor and timestamp, keeping the last}
+    \item {Sort by sensor name and assume the final row is the latest}
+    \item {Group only by timestamp and keep the first row in each group}
+\end{enumerate}
+\vspace{2mm}
+
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{6}{1}
+Construct an automated end-to-end Data Engineering pipeline using Pandas and Matplotlib. The system must ingest raw sensor readings from a CSV with missing data and outliers, impute missing values using median aggregation, compute rolling window statistical metrics (mean and standard deviation), and generate a publication-quality dual-axis visualization.
+\end{subjectiveq}
+
+\begin{solbox}
+\begin{lstlisting}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+def process_sensor_pipeline(csv_path: str, output_plot_path: str):
+    # Step 1: Load and clean
+    df = pd.read_csv(csv_path, parse_dates=['timestamp'])
+    df = df.sort_values('timestamp').reset_index(drop=True)
+    
+    # Impute missing values with sensor median
+    df['reading'] = df['reading'].fillna(df['reading'].median())
+    
+    # Step 2: Compute rolling metrics
+    df['rolling_mean'] = df['reading'].rolling(window=12, min_periods=1).mean()
+    df['rolling_std'] = df['reading'].rolling(window=12, min_periods=1).std().fillna(0)
+    
+    # Step 3: Visualization
+    fig, ax1 = plt.subplots(figsize=(10, 5), dpi=300)
+    ax1.plot(df['timestamp'], df['reading'], label='Raw Sensor', color='#0F2043', alpha=0.4)
+    ax1.plot(df['timestamp'], df['rolling_mean'], label='12-period Rolling Mean', color='#E85A10', lw=2)
+    
+    # Confidence interval band
+    ax1.fill_between(df['timestamp'], 
+                     df['rolling_mean'] - 2*df['rolling_std'], 
+                     df['rolling_mean'] + 2*df['rolling_std'], 
+                     color='#E85A10', alpha=0.15, label='95% Confidence Band')
+    
+    ax1.set_xlabel('Timestamp', fontsize=10, fontweight='bold')
+    ax1.set_ylabel('Sensor Amplitude', fontsize=10, fontweight='bold')
+    ax1.set_title('Automated Sensor Quality Assurance & Trend Analysis', fontsize=12, fontweight='bold')
+    ax1.legend(loc='upper left')
+    ax1.grid(True, linestyle='--', alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(output_plot_path)
+    plt.close()
+    return df
+\end{lstlisting}
+\textbf{Engineering Pipeline Significance:}\\
+$\bullet$ Demonstrates vector-based pandas operations without slow \texttt{apply} or row iterations.\\
+$\bullet$ Robust handling of temporal discontinuities and dynamic Matplotlib asset creation.
+\end{solbox}
+
+\begin{examinertip}
+$\bullet$ \textbf{Rubric Breakdown (10 Marks Total):}\\
+1. Algorithmic Formulation \& Theoretical Correctness: \textbf{3 Marks}\\
+2. Production Python Syntax \& Idiomatic Standards (PEP 8): \textbf{3 Marks}\\
+3. Boundary Case \& Exception Robustness: \textbf{2 Marks}\\
+4. Asymptotic Time \& Auxiliary Space Complexity Derivation: \textbf{2 Marks}
+\end{examinertip}

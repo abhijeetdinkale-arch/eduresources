@@ -1,0 +1,149 @@
+\chapter{Conditionals, Iterations, Functions, and Recursion}
+\label{ch:control_functions}
+
+\section{Control Flow and Conditional Branching}
+
+Programs make decisions by evaluating boolean expressions to alter the sequence of instruction execution. Python uses strict indentation blocks (conventionally 4 spaces) rather than curly braces to define scope boundaries.
+
+\subsection{Syntax Structures: \texttt{if}, \texttt{if-else}, and \texttt{if-elif-else}}
+\begin{lstlisting}[caption={Multi-way Signal Classification}]
+signal_level_dbm = -45.0
+
+if signal_level_dbm >= -30.0:
+    quality = "Strong Signal (Optimal)"
+elif signal_level_dbm >= -60.0:
+    quality = "Good Signal (Acceptable)"
+elif signal_level_dbm >= -80.0:
+    quality = "Weak Signal (Marginal)"
+else:
+    quality = "No Signal / Link Failure"
+
+print(f"Receiver Status: {quality}")
+\end{lstlisting}
+
+\subsection{Short-Circuit Evaluation}
+Python evaluates logical operators (\texttt{and}, \texttt{or}) using short-circuit semantics:
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{\texttt{A and B}:} If $A$ is false, Python returns $A$ immediately without evaluating $B$.
+    \item \textbf{\texttt{A or B}:} If $A$ is true, Python returns $A$ immediately without evaluating $B$.
+\end{itemize}
+This allows safe guard expressions, such as \texttt{if denom != 0 and (num / denom) > threshold:}.
+
+\section{Iterative Control Structures}
+
+\subsection{The \texttt{while} Loop and Sentinel Controls}
+The \texttt{while} statement executes a suite of instructions repeatedly as long as a test condition remains true. It is well-suited for iterative numerical approximations (e.g., Newton-Raphson method) where the iteration count is not known a priori.
+
+\begin{lstlisting}[caption={Newton-Raphson Square Root Approximation}]
+def newton_sqrt(n, tolerance=1e-7):
+    if n < 0:
+        raise ValueError("Cannot compute real square root of negative number.")
+    if n == 0:
+        return 0.0
+    x = n / 2.0
+    while True:
+        root_next = 0.5 * (x + n / x)
+        if abs(root_next - x) < tolerance:
+            return root_next
+        x = root_next
+
+print("Calculated:", newton_sqrt(2.0))
+\end{lstlisting}
+
+\subsection{The \texttt{for} Loop and the \texttt{range()} Sequence Generator}
+Python \texttt{for} loops iterate over elements of any sequence or iterable protocol:
+\begin{equation}
+\texttt{range(start, stop, step)} \implies [start, start+step, start+2\cdot step, \dots < stop]
+\end{equation}
+Python supports loop control statements: \texttt{break} (terminates loop), \texttt{continue} (skips current iteration), and an optional \texttt{else} block that executes if and only if the loop terminates normally without encountering a \texttt{break}.
+
+\section{Modular Architecture: Functions}
+
+Functions encapsulate logic, promote reusability, and establish isolated local scopes.
+
+\subsection{Parameter Binding Semantics}
+Python functions support diverse parameter passing mechanisms:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Positional Arguments:} Matched strictly left-to-right.
+    \item \textbf{Keyword Arguments:} Specified by name, independent of argument order (\texttt{func(b=2, a=1)}).
+    \item \textbf{Default Parameters:} Fallback values evaluated once at definition time.
+    \item \textbf{Arbitrary Positional Arguments (\texttt{*args}):} Bundles excess positional arguments into a \texttt{tuple}.
+    \item \textbf{Arbitrary Keyword Arguments (\texttt{**kwargs}):} Bundles excess keyword arguments into a \texttt{dict}.
+\end{enumerate}
+
+\begin{warningbox}[Mutable Default Arguments Pitfall]
+Default arguments are evaluated once when the function definition is executed, \textbf{not} at invocation time. Never use mutable objects (like lists or dictionaries) as default arguments:
+\begin{lstlisting}
+# BUG: The list accumulator persists across invocations!
+def append_reading(val, readings=[]):
+    readings.append(val)
+    return readings
+
+# CORRECT IDIOM:
+def append_reading_safe(val, readings=None):
+    if readings is None:
+        readings = []
+    readings.append(val)
+    return readings
+\end{lstlisting}
+\end{warningbox}
+
+\subsection{Scope Resolution: The LEGB Rule}
+Identifier lookup follows four nested namespaces:
+\begin{enumerate}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{L (Local):} Names assigned inside current function.
+    \item \textbf{E (Enclosing):} Names in the enclosing functions (closures).
+    \item \textbf{G (Global):} Names assigned at the top-level of module file.
+    \item \textbf{B (Built-in):} Names pre-assigned in Python's \texttt{builtins} module.
+\end{enumerate}
+Modifying variables outside local scope requires the \texttt{global} or \texttt{nonlocal} keywords.
+
+\section{Functional Paradigms and Anonymous Functions}
+Python provides \texttt{lambda} expressions for lightweight, anonymous single-expression functions:
+\begin{lstlisting}[caption={Higher-Order Functional Tools}]
+from functools import reduce
+
+voltages = [1.2, 3.3, 5.0, 12.0, 24.0]
+
+# map: transform each element
+scaled = list(map(lambda v: v * 1.05, voltages))
+
+# filter: extract subset matching predicate
+high_voltages = list(filter(lambda v: v >= 5.0, voltages))
+
+# reduce: combine elements recursively
+total_energy = reduce(lambda acc, v: acc + v**2, voltages, 0)
+\end{lstlisting}
+
+\section{Recursion and Memory Stack Mechanics}
+
+A recursive function calls itself to solve smaller subproblems until reaching a base condition.
+
+\begin{definition}[Call Stack Frame Allocation]
+Every recursive call pushes an activation record (stack frame) containing local variables, parameters, and return program counters onto the execution call stack. If recursion depth exceeds \texttt{sys.getrecursionlimit()} (typically 1000), a \texttt{RecursionError} is raised to prevent stack overflow crashes.
+\end{definition}
+
+\begin{examplebox}[Binary Search Implementation via Recursion]
+\begin{lstlisting}
+def binary_search(arr, target, low, high):
+    if low > high:
+        return -1  # Base case: element not found
+    
+    mid = (low + high) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] > target:
+        return binary_search(arr, target, low, mid - 1)
+    else:
+        return binary_search(arr, target, mid + 1, high)
+\end{lstlisting}
+Time complexity: $\mathcal{O}(\log n)$, Space complexity: $\mathcal{O}(\log n)$ due to recursive stack frames.
+\end{examplebox}
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Contrast \texttt{break}, \texttt{continue}, and \texttt{pass} with practical code examples.
+    \item How does Python resolve variable identifiers under the LEGB hierarchy? Give an example where \texttt{nonlocal} is required.
+    \item Write a recursive function to compute the Greatest Common Divisor (GCD) of two integers using the Euclidean algorithm.
+    \item Explain the consequence of defining \texttt{def register(item, log=[])} and suggest the standard defensive fix.
+\end{enumerate}

@@ -1,0 +1,47 @@
+\chapter{Unit 7: User \& Group Administration Quick Reference}
+
+\begin{cheatbox}{System Databases: /etc/passwd, /etc/shadow, /etc/group}
+\textbf{1. /etc/passwd Fields (7 colon-delimited fields):}
+\begin{center}
+\texttt{username : password(x) : UID : GID : GECOS : home\_directory : login\_shell}
+\end{center}
+
+\textbf{2. /etc/shadow Fields (9 colon-delimited fields):}
+\begin{center}
+\texttt{username : hash : last\_change : min\_days : max\_days : warn\_days : inact : expire : flag}
+\end{center}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{hash} prefix \texttt{\$6\$} = SHA-512; prefix \texttt{\$y\$} = yescrypt.
+    \item \texttt{last\_change} = Days elapsed since January 1, 1970 (Epoch).
+\end{itemize}
+
+\textbf{3. /etc/group Fields (4 colon-delimited fields):}
+\begin{center}
+\texttt{group\_name : password(x) : GID : comma\_separated\_user\_list}
+\end{center}
+\end{cheatbox}
+
+\begin{syntaxbox}{User and Group Management Commands}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Command} & \textbf{Administrative Action} & \textbf{Command} & \textbf{Administrative Action} \\
+\midrule
+\texttt{useradd -m -s /bin/bash u} & Create user with home directory & \texttt{groupadd -g GID g} & Create group with explicit GID \\
+\texttt{usermod -aG grp u} & \textbf{Append} user to supplementary group & \texttt{groupmod -n new old} & Rename group \\
+\texttt{usermod -L u} & Lock user password (\texttt{!} in shadow) & \texttt{groupdel g} & Delete group \\
+\texttt{usermod -U u} & Unlock user account & \texttt{chage -l u} & List password aging status \\
+\texttt{userdel -r u} & Delete user and wipe home folder & \texttt{chage -M 90 u} & Set max password age to 90 days \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{The sudoers Rule Grammar}
+\begin{center}
+\texttt{user\_or\_group \quad host=(runas\_user:runas\_group) \quad commands}
+\end{center}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{john ALL=(ALL:ALL) ALL}: User \texttt{john} can execute any command as any user on any host.
+    \item \texttt{\%devops ALL=(ALL:ALL) NOPASSWD: ALL}: All members of group \texttt{devops} can escalate to root without password prompt.
+    \item \textbf{Rule Validation:} Always edit using \texttt{visudo} to prevent locking administrators out via syntax corruption.
+\end{itemize}
+\end{cheatbox}

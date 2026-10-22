@@ -1,0 +1,127 @@
+\section{Continuous Assessment 2 (CA-2) --- Set B}
+\label{sec:ca2_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{B}{60 Minutes}{30 Marks}{CO4 (NumPy Arrays), CO5 (Pandas \& Matplotlib)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt any five out of the six questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    Explain the difference between a \textbf{view} and a \textbf{copy} of a NumPy array. What causes \texttt{arr[1:3, :]} to create a view while \texttt{arr[[0, 2], :]} creates a copy?
+}{6}{CO4}{L4 Analyze}
+
+\questionitem{2}{
+    Given an $M \times N$ matrix $X$, write a vectorized NumPy expression to compute $z$-score feature standardization along axis 0 without explicit loops.
+}{6}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    Explain the purpose of \texttt{np.newaxis} (or \texttt{None}) in array indexing. Demonstrate how to compute pairwise Euclidean distances between two matrices $A \in \mathbb{R}^{m \times d}$ and $B \in \mathbb{R}^{n \times d}$.
+}{6}{CO4}{L3 Apply}
+
+\questionitem{4}{
+    Explain what causes a \texttt{SettingWithCopyWarning} in Pandas. Provide a code example showing the hazardous pattern and write the corrected canonical expression using \texttt{.loc}.
+}{6}{CO5}{L4 Analyze}
+
+\questionitem{5}{
+    Write a Pandas script to merge two DataFrames on a composite key \texttt{['student\_id', 'semester']}, performing a left join and replacing resulting missing GPA entries with 0.0.
+}{6}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    Describe how to construct a multi-bar categorical chart and a pie chart with percentage callouts using Matplotlib.
+}{6}{CO5}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-2 Set B}
+
+\begin{solutionbox}[Solution to Question 1]
+\textbf{View vs Copy}: A view shares the same underlying memory buffer with the original array, mutating it if modified. A copy allocates a separate contiguous buffer.
+\textbf{Mechanics}: Basic slicing (\texttt{arr[1:3, :]}) modifies only the shape and strides metadata, requiring no buffer reallocation ($\mathcal{O}(1)$ view). Fancy indexing with integer lists (\texttt{arr[[0, 2], :]}) extracts non-uniform, arbitrary memory addresses that cannot be addressed by single fixed strides, forcing NumPy to allocate and populate a brand-new copy.
+\begin{markingrubric}
+$\bullet$ View shares buffer; copy allocates separate buffer: \textbf{2 Marks}\\
+$\bullet$ Basic slice stride adjustment without memory allocation: \textbf{2 Marks}\\
+$\bullet$ Fancy indexing arbitrary stride impossibility requiring copy: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+\begin{pycode}
+import numpy as np\\
+~\\
+def z\_score\_standardize(X):\\
+\_\_ESCTOKEN\_7\_\_ mu = np.mean(X, axis=0)       \_\_ESCTOKEN\_1\_\_ shape: (N,)\\
+\_\_ESCTOKEN\_7\_\_ sigma = np.std(X, axis=0)     \_\_ESCTOKEN\_1\_\_ shape: (N,)\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_1\_\_ Guard against division by zero for invariant features:\\
+\_\_ESCTOKEN\_7\_\_ sigma\_\_ESCTOKEN\_0\_\_safe = np.where(sigma == 0, 1.0, sigma)\\
+\_\_ESCTOKEN\_7\_\_ return (X - mu) / sigma\_\_ESCTOKEN\_0\_\_safe  \_\_ESCTOKEN\_1\_\_ (M, N) - (N,) broadcast
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Correct axis parameter (\texttt{axis=0}): \textbf{2 Marks}\\
+$\bullet$ Guard against zero variance ($0/0$ protection): \textbf{2 Marks}\\
+$\bullet$ Vectorized column-wise broadcasting: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\texttt{np.newaxis} inserts a new dimension of length 1, enabling broadcasting.
+\begin{pycode}
+\_\_ESCTOKEN\_1\_\_ Pairwise Euclidean Distance:\\
+\_\_ESCTOKEN\_1\_\_ A: (m, d) -> A[:, np.newaxis, :] : (m, 1, d)\\
+\_\_ESCTOKEN\_1\_\_ B: (n, d) -> B[np.newaxis, :, :] : (1, n, d)\\
+diff = A[:, np.newaxis, :] - B[np.newaxis, :, :] \_\_ESCTOKEN\_1\_\_ (m, n, d)\\
+dist\_\_ESCTOKEN\_0\_\_matrix = np.sqrt(np.sum(diff ** 2, axis=-1)) \_\_ESCTOKEN\_1\_\_ (m, n)
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Purpose of \texttt{np.newaxis} in rank expansion: \textbf{2 Marks}\\
+$\bullet$ Expanding $A$ to $(m, 1, d)$ and $B$ to $(1, n, d)$: \textbf{2 Marks}\\
+$\bullet$ Sum of squared differences along feature axis: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+\textbf{Root Cause}: Chained indexing \texttt{df[mask]['col'] = val} splits the operation into two calls: \texttt{\_\_getitem\_\_} followed by \texttt{\_\_setitem\_\_}. Pandas cannot guarantee whether the intermediate result is a view or a temporary copy.
+\textbf{Correct Idiom}: \texttt{df.loc[mask, 'col'] = val}.
+\begin{markingrubric}
+$\bullet$ Explanation of chained \texttt{\_\_getitem\_\_} / \texttt{\_\_setitem\_\_}: \textbf{3 Marks}\\
+$\bullet$ Correct single-step \texttt{.loc} assignment: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\begin{pycode}
+import pandas as pd\\
+~\\
+merged\_df = pd.merge(\\
+\_\_ESCTOKEN\_7\_\_ df1, df2,\\
+\_\_ESCTOKEN\_7\_\_ on=['student\_id', 'semester'],\\
+\_\_ESCTOKEN\_7\_\_ how='left'\\
+)\\
+merged\_df['gpa'] = merged\_df['gpa'].fillna(0.0)
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Composite key specification \texttt{on=[...]}: \textbf{2 Marks}\\
+$\bullet$ Left outer join parameterization \texttt{how='left'}: \textbf{2 Marks}\\
+$\bullet$ Imputation of missing GPA values via \texttt{.fillna()}: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\begin{pycode}
+import matplotlib.pyplot as plt\\
+~\\
+labels = ['Hardware', 'Software', 'Network', 'Cloud']\\
+sizes = [35, 30, 20, 15]\\
+colors = ['\_\_ESCTOKEN\_1\_\_ff9999', '\_\_ESCTOKEN\_1\_\_66b3ff', '\_\_ESCTOKEN\_1\_\_99ff99', '\_\_ESCTOKEN\_1\_\_ffcc99']\\
+~\\
+plt.figure(figsize=(6, 6))\\
+plt.pie(sizes, labels=labels, autopct='\%1.1f\%\%', startangle=140, colors=colors)\\
+plt.title("Infrastructure Distribution")\\
+plt.tight\_\_ESCTOKEN\_0\_\_layout()
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Categorical bar chart formulation: \textbf{3 Marks}\\
+$\bullet$ Pie chart with \texttt{autopct} format and slice aesthetic: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

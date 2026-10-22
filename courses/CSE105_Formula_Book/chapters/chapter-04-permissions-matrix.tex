@@ -1,0 +1,57 @@
+\chapter{Unit 4: File Permissions, Octal Math \& Ownership Matrix}
+
+\begin{cheatbox}{The Octal Permission Calculation Matrix}
+Every 3-character permission triplet is calculated as: $\text{Triad Value} = (r \times 4) + (w \times 2) + (x \times 1)$.
+\begin{center}
+\begin{tabular}{c c c c c}
+\toprule
+\textbf{Octal Digit} & \textbf{Binary Bits} & \textbf{Symbolic} & \textbf{Regular File Meaning} & \textbf{Directory Meaning} \\
+\midrule
+\texttt{7} & \texttt{111} & \texttt{rwx} & Full read, write, and execute & List, modify files, and enter directory \\
+\texttt{6} & \texttt{110} & \texttt{rw-} & Read and write (no execution) & List and modify (cannot traverse) \\
+\texttt{5} & \texttt{101} & \texttt{r-x} & Read and execute (programs) & List and traverse (cannot alter files) \\
+\texttt{4} & \texttt{100} & \texttt{r--} & Read-only document & List file names only (cannot access inodes) \\
+\texttt{0} & \texttt{000} & \texttt{---} & Completely restricted (no access) & Zero access \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{cheatbox}
+
+\begin{syntaxbox}{chmod Symbolic Mode Reference Table}
+\begin{tabularx}{\linewidth}{l l l X}
+\toprule
+\textbf{Target Reference} & \textbf{Operator} & \textbf{Permission Bit} & \textbf{Practical Synthesis Example} \\
+\midrule
+\texttt{u} (Owner / User) & \texttt{+} (Grant bit) & \texttt{r} (Read) & \texttt{chmod u+x run.sh} (Make executable for owner) \\
+\texttt{g} (Group members) & \texttt{-} (Revoke bit) & \texttt{w} (Write) & \texttt{chmod go-w doc.txt} (Protect file from others) \\
+\texttt{o} (Others / World) & \texttt{=} (Set exact) & \texttt{x} (Execute) & \texttt{chmod a=r notes.txt} (Set all to read-only) \\
+\texttt{a} (All: \texttt{ugo}) & & & \texttt{chmod u=rwx,go=rx app} (Standard 755 mode) \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{The umask Calculation Formulas}
+\begin{equation}
+\text{Default File Mode} = \text{Base File (666)} - \text{umask} \quad (\text{Execution bit is NEVER granted by default})
+\end{equation}
+\begin{equation}
+\text{Default Directory Mode} = \text{Base Directory (777)} - \text{umask}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{umask 022} $\to$ Files: $666 - 022 = \mathbf{644}$ (\texttt{rw-r--r--}); Directories: $777 - 022 = \mathbf{755}$ (\texttt{rwxr-xr-x}).
+    \item \texttt{umask 027} $\to$ Files: $666 - 027 = \mathbf{640}$ (\texttt{rw-r-----}); Directories: $777 - 027 = \mathbf{750}$ (\texttt{rwxr-x---}).
+    \item \texttt{umask 077} $\to$ Files: $666 - 077 = \mathbf{600}$ (\texttt{rw-------}); Directories: $777 - 077 = \mathbf{700}$ (\texttt{rwx------}).
+\end{itemize}
+\end{cheatbox}
+
+\begin{syntaxbox}{Special Permissions: SUID, SGID, and Sticky Bit}
+\begin{tabularx}{\linewidth}{c l l X}
+\toprule
+\textbf{Octal} & \textbf{Bit Name} & \textbf{Symbolic} & \textbf{Functional Behavior \& Security Utility} \\
+\midrule
+\texttt{4000} & \textbf{SUID} (Set User ID) & \texttt{-rwsr-xr-x} & Process runs with effective permissions of file \textbf{owner} (e.g. \texttt{passwd}). \\
+\texttt{2000} & \textbf{SGID} (Set Group ID) & \texttt{drwxrwsr-x} & Directory inheritance: newly created files inherit the \textbf{group} of directory. \\
+\texttt{1000} & \textbf{Sticky Bit} & \texttt{drwxrwxrwt} & Deletion restricted: files in folder can only be deleted by their \textbf{owner} (\texttt{/tmp}). \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}

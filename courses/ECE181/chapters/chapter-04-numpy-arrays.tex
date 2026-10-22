@@ -1,0 +1,113 @@
+\chapter{Scientific Computing with NumPy: Vectorized Arrays}
+\label{ch:numpy_arrays}
+
+\section{Motivation: Why NumPy for Engineering?}
+
+Standard Python lists store heterogeneous pointers to heap objects, causing pointer indirection overhead, cache misses, and significant memory overhead (typically 8 bytes per pointer plus 28 bytes per integer object). In high-performance engineering simulations, processing millions of numerical values using explicit Python loops is prohibitively slow.
+
+\begin{definition}[NumPy N-Dimensional Array (\texttt{ndarray})]
+A NumPy array is a contiguous, fixed-size memory buffer storing homogeneous C-primitive elements (e.g., 64-bit float, 32-bit int) described by a metadata descriptor:
+\begin{enumerate}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{Data Pointer:} Starting memory address of the raw contiguous buffer.
+    \item \textbf{Shape (\texttt{shape}):} A tuple specifying array dimensions $(d_0, d_1, \dots, d_{k-1})$.
+    \item \textbf{Data Type (\texttt{dtype}):} Fixed byte size and interpretation format of each element.
+    \item \textbf{Strides (\texttt{strides}):} The number of bytes to step in memory to advance by one index along each axis.
+\end{enumerate}
+\end{definition}
+
+\section{Array Creation and Structural Inspection}
+
+\begin{lstlisting}[caption={Fundamental NumPy Creation Routines}]
+import numpy as np
+
+# 1D and 2D arrays
+a1 = np.array([1, 2, 3, 4], dtype=np.float64)
+a2 = np.zeros((3, 4), dtype=np.int32)
+a3 = np.ones((2, 3), dtype=np.float32)
+a_identity = np.eye(4)  # 4x4 Identity matrix
+
+# Linear spacing routines
+grid_lin = np.linspace(0.0, 10.0, num=101) # Exact step: (stop - start)/(num - 1)
+grid_range = np.arange(0.0, 10.0, 0.5)      # Step based: excludes upper bound
+
+print("Shape   :", a2.shape)    # (3, 4)
+print("Dtype   :", a2.dtype)    # int32
+print("Strides :", a2.strides)  # (16, 4) bytes
+\end{lstlisting}
+
+\section{Indexing, Slicing, and Memory Views vs. Copies}
+
+NumPy basic slicing produces a \textbf{view} into the original array buffer rather than creating a new copy. Modifying a slice directly modifies the original array!
+
+\begin{lstlisting}[caption={Views vs. Deep Copies and Fancy Masking}]
+arr = np.array([10, 20, 30, 40, 50])
+view_slice = arr[1:4]
+view_slice[0] = 999
+print(arr)  # Output: [10, 999, 30, 40, 50] -> Original array modified!
+
+# Explicit copy to preserve original data
+copy_arr = arr[1:4].copy()
+
+# Boolean Masking
+mask = arr > 30
+filtered = arr[mask]
+print("Values > 30:", filtered)
+\end{lstlisting}
+
+\section{Vectorization and Universal Functions (ufuncs)}
+
+Vectorization replaces explicit Python \texttt{for} loops with compiled, low-level C loops executing SIMD (Single Instruction Multiple Data) machine instructions.
+
+\begin{keyequation}[NumPy Broadcasting Semantics]
+Two dimensions are compatible for element-wise broadcasting operations if and only if:
+\begin{enumerate}[leftmargin=1.8em, itemsep=2pt]
+    \item They are equal in size ($d_1 = d_2$), or
+    \item One of the dimensions is exactly $1$ ($d_1 = 1$ or $d_2 = 1$).
+\end{enumerate}
+Trailing axes are aligned first; missing leading dimensions are prepended with size 1.
+\end{keyequation}
+
+\begin{lstlisting}[caption={Broadcasting Demonstration}]
+# Signal matrix: shape (100, 3)
+signals = np.random.randn(100, 3)
+
+# Calibration offset vector: shape (3,)
+offsets = np.array([0.5, -0.2, 1.1])
+
+# Broadcasting automatically expands offsets across the 100 rows
+calibrated = signals + offsets  # Shape: (100, 3)
+\end{lstlisting}
+
+\section{Linear Algebra Operations}
+
+NumPy's \texttt{linalg} submodule links against highly optimized BLAS/LAPACK Fortran libraries (e.g., OpenBLAS, Intel MKL):
+
+\begin{lstlisting}[caption={Solving Linear Systems $A x = b$ in Circuit Analysis}]
+# Mesh equations:
+# 10*I1 -  2*I2 -  4*I3 = 12
+# -2*I1 + 15*I2 -  3*I3 = 0
+# -4*I1 -  3*I2 + 12*I3 = -6
+
+A = np.array([[ 10.0,  -2.0,  -4.0],
+              [ -2.0,  15.0,  -3.0],
+              [ -4.0,  -3.0,  12.0]])
+
+b = np.array([12.0, 0.0, -6.0])
+
+# Direct inversion vs solve
+# Preferred: np.linalg.solve (LU decomposition with partial pivoting)
+I = np.linalg.solve(A, b)
+det_A = np.linalg.det(A)
+eigenvalues, eigenvectors = np.linalg.eig(A)
+
+print("Mesh Currents (I1, I2, I3) in Amperes:", I)
+print("Determinant of Resistance Matrix     :", det_A)
+\end{lstlisting}
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Contrast the internal memory architecture of a Python list with a NumPy \texttt{ndarray}.
+    \item State the formal broadcasting rules. Given array $A$ of shape $(4, 1, 8)$ and array $B$ of shape $(5, 8)$, determine whether they are broadcast-compatible and calculate the resulting shape.
+    \item Why is \texttt{np.linalg.solve(A, b)} numerically preferred over computing \texttt{np.linalg.inv(A) @ b}?
+    \item Explain the difference between basic slicing and fancy indexing in terms of memory views versus copies.
+\end{enumerate}

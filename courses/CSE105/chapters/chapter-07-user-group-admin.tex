@@ -1,0 +1,131 @@
+\chapter{User and Group Administration \& Privilege Architecture}
+\label{chap:user-group-admin}
+
+\section{The Linux Multi-User Administrative Hierarchy}
+User identity in Linux forms the security perimeter. The kernel does not identify entities by human-readable usernames; internally, all authorization is mapped to numeric 32-bit \textbf{User Identifiers (UIDs)} and \textbf{Group Identifiers (GIDs)}.
+
+\begin{definition}[Classification of User Accounts]
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Superuser (root):} Assigned $\text{UID} = 0$. The root account bypasses all filesystem permission checks, can bind to privileged TCP/UDP network ports ($<1024$), manipulate raw disk sectors, and signal any process.
+    \item \textbf{System Service Accounts:} Typically assigned UIDs between $1$ and $999$ (e.g., \texttt{bin}, \texttt{daemon}, \texttt{www-data}, \texttt{sshd}). These accounts own background service daemons and have non-interactive login shells (\texttt{/usr/sbin/nologin} or \texttt{/bin/false}).
+    \item \textbf{Regular Human Users:} Assigned UIDs starting at $1000$ (e.g., \texttt{1000}, \texttt{1001}). Represent actual human developers and interactive operators.
+\end{enumerate}
+\end{definition}
+
+\subsection{Primary versus Supplementary Groups}
+Every user belongs to exactly one \textbf{Primary Group} (recorded in their \texttt{/etc/passwd} entry). Files newly created by the user automatically inherit this primary group. A user may additionally belong to multiple \textbf{Supplementary (Secondary) Groups} (recorded in \texttt{/etc/group}) to obtain access to shared team folders, administrative utilities (\texttt{sudo}), or hardware peripherals (\texttt{docker}, \texttt{vboxusers}).
+
+\section{Core Account Databases: /etc/passwd and /etc/shadow}
+User account properties are stored within colon-delimited ASCII configuration files.
+
+\subsection{Structure of /etc/passwd}
+World-readable (\texttt{chmod 644}) because utilities such as \texttt{ls -l} require access to translate numeric UIDs to usernames.
+\begin{center}
+\texttt{username : password : UID : GID : GECOS : home\_directory : login\_shell}
+\end{center}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{username}: Unique account login string.
+    \item \texttt{password}: Stored as an \texttt{x}, indicating that the actual cryptographic hash is isolated inside \texttt{/etc/shadow}.
+    \item \texttt{UID}: Numeric user identifier.
+    \item \texttt{GID}: Numeric primary group identifier.
+    \item \texttt{GECOS / Comment}: Metadata (full user name, office location, contact phone).
+    \item \texttt{home\_directory}: Initial directory upon interactive login.
+    \item \texttt{login\_shell}: Absolute path to the user's login shell program.
+\end{enumerate}
+
+\subsection{Structure of /etc/shadow}
+Restricted to root access exclusively (\texttt{chmod 640} or \texttt{600}) to prevent offline dictionary and rainbow table attacks.
+\begin{center}
+\texttt{username : hash : last\_change : min\_days : max\_days : warn\_days : inact : expire : flag}
+\end{center}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{hash}: Cryptographic hash. Commences with an algorithm identifier (e.g., \texttt{\$6\$} indicates SHA-512 with a salt string).
+    \item \texttt{last\_change}: Days elapsed since Epoch (Jan 1, 1970) that the password was last modified.
+    \item \texttt{min\_days}: Minimum number of days required before the user can change password again.
+    \item \texttt{max\_days}: Password expiration interval (forcing periodic rotation).
+    \item \texttt{warn\_days}: Advance warning days provided to the user prior to password expiration.
+\end{itemize}
+
+\subsection{Structure of /etc/group}
+\begin{center}
+\texttt{group\_name : group\_password : GID : user\_list}
+\end{center}
+
+\section{Account Provisioning Commands}
+\begin{commandbox}{useradd --- Create a New User Account}
+\textbf{Syntax:} \texttt{useradd [options] username}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-m}: Create the user's home directory (copying default profiles from \texttt{/etc/skel}).
+    \item \texttt{-d /path}: Custom home directory path.
+    \item \texttt{-s /path/shell}: Set default login shell (e.g., \texttt{/bin/bash}).
+    \item \texttt{-g group}: Explicit primary group assignment.
+    \item \texttt{-G group1,group2}: Comma-separated list of supplementary groups.
+    \item \texttt{-c "Full Name"}: GECOS comment field.
+    \item \texttt{-e YYYY-MM-DD}: Account expiration date.
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{usermod --- Modify User Account Properties}
+\textbf{Syntax:} \texttt{usermod [options] username}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-aG group}: \textbf{Append} user to a supplementary group.
+    \begin{warningbox}[The Fatal usermod -G Trap]
+    Always pair \texttt{-G} with \texttt{-a} (\textbf{append})! If \texttt{usermod -G docker user} is run without \texttt{-a}, the user is \textbf{removed from all other existing supplementary groups}, including \texttt{sudo}, instantly revoking their administrative privileges!
+    \end{warningbox}
+    \item \texttt{-s /path}: Modify login shell.
+    \item \texttt{-L}: Lock user account (prepends \texttt{!} to password hash in \texttt{/etc/shadow}).
+    \item \texttt{-U}: Unlock a locked user account.
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{userdel --- Delete User Account}
+\textbf{Syntax:} \texttt{userdel [options] username}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{userdel username}: Removes account from \texttt{/etc/passwd} and \texttt{/etc/shadow}, leaving home directory untouched.
+    \item \texttt{userdel -r username}: Recursively removes the user's home directory and mail spool.
+\end{itemize}
+\end{commandbox}
+
+\section{Group Management Commands}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{groupadd -g GID groupname}: Allocates a new group with an optional explicit numeric GID.
+    \item \texttt{groupmod -n newname oldname}: Renames an existing group.
+    \item \texttt{groupdel groupname}: Removes an existing group (prohibited if designated as a primary group for any user).
+\end{itemize}
+
+\section{Password Administration \& Aging Policies}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{passwd [username]}: Sets or updates account passwords.
+    \item \texttt{passwd -l username}: Locks user password.
+    \item \texttt{passwd -e username}: Immediately expires password, forcing rotation upon next login.
+    \item \textbf{chage (Change Age):} Configures enterprise password aging policies:
+    \begin{itemize}
+        \item \texttt{chage -l username}: Lists active password expiration and aging policy details.
+        \item \texttt{chage -M 90 -m 7 -W 14 username}: Sets maximum lifespan to 90 days, minimum interval to 7 days, with 14 days warning.
+    \end{itemize}
+\end{itemize}
+
+\section{Privilege Escalation: sudo and visudo}
+Direct login as root is considered an operational anti-pattern. Contemporary Linux infrastructures delegate administrative privileges via \textbf{sudo} (SuperUser DO).
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Configuration in /etc/sudoers:} Edited exclusively via \textbf{visudo}, which performs atomic syntax locking and validation, preventing syntax corruption that could lock all administrators out of the operating system.
+    \item \textbf{Grammar of Sudoers Rules:}
+    \begin{center}
+    \texttt{user\_or\_group \quad host=(runas\_user:runas\_group) \quad commands}
+    \end{center}
+    \textit{Example rule:} \texttt{\%devops ALL=(ALL:ALL) ALL} grants all members of the \texttt{devops} group full root escalation rights on all hosts.
+    \item \textbf{su vs su -:}
+    \begin{itemize}
+        \item \texttt{su}: Switches user but preserves the environment variables and working directory of the original caller.
+        \item \texttt{su -} (Login Shell): Completely clears environment, loading the target user's profile, \texttt{PATH}, and home directory.
+    \end{itemize}
+\end{itemize}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain why the encrypted password field in \texttt{/etc/passwd} contains an \texttt{x} instead of the actual cryptographic hash.
+    \item Contrast the impact of executing \texttt{usermod -G sudo rahul} versus \texttt{usermod -aG sudo rahul}.
+    \item Decode the meaning of the 7 colon-delimited fields for the account \texttt{git:x:998:998:git daemon:/var/lib/git:/usr/bin/git-shell}.
+    \item What is the functional difference between locking an account via \texttt{passwd -l} and setting its shell to \texttt{/sbin/nologin}?
+    \item Why must administrators use \texttt{visudo} rather than standard text editors to update \texttt{/etc/sudoers}?
+\end{enumerate}

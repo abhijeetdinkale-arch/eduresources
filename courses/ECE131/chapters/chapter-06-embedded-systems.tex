@@ -1,0 +1,98 @@
+\chapter{Embedded Systems and IoT Applications}
+\label{chap:embedded}
+
+\section{Embedded System Fundamentals}
+An embedded system is a dedicated, computer-based electromechanical system designed to perform a specialized set of real-time monitoring and control functions, typically constrained by strict memory, power, latency, and environmental requirements.
+
+\subsection{Architectural Building Blocks}
+An embedded system integrates:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Core Processing Unit}: Microcontroller, DSP, or FPGA executing firmware.
+    \item \textbf{Memory Subsystem}: Non-volatile Flash/ROM for program code and volatile SRAM for runtime stack and heap.
+    \item \textbf{Peripherals \& I/O}: Timers, Counters, Watchdog Timers, PWM channels, and ADCs.
+    \item \textbf{Communication Buses}: Inter-Integrated Circuit ($\text{I}^2\text{C}$), Serial Peripheral Interface (SPI), UART, and Controller Area Network (CAN).
+    \item \textbf{Power Management}: Low-power sleep modes and voltage regulators.
+\end{enumerate}
+
+\section{Microprocessors versus Microcontrollers}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Metric} & \textbf{Microprocessor ($\mu$P)} & \textbf{Microcontroller ($\mu$C)} \\
+\midrule
+Integration & CPU cores and caches only & CPU + Flash + RAM + ADC + Timers on a single die \\
+Target Domain & High-throughput, general-purpose computation & Dedicated, real-time control applications \\
+Bus Architecture & External address/data buses (Von Neumann) & Internal high-speed buses (Harvard architecture) \\
+Power Consumption & High (tens to hundreds of Watts) & Ultra-low (milliwatts to microwatts) \\
+Execution Latency & Non-deterministic (OS context switching) & Hard real-time deterministic cycle execution \\
+Cost & High per processor system & Extremely economical (sub-dollar units) \\
+Examples & Intel Core i7, AMD Ryzen, Apple M3 & ATmega328P, STM32, ESP32, PIC16F \\
+\bottomrule
+\end{tabularx}
+\end{center}\vspace{2mm}
+
+\section{The Arduino Ecosystem and Sensor Interfacing}
+
+\subsection{ATmega328P Microcontroller Architecture}
+The Arduino Uno development board is based on the Microchip ATmega328P 8-bit AVR RISC microcontroller:
+\begin{itemize}[leftmargin=1.5em]
+    \item Clock speed: $16\text{ MHz}$ crystal oscillator ($62.5\text{ ns}$ cycle instruction time).
+    \item Memory: $32\text{ KB}$ In-System Flash ($0.5\text{ KB}$ used by bootloader), $2\text{ KB}$ SRAM, $1\text{ KB}$ EEPROM.
+    \item I/O capabilities: 14 digital pins (pins 0--13, with 6 providing 8-bit hardware PWM at $\approx 490\text{ Hz}$ or $980\text{ Hz}$), 6 analog input channels (A0--A5) multiplexed to an internal 10-bit Successive Approximation ADC.
+\end{itemize}
+
+\subsection{Analog-to-Digital Conversion (ADC) Mathematics}
+The internal ADC maps an analog voltage $V_{in} \in [0, V_{ref}]$ into a discrete 10-bit integer $D \in [0, 1023]$:
+\begin{equation}
+D = \left\lfloor \frac{V_{in}}{V_{ref}} \times 1024 \right\rfloor \iff V_{in} = \frac{D \times V_{ref}}{1024}
+\end{equation}
+The quantization resolution (Least Significant Bit voltage, $V_{LSB}$) is:
+\begin{equation}
+V_{LSB} = \frac{V_{ref}}{2^n} = \frac{5.0\text{ V}}{1024} \approx 4.8828\text{ mV}
+\end{equation}
+Switching to the internal $1.1\text{ V}$ bandgap reference improves voltage resolution to:
+\begin{equation}
+V_{LSB,internal} = \frac{1.1\text{ V}}{1024} \approx 1.0742\text{ mV}
+\end{equation}
+
+\subsection{Sensor Interfacing Transfer Functions}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{LM35 Linear Analog Temperature Sensor}:
+    Produces a linear voltage output directly proportional to Celsius temperature:
+    \begin{equation}
+    V_{out} = 10\text{ mV}/^\circ\text{C} \times T \implies T(^\circ\text{C}) = \frac{V_{out}\text{ [mV]}}{10} = \frac{D \times (5000 / 1024)}{10}
+    \end{equation}
+    \item \textbf{HC-SR04 Ultrasonic Range Finder}:
+    Emits a $40\text{ kHz}$ ultrasonic burst and measures echo return time $\Delta t$. Using speed of sound $v = 340\text{ m/s} = 0.034\text{ cm}/\mu\text{s}$:
+    \begin{equation}
+    \text{Distance } d = \frac{v \times \Delta t_{\text{echo}}}{2} = \frac{\Delta t_{\text{echo}}\text{ [$\mu$s]}}{58.2} \quad \text{[cm]}
+    \end{equation}
+\end{itemize}
+
+\section{Internet of Things (IoT) and Cloud Applications}
+
+\subsection{Layered IoT Architecture}
+Modern Internet of Things ecosystems organize edge sensing and cloud analytics into four functional tiers:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Perception Tier}: Transducers, smart sensors, and microcontrollers sample physical metrics.
+    \item \textbf{Edge Tier}: Edge devices filter raw data, perform moving averages, and format payloads into JSON.
+    \item \textbf{Network / Transport Tier}: Telemetry is transmitted over Wi-Fi, Cellular (NB-IoT), or LoRaWAN using lightweight protocols such as \textbf{MQTT} (Message Queuing Telemetry Transport) over TLS/TCP.
+    \item \textbf{Cloud Application Tier}: Cloud IoT engines (AWS IoT Core, Azure IoT Hub, Google Cloud IoT) store time-series records and feed analytical dashboards.
+\end{enumerate}
+
+\subsection{Industrial and Societal Application Domains}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Condition Monitoring in Process Plants}: Continuous vibration, thermal, and acoustic tracking on motor bearings to predict mechanical failure before catastrophic shutdown (Predictive Maintenance / Industry 4.0).
+    \item \textbf{Healthcare Telemetry}: Wearable patient telemetry monitoring heart rate (ECG), SpO2, and blood pressure with cloud alert triggers.
+    \item \textbf{Precision Agriculture}: Soil moisture probes and automated solenoid valve control optimizing irrigation and fertilizer delivery.
+    \item \textbf{Smart Electrical Grids}: Automated Metering Infrastructure (AMI) and synchronized phasor measurement units (PMUs) balancing supply and demand dynamically.
+\end{itemize}
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Microcontroller integrates CPU, Flash, SRAM, and I/O peripherals onto a single silicon chip.
+    \item ATmega328P 10-bit ADC has step size $V_{LSB} = V_{ref} / 1024 \approx 4.88\text{ mV}$ at $5\text{ V}$.
+    \item LM35 sensor transfer function: $10\text{ mV}/^\circ\text{C}$; Ultrasonic sensor: $d = \Delta t / 58.2\text{ cm}$.
+    \item IoT architecture: Perception $\to$ Edge processing $\to$ MQTT network $\to$ Cloud analytics.
+\end{itemize}

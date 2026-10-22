@@ -1,0 +1,114 @@
+\section{End-Term Comprehensive Examination --- Set B}
+
+\LPUPaperHeader{End-Term Comprehensive Examination}{B}{180 Minutes (3 Hours)}{100 Marks}{CO1, CO2, CO3, CO4, CO5, CO6 (Full Syllabus)}
+
+\subsection*{Section A: Conceptual \& Short Analytical Questions (20 Marks, 2 Marks Each)}
+\noindent Answer all \textbf{TEN} questions:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item What is the color code sequence for a $1.0\,\mathrm{k}\Omega \pm 5\%$ resistor?
+    \item Define ideality factor ($\eta$) in the Shockley diode equation.
+    \item Why does an ammeter have low internal resistance?
+    \item State De Morgan's second theorem for three variables ($A, B, C$).
+    \item How many 2-input NAND gates are required to synthesize a 2-input AND gate?
+    \item Write the Carry Out equation for a Full Adder in terms of $A, B$, and $C_{\mathrm{in}}$.
+    \item If the analog input to an Arduino Uno is $2.5\,\mathrm{V}$, what is the corresponding 10-bit ADC reading?
+    \item State the function of the potentiometer on an IR sensor module.
+    \item Differentiate between dynamic resistance and static resistance of a PN junction.
+    \item What is the purpose of decoupling capacitors on digital circuit power rails?
+\end{enumerate}
+
+\subsection*{Section B: Analytical Derivations \& Hardware Design (40 Marks, 10 Marks Each)}
+\noindent Answer any \textbf{FOUR} out of five questions:
+\questionitem{11}{(a) Derive the Current Divider Law for a two-branch parallel network. (b) A current source of $60\,\mathrm{mA}$ feeds parallel branches of $R_1 = 30\,\Omega$ and $R_2 = 60\,\Omega$. Compute the branch currents and verify Kirchhoff's Current Law.}{10}{CO2}{L3}
+\questionitem{12}{(a) Explain the forward conduction characteristic of a Silicon PN diode. (b) If $I_D = 25\,\mathrm{mA}$ at $T = 300\,\mathrm{K}$ ($\eta = 1$), determine the dynamic AC resistance $r_d$. (c) Explain why the reverse saturation current increases with temperature.}{10}{CO3}{L3}
+\questionitem{13}{(a) Prove algebraically that the NOR gate is universal. (b) Realize NOT, OR, AND, and XOR operations exclusively using 2-input NOR gates.}{10}{CO4}{L4}
+\questionitem{14}{(a) Design a Full Subtractor circuit. Provide its truth table. (b) Derive minimal sum-of-products Boolean expressions for Difference ($D$) and Borrow Out ($B_{\mathrm{out}}$). (c) Draw the gate-level implementation.}{10}{CO5}{L4}
+\questionitem{15}{A bridge rectifier with a $1000\,\mu\mathrm{F}$ filter capacitor supplies a load of $R_L = 100\,\Omega$ from a $24\,\mathrm{V}_{\mathrm{rms}}, 50\,\mathrm{Hz}$ AC source. (a) Compute peak voltage $V_m$. (b) Calculate peak-to-peak ripple voltage $V_r = \frac{I_{dc}}{2 f C}$. (c) Determine the DC load voltage.}{10}{CO3}{L4}
+
+\subsection*{Section C: Laboratory Scenario \& Embedded Firmware Design (40 Marks, 20 Marks Each)}
+\noindent Answer both comprehensive practical system design problems:
+\questionitem{16}{\textbf{Automated Touchless Dispenser System Design}:\\
+You are assigned to build a touchless liquid dispenser using an Arduino Uno, an LM393 active-LOW IR proximity sensor, a $5\,\mathrm{V}$ relay module, and a miniature DC pump.\\
+(a) Draw the complete wiring diagram, including the flyback protection diode across the inductive relay coil [6 Marks].\\
+(b) Explain why directly driving a relay coil from an Arduino digital I/O pin exceeds maximum pin current ratings and how a transistor driver or relay module protects the ATmega328P [4 Marks].\\
+(c) Write a structured Arduino C++ sketch that activates the dispenser pump for exactly $1.5\,\mathrm{seconds}$ upon detecting a hand, enforcing a mandatory $3.0\,\mathrm{second}$ lockout to prevent continuous accidental re-triggering [10 Marks].}{20}{CO6}{L5}
+
+\questionitem{17}{\textbf{Laboratory Measurement Accuracy \& Instrument Loading Audit}:\\
+An engineering workshop team measures voltages and currents in a sensitive resistive divider network ($V_{\mathrm{in}} = 10\,\mathrm{V}, R_1 = 100\,\mathrm{k}\Omega, R_2 = 100\,\mathrm{k}\Omega$) using two different instruments: an older moving-coil analog multimeter ($20\,\mathrm{k}\Omega/\mathrm{V}$ on $10\,\mathrm{V}$ range $\implies R_m = 200\,\mathrm{k}\Omega$) and a modern bench DMM ($R_m = 10\,\mathrm{M}\Omega$).\\
+(a) Calculate the theoretical unloaded voltage and the voltage measured by both instruments [8 Marks].\\
+(b) Compute the percentage measurement error for each meter and interpret why high circuit resistance magnifies instrument loading [6 Marks].\\
+(c) Recommend two engineering solutions (instrument selection, active buffer buffering) to eliminate measurement loading errors in high-impedance circuits [6 Marks].}{20}{CO1, CO2}{L4}
+
+\subsection*{Model Solutions \& Marking Rubrics (End-Term Set B)}
+
+\begin{solutionbox}[Solution to Q.11]
+(a) For parallel resistors $R_1$ and $R_2$, equivalent resistance is $R_p = \frac{R_1 R_2}{R_1 + R_2}$.\\
+Voltage across parallel pair: $V_p = I_T R_p = I_T \left(\frac{R_1 R_2}{R_1 + R_2}\right)$.\\
+Current in branch 1: $I_1 = \frac{V_p}{R_1} = I_T \left(\frac{R_2}{R_1 + R_2}\right)$.\\
+Current in branch 2: $I_2 = \frac{V_p}{R_2} = I_T \left(\frac{R_1}{R_1 + R_2}\right)$.\\
+(b) Numerical calculation:
+\[ I_1 = 60\,\mathrm{mA} \times \frac{60}{30 + 60} = 60 \times \frac{60}{90} = 40.0\,\mathrm{mA} \]
+\[ I_2 = 60\,\mathrm{mA} \times \frac{30}{30 + 60} = 60 \times \frac{30}{90} = 20.0\,\mathrm{mA} \]
+Sum: $I_1 + I_2 = 40.0 + 20.0 = 60.0\,\mathrm{mA} = I_T$ (KCL verified).
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.11):} CDL algebraic derivation: 4 Marks $\bullet$ Branch current calculations: 4 Marks $\bullet$ KCL check: 2 Marks. Total = 10 Marks.
+\end{markingrubric}
+
+\begin{solutionbox}[Solution to Q.16 (Firmware Implementation)]
+\begin{verbatim}
+// Touchless Dispenser Controller with Hold-off Lockout
+const int IR_PIN = 2;          // Active LOW IR sensor input
+const int RELAY_PIN = 7;       // Relay control output pin
+const int STATUS_LED = 13;     // Status LED indicator
+
+const unsigned long DISPENSE_TIME = 1500; // 1.5 seconds pump active
+const unsigned long LOCKOUT_TIME = 3000;  // 3.0 seconds cooldown period
+
+unsigned long dispenseStartTime = 0;
+unsigned long dispenseEndTime = 0;
+bool isDispensing = false;
+
+void setup() {
+  pinMode(IR_PIN, INPUT_PULLUP);
+  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(STATUS_LED, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW); // Relay OFF
+  digitalWrite(STATUS_LED, LOW);
+  
+  Serial.begin(9600);
+  Serial.println("--- TOUCHLESS DISPENSER INITIALIZED ---");
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+  int sensorVal = digitalRead(IR_PIN);
+  
+  if (!isDispensing) {
+    // Check if cooldown lockout has elapsed
+    if (currentMillis - dispenseEndTime > LOCKOUT_TIME) {
+      if (sensorVal == LOW) { // Hand detected
+        Serial.println("Hand Detected: Activating Dispenser Pump...");
+        isDispensing = true;
+        dispenseStartTime = currentMillis;
+        digitalWrite(RELAY_PIN, HIGH); // Pump ON
+        digitalWrite(STATUS_LED, HIGH);
+      }
+    }
+  } else {
+    // Check if dispense duration has completed
+    if (currentMillis - dispenseStartTime >= DISPENSE_TIME) {
+      Serial.println("Dispense Complete. Entering Cooldown Period...");
+      digitalWrite(RELAY_PIN, LOW); // Pump OFF
+      digitalWrite(STATUS_LED, LOW);
+      isDispensing = false;
+      dispenseEndTime = currentMillis;
+    }
+  }
+}
+\end{verbatim}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.16):} (a) Schematic with flyback diode: 6 Marks $\bullet$ (b) ATmega328P current limit explanation ($40\,\mathrm{mA}$ max): 4 Marks $\bullet$ (c) Non-blocking timing firmware with state machine logic: 10 Marks. Total = 20 Marks.
+\end{markingrubric}
+\newpage

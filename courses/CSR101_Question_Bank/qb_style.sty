@@ -1,0 +1,153 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qb_style}[2026/09/16 v1.0 CSR101 Question Bank Style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=22pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+% Unicode declarations for safety
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{200E}{}
+\DeclareUnicodeCharacter{200F}{}
+\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03D5}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{222B}{\ensuremath{\int}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{2207}{\ensuremath{\nabla}}
+\DeclareUnicodeCharacter{2014}{---}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2019}{'}
+\DeclareUnicodeCharacter{2018}{'}
+\DeclareUnicodeCharacter{201C}{``}
+\DeclareUnicodeCharacter{201D}{''}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{00F7}{\ensuremath{\div}}
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2223}{|}
+\DeclareUnicodeCharacter{22EF}{\ensuremath{\dots}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{1D34}{\ensuremath{^H}}
+\DeclareUnicodeCharacter{1D62}{\ensuremath{_i}}
+\DeclareUnicodeCharacter{2C7C}{\ensuremath{_j}}
+\DeclareUnicodeCharacter{2096}{\ensuremath{_k}}
+\DeclareUnicodeCharacter{FF1A}{:}
+\DeclareUnicodeCharacter{FF5C}{|}
+\DeclareUnicodeCharacter{00E9}{\'{e}}
+\DeclareUnicodeCharacter{00A9}{\copyright}
+
+% Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUOrange}{RGB}{232, 90, 16}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{LightBg}{RGB}{246, 248, 252}
+\definecolor{BorderGray}{RGB}{205, 215, 225}
+\definecolor{SuccessGreen}{RGB}{24, 134, 75}
+\definecolor{AlertRed}{RGB}{200, 30, 30}
+\definecolor{TipBg}{RGB}{255, 248, 230}
+
+% Listings setup
+\lstset{
+    language=Python,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\color{LPUNavy}\bfseries,
+    stringstyle=\color{LPUOrange},
+    commentstyle=\color{DarkSlate!70}\itshape,
+    backgroundcolor=\color{LightBg},
+    frame=single,
+    rulecolor=\color{BorderGray},
+    tabsize=4,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{LPUNavy}\textbf{CSR101: Python Programming} \textbar\ Question Bank}
+\fancyhead[R]{\small\color{LPUOrange}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{LPUNavy}}{\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{LPUNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{LPUOrange}}{\thesubsection}{1em}{}
+
+% Box environments
+\newtcolorbox{subjectiveq}[2]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=LPUNavy,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={Subjective Problem #1.#2 \hfill [10 Marks]},
+    boxrule=1.2pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{solbox}{
+    enhanced,
+    breakable,
+    colback=LightBg,
+    colframe=BorderGray,
+    fonttitle=\bfseries\color{LPUNavy},
+    coltitle=LPUNavy,
+    title={Detailed Model Solution \& Implementation},
+    boxrule=0.8pt,
+    arc=1.5mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm
+}
+
+\newtcolorbox{examinertip}{
+    enhanced,
+    breakable,
+    colback=TipBg,
+    colframe=LPUOrange,
+    fonttitle=\bfseries\color{LPUOrange},
+    title={Examiner's Marking Rubric \& Key Evaluation Insights},
+    boxrule=0.8pt,
+    arc=1.5mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm
+}

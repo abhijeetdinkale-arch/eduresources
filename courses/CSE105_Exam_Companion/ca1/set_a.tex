@@ -1,0 +1,143 @@
+\LPUPaperHeader{Continuous Assessment 1 (CA-1)}{Set A}{60 Minutes}{30 Marks}{CO1, CO2}
+
+\begin{markingrubric}
+\textbf{General Instructions \& Marking Breakdown:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1pt]
+    \item Answer any \textbf{5 questions} out of 6. Each question carries \textbf{6 marks} ($5 \times 6 = 30$ Marks).
+    \item Commands must be syntactically valid with exact options and arguments.
+    \item Full credit requires complete explanation of the underlying kernel mechanics and expected terminal outputs.
+\end{itemize}
+\end{markingrubric}
+
+\questionitem{1}{Differentiate between User Space and Kernel Space in the Linux operating system. Explain the role of system calls in transitioning between these privilege levels with an architectural diagram.}{6}{CO1}{Analyze}
+
+\begin{examsol}
+\textbf{1. Privilege Domains in CPU Hardware:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Kernel Space (Ring 0):} The privileged CPU execution domain where the Linux kernel resides. Executes with unrestricted access to physical RAM, hardware page tables, CPU registers, and storage controller chips.
+    \item \textbf{User Space (Ring 3):} The unprivileged execution domain wherein user applications (compilers, bash shells, web servers) operate in sandboxed 64-bit virtual address spaces. Direct hardware access is prohibited.
+\end{itemize}
+
+\textbf{2. System Call Transition Mechanism:}
+When a user process requires kernel intervention (e.g., reading a file via \texttt{cat}), it executes a software trap (\texttt{syscall} instruction on x86-64). This triggers a controlled context switch from Ring 3 to Ring 0. The kernel inspects system call number registers, validates user pointer buffers, executes the kernel service, and switches back to Ring 3 returning the status code.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:}
+\begin{itemize}[leftmargin=1.5em]
+    \item Hardware rings (Ring 0 vs Ring 3) explanation: 2 Marks.
+    \item System call trap mechanism and context switch: 2 Marks.
+    \item Concrete example (\texttt{read()}, \texttt{write()}, \texttt{fork()}): 2 Marks.
+\end{itemize}
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2}{Explain the syntax and execution mechanics of the bc command. Construct a command that computes the value of $\sqrt{16384}$ and evaluates $(22/7)$ to exactly 6 decimal places.}{6}{CO2}{Apply}
+
+\begin{examsol}
+\textbf{1. bc Execution Mechanics:}
+The \texttt{bc} (Basic Calculator) utility is an arbitrary-precision mathematical scripting language. In shell automation, it is commonly driven via standard input pipelines (\texttt{echo "expression" | bc}). The internal variable \texttt{scale} configures the exact number of digits preserved following the decimal point during arithmetic division.
+
+\textbf{2. Command Implementation \& Output:}
+\begin{examcli}
+# Part A: Computing square root:
+$ echo "sqrt(16384)" | bc
+128
+
+# Part B: Precision division to 6 decimal places:
+$ echo "scale=6; 22 / 7" | bc
+3.142857
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{bc} pipeline syntax and \texttt{scale} definition: 2 Marks.
+    \item Square root command and correct calculation (128): 2 Marks.
+    \item Decimal scaling command and verified result (3.142857): 2 Marks.
+\end{itemize}
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{3}{Analyze the internal architecture of an Inode in an ext4 filesystem. Explain why an Inode does NOT record the name of the file it represents.}{6}{CO1}{Analyze}
+
+\begin{examsol}
+\textbf{1. Inode Metadata Architecture:}
+An inode (Index Node) is a fixed 256-byte data structure on disk that contains:
+\begin{enumerate}[leftmargin=1.5em]
+    \item File type (regular file, directory, symlink, character device).
+    \item Permission bits (mode) and owner UID/GID.
+    \item Byte size of the file.
+    \item Hard link count.
+    \item Timestamps: Access time (\texttt{atime}), Modification time (\texttt{mtime}), Change time (\texttt{ctime}).
+    \item Direct and indirect block pointers referencing physical storage sectors.
+\end{enumerate}
+
+\textbf{2. Why File Names are Omitted from Inodes:}
+File names are intentionally stored in the \textbf{parent directory's entry table}, which pairs human-readable names with numeric inode numbers (\texttt{dentry} map). This design permits multiple directory entries in the same or different directories to reference the exact same inode number—which is the fundamental definition of a \textbf{hard link}.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:}
+\begin{itemize}[leftmargin=1.5em]
+    \item Inode fields enumeration (permissions, timestamps, block pointers): 3 Marks.
+    \item Directory entry table pairing explanation and hard link rationale: 3 Marks.
+\end{itemize}
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{4}{Construct a single find command that traverses /var/log, locates all regular files ending with .log that are larger than 50 Megabytes and have been modified in the past 7 days, and lists their detailed permissions.}{6}{CO2}{Apply}
+
+\begin{examsol}
+\textbf{Command Implementation:}
+\begin{examcli}
+$ find /var/log -type f -name "*.log" -size +50M -mtime -7 -exec ls -lh {} +
+\end{examcli}
+
+\textbf{Flag Breakdown \& Rationale:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{/var/log}: Root starting point of search traversal.
+    \item \texttt{-type f}: Matches regular files exclusively (filters out sockets, symlinks, directories).
+    \item \texttt{-name "*.log"}: Matches file names terminating with \texttt{.log}.
+    \item \texttt{-size +50M}: Restricts matches to files strictly greater than 50 Megabytes.
+    \item \texttt{-mtime -7}: Identifies files modified within the past 7 days (less than 7 days ago).
+    \item \texttt{-exec ls -lh \{\} +}: Batches all matched paths and executes \texttt{ls -lh} in a single invocation for maximum performance.
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:}
+\begin{itemize}[leftmargin=1.5em]
+    \item Correct search target and type flag: 1 Mark.
+    \item Correct size and mtime flags: 2 Marks.
+    \item High-performance batched \texttt{-exec} execution: 3 Marks.
+\end{itemize}
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{5}{Explain the difference between Hard Links and Symbolic Links. Provide CLI demonstrations showing how each responds when the original target file is deleted.}{6}{CO1}{Understand}
+
+\begin{examsol}
+\textbf{Comparative Analysis:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Hard Link:} Direct directory pointer to an existing inode. Shares the exact same inode ID, permissions, and data blocks. Cannot cross filesystem partitions.
+    \item \textbf{Symbolic Link:} Independent file with its own inode storing the pathname of the target. Can link directories and cross partitions.
+\end{itemize}
+
+\begin{examcli}
+$ echo "Cluster Configuration" > master.conf
+$ ln master.conf hard.conf && ln -s master.conf sym.conf
+$ rm master.conf
+
+$ cat hard.conf
+Cluster Configuration    # Data intact (inode link count decremented from 2 to 1)
+
+$ cat sym.conf
+cat: sym.conf: No such file or directory    # Dangling link error
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:}
+\begin{itemize}[leftmargin=1.5em]
+    \item Inode sharing vs pathname storage distinction: 3 Marks.
+    \item Verification of behavior upon deletion of source file: 3 Marks.
+\end{itemize}
+\end{markingrubric}
+\end{examsol}

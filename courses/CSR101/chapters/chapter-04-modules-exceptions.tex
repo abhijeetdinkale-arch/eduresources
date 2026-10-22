@@ -1,0 +1,68 @@
+\chapter{Modules, Packages, and Robust Exception Handling Architecture}
+\label{chap:modules-exceptions}
+
+\section{Modular Software Architecture in Python}
+A \textbf{module} is a single Python source file (\texttt{.py}). A \textbf{package} is a filesystem directory containing an \texttt{\_\_init\_\_.py} file that establishes a hierarchical namespace.
+
+\section{Module Loading and Execution Mechanics}
+\begin{lstlisting}
+# Standard entry point execution guard
+if __name__ == "__main__":
+    # Code executed only when script is launched directly from command line
+    # NOT executed when imported by external modules
+    print("Executing as standalone script.")
+\end{lstlisting}
+
+\section{Exception Propagation and Stack Unwinding}
+\begin{definition}[Exception Unwinding]
+When an exception is raised, the PVM halts linear instruction flow and traverses the call stack upward. If an enclosing \texttt{try-except} block matches the exception type, execution resumes inside that block. If the stack unwinds completely without a handler, CPython prints a \texttt{Traceback} to \texttt{sys.stderr} and terminates with non-zero exit code.
+\end{definition}
+
+\section{The Complete \texttt{try-except-else-finally} Pipeline}
+\begin{lstlisting}
+try:
+    file_handle = open("telemetry.dat", "r")
+    payload = file_handle.read()
+except FileNotFoundError as err:
+    print(f"I/O Failure: {err}")
+else:
+    # Executed ONLY if NO exception was raised in try block
+    print(f"Successfully ingested {len(payload)} bytes.")
+finally:
+    # Executed UNCONDITIONALLY (clean up resources regardless of success or crash)
+    print("Closing file descriptors.")
+\end{lstlisting}
+
+\section{Custom Exception Hierarchies}
+\begin{lstlisting}
+class DataPipelineError(Exception):
+    '''Base exception for data processing pipeline failures.'''
+    pass
+
+class SchemaValidationError(DataPipelineError):
+    def __init__(self, missing_fields, message="Schema mismatch detected"):
+        super().__init__(f"{message}: {missing_fields}")
+        self.missing_fields = missing_fields
+
+class NetworkTimeoutError(DataPipelineError):
+    pass
+\end{lstlisting}
+
+\section{Context Managers and the \texttt{with} Statement}
+\begin{keyequation}[Context Manager Protocol (PEP 343)]
+Any class implementing the context protocol satisfies:
+\begin{equation}
+\text{with Context() as x:} \iff \begin{cases}
+x = \text{Context}.\_\_\text{enter}\_\_() \\
+\text{try: body} \\
+\text{finally: Context}.\_\_\text{exit}\_\_(\text{exc\_type, exc\_val, exc\_tb})
+\end{cases}
+\end{equation}
+\end{keyequation}
+
+\section{Chapter Summary}
+\begin{summarybox}
+$\bullet$ The \texttt{sys.path} array dictates the resolution order of imported modules.\\
+$\bullet$ Always catch specific exceptions rather than generic \texttt{Exception} or bare \texttt{except:}.\\
+$\bullet$ The \texttt{finally} block is guaranteed to execute even across \texttt{return} statements.
+\end{summarybox}

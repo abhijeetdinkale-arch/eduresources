@@ -1,0 +1,116 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qb_style}[2026/09/16 v1.0 CHE110 Question Bank Style]
+
+\RequirePackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2218}{\ensuremath{^\circ}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
+
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=22pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,physics,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+
+% Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUGreen}{RGB}{20, 110, 60}
+\definecolor{LPUOrange}{RGB}{227, 82, 5}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{LightBg}{RGB}{246, 250, 248}
+\definecolor{BorderGray}{RGB}{205, 218, 210}
+\definecolor{SuccessGreen}{RGB}{24, 134, 75}
+\definecolor{AlertRed}{RGB}{200, 30, 30}
+\definecolor{TipBg}{RGB}{255, 248, 230}
+
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUGreen,citecolor=LPUNavy]{hyperref}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{LPUNavy}\textbf{CHE110: Environmental Studies --- Question Bank \& Solved Problems}}
+\fancyhead[R]{\small\color{LPUGreen}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{LPUNavy}}
+  {\Large\color{LPUGreen}\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {2pt}
+  {\LARGE\color{LPUNavy}}
+  [\vspace{3pt}{\color{LPUGreen}\rule{\linewidth}{1.5pt}}\vspace{6pt}]
+\titlespacing*{\chapter}{0pt}{-10pt}{15pt}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{LPUNavy}}
+  {\thesection}{0.8em}{}
+  [\vspace{1pt}{\color{BorderGray}\rule{\linewidth}{0.6pt}}]
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+% TColorBoxes
+\newtcolorbox{subjectiveq}[2]{
+    enhanced,
+    breakable,
+    colback=LightBg,
+    colframe=LPUNavy,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={Unit #1 Subjective Solved Problem #2},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=6pt
+}
+
+\newtcolorbox{solbox}{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=LPUGreen,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={Analytical Step-by-Step Solution \& Rubric Breakdown},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=6pt
+}
+
+\newtcolorbox{examinertip}{
+    enhanced,
+    breakable,
+    colback=TipBg,
+    colframe=LPUOrange,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={Examiner's Marking Rubric \& Key Evaluation Criteria},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    before skip=6pt, after skip=8pt
+}
+
+\endinput

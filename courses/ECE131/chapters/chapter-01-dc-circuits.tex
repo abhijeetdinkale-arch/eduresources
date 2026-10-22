@@ -1,0 +1,229 @@
+\chapter{Fundamentals of D.C. Circuits}
+\label{chap:dc-circuits}
+
+\section{Introduction and Learning Objectives}
+Direct Current (DC) circuit theory provides the foundational bedrock upon which all electrical, electronic, communications, and computer engineering disciplines are erected. Whether designing high-speed digital motherboards, solar photovoltaic microgrids, or electric vehicle powertrains, an engineer must possess an intuitive and rigorous mastery of circuit topology, constitutive relations of passive elements, Kirchhoff's conservation laws, systematic matrix formulation methods, and classical network reduction theorems.
+
+\begin{important}[Unit Learning Objectives]
+Upon mastering this chapter, the engineer will be capable of:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Applying the passive sign convention to ascertain power generation versus dissipation.
+    \item Utilizing the constitutive relations of resistance, inductance, and capacitance under DC steady-state.
+    \item Stating and applying Kirchhoff's Current Law (KCL) and Kirchhoff's Voltage Law (KVL) to complex planar networks.
+    \item Performing Star--Delta ($\text{Y}-\Delta$) impedance conversions to simplify non-series-parallel circuits.
+    \item Formulating systematic Mesh and Nodal matrix equations, resolving supermeshes and supernodes.
+    \item Applying the Superposition Theorem, Thevenin's Theorem, Norton's Theorem, and the Maximum Power Transfer Theorem to simplify and optimize linear circuits.
+\end{enumerate}
+\end{important}
+
+\section{Circuit Variables and Passive Elements}
+
+\subsection{Current, Voltage, Power, and Energy}
+\begin{definition}[Electric Current and Potential]
+\textbf{Electric current} $i(t)$ is defined as the time rate of flow of net electric charge across a specified cross-sectional boundary:
+\begin{equation}
+i(t) = \frac{dq(t)}{dt} \quad \text{[Amperes, A]} \iff q(t) = \int_{t_0}^t i(\tau) d\tau + q(t_0)
+\end{equation}
+where $1\text{ A} = 1\text{ Coulomb/second}$. \textbf{Electric potential difference} (voltage) $v(t)$ is the energy expended or work done in moving a unit positive charge between two points:
+\begin{equation}
+v(t) = \frac{dw}{dq} \quad \text{[Volts, V]}
+\end{equation}
+where $1\text{ V} = 1\text{ Joule/Coulomb}$.
+\end{definition}
+
+\begin{definition}[Instantaneous Power and Passive Sign Convention]
+The instantaneous power $p(t)$ delivered to or absorbed by any two-terminal electrical element is the product of the terminal voltage and current:
+\begin{equation}
+p(t) = v(t) \cdot i(t) = \frac{dw}{dq} \cdot \frac{dq}{dt} = \frac{dw}{dt} \quad \text{[Watts, W]}
+\end{equation}
+\textbf{Passive Sign Convention}:
+\begin{itemize}
+    \item When the reference direction for current enters the positive ($+$) voltage terminal: $p(t) > 0 \implies$ the element \textbf{absorbs} (dissipates or stores) electrical power.
+    \item When the current leaves the positive ($+$) terminal: $p(t) < 0 \implies$ the element \textbf{delivers} (supplies) electrical power to the external network.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Tellegen's Theorem / Conservation of Power]
+In any lumped physical electrical network containing $B$ branches, the algebraic sum of instantaneous powers across all branches at any instant is identically zero:
+\begin{equation}
+\sum_{k=1}^B p_k(t) = \sum_{k=1}^B v_k(t) i_k(t) = 0 \iff \sum P_{\text{delivered}} = \sum P_{\text{absorbed}}
+\end{equation}
+\end{theorem}
+
+\subsection{Passive Circuit Elements: Resistor, Inductor, Capacitor}
+
+\begin{definition}[Linear Resistor and Ohm's Law]
+A resistor is an electrical component that dissipates electrical energy irreversibly into thermal energy. For a linear, time-invariant resistor, the voltage-current relationship is governed by \textbf{Ohm's Law}:
+\begin{equation}
+v(t) = R \cdot i(t) \iff i(t) = G \cdot v(t)
+\end{equation}
+where $R$ is the electrical resistance in Ohms ($\Omega$) and $G = 1/R$ is the conductance in Siemens (S). The resistance of a uniform conductor of length $L$, cross-sectional area $A$, and material resistivity $\rho$ is:
+\begin{equation}
+R = \rho \frac{L}{A} = \frac{L}{\sigma A}
+\end{equation}
+Resistance exhibits temperature dependence characterized by the temperature coefficient $\alpha_0$:
+\begin{equation}
+R(T) = R_0 \left[ 1 + \alpha_0 (T - T_0) \right]
+\end{equation}
+where pure metals exhibit a positive temperature coefficient ($\alpha > 0$, resistance increases with temperature), while semiconductors and carbon exhibit a negative temperature coefficient ($\alpha < 0$).
+\end{definition}
+
+\begin{definition}[Inductance and Capacitor DC Steady-State Behavior]
+An \textbf{inductor} stores energy in an induced magnetic field according to:
+\begin{equation}
+v_L(t) = L \frac{di_L(t)}{dt}, \qquad W_L(t) = \frac{1}{2} L i_L(t)^2
+\end{equation}
+Under steady DC conditions, currents are invariant with time ($di/dt = 0$). Hence, the voltage across an ideal inductor is zero ($v_L = 0$). An ideal inductor behaves as a \textbf{short circuit} under DC steady-state.
+
+A \textbf{capacitor} stores energy in an electrostatic field:
+\begin{equation}
+i_C(t) = C \frac{dv_C(t)}{dt}, \qquad W_C(t) = \frac{1}{2} C v_C(t)^2
+\end{equation}
+Under steady DC conditions, voltages are constant ($dv/dt = 0$). Hence, the current through an ideal capacitor is zero ($i_C = 0$). An ideal capacitor behaves as an \textbf{open circuit} under DC steady-state.
+\end{definition}
+
+\section{Fundamental Circuit Laws and Reduction Methods}
+
+\subsection{Kirchhoff's Laws}
+\begin{theorem}[Kirchhoff's Current Law (KCL)]
+The algebraic sum of all currents entering any node (or enclosed boundary) in an electric circuit is zero at every instant of time:
+\begin{equation}
+\sum_{k=1}^N i_k(t) = 0 \iff \sum i_{\text{entering}} = \sum i_{\text{leaving}}
+\end{equation}
+KCL is the direct circuit-theoretic manifestation of the law of \textbf{conservation of electric charge}.
+\end{theorem}
+
+\begin{theorem}[Kirchhoff's Voltage Law (KVL)]
+The algebraic sum of all potential differences (voltages) around any closed loop or path in an electric circuit is zero at every instant of time:
+\begin{equation}
+\sum_{k=1}^M v_k(t) = 0 \iff \sum V_{\text{rises}} = \sum V_{\text{drops}}
+\end{equation}
+KVL is the direct circuit-theoretic manifestation of the law of \textbf{conservation of energy}.
+\end{theorem}
+
+\subsection{Voltage and Current Division Rules}
+For two resistors $R_1$ and $R_2$ connected in series across total voltage $V$:
+\begin{equation}
+V_1 = V \frac{R_1}{R_1 + R_2}, \qquad V_2 = V \frac{R_2}{R_1 + R_2}
+\end{equation}
+For two resistors $R_1$ and $R_2$ connected in parallel carrying total current $I$:
+\begin{equation}
+I_1 = I \frac{R_2}{R_1 + R_2}, \qquad I_2 = I \frac{R_1}{R_1 + R_2}
+\end{equation}
+
+\subsection{Star--Delta ($\text{Y}-\Delta$) Transformations}
+When three resistors form a closed three-terminal configuration that cannot be decomposed into simple series or parallel combinations, equivalence transformations are mandatory.
+
+\begin{theorem}[Delta-to-Star ($\Delta \to \text{Y}$) Conversion]
+Given delta-connected resistors $R_{AB}, R_{BC}, R_{CA}$, the equivalent star branch connected to node $A$ is:
+\begin{equation}
+R_A = \frac{R_{AB} R_{CA}}{R_{AB} + R_{BC} + R_{CA}}, \quad R_B = \frac{R_{AB} R_{BC}}{R_{AB} + R_{BC} + R_{CA}}, \quad R_C = \frac{R_{BC} R_{CA}}{R_{AB} + R_{BC} + R_{CA}}
+\end{equation}
+If all delta resistors are identical ($R_\Delta$), then $R_Y = \frac{R_\Delta}{3}$.
+\end{theorem}
+
+\begin{theorem}[Star-to-Delta ($\text{Y} \to \Delta$) Conversion]
+Given star-connected resistors $R_A, R_B, R_C$, the equivalent delta resistor across terminals $A-B$ is:
+\begin{equation}
+R_{AB} = R_A + R_B + \frac{R_A R_B}{R_C}, \quad R_{BC} = R_B + R_C + \frac{R_B R_C}{R_A}, \quad R_{CA} = R_C + R_A + \frac{R_C R_A}{R_B}
+\end{equation}
+If all star resistors are identical ($R_Y$), then $R_\Delta = 3 R_Y$.
+\end{theorem}
+
+\section{Systematic Network Analysis: Mesh and Nodal Methods}
+
+\subsection{Mesh Current Analysis}
+Mesh analysis applies KVL to planar networks where loop boundaries do not intersect:
+\begin{equation}
+[\mathbf{R}] \mathbf{I}_{\text{mesh}} = \mathbf{V}_{\text{mesh}} \implies \begin{bmatrix} R_{11} & -R_{12} & \cdots \\ -R_{21} & R_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \\ \vdots \end{bmatrix} = \begin{bmatrix} V_{s1} \\ V_{s2} \\ \vdots \end{bmatrix}
+\end{equation}
+where $R_{ii}$ is the sum of resistances in mesh $i$, $R_{ij}$ is the mutual resistance shared by mesh $i$ and $j$, and $V_{si}$ is the net clockwise voltage rise in mesh $i$.
+\begin{definition}[Supermesh]
+When a current source is situated in a branch shared by two adjacent meshes, a \textbf{supermesh} is created by removing the branch containing the current source (opening the branch) and writing a single unified KVL equation around the perimeter of both meshes, complemented by an auxiliary branch current constraint equation:
+\begin{equation}
+I_2 - I_1 = I_{\text{source}}
+\end{equation}
+\end{definition}
+
+\subsection{Nodal Voltage Analysis}
+Nodal analysis designates one reference ground node ($0\text{ V}$) and applies KCL at all $N-1$ non-reference nodes:
+\begin{equation}
+[\mathbf{G}] \mathbf{V}_{\text{node}} = \mathbf{I}_{\text{node}} \implies \begin{bmatrix} G_{11} & -G_{12} & \cdots \\ -G_{21} & G_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \\ \vdots \end{bmatrix} = \begin{bmatrix} i_{s1} \\ i_{s2} \\ \vdots \end{bmatrix}
+\end{equation}
+where $G_{ii}$ is the sum of conductances incident to node $i$, $G_{ij}$ is the mutual conductance between nodes $i$ and $j$, and $i_{si}$ is the net current injected into node $i$.
+\begin{definition}[Supernode]
+When an ideal voltage source is connected directly between two non-reference nodes without series resistance, a \textbf{supernode} is formed by enclosing the voltage source and both adjacent nodes in a generalized Gaussian boundary, writing a combined KCL equation complemented by the constraint $v_2 - v_1 = V_{\text{source}}$.
+\end{definition}
+
+\section{Network Theorems}
+
+\begin{theorem}[Superposition Theorem]
+In any linear bilateral electrical network containing two or more independent sources, the voltage across or current through any branch is equal to the algebraic sum of the voltages or currents produced by each independent source acting individually, with all other independent sources deactivated:
+\begin{itemize}
+    \item Independent voltage sources are \textbf{deactivated by short-circuiting} ($v = 0$).
+    \item Independent current sources are \textbf{deactivated by open-circuiting} ($i = 0$).
+    \item Dependent sources must remain fully connected and active.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Thevenin's and Norton's Theorems]
+Any linear, bilateral two-terminal DC network can be replaced across its load terminals $A-B$ by:
+\begin{enumerate}
+    \item \textbf{Thevenin Equivalent}: An ideal voltage source $V_{th}$ in series with resistance $R_{th}$, where:
+    \begin{align}
+        V_{th} &= V_{oc} \quad \text{(Open-circuit voltage across terminals } A-B) \\
+        R_{th} &= \text{Input resistance across } A-B \text{ with all independent sources deactivated}
+    \end{align}
+    \item \textbf{Norton Equivalent}: An ideal current source $I_N$ in parallel with resistance $R_N$, where:
+    \begin{equation}
+        I_N = I_{sc} \quad \text{(Short-circuit current flowing from } A \text{ to } B), \qquad R_N = R_{th}
+    \end{equation}
+    The two representations are related via source transformation:
+    \begin{equation}
+        V_{th} = I_N R_N \iff I_N = \frac{V_{th}}{R_{th}}
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Maximum Power Transfer Theorem]
+A variable resistive load $R_L$ connected across a linear two-terminal DC network receives maximum electrical power when the load resistance equals the internal Thevenin resistance of the driving network:
+\begin{equation}
+R_L = R_{th}
+\end{equation}
+Under this matched condition, the maximum power transferred is:
+\begin{equation}
+P_{max} = \frac{V_{th}^2}{4 R_{th}} = \frac{I_N^2 R_N}{4}
+\end{equation}
+The transfer efficiency under maximum power is strictly $\eta = \frac{P_{load}}{P_{total}} \times 100\% = 50\%$.
+\end{theorem}
+
+\begin{example}[Thevenin Reduction with Independent and Dependent Sources]
+Determine the Thevenin equivalent circuit across terminals $A-B$ for a network driven by a $20\text{ V}$ independent source, an $8\,\Omega$ resistor, a dependent current source $0.5 I_x$ in parallel with a $4\,\Omega$ resistor, where $I_x$ is the current through the $8\,\Omega$ branch.
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item \textbf{Open-Circuit Voltage $V_{oc}$}:
+    With terminals $A-B$ open, the current $I_x$ flows from the $20\text{ V}$ source through $8\,\Omega$ and through the parallel combination. KCL at node $A$:
+    \[ I_x + 0.5 I_x = \frac{V_A}{4} \implies 1.5 I_x = 0.25 V_A \]
+    Since $I_x = \frac{20 - V_A}{8}$, substitute:
+    \[ 1.5 \left(\frac{20 - V_A}{8}\right) = 0.25 V_A \implies \frac{30 - 1.5 V_A}{8} = 0.25 V_A \implies 30 - 1.5 V_A = 2 V_A \implies 3.5 V_A = 30 \]
+    \[ V_{th} = V_A = \frac{30}{3.5} \approx 8.57\text{ V} \]
+    \item \textbf{Short-Circuit Current $I_{sc}$}:
+    Connecting a short between $A$ and $B$, $V_A = 0\text{ V}$.
+    The current through the $4\,\Omega$ resistor is zero.
+    $I_x = \frac{20 - 0}{8} = 2.5\text{ A}$.
+    The dependent source delivers $0.5 I_x = 0.5(2.5) = 1.25\text{ A}$.
+    By KCL at the shorted node: $I_{sc} = I_x + 0.5 I_x = 1.5(2.5) = 3.75\text{ A}$.
+    \item \textbf{Thevenin Resistance $R_{th}$}:
+    \[ R_{th} = \frac{V_{oc}}{I_{sc}} = \frac{8.5714\text{ V}}{3.75\text{ A}} \approx 2.286\,\Omega \]
+\end{enumerate}
+\end{example}
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Passive elements obey: $v_R = R i_R$, $v_L = L \frac{di_L}{dt}$ (short at DC), $i_C = C \frac{dv_C}{dt}$ (open at DC).
+    \item KCL states $\sum I = 0$ (charge conservation); KVL states $\sum V = 0$ (energy conservation).
+    \item Star--Delta conversion scales identical resistors by a factor of 3: $R_\Delta = 3 R_Y$.
+    \item Thevenin and Norton equivalents provide compact linear driving-point models: $V_{th} = V_{oc}$, $I_N = I_{sc}$, $R_{th} = R_N = V_{oc} / I_{sc}$.
+    \item Maximum Power Transfer requires $R_L = R_{th}$, giving $P_{max} = V_{th}^2 / (4 R_{th})$ at $50\%$ efficiency.
+\end{itemize}

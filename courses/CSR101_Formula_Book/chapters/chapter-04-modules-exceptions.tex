@@ -1,0 +1,62 @@
+\chapter{Standard Library Architecture, Custom Exceptions \& Import Mechanics}
+\label{chap:modules-exceptions}
+
+\section{Module Search Path Algorithm (\texttt{sys.path})}
+\begin{formulabox}{Import Resolution Sequence}
+When Python executes \texttt{import foo}:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Cache Check:} Check \texttt{sys.modules['foo']}. If present, return cached module.
+    \item \textbf{Built-in Modules:} Check compiled built-in modules list (\texttt{sys.builtin\_module\_names}).
+    \item \textbf{Search \texttt{sys.path}:}
+    \begin{itemize}[leftmargin=1em]
+        \item Directory containing the input script (or current working directory \texttt{""}).
+        \item \texttt{PYTHONPATH} environment variable directories.
+        \item Standard library directories (\texttt{lib/python3.x}).
+        \item Third-party site-packages directory (\texttt{site-packages}).
+    \end{itemize}
+    \item \textbf{Package Initialization:} If a directory containing \texttt{\_\_init\_\_.py} is found, initialize package.
+\end{enumerate}
+\end{formulabox}
+
+\section{Python Exception Hierarchy Architecture}
+\begin{formulabox}{Core Built-in Exception Tree (PEP 3151)}
+\begin{lstlisting}
+BaseException
+ |-- SystemExit
+ |-- KeyboardInterrupt
+ |-- GeneratorExit
+ |-- Exception (Catch all user-level exceptions here!)
+      |-- ArithmeticError
+      |    |-- ZeroDivisionError
+      |    |-- OverflowError
+      |    |-- FloatingPointError
+      |-- AssertionError
+      |-- AttributeError
+      |-- BufferError
+      |-- EOFError
+      |-- ImportError
+      |    |-- ModuleNotFoundError
+      |-- LookupError
+      |    |-- IndexError
+      |    |-- KeyError
+      |-- NameError
+      |    |-- UnboundLocalError
+      |-- OSError (EnvironmentError, IOError)
+      |    |-- FileNotFoundError
+      |    |-- PermissionError
+      |    |-- TimeoutError
+      |-- TypeError
+      |-- ValueError
+           |-- UnicodeError
+\end{lstlisting}
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{Examiner Warning on Exception Traps:}\\
+Never write bare \texttt{except:}, and avoid \texttt{except BaseException:}. Catching \texttt{BaseException} intercepts \texttt{KeyboardInterrupt} (Ctrl+C) and \texttt{SystemExit}, preventing graceful program termination. Always subclass \texttt{Exception} for custom application exceptions:
+\begin{lstlisting}
+class ApplicationError(Exception):
+    '''Base exception for domain logic.'''
+    pass
+\end{lstlisting}
+\end{memorytip}

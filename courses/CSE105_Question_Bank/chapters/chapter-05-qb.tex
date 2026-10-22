@@ -1,0 +1,119 @@
+\chapter{Unit 5: Shell Features, Redirection \& Pipelines Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{5.1}{Which file descriptor integer is assigned to Standard Error (stderr) by POSIX operating systems?}
+{\texttt{0}}
+{\texttt{1}}
+{\texttt{2}}
+{\texttt{3}}
+
+\mcqitem{5.2}{What does the operator >> file accomplish in a shell command line?}
+{Overwrites target file with standard error}
+{Appends standard output stream to the end of target file}
+{Redirects standard input from target file}
+{Pipes output to background daemon}
+
+\mcqitem{5.3}{Which shell redirection operator feeds multi-line text blocks directly to a command's standard input until a delimiter token is encountered?}
+{Here-String (\texttt{<<<})}
+{Here-Document (\texttt{<<})}
+{Append Redirection (\texttt{>>})}
+{Input Redirection (\texttt{<})}
+
+\mcqitem{5.4}{What occurs when executing: command > out.log 2>\&1?}
+{Both stdout and stderr are merged and written into out.log}
+{stdout is written to out.log, while stderr is discarded}
+{A syntax error is raised by the shell parser}
+{stderr is written to out.log, but stdout is echoed to the screen}
+
+\mcqitem{5.5}{Which command duplicates a pipeline stream, writing it to a disk file while concurrently passing it down the pipeline?}
+{\texttt{split}}
+{\texttt{tee}}
+{\texttt{fork}}
+{\texttt{clone}}
+
+\mcqitem{5.6}{In wildcard globbing, what does the pattern report[!0-9].txt match?}
+{Files named report followed by any decimal digit}
+{Files named report followed by any single character that is NOT a digit}
+{Files named report0.txt through report9.txt}
+{Any file starting with report}
+
+\mcqitem{5.7}{What is the default exit status of a multi-stage shell pipeline cmd1 | cmd2 | cmd3?}
+{The exit status of cmd1}
+{The exit status of cmd2}
+{The exit status of the final command, cmd3}
+{The arithmetic bitwise OR of all exit statuses}
+
+\mcqitem{5.8}{How can a Bash script be instructed to fail if ANY command in a pipeline fails?}
+{\texttt{set -e}}
+{\texttt{set -o pipefail}}
+{\texttt{set -u}}
+{\texttt{shopt -s failglob}}
+
+\mcqitem{5.9}{Where is data discarded when redirected via: command 2> /dev/null?}
+{To a volatile RAM disk}
+{To the Linux kernel bit-bucket special character device, silently discarded}
+{To the root user's mailbox}
+{To the swap partition}
+
+\mcqitem{5.10}{Which wildcard pattern matches files starting with 'app', followed by exactly two arbitrary characters, ending with '.log'?}
+{\texttt{app*.log}}
+{\texttt{app??.log}}
+{\texttt{app[2].log}}
+{\texttt{app\{2\}.log}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 5 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+5.1 & \textbf{(c)} & Standard Error is assigned File Descriptor 2 (\texttt{stderr}). \\
+5.2 & \textbf{(b)} & \texttt{>>} appends \texttt{stdout} without truncating existing file content. \\
+5.3 & \textbf{(b)} & \texttt{<< DELIMITER} is a Here-Document construct. \\
+5.4 & \textbf{(a)} & \texttt{> out.log 2>\&1} redirects stdout to \texttt{out.log} and duplicates FD 2 to FD 1. \\
+5.5 & \textbf{(b)} & \texttt{tee} reads from stdin and writes concurrently to stdout and files. \\
+5.6 & \textbf{(b)} & \texttt{[!0-9]} matches any character not in the range $0$--$9$. \\
+5.7 & \textbf{(c)} & By default, a pipeline returns the exit status of the right-most command. \\
+5.8 & \textbf{(b)} & \texttt{set -o pipefail} ensures the pipeline return status reflects any failure. \\
+5.9 & \textbf{(b)} & \texttt{/dev/null} destroys all data written to it immediately. \\
+5.10 & \textbf{(b)} & Each \texttt{?} matches exactly one single character (\texttt{app??.log} matches 2 chars). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain why command 2>\&1 > file does NOT merge streams into the file.}
+\begin{vivasol}
+The shell processes redirection operators strictly from left to right:
+\begin{enumerate}
+    \item When the shell encounters \texttt{2>\&1}, descriptor 2 (\texttt{stderr}) is duplicated to point wherever descriptor 1 (\texttt{stdout}) currently points (which is the active display terminal).
+    \item Next, when the shell encounters \texttt{> file}, descriptor 1 (\texttt{stdout}) is redirected to point to the file.
+\end{enumerate}
+As a result, \texttt{stderr} continues pointing to the terminal, and only \texttt{stdout} is redirected into \texttt{file}. The correct order is \texttt{> file 2>\&1}.
+\end{vivasol}
+
+\subsection*{Q2. Describe the operational mechanics of an anonymous kernel pipe (|).}
+\begin{vivasol}
+When the shell executes \texttt{cmd1 | cmd2}, it requests the kernel create an anonymous pipe via the \texttt{pipe()} system call, yielding two file descriptors: a write end and a read end. The shell forks two child processes: the write end is duplicated to \texttt{cmd1}'s stdout, and the read end is duplicated to \texttt{cmd2}'s stdin. Both processes run concurrently. Data flow is buffered in kernel memory (typically 64 KB). If \texttt{cmd1} generates data faster than \texttt{cmd2} consumes it, \texttt{cmd1} is paused by the kernel scheduler until buffer space frees up.
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{5.1 --- Diagnostic Log Tapping Pipeline}
+\textbf{Objective:} Build a multi-stage pipeline that searches configuration files, segregates errors to an error log, writes clean results to disk, and prints the total count to the console.
+\begin{clibox}
+$ find /etc -name "*.conf" 2> find_errors.log | tee conf_inventory.txt | wc -l
+148
+
+$ head -n 3 conf_inventory.txt
+/etc/resolv.conf
+/etc/sysctl.conf
+/etc/fuse.conf
+
+$ head -n 3 find_errors.log
+find: '/etc/ssl/private': Permission denied
+\end{clibox}
+\end{practicalbox}

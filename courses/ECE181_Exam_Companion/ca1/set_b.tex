@@ -1,0 +1,159 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+\label{sec:ca1_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{B}{60 Minutes}{30 Marks}{CO1 (Variables \& Types), CO2 (Conditionals \& Functions)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt any five out of the six questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    Explain the LEGB (Local, Enclosing, Global, Built-in) scope resolution rule. Provide code examples demonstrating the use and distinct behaviors of the \texttt{global} and \texttt{nonlocal} keywords.
+}{6}{CO2}{L2 Understand}
+
+\questionitem{2}{
+    Discuss floating-point representation artifacts in Python IEEE 754 arithmetic (e.g., \texttt{0.1 + 0.2 != 0.3}). Explain how to correctly perform financial arithmetic using the \texttt{decimal} module and tolerance comparisons via \texttt{math.isclose()}.
+}{6}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Write a Python function \texttt{collatz\_sequence(n)} that generates the sequence of numbers for starting integer $n$ until it reaches 1 ($n \to n/2$ if even, $n \to 3n + 1$ if odd). Compute and return the peak value reached and total stopping time.
+}{6}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Analyze Python's short-circuit evaluation mechanism for boolean operators \texttt{and} and \texttt{or}. What is printed by \texttt{print([] or 0 or "Hello" and 5)}? Explain the evaluation sequence step-by-step.
+}{6}{CO1}{L4 Analyze}
+
+\questionitem{5}{
+    Explain the function of \texttt{random.seed()}. Differentiate between pseudo-random numbers and cryptographically secure random numbers, contrasting \texttt{random.choice()} with \texttt{secrets.choice()}.
+}{6}{CO2}{L2 Understand}
+
+\questionitem{6}{
+    Write a recursive function to solve the classical \textbf{Tower of Hanoi} puzzle for $n$ disks. Draw the recursion tree for $n = 3$, showing disk movements and deriving total move count $M(n) = 2^n - 1$.
+}{6}{CO2}{L4 Analyze}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set B}
+
+\begin{solutionbox}[Solution to Question 1]
+When resolving an identifier, Python searches namespaces in strict order:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Local}: Names assigned inside the current function body.
+    \item \textbf{Enclosing}: Names in enclosing outer functions (closures).
+    \item \textbf{Global}: Names defined at the top level of the current module file.
+    \item \textbf{Built-in}: Preloaded symbols (\texttt{len}, \texttt{range}, \texttt{print}, \texttt{ValueError}).
+\end{enumerate}
+\textbf{Keyword Differences}:
+\begin{pycode}
+x = 10\\
+def outer():\\
+\_\_ESCTOKEN\_7\_\_ y = 20\\
+\_\_ESCTOKEN\_7\_\_ def inner():\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ nonlocal y  \# Modifies enclosing outer's variable\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ global x    \# Modifies module-level global variable\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ y += 1; x += 1
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Definition of LEGB lookup hierarchy: \textbf{2 Marks}\\
+$\bullet$ Explanation and syntax of \texttt{global}: \textbf{2 Marks}\\
+$\bullet$ Explanation and syntax of \texttt{nonlocal} in closures: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+Floats are represented in binary scientific notation: $0.1_{10} = 0.0001100110011\dots_2$ which has an infinite repeating fractional component in base 2. Truncation to 53 bits results in a rounding error:
+\begin{equation*}
+0.1 + 0.2 = 0.3000000000000000444 \dots \neq 0.3
+\end{equation*}
+\textbf{Safe Comparison Solutions}:
+\begin{pycode}
+import math\\
+from decimal import Decimal\\
+~\\
+\# Engineering tolerance check:\\
+assert math.isclose(0.1 + 0.2, 0.3, rel\_tol=1e-9)\\
+~\\
+\# Exact financial calculation:\\
+val = Decimal('0.1') + Decimal('0.2')  \# Decimal('0.3')
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Binary representation explanation of repeating fraction: \textbf{2 Marks}\\
+$\bullet$ Code implementation with \texttt{math.isclose}: \textbf{2 Marks}\\
+$\bullet$ Exact monetary representation with \texttt{decimal.Decimal}: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\begin{pycode}
+def collatz\_sequence(n):\\
+\_\_ESCTOKEN\_7\_\_ if not (isinstance(n, int) and n >= 1):\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ raise ValueError("Input must be a positive integer >= 1")\\
+\_\_ESCTOKEN\_7\_\_ seq = [n]\\
+\_\_ESCTOKEN\_7\_\_ while n != 1:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ if n \% 2 == 0:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ n = n // 2\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ else:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ n = 3 * n + 1\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ seq.append(n)\\
+\_\_ESCTOKEN\_7\_\_ return \_\_ESCTOKEN\_5\_\_\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ "sequence": seq,\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ "stopping\_time": len(seq) - 1,\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ "peak\_value": max(seq)\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_6\_\_
+\end{pycode}
+\begin{markingrubric}
+$\bullet$ Input validation and while loop termination condition: \textbf{2 Marks}\\
+$\bullet$ Correct parity branching ($n//2$ vs $3n+1$): \textbf{2 Marks}\\
+$\bullet$ Peak value and stopping time calculation: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+Evaluation of \texttt{[] or 0 or "Hello" and 5}:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Operator precedence: \texttt{and} (rank 12) binds tighter than \texttt{or} (rank 13). Expression parses as: \texttt{[] or 0 or ("Hello" and 5)}.
+    \item Evaluate \texttt{"Hello" and 5}: \texttt{"Hello"} is non-empty (truthy). Python evaluates second operand: returns \texttt{5}.
+    \item Evaluate \texttt{[] or 0 or 5}: Leftmost \texttt{[] or 0}: \texttt{[]} is empty list (falsy) $\to$ returns second operand \texttt{0}.
+    \item Remaining: \texttt{0 or 5}: \texttt{0} is falsy $\to$ returns second operand \textbf{5}. Output is \textbf{5}.
+\end{enumerate}
+\begin{markingrubric}
+$\bullet$ Operator precedence parsing (\texttt{and} over \texttt{or}): \textbf{2 Marks}\\
+$\bullet$ Evaluation of \texttt{"Hello" and 5}: \textbf{2 Marks}\\
+$\bullet$ Final left-to-right short-circuit step yielding 5: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\textbf{Seed Mechanics}: \texttt{random.seed(x)} initializes the internal state array (Mersenne Twister MT19937, state size 19937 bits). Given identical seeds, PRNG produces identical deterministic sequences across platforms.
+\textbf{PRNG vs CSPRNG}:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{random}: Predictable after observing 624 consecutive 32-bit outputs. Never use for passwords, security tokens, or cryptographic keys.
+    \item \texttt{secrets}: Uses OS entropy pools (\texttt{/dev/urandom} or Windows CryptGenRandom) ensuring non-reproducibility and resistance to state recovery.
+\end{itemize}
+\begin{markingrubric}
+$\bullet$ PRNG state initialization and deterministic repeatability: \textbf{2 Marks}\\
+$\bullet$ Vulnerability of MT19937 to state reconstruction: \textbf{2 Marks}\\
+$\bullet$ Cryptographic security with OS entropy via \texttt{secrets}: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\begin{pycode}
+def hanoi(n, source, auxiliary, target):\\
+\_\_ESCTOKEN\_7\_\_ if n == 1:\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ print(f"Move disk 1 from \{source\} -> \{target\}")\\
+\_\_ESCTOKEN\_7\_\_ \_\_ESCTOKEN\_7\_\_ return 1\\
+\_\_ESCTOKEN\_7\_\_ moves = hanoi(n - 1, source, target, auxiliary)\\
+\_\_ESCTOKEN\_7\_\_ print(f"Move disk \{n\} from \{source\} -> \{target\}")\\
+\_\_ESCTOKEN\_7\_\_ moves += 1 + hanoi(n - 1, auxiliary, source, target)\\
+\_\_ESCTOKEN\_7\_\_ return moves
+\end{pycode}
+\textbf{Recurrence Relation}: $M(n) = 2M(n-1) + 1$ with $M(1) = 1$.
+Solving by substitution: $M(n) = 2^n - 1$. For $n = 3$, $M(3) = 2^3 - 1 = \mathbf{7\text{ moves}}$.
+\begin{markingrubric}
+$\bullet$ Recursive function definition with 3 steps: \textbf{2 Marks}\\
+$\bullet$ Recurrence relation derivation $M(n) = 2^n - 1$: \textbf{2 Marks}\\
+$\bullet$ Correct sequence of 7 steps for $n=3$: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\newpage

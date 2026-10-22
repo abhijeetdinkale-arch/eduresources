@@ -1,0 +1,75 @@
+\section{End-Term Comprehensive Examination --- Set A (70 Marks)}
+\label{sec:endterm_set_a}
+
+\LPUPaperHeader{End-Term Examination}{A}{3 Hours}{70 Marks}{All Course Outcomes CO1 to CO6}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Structure: Part A (30 Marks Objective MCQs) + Part B (40 Marks Descriptive)}
+\end{center}
+
+\subsection*{Part A: Objective Assessment (30 Marks)}
+30 Multiple Choice Questions covering Units 4, 5, and 6 (10 from Fourier Series, 10 from Multivariate Calculus, 10 from Integral Calculus).
+
+\subsection*{Part B: Descriptive Analytical Section (40 Marks)}
+\textit{Instructions: Answer any four out of the five 10-mark problems.}
+
+\questionitem{1}{
+    (a) Find the rank of the matrix $A = \begin{bmatrix} 1 & 1 & 1 \\ 1 & -1 & 0 \\ 1 & 1 & 1 \end{bmatrix}$ and determine its nullity. [5 Marks]\\
+    (b) Solve $(D^2 - 4D + 4)y = 8(x^2 + e^{2x})$ using the operator method. [5 Marks]
+}{10}{CO1, CO3}{L3 Apply}
+
+\questionitem{2}{
+    (a) Solve by the method of Variation of Parameters: $y'' - 2y' + y = \frac{e^x}{x}$. [5 Marks]\\
+    (b) Solve the Cauchy-Euler equation: $x^2 \frac{d^2 y}{dx^2} - 3x \frac{dy}{dx} + 4y = 2x^2$. [5 Marks]
+}{10}{CO3}{L3 Apply}
+
+\questionitem{3}{
+    (a) Find the Fourier series expansion of $f(x) = |x|$ in the interval $[-\pi, \pi]$ and deduce that $\frac{1}{1^2} + \frac{1}{3^2} + \frac{1}{5^2} + \dots = \frac{\pi^2}{8}$. [5 Marks]\\
+    (b) Find the dimensions of the rectangular box of maximum volume inscribed in the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$. [5 Marks]
+}{10}{CO4, CO5}{L4 Analyze}
+
+\questionitem{4}{
+    (a) Evaluate $\iint_R (x + y)^2 dx dy$ over the region bounded by the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ using transformation to polar coordinates. [5 Marks]\\
+    (b) Change the order of integration and evaluate $\int_0^1 \int_{y^2}^1 y e^{x^2} dx dy$. [5 Marks]
+}{10}{CO6}{L4 Analyze}
+
+\questionitem{5}{
+    Find the volume of the sphere $x^2 + y^2 + z^2 \le a^2$ by evaluating the triple integral in spherical polar coordinates.
+}{10}{CO6}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- End-Term Set A}
+
+\begin{solutionbox}[Solution to Question 2(a) --- Variation of Parameters]
+Complementary function: $m^2 - 2m + 1 = 0 \implies m = 1, 1$.
+$y_c = (c_1 + c_2 x)e^x \implies y_1 = e^x, \; y_2 = x e^x$.
+Wronskian:
+\[
+W = y_1 y_2' - y_2 y_1' = e^x(e^x + x e^x) - (x e^x)(e^x) = e^{2x}
+\]
+With $R(x) = \frac{e^x}{x}$:
+\[
+u(x) = -\int \frac{y_2 R}{W} dx = -\int \frac{(x e^x)(e^x/x)}{e^{2x}} dx = -\int 1 dx = -x
+\]
+\[
+v(x) = \int \frac{y_1 R}{W} dx = \int \frac{(e^x)(e^x/x)}{e^{2x}} dx = \int \frac{1}{x} dx = \ln|x|
+\]
+Particular integral:
+\[
+y_p = -x e^x + (x e^x)\ln|x|
+\]
+General solution:
+\[
+\mathbf{y(x) = (c_1 + c_2 x)e^x - x e^x + x e^x \ln|x| = (c_1 + c_3 x)e^x + x e^x \ln|x|}
+\]
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4(b) --- Change of Order]
+Region bounded by $x = y^2 \implies y = \sqrt{x}$ and $x = 1$, with $y \in [0, 1]$.
+Switching to vertical strips: $x \in [0, 1]$, $y \in [0, \sqrt{x}]$.
+\[
+I = \int_0^1 \left( \int_0^{\sqrt{x}} y e^{x^2} dy \right) dx = \int_0^1 e^{x^2} \left[ \frac{y^2}{2} \right]_0^{\sqrt{x}} dx = \frac{1}{2}\int_0^1 x e^{x^2} dx = \frac{1}{4}[e^{x^2}]_0^1 = \mathbf{\frac{e - 1}{4}}
+\]
+\end{solutionbox}
+
+\newpage

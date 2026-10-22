@@ -1,0 +1,98 @@
+\chapter{Problem Definition and Analysis}
+\label{chap:problem-definition}
+
+\section{Introduction: From Ambiguity to Actionable Focus}
+The greatest failure mode in modern engineering projects is not technical incompetence during execution, but flawless execution of the wrong solution to the wrong problem. Problem definition is the rigorous discipline of deconstructing raw, ambiguous symptoms, mapping the human ecosystem, interrogating systemic constraints, and crystallizing a clear, actionable design mandate.
+
+\begin{important}[Unit Learning Objectives]
+Upon mastering this chapter, the engineer will be proficient in:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Constructing comprehensive Stakeholder Power-Interest matrices to manage institutional dynamics.
+    \item Synthesizing qualitative field data using Empathy Maps and Customer Journey Maps.
+    \item Conducting systematic root cause diagnosis via the 5-Whys methodology and Ishikawa (Fishbone) 6M/4P diagrams.
+    \item Formulating human-centered Point-of-View (POV) statements and deriving actionable ``How Might We'' (HMW) opportunity questions.
+    \item Defining strict project scope boundaries (In-Scope vs. Out-of-Scope) and establishing verifiable SMART objectives.
+\end{enumerate}
+\end{important}
+
+\section{Stakeholder Mapping and Ecosystem Analysis}
+Stakeholders are individuals, groups, or institutions that affect or are affected by the problem or its eventual resolution. They are categorized hierarchically:
+\begin{itemize}
+    \item \textbf{Primary Stakeholders:} Direct end-users whose daily routines or well-being directly interact with the system (e.g., outpatient clinic patients, daily commuters).
+    \item \textbf{Secondary Stakeholders:} Intermediaries who facilitate, administer, or maintain the system (e.g., triage nurses, bus maintenance crews, billing clerks).
+    \item \textbf{Tertiary Stakeholders:} External entities holding regulatory, financial, or political influence (e.g., municipal transit authorities, health insurance auditors, hospital board members).
+\end{itemize}
+
+\begin{methodbox}[Mendelow's Power-Interest Engagement Matrix]
+\begin{tabularx}{\linewidth}{|l|X|X|} \hline
+ & \textbf{Low Interest} & \textbf{High Interest} \\ \hline
+\textbf{High Power} & \textbf{Keep Satisfied:} Engage with executive summaries, risk reports, and regulatory compliance data. & \textbf{Manage Closely (Key Partners):} Involve continuously in co-design sessions, steering committees, and milestone sign-offs. \\ \hline
+\textbf{Low Power} & \textbf{Monitor (Minimum Effort):} Track passive logs and sentiment via periodic low-overhead telemetry. & \textbf{Keep Informed:} Provide transparent progress updates, user forums, and clear status dashboards to cultivate grassroots champions. \\ \hline
+\end{tabularx}
+\end{methodbox}
+
+\section{Qualitative Empathy Synthesis Tools}
+
+\subsection{The Empathy Map Canvas}
+Developed by Dave Gray, the Empathy Map synthesizes user interview transcripts and observational notes into four quadrants plus underlying motivational drivers:
+\begin{itemize}
+    \item \textbf{Says:} Direct verbatim quotes captured during field interviews (e.g., ``I never know which bus will arrive on platform 4'').
+    \item \textbf{Does:} Physical, observable actions and behavioral workarounds (e.g., user constantly glances at wristwatch, taps foot, paces between two conflicting informational kiosks).
+    \item \textbf{Thinks:} Underlying beliefs, unspoken assumptions, and mental models (e.g., ``If I miss this connection, I will be penalized at work'').
+    \item \textbf{Feels:} Visceral emotions, anxiety, frustration, pride, or vulnerability (e.g., feeling humiliated when asking the driver for route clarification).
+    \item \textbf{Pains:} Frustrations, perceived risks, cognitive overload, and high-consequence failure modes.
+    \item \textbf{Gains:} Aspirations, definitions of personal dignity, and desired emotional states.
+\end{itemize}
+
+\subsection{Customer Journey Mapping (CJM)}
+A Customer Journey Map charts the user's chronological trajectory across distinct operational touchpoints. Crucially, it plots an \textit{Emotional Curve} (bipolar valence from delight to distress). The deep emotional troughs on this curve reveal the highest-leverage intervention targets for design engineers.
+
+\section{Root Cause Diagnostic Methodologies}
+
+\subsection{The 5-Whys Protocol}
+Pioneered by Sakichi Toyoda at Toyota, the 5-Whys forces the engineer to drill through surface symptoms down to systemic policy, procedural, or architectural flaws.
+
+\begin{casestudy}[Application of 5-Whys in Cloud Infrastructure Outages]
+\textbf{Symptom:} Production API gateway latency spiked to 45 seconds, crashing checkout services.\\
+\textbf{Why 1:} Why did the API gateway stall? Because database connection pools were exhausted by unclosed client sockets.\\
+\textbf{Why 2:} Why were client sockets unclosed? Because client microservice instances were terminating abruptly under memory pressure.\\
+\textbf{Why 3:} Why were instances terminating under memory pressure? Because an unindexed database query was buffering 200,000 JSON rows into RAM.\\
+\textbf{Why 4:} Why was an unindexed query pushed to production? Because the staging environment had only 50 test records, masking query latency.\\
+\textbf{Why 5 (Root Cause):} The deployment CI/CD pipeline lacks automated query plan linting and production-scale synthetic load testing before staging sign-off.
+\end{casestudy}
+
+\subsection{Ishikawa (Fishbone) Diagrams}
+Ishikawa diagrams structure potential contributing factors into systemic categories:
+\begin{itemize}
+    \item \textbf{The 6Ms (Engineering \& Manufacturing):} Manpower, Methods, Machines, Materials, Measurements, Mother Nature (Environment).
+    \item \textbf{The 4Ps (Services \& Software):} People, Policies, Procedures, Plant / Technology.
+\end{itemize}
+
+\section{POV Formulation and ``How Might We'' Questioning}
+The synthesis phase culminates in the construction of a Point of View (POV) statement:
+\[
+\text{\textbf{POV Statement}} = \textbf{[User]} \text{ needs } \textbf{[Actionable Need]} \text{ because } \textbf{[Surprising Root Insight]}
+\]
+A strong POV statement is human-centered, grounded in evidence, and broad enough to allow creative divergence while narrow enough to provide clear constraints.
+
+From this POV, engineers generate ``How Might We'' (HMW) questions that serve as creative springboards for ideation:
+\begin{itemize}
+    \item \textit{Amp up the good:} How might we amplify the user's feelings of autonomy during registration?
+    \item \textit{Remove the bad:} How might we eliminate the need for paper documentation entirely?
+    \item \textit{Explore the opposite:} How might we make waiting for lab results an educational and relaxing experience?
+\end{itemize}
+
+\section{Scope Definition and SMART Objectives}
+\begin{itemize}
+    \item \textbf{Boundary Critique:} Formulating a rigorous In-Scope vs. Out-of-Scope ledger prevents ``scope creep'' and focuses capital on core invariants.
+    \item \textbf{SMART Objectives:} Every design intervention must define objectives that are \textbf{S}pecific, \textbf{M}easurable, \textbf{A}chievable, \textbf{R}elevant, and \textbf{T}ime-bound.
+\end{itemize}
+
+\begin{practiceset}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Differentiate between primary, secondary, and tertiary stakeholders in an automated university examination portal.
+    \item Perform a 5-Whys analysis on an electric vehicle fast-charging station experiencing 30\% cable theft and vandalism.
+    \item Draft an Empathy Map for a first-generation college student attempting to apply for academic financial aid via a mobile browser.
+    \item Convert the vague goal ``Improve software quality'' into a compliant SMART engineering objective.
+\end{enumerate}
+\end{practiceset}

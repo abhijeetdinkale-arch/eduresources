@@ -1,0 +1,792 @@
+\chapter{Unit 4: Array Operations using NumPy}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent This section contains 60 rigorous multiple-choice questions extracted from university course examination assessments. Review each question, test edge-case syntax, and verify code execution mechanics.
+\vspace{3mm}
+
+\noindent\textbf{Q1.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Easy]}}\\[2pt]
+Which Python library provides the \texttt{ndarray} object used for numerical arrays?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Matplotlib
+    \item \relax NumPy
+    \item \relax SciPy
+    \item \relax Pandas
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Easy]}}\\[2pt]
+What is a key difference between a NumPy array and a Python list?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax A NumPy array cannot be indexed
+    \item \relax A list uses less memory than an array
+    \item \relax A NumPy array stores elements of a single data type
+    \item \relax A list can only hold numbers
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Easy]}}\\[2pt]
+Which function is used to create a NumPy array from a Python list?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.list()}
+    \item \relax \texttt{np.make()}
+    \item \relax \texttt{np.create()}
+    \item \relax \texttt{np.array()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Easy]}}\\[2pt]
+Compared to Python lists, NumPy arrays are generally preferred for numerical computation because they are:
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Limited to one element only
+    \item \relax Faster and more memory efficient
+    \item \relax Unable to store integers
+    \item \relax Slower but easier to read
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5.} \hfill {\small\color{LPUOrange}\textbf{[data types | Easy]}}\\[2pt]
+Which attribute is used to check the data type of elements in a NumPy array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{.datatype}
+    \item \relax \texttt{.dtype}
+    \item \relax \texttt{.type}
+    \item \relax \texttt{.kind}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6.} \hfill {\small\color{LPUOrange}\textbf{[data types | Easy]}}\\[2pt]
+What does the NumPy data type \texttt{int64} represent?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax A 64-character string
+    \item \relax A 64-element array
+    \item \relax A 64-bit floating point number
+    \item \relax A 64-bit integer
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7.} \hfill {\small\color{LPUOrange}\textbf{[data types | Easy]}}\\[2pt]
+Which method changes the data type of an existing NumPy array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{.astype()}
+    \item \relax \texttt{.convert()}
+    \item \relax \texttt{.retype()}
+    \item \relax \texttt{.setdtype()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8.} \hfill {\small\color{LPUOrange}\textbf{[data types | Easy]}}\\[2pt]
+If an array is created as \texttt{np.array([1.0, 2.0, 3.0])}, its default data type will be:
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{bool}
+    \item \relax \texttt{str}
+    \item \relax \texttt{float64}
+    \item \relax \texttt{int32}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Easy]}}\\[2pt]
+Given \texttt{a = np.array([1, 2, 3])}, what is the result of \texttt{a + 2}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[3, 4, 5]}
+    \item \relax \texttt{[1, 2, 3, 2]}
+    \item \relax \texttt{[2, 4, 6]}
+    \item \relax \texttt{[3, 2, 3]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Easy]}}\\[2pt]
+Which attribute returns the shape (dimensions) of a NumPy array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{.size}
+    \item \relax \texttt{.shape}
+    \item \relax \texttt{.dim}
+    \item \relax \texttt{.length}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Easy]}}\\[2pt]
+Given \texttt{a = np.array([1, 2, 3])} and \texttt{b = np.array([4, 5, 6])}, what is \texttt{a * b}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[4, 5, 6]}
+    \item \relax \texttt{[1, 2, 3]}
+    \item \relax \texttt{[4, 10, 18]}
+    \item \relax \texttt{[5, 7, 9]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Easy]}}\\[2pt]
+Which function reshapes an array without changing its data?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{restack()}
+    \item \relax \texttt{resize()}
+    \item \relax \texttt{reform()}
+    \item \relax \texttt{reshape()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Easy]}}\\[2pt]
+What does \texttt{np.arange(0, 5)} produce?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[0, 1, 2, 3, 4]}
+    \item \relax \texttt{[0, 1, 2, 3, 4, 5]}
+    \item \relax \texttt{[1, 2, 3, 4, 5]}
+    \item \relax \texttt{[0, 5]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Easy]}}\\[2pt]
+Which NumPy function computes the average of array elements?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.mean()}
+    \item \relax \texttt{np.middle()}
+    \item \relax \texttt{np.center()}
+    \item \relax \texttt{np.avg()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Easy]}}\\[2pt]
+What does \texttt{np.max()} return for a NumPy array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax The number of elements
+    \item \relax The smallest element
+    \item \relax The sum of elements
+    \item \relax The largest element
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Easy]}}\\[2pt]
+Which function computes the standard deviation of a NumPy array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.dev()}
+    \item \relax \texttt{np.std()}
+    \item \relax \texttt{np.var()}
+    \item \relax \texttt{np.spread()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Easy]}}\\[2pt]
+Given \texttt{a = np.array([2, 4, 6])}, what does \texttt{np.sum(a)} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{3}
+    \item \relax \texttt{12}
+    \item \relax \texttt{6}
+    \item \relax \texttt{4}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Easy]}}\\[2pt]
+What does broadcasting in NumPy allow you to do?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Sort arrays automatically
+    \item \relax Print arrays to screen
+    \item \relax Send data over a network
+    \item \relax Operate on arrays of different shapes
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Easy]}}\\[2pt]
+When you add a scalar to a NumPy array, broadcasting causes the scalar to be:
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Ignored entirely
+    \item \relax Applied to every element
+    \item \relax Added only to the first element
+    \item \relax Converted to a string
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Easy]}}\\[2pt]
+For broadcasting to work between two arrays, their dimensions must be:
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Prime numbers
+    \item \relax Compatible or equal to 1
+    \item \relax Both greater than 10
+    \item \relax Exactly identical always
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Medium]}}\\[2pt]
+Given \texttt{import numpy as np}, what is the output of the following code? 
+ python 
+ lst = [1, 2, 3] 
+ arr = np.array([1, 2, 3]) 
+ print(lst * 2, arr * 2)
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[2, 4, 6] [2 4 6]}
+    \item \relax \texttt{[2, 4, 6] [1 2 3 1 2 3]}
+    \item \relax \texttt{[1, 2, 3, 1, 2, 3] [1 2 3 1 2 3]}
+    \item \relax \texttt{[1, 2, 3, 1, 2, 3] [2 4 6]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Medium]}}\\[2pt]
+Which statement best explains why NumPy arrays are generally faster than Python lists for numerical computation?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Arrays are interpreted line by line while lists are compiled
+    \item \relax Arrays store each element as a separate Python object with pointers
+    \item \relax Arrays automatically use multiple CPU cores for every operation
+    \item \relax Arrays store homogeneous data in contiguous memory and use vectorized C operations
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23.} \hfill {\small\color{LPUOrange}\textbf{[data types | Medium]}}\\[2pt]
+What will be the \texttt{dtype} of the array created below? 
+ python 
+ arr = np.array([1, 2, 3.0, 4])
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{float64}
+    \item \relax \texttt{int64}
+    \item \relax \texttt{object}
+    \item \relax \texttt{complex128}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24.} \hfill {\small\color{LPUOrange}\textbf{[data types | Medium]}}\\[2pt]
+What is the output of the following code? 
+ python 
+ arr = np.array([1, 2, 3], dtype=np.int8) 
+ arr[0] = 300 
+ print(arr[0])
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Raises an OverflowError
+    \item \relax \texttt{300}
+    \item \relax \texttt{127}
+    \item \relax \texttt{44}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25.} \hfill {\small\color{LPUOrange}\textbf{[data types | Medium]}}\\[2pt]
+Which code correctly converts a float array \texttt{a} into an integer array without changing the original?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{b = a.dtype(np.int32)}
+    \item \relax \texttt{b = a.convert('int32')}
+    \item \relax \texttt{b = int(a)}
+    \item \relax \texttt{b = a.astype(np.int32)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+Given \texttt{arr = np.arange(12).reshape(3, 4)}, what does \texttt{arr[:, 1]} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1 2 3 4]}
+    \item \relax \texttt{[1 5 9]}
+    \item \relax \texttt{[0 1 2 3]}
+    \item \relax \texttt{[4 5 6 7]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+What is the result of the following code? 
+ python 
+ a = np.array([[1, 2], [3, 4]]) 
+ print(a.sum(axis=0))
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[4 6]}
+    \item \relax \texttt{[3 7]}
+    \item \relax \texttt{[6 4]}
+    \item \relax \texttt{10}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+Given \texttt{arr = np.array([10, 20, 30, 40, 50])}, what does \texttt{arr[::-2]} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[10 30 50]}
+    \item \relax \texttt{[40 20]}
+    \item \relax \texttt{[50 30 10]}
+    \item \relax \texttt{[50 40 30 20 10]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+What is the difference between \texttt{np.dot(a, b)} and \texttt{a * b} for two 2D arrays of the same shape?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.dot} performs element-wise multiplication while \texttt{*} performs matrix multiplication
+    \item \relax Both perform matrix multiplication but \texttt{*} is faster
+    \item \relax Both perform element-wise multiplication with different rounding
+    \item \relax \texttt{np.dot} performs matrix multiplication while \texttt{*} performs element-wise multiplication
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+What is the output of the following code? 
+ python 
+ arr = np.array([1, 2, 3, 4, 5]) 
+ print(arr[arr \% 2 == 0])
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[True False True False True]}
+    \item \relax \texttt{[1 3 5]}
+    \item \relax \texttt{[2 4]}
+    \item \relax \texttt{[0 2 0 4 0]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Medium]}}\\[2pt]
+Given \texttt{arr = np.array([2, 4, 6, 8])}, what does \texttt{np.std(arr)} compute and its approximate value?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax The variance, 5.0
+    \item \relax Sample standard deviation, $\approx$
+    \item \relax Population standard deviation, $\approx$
+    \item \relax The range, 6.0
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Medium]}}\\[2pt]
+For \texttt{a = np.array([[1, 2], [3, 4]])}, what does \texttt{np.mean(a, axis=1)} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1.5 3.5]}
+    \item \relax \texttt{2.5}
+    \item \relax \texttt{[2. 3.]}
+    \item \relax \texttt{[4. 6.]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Medium]}}\\[2pt]
+Which function returns the *index* of the maximum value in an array rather than the value itself?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.maximum}
+    \item \relax \texttt{np.argmax}
+    \item \relax \texttt{np.max}
+    \item \relax \texttt{np.amax}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Medium]}}\\[2pt]
+What is the output of the following code? 
+ python 
+ arr = np.array([3, 1, 4, 1, 5, 9, 2]) 
+ print(np.median(arr))
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{4.0}
+    \item \relax \texttt{3.5}
+    \item \relax \texttt{1.0}
+    \item \relax \texttt{3.0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Medium]}}\\[2pt]
+Given \texttt{arr = np.array([10, 20, 30, 40])}, what does \texttt{np.cumsum(arr)} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[10 20 30 40]}
+    \item \relax \texttt{100}
+    \item \relax \texttt{[10 30 60 100]}
+    \item \relax \texttt{[100 90 70 40]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Medium]}}\\[2pt]
+What is the result of the following code? 
+ python 
+ a = np.array([[1], [2], [3]]) 
+ b = np.array([10, 20, 30]) 
+ print((a + b).shape)
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(3, 3)}
+    \item \relax Raises a ValueError
+    \item \relax \texttt{(3,)}
+    \item \relax \texttt{(3, 1)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Medium]}}\\[2pt]
+Which pair of array shapes CANNOT be broadcast together?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(5, 1)} and \texttt{(1, 6)}
+    \item \relax \texttt{(3, 4)} and \texttt{(4,)}
+    \item \relax \texttt{(4, 3)} and \texttt{(2,)}
+    \item \relax \texttt{(2, 3)} and \texttt{(1, 3)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Medium]}}\\[2pt]
+What is the output of the following code? 
+ python 
+ a = np.array([1, 2, 3]) 
+ print(a + 5)
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1 2 3 5]}
+    \item \relax \texttt{[5 5 5]}
+    \item \relax \texttt{[6 7 8]}
+    \item \relax Raises a ValueError
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Medium]}}\\[2pt]
+Given \texttt{a} of shape \texttt{(2, 3)} and \texttt{b} of shape \texttt{(3,)}, what is the shape of \texttt{a * b}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Raises a ValueError
+    \item \relax \texttt{(2,)}
+    \item \relax \texttt{(3,)}
+    \item \relax \texttt{(2, 3)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Medium]}}\\[2pt]
+What is the output of the following code? 
+ python 
+ arr = np.array([1, 2, 3]) 
+ arr2 = arr 
+ arr2[0] = 99 
+ print(arr[0])
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{0}
+    \item \relax Raises an error
+    \item \relax \texttt{1}
+    \item \relax \texttt{99}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Hard]}}\\[2pt]
+Consider the following code: 
+
+\begin{pycode}
+import numpy as np\\
+lst = [1, 2, 3]\\
+arr = np.array([1, 2, 3])\\
+print(lst * 2)\\
+print(arr * 2)
+\end{pycode}
+
+ What is the output?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[1, 2, 3, 1, 2, 3]} and \texttt{[1 2 3 1 2 3]}
+    \item \relax \texttt{[2, 4, 6]} and \texttt{[1 2 3 1 2 3]}
+    \item \relax \texttt{[1, 2, 3, 1, 2, 3]} and \texttt{[2 4 6]}
+    \item \relax \texttt{[2, 4, 6]} and \texttt{[2 4 6]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42.} \hfill {\small\color{LPUOrange}\textbf{[arrays vs lists | Hard]}}\\[2pt]
+A NumPy array stores 1 0 6 integers while an equivalent Python list stores the same values. Why does the NumPy array typically consume far less memory?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax It stores only unique values and references duplicates
+    \item \relax It offloads storage to disk and keeps only pointers in RAM
+    \item \relax It compresses the integers using run-length encoding automatically
+    \item \relax It stores raw values in a contiguous, fixed-type buffer without per-element object overhead
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43.} \hfill {\small\color{LPUOrange}\textbf{[data types | Hard]}}\\[2pt]
+What does the following code print? 
+
+\begin{pycode}
+import numpy as np\\
+arr = np.array([1, 2, 3], dtype=np.int8)\\
+arr[0] = 130\\
+print(arr[0])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{-126}
+    \item \relax \texttt{130}
+    \item \relax \texttt{127}
+    \item \relax \texttt{2}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44.} \hfill {\small\color{LPUOrange}\textbf{[data types | Hard]}}\\[2pt]
+Given \texttt{arr = np.array([1, 2, 3])}, which operation returns a new array of type \texttt{float64} without modifying \texttt{arr}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{arr.view(np.float64)}
+    \item \relax \texttt{arr.astype(np.float64)}
+    \item \relax \texttt{arr.dtype = np.float64}
+    \item \relax \texttt{arr.reshape(np.float64)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45.} \hfill {\small\color{LPUOrange}\textbf{[data types | Hard]}}\\[2pt]
+What is the resulting dtype of \texttt{np.array([True, 2, 3.5])}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{int64}
+    \item \relax \texttt{float64}
+    \item \relax \texttt{object}
+    \item \relax \texttt{bool}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Hard]}}\\[2pt]
+What does the following print? 
+
+\begin{pycode}
+import numpy as np\\
+a = np.arange(6).reshape(2, 3)\\
+b = a.T\\
+b[0, 0] = 99\\
+print(a[0, 0])
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{0}
+    \item \relax \texttt{99}
+    \item \relax \texttt{5}
+    \item \relax Raises an error
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Hard]}}\\[2pt]
+Given \texttt{a = np.array([10, 20, 30, 40])}, what does \texttt{a[::-1][1:3]} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{array([30, 20])}
+    \item \relax \texttt{array([20, 30])}
+    \item \relax \texttt{array([40, 30])}
+    \item \relax \texttt{array([30, 40])}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Hard]}}\\[2pt]
+Consider: 
+
+\begin{pycode}
+import numpy as np\\
+a = np.array([1, 2, 3, 4, 5])\\
+mask = a \% 2 == 0\\
+a[mask] = 0\\
+print(a)
+\end{pycode}
+
+ What is the output?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[0 2 0 4 0]}
+    \item \relax \texttt{[0 0 0 0 0]}
+    \item \relax \texttt{[1 2 3 4 5]}
+    \item \relax \texttt{[1 0 3 0 5]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Hard]}}\\[2pt]
+What is the result of \texttt{np.arange(12).reshape(3, 4)[:, 1::2]}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[[2 3], [6 7], [10 11]]}
+    \item \relax \texttt{[[1 3], [5 7], [9 11]]}
+    \item \relax \texttt{[[0 2], [4 6], [8 10]]}
+    \item \relax \texttt{[[1 2], [5 6], [9 10]]}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50.} \hfill {\small\color{LPUOrange}\textbf{[array operations | Hard]}}\\[2pt]
+Which statement about \texttt{np.reshape(a, (-1, 3))} is correct when \texttt{a} has 12 elements?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax It raises an error because \texttt{-1} is not a valid dimension
+    \item \relax The \texttt{-1} is treated as 0
+    \item \relax The \texttt{-1} is inferred as 4
+    \item \relax The \texttt{-1} reverses the array before reshaping
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Hard]}}\\[2pt]
+For \texttt{a = np.array([[1, 2], [3, 4]])}, what does \texttt{a.mean(axis=0)} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{array([1.5, 2.5, 3.5])}
+    \item \relax \texttt{array([1.5, 3.5])}
+    \item \relax \texttt{array([2., 3.])}
+    \item \relax \texttt{2.5}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Hard]}}\\[2pt]
+What does \texttt{np.std(np.array([2, 4, 4, 4, 5, 5, 7, 9]))} return (population standard deviation)?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{4.0}
+    \item \relax \texttt{2.14}
+    \item \relax \texttt{2.0}
+    \item \relax \texttt{5.0}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Hard]}}\\[2pt]
+Given an array containing a \texttt{np.nan}, which function ignores the NaN when computing the mean?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{np.nanmean}
+    \item \relax \texttt{np.mean}
+    \item \relax \texttt{np.mean} with \texttt{axis=None}
+    \item \relax \texttt{np.average}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Hard]}}\\[2pt]
+What is the difference between \texttt{a.var()} and \texttt{a.var(ddof=1)} for a sample array?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{ddof=1} divides by N +
+    \item \relax \texttt{ddof=1} divides by N -
+    \item \relax They are identical for all arrays
+    \item \relax \texttt{ddof=1} computes standard deviation instead of variance
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55.} \hfill {\small\color{LPUOrange}\textbf{[statistical functions | Hard]}}\\[2pt]
+For \texttt{a = np.array([[1, 5], [3, 2]])}, what does \texttt{np.argmax(a)} return?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{3}
+    \item \relax \texttt{5}
+    \item \relax \texttt{(0, 1)}
+    \item \relax \texttt{1}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Hard]}}\\[2pt]
+Given \texttt{a} of shape \texttt{(3, 1)} and \texttt{b} of shape \texttt{(1, 4)}, what is the shape of \texttt{a + b}?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax Raises a broadcasting error
+    \item \relax \texttt{(3, 1)}
+    \item \relax \texttt{(3, 4)}
+    \item \relax \texttt{(1, 4)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Hard]}}\\[2pt]
+Which pair of shapes CANNOT be broadcast together?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(5, 3, 4)} and \texttt{(3, 4)}
+    \item \relax \texttt{(3, 1)} and \texttt{(1, 4)}
+    \item \relax \texttt{(3, 4)} and \texttt{(2, 4)}
+    \item \relax \texttt{(3, 4)} and \texttt{(4,)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Hard]}}\\[2pt]
+What does the following produce? 
+
+\begin{pycode}
+import numpy as np\\
+a = np.array([[1], [2], [3]])\\
+b = np.array([10, 20, 30])\\
+print((a + b).shape)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{(1, 3)}
+    \item \relax \texttt{(9,)}
+    \item \relax \texttt{(3, 3)}
+    \item \relax \texttt{(3, 1)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Hard]}}\\[2pt]
+To subtract the per-column mean from each element of a \texttt{(100, 5)} array \texttt{X}, which expression works via broadcasting?
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{X - X.mean()}
+    \item \relax \texttt{X - X.mean(axis=1).reshape(-1, 1)} giving column-mean subtraction
+    \item \relax \texttt{X - X.mean(axis=0)}
+    \item \relax \texttt{X - X.mean(axis=1)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60.} \hfill {\small\color{LPUOrange}\textbf{[broadcasting | Hard]}}\\[2pt]
+What is the result of the following? 
+
+\begin{pycode}
+import numpy as np\\
+a = np.array([1, 2, 3])\\
+b = np.array([[0], [1], [2]])\\
+print(a * b)
+\end{pycode}
+
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item \relax \texttt{[[0 2 6]]}
+    \item \relax \texttt{[[1 2 3], [1 2 3], [1 2 3]]}
+    \item \relax Raises a broadcasting error
+    \item \relax \texttt{[[0 0 0], [1 2 3], [2 4 6]]}
+\end{enumerate}
+\vspace{2mm}
+
+
+\newpage
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{4}{1}
+Demonstrate NumPy vectorization, multi-dimensional array manipulation, and statistical broadcasting:
+\begin{enumerate}[label=(\alph*)]
+    \item Given a $1000 \times 10$ sensor dataset, normalize each feature column to zero-mean and unit variance ($z$-score standardization) using vectorized operations without any explicit Python \texttt{for} loops.
+    \item Implement min-max feature scaling $[0, 1]$ utilizing column-wise broadcasting.
+    \item Compute pairwise Euclidean distances between two matrices $X \in \mathbb{R}^{m \times d}$ and $Y \in \mathbb{R}^{n \times d}$ using NumPy broadcasting.
+\end{enumerate}
+\end{subjectiveq}
+
+\begin{solbox}
+\textbf{Vectorized NumPy Solution:}
+\begin{pycode}
+import numpy as np\\
+~\\
+def standardize\_matrix(X):\\
+\quad mean = np.mean(X, axis=0) \quad \# shape: (10,)\\
+\quad std = np.std(X, axis=0) \quad \quad \# shape: (10,)\\
+\quad std\_safe = np.where(std == 0, 1.0, std)\\
+\quad return (X - mean) / std\_safe \quad \# Broadcasts (1000, 10) - (10,)\\
+~\\
+def min\_max\_scale(X):\\
+\quad x\_min = np.min(X, axis=0)\\
+\quad x\_max = np.max(X, axis=0)\\
+\quad diff = np.where(x\_max == x\_min, 1.0, x\_max - x\_min)\\
+\quad return (X - x\_min) / diff\\
+~\\
+def pairwise\_euclidean(X, Y):\\
+\quad \# X: (m, 1, d), Y: (1, n, d) -> diff: (m, n, d)\\
+\quad diff = X[:, np.newaxis, :] - Y[np.newaxis, :, :]\\
+\quad return np.sqrt(np.sum(diff ** 2, axis=-1))
+\end{pycode}
+\textbf{Broadcasting Invariants:} Alignment occurs along trailing dimensions. Operating in C-contiguous memory blocks yields 50x--100x acceleration over pure Python iterations due to SIMD vector pipelines and cache spatial locality.
+\end{solbox}
+
+\begin{examinertip}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Algorithmic Formulation (3 Marks):} Correct problem decomposition, function signatures, and parameter documentation.
+    \item \textbf{Syntactic Rigor \& Implementation (4 Marks):} Valid Python syntax, proper error handling, defensive input validation, and avoidance of anti-patterns.
+    \item \textbf{Complexity \& Edge Analysis (3 Marks):} Accurate time and space asymptotic analysis $\mathcal{O}(n)$ and testing edge conditions (null inputs, zero division, empty collections).
+\end{itemize}
+\end{examinertip}

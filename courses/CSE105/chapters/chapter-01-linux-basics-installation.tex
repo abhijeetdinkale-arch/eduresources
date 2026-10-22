@@ -1,0 +1,136 @@
+\chapter{Linux Basics, OS Architecture \& Installation Methodologies}
+\label{chap:linux-basics}
+
+\section{Introduction and Historical Lineage}
+Operating systems form the critical interface between user applications and the physical electronic hardware. Understanding the lineage of modern open-source operating systems requires tracing the trajectory back to the Unix operating system developed in 1969 at AT\&T Bell Laboratories by Ken Thompson, Dennis Ritchie, Brian Kernighan, and Douglas McIlroy.
+
+\begin{definition}[Unix Heritage \& Design Philosophy]
+The Unix philosophy advocates modular software design centered around three foundational tenets:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Modularity:} Write programs that do one thing and do it well.
+    \item \textbf{Composability:} Write programs to work together by expecting text streams as universal inputs and outputs.
+    \item \textbf{Universality (``Everything is a file''):} Treat system resources, hardware devices, directories, network sockets, and inter-process communication channels uniformly as byte streams through standard file descriptors.
+\end{enumerate}
+\end{definition}
+
+In 1991, Linus Torvalds, an engineering student at the University of Helsinki, developed a monolithic, POSIX-compliant kernel targeting the Intel 80386 microprocessor architecture. Combining this independent kernel with the free software utilities of Richard Stallman's GNU Project created the modern operating system formally designated as \textbf{GNU/Linux}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.2cm, auto,
+    block/.style={rectangle, draw=brandnavy, fill=boxnavybg, text width=0.85\linewidth, text centered, rounded corners=3pt, minimum height=1cm, font=\sffamily\bfseries},
+    arrow/.style={thick, ->, >=stealth}]
+    \node [block] (apps) {User Applications, Compilers, Utilities \& Daemons};
+    \node [block, below of=apps] (shell) {Command Shell Interface (bash, zsh, sh) \& GNU Libraries (glibc)};
+    \node [block, below of=shell, fill=boxpurplebg, draw=brandpurple] (syscall) {System Call Interface (open, read, write, fork, execve)};
+    \node [block, below of=syscall, fill=boxtealbg, draw=brandteal] (kernel) {Linux Monolithic Kernel Subsystems\\(Process Scheduler, Virtual Memory, VFS, Network Stack, Device Drivers)};
+    \node [block, below of=kernel, fill=boxamberbg, draw=brandamber] (hw) {Physical Hardware\\(x86/ARM/RISC-V CPU, RAM, Disk Storage, NIC, Peripheral Busses)};
+    
+    \draw [arrow] (apps) -- (shell);
+    \draw [arrow] (shell) -- (syscall);
+    \draw [arrow] (syscall) -- (kernel);
+    \draw [arrow] (kernel) -- (hw);
+\end{tikzpicture}
+\caption{The Layered Architecture of the Linux Operating System.}
+\label{fig:linux-layers}
+\end{figure}
+
+\section{The Layered Architecture of Linux}
+The operational architecture of Linux is strictly partitioned into two fundamental privilege domains enforced by modern CPU hardware: \textbf{User Space} (Ring 3 on x86 architectures) and \textbf{Kernel Space} (Ring 0).
+
+\subsection{Kernel Responsibilities}
+The Linux kernel operates in privileged supervisor mode, executing the following responsibilities:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Process Scheduling (CPU Management):} Allocating CPU time slices across hundreds of competing threads utilizing the Completely Fair Scheduler (CFS).
+    \item \textbf{Virtual Memory Management:} Providing every process with an isolated 64-bit virtual address space, translating virtual addresses to physical RAM frames via hardware page tables and the Memory Management Unit (MMU).
+    \item \textbf{Virtual File System (VFS):} Abstracting distinct physical file storage systems (ext4, XFS, Btrfs, NFS) into a uniform hierarchical tree accessed via uniform POSIX system calls.
+    \item \textbf{Device Driver Abstraction:} Managing direct communication with silicon chipsets, graphic accelerators, solid-state drives, and Ethernet controllers.
+    \item \textbf{Security \& Isolation:} Enforcing user/group credentials, access control lists (ACLs), Linux Security Modules (SELinux, AppArmor), and network packet firewalls (Netfilter/iptables/nftables).
+\end{itemize}
+
+\begin{terminalbox}[System Call Tracing with strace]
+$ strace -e trace=openat,read,write,close date
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+close(3) = 0
+openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3
+read(3, "TZif2\0\0\0...", 4096) = 118
+close(3) = 0
+write(1, "Wed Oct 22 07:30:00 UTC 2026\n", 30) = 30
+\end{terminalbox}
+
+\section{Linux Distributions (Distros)}
+Because the Linux kernel is distributed under the GNU General Public License (GPLv2), various organizations, foundations, and commercial vendors package the kernel alongside specific package managers, desktop environments, system daemons, and software repositories into complete operating systems termed \textbf{Distributions}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l l l X}
+\toprule
+\textbf{Distribution} & \textbf{Upstream Family} & \textbf{Package Format} & \textbf{Primary Use Case \& Engineering Target} \\
+\midrule
+\textbf{Ubuntu / Debian} & Debian GNU/Linux & \texttt{.deb} (APT / dpkg) & Server deployments, cloud compute, general developer workstations. \\
+\textbf{RHEL / Fedora} & Red Hat Enterprise & \texttt{.rpm} (DNF / RPM) & Enterprise datacenter infrastructure, OpenShift, strict SELinux compliance. \\
+\textbf{Arch Linux} & Independent & \texttt{.pkg.tar.zst} (Pacman) & Rolling-release cutting-edge development, minimalism, deep OS inspection. \\
+\textbf{Alpine Linux} & Independent & \texttt{.apk} (APK) & Lightweight Docker micro-containers (musl libc and BusyBox based). \\
+\bottomrule
+\end{tabularx}
+\caption{Major Linux Distribution Ecosystems and Package Formats.}
+\label{tab:distros}
+\end{table}
+
+\section{System Installation Paradigms}
+Modern engineers employ multiple techniques to deploy and run Linux depending on hardware constraints, development workflows, and performance requirements.
+
+\subsection{Bare-Metal Native \& Dual-Boot Installation}
+Native installation dedicates physical disk partitions to the Linux filesystem:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Firmware \& Partitioning:} Modern PCs utilize UEFI (Unified Extensible Firmware Interface) combined with GPT (GUID Partition Table). A dedicated FAT32 EFI System Partition (ESP) mounted at \texttt{/boot/efi} stores bootloader binaries.
+    \item \textbf{Essential Partitions:}
+    \begin{enumerate}
+        \item \texttt{/boot/efi}: 512 MB, FAT32 partition for UEFI boot files.
+        \item \texttt{/} (Root): 30--100 GB, formatted with \texttt{ext4} or \texttt{XFS}, containing core binaries, system libraries, configuration files, and daemons.
+        \item \texttt{swap}: A dedicated partition or file utilized as virtual memory overflow when RAM physical pages are exhausted.
+        \item \texttt{/home} (Optional): User directories and personal configuration files partitioned separately to facilitate seamless OS upgrades.
+    \end{enumerate}
+    \item \textbf{GRUB2 Bootloader:} Grand Unified Bootloader v2 detects existing Windows OS installations via \texttt{os-prober} and generates a dual-boot interactive menu.
+\end{itemize}
+
+\begin{warningbox}[Dual-Boot Installation Safety]
+Always disable \textbf{Fast Startup} in Windows prior to modifying partition tables. Windows Fast Startup puts NTFS partitions into an active hibernation lock state; mounting a locked NTFS drive in Linux can result in silent, irrecoverable file system corruption.
+\end{warningbox}
+
+\subsection{Virtual Machine Environments (VirtualBox, VMware)}
+Virtual machines leverage hardware-assisted virtualization extensions (Intel VT-x or AMD-V) through a Type-2 hypervisor:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Virtual Hardware Emulation:} The hypervisor allocates virtual CPU cores (vCPUs), reserved RAM, and virtual storage drives represented as host container files (\texttt{.vdi} or \texttt{.vmdk}).
+    \item \textbf{Networking Modes:}
+    \begin{itemize}
+        \item \textit{NAT (Network Address Translation):} The guest VM shares the host IP address and can access external networks, but is inaccessible directly from the host.
+        \item \textit{Bridged Adapter:} The guest VM acts as an independent physical device on the local network router, obtaining its own DHCP IP address.
+        \item \textit{Host-Only:} Complete internal isolation allowing communication exclusively between the host and virtual machines.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Windows Subsystem for Linux (WSL 1 vs WSL 2)}
+Microsoft WSL provides tight Linux CLI integration directly inside Windows:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{WSL 1:} Translated Linux system calls directly into corresponding Windows NT kernel API calls. While lightweight, it lacked 100\% system call fidelity and exhibited sluggish I/O operations.
+    \item \textbf{WSL 2:} Features a complete, customized, real Linux kernel executing within a lightweight Hyper-V utility VM. It delivers full POSIX compatibility, native Docker daemon execution, and direct ext4 virtual disk performance.
+\end{itemize}
+
+\section{Desktop Environments \& Display Protocols}
+The graphical interface of Linux is modular. Unlike monolithic windowing systems, the Linux GUI separates the display server protocol from the window manager and desktop shell.
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Display Servers:} The legacy \textbf{X11 (X Window System)} communicates over a network-capable client-server protocol. Modern distributions have transitioned to \textbf{Wayland}, a secure, tear-free, direct rendering compositor architecture.
+    \item \textbf{GNOME:} Built upon the GTK toolkit, emphasizing minimal clutter, workspaces, dynamic search, and accessibility.
+    \item \textbf{KDE Plasma:} Built upon the Qt framework, providing extreme customization, high performance, and Windows-familiar layout conventions.
+\end{itemize}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Formulate the core architectural distinction between the Linux Kernel and a Linux Distribution.
+    \item Explain the mechanics of a system call and identify which CPU privilege ring executes kernel code.
+    \item Differentiate between Type-1 bare-metal and Type-2 hosted hypervisors.
+    \item Why must the EFI System Partition (ESP) be formatted with FAT32 rather than ext4 or NTFS?
+    \item Contrast the internal architecture of WSL 1 system call translation with WSL 2 lightweight hypervisor execution.
+\end{enumerate}

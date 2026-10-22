@@ -1,0 +1,71 @@
+\section{Continuous Assessment 2 (CA-2) --- Model Paper Set A}
+\LPUPaperHeader{Continuous Assessment 2 (CA-2)}{Set A}{60 Minutes}{30 Marks}{CO4 (Semiconductors \& Op-Amps)}
+
+\begin{center}
+\sffamily\textbf{\color{LPUOrange}Note: Answer any FIVE questions. Each question carries 6 marks.}
+\end{center}
+
+\questionitem{1}{
+    Explain the working of a PN junction diode under forward and reverse bias conditions. Sketch its characteristic curve, indicating knee voltage, reverse saturation current, and breakdown regions.
+}{6}{CO4}{L2 Understand}
+
+\questionitem{2}{
+    Design a Zener diode shunt voltage regulator to maintain a steady $12\text{ V}$ across a load requiring current varying between $10\text{ mA}$ and $50\text{ mA}$. The input supply voltage fluctuates between $18\text{ V}$ and $24\text{ V}$. Minimum Zener knee current is $I_{Z,min} = 5\text{ mA}$. Calculate the required series resistor $R_S$ and the maximum power dissipated by the Zener diode.
+}{6}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    Compare the Half-Wave, Center-Tapped Full-Wave, and Full-Wave Bridge rectifiers across: (a) Number of diodes, (b) DC voltage, (c) Ripple factor, (d) Rectification efficiency, and (e) Peak Inverse Voltage (PIV).
+}{6}{CO4}{L2 Understand}
+
+\questionitem{4}{
+    List the ideal characteristics of an operational amplifier. Explain the concept of virtual ground and show how it enables the analysis of an inverting amplifier.
+}{6}{CO4}{L2 Understand}
+
+\questionitem{5}{
+    Design an inverting summing amplifier using an op-amp to produce output $v_o = -(2 v_1 + 4 v_2 + 0.5 v_3)$. Choose feedback resistor $R_f = 20\text{ k}\Omega$.
+}{6}{CO4}{L3 Apply}
+
+\questionitem{6}{
+    In an op-amp integrator circuit with $R = 100\text{ k}\Omega$ and $C = 0.1\,\mu\text{F}$, a constant step input of $V_{in} = 2.0\text{ V}$ is applied at $t = 0$. Determine the output voltage after $0.5\text{ seconds}$, assuming the capacitor is initially uncharged.
+}{6}{CO4}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Detailed Marking Rubrics --- CA-2 Set A}
+
+\begin{solutionbox}[Solution to Question 2]
+\textbf{Step 1: Series Resistor Calculation ($R_S$)}\\
+To ensure regulation under worst-case minimum input and maximum load:
+\[ R_S \le \frac{V_{in,min} - V_Z}{I_{L,max} + I_{Z,min}} = \frac{18 - 12}{50\text{ mA} + 5\text{ mA}} = \frac{6\text{ V}}{55\text{ mA}} \approx 109.09\,\Omega \]
+Select standard resistor: $R_S = 100\,\Omega$.\\
+\textbf{Step 2: Maximum Zener Dissipation}\\
+Maximum Zener current occurs at maximum input voltage and minimum load current:
+\[ I_S = \frac{V_{in,max} - V_Z}{R_S} = \frac{24 - 12}{100} = \frac{12\text{ V}}{100\,\Omega} = 120\text{ mA} \]
+\[ I_{Z,max} = I_S - I_{L,min} = 120\text{ mA} - 10\text{ mA} = 110\text{ mA} \]
+Maximum Zener power dissipation:
+\[ P_{Z,max} = V_Z \times I_{Z,max} = 12\text{ V} \times 0.110\text{ A} = 1.32\text{ W} \]
+\begin{markingrubric}
+$\bullet$ Worst-case design condition formulation: \textbf{2.0 Marks}\\
+$\bullet$ Accurate calculation of series resistor $R_S$: \textbf{2.0 Marks}\\
+$\bullet$ Maximum Zener current and power dissipation rating: \textbf{2.0 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\textbf{Step 1: Integrator Governing Equation}\\
+For an ideal op-amp integrator:
+\[ v_o(t) = -\frac{1}{RC}\int_0^t v_{in}(\tau) d\tau + v_o(0) \]
+\textbf{Step 2: Component Time Constant}\\
+\[ RC = 100 \times 10^3\,\Omega \times 0.1 \times 10^{-6}\text{ F} = 0.01\text{ s} \]
+\textbf{Step 3: Integration Evaluation}\\
+With constant input $v_{in} = 2.0\text{ V}$ and $v_o(0) = 0$:
+\[ v_o(t) = -\frac{V_{in}}{RC} \cdot t = -\frac{2.0}{0.01} \cdot t = -200 t \]
+At $t = 0.5\text{ s}$:
+\[ v_o(0.5) = -200 \times 0.5 = -100\text{ V} \]
+Note: In practice, the op-amp will saturate at negative supply rail ($-V_{sat} \approx -14\text{ V}$ for $\pm 15\text{ V}$ rails).
+\begin{markingrubric}
+$\bullet$ Mathematical formula and integration derivation: \textbf{2.5 Marks}\\
+$\bullet$ Time constant $RC$ and numerical output: \textbf{2.5 Marks}\\
+$\bullet$ Observation regarding op-amp saturation limits: \textbf{1.0 Mark}
+\end{markingrubric}
+\end{solutionbox}
+\newpage

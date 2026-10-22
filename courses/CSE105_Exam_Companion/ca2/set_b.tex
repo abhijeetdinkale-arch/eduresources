@@ -1,0 +1,80 @@
+\LPUPaperHeader{Continuous Assessment 2 (CA-2)}{Set B}{60 Minutes}{30 Marks}{CO5}
+
+\begin{markingrubric}
+\textbf{General Instructions:} Answer any \textbf{5 questions} out of 6 ($5 \times 6 = 30$ Marks).
+\end{markingrubric}
+
+\questionitem{1}{An administrator needs to create a new user 'developer', set their home directory to '/home/dev', assign login shell '/bin/bash', and add them to supplementary groups 'docker' and 'sudo'. Construct the useradd command and explain each switch.}{6}{CO5}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+$ sudo useradd -m -d /home/dev -s /bin/bash -G docker,sudo developer
+\end{examcli}
+\textbf{Switch Breakdown:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-m}: Instructs the kernel to create the home directory if absent, populating it from \texttt{/etc/skel}.
+    \item \texttt{-d /home/dev}: Sets the explicit custom home directory path.
+    \item \texttt{-s /bin/bash}: Configures the user's login shell program.
+    \item \texttt{-G docker,sudo}: Assigns membership in supplementary groups \texttt{docker} and \texttt{sudo}.
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} Command syntax (3 Marks); Breakdown of all switches (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2}{Explain the purpose of visudo and analyze the following sudoers rule: '\%sysops ALL=(ALL:ALL) NOPASSWD: /usr/bin/systemctl restart nginx'.}{6}{CO5}{Analyze}
+
+\begin{examsol}
+\textbf{1. Purpose of visudo:}
+\texttt{visudo} safely edits \texttt{/etc/sudoers}. It implements file locking preventing concurrent edits and validates syntax prior to saving. If a syntax error is introduced, \texttt{visudo} alerts the user and refuses to save, preventing administrators from being locked out of root escalation.
+
+\textbf{2. Rule Analysis:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{\%sysops}: Applies to all members of the UNIX group \texttt{sysops} (indicated by \texttt{\%}).
+    \item \texttt{ALL=}: Rule applies on all host machines.
+    \item \texttt{(ALL:ALL)}: May execute the command as any user and any group.
+    \item \texttt{NOPASSWD:}: Members are not prompted to enter their user password.
+    \item \texttt{/usr/bin/systemctl restart nginx}: Restricts the passwordless escalation strictly to restarting the \texttt{nginx} web service.
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} \texttt{visudo} safety locking (3 Marks); Rule component breakdown (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{3}{Describe the complete sequence of events when an interactive foreground process is sent the SIGTSTP signal (Ctrl+Z), resumed in the background (bg), and restored to the foreground (fg).}{6}{CO5}{Understand}
+
+\begin{examsol}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Pressing \texttt{Ctrl+Z} sends signal \texttt{SIGTSTP (20)} to the foreground process group. The process scheduler moves its state to \texttt{TASK\_STOPPED (T)}.
+    \item The shell regains terminal control and allocates an integer job number (e.g. \texttt{[1]+ Stopped}).
+    \item Issuing \texttt{bg \%1} sends \texttt{SIGCONT (18)} to the stopped job and configures it to run without demanding terminal standard input.
+    \item Issuing \texttt{fg \%1} reassigns terminal control and file descriptors back to the job, returning it to the active foreground.
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} Signal mechanics (3 Marks); Shell job management sequence (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{4}{Demonstrate how password aging policies are configured and audited using the chage command. Set maximum age to 60 days, minimum age to 5 days, and warning to 10 days for user 'developer'.}{6}{CO5}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+# Configure policy:
+$ sudo chage -M 60 -m 5 -W 10 developer
+
+# Audit configured parameters:
+$ sudo chage -l developer
+Last password change                                    : Oct 22, 2026
+Password expires                                        : Dec 21, 2026
+Minimum number of days between password change          : 5
+Maximum number of days between password change          : 60
+Number of days of warning before password expires       : 10
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} \texttt{chage} switches (3 Marks); Audit command and output (3 Marks).
+\end{markingrubric}
+\end{examsol}

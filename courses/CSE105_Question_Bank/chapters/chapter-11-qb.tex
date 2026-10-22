@@ -1,0 +1,130 @@
+\chapter{Unit 11: Development Tools \& Git Version Control Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{11.1}{Which command initializes a new Git repository in the current working directory?}
+{\texttt{git start}}
+{\texttt{git init}}
+{\texttt{git create}}
+{\texttt{git new}}
+
+\mcqitem{11.2}{Where does Git store its complete object database, references, and configuration?}
+{In \texttt{/etc/git.conf}}
+{In the hidden \texttt{.git/} directory in the project root}
+{On the remote GitHub server exclusively}
+{In \texttt{/var/log/git}}
+
+\mcqitem{11.3}{Which Git command moves modified files from the Working Directory into the Staging Area (Index)?}
+{\texttt{git stage}}
+{\texttt{git commit}}
+{\texttt{git add}}
+{\texttt{git push}}
+
+\mcqitem{11.4}{What immutable object in the Git object database represents a snapshot of directory contents?}
+{Blob}
+{Tree}
+{Commit}
+{Tag}
+
+\mcqitem{11.5}{What is a branch in Git's internal architecture?}
+{A complete physical copy of all source code files}
+{A lightweight 41-byte plain-text pointer storing a 40-character commit SHA hash}
+{A database table holding diff deltas}
+{A remote server URL}
+
+\mcqitem{11.6}{Which command creates a new branch named 'feature' and immediately checks it out?}
+{\texttt{git branch -new feature}}
+{\texttt{git switch -c feature}}
+{\texttt{git merge feature}}
+{\texttt{git pull feature}}
+
+\mcqitem{11.7}{What occurs during a Fast-Forward merge in Git?}
+{A new merge commit with two parents is generated}
+{Git simply moves the active branch pointer forward to the tip of the merged branch}
+{Git deletes the merged branch permanently}
+{Git rejects the merge due to conflict}
+
+\mcqitem{11.8}{Which command downloads remote repository branches and commits without merging them into active branches?}
+{\texttt{git pull}}
+{\texttt{git fetch}}
+{\texttt{git clone}}
+{\texttt{git sync}}
+
+\mcqitem{11.9}{What do the conflict markers <<<<<<< HEAD denote during a merge conflict?}
+{The beginning of the changes on the incoming branch}
+{The beginning of conflicting changes on the currently checked-out branch}
+{The commit hash of the common ancestor}
+{A fatal corruption in the Git index}
+
+\mcqitem{11.10}{Which command line tool provides native terminal integration for managing GitHub PRs, issues, and releases?}
+{\texttt{git-hub}}
+{\texttt{gh}}
+{\texttt{hub-cli}}
+{\texttt{git-pr}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 11 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+11.1 & \textbf{(b)} & \texttt{git init} provisions the local repository structure. \\
+11.2 & \textbf{(b)} & All history, blobs, and branches reside inside the local \texttt{.git/} folder. \\
+11.3 & \textbf{(c)} & \texttt{git add} stages modified files into the index. \\
+11.4 & \textbf{(b)} & Trees represent directory hierarchies; Blobs store pure file content. \\
+11.5 & \textbf{(b)} & A Git branch is merely a movable pointer pointing to a commit object. \\
+11.6 & \textbf{(b)} & \texttt{git switch -c} (or \texttt{git checkout -b}) creates and switches branches. \\
+11.7 & \textbf{(b)} & Fast-Forward advances the branch pointer without creating a merge commit. \\
+11.8 & \textbf{(b)} & \texttt{git fetch} downloads remote references without altering the local working tree. \\
+11.9 & \textbf{(b)} & \texttt{<<<<<<< HEAD} identifies lines from the current branch. \\
+11.10 & \textbf{(b)} & \texttt{gh} is the official GitHub command-line interface. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the Three-Tree Architecture of Git and trace a file change across all three.}
+\begin{vivasol}
+Git manages files across three logical domains:
+1. **Working Directory:** The physical files on disk that the developer edits directly.
+2. **Staging Area (Index):** A binary file at \texttt{.git/index} that prepares the snapshot for the next commit. Executing \texttt{git add <file>} computes the SHA hash of the file, writes a blob object into \texttt{.git/objects/}, and registers the path in the index.
+3. **Repository (HEAD):** The permanent history of committed snapshots. Executing \texttt{git commit} creates a tree object from the index, builds a commit object pointing to that tree, and advances the branch pointer and HEAD to the new commit.
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{11.1 --- Git Branching, Conflict Simulation and Resolution}
+\textbf{Objective:} Create divergent commits on two branches modifying the same file line, induce a merge conflict, and resolve it manually.
+\begin{clibox}
+# 1. Initialize repository and make initial commit:
+$ git init demo-repo && cd demo-repo
+$ echo "TIMEOUT = 30" > config.py
+$ git add config.py && git commit -m "Initial commit"
+
+# 2. Create feature branch and modify timeout:
+$ git switch -c feature-perf
+$ echo "TIMEOUT = 10" > config.py
+$ git commit -am "Optimize timeout for performance"
+
+# 3. Switch back to main and make conflicting change:
+$ git switch main
+$ echo "TIMEOUT = 60" > config.py
+$ git commit -am "Increase timeout for resilience"
+
+# 4. Attempt merge to trigger conflict:
+$ git merge feature-perf
+Auto-merging config.py
+CONFLICT (content): Merge conflict in config.py
+Automatic merge failed; fix conflicts and then commit the result.
+
+# 5. Resolve conflict and complete merge:
+$ cat << 'EOF' > config.py
+TIMEOUT = 45  # Compromise resolved value
+EOF
+$ git add config.py
+$ git commit -m "Merge branch feature-perf: resolved timeout setting"
+[main 7f2a10b] Merge branch feature-perf: resolved timeout setting
+\end{clibox}
+\end{practicalbox}

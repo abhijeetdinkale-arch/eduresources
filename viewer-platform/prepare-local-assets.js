@@ -19,7 +19,10 @@ function formatBytes(bytes) {
 }
 
 function classifyPdf(relPath, fileName) {
-  const parts = relPath.split(path.sep);
+  let parts = relPath.split(path.sep);
+  if (parts[0] === 'courses') {
+    parts = parts.slice(1);
+  }
   const topFolder = parts[0] || '';
   const subFolder = parts.length > 2 ? parts[1] : '';
 
@@ -29,6 +32,14 @@ function classifyPdf(relPath, fileName) {
   else if (topFolder.startsWith('INT335')) courseCode = 'INT335';
   else if (topFolder.startsWith('INT108')) courseCode = 'INT108';
   else if (topFolder.startsWith('MTH165')) courseCode = 'MTH165';
+  else if (topFolder.startsWith('MTH174')) courseCode = 'MTH174';
+  else if (topFolder.startsWith('CHE110')) courseCode = 'CHE110';
+  else if (topFolder.startsWith('ECE120')) courseCode = 'ECE120';
+  else if (topFolder.startsWith('CSR101')) courseCode = 'CSR101';
+  else if (topFolder.startsWith('CSR102')) courseCode = 'CSR102';
+  else if (topFolder.startsWith('ECE131')) courseCode = 'ECE131';
+  else if (topFolder.startsWith('CSE105')) courseCode = 'CSE105';
+  else if (topFolder.startsWith('ECE181')) courseCode = 'ECE181';
   else if (topFolder.startsWith('ECE249')) courseCode = 'ECE249';
   else if (topFolder.startsWith('ECE279')) courseCode = 'ECE279';
   else if (topFolder.startsWith('MEC136')) courseCode = 'MEC136';
@@ -86,6 +97,10 @@ function scanAndBundlePdfs(dir, baseDir = dir) {
         item === 'ios' ||
         item === 'android' ||
         item === 'pdf_verifier' ||
+        item === 'scripts' ||
+        item === 'media' ||
+        item === 'dossiers' ||
+        item === 'releases' ||
         item.startsWith('.')
       ) {
         continue;
@@ -124,7 +139,9 @@ function scanAndBundlePdfs(dir, baseDir = dir) {
 }
 
 console.log('📦 Bundling all local study materials into app assets...');
-const materials = scanAndBundlePdfs(WORKSPACE_ROOT);
+const coursesDir = path.join(WORKSPACE_ROOT, 'courses');
+const scanTarget = fs.existsSync(coursesDir) ? coursesDir : WORKSPACE_ROOT;
+const materials = scanAndBundlePdfs(scanTarget, WORKSPACE_ROOT);
 materials.sort((a, b) => {
   if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
   return a.title.localeCompare(b.title);

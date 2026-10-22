@@ -1,0 +1,129 @@
+\chapter{Real-World Engineering Applications: OOP, File I/O, and Exceptions}
+\label{ch:real_world_applications}
+
+\section{Object-Oriented Programming (OOP) in Python}
+
+Object-Oriented Programming models real-world hardware systems as computational objects combining internal state (attributes) with behaviors (methods).
+
+\subsection{Classes, Instances, and the \texttt{self} Parameter}
+In Python, a class is a blueprint for instantiating objects. The special method \texttt{\_\_init\_\_} serves as the object constructor. The explicit \texttt{self} parameter refers to the current instance invoking the method.
+
+\begin{lstlisting}[caption={Modeling an Embedded Analog Sensor Class}]
+class SensorNode:
+    # Class-level attribute shared across all instances
+    BUS_STANDARD = "I2C"
+    
+    def __init__(self, node_id: str, address: int, v_ref: float = 3.3):
+        # Instance attributes
+        self.node_id = node_id
+        self.address = address
+        self.v_ref = v_ref
+        self._calibration_offset = 0.0  # Protected attribute by convention
+        
+    def read_raw_adc(self) -> int:
+        """Simulate reading 10-bit ADC integer."""
+        import random
+        return random.randint(0, 1023)
+        
+    def get_voltage(self) -> float:
+        raw = self.read_raw_adc()
+        return (raw / 1023.0) * self.v_ref + self._calibration_offset
+        
+    def set_offset(self, offset: float):
+        if abs(offset) > 0.5:
+            raise ValueError("Calibration offset exceeds safe +/- 0.5V limit.")
+        self._calibration_offset = offset
+\end{lstlisting}
+
+\subsection{Inheritance and Polymorphism}
+Subclasses inherit attributes and methods from base classes and can override behavior using the \texttt{super()} proxy object:
+
+\begin{lstlisting}[caption={Specialized Temperature Sensor Subclass}]
+class TemperatureSensor(SensorNode):
+    def __init__(self, node_id: str, address: int, sensitivity_mv_c: float = 10.0):
+        super().__init__(node_id, address, v_ref=3.3)
+        self.sensitivity = sensitivity_mv_c / 1000.0  # Convert to V/deg C
+        
+    def get_temperature_celsius(self) -> float:
+        voltage = self.get_voltage()
+        # LM35 characteristic: 10 mV / deg C
+        return voltage / self.sensitivity
+\end{lstlisting}
+
+\section{Defensive File Handling and Context Managers}
+
+\subsection{The \texttt{with} Statement (Context Manager Protocol)}
+Engineering scripts must guarantee that operating system file descriptors and hardware communication sockets are promptly closed, even if runtime errors occur. The \texttt{with} statement enforces the Context Manager protocol (\texttt{\_\_enter\_\_} and \texttt{\_\_exit\_\_}).
+
+\begin{lstlisting}[caption={Reading and Writing Telemetry Logs with CSV}]
+import csv
+
+# Writing structured engineering log data
+log_file = "sensor_telemetry.csv"
+records = [
+    {"timestamp": "12:00:01", "node": "TMP_01", "temp": 24.5},
+    {"timestamp": "12:00:02", "node": "TMP_01", "temp": 24.8},
+    {"timestamp": "12:00:03", "node": "TMP_01", "temp": 25.1}
+]
+
+with open(log_file, mode="w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["timestamp", "node", "temp"])
+    writer.writeheader()
+    writer.writerows(records)
+
+# Safe reading
+with open(log_file, mode="r", encoding="utf-8") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(f"Time: {row['timestamp']} | Temp: {float(row['temp']):.1f} C")
+\end{lstlisting}
+
+\section{Robust Exception Handling}
+
+Exceptions provide a structured mechanism for handling runtime errors without crashing mission-critical processes.
+
+\begin{definition}[Exception Architecture]
+The \texttt{try-except-else-finally} suite executes instructions with deterministic cleanup semantics:
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{\texttt{try}:} Encloses risky code that may raise an exception.
+    \item \textbf{\texttt{except ExceptionType as err}:} Catches and handles specific exception instances.
+    \item \textbf{\texttt{else}:} Executes if and only if no exception was raised in the \texttt{try} block.
+    \item \textbf{\texttt{finally}:} Executes unconditionally under all circumstances (even after \texttt{return} or uncaught exceptions), ideal for releasing hardware locks.
+\end{itemize}
+\end{definition}
+
+\begin{lstlisting}[caption={Comprehensive Exception Handling Pattern}]
+def parse_telemetry_packet(raw_string: str) -> dict:
+    try:
+        parts = raw_string.strip().split(',')
+        if len(parts) < 3:
+            raise IndexError("Packet contains fewer fields than expected format.")
+        
+        node_id = parts[0]
+        voltage = float(parts[1])
+        status_code = int(parts[2])
+        
+    except ValueError as ve:
+        print(f"Data corruption error: numeric conversion failed: {ve}")
+        return {}
+    except IndexError as ie:
+        print(f"Malformed framing error: {ie}")
+        return {}
+    else:
+        print("Packet parsed successfully with zero errors.")
+        return {"node": node_id, "voltage": voltage, "status": status_code}
+    finally:
+        # Guarantee watchdog timer reset
+        pass
+\end{lstlisting}
+
+\section{Real-World Case Study: Automated Diagnostic Log Processing}
+Modern electronics systems deploy autonomous Python scripts to parse daily hardware crash dumps, calculate mean-time-between-failures (MTBF), generate analytical figures with Matplotlib, and dispatch diagnostic summaries to engineering teams.
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Explain how Python's \texttt{with open(...) as f:} guarantees file closure even if an unhandled exception occurs inside the block.
+    \item Contrast class attributes versus instance attributes. In what scenarios is a class attribute appropriate?
+    \item What is the purpose of the \texttt{else} and \texttt{finally} clauses in a \texttt{try-except} construct?
+    \item Design an object-oriented Python hierarchy representing electronic lab instruments (\texttt{PowerSupply}, \texttt{Oscilloscope}, \texttt{Multimeter}) derived from an abstract base class \texttt{LabInstrument}.
+\end{enumerate}

@@ -1,0 +1,45 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+
+\LPUPaperHeader{Continuous Assessment 1 (CA-1)}{B}{60 Minutes}{25 Marks}{CO1 (Components \& Instruments), CO2 (Divider Laws)}
+
+\noindent\textbf{Instructions to Candidates:}
+\begin{enumerate*}[label=\textbf{\arabic*.}]
+    \item Answer any \textbf{FIVE} questions out of the six questions presented.
+    \item Each question carries \textbf{5 Marks}. Clearly state governing circuit theorems.
+\end{enumerate*}
+
+\questionitem{1}{A precision metal-film resistor has five color bands: Red, Violet, Black, Red, Brown. Determine: (a) Nominal resistance, (b) Tolerance percentage, (c) Upper and lower tolerance limits.}{5}{CO1}{L2}
+\questionitem{2}{Differentiate between an analog multimeter and a digital multimeter (DMM) in terms of input impedance, loading effect on high-resistance circuits, and measurement accuracy.}{5}{CO1}{L2}
+\questionitem{3}{A $10\,\mathrm{k}\Omega$ linear potentiometer is connected across a $+12.0\,\mathrm{V}$ regulated supply. (a) Determine the output voltage when the wiper is positioned at $35\%$ of its travel from ground. (b) If a load of $10\,\mathrm{k}\Omega$ is connected to the wiper at this position, calculate the loaded voltage.}{5}{CO2}{L3}
+\questionitem{4}{A total current $I_T = 50\,\mathrm{mA}$ splits across three parallel branches with resistances $R_1 = 20\,\Omega$, $R_2 = 30\,\Omega$, and $R_3 = 60\,\Omega$. Using the conductance form of the Current Divider Law, compute the current in each branch.}{5}{CO2}{L3}
+\questionitem{5}{A disc ceramic capacitor is marked with the code \textbf{473J}. (a) Decode its capacitance in picofarads, nanofarads, and microfarads. (b) State its tolerance percentage.}{5}{CO1}{L2}
+\questionitem{6}{An ammeter with internal shunt resistance $R_A = 2.5\,\Omega$ is inserted to measure current in a series circuit having $V_S = 5.0\,\mathrm{V}$ and $R = 50\,\Omega$. Calculate: (a) The true circuit current without the meter, (b) The measured circuit current, (c) The percentage insertion error.}{5}{CO2}{L4}
+
+\subsection*{Model Solutions \& Marking Rubrics (Set B)}
+
+\begin{solutionbox}[Solution to Q.1]
+(a) Red = 2, Violet = 7, Black = 0, Red = $10^2 = 100$, Brown = $\pm 1\%$.\\
+Nominal resistance: $R = 270 \times 10^2\,\Omega = 27{,}000\,\Omega = 27.0\,\mathrm{k}\Omega$.\\
+(b) Tolerance = $\pm 1\%$.\\
+(c) Allowed range: $\pm 1\% \times 27\,\mathrm{k}\Omega = \pm 0.27\,\mathrm{k}\Omega$.\\
+$R_{\max} = 27.27\,\mathrm{k}\Omega$, $R_{\min} = 26.73\,\mathrm{k}\Omega$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.1):} 5-band decoding: 2 Marks $\bullet$ Nominal value $27\,\mathrm{k}\Omega$: 1 Mark $\bullet$ Tolerance bounds: 2 Marks. Total = 5 Marks.
+\end{markingrubric}
+
+\begin{solutionbox}[Solution to Q.4]
+Conductances:
+\[ G_1 = \frac{1}{20} = 0.05\,\mathrm{S}, \quad G_2 = \frac{1}{30} = 0.0333\,\mathrm{S}, \quad G_3 = \frac{1}{60} = 0.0167\,\mathrm{S} \]
+Total conductance:
+\[ G_{\mathrm{total}} = 0.05 + 0.0333 + 0.0167 = 0.10\,\mathrm{S} \]
+Branch currents:
+\[ I_1 = I_T \frac{G_1}{G_{\mathrm{total}}} = 50 \times \frac{0.05}{0.10} = 25.0\,\mathrm{mA} \]
+\[ I_2 = I_T \frac{G_2}{G_{\mathrm{total}}} = 50 \times \frac{0.0333}{0.10} = 16.67\,\mathrm{mA} \]
+\[ I_3 = I_T \frac{G_3}{G_{\mathrm{total}}} = 50 \times \frac{0.0167}{0.10} = 8.33\,\mathrm{mA} \]
+Check: $25.0 + 16.67 + 8.33 = 50.0\,\mathrm{mA}$ (KCL verified).
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.4):} Conductance calculations: 2 Marks $\bullet$ Branch current evaluations: 2.5 Marks $\bullet$ Verification of KCL sum: 0.5 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

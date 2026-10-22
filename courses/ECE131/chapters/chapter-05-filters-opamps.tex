@@ -1,0 +1,111 @@
+\chapter{Fundamentals of Filters and Operational Amplifier}
+\label{chap:filters-opamps}
+
+\section{Frequency-Selective Filters}
+Filters are frequency-selective circuits that allow signals within a specified transmission passband to pass with minimal attenuation, while suppressing frequencies in the stopband.
+
+\subsection{First-Order Passive RC Filters}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Low-Pass RC Filter}: Formed by series resistor $R$ and shunt capacitor $C$:
+    \begin{equation}
+    H(j\omega) = \frac{\mathbf{V}_o}{\mathbf{V}_i} = \frac{1/(j\omega C)}{R + 1/(j\omega C)} = \frac{1}{1 + j\omega RC} = \frac{1}{1 + j(f / f_c)}
+    \end{equation}
+    where the cutoff ($-3\text{ dB}$) frequency is $f_c = \frac{1}{2\pi RC}$. At $f = f_c$, magnitude $|H| = 1/\sqrt{2} = 0.707$ ($-3\text{ dB}$) and phase $\theta = -45^\circ$. For frequencies $f \gg f_c$, attenuation rolls off at $-20\text{ dB/decade}$ ($-6\text{ dB/octave}$).
+    \item \textbf{High-Pass RC Filter}: Formed by series capacitor $C$ and shunt resistor $R$:
+    \begin{equation}
+    H(j\omega) = \frac{j\omega RC}{1 + j\omega RC} = \frac{j(f / f_c)}{1 + j(f / f_c)} \implies f_c = \frac{1}{2\pi RC}
+    \end{equation}
+    At $f = f_c$, magnitude $|H| = 0.707$ and phase $\theta = +45^\circ$.
+    \item \textbf{Band-Pass and Band-Stop Filters}: Cascaded combinations of high-pass and low-pass stages define passbands or notch bands with bandwidth $BW = f_{c2} - f_{c1}$ and center frequency $f_0 = \sqrt{f_{c1} f_{c2}}$.
+\end{itemize}
+
+\section{The Operational Amplifier (Op-Amp)}
+
+\subsection{Ideal Characteristics and Virtual Ground}
+The operational amplifier is a direct-coupled, high-gain differential voltage amplifier.
+\begin{definition}[Ideal Op-Amp Parameters]
+\begin{itemize}
+    \item Differential Open-Loop Gain: $A_{OL} \to \infty$.
+    \item Input Resistance: $R_{in} \to \infty \implies$ Input bias currents $I^+ = I^- = 0$.
+    \item Output Resistance: $R_{out} = 0$.
+    \item Bandwidth: $BW \to \infty$.
+    \item Slew Rate: $SR \to \infty$.
+    \item Common-Mode Rejection Ratio: $\text{CMRR} \to \infty$.
+    \item Input Offset Voltage: $V_{os} = 0$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Virtual Ground / Virtual Short Principle]
+In an op-amp circuit operating with stable negative feedback and unsaturated output:
+\begin{equation}
+v^+ - v^- = \frac{v_o}{A_{OL}} \xrightarrow{A_{OL} \to \infty} 0 \implies v^- \approx v^+
+\end{equation}
+If the non-inverting terminal ($v^+$) is grounded ($0\text{ V}$), the inverting terminal ($v^-$) is held at \textbf{virtual ground} potential without any physical copper connection to ground.
+\end{theorem}
+
+\subsection{Fundamental Linear Op-Amp Configurations}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Inverting Amplifier}:
+    Applying KCL at the virtual ground node ($v^- = 0$):
+    \begin{equation}
+    \frac{v_{in} - 0}{R_1} + \frac{v_o - 0}{R_f} = 0 \implies v_o = -\frac{R_f}{R_1} v_{in}, \qquad A_v = -\frac{R_f}{R_1}
+    \end{equation}
+    The input impedance seen by the source is strictly $R_{in} = R_1$.
+    \item \textbf{Non-Inverting Amplifier}:
+    Applying voltage division at the inverting node ($v^- = v^+ = v_{in}$):
+    \begin{equation}
+    v_{in} = v_o \frac{R_1}{R_1 + R_f} \implies v_o = \left( 1 + \frac{R_f}{R_1} \right) v_{in}, \qquad A_v = 1 + \frac{R_f}{R_1}
+    \end{equation}
+    The input impedance is exceptionally high ($R_{in} \to \infty$).
+    \item \textbf{Voltage Follower / Unity-Gain Buffer}:
+    Setting $R_f = 0$ and $R_1 = \infty$ yields $v_o = v_{in}$ ($A_v = 1$). Acts as an impedance matching buffer between high-impedance sensors and low-impedance loads.
+    \item \textbf{Inverting Summing Amplifier}:
+    \begin{equation}
+    v_o = -\left( \frac{R_f}{R_1} v_1 + \frac{R_f}{R_2} v_2 + \cdots + \frac{R_f}{R_n} v_n \right)
+    \end{equation}
+    \item \textbf{Difference Amplifier (Subtractor)}:
+    \begin{equation}
+    v_o = \frac{R_2}{R_1}(v_2 - v_1) \quad \text{when } \frac{R_4}{R_3} = \frac{R_2}{R_1}
+    \end{equation}
+\end{itemize}
+
+\subsection{Dynamic Op-Amp RC Circuits}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Ideal Integrator}: Capacitor in the feedback branch ($i_C = C \frac{dv_o}{dt}$):
+    \begin{equation}
+    \frac{v_{in}}{R} + C \frac{dv_o}{dt} = 0 \implies v_o(t) = -\frac{1}{RC}\int_0^t v_{in}(\tau) d\tau + v_o(0)
+    \end{equation}
+    In frequency domain: $H(s) = -\frac{1}{s RC}$. Practical integrators place a large shunt resistor $R_f$ across $C$ to stabilize DC gain.
+    \item \textbf{Ideal Differentiator}: Capacitor in the input branch ($i_C = C \frac{dv_{in}}{dt}$):
+    \begin{equation}
+    C \frac{dv_{in}}{dt} + \frac{v_o}{R} = 0 \implies v_o(t) = -RC \frac{dv_{in}(t)}{dt}
+    \end{equation}
+    In frequency domain: $H(s) = -s RC$. Practical differentiators place a small series resistor $R_s$ with $C$ to suppress high-frequency noise amplification.
+\end{itemize}
+
+\section{Active Filters and Automotive Applications}
+
+\subsection{Active Low-Pass and High-Pass Filters}
+Active filters combine op-amps with resistors and capacitors, eliminating the need for bulky inductors and offering input-output buffer isolation with controllable passband gain.
+For an active first-order low-pass filter:
+\begin{equation}
+f_c = \frac{1}{2\pi R C}, \qquad A_{v0} = 1 + \frac{R_f}{R_1}
+\end{equation}
+
+\subsection{Op-Amp Comparator and ABS Brake Modulation}
+In open-loop configuration (no feedback), the op-amp acts as an analog voltage comparator:
+\begin{equation}
+v_o = \begin{cases} +V_{sat} & \text{if } v^+ > v^- \\ -V_{sat} & \text{if } v^+ < v^- \end{cases}
+\end{equation}
+\begin{important}[Anti-lock Braking System (ABS) Application]
+In an automobile equipped with ABS, magnetic reluctance wheel sensors produce an alternating voltage proportional to the angular rotation of each wheel. An op-amp comparator compares this rectified sensor voltage with an electronic reference threshold $V_{ref}$ derived from chassis deceleration. When severe braking causes an impending wheel lockup ($v_{wheel} < V_{ref}$), the comparator immediately flips its output to HIGH ($+V_{sat}$), signaling the ECU hydraulic modulator to release brake fluid pressure in high-frequency pulses ($15--20\text{ Hz}$), preventing skidding and preserving steering control.
+\end{important}
+
+\section{Chapter Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item Passive RC cutoff: $f_c = 1/(2\pi RC)$.
+    \item Ideal op-amp: $A_{OL}=\infty$, $R_{in}=\infty$, $R_{out}=0$; Virtual ground: $v^- \approx v^+$.
+    \item Inverting amplifier: $A_v = -R_f/R_1$; Non-inverting amplifier: $A_v = 1 + R_f/R_1$.
+    \item Integrator: $v_o = -\frac{1}{RC}\int v_{in} dt$; Differentiator: $v_o = -RC \frac{dv_{in}}{dt}$.
+    \item Comparator serves as high-speed threshold detector in safety ABS architectures.
+\end{itemize}

@@ -1,0 +1,61 @@
+\chapter{Unit 10: Bash Shell Scripting Master Syntax Card}
+
+\begin{cheatbox}{Positional Parameters \& Special Built-in Variables}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Variable} & \textbf{Meaning} & \textbf{Variable} & \textbf{Meaning} \\
+\midrule
+\texttt{\$0} & Name of the script executable & \texttt{\$?} & Exit status code of last command ($0 = \text{OK}$) \\
+\texttt{\$1 ... \$9} & First through ninth argument & \texttt{\$\$} & Process ID (PID) of current running script \\
+\texttt{\$\{10\}} & Tenth positional argument & \texttt{\$!} & PID of last spawned background job \\
+\texttt{\$\#} & Count of arguments passed & \texttt{\$@} & Quoted argument list (\texttt{"\$1" "\$2" ...}) \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{Relational \& File Test Operators}
+\begin{tabularx}{\linewidth}{l l l l}
+\toprule
+\textbf{Integer Test} & \textbf{String Test} & \textbf{File Test} & \textbf{Condition Verified} \\
+\midrule
+\texttt{-eq} (Equal) & \texttt{=} or \texttt{==} (Equal) & \texttt{-e path} & File or directory exists \\
+\texttt{-ne} (Not Equal) & \texttt{!=} (Not Equal) & \texttt{-f path} & Exists and is a \textbf{regular file} \\
+\texttt{-lt} (Less Than) & \texttt{-z str} (Length is 0) & \texttt{-d path} & Exists and is a \textbf{directory} \\
+\texttt{-le} (Less or Equal) & \texttt{-n str} (Length $>0$) & \texttt{-r path} & File is readable \\
+\texttt{-gt} (Greater Than) & \texttt{<}, \texttt{>} (ASCII order) & \texttt{-w path} & File is writable \\
+\texttt{-ge} (Greater or Equal) & & \texttt{-x path} & File is executable \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{codebox}[Core Control Structures Skeleton Templates]
+# 1. if-then-elif-else construct:
+if [ "$ENV" = "production" ] && [ -f "$CONF" ]; then
+    echo "Starting in Production mode..."
+elif [ "$ENV" = "staging" ]; then
+    echo "Starting in Staging mode..."
+else
+    echo "Defaulting to Development..."
+fi
+
+# 2. case-esac construct:
+case "$1" in
+    start) systemctl start app ;;
+    stop)  systemctl stop app ;;
+    *)     echo "Usage: $0 {start|stop}" ; exit 1 ;;
+esac
+
+# 3. for loop over collections:
+for server in web01 web02 db01; do
+    ping -c 1 "$server" >/dev/null && echo "$server is online"
+done
+
+# 4. while loop reading files line-by-line safely:
+while IFS= read -r line || [ -n "$line" ]; do
+    echo "Record: $line"
+done < data.csv
+\end{codebox}
+
+\begin{tipbox}
+Always include \texttt{set -euo pipefail} at the top of production Bash scripts. It causes scripts to exit immediately on errors (\texttt{-e}), fail on uninitialized variables (\texttt{-u}), and fail on pipeline errors (\texttt{-o pipefail}).
+\end{tipbox}

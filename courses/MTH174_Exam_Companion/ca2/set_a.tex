@@ -1,0 +1,69 @@
+\section{Continuous Assessment 2 (CA-2) --- Set A}
+\label{sec:ca2_set_a}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{A}{60 Minutes}{30 Marks}{CO4 (Fourier Series), CO5 (Multivariate Calculus)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Find the Fourier series of $f(x) = x$ in the interval $(-\pi, \pi)$ with period $2\pi$.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{2}{
+    Obtain the half-range sine series for $f(x) = \pi - x$ in $(0, \pi)$.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    If $u = \sin^{-1}\left(\frac{x + y}{\sqrt{x} + \sqrt{y}}\right)$, prove using Euler's theorem that:
+    \[
+    x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \frac{1}{2} \tan u
+    \]
+}{5}{CO5}{L4 Analyze}
+
+\questionitem{4}{
+    If $x = r \cos \theta$, $y = r \sin \theta$, compute the Jacobian $\frac{\partial(x,y)}{\partial(r,\theta)}$ and verify the reciprocal property $\frac{\partial(x,y)}{\partial(r,\theta)} \cdot \frac{\partial(r,\theta)}{\partial(x,y)} = 1$.
+}{5}{CO5}{L3 Apply}
+
+\questionitem{5}{
+    Examine the function $f(x,y) = x^3 + y^3 - 3axy$ for local extrema.
+}{5}{CO5}{L4 Analyze}
+
+\questionitem{6}{
+    Find the maximum and minimum distances from the origin to the curve $5x^2 + 6xy + 5y^2 = 8$ using Lagrange multipliers.
+}{5}{CO5}{L4 Analyze}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-2 Set A}
+
+\begin{solutionbox}[Solution to Question 1]
+Since $f(x) = x$ is an odd function on $(-\pi, \pi)$, $a_0 = 0$ and $a_n = 0$.
+\[
+b_n = \frac{2}{\pi}\int_0^\pi x \sin nx \, dx = \frac{2}{\pi}\left[ -\frac{x \cos nx}{n} + \frac{\sin nx}{n^2} \right]_0^\pi = -\frac{2(-1)^n}{n} = \frac{2(-1)^{n+1}}{n}
+\]
+Thus: $\mathbf{x = 2\left( \sin x - \frac{\sin 2x}{2} + \frac{\sin 3x}{3} - \dots \right)}$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+Let $v = \sin u = \frac{x + y}{\sqrt{x} + \sqrt{y}}$. The degree of $v$ is $n = 1 - \frac{1}{2} = \frac{1}{2}$.
+By Euler's theorem on $v$:
+\[
+x \frac{\partial v}{\partial x} + y \frac{\partial v}{\partial y} = \frac{1}{2} v
+\]
+Since $v = \sin u$, $\frac{\partial v}{\partial x} = \cos u \frac{\partial u}{\partial x}$ and $\frac{\partial v}{\partial y} = \cos u \frac{\partial u}{\partial y}$:
+\[
+\cos u \left( x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} \right) = \frac{1}{2} \sin u \implies x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = \frac{1}{2}\tan u
+\]
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+Critical points: $f_x = 3x^2 - 3ay = 0 \implies y = \frac{x^2}{a}$.
+$f_y = 3y^2 - 3ax = 0 \implies 3\left(\frac{x^4}{a^2}\right) - 3ax = 0 \implies x(x^3 - a^3) = 0$.
+Points: $(0,0)$ and $(a,a)$.
+Second derivatives: $r = f_{xx} = 6x$, $s = f_{xy} = -3a$, $t = f_{yy} = 6y$.
+At $(0,0)$: $\Delta = rt - s^2 = 0 - 9a^2 = -9a^2 < 0 \implies$ \textbf{Saddle Point}.
+At $(a,a)$: $\Delta = (6a)(6a) - 9a^2 = 27a^2 > 0$, and $r = 6a > 0$ (for $a > 0$) $\implies$ \textbf{Local Minimum} at $(a,a)$ with value $f(a,a) = -a^3$.
+\end{solutionbox}
+
+\newpage

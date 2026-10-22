@@ -1,0 +1,111 @@
+\chapter{Data Structures: Strings, Lists, Tuples, Dictionaries, and Sets}
+\label{ch:data_structures}
+
+\section{Sequences: Strings and Lists}
+
+Python provides rich sequence types that support common operations: indexing, slicing, concatenation, repetition, and membership testing.
+
+\subsection{Strings: Immutable Text Sequences}
+Strings are immutable sequences of Unicode codepoints. Indexing uses zero-based non-negative offsets from left, or negative offsets from the right:
+\begin{equation}
+\text{slice syntax: } \texttt{s[start:stop:step]}
+\end{equation}
+When \texttt{step} is negative, the slice traverses in reverse (e.g., \texttt{s[::-1]} reverses string \texttt{s}).
+
+\begin{lstlisting}[caption={Key String Transformation Methods}]
+payload = "  SENSOR_ID:A49_VAL:104.5_STATUS:OK  "
+cleaned = payload.strip()
+tokens = cleaned.split('_')
+formatted_key = ":".join(tokens[:2])
+print("Extracted Tokens:", tokens)
+print("Reconstructed:", formatted_key)
+\end{lstlisting}
+
+\subsection{Lists: Dynamic Heterogeneous Arrays}
+Lists are mutable sequences implemented in CPython as dynamic arrays of pointers (\texttt{PyObject**}). As elements are appended, the array automatically over-allocates geometric headroom to provide amortized $\mathcal{O}(1)$ append operations.
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{l l X l}
+\toprule
+\textbf{Operation} & \textbf{Method / Syntax} & \textbf{Description} & \textbf{Time Complexity} \\
+\midrule
+Append & \texttt{L.append(x)} & Adds element to end & $\mathcal{O}(1)$ amortized \\
+Insert & \texttt{L.insert(i, x)} & Shifts elements right of index $i$ & $\mathcal{O}(n)$ \\
+Pop End & \texttt{L.pop()} & Removes and returns terminal element & $\mathcal{O}(1)$ \\
+Pop Index & \texttt{L.pop(i)} & Shifts elements left of index $i$ & $\mathcal{O}(n)$ \\
+Sort & \texttt{L.sort()} & In-place adaptive Timsort & $\mathcal{O}(n \log n)$ \\
+Reverse & \texttt{L.reverse()} & In-place element reversal & $\mathcal{O}(n)$ \\
+\bottomrule
+\end{tabularx}
+\caption{CPython List Core Operations and Asymptotic Complexity.}
+\label{tab:list_complexity}
+\end{table}
+
+\subsection{List Comprehensions}
+List comprehensions provide a concise syntactic construct to generate lists:
+\begin{lstlisting}[caption={Comprehension Patterns}]
+# Basic transformation
+squares = [x**2 for x in range(10) if x % 2 == 0]
+
+# Flattening 2D matrix
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flat = [val for row in matrix for val in row]
+\end{lstlisting}
+
+\section{Tuples: Immutable Heterogeneous Records}
+
+Tuples are immutable sequence collections created using parentheses \texttt{()} or comma-separated literals. Once instantiated, tuple size and element bindings cannot be modified.
+
+\begin{theorem}[Tuple Hashability and Immutability]
+A tuple is hashable (and therefore eligible as a dictionary key or set member) if and only if all of its constituent elements are themselves hashable (immutable).
+\end{theorem}
+
+\begin{lstlisting}[caption={Tuple Packing, Unpacking, and Swapping}]
+# Coordinate packing and unpacking
+point3d = (12.5, -4.2, 85.0)
+x, y, z = point3d
+
+# Idiomatic variable swap in Python
+a, b = 10, 20
+a, b = b, a  # Implemented via tuple packing and unpacking
+\end{lstlisting}
+
+\section{Dictionaries: Key-Value Hash Maps}
+
+Dictionaries (\texttt{dict}) implement an associative array mapping unique keys to arbitrary value objects.
+
+\subsection{CPython Hash Table Architecture}
+CPython implements compact dictionaries using an internal sparse index array pointing to a dense array of entries containing \texttt{(hash, key, value)}.
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item \textbf{Average Time Complexity:} $\mathcal{O}(1)$ for lookup, insertion, and deletion.
+    \item \textbf{Key Requirements:} Keys must implement \texttt{\_\_hash\_\_()} and \texttt{\_\_eq\_\_()} protocols and remain invariant over time.
+\end{itemize}
+
+\begin{lstlisting}[caption={Dictionary Manipulation and Frequency Counter}]
+telemetry = {"temp": 28.4, "pressure": 101.3, "humidity": 65.2}
+
+# Safe access with default fallback
+lux = telemetry.get("ambient_lux", 0.0)
+
+# Dictionary comprehension
+scaled_telemetry = {k: v * 1.1 for k, v in telemetry.items()}
+\end{lstlisting}
+
+\section{Sets: Mathematical Collection of Unique Elements}
+
+Sets (\texttt{set}) are mutable, unordered collections of unique hashable objects, optimized for membership tests ($\mathcal{O}(1)$ average) and mathematical set algebra:
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item Union: \texttt{A | B} or \texttt{A.union(B)}
+    \item Intersection: \texttt{A \& B} or \texttt{A.intersection(B)}
+    \item Difference: \texttt{A - B} or \texttt{A.difference(B)}
+    \item Symmetric Difference: \texttt{A \^{} B} or \texttt{A.symmetric\_difference(B)}
+\end{itemize}
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Differentiate between shallow copy (\texttt{copy.copy}) and deep copy (\texttt{copy.deepcopy}) with a nested list example.
+    \item Why cannot a list be used as a dictionary key, whereas a tuple can?
+    \item Given \texttt{s = "engineering"}, write a single-line dictionary comprehension that counts the frequency of each character.
+    \item Explain the time complexity differences between checking membership (\texttt{x in collection}) for a \texttt{list} of size $N$ versus a \texttt{set} of size $N$.
+\end{enumerate}

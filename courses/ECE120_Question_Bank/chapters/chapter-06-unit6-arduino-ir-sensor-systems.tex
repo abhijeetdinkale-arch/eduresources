@@ -1,0 +1,632 @@
+\chapter{Unit 6: Microcontroller Workshop: Arduino Uno \& Embedded Sensor Interfacing}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent The following 60 multiple-choice questions reflect the official workshop evaluation bank, categorized by fundamental learning outcome and laboratory testing difficulty.\vspace{3mm}
+
+\noindent\textbf{Q1. What is the Arduino Uno?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A type of battery charger}
+    \item {A digital storage device}
+    \item {A wireless router}
+    \item {A microcontroller development board}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q2. Which microcontroller is used on the Arduino Uno board?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {ESP8266}
+    \item {ATmega328P}
+    \item {ATmega2560}
+    \item {PIC16F877A}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q3. What does IR stand for in an IR sensor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Input Relay}
+    \item {Infrared Radiation}
+    \item {Internal Resistance}
+    \item {Integrated Register}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q4. What is the main purpose of an IR sensor in a detection system?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To detect nearby objects}
+    \item {To regulate voltage}
+    \item {To produce sound}
+    \item {To store the program}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q5. Which Arduino Uno pin is commonly used to provide ground?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {VIN pin}
+    \item {GND pin}
+    \item {AREF pin}
+    \item {RESET pin}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q6. Which Arduino function runs once when the board starts?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {start()}
+    \item {loop()}
+    \item {begin()}
+    \item {setup()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q7. Which Arduino function repeats continuously after setup() ?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {cycle()}
+    \item {runOnce()}
+    \item {repeat()}
+    \item {loop()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q8. Which function configures an Arduino pin as an input or output?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {digitalRead()}
+    \item {analogRead()}
+    \item {digitalWrite()}
+    \item {pinMode()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q9. Which function reads a digital signal from an IR sensor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {digitalWrite()}
+    \item {analogWrite()}
+    \item {digitalRead()}
+    \item {pinMode()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q10. Which function sends a HIGH or LOW signal to a digital output pin?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {analogRead()}
+    \item {pinMode()}
+    \item {digitalRead()}
+    \item {digitalWrite()}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q11. What type of signal does a digital IR sensor module commonly provide?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Audio or video}
+    \item {HIGH or LOW}
+    \item {Positive or negative voltage only}
+    \item {Text or image data}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q12. Which component on many IR sensor modules emits infrared light?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Phototransistor}
+    \item {Voltage regulator}
+    \item {Buzzer}
+    \item {IR LED}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q13. Which component receives reflected infrared light?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Crystal oscillator}
+    \item {Push button}
+    \item {Photodiode}
+    \item {Relay coil}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q14. What is the purpose of the potentiometer on many IR sensor modules?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To adjust detection sensitivity}
+    \item {To store sensor readings}
+    \item {To increase program memory}
+    \item {To connect the USB cable}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q15. Which Arduino Uno pin group is intended for digital input and output?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Digital pins}
+    \item {Analog reference pins}
+    \item {Power pins}
+    \item {USB shield pins}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q16. What is the usual logic value of a HIGH digital signal?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Logic 1}
+    \item {A stored program}
+    \item {Logic 0}
+    \item {No connection}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q17. Which software is commonly used to write and upload programs to an Arduino Uno?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Spreadsheet editor}
+    \item {Web browser}
+    \item {Image viewer}
+    \item {Arduino IDE}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q18. What is an Arduino program commonly called?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A waveform}
+    \item {A register}
+    \item {A sketch}
+    \item {A terminal}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q19. Why is a common ground needed between the Arduino and IR sensor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To replace the power supply}
+    \item {To provide a shared reference}
+    \item {To erase the Arduino program}
+    \item {To increase infrared brightness}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q20. What can an Arduino do when an object is detected by an IR sensor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Increase the object size}
+    \item {Change its processor}
+    \item {Recharge the sensor battery}
+    \item {Turn on an LED}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q21. An IR sensor module gives a LOW output when an object is detected. Which Arduino Uno code correctly turns on an LED connected to pin 13 when the object is present?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {if (analogRead(sensorPin) == LOW) digitalWrite(13, HIGH);}
+    \item {if (digitalRead(sensorPin) == LOW) digitalWrite(13, HIGH);}
+    \item {if (digitalWrite(sensorPin, LOW)) digitalRead(13, HIGH);}
+    \item {if (digitalRead(sensorPin) == HIGH) digitalWrite(13, HIGH);}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q22. Why is a common ground connection required between an Arduino Uno and an IR sensor module?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It converts the sensor output into analog voltage}
+    \item {It prevents the Arduino from requiring a power supply}
+    \item {It provides a shared voltage reference for signals}
+    \item {It increases the sensor's infrared wavelength}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q23. An IR obstacle sensor is connected to digital pin 7, and its output is active HIGH. Which initialization is appropriate?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {pinMode(7, INPUT);}
+    \item {digitalWrite(7, INPUT);}
+    \item {pinMode(7, OUTPUT);}
+    \item {analogWrite(7, INPUT);}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q24. The detection range of an IR module changes when its onboard potentiometer is adjusted. What does this potentiometer usually control?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The comparator's detection threshold}
+    \item {The Arduino clock frequency}
+    \item {The infrared LED color}
+    \item {The serial communication speed}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q25. An LED is connected directly between an Arduino output pin and ground. Why should a series resistor be included?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To reverse the LED's polarity}
+    \item {To convert digital output into serial data}
+    \item {To limit current through the LED}
+    \item {To increase the Arduino supply voltage}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q26. An IR sensor output repeatedly changes between HIGH and LOW when an object is stationary near the detection boundary. Which software method is most suitable for reducing false switching?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Require a stable state for several readings}
+    \item {Set every unused pin to analog input}
+    \item {Increase the serial monitor baud rate}
+    \item {Change the LED resistor to a larger value}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q27. Which statement best describes the role of the IR receiver in a typical reflective obstacle sensor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It detects reflected infrared radiation}
+    \item {It stores the detected object's distance}
+    \item {It regulates current to the indicator LED}
+    \item {It generates the Arduino program clock}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q28. A sensor module operates at 5 V, while its output is connected to Arduino Uno digital pin 8. Which connection is correct?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {VCC to GND, GND to 5 V, OUT to pin 8}
+    \item {VCC to Vin, GND to pin 8, OUT to the USB shield}
+    \item {VCC to 5 V, GND to GND, OUT to pin 8}
+    \item {VCC to pin 8, GND to 5 V, OUT to GND}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q29. What is the main purpose of using Serial.begin(9600) in an IR detection project?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To set the IR transmitter's emission frequency}
+    \item {To select the sensor's physical detection range}
+    \item {To provide regulated power to the sensor module}
+    \item {To configure communication with the Serial Monitor}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q30. A detection system should keep an alarm active while an object remains in front of the sensor. Which control structure is most appropriate?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use analogWrite without checking the sensor}
+    \item {Use a one-time statement in setup only}
+    \item {Use an if-else statement based on sensor state}
+    \item {Use delay without reading the sensor again}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q31. Why can a black object be detected less reliably by a reflective IR sensor than a white object?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Black objects disable the Arduino input circuit}
+    \item {Black surfaces always produce a higher supply voltage}
+    \item {Black objects emit visible light instead of infrared light}
+    \item {Black surfaces generally reflect less infrared light}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q32. An IR sensor is connected to pin 2, and an indicator LED is connected to pin 9. Which pair of declarations matches this arrangement?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {const int sensorPin = 0; const int ledPin = 1;}
+    \item {const int sensorPin = A2; const int ledPin = A9;}
+    \item {const int sensorPin = 2; const int ledPin = 9;}
+    \item {const int sensorPin = 9; const int ledPin = 2;}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q33. What is the likely result if an IR sensor's OUT terminal is accidentally connected to an Arduino output pin configured as OUTPUT?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The Arduino increases the sensor detection range}
+    \item {The IR receiver stops needing a common ground}
+    \item {The sensor and Arduino outputs may conflict}
+    \item {The sensor automatically becomes an analog input}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q34. An IR sensor indicates detection with LOW, but the program activates the alarm with HIGH. Which change fixes the logical error?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Move the sensor wire to the USB connector}
+    \item {Invert the condition used to test the sensor}
+    \item {Replace digitalRead with analogWrite}
+    \item {Increase the delay time without changing the condition}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q35. Why should an IR sensor and its target generally be kept aligned during testing?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Alignment changes the USB communication protocol}
+    \item {Alignment determines the Arduino's program memory size}
+    \item {Alignment controls the resistor tolerance automatically}
+    \item {Alignment affects the amount of reflected IR received}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q36. Which sequence represents a suitable Arduino program structure for an IR detection system?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Read sensor once, configure pins, stop execution}
+    \item {Configure pins, read sensor, control output, repeat}
+    \item {Start serial output, remove power, configure pins, stop}
+    \item {Control output, erase program, read sensor, repeat}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q37. A sensor output is connected to an Arduino input, but the reading changes randomly when the sensor is disconnected. What is the most likely cause?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The Arduino has too many comments}
+    \item {The LED has excessive brightness}
+    \item {The input pin is floating}
+    \item {The USB cable is too short}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q38. An Arduino Uno must count an object each time it passes the IR sensor, rather than counting repeatedly while it remains present. What programming technique is needed?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Place the counter declaration inside setup only}
+    \item {Detect a transition between absent and present states}
+    \item {Use a constant HIGH output for the sensor pin}
+    \item {Keep increasing the counter every loop cycle}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q39. Which change can help prevent an Arduino output pin from being overloaded when driving an external buzzer circuit?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use a transistor driver and suitable protection}
+    \item {Short the buzzer terminals to the 5 V rail}
+    \item {Connect the buzzer directly to the input pin}
+    \item {Remove the common ground from the circuit}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q40. An IR detection circuit works indoors but gives false detections under strong sunlight. What is a practical improvement?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Replace digitalRead with pinMode}
+    \item {Increase the Arduino reset frequency}
+    \item {Shield the sensor from ambient infrared light}
+    \item {Disconnect the sensor ground during operation}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q41. An IR obstacle sensor is connected to Arduino Uno digital pin D2 and produces a LOW output when an object is detected. The object remains in front of the sensor for 80 ms, but the detection must be accepted only if the signal is LOW continuously for at least 50 ms. Which implementation best satisfies this requirement without blocking other time-critical tasks?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Record millis() at the first LOW and accept when LOW persists for 50 ms}
+    \item {Count exactly 50 loop iterations after the first LOW reading}
+    \item {Use analogRead() and accept when the value exceeds 50}
+    \item {Use delay(50) after every LOW reading}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q42. An IR receiver module connected to an Arduino Uno gives an unstable digital output when a motor starts. The sensor and motor use the same 5 V supply. Which hardware change most directly reduces supply-induced false detections?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Connect the sensor ground through the motor winding}
+    \item {Replace the digital input with an unused PWM output}
+    \item {Increase the sensor threshold by changing the Arduino clock speed}
+    \item {Add local decoupling near the sensor and separate motor return paths}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q43. A reflective IR sensor is calibrated using a white target, but the system later detects a black target at the same distance inconsistently. What is the most appropriate design response?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Disable ambient-light compensation to make the output digital}
+    \item {Characterize target reflectivity and calibrate the detection threshold accordingly}
+    \item {Use a fixed threshold selected only from the white-target reading}
+    \item {Increase the Arduino supply voltage above 5 V}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q44. A sensor output is connected to Arduino Uno pin D2, and an interrupt is configured for CHANGE . A moving object causes 12 transitions within 3 ms because of surface texture. Which strategy best prevents one object from being counted multiple times?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Replace CHANGE with LOW and keep the same counting logic}
+    \item {Increment the count on every interrupt transition}
+    \item {Disable interrupts permanently after the first transition}
+    \item {Use edge qualification and ignore further events during a timed lockout}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q45. An Arduino Uno reads an analog IR receiver on A0. With the sensor disconnected, the reading changes randomly between 0 and 1023. Which conclusion is most defensible?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The ADC is automatically generating a valid distance measurement}
+    \item {The floating input is picking up noise and needs a defined electrical state}
+    \item {The Arduino reference voltage has become exactly zero}
+    \item {The IR emitter is operating at an excessive duty cycle}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q46. A 5 V IR sensor module has an output that may reach 5 V, while the receiving controller input is a 3.3 V-only device. Which interface is the safest general solution?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use a resistor divider or a proper 5 V-to-3.3 V level shifter}
+    \item {Configure the receiving pin as an analog output}
+    \item {Add a capacitor in series and leave the input otherwise unchanged}
+    \item {Connect the output directly because logic inputs always tolerate 5 V}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q47. An Arduino Uno detection system must operate for several hours from a battery. The IR emitter is continuously enabled even when no measurement is being made. Which modification most effectively reduces average sensor power while preserving reliable detection?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Increase the ADC resolution by changing analogRead() syntax}
+    \item {Pulse the IR emitter and sample synchronously when detection is needed}
+    \item {Set the sensor input pin to OUTPUT-HIGH continuously}
+    \item {Increase serial monitor output frequency}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q48. Two IR detection sensors are installed 8 cm apart, but each emitter spreads radiation widely and both receivers respond to the same object. Which change most directly improves spatial discrimination?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Replace both sensor grounds with separate floating grounds}
+    \item {Read both inputs only after calling delay(1000)}
+    \item {Increase the baud rate of the serial interface}
+    \item {Use optical shielding and narrower emitter-receiver alignment}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q49. An IR sensor output is active LOW. The Arduino code uses pinMode(sensorPin, INPUT\_PULLUP) , but the sensor output is a push-pull output that drives HIGH during detection. What is the primary concern?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The ADC loses all resolution on digital pins}
+    \item {The sensor output and pull-up necessarily create a damaging short circuit}
+    \item {The software polarity and assumed idle state may be interpreted incorrectly}
+    \item {The pull-up changes the Arduino clock frequency}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q50. A detection routine stores the current sensor state in a variable shared with an interrupt service routine. Which declaration is required when the variable can change asynchronously and is read in the main program?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {volatile bool sensorState}
+    \item {static double sensorState}
+    \item {const int sensorState}
+    \item {register char sensorState}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q51. An Arduino Uno measures the time between IR sensor edges using micros() . The measurement occasionally becomes incorrect after the timer counter wraps around. Which expression is wraparound-safe for unsigned timestamps now and previous ?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {if (now > previous + interval)}
+    \item {if (previous - now >= interval)}
+    \item {if (now - previous >= interval)}
+    \item {if (now + interval > previous)}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q52. An analog IR sensor produces 2.60 V, and the Arduino Uno uses its default 5.00 V analog reference. What ADC value is theoretically expected for the 10-bit converter?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {About 133}
+    \item {About 512}
+    \item {About 858}
+    \item {About 532}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q53. A sensor's analog output has a source impedance of 200 k $\Omega$ . Consecutive Arduino Uno ADC readings differ significantly, especially after switching from another channel. What is the best firmware-level correction?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Discard the first conversion after channel selection and allow settling}
+    \item {Set all unused digital pins to INPUT without pull-ups}
+    \item {Drive the analog pin HIGH before every conversion}
+    \item {Take one reading only and increase the serial baud rate}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q54. A binary IR sensor signal contains short noise pulses. The system must detect a genuine object only when at least 4 of the latest 5 samples are active. Which method implements this rule most directly?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Average the samples as floating-point voltages only}
+    \item {Trigger whenever any two nonconsecutive samples are active}
+    \item {Accept the first active sample and reset the processor}
+    \item {Use a running five-sample window and count active samples}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q55. An IR sensor is connected to an Arduino Uno input located near a PWM motor-control wire. The detection fails only when the motor duty cycle changes rapidly. Which investigation should be performed first?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Check signal integrity, grounding, decoupling, and wire routing}
+    \item {Increase the number of LCD characters displayed}
+    \item {Replace digitalRead() with Serial.read()}
+    \item {Change the C++ variable names to shorter identifiers}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q56. A sensor output is normally HIGH, but it becomes disconnected intermittently. The Arduino input then registers random transitions. Which configuration is most appropriate if the sensor interface is an open-collector output that asserts LOW?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use OUTPUT\_LOW and read the same pin}
+    \item {Use INPUT\_PULLDOWN and treat HIGH as the active state}
+    \item {Use INPUT\_PULLUP and treat LOW as the active state}
+    \item {Use a floating INPUT and average digital readings}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q57. An Arduino Uno drives an IR LED directly from a digital pin through a 100 $\Omega$ resistor from a 5 V supply. The LED forward voltage is 1.2 V. Ignoring pin limits, the nominal current is approximately what value?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {50 mA}
+    \item {38 mA}
+    \item {12 mA}
+    \item {24 mA}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q58. A reflective IR detector must distinguish sunlight from a nearby modulated IR emitter. Which receiver strategy gives the strongest rejection of steady ambient illumination?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Measure only the total unmodulated photodiode current}
+    \item {Modulate the emitter and synchronously detect its modulation}
+    \item {Increase the receiver gain until the ADC saturates}
+    \item {Use a longer cable with no reference conductor}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q59. A detection output drives a relay module from Arduino Uno pin D8. The relay resets the Arduino when energized. Which correction is most appropriate for a bare relay coil driven by a transistor?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Connect the diode in series with the Arduino input pin}
+    \item {Use a capacitor across the sensor output instead of coil suppression}
+    \item {Remove the transistor so the pin absorbs the inductive transient}
+    \item {Place a flyback diode across the coil and provide adequate supply decoupling}
+\end{enumerate}
+\vspace{2mm}
+
+\noindent\textbf{Q60. A sensor is sampled every 10 ms, and a detection requires 5 consecutive active samples. An object enters the sensing region immediately after a sample. What is the worst-case confirmation latency, excluding sensor response time?} \hfill [Tag: Design and implementation of an Arduino Uno and IR sensor-based detection system | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {40 ms}
+    \item {50 ms}
+    \item {10 ms}
+    \item {60 ms}
+\end{enumerate}
+\vspace{2mm}
+
+
+\newpage
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{6}{1}
+An automated obstacle detection and count-alert system is built using an Arduino Uno (ATmega328P) and an active-LOW Infrared (IR) Proximity Sensor module. (a) Provide the complete circuit schematic wiring interface between the IR sensor, Arduino Uno, and an indicator buzzer/LED. (b) Write a robust Arduino C++ sketch incorporating software debounce to count detected objects and activate an alert when more than 50 objects pass.
+\end{subjectiveq}
+
+\begin{solbox}
+\textbf{(a) Hardware Interface Wiring:}\\
+- \textbf{IR Sensor Module}:\\
+  * VCC $\to$ Arduino 5V\\
+  * GND $\to$ Arduino GND\\
+  * OUT $\to$ Arduino Digital Pin 2 (External Interrupt INT0)\\
+- \textbf{Indicator LED}: Anode to Digital Pin 13 through a $220\,\Omega$ series current-limiting resistor; Cathode to GND.\\
+- \textbf{Piezo Buzzer}: Positive terminal to Digital Pin 8; Negative terminal to GND.\\\\
+\textbf{(b) Embedded Firmware Implementation:}\\
+\begin{verbatim}
+const int irSensorPin = 2;
+const int ledPin = 13;
+const int buzzerPin = 8;
+
+volatile unsigned long objectCount = 0;
+volatile unsigned long lastTriggerTime = 0;
+const unsigned long debounceDelay = 150; // milliseconds
+
+void setup() {
+  pinMode(irSensorPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  Serial.begin(9600);
+  Serial.println(\"--- ECE120: Arduino IR Object Counter Active ---\");
+}
+
+void loop() {
+  int sensorState = digitalRead(irSensorPin);
+  if (sensorState == LOW) { // Active LOW detection
+    unsigned long currentTime = millis();
+    if (currentTime - lastTriggerTime > debounceDelay) {
+      objectCount++;
+      lastTriggerTime = currentTime;
+      digitalWrite(ledPin, HIGH);
+      Serial.print(\"Object Detected! Cumulative Count: \");
+      Serial.println(objectCount);
+      if (objectCount >= 50) {
+        digitalWrite(buzzerPin, HIGH); // Alarm threshold
+      }
+      delay(50);
+      digitalWrite(ledPin, LOW);
+    }
+  }
+}
+\end{verbatim}
+\end{solbox}
+
+\begin{examinertip}
+Examiner Rubric (10 Marks):\\
+- Interfacing schematic \& pin mapping with current limiting: 3 Marks\\
+- Complete setup() and pin configuration logic: 2 Marks\\
+- Software debounce algorithm using non-blocking millis(): 3 Marks\\
+- Threshold counter condition and actuator activation: 2 Marks
+\end{examinertip}
+
+
+\section{Section C: Laboratory Viva-Voce Questions with Authoritative Solutions}
+
+\noindent\textbf{Viva Question:} Explain the working principle of the LM393 comparator inside an IR proximity sensor module.\\
+\textbf{Technical Answer:} The IR sensor features an IR LED emitter and photodiode receiver. Reflected IR light from an obstacle creates a reverse photocurrent, developing a proportional voltage at the non-inverting input ($IN+$) of the LM393. The inverting input ($IN-$) is held at a reference voltage set by the multi-turn potentiometer. When reflected voltage exceeds reference, the comparator output transitions from HIGH to LOW, signaling an obstacle.
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} What is the resolution of the Arduino Uno Analog-to-Digital Converter (ADC)?\\
+\textbf{Technical Answer:} The ATmega328P on the Arduino Uno includes a 10-bit successive approximation ADC. With default reference voltage $V_{\mathrm{ref}} = 5.0\text{ V}$, it quantizes input voltages into $2^{10} = 1024$ discrete steps ($0$ to $1023$). The voltage resolution per LSB is $5.0\text{ V} / 1024 \approx 4.8828\text{ mV}$.
+\vspace{3mm}
+
+\noindent\textbf{Viva Question:} What are the limitations of optical IR proximity sensors in industrial environments?\\
+\textbf{Technical Answer:} IR sensors suffer from: (1) Ambient sunlight or incandescent infrared interference that saturates the photodiode, (2) Surface reflectivity dependency (dark/matte objects absorb IR and fail to trigger, while white/glossy surfaces trigger at long distances), and (3) Lens dust/oil contamination in harsh factory atmospheres.
+\vspace{3mm}
+
+
+\section{Section D: Workshop Troubleshooting \& Fault Diagnostic Case Study}
+
+\textbf{Troubleshooting Scenario: Arduino Resets Every Time Buzzer/Relay Activates}\\
+When an Arduino obstacle detection circuit triggers an external $5\text{V}$ electromagnetic relay or buzzer, the Arduino Uno immediately resets and re-runs `setup()`.\\\\
+\textbf{Diagnostic Cause:} Inductive kickback and power rail brownout. Inductive actuators draw heavy initial surge current and produce high-voltage negative flyback spikes when switched off ($V = L \frac{di}{dt}$), pulling the $+5\text{V}$ rail below the ATmega328P brown-out detection (BOD) threshold of $4.3\text{V}$.\\
+\textbf{Hardware Fix:} (1) Place a reverse-biased flyback diode (1N4007) directly across the relay coil terminals. (2) Power inductive actuators from a separate external power supply, keeping ground rails common. (3) Install a $100\,\mu\mathrm{F}$ electrolytic capacitor in parallel with a $0.1\,\mu\mathrm{F}$ ceramic capacitor across the Arduino power rails for supply decoupling.
+\vspace{4mm}

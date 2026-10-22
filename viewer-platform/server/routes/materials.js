@@ -15,7 +15,10 @@ function formatBytes(bytes) {
 }
 
 function classifyPdf(relPath, fileName) {
-  const parts = relPath.split(path.sep);
+  let parts = relPath.split(path.sep);
+  if (parts[0] === 'courses') {
+    parts = parts.slice(1);
+  }
   const topFolder = parts[0] || '';
   const subFolder = parts.length > 2 ? parts[1] : '';
 
@@ -25,6 +28,14 @@ function classifyPdf(relPath, fileName) {
   else if (topFolder.startsWith('INT335')) courseCode = 'INT335';
   else if (topFolder.startsWith('INT108')) courseCode = 'INT108';
   else if (topFolder.startsWith('MTH165')) courseCode = 'MTH165';
+  else if (topFolder.startsWith('MTH174')) courseCode = 'MTH174';
+  else if (topFolder.startsWith('CHE110')) courseCode = 'CHE110';
+  else if (topFolder.startsWith('ECE120')) courseCode = 'ECE120';
+  else if (topFolder.startsWith('CSR101')) courseCode = 'CSR101';
+  else if (topFolder.startsWith('CSR102')) courseCode = 'CSR102';
+  else if (topFolder.startsWith('ECE131')) courseCode = 'ECE131';
+  else if (topFolder.startsWith('CSE105')) courseCode = 'CSE105';
+  else if (topFolder.startsWith('ECE181')) courseCode = 'ECE181';
   else if (topFolder.startsWith('ECE249')) courseCode = 'ECE249';
   else if (topFolder.startsWith('ECE279')) courseCode = 'ECE279';
   else if (topFolder.startsWith('MEC136')) courseCode = 'MEC136';
@@ -67,7 +78,18 @@ function scanPdfFiles(dir, baseDir = dir) {
   try {
     const list = fs.readdirSync(dir);
     for (const item of list) {
-      if (item === 'node_modules' || item === '.git' || item === 'viewer-platform' || item === '.gemini' || item === 'pdf_verifier') {
+      if (
+        item === 'node_modules' ||
+        item === '.git' ||
+        item === 'viewer-platform' ||
+        item === '.gemini' ||
+        item === '.agents' ||
+        item === 'pdf_verifier' ||
+        item === 'scripts' ||
+        item === 'media' ||
+        item === 'dossiers' ||
+        item === 'releases'
+      ) {
         continue;
       }
       const fullPath = path.join(dir, item);
@@ -125,7 +147,10 @@ function loadManifestFallback() {
 function getMaterialsList() {
   const now = Date.now();
   if (!cachedMaterials || now - lastScanTime > 30000) {
-    let scanned = scanPdfFiles(WORKSPACE_ROOT);
+    const coursesDir = path.join(WORKSPACE_ROOT, 'courses');
+    let scanned = fs.existsSync(coursesDir)
+      ? scanPdfFiles(coursesDir, WORKSPACE_ROOT)
+      : scanPdfFiles(WORKSPACE_ROOT);
     if (!scanned || scanned.length === 0) {
       scanned = loadManifestFallback();
     }

@@ -1,0 +1,83 @@
+\section{End-Term Comprehensive Examination --- Model Paper 1}
+\LPUPaperHeader{End-Term University Examination}{Model Paper 1}{180 Minutes}{70 Marks}{Comprehensive CO1--CO5 (All Units)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Structure: Part A contains 10 Compulsory Short Questions (2 Marks each = 20 Marks). Part B contains 5 Comprehensive Analytical Questions (10 Marks each = 50 Marks).}
+\end{center}
+
+\subsection*{Part A: Short Concept \& Numerical Questions (10 $\times$ 2 = 20 Marks)}
+\questionitem{1}{Distinguish between unilateral and bilateral circuit elements with an example of each.}{2}{CO1}{L2 Understand}
+\questionitem{2}{State the physical significance of the Form Factor of an alternating signal.}{2}{CO2}{L2 Understand}
+\questionitem{3}{Define Quality Factor ($Q$) of a resonant series circuit in terms of energy stored and lost.}{2}{CO2}{L2 Understand}
+\questionitem{4}{Why is the open-circuit test conducted on the low-voltage side of a transformer?}{2}{CO3}{L2 Understand}
+\questionitem{5}{Why is a DC series motor never started without mechanical load?}{2}{CO3}{L2 Understand}
+\questionitem{6}{What is the difference between Zener breakdown and Avalanche breakdown in diodes?}{2}{CO4}{L2 Understand}
+\questionitem{7}{State the condition for a differential amplifier to have zero output for common-mode signals.}{2}{CO4}{L2 Understand}
+\questionitem{8}{Explain why an ideal op-amp has an infinite input impedance.}{2}{CO4}{L2 Understand}
+\questionitem{9}{State the resolution in millivolts of a 10-bit ADC operated at $V_{ref} = 5.0\text{ V}$.}{2}{CO5}{L3 Apply}
+\questionitem{10}{Name two serial communication protocols supported by the ATmega328P microcontroller.}{2}{CO5}{L1 Remember}
+
+\newpage
+\subsection*{Part B: Comprehensive Analytical Problems (5 $\times$ 10 = 50 Marks)}
+
+\questionitem{11}{
+    In the network shown, find the current through the $2\,\Omega$ resistor connected between terminals $A$ and $B$ using Thevenin's Theorem. Circuit specifications: A $24\text{ V}$ voltage source in series with $4\,\Omega$, in parallel with a branch containing a $6\,\Omega$ resistor, connected to a second loop with a $3\text{ A}$ current source in parallel with an $8\,\Omega$ resistor.
+}{10}{CO1}{L3 Apply}
+
+\questionitem{12}{
+    A balanced 3-phase, star-connected load of $(16 + j12)\,\Omega$ per phase is connected across a $400\text{ V}$, $50\text{ Hz}$, 3-phase supply. Calculate: (a) Phase voltage and line voltage, (b) Phase current and line current, (c) Active, reactive, and apparent power consumed, and (d) The readings on two wattmeters connected to measure the total three-phase power.
+}{10}{CO2}{L3 Apply}
+
+\questionitem{13}{
+    A $20\text{ kVA}$, $2000/200\text{ V}$, $50\text{ Hz}$ single-phase transformer gave the following test results:
+    \begin{itemize}
+        \item Open Circuit Test (LV side): $200\text{ V}$, $4.0\text{ A}$, $120\text{ W}$.
+        \item Short Circuit Test (HV side): $60\text{ V}$, $10.0\text{ A}$, $300\text{ W}$.
+    \end{itemize}
+    Determine: (a) Equivalent circuit parameters referred to the primary HV side, (b) Efficiency at full load, $0.8$ power factor lagging, and (c) Voltage regulation at full load, $0.8$ power factor lagging.
+}{10}{CO3}{L4 Analyze}
+
+\questionitem{14}{
+    (a) Design an inverting and non-inverting operational amplifier circuit to provide gains of $-5$ and $+5$ respectively. Specify suitable resistor values.\\
+    (b) Design an active second-order low-pass Butterworth filter with a cutoff frequency of $f_c = 1.0\text{ kHz}$. Choose $C_1 = C_2 = 10\text{ nF}$.
+}{10}{CO4}{L3 Apply}
+
+\questionitem{15}{
+    (a) Draw the architectural block diagram of an embedded data acquisition system incorporating an ATmega328P microcontroller, an analog temperature sensor (LM35), and an HC-SR04 ultrasonic sensor.\\
+    (b) Formulate the complete mathematical algorithm for converting raw 10-bit ADC samples into calibrated Celsius temperature, and explain how the digitized data is transmitted via an MQTT broker to a cloud dashboard.
+}{10}{CO5}{L4 Analyze}
+
+\newpage
+\subsection*{Exhaustive Model Solutions and Marking Schemes --- End-Term Paper 1}
+
+\begin{solutionbox}[Solution to Question 12 (3-Phase Balanced Load)]
+\textbf{Step 1: Voltages and Phase Impedance}\\
+Line voltage $V_L = 400\text{ V}$. For star connection:
+\[ V_{ph} = \frac{V_L}{\sqrt{3}} = \frac{400}{\sqrt{3}} \approx 230.94\text{ V} \]
+Phase impedance $\mathbf{Z}_{ph} = 16 + j12\,\Omega$:
+\[ |\mathbf{Z}_{ph}| = \sqrt{16^2 + 12^2} = \sqrt{256 + 144} = \sqrt{400} = 20.0\,\Omega \]
+Phase angle: $\phi = \arctan(12/16) = \arctan(0.75) \approx 36.87^\circ$ (lagging).\\
+Power factor: $\cos\phi = 16 / 20 = 0.8\text{ lagging}$.\\
+\textbf{Step 2: Currents}\\
+In star connection, line current equals phase current ($I_L = I_{ph}$):
+\[ I_L = I_{ph} = \frac{V_{ph}}{|\mathbf{Z}_{ph}|} = \frac{230.94}{20.0} \approx 11.547\text{ A} \]
+\textbf{Step 3: Three-Phase Powers}\\
+\begin{align*}
+P_{3\phi} &= \sqrt{3} V_L I_L \cos\phi = \sqrt{3} \times 400 \times 11.547 \times 0.8 = 6400\text{ W} = 6.4\text{ kW} \\
+Q_{3\phi} &= \sqrt{3} V_L I_L \sin\phi = \sqrt{3} \times 400 \times 11.547 \times 0.6 = 4800\text{ VAR} = 4.8\text{ kVAR} \\
+S_{3\phi} &= \sqrt{3} V_L I_L = \sqrt{3} \times 400 \times 11.547 = 8000\text{ VA} = 8.0\text{ kVA}
+\end{align*}
+\textbf{Step 4: Two-Wattmeter Readings}\\
+\begin{align*}
+W_1 &= V_L I_L \cos(30^\circ - \phi) = 400 \times 11.547 \times \cos(30^\circ - 36.87^\circ) = 4618.8 \times \cos(-6.87^\circ) \approx 4585.5\text{ W} \\
+W_2 &= V_L I_L \cos(30^\circ + \phi) = 4618.8 \times \cos(66.87^\circ) \approx 1814.5\text{ W}
+\end{align*}
+Check sum: $W_1 + W_2 = 4585.5 + 1814.5 = 6400.0\text{ W} = P_{3\phi}$ (Perfect match!).
+\begin{markingrubric}
+$\bullet$ Phase voltage and impedance derivation: \textbf{2.0 Marks}\\
+$\bullet$ Line and phase current computation: \textbf{2.0 Marks}\\
+$\bullet$ Power calculations ($P, Q, S$): \textbf{3.0 Marks}\\
+$\bullet$ Two-wattmeter readings and consistency check: \textbf{3.0 Marks}
+\end{markingrubric}
+\end{solutionbox}
+\newpage

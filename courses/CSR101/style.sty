@@ -1,0 +1,364 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/08/28 v1.0 CSR101 Python Programming Textbook Style Package]
+
+% 1. Core Encoding, Typography & Geometry
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+% 2. Mathematics, Tables & Listings
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty = true, inter-unit-product = \ensuremath{{}\cdot{}}}
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{enumitem}
+
+% Unicode mapping for safe compilation
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{200E}{}
+\DeclareUnicodeCharacter{200F}{}
+\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03D5}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2014}{---}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2019}{'}
+\DeclareUnicodeCharacter{2018}{'}
+\DeclareUnicodeCharacter{201C}{``}
+\DeclareUnicodeCharacter{201D}{''}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{00F7}{\ensuremath{\div}}
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2223}{|}
+\DeclareUnicodeCharacter{00E9}{\'{e}}
+\DeclareUnicodeCharacter{00A9}{\copyright}
+
+% 3. Color Palette
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+\definecolor{brandnavy}{RGB}{15, 32, 67}         % LPU Navy #0F2043
+\definecolor{brandblue}{RGB}{234, 88, 12}        % LPU Orange #EA580C
+\definecolor{brandslate}{RGB}{71, 85, 105}       % Muted Slate
+\definecolor{branddark}{RGB}{15, 23, 42}         % Slate Dark
+\definecolor{brandaccent}{RGB}{217, 4, 41}       % Crimson
+\definecolor{brandteal}{RGB}{13, 148, 136}       % Teal Green
+\definecolor{brandpurple}{RGB}{126, 34, 206}     % Purple
+\definecolor{brandgold}{RGB}{217, 119, 6}        % Amber Gold
+
+\definecolor{boxnavyborder}{RGB}{15, 32, 67}
+\definecolor{boxnavybg}{RGB}{245, 248, 255}
+
+\definecolor{boxamberborder}{RGB}{217, 119, 6}
+\definecolor{boxamberbg}{RGB}{255, 251, 235}
+
+\definecolor{boxgreenborder}{RGB}{13, 148, 136}
+\definecolor{boxgreenbg}{RGB}{240, 253, 250}
+
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+
+\definecolor{boxpurplebg}{RGB}{250, 245, 255}
+\definecolor{boxgrayborder}{RGB}{205, 215, 225}
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxgoldbg}{RGB}{254, 243, 199}
+
+% Listings Configuration
+\RequirePackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{boxgraybg},
+    frame=single,
+    rulecolor=\color{boxgrayborder},
+    keywordstyle=\color{brandblue}\bfseries,
+    commentstyle=\color{brandslate}\itshape,
+    stringstyle=\color{brandnavy},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false,
+    captionpos=b
+}
+
+% 4. Callout Environments
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{definition}[1][]{
+    enhanced, breakable,
+    colback=boxnavybg, colframe=boxnavyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Definition}{Definition: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{theorem}[1][]{
+    enhanced, breakable,
+    colback=boxpurplebg, colframe=brandpurple,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Computational Principle / Law}{Principle: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{keyequation}[1][]{
+    enhanced, breakable,
+    colback=boxgoldbg, colframe=boxamberborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Core Architecture Formula / Identity}{#1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=branddark
+}
+
+\newtcolorbox{methodbox}[1][]{
+    enhanced, breakable,
+    colback=boxgreenbg, colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Algorithmic Method / Design Heuristic}{Method: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{example}[1][]{
+    enhanced, breakable,
+    colback=boxskybg, colframe=boxskyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Example}{Worked Example: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{solutionbox}[1][]{
+    enhanced, breakable,
+    colback=boxgraybg, colframe=boxgrayborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Step-by-Step Analytical Solution}{#1}},
+    boxrule=1.0pt, leftrule=3.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=branddark
+}
+
+\newtcolorbox{examtip}[1][]{
+    enhanced, breakable,
+    colback=boxrosebg, colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Examiner Warning \& Common Software Trap}{Examiner Warning: #1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+\newtcolorbox{summarybox}[1][]{
+    enhanced, breakable,
+    colback=boxnavybg, colframe=brandnavy,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Chapter Synthesis \& Key Takeaways}{#1}},
+    boxrule=1.2pt, leftrule=4.5pt, arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=white
+}
+
+% 5. Header / Footer & Section Formatting
+\RequirePackage{fancyhdr}
+\RequirePackage{truncate}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{brandslate}\textbf{CSR101} \textbar\ Python for AI \& Data Engineering}
+\fancyhead[R]{\small\sffamily\color{brandnavy}\truncate{0.55\linewidth}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\small\sffamily\color{brandslate}LPU Engineering Open}
+\fancyfoot[R]{\small\sffamily\bfseries\color{brandblue}\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandblue}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandblue}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandblue}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandblue,
+    citecolor=brandteal,
+    urlcolor=brandnavy,
+    pdftitle={CSR101: Python Programming (AI \& Data Engineering Specialization)},
+    pdfauthor={LPU School of Computer Science and Engineering Academic Faculty}
+}
+
+\RequirePackage{tikz}
+
+% 6. Cover and Frontmatter Macros
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[brandnavy] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandblue] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ENGINEERING OPEN \textbullet\ MASTER TEXTBOOK SERIES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {University Curriculum \textbullet\ AI \& Data Engineering Specialization};
+    
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandblue] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Independent Academic Editorial Initiative \textbullet\ 2026--2027 Edition};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Free \& Open Educational License (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{32}{38}\selectfont\bfseries\sffamily\color{brandnavy} Python Programming\par}
+    \vspace{0.4cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandblue} AI \& Data Engineering Specialization (CSR101)\par}
+    \vspace{0.4cm}
+    {\color{brandslate}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Computational Foundations \textbullet\ OOP \textbullet\ NumPy Matrices \textbullet\ Pandas \& Pipelines}\par}
+    
+    \vspace{1.8cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.95\linewidth,
+        colback=boxnavybg,
+        colframe=brandnavy,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Textbook Curricular Highlights:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item \textbf{Unit 1:} Python Environment Architecture, PVM, Memory Allocation \& Lexical Foundations.
+            \item \textbf{Unit 2:} Control Logic, Functional Paradigms, Variable Scopes (LEGB) \& Regular Expressions.
+            \item \textbf{Unit 3:} High-Performance Data Structures, Memory Complexities, OOP \& Metaprogramming.
+            \item \textbf{Unit 4:} Standard Library Systems, Exception Propagation Architectures \& Context Managers.
+            \item \textbf{Unit 5:} NumPy Vectorized Computing, Broadcasting Invariants \& Matrix Decompositions.
+            \item \textbf{Unit 6:} Enterprise File I/O, Pandas Analytical Pipelines \& Statistical Visualization.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Course Director \& Faculty Board:}\\
+    LPU School of Computer Science and Engineering\\
+    Department of Artificial Intelligence and Data Engineering}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large CSR101: Python Programming (AI \& Data Engineering Specialization)}\\
+\textit{\sffamily Master University Textbook \& Comprehensive Laboratory Manual}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Engineering Open Initiative\\
+\textbf{\sffamily Edition:} 2026--2027 Academic Year Edition\\
+\textbf{\sffamily Primary Curriculum Code:} CSR101 (Computer Science \& AI Curriculum)\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Copyright \& Intellectual Property:}\\
+\textcopyright\ 2026 The Faculty and Academic Editorial Board of LPU Engineering Open.\\
+This work is released under the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} license.\\
+All source code listings, data pipeline implementations, and test suites are distributed under the \textbf{MIT License}.\\
+
+\vspace{0.4cm}
+\noindent
+\textbf{\sffamily Academic Advisory Statement:}\\
+This publication is authored in accordance with the official course syllabus of Lovely Professional University for CSR101. It is designed to serve as both an instructional textbook and an authoritative reference manual for advanced software engineering, machine learning pipelines, and technical interviews.
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    {\Large\sffamily\bfseries\color{brandnavy} Pedagogical Architecture \& How to Use This Book}
+\end{center}
+\vspace{1cm}
+\noindent
+This textbook is structured around the six rigorous units of the CSR101 curriculum:
+\begin{enumerate}[leftmargin=1.8em, itemsep=6pt]
+    \item \textbf{Formal Mathematical \& Architectural Definitions:} Every concept begins with formal language semantics, CPython internals, or asymptotic complexity models.
+    \item \textbf{Syntax Specification \& Code Invariants:} High-yield code examples illustrate idiomatic Python 3.11+ standards following PEP 8.
+    \item \textbf{Step-by-Step Worked Problems:} Practical algorithms with explicit execution traces, time complexity derivations, and memory layout diagrams.
+    \item \textbf{Examiner Traps \& Edge Cases:} Callout warnings highlighting standard examination traps, tricky operator precedence nuances, and silent runtime bugs.
+\end{enumerate}
+\newpage
+}

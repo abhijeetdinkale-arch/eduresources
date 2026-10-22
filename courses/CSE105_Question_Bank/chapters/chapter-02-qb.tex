@@ -1,0 +1,117 @@
+\chapter{Unit 2: System Utilities \& Basic CLI Commands Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{2.1}{What does an exit status code of 0 (\$?) indicate in Linux CLI grammar?}
+{Fatal error occurred}
+{Successful command execution without error}
+{Command timed out waiting for input}
+{Process was killed by signal SIGKILL}
+
+\mcqitem{2.2}{Which switch enables the interpretation of backslash escapes (such as \textbackslash n and \textbackslash t) in the echo command?}
+{\texttt{-n}}
+{\texttt{-e}}
+{\texttt{-E}}
+{\texttt{-s}}
+
+\mcqitem{2.3}{What is the output of the command: expr 15 / 4?}
+{\texttt{3.75}}
+{\texttt{3}}
+{\texttt{4}}
+{\texttt{Error: floating point not supported}}
+
+\mcqitem{2.4}{How is decimal precision configured when using the bc arbitrary-precision calculator?}
+{\texttt{set precision=N}}
+{\texttt{scale=N}}
+{\texttt{float=N}}
+{\texttt{digits=N}}
+
+\mcqitem{2.5}{Which command records a complete terminal session into a typescript log file?}
+{\texttt{record}}
+{\texttt{history}}
+{\texttt{script}}
+{\texttt{logger}}
+
+\mcqitem{2.6}{Which manual page section contains configuration file formats (such as /etc/passwd and /etc/shadow)?}
+{Section 1}
+{Section 2}
+{Section 4}
+{Section 5}
+
+\mcqitem{2.7}{What do the three floating-point numbers in the output of the uptime command represent?}
+{CPU core temperatures}
+{System load averages over the past 1, 5, and 15 minutes}
+{RAM utilization percentages}
+{Network packet transmission rates}
+
+\mcqitem{2.8}{Which command suppresses character echoing on the terminal, making it ideal for hidden password prompts?}
+{\texttt{stty -echo}}
+{\texttt{tty -s}}
+{\texttt{passwd -q}}
+{\texttt{echo -h}}
+
+\mcqitem{2.9}{Which format string passed to the date command emits the Unix Epoch timestamp?}
+{\texttt{+\%Y}}
+{\texttt{+\%s}}
+{\texttt{+\%T}}
+{\texttt{+\%z}}
+
+\mcqitem{2.10}{What is the function of the apropos command?}
+{Displays real-time memory distribution}
+{Searches manual page short descriptions for a given keyword string}
+{Compiles a C program into machine bytecode}
+{Reboots the operating system}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 2 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+2.1 & \textbf{(b)} & POSIX exit status 0 indicates success; non-zero ($1$--$255$) indicates an error condition. \\
+2.2 & \textbf{(b)} & \texttt{echo -e} enables backslash escape character interpretation. \\
+2.3 & \textbf{(b)} & \texttt{expr} performs integer arithmetic exclusively, truncating fractional remainders ($15/4 = 3$). \\
+2.4 & \textbf{(b)} & The \texttt{scale=N} variable in \texttt{bc} dictates the number of fractional decimal digits. \\
+2.5 & \textbf{(c)} & The \texttt{script} command spawns a pseudo-terminal capturing all session I/O. \\
+2.6 & \textbf{(d)} & Section 5 of the manual system is reserved for File Formats and Conventions. \\
+2.7 & \textbf{(b)} & Uptime load averages represent the average number of runnable processes over 1, 5, 15 min. \\
+2.8 & \textbf{(a)} & \texttt{stty -echo} instructs the terminal line discipline to disable character echoing. \\
+2.9 & \textbf{(b)} & \texttt{+\%s} emits seconds elapsed since 1970-01-01 00:00:00 UTC (Unix Epoch). \\
+2.10 & \textbf{(b)} & \texttt{apropos} (equivalent to \texttt{man -k}) searches man page database descriptions. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain why expr 5 * 4 produces a syntax error in Bash, and how to fix it.}
+\begin{vivasol}
+In Bash, the asterisk (\texttt{*}) is a reserved wildcard globbing character that expands to all filenames in the active working directory. When the shell encounters \texttt{expr 5 * 4}, it expands \texttt{*} into a list of filenames before invoking \texttt{expr}, resulting in an invalid argument list (e.g., \texttt{expr 5 file1.txt file2.txt 4}). To perform multiplication, the asterisk must be escaped or quoted: \texttt{expr 5 \textbackslash* 4} or \texttt{expr 5 '*' 4}.
+\end{vivasol}
+
+\subsection*{Q2. Explain the purpose of the script and scriptreplay commands.}
+\begin{vivasol}
+The \texttt{script} utility records terminal sessions for auditing, debugging, and instructional replay. By invoking \texttt{script -t=timing.log session.log}, the utility captures both keystrokes and precise millisecond timing. Later, executing \texttt{scriptreplay timing.log session.log} replays the interactive terminal session at exact original speeds.
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{2.1 --- Precision Arithmetic and System Identity Audit}
+\textbf{Objective:} Calculate mathematical constants to high decimal precision and generate a formatted system diagnostic report.
+\begin{clibox}
+# 1. Arbitrary precision calculation of Pi via Ramanujan formula approximation:
+$ echo "scale=8; 355 / 113" | bc
+3.14159292
+
+# 2. Formatted system status header via printf:
+$ printf "+----------------------+-------------------------------------+\n"
+$ printf "| %-20s | %-35s |\n" "Host System" "$(uname -n)" "Kernel" "$(uname -r)" "Uptime" "$(uptime -p)"
+$ printf "+----------------------+-------------------------------------+\n"
++----------------------+-------------------------------------+
+| Host System          | workstation-dev-01                  |
+| Kernel               | 6.8.0-45-generic                    |
+| Uptime               | up 4 days, 6 hours                  |
++----------------------+-------------------------------------+
+\end{clibox}
+\end{practicalbox}

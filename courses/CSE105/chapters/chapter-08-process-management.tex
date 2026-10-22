@@ -1,0 +1,148 @@
+\chapter{Process Life Cycle, Job Control \& Linux Signal Architecture}
+\label{chap:process-management}
+
+\section{The Process Abstraction \& Virtual Memory Architecture}
+A \textbf{program} is a static, passive collection of machine instructions stored on disk (e.g., an ELF binary). A \textbf{process} is an active, dynamic instance of a computer program in execution, allocated a private virtual memory address space and tracking operating system resources.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=0.8cm,
+    seg/.style={rectangle, draw=brandnavy, fill=boxnavybg, font=\sffamily\small\bfseries, minimum width=6.5cm, minimum height=0.8cm, text centered},
+    arrow/.style={thick, ->, >=stealth, draw=brandnavy}
+]
+    \node[seg, fill=boxpurplebg, draw=brandpurple] (stack) {Stack (Local Variables, Function Call Frames)};
+    \node[seg, below=0.6cm of stack, fill=boxtealbg, draw=brandteal] (heap) {Heap (Dynamic Memory via \texttt{malloc()})};
+    \node[seg, below=0.1cm of heap] (bss) {BSS Segment (Uninitialized Global / Static Data)};
+    \node[seg, below=0.1cm of bss] (data) {Data Segment (Initialized Global / Static Data)};
+    \node[seg, below=0.1cm of data, fill=boxamberbg, draw=brandamber] (text) {Text / Code Segment (Read-Only Machine Instructions)};
+
+    \draw[arrow] (stack.south) -- node[right, font=\tiny\sffamily] {Grows Downward} ($(stack.south)+(0,-0.5)$);
+    \draw[arrow] (heap.north) -- node[right, font=\tiny\sffamily] {Grows Upward} ($(heap.north)+(0,0.5)$);
+\end{tikzpicture}
+\caption{The Virtual Address Space Memory Layout of a Linux Process.}
+\label{fig:process-mem}
+\end{figure}
+
+\section{Process Identification \& The Parent-Child Hierarchy}
+Every process in Linux is assigned a unique positive integer: the \textbf{Process ID (PID)}. Processes form an unbroken hierarchical tree rooted at \textbf{PID 1} (the \texttt{systemd} or \texttt{init} daemon).
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{PID (Process ID):} Unique identifier allocated monotonically by the kernel.
+    \item \textbf{PPID (Parent Process ID):} Identifies the process that spawned this child process.
+    \item \textbf{Process Creation (fork and execve):}
+    \begin{enumerate}
+        \item The \texttt{fork()} system call duplicates the parent process, creating an identical child process with a new PID and isolated memory pages (via Copy-On-Write).
+        \item The \texttt{execve()} system call replaces the child's address space with a new executable binary image.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Orphan Processes versus Zombie Processes}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Attribute} & \textbf{Orphan Process} & \textbf{Zombie Process (Defunct)} \\
+\midrule
+\textbf{Definition} & A running child process whose parent terminates prematurely. & A process that has completed execution (\texttt{exit()}), but its exit code has not yet been read. \\
+\textbf{Resource Usage} & Consumes active CPU time, memory pages, and I/O descriptors. & Consumes \textbf{zero memory and zero CPU}; occupies only an entry slot in the kernel Process Table. \\
+\textbf{Resolution} & Automatically adopted by PID 1 (\texttt{systemd}), which manages its termination. & Parent must invoke the \texttt{wait()} or \texttt{waitpid()} system call to reap the exit status. \\
+\textbf{Elimination} & Terminates normally or via signals. & \textbf{Cannot be killed with \texttt{kill -9}} (it is already dead!). Must terminate or signal the parent process. \\
+\bottomrule
+\end{tabularx}
+\caption{Architectural Comparison of Orphan and Zombie Processes.}
+\label{tab:orphan-zombie}
+\end{table}
+
+\section{Process Inspection: ps and top}
+\begin{commandbox}{ps --- Process Status Snapshot}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{ps aux} (BSD Syntax):
+    \begin{itemize}
+        \item \texttt{a}: Displays processes of all users.
+        \item \texttt{u}: Displays user-oriented format (CPU\%, MEM\%, start time).
+        \item \texttt{x}: Displays processes detached from a controlling terminal (daemons).
+    \end{itemize}
+    \item \texttt{ps -ef} (Standard System V Syntax):
+    \begin{itemize}
+        \item \texttt{-e}: Selects all processes.
+        \item \texttt{-f}: Full-format listing showing UID, PID, PPID, C, STIME, TTY, TIME, CMD.
+    \end{itemize}
+    \item \textbf{Process State Codes (STAT column):}
+    \begin{itemize}
+        \item \texttt{R}: Running or runnable on the CPU run queue.
+        \item \texttt{S}: Interruptible sleep (waiting for an event or I/O completion).
+        \item \texttt{D}: Uninterruptible sleep (usually waiting for disk I/O; cannot be signaled).
+        \item \texttt{T}: Stopped / Paused by job control or tracing signal.
+        \item \texttt{Z}: Zombie / Defunct process.
+        \item \texttt{s}: Session leader process.
+        \item \texttt{+}: Process belongs to the foreground process group.
+    \end{itemize}
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{top --- Dynamic Real-Time System Monitor}
+Provides dynamic updates of CPU utilization, memory distribution, and tasks:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Interactive Control Keys:}
+    \begin{itemize}
+        \item \texttt{P}: Sort processes by instantaneous CPU percentage.
+        \item \texttt{M}: Sort processes by resident memory utilization.
+        \item \texttt{k}: Prompt for PID and signal number to terminate a process.
+        \item \texttt{r}: Renice a running process (alters scheduling priority).
+        \item \texttt{q}: Exit the top monitor.
+    \end{itemize}
+\end{itemize}
+\end{commandbox}
+
+\section{Job Control in Terminal Sessions}
+Interactive shells allow managing multiple concurrent foreground and background jobs:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Background Execution (\texttt{\&}):} Appending an ampersand executes a command asynchronously in the background, immediately returning control to the prompt: \texttt{python3 train.py \&}.
+    \item \textbf{Listing Jobs (\texttt{jobs -l}):} Enumerates all active shell jobs with job numbers and PIDs.
+    \item \textbf{Suspending a Job (\texttt{Ctrl+Z}):} Sends the \texttt{SIGTSTP} signal, pausing the active foreground process and placing it into a stopped background state.
+    \item \textbf{Resuming in Background (\texttt{bg \%N}):} Restarts stopped job $N$ running in the background.
+    \item \textbf{Restoring to Foreground (\texttt{fg \%N}):} Brings background job $N$ into the active terminal foreground.
+    \item \textbf{Preventing SIGHUP Termination (\texttt{nohup}):} \texttt{nohup cmd \&} detaches the command from the controlling terminal, ensuring it continues executing even when the user disconnects or closes the session.
+\end{itemize}
+
+\section{Linux Signal Architecture}
+Signals are asynchronous software notifications sent by the Linux kernel to notify a process that a specific system event or condition has transpired.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{c l l X}
+\toprule
+\textbf{Signal \#} & \textbf{Signal Name} & \textbf{Default Action} & \textbf{Operational Semantics \& Trappable Status} \\
+\midrule
+\texttt{1} & \texttt{SIGHUP} & Terminate & Hangup detected on controlling terminal; used to instruct daemons to reload configuration files. Trappable. \\
+\texttt{2} & \texttt{SIGINT} & Terminate & Terminal Interrupt generated via keyboard \texttt{Ctrl+C}. Trappable. \\
+\texttt{3} & \texttt{SIGQUIT} & Core Dump & Terminal Quit generated via keyboard \texttt{Ctrl+\textbackslash}. Produces memory core dump. Trappable. \\
+\texttt{9} & \textbf{SIGKILL} & \textbf{Immediate Kill} & \textbf{Uncatchable and un-ignorable!} The kernel immediately destroys the process. Trapping prohibited. \\
+\texttt{15} & \textbf{SIGTERM} & Terminate & Graceful termination request. Allows programs to flush file buffers, release locks, and close connections. Trappable. \\
+\texttt{18} & \texttt{SIGCONT} & Continue & Resumes a previously paused or stopped process. \\
+\texttt{19} & \textbf{SIGSTOP} & \textbf{Pause Execution} & \textbf{Uncatchable and un-ignorable!} The kernel immediately suspends process scheduling. Trapping prohibited. \\
+\texttt{20} & \texttt{SIGTSTP} & Stop & Terminal stop signal generated via keyboard \texttt{Ctrl+Z}. Trappable. \\
+\bottomrule
+\end{tabularx}
+\caption{Standard POSIX Linux Signals and Kernel Intercept Properties.}
+\label{tab:signals}
+\end{table}
+
+\section{Signaling Commands: kill, killall, pkill}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{kill -15 PID}: Gracefully requests process termination (SIGTERM, default).
+    \item \texttt{kill -9 PID}: Forces instantaneous, uncatchable termination (SIGKILL).
+    \item \texttt{killall nginx}: Signals all processes matching the exact binary name \texttt{nginx}.
+    \item \texttt{pkill -u student python}: Terminates all \texttt{python} instances executed by user \texttt{student}.
+    \item \texttt{pgrep -l apache}: Lists PIDs and process names matching the regex pattern.
+\end{itemize}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the distinct responsibilities of the \texttt{fork()} and \texttt{execve()} system calls during process creation.
+    \item Why cannot a zombie process be terminated by issuing \texttt{kill -9 <PID>}? What administrative action successfully eliminates a zombie?
+    \item Contrast the impact of \texttt{SIGTERM (15)} versus \texttt{SIGKILL (9)} on an active database engine.
+    \item Formulate the exact command sequence required to suspend a running compilation job, resume it in the background, verify its state, and return it to the foreground.
+    \item What is the purpose of running long-term background batch operations via \texttt{nohup}?
+\end{enumerate}

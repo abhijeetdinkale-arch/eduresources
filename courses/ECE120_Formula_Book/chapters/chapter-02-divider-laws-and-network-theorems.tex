@@ -1,0 +1,32 @@
+\chapter{Divider Laws \& Prototyping Network Formulas}
+
+\section{Voltage Divider Formulations}
+\begin{formulabox}{Voltage Divider Expressions \& Loading Correction}
+For $n$ series resistors connected across input potential $V_{\mathrm{in}}$:
+\[ R_{\mathrm{total}} = R_1 + R_2 + \dots + R_n = \sum_{k=1}^n R_k \]
+The voltage drop across any arbitrary resistor $R_x$ is:
+\[ V_x = V_{\mathrm{in}} \frac{R_x}{R_{\mathrm{total}}} \]
+For a classic two-resistor divider across $R_2$:
+\[ V_{\mathrm{out,unloaded}} = V_{\mathrm{in}} \frac{R_2}{R_1 + R_2} \]
+\textbf{Loaded Voltage Divider (with Load Resistance $R_L$)}:
+\[ R_{2,\mathrm{loaded}} = R_2 \parallel R_L = \frac{R_2 R_L}{R_2 + R_L} \]
+\[ V_{\mathrm{out,loaded}} = V_{\mathrm{in}} \frac{R_2 \parallel R_L}{R_1 + (R_2 \parallel R_L)} = V_{\mathrm{in}} \frac{R_2 R_L}{R_1 R_2 + R_1 R_L + R_2 R_L} \]
+\textbf{Percentage Loading Error}:
+\[ \%\text{ Error} = \frac{V_{\mathrm{unloaded}} - V_{\mathrm{loaded}}}{V_{\mathrm{unloaded}}} \times 100\% = \frac{R_1}{R_1 + R_L \left(1 + \frac{R_1}{R_2}\right)} \times 100\% \]
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{The 10\% Divider Loading Rule of Thumb:}\\
+To keep loading attenuation below $10\%$, ensure the load resistance is at least 10 times the lower divider resistor ($R_L \ge 10\,R_2$). To achieve $< 1\%$ error, choose $R_L \ge 100\,R_2$, or buffer with an op-amp voltage follower!
+\end{memorytip}
+
+\section{Current Divider Formulations}
+\begin{formulabox}{Current Divider Law (Parallel Networks)}
+For $n$ parallel resistors connected across a total node current $I_T$:
+\[ \frac{1}{R_p} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_n} = \sum_{k=1}^n G_k \]
+The branch current through conductance $G_x = 1/R_x$ is:
+\[ I_x = I_T \frac{G_x}{\sum_{k=1}^n G_k} = I_T \frac{R_p}{R_x} \]
+\textbf{Special Two-Resistor Parallel Network}:
+\[ I_1 = I_T \frac{R_2}{R_1 + R_2}, \quad I_2 = I_T \frac{R_1}{R_1 + R_2} \]
+\textbf{Dual Dual Principle}: In the voltage divider, $V_x \propto R_x$ (proportional to its own resistance). In the two-branch current divider, $I_1 \propto R_2$ (proportional to the opposite resistor!).
+\end{formulabox}

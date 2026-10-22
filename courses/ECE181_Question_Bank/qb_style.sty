@@ -1,0 +1,108 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qb_style}[2026/10/22 v1.0 ECE181 Question Bank Style]
+
+\RequirePackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{00A0}{ }
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[margin=20mm,top=24mm,bottom=24mm,headheight=22pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{titlesec}
+\RequirePackage{booktabs}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks,colorlinks=true,linkcolor=LPUNavy,urlcolor=LPUOrange,citecolor=LPUNavy]{hyperref}
+
+% Palette
+\definecolor{LPUNavy}{RGB}{15, 32, 67}
+\definecolor{LPUOrange}{RGB}{232, 90, 16}
+\definecolor{DarkSlate}{RGB}{35, 45, 55}
+\definecolor{LightBg}{RGB}{246, 248, 252}
+\definecolor{BorderGray}{RGB}{205, 215, 225}
+\definecolor{SuccessGreen}{RGB}{24, 134, 75}
+\definecolor{AlertRed}{RGB}{200, 30, 30}
+\definecolor{TipBg}{RGB}{255, 248, 230}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{LPUNavy}\textbf{ECE181: Introduction to Python --- Question Bank}}
+\fancyhead[R]{\small\color{LPUOrange}\textbf{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{LPUNavy}}{\chaptertitlename\ \thechapter}{15pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{LPUNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{LPUOrange}}{\thesubsection}{1em}{}
+
+% Boxes
+\newtcolorbox{subjectiveq}[2][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=LPUNavy,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title={Problem #2 \hfill [Subjective Analytical Problem --- 10 Marks]},
+    boxrule=1pt,
+    arc=3mm,
+    top=3mm, bottom=3mm, left=3mm, right=3mm,
+    #1
+}
+
+\newtcolorbox{solbox}[1][]{
+    enhanced,
+    breakable,
+    colback=LightBg,
+    colframe=BorderGray,
+    boxrule=0.8pt,
+    arc=2mm,
+    top=2.5mm, bottom=2.5mm, left=3mm, right=3mm,
+    title={\textbf{\color{LPUNavy}Step-by-Step Analytical \& Algorithmic Solution:}},
+    #1
+}
+
+\newtcolorbox{examinertip}[1][]{
+    enhanced,
+    breakable,
+    colback=TipBg,
+    colframe=LPUOrange,
+    fonttitle=\bfseries\color{LPUOrange},
+    title={\textbf{Examiner's Guidance \& Marking Rubric Breakdown}},
+    boxrule=0.8pt,
+    arc=2mm,
+    top=2mm, bottom=2mm, left=3mm, right=3mm,
+    #1
+}
+
+\newenvironment{pycode}{%
+  \par\vspace{1.5mm}\begingroup\small\ttfamily\raggedright\noindent%
+}{%
+  \par\endgroup\vspace{1.5mm}%
+}
+\newenvironment{codebox}{\begin{pycode}}{\end{pycode}}
+
+\endinput

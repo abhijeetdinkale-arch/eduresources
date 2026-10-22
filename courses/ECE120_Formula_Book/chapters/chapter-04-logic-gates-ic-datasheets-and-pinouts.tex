@@ -1,0 +1,39 @@
+\chapter{Digital Logic IC Datasheets, Pinouts \& Universal Gates}
+
+\section{74xx Series TTL Pinout Configurations}
+\begin{formulabox}{Standard 14-Pin DIP Pinout Mapping}
+For all standard 74xx TTL logic ICs, \textbf{Pin 7 = GND} and \textbf{Pin 14 = $V_{CC}$ (+5V)}:
+\begin{itemize}
+    \item \textbf{7400 Quad 2-Input NAND}: Gate 1 (1,2 $\to$ 3); Gate 2 (4,5 $\to$ 6); Gate 3 (9,10 $\to$ 8); Gate 4 (12,13 $\to$ 11).
+    \item \textbf{7402 Quad 2-Input NOR}: Gate 1 (2,3 $\to$ 1); Gate 2 (5,6 $\to$ 4); Gate 3 (8,9 $\to$ 10); Gate 4 (11,12 $\to$ 13). \textit{Note inverted pin order: Output on 1, inputs on 2 and 3!}
+    \item \textbf{7404 Hex Inverter}: Gate 1 (1 $\to$ 2); Gate 2 (3 $\to$ 4); Gate 3 (5 $\to$ 6); Gate 4 (9 $\to$ 8); Gate 5 (11 $\to$ 10); Gate 6 (13 $\to$ 12).
+    \item \textbf{7408 Quad 2-Input AND}: Gate 1 (1,2 $\to$ 3); Gate 2 (4,5 $\to$ 6); Gate 3 (9,10 $\to$ 8); Gate 4 (12,13 $\to$ 11).
+    \item \textbf{7432 Quad 2-Input OR}: Gate 1 (1,2 $\to$ 3); Gate 2 (4,5 $\to$ 6); Gate 3 (9,10 $\to$ 8); Gate 4 (12,13 $\to$ 11).
+    \item \textbf{7486 Quad 2-Input XOR}: Gate 1 (1,2 $\to$ 3); Gate 2 (4,5 $\to$ 6); Gate 3 (9,10 $\to$ 8); Gate 4 (12,13 $\to$ 11).
+\end{itemize}
+\end{formulabox}
+
+\section{Universal Gate Realization Formulas \& Minimum Gate Counts}
+\begin{formulabox}{Universal Syntheses \& Gate Count Matrix}
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Target Boolean Gate} & \textbf{Realization via NAND Gates Only} & \textbf{Realization via NOR Gates Only} \\
+\midrule
+NOT Gate ($\overline{A}$) & $\overline{A \cdot A}$ (\textbf{1 Gate}) & $\overline{A + A}$ (\textbf{1 Gate}) \\
+AND Gate ($A \cdot B$) & $\overline{\overline{A \cdot B} \cdot \overline{A \cdot B}}$ (\textbf{2 Gates}) & $\overline{\overline{A + A} + \overline{B + B}}$ (\textbf{3 Gates}) \\
+OR Gate ($A + B$) & $\overline{\overline{A \cdot A} \cdot \overline{B \cdot B}}$ (\textbf{3 Gates}) & $\overline{\overline{A + B} + \overline{A + B}}$ (\textbf{2 Gates}) \\
+NOR Gate ($\overline{A + B}$) & Invert output of OR (\textbf{4 Gates}) & Direct NOR (\textbf{1 Gate}) \\
+NAND Gate ($\overline{A \cdot B}$) & Direct NAND (\textbf{1 Gate}) & Invert output of AND (\textbf{4 Gates}) \\
+XOR Gate ($A \oplus B$) & $\overline{\overline{A\overline{AB}} \cdot \overline{B\overline{AB}}}$ (\textbf{4 Gates}) & $\overline{\overline{A+B} + \overline{\overline{A}+\overline{B}}}$ (\textbf{5 Gates}) \\
+XNOR Gate ($\overline{A \oplus B}$) & Invert XOR output (\textbf{5 Gates}) & Dual of XOR (\textbf{4 Gates}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{De Morgan's Laws Shortcut:}\\
+1. Break the line, change the sign: $\overline{A \cdot B} = \overline{A} + \overline{B}$\\
+2. Break the line, change the sign: $\overline{A + B} = \overline{A} \cdot \overline{B}$
+\end{memorytip}

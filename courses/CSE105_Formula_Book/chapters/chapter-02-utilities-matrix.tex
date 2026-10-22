@@ -1,0 +1,46 @@
+\chapter{Unit 2: System Utilities \& CLI Command Matrix}
+
+\begin{cheatbox}{System Utilities Command Specification Matrix}
+\small
+\begin{tabularx}{\linewidth}{l l X l}
+\toprule
+\textbf{Command} & \textbf{Syntax} & \textbf{High-Yield Options \& Description} & \textbf{Return / Exit} \\
+\midrule
+\texttt{cal} & \texttt{cal [opts] [yr]} & \texttt{-3} (prev/cur/next), \texttt{-y} (full year), \texttt{-j} (Julian days). & \texttt{0} = OK \\
+\texttt{date} & \texttt{date [+FMT]} & \texttt{+\%Y-\%m-\%d} (ISO date), \texttt{+\%T} (time), \texttt{+\%s} (Unix epoch). & \texttt{0} = OK \\
+\texttt{echo} & \texttt{echo [opts] [str]} & \texttt{-n} (no newline), \texttt{-e} (enable backslash escapes: \texttt{\textbackslash n}, \texttt{\textbackslash t}). & \texttt{0} = OK \\
+\texttt{printf} & \texttt{printf FMT [args]} & Format specifiers: \texttt{\%s} string, \texttt{\%d} int, \texttt{\%10.2f} float. & \texttt{0} = OK \\
+\texttt{bc} & \texttt{bc [opts]} & Arbitrary precision math. Set \texttt{scale=N} for decimal precision. & \texttt{0} = OK \\
+\texttt{expr} & \texttt{expr arg1 op arg2} & Integer arithmetic. \texttt{*} must be escaped (\texttt{\textbackslash*}). & \texttt{0} = OK, \texttt{1} = zero \\
+\texttt{script} & \texttt{script [file]} & Records terminal session; replay via \texttt{scriptreplay}. & \texttt{0} = OK \\
+\texttt{passwd} & \texttt{passwd [user]} & Updates authentication token in \texttt{/etc/shadow}. & Non-zero = Error \\
+\texttt{whoami} & \texttt{whoami} & Prints effective user login name. & \texttt{0} = OK \\
+\texttt{id} & \texttt{id [user]} & Shows numeric UID, GID, and supplementary groups. & \texttt{0} = OK \\
+\texttt{who} & \texttt{who [opts]} & \texttt{-H} (headers), \texttt{-b} (last system reboot time). & \texttt{0} = OK \\
+\texttt{uname} & \texttt{uname [opts]} & \texttt{-a} (all), \texttt{-r} (kernel release), \texttt{-m} (CPU architecture). & \texttt{0} = OK \\
+\texttt{uptime} & \texttt{uptime [opts]} & Reports system uptime, user count, and 1, 5, 15 min load averages. & \texttt{0} = OK \\
+\texttt{tty} & \texttt{tty} & Prints terminal device file name (e.g., \texttt{/dev/pts/1}). & \texttt{0} = Terminal \\
+\texttt{stty} & \texttt{stty [opts]} & \texttt{-echo} (disables keyboard echo for password prompts). & \texttt{0} = OK \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{Manual Page Section Hierarchy}
+\begin{tabularx}{\linewidth}{c l X}
+\toprule
+\textbf{Section} & \textbf{Category} & \textbf{Archetypal Examples} \\
+\midrule
+\textbf{1} & Executable Programs / User Commands & \texttt{ls}, \texttt{cat}, \texttt{grep}, \texttt{cal}, \texttt{date} \\
+\textbf{2} & Kernel System Calls & \texttt{open}, \texttt{read}, \texttt{write}, \texttt{fork}, \texttt{execve} \\
+\textbf{3} & Library Calls (C Standard Library) & \texttt{printf}, \texttt{malloc}, \texttt{strcpy}, \texttt{scanf} \\
+\textbf{4} & Special Files (Hardware / Device Nodes) & \texttt{/dev/null}, \texttt{/dev/sda}, \texttt{/dev/tty} \\
+\textbf{5} & File Formats and Conventions & \texttt{/etc/passwd}, \texttt{/etc/fstab}, \texttt{/etc/shadow} \\
+\textbf{7} & Miscellaneous \& Conventions & \texttt{regex(7)}, \texttt{standards(7)}, \texttt{man(7)} \\
+\textbf{8} & System Administration Commands & \texttt{useradd}, \texttt{fdisk}, \texttt{iptables}, \texttt{mount} \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{tipbox}
+To locate commands by keyword without opening individual manual pages, run \texttt{apropos keyword} or \texttt{man -k keyword}. Run \texttt{whatis command} for instantaneous one-line purpose summaries.
+\end{tipbox}

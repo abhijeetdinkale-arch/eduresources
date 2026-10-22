@@ -1,0 +1,97 @@
+\chapter{Unit 3: Fundamentals of Electrical Machines}
+
+\section{Magnetic Circuits and Mutual Coupling}
+
+\begin{formulabox}{Magnetic Coupling and Induction}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Self-Inductance}: $L = \frac{N \Phi}{i} = \frac{N^2}{\mathcal{R}} = \frac{\mu N^2 A}{l}$ [Henries, H].
+    \item \textbf{Mutual Inductance}: $M = \frac{N_2 \Phi_{12}}{i_1} = \frac{N_1 \Phi_{21}}{i_2} = k\sqrt{L_1 L_2}$.
+    \item \textbf{Coupling Coefficient ($k$)}: $k = \frac{M}{\sqrt{L_1 L_2}}$, where $0 \le k \le 1$. ($k \approx 0.98--0.99$ for iron-core transformers).
+    \item \textbf{Coupled Inductors in Series}:
+    \begin{align*}
+        \text{Series Aiding (same dot orientation): } & L_{eq} = L_1 + L_2 + 2M \\
+        \text{Series Opposing (opposite dot orientation): } & L_{eq} = L_1 + L_2 - 2M
+    \end{align*}
+    \item \textbf{Measurement of Mutual Inductance}: $M = \frac{L_{\text{aiding}} - L_{\text{opposing}}}{4}$.
+\end{itemize}
+\end{formulabox}
+
+\section{Single-Phase Transformers}
+
+\begin{formulabox}{Transformer Operating Principles and EMF Equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{EMF Equation of a Transformer}:
+    \[ E_1 = 4.44 f N_1 \Phi_m = 4.44 f N_1 B_m A, \qquad E_2 = 4.44 f N_2 \Phi_m \]
+    \item \textbf{Transformation / Turns Ratio ($k$)}:
+    \[ k = \frac{E_2}{E_1} = \frac{V_2}{V_1} = \frac{N_2}{N_1} = \frac{I_1}{I_2} \]
+    \item \textbf{Impedance Transformation Across Windings}:
+    \[ R_1' = \frac{R_2}{k^2}, \quad X_1' = \frac{X_2}{k^2} \implies R_{e1} = R_1 + \frac{R_2}{k^2}, \quad R_{e2} = R_2 + k^2 R_1 \]
+    \item \textbf{Losses in Transformers}:
+    \begin{align*}
+        \text{Iron / Core Losses ($P_i$): } & P_i = P_h + P_e \quad \text{(Constant, measured by Open-Circuit Test)} \\
+        \text{Hysteresis Loss: } & P_h = k_h f B_m^{1.6} V \quad \text{(Steinmetz formula)} \\
+        \text{Eddy Current Loss: } & P_e = k_e f^2 B_m^2 t^2 V \quad (t\text{: lamination thickness}) \\
+        \text{Copper Losses ($P_{cu}$): } & P_{cu}(x) = x^2 P_{cu,FL} \quad \text{(Variable, measured by Short-Circuit Test)}
+    \end{align*}
+    where $x = \frac{\text{Actual Load}}{\text{Rated Load}} = \frac{I_2}{I_{2,FL}}$.
+    \item \textbf{Efficiency ($\eta$)}:
+    \[ \eta = \frac{x S \cos\phi}{x S \cos\phi + P_i + x^2 P_{cu,FL}} \times 100\% \]
+    \item \textbf{Condition for Maximum Efficiency}:
+    \[ P_i = x^2 P_{cu,FL} \implies x = \sqrt{\frac{P_i}{P_{cu,FL}}} \]
+    \item \textbf{Voltage Regulation}:
+    \[ \%VR = \frac{V_{2,NL} - V_{2,FL}}{V_{2,FL}} \times 100\% \approx \frac{I_2(R_{e2}\cos\phi \pm X_{e2}\sin\phi)}{V_{2,FL}} \times 100\% \]
+    ($+$ for lagging power factor, $-$ for leading power factor). Zero regulation occurs at leading pf when $\tan\phi = -R_{e2}/X_{e2}$.
+    \item \textbf{Auto-Transformer Copper Saving}:
+    \[ \frac{\text{Weight of Copper in Auto-Transformer}}{\text{Weight of Copper in Two-Winding Transformer}} = 1 - k \quad \left(k = \frac{V_2}{V_1} < 1\right) \]
+    Copper saved $= k \times (\text{Copper in 2-winding transformer})$.
+\end{itemize}
+\end{formulabox}
+
+\section{DC Machines: Motors and Generators}
+
+\begin{formulabox}{DC Machine Governing Equations}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Generated / Counter-EMF (Back EMF)}:
+    \[ E_b = \frac{P \Phi Z N}{60 A} \]
+    ($P$: poles, $\Phi$: flux per pole in Wb, $Z$: total armature conductors, $N$: speed in rpm, $A$: parallel paths: $A = 2$ for wave, $A = P$ for lap).
+    \item \textbf{Terminal Voltage Relation}:
+    \begin{align*}
+        \text{DC Generator: } & V = E_g - I_a R_a \\
+        \text{DC Motor: } & V = E_b + I_a R_a \implies I_a = \frac{V - E_b}{R_a}
+    \end{align*}
+    \item \textbf{Electromagnetic Torque}:
+    \[ T = \frac{1}{2\pi} \left(\frac{P \Phi Z I_a}{A}\right) = 0.159 \cdot \frac{P \Phi Z I_a}{A} \text{ [N}\cdot\text{m]} \implies T \propto \Phi I_a \]
+    \item \textbf{Speed Equation of DC Motor}:
+    \[ N = \frac{60 A}{P Z} \frac{E_b}{\Phi} \propto \frac{V - I_a R_a}{\Phi} \]
+    \item \textbf{Starting Current}: At standstill ($N = 0 \implies E_b = 0$), $I_{start} = \frac{V}{R_a} \approx 20--50 \times I_{rated}$. A 3-point or 4-point starter inserts external resistance $R_{ext}$ during starting.
+    \item \textbf{Speed Control Methods}:
+    \begin{itemize}
+        \item Field Control / Flux Weakening ($\Phi \downarrow \implies N \uparrow$): Above base speed.
+        \item Armature Resistance Control ($R_{ext} \uparrow \implies E_b \downarrow \implies N \downarrow$): Below base speed.
+    \end{itemize}
+\end{itemize}
+\end{formulabox}
+
+\section{AC Induction Motors}
+
+\begin{formulabox}{Three-Phase and Single-Phase Induction Motors}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Synchronous Speed of Rotating Magnetic Field}:
+    \[ N_s = \frac{120 f}{P} \text{ [rpm]} \]
+    \item \textbf{Slip ($s$)}:
+    \[ s = \frac{N_s - N}{N_s} \iff N = N_s(1 - s) \]
+    At standstill: $N = 0 \implies s = 1.0$. At synchronous speed: $N = N_s \implies s = 0$.
+    \item \textbf{Rotor Quantities at Slip $s$}:
+    \[ f_r = s f, \qquad E_{2r} = s E_2, \qquad X_{2r} = s X_2 \]
+    \item \textbf{Rotor Current and Power Factor}:
+    \[ I_{2r} = \frac{s E_2}{\sqrt{R_2^2 + (s X_2)^2}}, \qquad \cos\phi_{2r} = \frac{R_2}{\sqrt{R_2^2 + (s X_2)^2}} \]
+    \item \textbf{Torque Equation}:
+    \[ T \propto \frac{s E_2^2 R_2}{R_2^2 + (s X_2)^2} \]
+    \item \textbf{Maximum / Breakdown Torque}:
+    Occurs when rotor resistance equals rotor reactance ($R_2 = s_{mT} X_2$):
+    \[ s_{mT} = \frac{R_2}{X_2}, \qquad T_{max} \propto \frac{E_2^2}{2 X_2} \]
+    $T_{max}$ is independent of rotor resistance $R_2$, but the slip at which it occurs is proportional to $R_2$.
+    \item \textbf{Single-Phase Induction Motor}:
+    Double revolving field theory decomposes pulsating field into forward ($s_f = s$) and backward ($s_b = 2 - s$) rotating fields. It possesses zero starting torque ($T_{start} = 0$) and requires auxiliary phase split methods (capacitor-start, split-phase, shaded-pole).
+\end{itemize}
+\end{formulabox}

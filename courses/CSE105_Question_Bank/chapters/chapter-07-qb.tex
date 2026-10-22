@@ -1,0 +1,119 @@
+\chapter{Unit 7: User \& Group Administration Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{7.1}{What numeric User ID (UID) is permanently assigned to the superuser (root)?}
+{\texttt{1000}}
+{\texttt{1}}
+{\texttt{0}}
+{\texttt{65534}}
+
+\mcqitem{7.2}{Which file contains encrypted user password hashes alongside aging parameters?}
+{\texttt{/etc/passwd}}
+{\texttt{/etc/shadow}}
+{\texttt{/etc/security}}
+{\texttt{/etc/group}}
+
+\mcqitem{7.3}{What does the field value 'x' in the second column of /etc/passwd indicate?}
+{The account has been deleted}
+{The account password is encrypted and stored in /etc/shadow}
+{The account has no password required}
+{The account is locked}
+
+\mcqitem{7.4}{Which command switch instructs useradd to automatically create the user's home directory?}
+{\texttt{-d}}
+{\texttt{-m}}
+{\texttt{-h}}
+{\texttt{-c}}
+
+\mcqitem{7.5}{Which command modifies password expiration parameters and aging policies?}
+{\texttt{usermod}}
+{\texttt{chage}}
+{\texttt{passwd -e}}
+{\texttt{expire}}
+
+\mcqitem{7.6}{Which command must be used to safely edit the /etc/sudoers file with syntax validation?}
+{\texttt{nano /etc/sudoers}}
+{\texttt{vim /etc/sudoers}}
+{\texttt{visudo}}
+{\texttt{editsudo}}
+
+\mcqitem{7.7}{What is the primary difference between executing 'su' versus 'su -'?}
+{\texttt{su} switches to root without asking for password}
+{\texttt{su -} provides a full login shell, loading target user environment and PATH}
+{\texttt{su} is deprecated in modern Linux}
+{\texttt{su -} restricts command execution to single-user mode}
+
+\mcqitem{7.8}{Which command deletes a user account while simultaneously removing their home directory and mail spool?}
+{\texttt{userdel -r username}}
+{\texttt{userdel -f username}}
+{\texttt{rmuser username}}
+{\texttt{deluser --all username}}
+
+\mcqitem{7.9}{In /etc/shadow, what hash algorithm is denoted by the password prefix \$6\$?}
+{MD5}
+{Blowfish}
+{SHA-256}
+{SHA-512}
+
+\mcqitem{7.10}{Which command permanently locks a user account password by prepending an exclamation mark (!) in /etc/shadow?}
+{\texttt{usermod -L username}}
+{\texttt{useradd -lock username}}
+{\texttt{chage -d 0 username}}
+{\texttt{groupmod -L username}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 7 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+7.1 & \textbf{(c)} & The superuser account root is hardcoded to UID 0. \\
+7.2 & \textbf{(b)} & \texttt{/etc/shadow} stores cryptographic hashes, salt, and aging parameters. \\
+7.3 & \textbf{(b)} & The \texttt{x} placeholder signals that the hash resides in shadow file. \\
+7.4 & \textbf{(b)} & \texttt{useradd -m} provisions home directory from \texttt{/etc/skel}. \\
+7.5 & \textbf{(b)} & \texttt{chage} (change age) manipulates password rotation and warning windows. \\
+7.6 & \textbf{(c)} & \texttt{visudo} prevents syntax errors that could permanently lock out administrators. \\
+7.7 & \textbf{(b)} & \texttt{su -} loads login shell profiles, resetting environment variables and directory. \\
+7.8 & \textbf{(a)} & \texttt{userdel -r} recursively destroys user home directory and mail spool. \\
+7.9 & \textbf{(d)} & The identifier \texttt{\$6\$} indicates SHA-512 hashing with cryptographic salt. \\
+7.10 & \textbf{(a)} & \texttt{usermod -L} prepends \texttt{!} to password hash, blocking authentication. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the 7 fields of /etc/passwd with an exact example entry.}
+\begin{vivasol}
+Entry: \texttt{student:x:1001:1001:CS Undergrad,Lab 4:/home/student:/bin/bash}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{student}: Username / login name.
+    \item \texttt{x}: Password placeholder indicating hash is in \texttt{/etc/shadow}.
+    \item \texttt{1001}: User ID (UID).
+    \item \texttt{1001}: Primary Group ID (GID).
+    \item \texttt{CS Undergrad,Lab 4}: GECOS comment field describing user.
+    \item \texttt{/home/student}: Absolute path to home directory.
+    \item \texttt{/bin/bash}: Login shell program spawned upon authentication.
+\end{enumerate}
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{7.1 --- Provisioning Multi-Tier User Accounts}
+\textbf{Objective:} Create an administrative user, configure password aging policies, append to the sudo group, and audit the shadow entry.
+\begin{clibox}
+$ sudo useradd -m -s /bin/bash -c "DevOps Lead" devlead
+$ sudo usermod -aG sudo devlead
+$ sudo chage -M 60 -W 7 devlead
+$ sudo chage -l devlead
+Last password change                                    : Oct 22, 2026
+Password expires                                        : Dec 21, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 60
+Number of days of warning before password expires       : 7
+\end{clibox}
+\end{practicalbox}

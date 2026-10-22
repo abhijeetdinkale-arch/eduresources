@@ -1,0 +1,168 @@
+\chapter{The Filesystem Hierarchy, Inode Architecture \& File Management}
+\label{chap:filesystem-management}
+
+\section{The Filesystem Hierarchy Standard (FHS)}
+In contrast to operating systems that employ multiple drive letters (\texttt{C:}, \texttt{D:}), Linux arranges all storage devices, partitions, pseudo-filesystems, and network mounts beneath a single inverted tree rooted at the forward slash (\texttt{/}). The layout is codified by the \textbf{Filesystem Hierarchy Standard (FHS)}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.0cm,
+    dir/.style={rectangle, draw=brandnavy, fill=boxnavybg, rounded corners=2pt, font=\small\ttfamily\bfseries, minimum width=1.8cm, minimum height=0.7cm},
+    edge/.style={thick, draw=brandnavy}]
+    \node [dir] (root) {/ (Root)};
+    \node [dir, below left=1.2cm and 3.5cm of root] (bin) {/bin};
+    \node [dir, below left=1.2cm and 2.0cm of root] (etc) {/etc};
+    \node [dir, below left=1.2cm and 0.5cm of root] (home) {/home};
+    \node [dir, below right=1.2cm and 0.5cm of root] (dev) {/dev};
+    \node [dir, below right=1.2cm and 2.0cm of root] (proc) {/proc};
+    \node [dir, below right=1.2cm and 3.5cm of root] (var) {/var};
+
+    \draw [edge] (root) -- (bin);
+    \draw [edge] (root) -- (etc);
+    \draw [edge] (root) -- (home);
+    \draw [edge] (root) -- (dev);
+    \draw [edge] (root) -- (proc);
+    \draw [edge] (root) -- (var);
+\end{tikzpicture}
+\caption{The Root Branching Structure under the Filesystem Hierarchy Standard.}
+\label{fig:fhs-tree}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Directory Path} & \textbf{FHS Purpose \& Structural Contents} \\
+\midrule
+\texttt{/} & The Root Directory; the supreme parent of the entire hierarchy. \\
+\texttt{/bin} & Essential user command binaries required in single-user recovery mode (\texttt{cat}, \texttt{ls}, \texttt{cp}). \\
+\texttt{/sbin} & Essential system binaries for superuser administration (\texttt{fdisk}, \texttt{init}, \texttt{ip}). \\
+\texttt{/etc} & Host-specific system-wide configuration files and startup scripts (\texttt{passwd}, \texttt{fstab}). \\
+\texttt{/home} & User home directories housing personal configurations and documents (\texttt{/home/asha}). \\
+\texttt{/root} & Dedicated home directory of the superuser (root). \\
+\texttt{/dev} & Device special files representing physical/virtual hardware (\texttt{/dev/sda}, \texttt{/dev/null}, \texttt{/dev/urandom}). \\
+\texttt{/proc} & Virtual pseudo-filesystem exposing real-time kernel data structures and process state. \\
+\texttt{/sys} & Unified sysfs pseudo-filesystem exposing hardware buses and kernel device drivers. \\
+\texttt{/var} & Variable data files: system logs (\texttt{/var/log}), spool queues, and mail stores. \\
+\texttt{/tmp} & Temporary storage files accessible by all users; automatically emptied on reboot. \\
+\texttt{/usr} & User secondary hierarchy containing sharable, read-only multi-user software (\texttt{/usr/bin}). \\
+\texttt{/opt} & Add-on commercial or third-party proprietary application software packages. \\
+\texttt{/boot} & Kernel images (\texttt{vmlinuz}), initramfs ramdisks, and GRUB bootloader configuration. \\
+\texttt{/lib} & Shared dynamic library dependencies (\texttt{.so} files) and kernel modules. \\
+\bottomrule
+\end{tabularx}
+\caption{Linux Filesystem Hierarchy Standard (FHS) Directory Directory Specifications.}
+\label{tab:fhs}
+\end{table}
+
+\section{Path Resolution: Absolute vs Relative Paths}
+Every file in Linux is uniquely addressed through a path string:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Absolute Path:} Defined from the root directory (\texttt{/}). It invariably commences with a forward slash (e.g., \texttt{/home/student/projects/main.c}). It resolves unambiguously regardless of the working directory.
+    \item \textbf{Relative Path:} Defined with respect to the current working directory. It never begins with a leading forward slash:
+    \begin{itemize}
+        \item \texttt{.} refers explicitly to the current working directory.
+        \item \texttt{..} refers explicitly to the immediate parent directory.
+        \item \texttt{\textasciitilde} resolves to the active user's home directory.
+        \item \texttt{-} represents the previous working directory (\texttt{OLDPWD}).
+    \end{itemize}
+\end{itemize}
+
+\section{The Inode Architecture \& Hard vs Symbolic Links}
+In Linux filesystems (such as \texttt{ext4}), a file is strictly split into two entities: \textbf{Directory Entry} (File name and inode pointer) and \textbf{Inode} (Index Node containing metadata and pointers to data disk blocks).
+
+\begin{definition}[Inode Metadata Attributes]
+The inode data structure records:
+\begin{enumerate}[leftmargin=1.5em]
+    \item File type (regular file, directory, symlink, block device, FIFO).
+    \item Permissions and access control bits (mode flags).
+    \item Owner User ID (UID) and Owner Group ID (GID).
+    \item File byte size.
+    \item Hard link reference count.
+    \item Timestamps: Access time (\texttt{atime}), Modification time (\texttt{mtime}), and Inode Change time (\texttt{ctime}).
+    \item Direct and indirect block pointers addressing physical storage sectors.
+\end{enumerate}
+\textit{Crucial Principle:} An inode does \textbf{not} contain the file name. The file name is stored exclusively inside the parent directory table alongside its associated inode number.
+\end{definition}
+
+\subsection{Hard Links versus Symbolic (Soft) Links}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Feature Dimension} & \textbf{Hard Link (\texttt{ln target link})} & \textbf{Symbolic Link (\texttt{ln -s target link})} \\
+\midrule
+\textbf{Inode Allocation} & Shares the \textit{exact same} inode number as the original target file. & Allocates a \textit{new, distinct} inode with file type \texttt{l}. \\
+\textbf{Data Content} & Directly points to the target file's physical data blocks. & Contains a text string storing the pathname of the target. \\
+\textbf{Target Deletion} & Data remains intact; link count decrements by 1; data freed only when link count reaches 0. & Becomes a broken (dangling) link pointing to a non-existent target. \\
+\textbf{Cross-Filesystem} & \textbf{Cannot} span across distinct partitions or filesystems (inode IDs are local). & \textbf{Can} cross distinct storage drives, filesystems, and network shares. \\
+\textbf{Directory Linking} & Prohibited for ordinary users to prevent recursive cyclic infinite directory loops. & Permitted and widely utilized to reference directories. \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison Between Hard Links and Symbolic Links.}
+\label{tab:links}
+\end{table}
+
+\section{Core Directory \& File Operations Primitives}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{pwd}: Print Working Directory. Outputs the absolute path of the current directory.
+    \item \texttt{cd [dir]}: Change Directory. \texttt{cd} with no arguments returns to \texttt{\$HOME}; \texttt{cd -} toggles to the previous directory.
+    \item \texttt{ls [options] [path]}: Lists directory contents.
+    \begin{itemize}
+        \item \texttt{-l}: Long listing format (permissions, links, owner, group, size, mtime, name).
+        \item \texttt{-a}: Show all files, including hidden files (commencing with a dot \texttt{.}).
+        \item \texttt{-h}: Human-readable sizes (K, M, G).
+        \item \texttt{-t}: Sort by modification time (most recent first).
+        \item \texttt{-r}: Reverse the sort order.
+        \item \texttt{-i}: Display inode index numbers.
+    \end{itemize}
+    \item \texttt{mkdir -p a/b/c}: Creates nested directory hierarchies without error.
+    \item \texttt{rmdir}: Removes empty directories only.
+    \item \texttt{touch}: Creates empty files if non-existent, or updates \texttt{atime} and \texttt{mtime} timestamps.
+    \item \texttt{cp -r -p src dest}: Recursively copies directories (\texttt{-r}) preserving timestamps and permissions (\texttt{-p}).
+    \item \texttt{mv}: Moves files or renames filenames atomically within the same filesystem.
+    \item \texttt{rm -rf}: Recursively and forcefully deletes directories and files without interactive prompting.
+\end{itemize}
+
+\section{Deep Search: The find Engine}
+Unlike \texttt{locate} which relies on a pre-indexed database, \textbf{find} navigates physical directory inodes in real-time.
+\begin{commandbox}{find --- Search Files in a Directory Hierarchy}
+\textbf{Syntax:} \texttt{find [starting-point] [criteria] [action]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-name "pattern"}: Case-sensitive name matching with shell wildcards.
+    \item \texttt{-iname "pattern"}: Case-insensitive name matching.
+    \item \texttt{-type f|d|l}: Matches regular files (\texttt{f}), directories (\texttt{d}), or symlinks (\texttt{l}).
+    \item \texttt{-size +100M}: Matches files exceeding 100 Megabytes in size.
+    \item \texttt{-mtime -7}: Modified within the past 7 days.
+    \item \texttt{-perm 644}: Exact octal permission matching.
+    \item \texttt{-exec cmd \{\} \textbackslash;}: Executes \texttt{cmd} on each matching file sequentially.
+    \item \texttt{-exec cmd \{\} +}: Batches matching filenames together into a single command invocation (high performance).
+\end{itemize}
+\end{commandbox}
+
+\begin{terminalbox}[Advanced find Practical Invocations]
+$ find /var/log -type f -name "*.log" -size +10M
+/var/log/syslog.1
+/var/log/nginx/access.log
+
+$ find /home/user/docs -type f -mtime -3 -exec cp {} /backup/recent/ +
+\end{terminalbox}
+
+\section{Directory Visualization \& Disk Space Analysis}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{tree:} Produces a visual tree representation. \texttt{tree -L 2 -d} limits recursion depth to 2 levels and restricts display to directories only.
+    \item \textbf{history:} Inspects the interactive command history list. \texttt{!!} repeats the preceding command; \texttt{!n} executes command number $n$; \texttt{!-2} executes the second-to-last command; \texttt{!str} executes the most recent command beginning with \texttt{str}.
+    \item \textbf{df -h:} Reports filesystem disk space usage, total capacity, and mount points in human-readable units. The \texttt{-i} option audits inode capacity.
+    \item \textbf{du -sh *:} Estimates disk space usage of files and directories within the current working folder.
+\end{itemize}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item State the architectural purpose of \texttt{/proc} and explain why files within it consume 0 bytes of physical disk space.
+    \item What is the functional impact on a file when its hard link count drops from 2 to 1? What occurs when it drops from 1 to 0?
+    \item Why cannot a hard link be established across two distinct physical disk partitions?
+    \item Construct a \texttt{find} command that locates all regular files ending with \texttt{.tmp} inside \texttt{/tmp} older than 30 days and removes them safely.
+    \item Differentiate between \texttt{df -h} and \texttt{du -sh}. In what situation can \texttt{df} report a disk as 100\% full even when \texttt{du} reports ample free storage?
+\end{enumerate}

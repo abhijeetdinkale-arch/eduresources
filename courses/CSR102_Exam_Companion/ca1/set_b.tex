@@ -1,0 +1,110 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+\label{sec:ca1_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{B}{60 Minutes}{30 Marks}{CO1 (Foundations \& Wicked Problems), CO2 (Problem Definition \& Analysis)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Apply the Cynefin sense-making framework to classify four distinct engineering operational domains (Clear, Complicated, Complex, Chaotic). Provide the recommended decision-making sequence for each.
+}{5}{CO1}{L2 Understand}
+
+\questionitem{2}{
+    Explain the first diamond of the UK Design Council Double Diamond model. Why does premature convergence during problem discovery lead to system failure?
+}{5}{CO1}{L3 Apply}
+
+\questionitem{3}{
+    Construct an Empathy Map (Says, Thinks, Does, Feels, Pains, Gains) for an elderly patient attempting to navigate an automated hospital appointment kiosk.
+}{5}{CO2}{L3 Apply}
+
+\questionitem{4}{
+    Differentiate between symptoms and root causes. Illustrate how an engineering team might mistake a symptom for a root cause in an e-commerce shopping cart abandonment scenario.
+}{5}{CO2}{L4 Analyze}
+
+\questionitem{5}{
+    Explain the purpose of Scope Boundary Critique. Construct an In-Scope vs. Out-of-Scope boundary table for a project deploying an AI chatbot for student academic advising.
+}{5}{CO2}{L3 Apply}
+
+\questionitem{6}{
+    Define the SMART criteria for engineering project objectives. Transform two poorly drafted objectives (``Make the app faster'' and ``Improve customer satisfaction'') into fully compliant SMART objectives.
+}{5}{CO2}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set B}
+
+\begin{solutionbox}[Solution to Question 1]
+\textbf{Cynefin Framework Domain Breakdown:}\\
+1. \textbf{Clear (Simple):} Known causes and effects. \textit{Response:} Sense $\to$ Categorize $\to$ Respond. Apply Best Practice (e.g., password reset procedure).\\
+2. \textbf{Complicated:} Multiple viable solutions; requires expert diagnostic evaluation. \textit{Response:} Sense $\to$ Analyze $\to$ Respond. Apply Good Practice (e.g., database performance index tuning).\\
+3. \textbf{Complex:} Emergent patterns; cause and effect only visible in retrospect. \textit{Response:} Probe $\to$ Sense $\to$ Respond. Apply Safe-to-Fail experiments and agile prototypes (e.g., redesigning social networking feed ranking).\\
+4. \textbf{Chaotic:} High turbulence; immediate crisis. \textit{Response:} Act $\to$ Sense $\to$ Respond. Establish immediate command and stabilization (e.g., live ransomware attack mitigation).
+\begin{markingrubric}
+$\bullet$ Correct identification of all 4 domains: \textbf{2 Marks}\\
+$\bullet$ Accurate response sequences and engineering actions: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+\textbf{The First Diamond (Discover \& Define):}\\
+$\bullet$ \textit{Discover (Divergence):} Exploring the full context, gathering empathy data from diverse users, and challenging hidden assumptions.\\
+$\bullet$ \textit{Define (Convergence):} Synthesizing observations into a clear root problem statement and design brief.\\
+\textbf{Consequences of Premature Convergence:}\\
+Premature convergence occurs when engineers accept the client's initial brief at face value without question. This leads to the ``Solution in Search of a Problem'' anti-pattern, where expensive software or hardware is built to solve a superficial symptom while the root human need remains completely unaddressed.
+\begin{markingrubric}
+$\bullet$ Accurate description of Discover and Define phases: \textbf{3 Marks}\\
+$\bullet$ Analysis of premature convergence risks and failure modes: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+\textbf{Empathy Map for Elderly Kiosk User:}\\
+$\bullet$ \textbf{Says:} ``Where do I insert my Medicare card?'', ``Is this thing going to print my receipt?''\\
+$\bullet$ \textbf{Does:} Squints at small touch targets; leans close to screen; hesitates before pressing buttons; clutches paper records tightly.\\
+$\bullet$ \textbf{Thinks:} ``I hope I don't break this machine''; ``Everyone in line behind me is judging how slow I am.''\\
+$\bullet$ \textbf{Feels:} Visceral embarrassment; vulnerability; anxiety over losing their appointment slot.\\
+$\bullet$ \textbf{Pains:} Tiny fonts, confusing medical terminology, timeout resets that erase progress, high glare on screen.\\
+$\bullet$ \textbf{Gains:} Clear physical receipt with large bold room numbers, friendly assistance, dignity in self-service.
+\begin{markingrubric}
+$\bullet$ Realistic entries across all 4 core quadrants (Says, Does, Thinks, Feels): \textbf{3 Marks}\\
+$\bullet$ Deep synthesis of Pains and Gains: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+\textbf{Symptoms vs. Root Causes in Cart Abandonment:}\\
+$\bullet$ \textit{Symptom:} Observable surface manifestation of distress (e.g., 68\% of users abandon checkout on step 3).\\
+$\bullet$ \textit{Superficial Mistake:} Management assumes users abandoned carts because ``the checkout button is too small'' or ``users lack discounts,'' spending \$30,000 on coupon promotional pop-ups.\\
+$\bullet$ \textit{Root Cause Analysis:} Deep user shadowing reveals that step 3 demands mandatory account creation with password complexity rules and unexpected \$14 shipping fees disclosed for the first time. The root cause is surprise pricing and high registration friction, not lack of interest.
+\begin{markingrubric}
+$\bullet$ Rigorous theoretical distinction: \textbf{2 Marks}\\
+$\bullet$ Detailed, realistic e-commerce failure illustration: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+\textbf{Scope Boundary Ledger for AI Advising Chatbot:}\\
+\begin{tabularx}{\linewidth}{|X|X|} \hline
+\textbf{In-Scope (Hard Deliverables)} & \textbf{Out-of-Scope (Explicit Exclusions)} \\ \hline
+Automated retrieval of prerequisite courses and graduation requirements from course catalog. & Automatic registration or fee payment processing. \\ \hline
+Natural language Q\&A regarding add/drop deadlines. & Handling mental health counseling or crisis intervention (diverted to human helpline). \\ \hline
+Integration with student portal via single sign-on (SSO). & Modifying student academic grade transcripts. \\ \hline
+\end{tabularx}
+\begin{markingrubric}
+$\bullet$ Definition and importance of Scope Boundary Critique: \textbf{2 Marks}\\
+$\bullet$ Clear, professional In-Scope vs. Out-of-Scope ledger: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+\textbf{SMART Objective Transformation:}\\
+\textbf{Poor Objective 1:} ``Make the app faster.''\\
+$\to$ \textbf{SMART Formulation:} ``Reduce 95th-percentile home screen API load latency from 3.8 seconds to under 800 milliseconds across 4G mobile connections within 60 calendar days of sprint launch.''\\
+\textbf{Poor Objective 2:} ``Improve customer satisfaction.''\\
+$\to$ \textbf{SMART Formulation:} ``Elevate post-support Net Promoter Score (NPS) from $+14$ to $\ge +45$ and decrease average first-response resolution time from 24 hours to under 2 hours by the conclusion of Q3.''
+\begin{markingrubric}
+$\bullet$ Explanation of SMART dimensions: \textbf{1 Mark}\\
+$\bullet$ Flawless conversion of Objective 1 and Objective 2 with exact metrics: \textbf{4 Marks}
+\end{markingrubric}
+\end{solutionbox}

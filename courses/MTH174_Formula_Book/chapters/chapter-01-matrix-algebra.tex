@@ -1,0 +1,50 @@
+\chapter{Unit 1: Matrix Algebra \& Spectral Invariants}
+
+\begin{formulabox}{Matrix Invariants \& Determinant Identities}
+\begin{itemize}
+    \item \textbf{Trace}: $\operatorname{tr}(A) = \sum_{i=1}^n a_{ii} = \sum_{i=1}^n \lambda_i$.
+    \item \textbf{Determinant}: $\det(A) = \prod_{i=1}^n \lambda_i$.
+    \item $\det(kA) = k^n \det(A)$ for $A \in \mathbb{R}^{n \times n}$.
+    \item $\det(A^T) = \det(A)$, $\det(AB) = \det(A)\det(B)$.
+    \item $\det(A^{-1}) = \frac{1}{\det(A)}$.
+    \item $A \cdot \operatorname{adj}(A) = \operatorname{adj}(A) \cdot A = \det(A) I_n$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Rank Theorems \& Consistency Criteria ($Ax = b$)}
+\begin{itemize}
+    \item $\operatorname{rank}(A) = \text{number of non-zero rows in Row Echelon Form (REF)}$.
+    \item $\operatorname{rank}(A) \le \min(m, n)$ for $A \in \mathbb{R}^{m \times n}$.
+    \item \textbf{Rank-Nullity Theorem}: $\operatorname{rank}(A) + \operatorname{nullity}(A) = n$ (number of columns).
+    \item \textbf{Consistency of $Ax = b$}:
+    \begin{align*}
+        \operatorname{rank}(A) \neq \operatorname{rank}([A \mid b]) &\implies \text{Inconsistent (No solution)} \\
+        \operatorname{rank}(A) = \operatorname{rank}([A \mid b]) = n &\implies \text{Consistent with Unique solution} \\
+        \operatorname{rank}(A) = \operatorname{rank}([A \mid b]) = r < n &\implies \text{Consistent with Infinitely many solutions ($n - r$ free params)}
+    \end{align*}
+    \item \textbf{Homogeneous System $Ax = 0$}:
+    \begin{itemize}
+        \item $\operatorname{rank}(A) = n \iff \det(A) \neq 0 \implies \text{Only trivial solution } x = 0$.
+        \item $\operatorname{rank}(A) < n \iff \det(A) = 0 \implies \text{Non-trivial (infinite) solutions exist}$.
+    \end{itemize}
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Characteristic Equation, Eigenvalues \& Cayley-Hamilton}
+\begin{itemize}
+    \item Characteristic equation: $|A - \lambda I| = 0$.
+    \item \textbf{$2 \times 2$ Matrix}: $\lambda^2 - \operatorname{tr}(A)\lambda + \det(A) = 0$.
+    \item \textbf{$3 \times 3$ Matrix}: $\lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0$, where:
+    \begin{itemize}
+        \item $S_1 = \operatorname{tr}(A) = a_{11} + a_{22} + a_{33}$
+        \item $S_2 = M_{11} + M_{22} + M_{33} = \begin{vmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{vmatrix} + \begin{vmatrix} a_{11} & a_{13} \\ a_{31} & a_{33} \end{vmatrix} + \begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}$
+        \item $S_3 = \det(A)$
+    \end{itemize}
+    \item \textbf{Cayley-Hamilton Theorem}: $A^n + c_{n-1}A^{n-1} + \dots + c_1 A + c_0 I = 0$.
+    \item Matrix inverse via Cayley-Hamilton: $A^{-1} = -\frac{1}{c_0}[A^{n-1} + c_{n-1}A^{n-2} + \dots + c_1 I]$.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Eigenvalues of triangular or diagonal matrices are simply the main diagonal entries! If $\lambda$ is an eigenvalue of $A$, then $A + kI$ has eigenvalue $\lambda + k$, $A^m$ has eigenvalue $\lambda^m$, and $kA$ has eigenvalue $k\lambda$.
+\end{memorytip}

@@ -1,0 +1,98 @@
+\LPUPaperHeader{Continuous Assessment 1 (CA-1)}{Set B}{60 Minutes}{30 Marks}{CO1, CO2}
+
+\begin{markingrubric}
+\textbf{General Instructions \& Marking Breakdown:} Answer any \textbf{5 questions} ($5 \times 6 = 30$ Marks).
+\end{markingrubric}
+
+\questionitem{1}{Contrast the architectural implementation of WSL 1 versus WSL 2. Why does WSL 2 deliver superior performance for containerized workloads like Docker?}{6}{CO1}{Analyze}
+
+\begin{examsol}
+\textbf{Architectural Comparison:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{WSL 1 (Emulation):} Implemented a translation layer that mapped Linux system calls to Windows NT kernel APIs on the fly. It lacked complete POSIX fidelity and exhibited sluggish disk I/O.
+    \item \textbf{WSL 2 (Virtualization):} Runs a complete, real Linux kernel within a lightweight Hyper-V utility VM. It supports native ext4 virtual disks (\texttt{.vhdx}), direct hardware memory allocation, and 100\% POSIX compliance.
+\end{itemize}
+Docker daemon requires Linux cgroups, namespaces, and overlay2 storage drivers—features implemented natively inside the real Linux kernel of WSL 2, allowing Docker to run with native Linux performance without an emulation layer.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} WSL 1 vs 2 architectural breakdown (3 Marks); Docker compatibility rationale (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2}{Formulate an echo command and a printf command that produce identical tabular output with columns: 'Module', 'PID', and 'Latency (ms)'. Explain why printf is preferred for strict formatting.}{6}{CO2}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+# Method 1: Using echo with escape interpretation (-e):
+$ echo -e "Module\tPID\tLatency (ms)\nAuth\t1024\t1.45\nDB\t2048\t12.80"
+
+# Method 2: Using printf with fixed width specifiers:
+$ printf "%-10s %-8s %-12s\n" "Module" "PID" "Latency (ms)" "Auth" "1024" "1.45" "DB" "2048" "12.80"
+Module     PID      Latency (ms)
+Auth       1024     1.45        
+DB         2048     12.80       
+\end{examcli}
+\textbf{Why printf is preferred:} \texttt{printf} conforms to ANSI C formatting standards, does not rely on non-standard escape switches across shells, guarantees explicit column width alignment, and never emits unexpected trailing newlines.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} \texttt{echo -e} implementation (2 Marks); \texttt{printf} format strings (2 Marks); Evaluation (2 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{3}{Describe the Filesystem Hierarchy Standard (FHS) conventions for /etc, /var, /proc, and /dev. Why are files in /proc reported as 0 bytes?}{6}{CO1}{Understand}
+
+\begin{examsol}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{/etc}: Host-specific static configuration files (\texttt{passwd}, \texttt{fstab}).
+    \item \texttt{/var}: Variable dynamic files that change size during runtime (system logs, spool queues).
+    \item \texttt{/dev}: Device nodes representing hardware controllers and pseudo-devices (\texttt{/dev/sda}, \texttt{/dev/null}).
+    \item \texttt{/proc}: Kernel runtime pseudo-filesystem. It exists entirely in RAM and consumes 0 physical disk sectors; read requests trigger the kernel to generate ASCII diagnostic reports dynamically.
+\end{itemize}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} 1 Mark per directory definition (4 Marks); \texttt{/proc} RAM dynamic generation explanation (2 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{4}{Demonstrate how to record an interactive terminal troubleshooting session using script, and how an auditor can replay the session at original speed using scriptreplay.}{6}{CO2}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+# 1. Start recording with timing log:
+$ script -t=timing.log session.log
+Script started, file is session.log
+$ uname -a
+$ df -h
+$ exit
+Script done, file is session.log
+
+# 2. Replay the session with millisecond timing fidelity:
+$ scriptreplay timing.log session.log
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} \texttt{script} command flags (3 Marks); \texttt{scriptreplay} execution and timing mechanism (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{5}{A developer notices that df -h reports a partition as 100\% full, yet du -sh * on the mount point indicates that only 40\% of storage is occupied. Diagnose the root cause and provide the CLI command to resolve it.}{6}{CO1}{Analyze}
+
+\begin{examsol}
+\textbf{Root Cause Diagnosis:}
+This situation occurs when a large file has been deleted with \texttt{rm}, but an active running process still holds an open file descriptor to that file. The directory entry is deleted (so \texttt{du} cannot traverse or find it), but the kernel refuses to deallocate the physical disk blocks until all referencing file descriptors are closed (so \texttt{df} reports the space as occupied).
+
+\textbf{Resolution Commands:}
+\begin{examcli}
+# 1. Identify processes holding open descriptors to deleted files:
+$ lsof +L1
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NLINK   NAME
+nginx   14205 root    7w   REG    8,1 8589934592     0 /var/log/nginx/access.log (deleted)
+
+# 2. Restart or reload the holding process to free storage blocks:
+$ sudo systemctl reload nginx
+\end{examcli}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [6 Marks]:} Open file descriptor / unlinked inode diagnosis (3 Marks); \texttt{lsof +L1} and reload fix (3 Marks).
+\end{markingrubric}
+\end{examsol}

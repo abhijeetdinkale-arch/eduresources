@@ -1,0 +1,160 @@
+\chapter{Introduction to Python: Variables, Expressions, and Statements}
+\label{ch:python_basics}
+
+\section{Introduction to the Python Programming Language}
+
+Python is a high-level, interpreted, dynamically typed, multi-paradigm programming language created by Guido van Rossum and first released in 1991. In modern engineering, scientific computing, and embedded electronics, Python serves as the lingua franca for data acquisition, algorithm prototyping, hardware interfacing, and machine learning pipelines.
+
+\begin{definition}[CPython Architecture and Execution Pipeline]
+Python programs are not directly translated into host machine microcode. Instead, the standard reference implementation, \textbf{CPython}, executes source code through a two-stage virtual machine pipeline:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Compilation Phase:} The Python parser parses source code (\texttt{.py}) into an Abstract Syntax Tree (AST), checks syntax, and compiles statements into platform-independent intermediate instructions known as \textbf{bytecode} (typically serialized as \texttt{.pyc} files inside the \texttt{\_\_pycache\_\_} cache directory).
+    \item \textbf{Interpretation Phase:} The \textbf{Python Virtual Machine (PVM)} iteratively evaluates the bytecode stream, translating bytecode opcodes into host operating system system calls and native CPU operations.
+\end{enumerate}
+\end{definition}
+
+\subsection{Interactive Mode vs. Script Mode}
+Python provides two distinct execution execution paradigms:
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Interactive Mode (REPL):} Executed via the command-line prompt (\texttt{>>>}) or Jupyter notebooks, providing an immediate Read-Eval-Print Loop. It is optimal for experimenting with expressions, inspecting hardware registers, and rapid testing.
+    \item \textbf{Script Mode:} Executing stored instructions written in source files (\texttt{python script.py}). This is required for production engineering systems, automated cron tasks, and embedded daemon scripts.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, auto,
+    block/.style={rectangle, draw=brandnavy, fill=boxnavybg, thick, text width=2.8cm, align=center, rounded corners=2pt, minimum height=1cm},
+    arrow/.style={draw=brandblue, ultra thick, ->, >=stealth}]
+    
+    \node[block] (source) {Python Source Code (\texttt{.py})};
+    \node[block, right=1.2cm of source] (compiler) {CPython Compiler\\(AST Analysis)};
+    \node[block, right=1.2cm of compiler] (bytecode) {Bytecode Stream\\(\texttt{.pyc} files)};
+    \node[block, right=1.2cm of bytecode] (pvm) {Python Virtual Machine (PVM)};
+    \node[block, below=1.0cm of pvm] (cpu) {Host OS \& CPU\\(Native Execution)};
+
+    \draw[arrow] (source) -- (compiler);
+    \draw[arrow] (compiler) -- (bytecode);
+    \draw[arrow] (bytecode) -- (pvm);
+    \draw[arrow] (pvm) -- (cpu);
+\end{tikzpicture}
+\caption{CPython Two-Stage Compilation and Virtual Machine Execution Pipeline.}
+\label{fig:cpython_pipeline}
+\end{figure}
+
+\section{Identifiers, Variables, and Memory Reference Model}
+
+In C and C++, a variable is a named storage address in memory whose bit width is determined by its static type. In contrast, Python implements a purely \textbf{object-reference model}.
+
+\begin{theorem}[Python Object Reference Model]
+In Python:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Everything is an object:} Primitive numbers, strings, functions, classes, and modules are heap-allocated objects containing metadata headers (type pointer, reference count).
+    \item \textbf{Variables are reference pointers:} A variable name is merely an identifier bound to an object in the local or global namespace dictionary.
+    \item \textbf{Dynamic Typing:} Variable bindings carry no fixed data type constraint; the type resides entirely within the heap object itself.
+\end{enumerate}
+\end{theorem}
+
+\begin{lstlisting}[caption={Demonstrating Object Identity and References in Python}]
+# Variable binding and identity
+a = 256
+b = 256
+print(a is b)      # True: CPython small integer caching pool [-5, 256]
+
+x = 1000
+y = 1000
+print(x == y)      # True: Value equality check
+print(x is y)      # May be False: Distinct heap objects outside cache
+print(id(x), id(y)) # Inspect unique memory address identifiers
+\end{lstlisting}
+
+\subsection{Identifier Naming Rules and Conventions (PEP 8)}
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt]
+    \item Identifiers must begin with an alphabetic character (\texttt{a-z}, \texttt{A-Z}) or an underscore (\texttt{\_}).
+    \item Subsequent characters can be alphanumeric or underscores. Punctuation and symbols (\texttt{@}, \texttt{\$}, \texttt{\%}) are strictly invalid.
+    \item Identifiers are strictly case-sensitive (\texttt{Voltage}, \texttt{voltage}, and \texttt{VOLTAGE} represent three distinct namespaces).
+    \item Keywords (such as \texttt{def}, \texttt{class}, \texttt{yield}, \texttt{lambda}, \texttt{finally}) cannot be used as variable names.
+\end{itemize}
+
+\section{Core Built-In Data Types}
+
+Python provides five foundational atomic scalar data types:
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{l l X l}
+\toprule
+\textbf{Data Type} & \textbf{Class Name} & \textbf{Description and Semantics} & \textbf{Mutability} \\
+\midrule
+Integer & \texttt{int} & Arbitrary-precision signed integers (unbounded size) & Immutable \\
+Floating-Point & \texttt{float} & IEEE 754 double-precision 64-bit floating point & Immutable \\
+Complex & \texttt{complex} & Complex numbers with real and imaginary float parts & Immutable \\
+Boolean & \texttt{bool} & Logical truth values (\texttt{True}, \texttt{False}), subtype of \texttt{int} & Immutable \\
+String & \texttt{str} & Unicode character sequences & Immutable \\
+\bottomrule
+\end{tabularx}
+\caption{Foundational Built-In Scalar Data Types in Python.}
+\label{tab:scalar_types}
+\end{table}
+
+\section{Operators, Precedence, and Expression Evaluation}
+
+Python expressions are constructed from operands and operators. Operators are categorized by arity and semantic function.
+
+\subsection{Arithmetic Operators}
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{Addition (\texttt{+}) and Subtraction (\texttt{-}):} Standard algebraic addition and negation.
+    \item \textbf{Multiplication (\texttt{*}):} Performs scalar multiplication or sequence repetition.
+    \item \textbf{True Division (\texttt{/}):} Always returns a \texttt{float}, e.g., \texttt{7 / 2} evaluates to \texttt{3.5}.
+    \item \textbf{Floor Division (\texttt{//}):} Truncates fractional parts toward negative infinity, e.g., \texttt{7 // 2} evaluates to \texttt{3}, but \texttt{-7 // 2} evaluates to \texttt{-4}.
+    \item \textbf{Modulo (\texttt{\%}):} Computes the remainder satisfying $a = (a // b) \times b + (a \% b)$.
+    \item \textbf{Exponentiation (\texttt{**}):} Evaluates power expressions with right-to-left associativity.
+\end{itemize}
+
+\begin{warningbox}[Right-Associativity of Exponentiation]
+Unlike standard left-associative arithmetic operators ($+$, $-$, $*$, $/$, $//$), the exponentiation operator (\texttt{**}) binds from \textbf{right to left}:
+\begin{equation}
+2 ** 3 ** 2 = 2 ** (3 ** 2) = 2 ** 9 = 512 \quad (\text{NOT } (2 ** 3) ** 2 = 8 ** 2 = 64)
+\end{equation}
+\end{warningbox}
+
+\subsection{Relational and Bitwise Operators}
+Relational operators (\texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}, \texttt{==}, \texttt{!=}) compare operands and return a \texttt{bool}. Python uniquely supports \textbf{chained comparisons}:
+\begin{equation}
+a < b < c \iff (a < b) \text{ \textbf{and} } (b < c)
+\end{equation}
+
+Bitwise operators manipulate raw bit-patterns of integers:
+\begin{itemize}[leftmargin=1.8em, itemsep=2pt]
+    \item Bitwise AND (\texttt{\&}): True if both bits are 1.
+    \item Bitwise OR (\texttt{|}): True if either bit is 1.
+    \item Bitwise XOR (\texttt{\^{}}): True if exactly one bit is 1.
+    \item Bitwise Inversion (\texttt{\~{}}): Inverts all bits, satisfying \texttt{\~{x} == -(x + 1)}.
+    \item Left Shift (\texttt{<<}) and Right Shift (\texttt{>>}): Multiplies or divides integers by powers of 2.
+\end{itemize}
+
+\section{Standard Input and Formatted Output}
+
+Interactive user input is received via the built-in \texttt{input(prompt)} function, which always returns a \texttt{str}. Type casting must be explicitly applied.
+
+\begin{lstlisting}[caption={Engineering I/O and Modern String Formatting (f-strings)}]
+# Data acquisition input casting
+voltage = float(input("Enter measured node voltage (V): "))
+current = float(input("Enter loop branch current (A): "))
+
+# Calculation
+power = voltage * current
+resistance = voltage / current if current != 0 else float('inf')
+
+# Modern f-string formatted display with precision specifications
+print(f"Power Dissipation : {power:10.4f} W")
+print(f"Branch Resistance : {resistance:10.2f} Ohms")
+print(f"Scientific Notation: {power:.3e} W")
+\end{lstlisting}
+
+\section{Chapter Summary and Review Questions}
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item Explain the two-step execution model of CPython. How does bytecode differ from machine code?
+    \item What is small integer caching, and why does \texttt{a is b} evaluate to \texttt{True} for \texttt{a=200, b=200} but can be \texttt{False} for \texttt{a=1000, b=1000}?
+    \item Evaluate the exact expression: \texttt{result = 4 + 3 * 2 ** 3 // 4 - 5 \% 2}.
+    \item Write a script that reads temperature in Fahrenheit from the console and outputs Celsius and Kelvin using \texttt{f-strings} formatted to 2 decimal places.
+\end{enumerate}

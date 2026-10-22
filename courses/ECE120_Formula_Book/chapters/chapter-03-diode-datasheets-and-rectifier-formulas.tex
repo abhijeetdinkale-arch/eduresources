@@ -1,0 +1,63 @@
+\chapter{Diode Equations, Ratings \& Rectifier Parameters}
+
+\section{Fundamental Semiconductor Equations}
+\begin{formulabox}{Shockley Diode Equation \& Thermal Parameters}
+\[ I_D = I_s \left( e^{\frac{V_D}{\eta V_T}} - 1 \right) \]
+\begin{itemize}
+    \item $I_s$: Reverse saturation current ($10^{-12}\text{ to } 10^{-9}\,\mathrm{A}$ for Silicon, $10^{-6}\,\mathrm{A}$ for Germanium).
+    \item $\eta$: Ideality factor ($\eta = 1$ for modern planar Silicon at normal currents, $\eta = 2$ at very low currents).
+    \item $V_T$: Thermal voltage:
+    \[ V_T = \frac{k T}{q} = \frac{1.3806 \times 10^{-23} \times T}{1.6022 \times 10^{-19}} \approx \frac{T}{11600} \]
+    At standard room temperature $T = 300\,\mathrm{K}$ ($27^\circ\mathrm{C}$):
+    \[ V_T \approx 25.86\,\mathrm{mV} \approx 26\,\mathrm{mV} \]
+\end{itemize}
+\end{formulabox}
+
+\section{Static and Dynamic Resistances}
+\begin{formulabox}{Diode Resistances}
+\begin{itemize}
+    \item \textbf{Static (DC) Resistance}: Reciprocal of secant slope from origin:
+    \[ R_D = \frac{V_D}{I_D} \]
+    \item \textbf{Dynamic (AC / Incremental) Resistance}: Reciprocal of tangent slope at Q-point:
+    \[ r_d = \frac{d V_D}{d I_D} = \frac{\eta V_T}{I_D + I_s} \approx \frac{\eta V_T}{I_D} = \frac{26\,\mathrm{mV}}{I_D} \quad (\text{at } 300\,\mathrm{K}, \eta=1) \]
+\end{itemize}
+\end{formulabox}
+
+\section{Rectifier Benchmark Comparison Table}
+\begin{formulabox}{Rectifier Topologies \& Performance Metrics}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Parameter} & \textbf{Half-Wave} & \textbf{Full-Wave (Center-Tap)} & \textbf{Bridge Rectifier} \\
+\midrule
+Number of Diodes & 1 & 2 & 4 \\
+DC Output Voltage $V_{dc}$ & $\frac{V_m}{\pi} \approx 0.318\,V_m$ & $\frac{2 V_m}{\pi} \approx 0.636\,V_m$ & $\frac{2 V_m}{\pi} \approx 0.636\,V_m$ \\
+RMS Output Voltage $V_{rms}$ & $\frac{V_m}{2} = 0.5\,V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707\,V_m$ & $\frac{V_m}{\sqrt{2}} \approx 0.707\,V_m$ \\
+Ripple Factor $\gamma$ & $1.21$ & $0.482$ & $0.482$ \\
+Ripple Frequency $f_r$ & $f_{\mathrm{in}}$ & $2 f_{\mathrm{in}}$ & $2 f_{\mathrm{in}}$ \\
+Rectification Efficiency $\eta_{\max}$ & $40.6\%$ & $81.2\%$ & $81.2\%$ \\
+Peak Inverse Voltage (PIV) & $V_m$ & $2 V_m$ & $V_m$ \\
+Transformer Utilization Factor & $0.287$ & $0.693$ & $0.812$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}
+
+\section{1N400x Series Diode Datasheet Summary}
+\begin{formulabox}{1N4001 through 1N4007 Key Ratings}
+\begin{center}
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Part Number} & \textbf{1N4001} & \textbf{1N4002} & \textbf{1N4003} & \textbf{1N4004} & \textbf{1N4005} & \textbf{1N4006} & \textbf{1N4007} \\
+\midrule
+Peak Reverse Voltage $V_{RRM}$ & 50 V & 100 V & 200 V & 400 V & 600 V & 800 V & 1000 V \\
+Max RMS Reverse Voltage & 35 V & 70 V & 140 V & 280 V & 420 V & 560 V & 700 V \\
+Average Forward Current $I_{F(\mathrm{AV})}$ & \multicolumn{7}{c}{1.0 A at $T_A = 75^\circ\mathrm{C}$} \\
+Max Forward Voltage Drop $V_F$ & \multicolumn{7}{c}{1.1 V at 1.0 A DC} \\
+Peak Forward Surge Current $I_{FSM}$ & \multicolumn{7}{c}{30 A (8.3 ms half sine pulse)} \\
+Reverse Leakage Current $I_R$ & \multicolumn{7}{c}{$5.0\,\mu\mathrm{A}$ at rated $V_{RRM}$ ($25^\circ\mathrm{C}$)} \\
+Package & \multicolumn{7}{c}{DO-41 Axial Leaded Plastic} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{formulabox}

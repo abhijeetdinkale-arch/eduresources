@@ -1,0 +1,53 @@
+\chapter{Unit 5: Pandas DataFrame Operations \& Matplotlib Visualizations}
+
+\begin{formulabox}{Pandas Selection \& Indexing Semantics: \texttt{.loc} vs \texttt{.iloc}}
+\begin{center}
+\begin{tabularx}{0.96\textwidth}{l X X}
+\toprule
+\textbf{Feature} & \textbf{\texttt{.loc} (Label-based Indexing)} & \textbf{\texttt{.iloc} (Integer Position Indexing)} \\
+\midrule
+Index specification & Row/Column index labels (strings, dates) & 0-based integer coordinates ($0 \dots N-1$) \\
+Slice endpoint & \textbf{Inclusive of endpoint}: \texttt{'a':'c'} includes \texttt{'c'} & \textbf{Exclusive of endpoint}: \texttt{0:3} yields indices $0, 1, 2$ \\
+Boolean masking & Supported: \texttt{df.loc[df['A'] > 0]} & Requires numpy array/list: \texttt{df.iloc[mask.values]} \\
+Missing keys & Raises \texttt{KeyError} if label missing & Raises \texttt{IndexError} if out of bounds \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\begin{formulabox}{Data Cleaning \& Transformation APIs}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Missing Values}:
+    \begin{itemize}
+        \item Detection: \texttt{df.isna().sum()} (returns missing count per column).
+        \item Dropping: \texttt{df.dropna(how='any', subset=['col1', 'col2'])}.
+        \item Imputation: \texttt{df['val'].fillna(df['val'].median(), inplace=False)}.
+    \end{itemize}
+    \item \textbf{Deduplication}: \texttt{df.drop\_duplicates(subset=['id'], keep='first')}.
+    \item \textbf{Categorical Conversion}: \texttt{df['cat'] = df['cat'].astype('category')} (reduces memory consumption by $80\%$).
+    \item \textbf{Groupby Aggregation}:
+    \begin{equation*}
+    \texttt{df.groupby('dept')['salary'].agg(['mean', 'std', 'count']).reset\_index()}
+    \end{equation*}
+    \item \textbf{Transform vs Agg}: \texttt{.agg()} reduces group to single value; \texttt{.transform()} returns a Series aligned with original DataFrame rows.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Matplotlib Object-Oriented Hierarchy Cheat-Sheet}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Canvas initialization: \texttt{fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 8))}.
+    \item Line chart: \texttt{ax.plot(x, y, color='navy', linestyle='--', linewidth=1.5, label='Trace')}.
+    \item Scatter plot: \texttt{ax.scatter(x, y, s=area, c=colors, alpha=0.7)}.
+    \item Histogram: \texttt{ax.hist(data, bins=30, density=True, edgecolor='black')}.
+    \item Bar chart: \texttt{ax.bar(categories, values, color='orange')}, \texttt{ax.barh()} for horizontal.
+    \item Labels \& Aesthetics:
+    \begin{equation*}
+    \texttt{ax.set\_title("Title"), ax.set\_xlabel("X"), ax.set\_ylabel("Y"), ax.legend(), ax.grid(True)}
+    \end{equation*}
+    \item Layout optimization: \texttt{plt.tight\_layout()}, \texttt{plt.savefig("fig.png", dpi=300, bbox\_inches='tight')}.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Never modify a DataFrame via chained assignment \texttt{df[df['A']>0]['B'] = 5}! This triggers the dreaded \texttt{SettingWithCopyWarning} because Pandas cannot guarantee whether the intermediate slice is a view or a copy! Always write: \texttt{df.loc[df['A'] > 0, 'B'] = 5}.
+\end{memorytip}

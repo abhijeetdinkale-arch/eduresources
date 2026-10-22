@@ -1,0 +1,116 @@
+\chapter{Semiconductor PN Junction Diode Characteristics \& Workshop Applications}
+\label{chap:diodes}
+
+\section{Overview and Laboratory Learning Objectives}
+The PN junction diode is the foundational two-terminal non-linear semiconductor building block of modern electronics. Mastering its forward and reverse conduction physics, knee (cut-in) potential, dynamic resistance, and rectifying behavior is required for power supply construction, signal demodulation, voltage clamping, and over-voltage protection circuits.
+
+\begin{important}[Unit Learning Objectives]
+Upon completion of this chapter and lab experiments, the student will be proficient in:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Describing the physical mechanism of depletion region formation, built-in barrier potential, and charge carriers.
+    \item Applying the Shockley diode equation to calculate forward current and thermal voltage $V_T$.
+    \item Distinguishing between static (DC) resistance $R_D$ and dynamic (AC) incremental resistance $r_d$.
+    \item Performing bench experiments to record forward V-I data points and plot the exponential characteristic curve.
+    \item Analyzing rectifier topologies (Half-Wave, Full-Wave Center-Tapped, Full-Wave Bridge) and calculating ripple factor, PIV, and efficiency.
+    \item Diagnosing open, shorted, and leaking diodes on the workbench using DMM diode check mode.
+\end{enumerate}
+\end{important}
+
+\section{Physics of the PN Junction}
+A PN junction is formed by metallurgically joining P-type semiconductor (rich in mobile hole majorities) and N-type semiconductor (rich in electron majorities). At the metallurgical interface:
+\begin{enumerate}
+    \item \textbf{Carrier Diffusion}: Holes diffuse from P to N, and electrons diffuse from N to P.
+    \item \textbf{Depletion Region}: The migrating carriers recombine, unmasking fixed immobile ionized donor ions ($N_D^+$) on the N-side and immobile ionized acceptor ions ($N_A^-$) on the P-side.
+    \item \textbf{Built-in Barrier Potential}: The uncompensated space-charge region establishes an internal electric field $\vec{E}$ pointing from N to P, creating a built-in barrier potential:
+    \[ V_0 = V_T \ln\left( \frac{N_A N_D}{n_i^2} \right) \]
+    At $300\,\mathrm{K}$, $V_0 \approx 0.7\,\mathrm{V}$ for Silicon and $\approx 0.3\,\mathrm{V}$ for Germanium.
+\end{enumerate}
+
+\section{The Shockley Diode Equation}
+\begin{keyequation}[Shockley Diode Characteristic Equation]
+\[ I_D = I_s \left( e^{\frac{V_D}{\eta V_T}} - 1 \right) \]
+\end{keyequation}
+where:
+\begin{itemize}
+    \item $I_s$ is the reverse saturation current ($10^{-14}\text{ to } 10^{-9}\,\mathrm{A}$ for Silicon).
+    \item $\eta$ is the emission/ideality coefficient ($\eta = 1$ for standard Silicon conduction).
+    \item $V_T = \frac{kT}{q} = \frac{T}{11600} \approx 25.86\,\mathrm{mV} \approx 26\,\mathrm{mV}$ at room temperature ($300\,\mathrm{K}$).
+\end{itemize}
+
+\subsection{Static vs. Dynamic Resistance}
+\begin{definition}[Static and Dynamic Diode Resistance]
+\begin{itemize}
+    \item \textbf{Static (DC) Resistance ($R_D$)}: The ratio of total DC voltage across the diode to DC current through it at a given quiescent operating point:
+    \[ R_D = \frac{V_D}{I_D} \]
+    \item \textbf{Dynamic (AC) Resistance ($r_d$)}: The reciprocal of the instantaneous slope of the V-I curve at the Q-point:
+    \[ r_d = \frac{d V_D}{d I_D} = \frac{\eta V_T}{I_D + I_s} \approx \frac{\eta V_T}{I_D} = \frac{26\,\mathrm{mV}}{I_D} \quad (\text{at } 300\,\mathrm{K}, \eta=1) \]
+\end{itemize}
+\end{definition}
+
+\section{Laboratory Experiment 3: V-I Characteristics of PN Diode}
+\begin{experimentbox}[Laboratory Experiment 3 Protocol]
+\textbf{Objective}: To experimentally plot the forward-bias V-I characteristic of a Silicon 1N4007 diode and determine its cut-in knee voltage and dynamic resistance.\\
+\textbf{Apparatus Required}:
+\begin{enumerate}
+    \item Variable DC Power Supply ($0\text{--}15\,\mathrm{V}$) --- 1 unit
+    \item 1N4007 Silicon PN junction diode --- 1 piece
+    \item Carbon-film current limiting resistor ($R_S = 1\,\mathrm{k}\Omega, 0.5\,\mathrm{W}$) --- 1 piece
+    \item Digital Multimeters (one for $V_D$, one for $I_D$) --- 2 units
+    \item Breadboard and patch jumpers
+\end{enumerate}
+\end{experimentbox}
+
+\begin{observationtable}[Observation Table 3.1: Forward V-I Data Points for 1N4007 Silicon Diode]
+\begin{center}
+\begin{tabular}{cccccc}
+\toprule
+\textbf{S. No.} & \textbf{Supply Voltage $V_S$ (V)} & \textbf{Diode Drop $V_D$ (V)} & \textbf{Current $I_D$ (mA)} & \textbf{Static $R_D$ ($\Omega$)} & \textbf{Dynamic $r_d$ ($\Omega$)} \\
+\midrule
+1 & $0.20$ & $0.200$ & $0.00$ & $\infty$ & $\infty$ \\
+2 & $0.40$ & $0.395$ & $0.01$ & $39{,}500$ & $2600$ \\
+3 & $0.60$ & $0.540$ & $0.06$ & $9{,}000$ & $433$ \\
+4 & $0.80$ & $0.610$ & $0.19$ & $3{,}210$ & $137$ \\
+5 & $1.00$ & $0.645$ & $0.35$ & $1{,}843$ & $74$ \\
+6 & $2.00$ & $0.695$ & $1.30$ & $535$ & $20.0$ \\
+7 & $4.00$ & $0.725$ & $3.27$ & $222$ & $7.9$ \\
+8 & $6.00$ & $0.742$ & $5.26$ & $141$ & $4.9$ \\
+9 & $8.00$ & $0.755$ & $7.24$ & $104$ & $3.6$ \\
+10 & $10.00$ & $0.765$ & $9.23$ & $83$ & $2.8$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{observationtable}
+
+\section{Workshop Rectifier Circuits and Power Conversion}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Performance Parameter} & \textbf{Half-Wave} & \textbf{Full-Wave Center-Tapped} & \textbf{Full-Wave Bridge} \\
+\midrule
+Diodes Required & 1 & 2 & 4 \\
+DC Output Voltage $V_{dc}$ & $\frac{V_m}{\pi} \approx 0.318\,V_m$ & $\frac{2 V_m}{\pi} \approx 0.636\,V_m$ & $\frac{2 V_m}{\pi} \approx 0.636\,V_m$ \\
+Ripple Factor $\gamma$ & $1.21$ & $0.482$ & $0.482$ \\
+Peak Inverse Voltage (PIV) & $V_m$ & $2 V_m$ & $V_m$ \\
+Rectification Efficiency $\eta$ & $40.6\%$ & $81.2\%$ & $81.2\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Worked Numerical Examples}
+\begin{example}[Dynamic Resistance Calculation at Specified Operating Current]
+A Silicon diode operates with forward current $I_D = 13\,\mathrm{mA}$ at $T = 300\,\mathrm{K}$ with $\eta = 1$. Calculate: (a) Dynamic resistance $r_d$, (b) AC voltage fluctuation if a small alternating ripple current $\Delta I = \pm 0.5\,\mathrm{mA}$ is superimposed.
+\end{example}
+\begin{solutionbox}
+(a) Using the dynamic resistance formula:
+\[ r_d = \frac{\eta V_T}{I_D} = \frac{0.026\,\mathrm{V}}{0.013\,\mathrm{A}} = 2.0\,\Omega \]
+(b) The small-signal AC voltage fluctuation across the forward-biased junction is:
+\[ \Delta V_D = r_d \cdot \Delta I = 2.0\,\Omega \times (\pm 0.5 \times 10^{-3}\,\mathrm{A}) = \pm 1.0\,\mathrm{mV} \]
+\end{solutionbox}
+
+\section{Workshop Viva-Voce Questions \& Answers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Question}: What causes the reverse breakdown in a Zener diode versus an ordinary rectifier diode?\\
+    \textbf{Answer}: Zener breakdown occurs in heavily doped junctions with narrow depletion regions where intense electric fields ($> 10^7\,\mathrm{V/m}$) rupture covalent bonds by quantum tunneling. Avalanche breakdown occurs in lightly doped junctions where high reverse voltages accelerate minority carriers to kinetic energies sufficient to knock out valence electrons via impact ionization.
+    \item \textbf{Question}: Why does a bridge rectifier require half the PIV rating of a center-tapped rectifier for the same DC output?\\
+    \textbf{Answer}: In a center-tapped full-wave rectifier, during the reverse half-cycle, the non-conducting diode experiences the full end-to-end secondary voltage across both windings ($2 V_m$). In a bridge rectifier, the reverse voltage divides across two series reverse-biased diodes, limiting the stress on each diode to $V_m$.
+\end{enumerate}

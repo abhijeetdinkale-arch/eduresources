@@ -1,0 +1,63 @@
+\LPUPaperHeader{Endterm University Examination (ETE)}{Set B}{180 Minutes}{100 Marks}{CO1, CO2, CO3, CO4, CO5, CO6}
+
+\begin{markingrubric}
+\textbf{Structure:} Section A (20 Marks), Section B (40 Marks), Section C (40 Marks).
+\end{markingrubric}
+
+\section*{Section A: Diagnostic Fundamentals [20 Marks]}
+
+\questionitem{1.1}{What does the system call fork() return to the parent process upon success?}{2}{CO1}{Remember}
+\begin{examsol}
+Returns the positive integer PID of the newly created child process.
+\end{examsol}
+
+\questionitem{1.2}{Which test flag evaluates whether a string has zero length (is empty)?}{2}{CO6}{Remember}
+\begin{examsol}
+\texttt{-z "\$STRING"}.
+\end{examsol}
+
+\section*{Section B: Systems Administration Analysis [40 Marks]}
+
+\questionitem{2.1}{A security audit identifies that regular users can execute /usr/bin/gcc. How can an administrator restrict execution of the C compiler strictly to members of group 'developers'?}{5}{CO3}{Apply}
+
+\begin{examsol}
+\begin{examcli}
+$ sudo groupadd developers
+$ sudo chown root:developers /usr/bin/gcc
+$ sudo chmod 750 /usr/bin/gcc
+$ ls -l /usr/bin/gcc
+-rwxr-x--- 1 root developers 1258296 Oct 22 08:45 /usr/bin/gcc
+\end{examcli}
+Mode \texttt{750} grants full control to root, read/execute to group \texttt{developers}, and zero access to others.
+\end{examsol}
+
+\section*{Section C: Engineering \& DevOps Challenges [40 Marks]}
+
+\questionitem{3.1}{Write a complete Bash script 'user\_audit.sh' that reads /etc/passwd line-by-line, identifies all regular user accounts with UID >= 1000, checks if their home directory exists on disk, and flags accounts missing a home folder.}{10}{CO6}{Create}
+
+\begin{examsol}
+\begin{examscript}
+#!/bin/bash
+set -euo pipefail
+
+echo "=== System User Home Directory Audit Report ==="
+printf "%-15s %-8s %-25s %-12s\n" "Username" "UID" "Home Directory" "Status"
+printf "%s\n" "------------------------------------------------------------------"
+
+while IFS=: read -r user pass uid gid gecos home shell; do
+    # Filter for regular users
+    if [ "$uid" -ge 1000 ] && [ "$user" != "nobody" ]; then
+        if [ -d "$home" ]; then
+            status="[OK]"
+        else
+            status="[MISSING DIR]"
+        fi
+        printf "%-15s %-8s %-25s %-12s\n" "$user" "$uid" "$home" "$status"
+    fi
+done < /etc/passwd
+\end{examscript}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [10 Marks]:} \texttt{IFS=:} file parsing (3 Marks); UID filter $\ge 1000$ (3 Marks); \texttt{-d} directory validation (2 Marks); Formatted output (2 Marks).
+\end{markingrubric}
+\end{examsol}

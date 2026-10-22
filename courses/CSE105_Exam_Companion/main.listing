@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+
+SERVICE="${1:-}"
+if [ -z "$SERVICE" ]; then
+    echo "Usage: $0 <service_name>" >&2
+    exit 1
+fi
+
+if pgrep -x "$SERVICE" > /dev/null; then
+    echo "[OK] Service $SERVICE is active."
+    exit 0
+else
+    echo "[WARN] Service $SERVICE is DOWN! Attempting restart..." >&2
+    sudo systemctl restart "$SERVICE"
+    exit 2
+fi

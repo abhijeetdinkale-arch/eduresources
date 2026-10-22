@@ -1,0 +1,131 @@
+\LPUPaperHeader{Endterm University Examination (ETE)}{Set A}{180 Minutes}{100 Marks}{CO1, CO2, CO3, CO4, CO5, CO6}
+
+\begin{markingrubric}
+\textbf{Structure of the Comprehensive Examination:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1pt]
+    \item \textbf{Section A:} 10 Short Answer Diagnostic Questions $\times$ 2 Marks = \textbf{20 Marks}. All compulsory.
+    \item \textbf{Section B:} 8 Intermediate Analytical Questions $\times$ 5 Marks = \textbf{40 Marks}.
+    \item \textbf{Section C:} 4 Comprehensive Engineering / Shell Automation Challenges $\times$ 10 Marks = \textbf{40 Marks}.
+\end{itemize}
+\end{markingrubric}
+
+\section*{Section A: Compulsory Diagnostic Core [20 Marks]}
+
+\questionitem{1.1}{Define the purpose of the Completely Fair Scheduler (CFS) in the Linux kernel.}{2}{CO1}{Remember}
+\begin{examsol}
+CFS guarantees proportional, fair CPU execution time slices across competing threads utilizing red-black virtual runtime trees.
+\end{examsol}
+
+\questionitem{1.2}{What does the token \$? represent in POSIX shell scripting?}{2}{CO6}{Remember}
+\begin{examsol}
+The integer exit status code returned by the most recently completed foreground command.
+\end{examsol}
+
+\questionitem{1.3}{Convert the permission mode -rw-r----- into its 3-digit octal value.}{2}{CO3}{Apply}
+\begin{examsol}
+\textbf{640} (Owner: \texttt{rw-} = 6, Group: \texttt{r--} = 4, Others: \texttt{---} = 0).
+\end{examsol}
+
+\questionitem{1.4}{Which command reports disk usage of directory trees summed into human-readable units?}{2}{CO2}{Remember}
+\begin{examsol}
+\texttt{du -sh <path>}.
+\end{examsol}
+
+\questionitem{1.5}{What does the Bash wildcard pattern data[!0-9].csv match?}{2}{CO4}{Understand}
+\begin{examsol}
+Any file starting with \texttt{data}, followed by a single character that is \textbf{not} a digit, ending with \texttt{.csv}.
+\end{examsol}
+
+\section*{Section B: Intermediate Systems Analysis [40 Marks]}
+
+\questionitem{2.1}{A database server suffers from high memory pressure. Explain how an engineer utilizes top and ps aux to identify memory leaks, sort processes by RSS, and determine process state codes.}{5}{CO5}{Apply}
+
+\begin{examsol}
+\textbf{Diagnostic Workflow:}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{ps aux Sort:} Execute \texttt{ps aux --sort=-\%mem | head -n 10}. Column \texttt{RSS} (Resident Set Size) reveals exact non-swapped physical memory in KB.
+    \item \textbf{top Interactive Monitoring:} Launch \texttt{top} and press capital \texttt{M} to sort live tasks by memory percentage. Inspect the \texttt{STAT} column: processes in state \texttt{D} indicate processes blocked on I/O.
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [5 Marks]:} \texttt{ps aux} sorting command (2.5 Marks); \texttt{top} interactive keys and RSS metrics (2.5 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{2.2}{Explain why executing a script via './script.sh' requires execute (+x) permission, whereas executing via 'bash script.sh' requires only read (+r) permission.}{5}{CO6}{Analyze}
+
+\begin{examsol}
+\textbf{1. Invoking via \texttt{./script.sh}:}
+The kernel directly loads the file via the \texttt{execve()} system call. The kernel inspects file inode permission bits; if the execute (\texttt{x}) bit is not set, \texttt{execve()} fails with \texttt{Permission denied} before reading the shebang line.
+
+\textbf{2. Invoking via \texttt{bash script.sh}:}
+The executable binary being executed is \texttt{/bin/bash} (which already has execute permissions). Bash runs in user space, opens \texttt{script.sh} as a standard input stream via \texttt{open()} (which requires read \texttt{r} permission only), and parses the commands sequentially.
+
+\begin{markingrubric}
+\textbf{Marking Rubric [5 Marks]:} Kernel \texttt{execve()} check (2.5 Marks); User-space binary stream reading (2.5 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\section*{Section C: Advanced Engineering \& Script Automation [40 Marks]}
+
+\questionitem{3.1}{Develop a production-grade Bash script 'monitor\_disk.sh' that: (a) enforces 'set -euo pipefail', (b) checks disk utilization across all mounted partitions using 'df', (c) identifies partitions exceeding 85\% capacity, (d) writes alerts with timestamps to an alert log, and (e) returns exit status 1 if any partition exceeds threshold, 0 otherwise.}{10}{CO6}{Create}
+
+\begin{examsol}
+\begin{examscript}
+#!/bin/bash
+set -euo pipefail
+
+ALERT_LOG="/var/log/disk\_alert.log"
+THRESHOLD=85
+ALERT_TRIGGERED=0
+
+echo "[$(date +'%Y-%m-%d %T')] Commencing filesystem capacity audit..."
+
+# Read df output line-by-line skipping header
+while read -r usage mount_point; do
+    # Strip percentage symbol
+    pct=${usage%\%}
+    
+    if [ "$pct" -ge "$THRESHOLD" ]; then
+        echo "[CRITICAL $(date +'%Y-%m-%d %T')] Partition $mount_point usage at ${pct}% (Exceeds ${THRESHOLD}%)" | tee -a "$ALERT_LOG"
+        ALERT_TRIGGERED=1
+    fi
+done < <(df -hP | awk 'NR>1 {print $5, $6}')
+
+if [ "$ALERT_TRIGGERED" -eq 1 ]; then
+    echo "[ALERT] One or more filesystems exceed safety thresholds." >&2
+    exit 1
+else
+    echo "[OK] All filesystem capacities nominal."
+    exit 0
+fi
+\end{examscript}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [10 Marks]:} Defensive header \texttt{set -euo pipefail} (2 Marks); \texttt{df} parsing logic (3 Marks); Threshold numerical comparison (2 Marks); Logging and exit status control (3 Marks).
+\end{markingrubric}
+\end{examsol}
+
+\questionitem{3.2}{Explain Git internal object architecture (Blobs, Trees, Commits). Trace the step-by-step resolution of a Git merge conflict from divergent branches to commit completion.}{10}{CO6}{Analyze}
+
+\begin{examsol}
+\textbf{1. Git Object Architecture:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Blob:} Stores pure file content bytes addressed by SHA hash.
+    \item \textbf{Tree:} Represents directories, associating file names and permissions with blob/tree hashes.
+    \item \textbf{Commit:} Metadata container storing author, committer, timestamp, message, pointer to root tree, and parent commit hash(es).
+\end{itemize}
+
+\textbf{2. Conflict Resolution Lifecycle:}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Divergent branches modify identical lines. \texttt{git merge feature} halts with \texttt{CONFLICT (content)}.
+    \item Git marks conflict zones in affected files with \texttt{<<<<<<< HEAD}, \texttt{=======}, and \texttt{>>>>>>> feature}.
+    \item The engineer opens the file, resolves conflicting logic, and removes all marker tokens.
+    \item The engineer stages resolved files via \texttt{git add <file>}, updating the index.
+    \item Executing \texttt{git commit} creates a merge commit with two parent hashes.
+\end{enumerate}
+
+\begin{markingrubric}
+\textbf{Marking Rubric [10 Marks]:} Git 3 object types (4 Marks); Conflict markers \& resolution stages (6 Marks).
+\end{markingrubric}
+\end{examsol}

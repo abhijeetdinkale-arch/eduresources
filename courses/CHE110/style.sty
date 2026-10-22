@@ -1,0 +1,422 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/09/16 v1.0 CHE110 Environmental Studies Textbook Style]
+
+\RequirePackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{2218}{\ensuremath{^\circ}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm,
+    headheight=15pt,
+    headsep=18pt,
+    footskip=14mm
+}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools,amsthm}
+\RequirePackage{bm}
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\sisetup{
+    separate-uncertainty = true,
+    inter-unit-product = \ensuremath{{}\cdot{}}
+}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\RequirePackage[table,dvipsnames,svgnames]{xcolor}
+
+% Environmental Theme Palette
+\definecolor{brandforest}{RGB}{16, 92, 56}       % Deep Forest Green #105C38
+\definecolor{brandemerald}{RGB}{20, 110, 60}     % Emerald Accent #146E3C
+\definecolor{brandnavy}{RGB}{15, 35, 65}         % Deep Navy #0F2341
+\definecolor{brandteal}{RGB}{13, 148, 136}       % Teal #0D9488
+\definecolor{brandgold}{RGB}{180, 83, 9}         % Amber Gold #B45309
+\definecolor{brandslate}{RGB}{71, 85, 105}       % Slate #475569
+\definecolor{branddark}{RGB}{15, 23, 42}         % Charcoal Dark #0F172A
+
+\definecolor{boxgreenbg}{RGB}{242, 252, 246}
+\definecolor{boxgreenborder}{RGB}{20, 110, 60}
+
+\definecolor{boxnavybg}{RGB}{243, 247, 254}
+\definecolor{boxnavyborder}{RGB}{15, 35, 65}
+
+\definecolor{boxgoldbg}{RGB}{255, 251, 235}
+\definecolor{boxgoldborder}{RGB}{180, 83, 9}
+
+\definecolor{boxtealbg}{RGB}{240, 253, 250}
+\definecolor{boxtealborder}{RGB}{13, 148, 136}
+
+\definecolor{boxskybg}{RGB}{240, 249, 255}
+\definecolor{boxskyborder}{RGB}{2, 132, 199}
+
+\definecolor{boxrosebg}{RGB}{255, 241, 242}
+\definecolor{boxroseborder}{RGB}{225, 29, 72}
+
+\definecolor{boxgraybg}{RGB}{248, 250, 252}
+\definecolor{boxgrayborder}{RGB}{148, 163, 184}
+
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable,hooks}
+
+% Boxes
+\newtcolorbox{definition}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=boxgreenborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Definition}{Definition: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandforest,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{theorem}[1][]{
+    enhanced,
+    breakable,
+    colback=boxnavybg,
+    colframe=brandnavy,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Ecological Law / Governing Principle}{Principle: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandnavy,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{keyequation}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgoldbg,
+    colframe=boxgoldborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Key Formula / Quantitative Relation}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandgold,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{example}[1][]{
+    enhanced,
+    breakable,
+    colback=boxskybg,
+    colframe=boxskyborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Worked Quantitative Example}{Worked Example: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=boxskyborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{solutionbox}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=boxgrayborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Step-by-Step Analytical Solution}{#1}},
+    boxrule=1.0pt,
+    leftrule=3.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=branddark,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{casestudy}[1][]{
+    enhanced,
+    breakable,
+    colback=boxtealbg,
+    colframe=brandteal,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Real-World Case Diagnostic}{Case Diagnostic: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandteal,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{examtip}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgoldbg,
+    colframe=brandgold,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Examiner Strategy \& Key Takeaway}{Exam Strategy: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandgold,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{commonmistake}[1][]{
+    enhanced,
+    breakable,
+    colback=boxrosebg,
+    colframe=boxroseborder,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Common Student Pitfall / Exam Trap}{Common Pitfall: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=boxroseborder,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{quickrevision}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgraybg,
+    colframe=brandforest,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Quick Revision Takeaways}{Quick Revision: #1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandforest,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\newtcolorbox{important}[1][]{
+    enhanced,
+    breakable,
+    colback=boxgreenbg,
+    colframe=brandforest,
+    fonttitle=\bfseries\sffamily,
+    title={\ifstrempty{#1}{Key Learning Objectives}{#1}},
+    boxrule=1.2pt,
+    leftrule=4.5pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    coltitle=brandforest,
+    attach title to upper={\par\vspace{4pt}},
+    after title={\par\smallskip\noindent}
+}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\sffamily\thepage}
+\fancyhead[RE]{\small\sffamily\nouppercase{\leftmark}}
+\fancyhead[LO]{\small\sffamily\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\color{brandforest}\large\bfseries\MakeUppercase{\chaptertitlename\ \thechapter}}
+  {4pt}
+  {\Huge\bfseries\color{brandnavy}}
+  [\vspace{4pt}{\color{brandforest}\rule{\linewidth}{1.5pt}}\vspace{10pt}]
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily\color{brandnavy}}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{brandslate!40}\rule{\linewidth}{0.5pt}}]
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily\color{brandforest}}
+  {\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\sffamily\color{brandslate}}
+  {\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brandforest,
+    citecolor=brandteal,
+    urlcolor=brandforest,
+    pdfauthor={LPU Faculty of Environmental Sciences},
+    pdftitle={CHE110: Environmental Studies --- Comprehensive Master Textbook},
+    pdfsubject={Environmental Studies and Sustainability},
+    pdfkeywords={CHE110, Environment, Ecology, Biodiversity, Pollution, Disaster Management, Environmental Law},
+    plainpages=false,
+    bookmarksnumbered=true
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newcommand{\makebookcover}{%
+\begin{titlepage}
+\pagenumbering{Alph}
+\pagecolor{white}
+\noindent
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[brandforest] (current page.north west) rectangle ([yshift=-4.5cm]current page.north east);
+    \fill[brandemerald] ([yshift=-4.5cm]current page.north west) rectangle ([yshift=-4.7cm]current page.north east);
+    \node[anchor=north west, text=white, font=\sffamily\bfseries\large] 
+        at ([xshift=25mm, yshift=-20mm]current page.north west) {LPU ACADEMIC TEXTBOOK SERIES \textbullet\ ENVIRONMENTAL SCIENCES};
+    \node[anchor=north west, text=white!80, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=-28mm]current page.north west) {Standard Curriculum Textbook for Engineering and Applied Sciences};
+    \fill[brandnavy] (current page.south west) rectangle ([yshift=2.2cm]current page.south east);
+    \fill[brandforest] ([yshift=2.2cm]current page.south west) rectangle ([yshift=2.4cm]current page.south east);
+    \node[anchor=south west, text=white, font=\sffamily\small] 
+        at ([xshift=25mm, yshift=10mm]current page.south west) {Faculty of Environmental Sciences \& Sustainability \textbullet\ 2026--2027};
+    \node[anchor=south east, text=white!80, font=\sffamily\small] 
+        at ([xshift=-25mm, yshift=10mm]current page.south east) {Open Educational Resource (CC BY-NC-SA 4.0)};
+\end{tikzpicture}
+
+\vspace*{4.8cm}
+
+\begin{flushleft}
+    {\fontsize{34}{40}\selectfont\bfseries\sffamily\color{brandnavy} Environmental Studies\par}
+    \vspace{0.8cm}
+    {\fontsize{18}{22}\selectfont\sffamily\color{brandforest} CHE110 $\cdot$ Comprehensive University Master Textbook\par}
+    \vspace{0.4cm}
+    {\color{brandforest}\rule{0.6\linewidth}{1.5pt}\par}
+    \vspace{0.8cm}
+    {\large\sffamily\color{branddark}
+    \textbf{Ecology \textbullet\ Natural Resources \textbullet\ Biodiversity \textbullet\ Pollution Control \textbullet\ Disaster Management \textbullet\ Environmental Law}\par}
+    
+    \vspace{2.0cm}
+    
+    \begin{tcolorbox}[
+        enhanced,
+        width=0.92\linewidth,
+        colback=boxgreenbg,
+        colframe=brandforest,
+        boxrule=1pt,
+        arc=4pt
+    ]
+        \sffamily\small
+        \textbf{Key Pedagogical Features:}
+        \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=3pt]
+            \item Exhaustive, rigorous coverage of all 6 Units aligned with UGC and University syllabi.
+            \item Detailed quantitative mathematical modeling: IPAT framework, Lindeman energetics, Shannon-Wiener and Simpson biodiversity indices, Streeter-Phelps oxygen sag equations, and demographic logistics.
+            \item Comprehensive clinical diagnostics of historical environmental disasters: Bhopal, Chernobyl, Minamata, London Smog, and Kedarnath.
+            \item Complete statutory treatment: Wildlife Protection Act, Water Act, Air Act, EPA 1986, Forest Rights Act, Disaster Management Act 2005, and Constitutional environmental jurisprudence.
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\sffamily\small\textbf{Editorial Board:}\\
+    LPU Environmental Sciences Editorial Board \& Faculty of Technology\\
+    University Academic Press}
+\end{flushleft}
+\end{titlepage}
+\nopagecolor
+\pagenumbering{roman}
+}
+
+\newcommand{\copyrightpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent
+\textbf{\sffamily\large CHE110: Environmental Studies --- University Master Textbook}\\
+\textit{\sffamily A Comprehensive Academic and Applied Reference}\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Published by:} LPU Academic Publishing Group\\
+\textbf{\sffamily Academic Year:} 2026--2027 Edition\\
+\textbf{\sffamily Course Code:} CHE110 (Environmental Studies)\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Licensing \& Distribution:}\\
+\textcopyright\ 2026 The Authors and Contributors.\\
+This educational textbook is distributed under the terms of the \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)} License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.\\
+
+\vspace{0.6cm}
+\noindent
+\textbf{\sffamily Suggested Citation:}\\
+Faculty of Environmental Sciences, \textit{CHE110: Environmental Studies --- Comprehensive Master Textbook}, 2026 ed. University Academic Open Educational Resources.
+
+\vspace*{\fill}
+\newpage
+}
+
+\newcommand{\disclaimerpage}{%
+\newpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{tcolorbox}[
+    enhanced,
+    colback=boxgoldbg,
+    colframe=brandgold,
+    boxrule=1.5pt,
+    arc=4pt,
+    title={\Large\bfseries\sffamily Academic Scope and Disclaimer}
+]
+\sffamily\normalsize\setlength{\parskip}{8pt}
+
+\textbf{1. Pedagogical Intent}\\
+This publication is developed as a comprehensive university-level master textbook designed to impart thorough environmental literacy, scientific principles of sustainable resource management, and regulatory compliance knowledge to undergraduate students of engineering and technology.
+
+\textbf{2. Institutional Alignment}\\
+Curricular topics, unit structures, and practice question patterns are compiled under educational fair use to assist students in mastering the established syllabus for CHE110.
+
+\textbf{3. Rigor \& Quantitative Precision}\\
+Environmental science requires rigorous multidisciplinary synthesis across ecology, chemical engineering, atmospheric dynamics, and jurisprudence. All mathematical formulations and statutory references have been prepared in concordance with standards established by CPCB, MoEFCC, NDMA, and international treaty conventions (UNFCCC, CBD, UNDRR).
+\end{tcolorbox}
+\vfill
+\newpage
+}
+
+\endinput

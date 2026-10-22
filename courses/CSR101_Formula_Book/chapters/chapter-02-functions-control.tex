@@ -1,0 +1,84 @@
+\chapter{Control Flow, Iteration Protocols, Function Signatures \& Regular Expressions}
+\label{chap:functions-control}
+
+\section{Control Flow Mechanics}
+\begin{formulabox}{Loop \texttt{else} Clause Invariant}
+In Python, both \texttt{for} and \texttt{while} loops accept an optional \texttt{else} block:
+\begin{lstlisting}
+for item in iterable:
+    if condition(item):
+        break  # Skips loop else
+else:
+    # Executes ONLY if the loop completed without encountering a break
+    handle_exhaustion()
+\end{lstlisting}
+\textbf{Usage:} Eliminates boolean flag variables when searching for an element in a collection.
+\end{formulabox}
+
+\section{Function Parameter Anatomy \& Argument Unpacking}
+\begin{formulabox}{Complete Parameter Specification Hierarchy (PEP 3102 \& PEP 570)}
+A fully generalized Python function signature is declared as:
+\begin{lstlisting}
+def func(pos_only1, pos_only2, /, pos_or_kw, *args, kw_only1, kw_only2=val, **kwargs):
+    pass
+\end{lstlisting}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{\texttt{/}} (Positional-only marker): Parameters preceding \texttt{/} cannot be passed as keyword arguments.
+    \item \textbf{\texttt{*args}} (Variadic positional): Packs remaining positional arguments into an immutable \texttt{tuple}.
+    \item \textbf{Keyword-only parameters}: Any parameter declared after \texttt{*} or \texttt{*args} MUST be passed by name.
+    \item \textbf{\texttt{**kwargs}} (Variadic keyword): Packs extra keyword arguments into a mutable \texttt{dict}.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+\textbf{The Mutable Default Argument Trap:}\\
+Default arguments are evaluated \textbf{once at function definition time}, not at runtime!
+\begin{lstlisting}
+# BUG: shared list between invocations
+def append_to(element, target=[]):
+    target.append(element)
+    return target
+
+# CORRECT: None sentinel idiom
+def append_to(element, target=None):
+    if target is None:
+        target = []
+    target.append(element)
+    return target
+\end{lstlisting}
+\end{memorytip}
+
+\section{Scope Resolution: The LEGB Rule}
+\begin{formulabox}{LEGB Search Hierarchy}
+Identifiers are resolved by inspecting nested namespaces in strict sequence:
+\begin{equation}
+\textbf{L}ocal \;\longrightarrow\; \textbf{E}nclosing \;\longrightarrow\; \textbf{G}lobal \;\longrightarrow\; \textbf{B}uilt-in
+\end{equation}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{global var}: Rebinds variable in the module-level global namespace.
+    \item \texttt{nonlocal var}: Rebinds variable in the nearest enclosing non-global scope (closures).
+\end{itemize}
+\end{formulabox}
+
+\section{Regular Expressions Cheat-Sheet (\texttt{re} Module)}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{llX}
+\toprule
+\textbf{Pattern} & \textbf{Category} & \textbf{Semantics \& Match Criteria} \\
+\midrule
+\texttt{\textbackslash d} / \texttt{\textbackslash D} & Character Class & Matches any Unicode digit ($[0-9]$) / non-digit \\
+\texttt{\textbackslash w} / \texttt{\textbackslash W} & Character Class & Matches alphanumeric character plus underscore / non-alphanumeric \\
+\texttt{\textbackslash s} / \texttt{\textbackslash S} & Character Class & Matches any whitespace char (\texttt{\textbackslash t}, \texttt{\textbackslash n}, space) / non-whitespace \\
+\texttt{\textbackslash b} / \texttt{\textbackslash B} & Boundary Anchor & Word boundary (transition between \texttt{\textbackslash w} and \texttt{\textbackslash W}) / non-boundary \\
+\texttt{\textasciicircum{}} / \texttt{\$} & Line Anchors & Matches beginning of string (or line in MULTILINE) / end of string \\
+\texttt{*}, \texttt{+}, \texttt{?} & Greedy Quantifiers & 0 or more, 1 or more, 0 or 1 occurrences \\
+\texttt{*?}, \texttt{+?}, \texttt{??} & Lazy Quantifiers & Non-greedy variants matching minimal characters necessary \\
+\texttt{(?P<name>...)} & Named Group & Captures matched substring accessible by dictionary key in \texttt{match.groupdict()} \\
+\texttt{(?:...)} & Non-capturing & Groups patterns for quantifiers without consuming memory in group tuples \\
+\texttt{(?=...)} / \texttt{(?!...)} & Lookaround & Positive lookahead / negative lookahead (zero-width assertion) \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Regular Expression Syntax}
+\end{table}

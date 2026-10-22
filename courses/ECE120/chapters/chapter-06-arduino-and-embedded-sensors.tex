@@ -1,0 +1,147 @@
+\chapter{Microcontroller Workshop: Arduino Uno \& Embedded Sensor Interfacing}
+\label{chap:arduino}
+
+\section{Overview and Laboratory Learning Objectives}
+The integration of physical electronic hardware with programmable digital controllers represents the core of modern robotics, Internet of Things (IoT), industrial instrumentation, and automated control systems. In this culminating workshop unit, students explore the architecture of the open-source Arduino Uno development platform (powered by the Microchip ATmega328P microcontroller), master C/C++ embedded firmware programming, interface an active Infrared (IR) Proximity/Obstacle sensor, and implement real-world automated control and telemetry algorithms.
+
+\begin{important}[Unit Learning Objectives]
+Upon completion of this chapter and lab experiments, the student will be proficient in:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explaining the hardware architecture, memory map, and peripheral subsystems of the ATmega328P.
+    \item Mapping physical Arduino Uno header pins to digital I/O ports, PWM channels, and 10-bit analog inputs.
+    \item Developing structured embedded firmware using standard Arduino IDE sketch architecture (`setup()` and `loop()`).
+    \item Operating the LM393 comparator-based active Infrared (IR) obstacle detection module.
+    \item Calibrating sensor detection thresholds using an on-board multi-turn cermet potentiometer.
+    \item Implementing software debounce and state machine logic to build reliable item counters and intrusion alert systems.
+    \item Diagnosing electrical hazards such as inductive kickback, brownout resets, and ground bounce.
+\end{enumerate}
+\end{important}
+
+\section{Arduino Uno Hardware Architecture}
+The Arduino Uno R3 is built around the 8-bit AVR RISC ATmega328P microcontroller:
+\begin{itemize}
+    \item \textbf{Processing Core}: 8-bit AVR RISC architecture executing up to 16 MIPS at 16 MHz.
+    \item \textbf{Memory Organization}:
+    \begin{itemize}
+        \item 32 KB In-System Programmable Flash memory (0.5 KB reserved for Optiboot bootloader).
+        \item 2 KB internal SRAM for dynamic variable allocation and stack frame execution.
+        \item 1 KB EEPROM for persistent non-volatile data storage across power cycles.
+    \end{itemize}
+    \item \textbf{Digital I/O (Pins 0 to 13)}: 14 general-purpose digital input/output pins. Absolute maximum current per pin is $40\,\mathrm{mA}$ ($20\,\mathrm{mA}$ recommended continuous limit).
+    \item \textbf{Pulse Width Modulation (PWM)}: 6 hardware timer channels (Pins 3, 5, 6, 9, 10, 11 marked with $\sim$) producing 8-bit PWM signals ($0\text{--}255$) at $490\,\mathrm{Hz}$ or $980\,\mathrm{Hz}$.
+    \item \textbf{Analog Inputs (Pins A0 to A5)}: 6 single-ended channels multiplexed into a 10-bit successive approximation ADC.
+    \[ V_{\mathrm{meas}} = \text{ADC Reading} \times \left( \frac{5.0\,\mathrm{V}}{1024} \right) \approx \text{ADC Reading} \times 4.8828\,\mathrm{mV} \]
+    \item \textbf{Power Distribution}: Regulated on-board $5.0\,\mathrm{V}$ (NCP1117 LDO) and $3.3\,\mathrm{V}$ (LP2985 LDO) outputs from a $7\text{--}12\,\mathrm{V}$ DC barrel jack input.
+\end{itemize}
+
+\section{Infrared (IR) Proximity and Obstacle Detection Sensor Module}
+The standard workshop IR sensor module utilizes optical triangulation and reflection:
+\begin{enumerate}
+    \item \textbf{IR Emitter (LED)}: Transmits continuous infrared light at a wavelength of $\lambda \approx 940\,\mathrm{nm}$.
+    \item \textbf{IR Detector (Photodiode)}: Measures reflected infrared intensity. When an obstacle approaches, reflected radiation enters the photodiode, generating a proportional reverse photocurrent.
+    \item \textbf{LM393 Dual Differential Comparator}: Compares the photodiode voltage ($V_{\mathrm{photo}}$) against an adjustable reference voltage ($V_{\mathrm{ref}}$) configured via a 10-turn cermet potentiometer:
+    \[ V_{\mathrm{OUT}} = \begin{cases} 0\,\mathrm{V}\,\,(\text{Logic LOW / Active}), & \text{when } V_{\mathrm{photo}} > V_{\mathrm{ref}}\,\,(\text{Obstacle detected}) \\ 5\,\mathrm{V}\,\,(\text{Logic HIGH / Idle}), & \text{when } V_{\mathrm{photo}} \le V_{\mathrm{ref}}\,\,(\text{No obstacle}) \end{cases} \]
+    \item \textbf{Status Indicators}: A power LED (red) confirms $+5\,\mathrm{V}$ supply; an output indicator LED (green) illuminates when an obstacle is detected.
+\end{enumerate}
+
+\section{Laboratory Experiment 6: Arduino IR Obstacle Detection \& Counter}
+\begin{experimentbox}[Laboratory Experiment 6 Protocol]
+\textbf{Objective}: To interface an active-LOW IR sensor module and an alert actuator to an Arduino Uno, calibrate detection distance, and write embedded firmware implementing a debounced conveyor counter.\\
+\textbf{Apparatus Required}:
+\begin{enumerate}
+    \item Arduino Uno R3 development board with USB cable --- 1 unit
+    \item 3-Pin Active-LOW IR Proximity Sensor Module (LM393) --- 1 unit
+    \item Red LED ($5\,\mathrm{mm}$) with $220\,\Omega$ resistor --- 1 set
+    \item Active $5\,\mathrm{V}$ Piezo Buzzer --- 1 unit
+    \item Solderless breadboard and female-to-male DuPont jumpers
+\end{enumerate}
+\end{experimentbox}
+
+\begin{observationtable}[Observation Table 6.1: IR Sensor Calibration and Distance Response]
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Target Distance (cm)} & \textbf{White Surface (OUT)} & \textbf{Cardboard (OUT)} & \textbf{Black Matte (OUT)} & \textbf{Detection State} \\
+\midrule
+$2.0$ & $0.0\,\mathrm{V}$ (LOW) & $0.0\,\mathrm{V}$ (LOW) & $0.0\,\mathrm{V}$ (LOW) & Detected \\
+$5.0$ & $0.0\,\mathrm{V}$ (LOW) & $0.0\,\mathrm{V}$ (LOW) & $4.8\,\mathrm{V}$ (HIGH) & Surface Dependent \\
+$10.0$ & $0.0\,\mathrm{V}$ (LOW) & $4.8\,\mathrm{V}$ (HIGH) & $5.0\,\mathrm{V}$ (HIGH) & Distance Limit \\
+$15.0$ & $4.9\,\mathrm{V}$ (HIGH) & $5.0\,\mathrm{V}$ (HIGH) & $5.0\,\mathrm{V}$ (HIGH) & Clear (Idle) \\
+$20.0$ & $5.0\,\mathrm{V}$ (HIGH) & $5.0\,\mathrm{V}$ (HIGH) & $5.0\,\mathrm{V}$ (HIGH) & Clear (Idle) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{observationtable}
+
+\section{Complete Embedded Firmware Implementation}
+\begin{solutionbox}[Production-Ready Arduino C++ Counter Sketch]
+\begin{verbatim}
+/*
+ * ECE120 Basic Electronics Engineering Workshop
+ * Arduino Uno & LM393 IR Obstacle Counter with Software Debounce
+ */
+
+const int IR_PIN = 2;       // Digital Pin 2 (Active LOW)
+const int LED_PIN = 13;     // On-board LED indicator
+const int BUZZER_PIN = 8;   // Audible buzzer alert pin
+
+volatile unsigned long objectCount = 0;
+unsigned long lastEventTime = 0;
+const unsigned long DEBOUNCE_MS = 120; // 120 ms minimum pulse separation
+
+void setup() {
+  pinMode(IR_PIN, INPUT_PULLUP);
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  digitalWrite(LED_PIN, LOW);
+  digitalWrite(BUZZER_PIN, LOW);
+  
+  Serial.begin(9600);
+  while (!Serial) { ; } // Wait for serial monitor connection
+  Serial.println("=========================================");
+  Serial.println("ECE120: Arduino Uno IR Object Counter");
+  Serial.println("System Initialized & Ready");
+  Serial.println("=========================================");
+}
+
+void loop() {
+  int sensorVal = digitalRead(IR_PIN);
+  
+  // Check for active LOW signal from LM393
+  if (sensorVal == LOW) {
+    unsigned long currentMillis = millis();
+    if (currentMillis - lastEventTime > DEBOUNCE_MS) {
+      objectCount++;
+      lastEventTime = currentMillis;
+      
+      // Visual feedback
+      digitalWrite(LED_PIN, HIGH);
+      
+      // Real-time serial telemetry
+      Serial.print("[TELEMETRY] Object Detected! Cumulative Count: ");
+      Serial.println(objectCount);
+      
+      // Trigger buzzer if count reaches batch threshold (e.g. 20 objects)
+      if (objectCount % 20 == 0) {
+        Serial.println(">>> BATCH THRESHOLD REACHED: AUDIBLE ALARM <<<");
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(100);
+        digitalWrite(BUZZER_PIN, LOW);
+      }
+      
+      delay(40);
+      digitalWrite(LED_PIN, LOW);
+    }
+  }
+}
+\end{verbatim}
+\end{solutionbox}
+
+\section{Workshop Viva-Voce Questions \& Answers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Question}: Why does the microcontroller experience unintended brownout resets when inductive motors or relays are switched?\\
+    \textbf{Answer}: Inductive coils store energy in a magnetic field ($E = \frac{1}{2} L I^2$). When turned OFF suddenly, the collapsing field generates a massive reverse back-EMF spike ($V = -L \frac{di}{dt}$) that pulls down the regulated DC rail. If the supply voltage drops below the ATmega328P internal Brown-Out Detector (BOD) threshold of $4.3\,\mathrm{V}$ or $2.7\,\mathrm{V}$, the CPU executes an emergency hardware reset. Placing a reverse-biased flyback diode across the coil shunts this transient harmlessly.
+    \item \textbf{Question}: What is the purpose of software debounce in mechanical and optical counter systems?\\
+    \textbf{Answer}: When an object partially crosses an optical sensor beam or when mechanical switch contacts engage, micro-vibrations and edge reflections cause the signal to rapidly toggle between HIGH and LOW dozens of times over a $5\text{--}50\,\mathrm{ms}$ window. Software debounce enforces a mandatory lockout hold-off window (e.g. $100\,\mathrm{ms}$) after the initial edge, ensuring only one valid count is recorded per physical object.
+\end{enumerate}

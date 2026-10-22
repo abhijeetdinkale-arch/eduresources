@@ -1,0 +1,114 @@
+\chapter{Fundamental Circuit Laws \& Divider Networks in Workshop}
+\label{chap:dividers}
+
+\section{Overview and Laboratory Learning Objectives}
+The Voltage Divider Law (VDL) and Current Divider Law (CDL) constitute the two foundational analytical tools used by electrical and computer engineers to determine potential distributions and current branch splits in linear resistive networks. In the workshop environment, understanding these laws is crucial not only for biasing electronic circuits and attenuating sensor signals, but also for evaluating the severe loading errors that arise when measuring instruments or real-world loads are connected across non-ideal dividers.
+
+\begin{important}[Unit Learning Objectives]
+Upon completion of this chapter and related laboratory experiments, the student will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item State and mathematically derive the Voltage Divider Law for arbitrary series resistive chains.
+    \item Explain the operational mechanics of potentiometers and rheostats as adjustable voltage dividers.
+    \item Quantify voltmeter loading errors mathematically and select appropriate meter impedances to minimize measurement distortion.
+    \item State and derive the Current Divider Law for two-branch and general $n$-branch parallel circuits using conductance formulation.
+    \item Calculate ammeter insertion burden voltage and describe its impact on low-resistance circuits.
+    \item Build, measure, and troubleshoot series-parallel divider circuits on a solderless breadboard.
+\end{enumerate}
+\end{important}
+
+\section{The Voltage Divider Law (VDL)}
+\begin{definition}[Voltage Divider Law]
+When $n$ resistors are connected in series across a total DC potential difference $V_{\mathrm{in}}$, the current flowing through each element is identical:
+\[ I = \frac{V_{\mathrm{in}}}{R_{\mathrm{total}}} = \frac{V_{\mathrm{in}}}{\sum_{k=1}^n R_k} \]
+According to Ohm's Law, the voltage drop across any individual component $R_x$ is directly proportional to its resistance:
+\[ V_x = I \cdot R_x = V_{\mathrm{in}} \left( \frac{R_x}{R_{\mathrm{total}}} \right) \]
+\end{definition}
+
+For the standard two-resistor divider formed by $R_1$ and $R_2$ across supply $V_{\mathrm{in}}$, the output voltage across $R_2$ is:
+\begin{keyequation}[Two-Resistor Voltage Divider Formula]
+\[ V_{\mathrm{out}} = V_{\mathrm{in}} \left( \frac{R_2}{R_1 + R_2} \right) \]
+\end{keyequation}
+
+\subsection{Potentiometer as an Adjustable Voltage Divider}
+A potentiometer consists of a three-terminal resistive element where a mechanical wiper slides across a track of total resistance $R_{\mathrm{pot}}$.
+Let the position of the wiper divide the track into a lower portion $R_2 = \alpha R_{\mathrm{pot}}$ and an upper portion $R_1 = (1 - \alpha) R_{\mathrm{pot}}$, where $\alpha \in [0, 1]$ represents the fractional wiper position. The unloaded wiper potential is:
+\[ V_{\mathrm{out}} = V_{\mathrm{in}} \left( \frac{\alpha R_{\mathrm{pot}}}{(1 - \alpha) R_{\mathrm{pot}} + \alpha R_{\mathrm{pot}}} \right) = \alpha V_{\mathrm{in}} \]
+Hence, turning the potentiometer shaft smoothly varies the output voltage from $0\,\mathrm{V}$ to $V_{\mathrm{in}}$.
+
+\section{Voltmeter Loading Effects and Loading Error}
+When an external load resistor $R_L$ (or an analog/digital voltmeter with finite internal resistance $R_m$) is placed across $R_2$, the equivalent parallel resistance becomes:
+\[ R_{2,\mathrm{eq}} = R_2 \parallel R_L = \frac{R_2 R_L}{R_2 + R_L} \]
+Since $R_{2,\mathrm{eq}} < R_2$, the loaded output voltage drops:
+\[ V_{\mathrm{loaded}} = V_{\mathrm{in}} \left( \frac{R_{2,\mathrm{eq}}}{R_1 + R_{2,\mathrm{eq}}} \right) = V_{\mathrm{in}} \left( \frac{R_2 R_L}{R_1 R_2 + R_1 R_L + R_2 R_L} \right) \]
+
+\begin{keyequation}[Percentage Voltmeter Loading Error]
+\[ \%\text{ Error} = \frac{V_{\mathrm{unloaded}} - V_{\mathrm{loaded}}}{V_{\mathrm{unloaded}}} \times 100\% = \frac{R_1}{R_1 + R_L \left(1 + \frac{R_1}{R_2}\right)} \times 100\% \]
+\end{keyequation}
+If $R_L \gg R_2$ (at least 100 times larger), $R_{2,\mathrm{eq}} \approx R_2$ and the loading error drops below $1\%$.
+
+\section{The Current Divider Law (CDL)}
+\begin{definition}[Current Divider Law]
+When $n$ parallel branches are connected across an incoming node current $I_T$, the voltage across each parallel branch is identical ($V_p = I_T R_p$). The current through any branch $k$ of conductance $G_k = 1/R_k$ is:
+\[ I_k = I_T \left( \frac{G_k}{\sum_{j=1}^n G_j} \right) = I_T \left( \frac{R_p}{R_k} \right) \]
+\end{definition}
+
+For a two-branch parallel network consisting of $R_1$ and $R_2$:
+\[ R_p = \frac{R_1 R_2}{R_1 + R_2} \]
+Substituting into Ohm's Law yields the classical two-branch formulas:
+\begin{keyequation}[Two-Branch Current Divider Equations]
+\[ I_1 = I_T \left( \frac{R_2}{R_1 + R_2} \right), \quad I_2 = I_T \left( \frac{R_1}{R_1 + R_2} \right) \]
+\end{keyequation}
+Notice the inverse proportionality: the branch with the smaller resistance carries the larger share of the total current.
+
+\section{Laboratory Experiment 2: Validation of Voltage and Current Dividers}
+\begin{experimentbox}[Laboratory Experiment 2 Protocol]
+\textbf{Objective}: To experimentally verify the Voltage Divider Law, quantify loading effects with varying load resistors, and verify the Current Divider Law in a parallel branch network.\\
+\textbf{Apparatus Required}:
+\begin{enumerate}
+    \item Regulated DC Power Supply ($0\text{--}30\,\mathrm{V}$) --- 1 unit
+    \item Bench Digital Multimeter (DMM) --- 2 units
+    \item Resistors: $R_1 = 1\,\mathrm{k}\Omega$, $R_2 = 2.2\,\mathrm{k}\Omega$, $R_L = 100\,\Omega, 1\,\mathrm{k}\Omega, 10\,\mathrm{k}\Omega, 100\,\mathrm{k}\Omega$
+    \item Solderless breadboard and connection jumpers
+\end{enumerate}
+\end{experimentbox}
+
+\begin{observationtable}[Observation Table 2.1: Voltage Divider Loading Data ($V_{\mathrm{in}} = 10.0\,\mathrm{V}, R_1 = 1\,\mathrm{k}\Omega, R_2 = 2.2\,\mathrm{k}\Omega$)]
+\begin{center}
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Trial} & \textbf{Load Resistor ($R_L$)} & \textbf{Theor. $V_{\mathrm{loaded}}$ (V)} & \textbf{Meas. $V_{\mathrm{loaded}}$ (V)} & \textbf{Loading Error (\%)} & \textbf{Operating Regime} \\
+\midrule
+1 & Open Circuit ($\infty$) & $6.875\,\mathrm{V}$ & $6.868\,\mathrm{V}$ & $0.10\%$ & Ideal Divider \\
+2 & $100\,\mathrm{k}\Omega$ & $6.745\,\mathrm{V}$ & $6.738\,\mathrm{V}$ & $1.99\%$ & Low Loading \\
+3 & $10\,\mathrm{k}\Omega$ & $5.909\,\mathrm{V}$ & $5.902\,\mathrm{V}$ & $14.07\%$ & Moderate Loading \\
+4 & $1\,\mathrm{k}\Omega$ & $3.571\,\mathrm{V}$ & $3.565\,\mathrm{V}$ & $48.14\%$ & Severe Loading \\
+5 & $100\,\Omega$ & $0.803\,\mathrm{V}$ & $0.798\,\mathrm{V}$ & $88.38\%$ & Near-Short Loading \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{observationtable}
+
+\section{Worked Numerical Examples}
+\begin{example}[Sizing a Sensor Bias Divider]
+An embedded analog sensor requiring a stable $3.3\,\mathrm{V}$ reference is to be supplied from a $+5.0\,\mathrm{V}$ Arduino rail using a two-resistor voltage divider. If the maximum current drawn through the divider chain must not exceed $5\,\mathrm{mA}$ to save power, calculate: (a) Suitable standard $5\%$ resistor values for $R_1$ and $R_2$, (b) The actual voltage produced by these standard values.
+\end{example}
+\begin{solutionbox}
+Total resistance must satisfy:
+\[ R_{\mathrm{total}} = R_1 + R_2 \ge \frac{5.0\,\mathrm{V}}{5\,\mathrm{mA}} = 1000\,\Omega \]
+Using the divider relation:
+\[ \frac{R_2}{R_1 + R_2} = \frac{3.3}{5.0} = 0.66 \implies R_2 = 0.66\,R_{\mathrm{total}}, \quad R_1 = 0.34\,R_{\mathrm{total}} \]
+Choosing $R_{\mathrm{total}} \approx 3\,\mathrm{k}\Omega$:
+\[ R_2 \approx 0.66 \times 3000 = 1980\,\Omega \implies \text{Standard } 2.0\,\mathrm{k}\Omega \text{ or } 2.2\,\mathrm{k}\Omega \]
+\[ R_1 \approx 0.34 \times 3000 = 1020\,\Omega \implies \text{Standard } 1.0\,\mathrm{k}\Omega \]
+Testing standard pair $R_1 = 1.0\,\mathrm{k}\Omega$ and $R_2 = 2.0\,\mathrm{k}\Omega$:
+\[ V_{\mathrm{out}} = 5.0 \times \frac{2.0}{1.0 + 2.0} = 5.0 \times \frac{2}{3} = 3.33\,\mathrm{V} \]
+This yields an error of only $+1.0\%$, well within sensor tolerances.
+\end{solutionbox}
+
+\section{Workshop Viva-Voce Questions \& Answers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Question}: What is the fundamental physical reason why ammeters must have very low internal resistance?\\
+    \textbf{Answer}: An ammeter is connected in series with the branch whose current is being measured. If the meter had non-negligible resistance $R_A$, it would increase total circuit loop resistance, creating an insertion burden voltage ($V_A = I R_A$) that reduces the true circuit current.
+    \item \textbf{Question}: How does an operational amplifier buffer prevent loading errors in voltage dividers?\\
+    \textbf{Answer}: An op-amp connected as a unity-gain buffer has nearly infinite input impedance ($> 10^{12}\,\Omega$) and extremely low output impedance ($< 0.1\,\Omega$). When placed between the divider output and the load, it draws virtually zero current from the divider (preventing voltage sag) while delivering required load current from its own power supply rails.
+\end{enumerate}

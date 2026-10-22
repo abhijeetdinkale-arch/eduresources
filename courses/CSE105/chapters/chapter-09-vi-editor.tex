@@ -1,0 +1,147 @@
+\chapter{The vi/vim Modal Text Editor \& Advanced Editing Mastery}
+\label{chap:vi-editor}
+
+\section{The Philosophy of Modal Text Editing}
+In modern graphical word processors and modeless text editors (such as VS Code or nano), every keypress immediately inserts alphanumeric characters into the document buffer. In contrast, \textbf{vi} (visual editor, authored by Bill Joy in 1976) and its modern enhancement \textbf{vim} (Vi IMproved, authored by Bram Moolenaar in 1991) are designed around the concept of \textbf{Modal Editing}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=2.5cm,
+    mode/.style={rectangle, draw=brandnavy, fill=boxnavybg, font=\sffamily\bfseries, minimum width=3.5cm, minimum height=1.2cm, align=center, rounded corners=4pt},
+    arrow/.style={thick, ->, >=stealth, draw=brandnavy}
+]
+    \node[mode, fill=boxtealbg, draw=brandteal] (cmd) {Command / Normal Mode\\(Default Navigation \& Edits)};
+    \node[mode, fill=boxpurplebg, draw=brandpurple, right=3.5cm of cmd] (ins) {Insert Mode\\(Text Entry \& Typing)};
+    \node[mode, fill=boxamberbg, draw=brandamber, below=1.8cm of $(cmd)!0.5!(ins)$] (ex) {Last-Line / Ex Mode\\(File I/O, Search, Replace)};
+
+    \draw[arrow] (cmd.north east) -- node[above, font=\small\ttfamily] {i, a, o, s, C} (ins.north west);
+    \draw[arrow] (ins.south west) -- node[below, font=\small\ttfamily] {<Esc>} (cmd.south east);
+
+    \draw[arrow] (cmd.south) -- node[left, font=\small\ttfamily] {:, /, ?} (ex.north west);
+    \draw[arrow] (ex.north east) -- node[right, font=\small\ttfamily] {<Esc> or <Enter>} (ins.south);
+    \draw[arrow] (ex.west) -- node[above left, font=\small\ttfamily] {<Esc>} (cmd.south west);
+\end{tikzpicture}
+\caption{The Three Primary Operating Modes of the vi/vim Editor.}
+\label{fig:vi-modes}
+\end{figure}
+
+\section{Starting vi \& Initializing Files}
+\begin{commandbox}{Invoking vi from the Shell}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{vi filename}: Opens \texttt{filename} for editing (creates file in buffer if non-existent).
+    \item \texttt{vi +N filename}: Opens file with cursor positioned immediately on line number $N$.
+    \item \texttt{vi +/pattern filename}: Opens file with cursor positioned on the first match of \texttt{pattern}.
+    \item \texttt{vi -R filename}: Opens file in read-only mode (identical to \texttt{view}).
+\end{itemize}
+\end{commandbox}
+
+\section{Navigation Commands in Command (Normal) Mode}
+Navigation keys operate without leaving command mode, maximizing typing speed by keeping the hands anchored on the keyboard home row.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Key} & \textbf{Navigation Functionality} & \textbf{Key} & \textbf{Navigation Functionality} \\
+\midrule
+\texttt{h} & Move cursor left one character & \texttt{0} (zero) & Jump to absolute start of current line \\
+\texttt{l} & Move cursor right one character & \texttt{\^{}} & Jump to first non-whitespace character \\
+\texttt{k} & Move cursor up one line & \texttt{\$} & Jump to absolute end of current line \\
+\texttt{j} & Move cursor down one line & \texttt{gg} & Jump to absolute first line of file \\
+\texttt{w} & Jump forward to start of next word & \texttt{G} & Jump to absolute last line of file \\
+\texttt{b} & Jump backward to start of previous word & \texttt{50G} & Jump directly to line number 50 \\
+\texttt{e} & Jump forward to end of current word & \texttt{\%}: & Jump to matching bracket \texttt{()}, \texttt{\{\}}, \texttt{[]} \\
+\bottomrule
+\end{tabularx}
+\caption{Essential Cursor Navigation Primitives in vi/vim.}
+\label{tab:vi-nav}
+\end{table}
+
+\section{Viewport Scrolling \& Screen Positioning}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{Ctrl+f}: Scroll forward one complete screen.
+    \item \texttt{Ctrl+b}: Scroll backward one complete screen.
+    \item \texttt{Ctrl+d}: Scroll down half a screen.
+    \item \texttt{Ctrl+u}: Scroll up half a screen.
+    \item \texttt{zz}: Redraw screen with current line centered in viewport.
+    \item \texttt{zt}: Redraw screen with current line at the top.
+    \item \texttt{zb}: Redraw screen with current line at the bottom.
+\end{itemize}
+
+\section{Entering Insert Mode \& Text Alteration Operators}
+Transitioning from Command Mode to Insert Mode is accomplished via specialized operators:
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{i}: Insert text immediately \textbf{before} the active cursor.
+    \item \texttt{I}: Jump to line beginning and insert text.
+    \item \texttt{a}: Append text immediately \textbf{after} the active cursor.
+    \item \texttt{A}: Jump to line end and append text.
+    \item \texttt{o}: Open a new blank line \textbf{below} the current line and enter Insert mode.
+    \item \texttt{O}: Open a new blank line \textbf{above} the current line and enter Insert mode.
+    \item \texttt{r}: Replace a single character under the cursor and immediately revert to Command mode.
+    \item \texttt{R}: Enter continuous Overwrite / Replace mode.
+    \item \texttt{s}: Substitute: deletes character under cursor and enters Insert mode.
+    \item \texttt{cw}: Change Word: deletes remainder of word and enters Insert mode.
+    \item \texttt{C}: Change line: deletes from cursor to line end and enters Insert mode.
+\end{itemize}
+
+\section{Deletion \& Register Mechanics}
+In vi, ``deletion'' is functionally equivalent to ``cut''; deleted text is automatically retained within an internal clipboard register.
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{x}: Delete single character under cursor.
+    \item \texttt{dw}: Delete from cursor to start of next word.
+    \item \texttt{dd}: Delete (cut) entire current line.
+    \item \texttt{5dd}: Delete 5 consecutive lines starting from cursor.
+    \item \texttt{d\$}: Delete from cursor to the end of the line.
+    \item \texttt{dG}: Delete from current line to the absolute end of the document.
+    \item \texttt{u}: \textbf{Undo} last edit operation.
+    \item \texttt{Ctrl+r}: \textbf{Redo} previously undone operation.
+    \item \texttt{.}: \textbf{Repeat} last editing command.
+\end{itemize}
+
+\section{Yanking (Copying) \& Putting (Pasting)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{yy} or \texttt{Y}: Yank (copy) current line into the default register.
+    \item \texttt{3yy}: Yank 3 lines starting from cursor.
+    \item \texttt{yw}: Yank current word.
+    \item \texttt{p}: Put (paste) register contents \textbf{after} cursor (or below current line).
+    \item \texttt{P}: Put (paste) register contents \textbf{before} cursor (or above current line).
+    \item \texttt{"a2yy}: Yank 2 lines explicitly into named register \texttt{a}.
+    \item \texttt{"ap}: Paste contents stored inside named register \texttt{a}.
+\end{itemize}
+
+\section{Ex Mode: File Management, Search \& Global Substitution}
+Pressing colon (\texttt{:}) transfers execution to the command-line buffer at the screen bottom:
+\begin{commandbox}{Ex Command Syntax and File Operations}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{:w}: Write (save) buffer changes to disk.
+    \item \texttt{:w filename}: Save buffer copy to \texttt{filename} (Save As).
+    \item \texttt{:q}: Quit vi (fails if unsaved modifications exist).
+    \item \texttt{:wq} or \texttt{:x} or \texttt{ZZ}: Save changes and exit.
+    \item \texttt{:q!}: Force exit, discarding all unsaved changes permanently.
+    \item \texttt{/pattern}: Search forward for regex \texttt{pattern} (\texttt{n} jumps to next, \texttt{N} to previous).
+    \item \texttt{?pattern}: Search backward for regex \texttt{pattern}.
+\end{itemize}
+\end{commandbox}
+
+\subsection{Global Search and Replace Grammar}
+The general syntax for search and replace in Ex mode is:
+\begin{equation}
+\texttt{:[range]s/find\_pattern/replacement\_string/[flags]}
+\end{equation}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{:s/old/new/}: Replaces first occurrence of \texttt{old} with \texttt{new} on current line only.
+    \item \texttt{:s/old/new/g}: Replaces all occurrences on current line (\texttt{g} = global on line).
+    \item \texttt{:\%s/old/new/g}: Replaces all occurrences across the \textbf{entire file} (\texttt{\%} = all lines from 1 to the end).
+    \item \texttt{:\%s/old/new/gc}: Prompts for interactive confirmation (\texttt{y/n/a/q}) before each replacement.
+    \item \texttt{:10,25s/foo/bar/g}: Replaces occurrences specifically between line 10 and line 25.
+\end{itemize}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain the operational differences between the \texttt{i}, \texttt{I}, \texttt{a}, and \texttt{A} insertion operators in vi.
+    \item What is the function of the dot (\texttt{.}) command in vi Command mode?
+    \item Formulate an Ex command string that replaces every occurrence of \texttt{/usr/local/bin} with \texttt{/opt/bin} across an entire configuration file.
+    \item Differentiate between \texttt{dd} and \texttt{yy} followed by \texttt{p}.
+    \item How does an engineer exit vi when a file has been opened without write permissions and refuses to save via \texttt{:wq}?
+\end{enumerate}

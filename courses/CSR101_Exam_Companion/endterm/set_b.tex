@@ -1,0 +1,233 @@
+\section{End-Term Comprehensive Examination --- Set B (Units 1 to 6)}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 70\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 3 Hours\\
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\subsection*{Part A: Objective Conceptual Questions (15 Marks)}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item What is the purpose of Python virtual environments (\texttt{venv})? \hfill \textbf{[Ans: Isolated dependency management per project]}
+    \item What is printed by \texttt{print("a" * 3)}? \hfill \textbf{[Ans: \texttt{'aaa'}]}
+    \item Which regex flag enables case-insensitive pattern matching? \hfill \textbf{[Ans: \texttt{re.IGNORECASE} or \texttt{re.I}]}
+    \item What is the time complexity of deleting an element from the beginning of a Python list? \hfill \textbf{[Ans: $\mathcal{O}(n)$ due to shifting elements]}
+    \item In Python, what is the base class for all built-in exceptions? \hfill \textbf{[Ans: \texttt{BaseException}]}
+    \item What does the \texttt{zip()} function return? \hfill \textbf{[Ans: An iterator of tuples]}
+    \item Which NumPy function flattens an array returning a contiguous copy? \hfill \textbf{[Ans: \texttt{flatten()} (unlike \texttt{ravel()} which returns a view)]}
+    \item What is the shape of \texttt{np.array([[1, 2], [3, 4]])}? \hfill \textbf{[Ans: \texttt{(2, 2)}]}
+    \item What operator is used for matrix multiplication in Python 3.5+? \hfill \textbf{[Ans: \texttt{@}]}
+    \item In Pandas, how do you drop duplicate rows based on column \texttt{'id'}? \hfill \textbf{[Ans: \texttt{df.drop\_duplicates(subset=['id'])]}}
+    \item What is the purpose of \texttt{plt.tight\_layout()} in Matplotlib? \hfill \textbf{[Ans: Automatically adjusts subplot params to prevent overlap]}
+    \item What does \texttt{open("data.txt", "a")} do if the file does not exist? \hfill \textbf{[Ans: Creates a new empty file]}
+    \item Which keyword rebinds a variable in the nearest enclosing non-global scope? \hfill \textbf{[Ans: \texttt{nonlocal}]}
+    \item What is returned by \texttt{filter(None, [0, 1, False, 2, ''])}? \hfill \textbf{[Ans: Iterator yielding truthy values: \texttt{1, 2}]}
+    \item What does \texttt{pd.merge(..., how='inner')} compute? \hfill \textbf{[Ans: Intersection of records matching key values]}
+\end{enumerate}
+
+\subsection*{Part B: Analytical \& Coding Problems (25 Marks)}
+
+\noindent\textbf{Question 16 [5 Marks]:} Explain how Python executes list comprehensions internally. Compare list comprehensions with Python \texttt{for} loops and explain why comprehensions execute faster.
+\begin{solutionbox}
+List comprehensions are compiled into specialized bytecode leveraging the \texttt{LIST\_APPEND} instruction inside the C-level evaluation loop. In contrast, standard Python \texttt{for} loops incur repeated name lookup overhead for \texttt{list.append} attribute retrieval and multiple function call evaluation stack frames on each iteration.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Bytecode instruction \texttt{LIST\_APPEND} (2.5M); Elimination of method lookup and call frame overhead (2.5M).
+\end{markingrubric}
+
+\noindent\textbf{Question 17 [5 Marks]:} Write a Python decorator \texttt{@retry(max\_attempts=3, delay=1.0)} that automatically retries a failing network function upon encountering an exception.
+\begin{solutionbox}
+\begin{lstlisting}
+import time
+from functools import wraps
+
+def retry(max_attempts=3, delay=1.0):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            while attempts < max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as err:
+                    attempts += 1
+                    if attempts >= max_attempts:
+                        raise err
+                    time.sleep(delay)
+        return wrapper
+    return decorator
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Three-layer nested closure architecture for parameterized decorator (3M); Exception catching and retry sleep loop (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 18 [5 Marks]:} Implement a function \texttt{matrix\_power(A, p)} using NumPy and binary exponentiation ($\mathcal{O}(\log p)$ matrix multiplications).
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+def matrix_power(A: np.ndarray, p: int) -> np.ndarray:
+    n = A.shape[0]
+    result = np.eye(n)
+    base = A.copy()
+    while p > 0:
+        if p % 2 == 1:
+            result = result @ base
+        base = base @ base
+        p //= 2
+    return result
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Binary exponentiation logic (3M); Matrix multiplication with \texttt{@} (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 19 [5 Marks]:} Describe the split-apply-combine strategy in Pandas. Give a worked example computing the mean and 95th percentile latency grouped by API route.
+\begin{solutionbox}
+\begin{lstlisting}
+import pandas as pd
+import numpy as np
+
+# Sample data
+df = pd.DataFrame({
+    'route': ['/login', '/api/v1/predict', '/login', '/api/v1/predict'],
+    'latency': [45.2, 120.5, 52.1, 115.8]
+})
+
+res = df.groupby('route')['latency'].agg(
+    mean_latency='mean',
+    p95_latency=lambda x: np.percentile(x, 95)
+).reset_index()
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Explanation of split-apply-combine steps (2M); GroupBy code with aggregation and lambda percentile (3M).
+\end{markingrubric}
+
+\noindent\textbf{Question 20 [5 Marks]:} Explain the difference between \texttt{\_\_str\_\_} and \texttt{\_\_repr\_\_}. Provide a class demonstrating both methods with distinct representations.
+\begin{solutionbox}
+$\bullet$ \texttt{\_\_repr\_\_}: Goal is to be unambiguous, intended for developers and debugging (e.g., \texttt{eval(repr(obj)) == obj}).\\
+$\bullet$ \texttt{\_\_str\_\_}: Goal is to be readable, intended for end users (\texttt{print(obj)}).
+\begin{lstlisting}
+class User:
+    def __init__(self, username, user_id):
+        self.username, self.user_id = username, user_id
+
+    def __repr__(self):
+        return f"User('{self.username}', {self.user_id})"
+
+    def __str__(self):
+        return f"User: {self.username} (ID: #{self.user_id})"
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Distinguishing audience and purpose of each method (3M); Code implementation (2M).
+\end{markingrubric}
+
+\subsection*{Part C: In-Depth Engineering Systems \& Pipeline Problems (30 Marks)}
+
+\noindent\textbf{Question 21 [10 Marks]:} Design and implement a Thread-Safe In-Memory Key-Value Store with TTL (Time-To-Live) expiration and an eviction worker thread in Python.
+\begin{solutionbox}
+\begin{lstlisting}
+import time
+import threading
+
+class TTLKeyStore:
+    def __init__(self):
+        self._store = {}
+        self._lock = threading.Lock()
+
+    def set(self, key: str, value, ttl_seconds: float):
+        with self._lock:
+            expiry = time.time() + ttl_seconds
+            self._store[key] = (value, expiry)
+
+    def get(self, key: str):
+        with self._lock:
+            if key not in self._store:
+                return None
+            val, expiry = self._store[key]
+            if time.time() > expiry:
+                del self._store[key]
+                return None
+            return val
+
+    def cleanup_expired(self):
+        with self._lock:
+            now = time.time()
+            expired_keys = [k for k, (v, exp) in self._store.items() if now > exp]
+            for k in expired_keys:
+                del self._store[k]
+            return len(expired_keys)
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Thread synchronization via \texttt{threading.Lock} (3M); Store implementation with timestamp metadata (3M); Lazy expiration on get (2M); Batch cleanup implementation (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 22 [10 Marks]:} Implement the Gram-Schmidt Orthogonalization algorithm in NumPy to calculate the QR decomposition ($A = Q R$) of a full-rank matrix.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+
+def gram_schmidt_qr(A: np.ndarray):
+    m, n = A.shape
+    Q = np.zeros((m, n))
+    R = np.zeros((n, n))
+    
+    for j in range(n):
+        v = A[:, j].astype(float)
+        for i in range(j):
+            R[i, j] = np.dot(Q[:, i], A[:, j])
+            v = v - R[i, j] * Q[:, i]
+        R[j, j] = np.linalg.norm(v)
+        if R[j, j] < 1e-12:
+            raise ValueError("Matrix is rank deficient.")
+        Q[:, j] = v / R[j, j]
+        
+    return Q, R
+\end{lstlisting}
+\textbf{Orthogonality Check:} $Q^T Q = I_n$ and $A = Q R$.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Mathematical formulation of projection vector subtraction (4M); Normalization and $Q, R$ construction (4M); Verification of orthogonality (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 23 [10 Marks]:} Build an anomaly detection pipeline on multivariate data using Pandas and Matplotlib. Calculate the Mahalanobis distance from scratch using NumPy.
+\begin{solutionbox}
+\begin{lstlisting}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def detect_mahalanobis_anomalies(df: pd.DataFrame, threshold: float = 3.0):
+    X = df.values
+    mu = np.mean(X, axis=0)
+    X_diff = X - mu
+    cov = np.cov(X, rowvar=False)
+    inv_cov = np.linalg.inv(cov)
+    
+    # Compute Mahalanobis distance for each sample: d = sqrt((x-mu)^T S^-1 (x-mu))
+    # Vectorized calculation:
+    left = X_diff @ inv_cov
+    dists = np.sqrt(np.sum(left * X_diff, axis=1))
+    
+    df['mahalanobis'] = dists
+    df['is_anomaly'] = dists > threshold
+    
+    # Visualization
+    fig, ax = plt.subplots(figsize=(8, 4), dpi=300)
+    ax.scatter(np.arange(len(dists)), dists, c=df['is_anomaly'].map({True: '#DC3545', False: '#0F2043'}), alpha=0.7)
+    ax.axhline(threshold, color='#EA580C', linestyle='--', label=f'Threshold ({threshold})')
+    ax.set_ylabel('Mahalanobis Distance')
+    ax.set_xlabel('Sample Index')
+    ax.legend()
+    plt.tight_layout()
+    plt.savefig('anomalies.pdf')
+    plt.close()
+    return df
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Covariance computation and matrix inversion (3M); Vectorized Mahalanobis calculation (3M); Thresholding and Pandas annotation (2M); Visual scatter plot generation (2M).
+\end{markingrubric}

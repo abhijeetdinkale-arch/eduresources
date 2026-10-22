@@ -1,0 +1,156 @@
+\chapter{Matrix Algebra and Spectral Theory}
+\label{chap:matrix-algebra}
+
+\section{Overview and Learning Objectives}
+Matrix algebra constitutes the bedrock of contemporary computational mathematics, physical modeling, finite-element analysis, quantum mechanics, and machine learning architectures. This unit establishes the rigorous algebraic foundations governing matrix transformations, echelon reductions, rank invariants, the solvability criteria of non-homogeneous and homogeneous linear systems, and the spectral decomposition governed by eigenvalues, eigenvectors, and the Cayley-Hamilton theorem.
+
+\begin{important}[Unit Learning Objectives]
+Upon completion of this chapter, the engineer will be proficient in:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Applying elementary row and column operations without altering system invariants.
+    \item Reducing rectangular matrices to Row Echelon Form (REF) and Canonical Normal Form ($[I_r, 0; 0, 0]$).
+    \item Computing the determinantal and transformation rank ($\operatorname{rank}(A)$) and establishing nullity via the Rank-Nullity Theorem.
+    \item Computing matrix inverses via Gauss-Jordan elimination on augmented partition $[A | I]$.
+    \item Deciding consistency and uniqueness of linear systems $Ax = b$ via the Rouch\'e-Capelli theorem.
+    \item Extracting characteristic spectra (eigenvalues) and eigenspaces, establishing algebraic and geometric multiplicities.
+    \item Applying the Cayley-Hamilton theorem to compute high powers $A^k$ and inverse matrices $A^{-1}$.
+\end{enumerate}
+\end{important}
+
+\section{Elementary Operations and Matrix Transformations}
+\begin{definition}[Elementary Operations]
+An elementary operation on a matrix $A \in \mathbb{R}^{m \times n}$ is any of the following three transformations:
+\begin{enumerate}
+    \item \textbf{Row/Column Interchange ($R_i \leftrightarrow R_j$ or $C_i \leftrightarrow C_j$)}: Swapping two rows or columns.
+    \item \textbf{Non-Zero Scalar Multiplication ($R_i \to k R_i$, $k \neq 0$)}: Scaling all entries of a row by a non-zero constant $k$.
+    \item \textbf{Row/Column Addition ($R_i \to R_i + k R_j$, $i \neq j$)}: Adding a scalar multiple of row $j$ to row $i$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Invariance of Equivalence]
+Elementary operations preserve the row space, column space, rank, and the solution space of the associated homogeneous linear system $Ax = 0$. Two matrices $A$ and $B$ are said to be row-equivalent ($A \sim B$) if $B$ can be obtained from $A$ via a finite sequence of elementary row transformations.
+\end{theorem}
+
+\section{Rank of a Matrix}
+\begin{definition}[Row Echelon Form (REF)]
+A matrix is in Row Echelon Form if:
+\begin{enumerate}
+    \item All all-zero rows reside at the bottom of the matrix.
+    \item The leading entry (pivot) of each non-zero row is strictly to the right of the leading entry of the row above it.
+    \item All elements below a leading pivot are zero.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Rank ($\operatorname{rank}(A)$)]
+The rank of a matrix $A$, denoted $\rho(A)$ or $\operatorname{rank}(A)$, is the number of non-zero rows in its row echelon form. Equivalently, it is the maximum number of linearly independent row (or column) vectors in $A$, or the order of the largest square submatrix of $A$ with a non-zero determinant.
+\end{definition}
+
+\begin{theorem}[Normal Form / Canonical Form]
+Every matrix $A$ of order $m \times n$ with $\operatorname{rank}(A) = r$ can be reduced by a sequence of elementary row and column operations to the canonical normal form:
+\begin{equation}
+N = \begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}
+\end{equation}
+where $I_r$ is the $r \times r$ identity matrix and $0$ denotes zero blocks of appropriate dimensions.
+\end{theorem}
+
+\begin{example}[Computing Rank via Row Echelon Form]
+Determine the rank of the matrix:
+\begin{equation*}
+A = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 7 \\ 3 & 6 & 10 \end{bmatrix}
+\end{equation*}
+
+\textbf{Solution:}
+Apply elementary row operations to eliminate entries beneath the first pivot:
+\begin{enumerate}
+    \item $R_2 \to R_2 - 2R_1 \implies \begin{bmatrix} 1 & 2 & 3 \\ 0 & 0 & 1 \\ 3 & 6 & 10 \end{bmatrix}$
+    \item $R_3 \to R_3 - 3R_1 \implies \begin{bmatrix} 1 & 2 & 3 \\ 0 & 0 & 1 \\ 0 & 0 & 1 \end{bmatrix}$
+    \item $R_3 \to R_3 - R_2 \implies \begin{bmatrix} 1 & 2 & 3 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix}$
+\end{enumerate}
+The matrix is now in Row Echelon Form. The number of non-zero rows is $2$. Hence, $\operatorname{rank}(A) = 2$.
+\end{example}
+
+\section{Inversion via the Gauss-Jordan Method}
+To invert an $n \times n$ non-singular matrix $A$, construct the partitioned augmented matrix:
+\begin{equation}
+[A \mid I_n]
+\end{equation}
+Apply elementary row operations until the left block $A$ is converted into the identity matrix $I_n$:
+\begin{equation}
+[A \mid I_n] \xrightarrow{\text{Row Operations}} [I_n \mid A^{-1}]
+\end{equation}
+If the left block cannot be reduced to $I_n$ (i.e., a zero row appears), $\det(A) = 0$ and $A^{-1}$ does not exist.
+
+\section{Systems of Linear Simultaneous Equations}
+Consider a system of $m$ linear equations in $n$ unknowns:
+\begin{equation}
+Ax = b, \quad A \in \mathbb{R}^{m \times n}, \; x \in \mathbb{R}^n, \; b \in \mathbb{R}^m
+\end{equation}
+Form the augmented matrix $[A \mid b]$.
+
+\begin{theorem}[Rouch\'e-Capelli Theorem]
+\begin{enumerate}
+    \item \textbf{Consistent System}: The system $Ax = b$ possesses at least one solution if and only if:
+    \begin{equation}
+    \operatorname{rank}(A) = \operatorname{rank}([A \mid b]) = r
+    \end{equation}
+    \begin{itemize}
+        \item \textbf{Unique Solution}: If $r = n$ (where $n$ is the number of unknowns).
+        \item \textbf{Infinitely Many Solutions}: If $r < n$. The solutions contain $n - r$ linearly independent arbitrary parameters.
+    \end{itemize}
+    \item \textbf{Inconsistent System}: If $\operatorname{rank}(A) < \operatorname{rank}([A \mid b])$, the equations are contradictory and no solution exists.
+\end{enumerate}
+\end{theorem}
+
+\section{Eigenvalues and Eigenvectors}
+\begin{definition}[Eigenvalue and Eigenvector]
+Let $A \in \mathbb{R}^{n \times n}$. A scalar $\lambda \in \mathbb{C}$ is termed an \textbf{eigenvalue} of $A$ if there exists a non-zero vector $v \in \mathbb{C}^n$ such that:
+\begin{equation}
+Av = \lambda v \iff (A - \lambda I)v = 0
+\end{equation}
+The non-trivial solution vector $v \neq 0$ is the \textbf{eigenvector} corresponding to $\lambda$.
+\end{definition}
+
+\begin{theorem}[Characteristic Equation]
+Eigenvalues are the roots of the characteristic polynomial:
+\begin{equation}
+P(\lambda) = \det(A - \lambda I) = 0
+\end{equation}
+For a $2 \times 2$ matrix: $\lambda^2 - \operatorname{tr}(A)\lambda + \det(A) = 0$.
+For a $3 \times 3$ matrix: $\lambda^3 - S_1 \lambda^2 + S_2 \lambda - S_3 = 0$, where $S_1 = \operatorname{tr}(A)$, $S_2 = \sum \text{Principal Minors}$, and $S_3 = \det(A)$.
+\end{theorem}
+
+\begin{theorem}[Spectral Properties]
+\begin{enumerate}
+    \item $\sum_{i=1}^n \lambda_i = \operatorname{tr}(A) = \sum_{i=1}^n a_{ii}$.
+    \item $\prod_{i=1}^n \lambda_i = \det(A)$.
+    \item If $A$ is symmetric real, all eigenvalues are strictly real, and eigenvectors corresponding to distinct eigenvalues are mutually orthogonal.
+    \item The eigenvalues of $A^{-1}$ are $\frac{1}{\lambda_i}$ (for $\lambda_i \neq 0$).
+    \item The eigenvalues of $A^k$ are $\lambda_i^k$.
+\end{enumerate}
+\end{theorem}
+
+\section{The Cayley-Hamilton Theorem}
+\begin{theorem}[Cayley-Hamilton Theorem]
+Every square matrix $A \in \mathbb{R}^{n \times n}$ satisfies its own characteristic equation:
+\begin{equation}
+P(A) = A^n + c_{n-1}A^{n-1} + \dots + c_1 A + c_0 I = 0
+\end{equation}
+\end{theorem}
+
+\begin{example}[Matrix Inversion using Cayley-Hamilton]
+Let $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$. Verify Cayley-Hamilton and find $A^{-1}$.
+
+\textbf{Solution:}
+Characteristic polynomial:
+\begin{equation*}
+\det(A - \lambda I) = \begin{vmatrix} 2-\lambda & 1 \\ 1 & 2-\lambda \end{vmatrix} = (2-\lambda)^2 - 1 = \lambda^2 - 4\lambda + 3 = 0
+\end{equation*}
+By Cayley-Hamilton:
+\begin{equation*}
+A^2 - 4A + 3I = 0
+\end{equation*}
+Multiplying both sides by $A^{-1}$:
+\begin{equation*}
+A - 4I + 3A^{-1} = 0 \implies A^{-1} = \frac{1}{3}(4I - A) = \frac{1}{3}\left( \begin{bmatrix} 4 & 0 \\ 0 & 4 \end{bmatrix} - \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} \right) = \frac{1}{3}\begin{bmatrix} 2 & -1 \\ -1 & 2 \end{bmatrix}
+\end{equation*}
+\end{example}

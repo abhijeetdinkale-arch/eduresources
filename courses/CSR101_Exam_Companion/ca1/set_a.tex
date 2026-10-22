@@ -1,0 +1,114 @@
+\section{Continuous Assessment 1 (CA-1) --- Set A}
+\noindent\textbf{Course Code:} CSR101 \hfill \textbf{Max Marks:} 30\\
+\textbf{Course Title:} Python Programming (AI \& Data Engg.) \hfill \textbf{Time Allowed:} 60 Minutes\\
+\textbf{Instructions:} Answer any \textbf{5} out of the following 6 questions. Each carries \textbf{6 marks}.
+\vspace{4mm}
+\hrule
+\vspace{4mm}
+
+\noindent\textbf{Question 1 [Unit 1]:} Explain the internal structure of CPython's \texttt{PyObject}. What is the reference counting mechanism, and how does Python's cyclic garbage collector handle circular references?
+\begin{solutionbox}
+In CPython, every value allocated on the heap contains a \texttt{PyObject} header consisting of \texttt{ob\_refcnt} (64-bit reference counter) and \texttt{ob\_type} (pointer to type descriptor).
+\begin{lstlisting}
+import sys
+x = [1, 2, 3]
+print(sys.getrefcount(x))  # Prints 2 (x and getrefcount parameter)
+\end{lstlisting}
+\textbf{Cyclic Garbage Collection:}\\
+Reference counting immediately reclaims objects when \texttt{ob\_refcnt == 0}. However, circular references ($A \to B \to A$) prevent the counter from reaching zero. CPython employs a generational cyclic garbage collector (\texttt{gc} module) that periodically tracks container objects (\texttt{list}, \texttt{dict}, user classes) across three generations (0, 1, 2). It isolates reference cycles by calculating unreachable subgraphs and destroys unreferenced cycles.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} \texttt{PyObject} struct fields (2M); Reference counting increment/decrement lifecycle (2M); Generational cyclic collection of isolated loops (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 2 [Unit 1]:} Discuss the difference between integer division \texttt{//} and modulo \texttt{\%} in Python when negative operands are involved. Evaluate \texttt{-25 // 4} and \texttt{-25 \% 4}.
+\begin{solutionbox}
+Python enforces the mathematical floor division invariant $a = (a // b) \cdot b + (a \% b)$.
+For $a = -25, b = 4$:
+\begin{equation}
+-25 / 4 = -6.25 \implies \lfloor -6.25 \rfloor = -7
+\end{equation}
+Then the remainder is:
+\begin{equation}
+r = -25 - (-7 \cdot 4) = -25 - (-28) = 3
+\end{equation}
+Thus \texttt{-25 // 4 == -7} and \texttt{-25 \% 4 == 3}.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Floor definition towards $-\infty$ (2M); Calculation of quotient $-7$ (2M); Derivation of modulo $+3$ (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 3 [Unit 2]:} Implement a function \texttt{extract\_emails(text)} using regular expressions that extracts and returns all unique valid email addresses sorted alphabetically.
+\begin{solutionbox}
+\begin{lstlisting}
+import re
+
+def extract_emails(text: str) -> list:
+    pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+    emails = pattern.findall(text)
+    # Return unique sorted emails
+    return sorted(list(set(emails)))
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Correct regex pattern syntax (3M); Set deduplication and sorting logic (2M); Function signature and PEP 8 compliance (1M).
+\end{markingrubric}
+
+\noindent\textbf{Question 4 [Unit 2]:} Write a recursive Python function \texttt{binary\_search(arr, target, low, high)} that returns the index of target in a sorted list or $-1$ if absent. State the recurrence relation and space complexity.
+\begin{solutionbox}
+\begin{lstlisting}
+def binary_search(arr, target, low, high):
+    if low > high:
+        return -1
+    mid = (low + high) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] > target:
+        return binary_search(arr, target, low, mid - 1)
+    else:
+        return binary_search(arr, target, mid + 1, high)
+\end{lstlisting}
+\textbf{Recurrence Relation:} $T(n) = T(n/2) + \mathcal{O}(1) \implies \mathcal{O}(\log n)$ time. Space complexity: $\mathcal{O}(\log n)$ stack frames.
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Base cases and mid index calculation (2M); Recursive calls logic (2M); Recurrence relation \& space complexity (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 5 [Unit 2]:} Explain variable scoping and the LEGB rule. Demonstrate the difference between \texttt{global} and \texttt{nonlocal} keywords using a clear code example.
+\begin{solutionbox}
+\begin{lstlisting}
+x = "Global"
+
+def outer():
+    x = "Enclosing"
+    def inner_nonlocal():
+        nonlocal x
+        x = "Modified Enclosing"
+    def inner_global():
+        global x
+        x = "Modified Global"
+    inner_nonlocal()
+    print("Outer after nonlocal:", x)  # Prints: Modified Enclosing
+outer()
+print("Global after outer:", x)        # Prints: Global
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Explanation of LEGB 4 levels (2M); Correct \texttt{nonlocal} usage and behavior (2M); Correct \texttt{global} demonstration (2M).
+\end{markingrubric}
+
+\noindent\textbf{Question 6 [Unit 2]:} Explain why using a mutable object (like a list or dict) as a default argument in a Python function is an anti-pattern. Provide the standard design solution.
+\begin{solutionbox}
+Default arguments are evaluated once when the function definition is executed, creating a single shared object across all invocations.
+\begin{lstlisting}
+# Standard Idiom: None Sentinel
+def append_item(val, container=None):
+    if container is None:
+        container = []
+    container.append(val)
+    return container
+\end{lstlisting}
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Scheme:} Identification of definition-time evaluation (3M); Correct \texttt{None} sentinel pattern implementation (3M).
+\end{markingrubric}

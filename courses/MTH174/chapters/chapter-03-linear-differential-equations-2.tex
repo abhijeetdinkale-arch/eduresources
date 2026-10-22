@@ -1,0 +1,112 @@
+\chapter{Non-Homogeneous Differential Equations and Special Forms}
+\label{chap:lde-2}
+
+\section{Overview and Fundamental Principle}
+When an external driving force or excitation $X(x) \neq 0$ acts on an engineering system, the governing equation becomes non-homogeneous:
+\begin{equation}
+f(D)y = X(x)
+\end{equation}
+By the principle of superposition, the complete general solution is:
+\begin{equation}
+y(x) = y_c(x) + y_p(x) = \text{Complementary Function (C.F.)} + \text{Particular Integral (P.I.)}
+\end{equation}
+where $y_c(x)$ satisfies $f(D)y_c = 0$, and $y_p(x)$ satisfies $f(D)y_p = X(x)$.
+
+\section{The Inverse Operator Method for Particular Integrals}
+The particular integral is formally defined as:
+\begin{equation}
+y_p = \frac{1}{f(D)} X(x)
+\end{equation}
+
+\begin{theorem}[Standard Evaluation Rules for $\frac{1}{f(D)}X(x)$]
+\begin{enumerate}
+    \item \textbf{Exponential Function $X(x) = e^{ax}$}:
+    \begin{equation}
+    \frac{1}{f(D)} e^{ax} = \frac{1}{f(a)} e^{ax}, \quad \text{provided } f(a) \neq 0
+    \end{equation}
+    \textit{Case of Failure}: If $f(a) = 0$, then $\frac{1}{f(D)} e^{ax} = x \frac{1}{f'(D)} e^{ax}$.
+    \item \textbf{Trigonometric Functions $X(x) = \sin(ax)$ or $\cos(ax)$}:
+    Replace $D^2$ with $-a^2$:
+    \begin{equation}
+    \frac{1}{\phi(D^2)} \sin(ax) = \frac{1}{\phi(-a^2)} \sin(ax), \quad \text{provided } \phi(-a^2) \neq 0
+    \end{equation}
+    \textit{Case of Failure}: If $\phi(-a^2) = 0$, then $\frac{1}{\phi(D^2)} \sin(ax) = x \frac{1}{\phi'(D^2)} \sin(ax)$.
+    \item \textbf{Polynomial Function $X(x) = x^m$}:
+    Expand $[f(D)]^{-1}$ as a Maclaurin series in ascending powers of $D$ up to order $m$:
+    \begin{equation}
+    y_p = [f(D)]^{-1} x^m = (1 + a_1 D + a_2 D^2 + \dots) x^m
+    \end{equation}
+    \item \textbf{Exponential Shift Property $X(x) = e^{ax} V(x)$}:
+    \begin{equation}
+    \frac{1}{f(D)} [e^{ax} V(x)] = e^{ax} \frac{1}{f(D + a)} V(x)
+    \end{equation}
+    \item \textbf{Product with $x$: $X(x) = x V(x)$}:
+    \begin{equation}
+    \frac{1}{f(D)} [x V(x)] = x \frac{1}{f(D)} V(x) - \frac{f'(D)}{[f(D)]^2} V(x)
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\section{The Method of Undetermined Coefficients}
+The method of undetermined coefficients applies when $X(x)$ is composed of linear combinations or products of polynomials, exponentials, and sines/cosines. We hypothesize a trial solution $y_p(x)$ with unknown coefficients $A, B, C, \dots$, substitute into $f(D)y_p = X(x)$, and match coefficients of like terms. If any term in the trial solution appears in $y_c(x)$, we multiply the entire trial term by $x^k$, where $k$ is the smallest integer eliminating the duplication.
+
+\section{The Method of Variation of Parameters}
+Unlike operator methods, Variation of Parameters is universally applicable to any continuous forcing function $R(x)$.
+Consider the second-order equation in standard form:
+\begin{equation}
+y'' + P(x)y' + Q(x)y = R(x)
+\end{equation}
+Let $y_c(x) = c_1 y_1(x) + c_2 y_2(x)$ be the complementary function. The particular integral is sought as:
+\begin{equation}
+y_p(x) = u(x) y_1(x) + v(x) y_2(x)
+\end{equation}
+where $u(x)$ and $v(x)$ are determined by:
+\begin{equation}
+u(x) = -\int \frac{y_2(x) R(x)}{W(y_1, y_2)(x)} \, dx, \quad v(x) = \int \frac{y_1(x) R(x)}{W(y_1, y_2)(x)} \, dx
+\end{equation}
+where $W(y_1, y_2) = y_1 y_2' - y_2 y_1'$ is the non-zero Wronskian.
+
+\begin{example}[Variation of Parameters]
+Solve $y'' + y = \sec x$.
+
+\textbf{Solution:}
+A.E.: $m^2 + 1 = 0 \implies m = \pm i$.
+$y_c = c_1 \cos x + c_2 \sin x \implies y_1 = \cos x, \; y_2 = \sin x$.
+The Wronskian is:
+\begin{equation*}
+W(y_1, y_2) = (\cos x)(\cos x) - (\sin x)(-\sin x) = \cos^2 x + \sin^2 x = 1
+\end{equation*}
+Now evaluate $u(x)$ and $v(x)$ with $R(x) = \sec x$:
+\begin{align*}
+u(x) &= -\int \frac{\sin x \sec x}{1} \, dx = -\int \tan x \, dx = \ln |\cos x| \\
+v(x) &= \int \frac{\cos x \sec x}{1} \, dx = \int 1 \, dx = x
+\end{align*}
+The particular integral is:
+\begin{equation*}
+y_p = (\ln |\cos x|)\cos x + x \sin x
+\end{equation*}
+General solution:
+\begin{equation*}
+y(x) = c_1 \cos x + c_2 \sin x + \cos x \ln |\cos x| + x \sin x
+\end{equation*}
+\end{example}
+
+\section{Cauchy-Euler Homogeneous Linear Equations}
+\begin{definition}[Euler-Cauchy Equation]
+An equation of the form:
+\begin{equation}
+a_n x^n \frac{d^n y}{dx^n} + a_{n-1} x^{n-1} \frac{d^{n-1} y}{dx^{n-1}} + \dots + a_1 x \frac{dy}{dx} + a_0 y = X(x)
+\end{equation}
+is reduced to a linear differential equation with constant coefficients via the transformation:
+\begin{equation}
+x = e^z \iff z = \ln x \quad (x > 0)
+\end{equation}
+\end{definition}
+
+Letting $\theta \equiv \frac{d}{dz}$, we have the operator identities:
+\begin{align}
+x \frac{dy}{dx} &= \theta y \\
+x^2 \frac{d^2 y}{dx^2} &= \theta(\theta - 1)y \\
+x^3 \frac{d^3 y}{dx^3} &= \theta(\theta - 1)(\theta - 2)y
+\end{align}
+After substitution, the equation is solved for $y(z)$, and transformed back to $x$ via $z = \ln x$.

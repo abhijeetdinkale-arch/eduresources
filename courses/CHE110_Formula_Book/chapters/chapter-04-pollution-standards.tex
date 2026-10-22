@@ -1,0 +1,73 @@
+\chapter{Unit 4: Environmental Pollution Standards, AQI, Water Quality \& Waste}
+
+\begin{formulabox}{CPCB National Ambient Air Quality Standards (NAAQS 2009)}
+\begin{center}
+\begin{tabularx}{\linewidth}{X c c c}
+\toprule
+\textbf{Pollutant} & \textbf{Time-Weighted Average} & \textbf{Industrial, Residential \& Rural} & \textbf{Ecologically Sensitive} \\
+\midrule
+Particulate Matter ($\text{PM}_{10}$) & Annual / 24 Hours & $60\text{ / }100\ \mu\text{g/m}^3$ & $60\text{ / }100\ \mu\text{g/m}^3$ \\
+Fine Particulate ($\text{PM}_{2.5}$) & Annual / 24 Hours & $40\text{ / }60\ \mu\text{g/m}^3$ & $40\text{ / }60\ \mu\text{g/m}^3$ \\
+Sulphur Dioxide ($\text{SO}_2$) & Annual / 24 Hours & $50\text{ / }80\ \mu\text{g/m}^3$ & $20\text{ / }80\ \mu\text{g/m}^3$ \\
+Nitrogen Dioxide ($\text{NO}_2$) & Annual / 24 Hours & $40\text{ / }80\ \mu\text{g/m}^3$ & $30\text{ / }80\ \mu\text{g/m}^3$ \\
+Carbon Monoxide ($\text{CO}$) & 8 Hours / 1 Hour & $2.0\text{ / }4.0\text{ mg/m}^3$ & $2.0\text{ / }4.0\text{ mg/m}^3$ \\
+Ozone ($\text{O}_3$) & 8 Hours / 1 Hour & $100\text{ / }180\ \mu\text{g/m}^3$ & $100\text{ / }180\ \mu\text{g/m}^3$ \\
+Lead ($\text{Pb}$) & Annual / 24 Hours & $0.50\text{ / }1.0\ \mu\text{g/m}^3$ & $0.50\text{ / }1.0\ \mu\text{g/m}^3$ \\
+Ammonia ($\text{NH}_3$) & Annual / 24 Hours & $100\text{ / }400\ \mu\text{g/m}^3$ & $100\text{ / }400\ \mu\text{g/m}^3$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{National Air Quality Index (AQI) Categories}:
+\begin{itemize}[leftmargin=1.2em]
+    \item 0--50: Good \quad 51--100: Satisfactory \quad 101--200: Moderate \quad 201--300: Poor \quad 301--400: Very Poor \quad 401--500: Severe.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Water Quality Parameters, BOD Kinetics \& Streeter-Phelps}
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Biochemical Oxygen Demand (BOD Kinetics)}:
+    \begin{align}
+    y(t) &= L_0(1 - e^{-k_d t}) \\
+    \text{BOD}_5 &= L_0(1 - e^{-5 k_d}) \approx 0.68 L_0 \quad (\text{for standard } k_d \approx 0.23\text{ day}^{-1})
+    \end{align}
+    where $L_0 = \text{ultimate carbonaceous BOD}$, $y(t) = \text{BOD exerted at time } t$, $k_d = \text{deoxygenation constant}$.
+    \item \textbf{Chemical Oxygen Demand (COD)}: Measures total oxygen required for chemical oxidation by acidic potassium dichromate ($K_2Cr_2O_7$). $\text{COD} \ge \text{BOD}_u \ge \text{BOD}_5$. $\text{BOD}_5 / \text{COD} \ge 0.5$ implies high biodegradability.
+    \item \textbf{Streeter-Phelps Oxygen Sag Equation}:
+    \begin{equation}
+    D(t) = \frac{k_d L_0}{k_r - k_d} \left( e^{-k_d t} - e^{-k_r t} \right) + D_0 e^{-k_r t}
+    \end{equation}
+    where $D(t) = \text{DO deficit at time } t$, $D_0 = \text{initial DO deficit}$, $k_r = \text{stream reaeration rate constant}$.
+    \item \textbf{Critical Time ($t_c$) and Critical Deficit ($D_c$)}:
+    \begin{align}
+    t_c &= \frac{1}{k_r - k_d} \ln\left\{ \frac{k_r}{k_d} \left[ 1 - D_0 \frac{k_r - k_d}{k_d L_0} \right] \right\} \\
+    D_c &= \frac{k_d}{k_r} L_0 e^{-k_d t_c}
+    \end{align}
+    \item \textbf{CPCB Designated Best Use Classes}: Class A (Drinking source without treatment, DO $\ge 6\text{ mg/L}$, BOD $\le 2\text{ mg/L}$); Class D (Aquatic fisheries propagation, DO $\ge 4.0\text{ mg/L}$, Free ammonia $\le 1.2\text{ mg/L}$).
+\end{itemize}
+\end{formulabox}
+
+\begin{lawbox}{Noise Standards \& Solid Waste Management Rules}
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{Ambient Noise Standards (Noise Rules, 2000)}:
+    \begin{center}
+    \begin{tabular}{llcc}
+    \toprule
+    \textbf{Zone Code} & \textbf{Category of Area} & \textbf{Day Limit ($6\text{ AM}--10\text{ PM}$)} & \textbf{Night Limit ($10\text{ PM}--6\text{ AM}$)} \\
+    \midrule
+    (A) & Industrial Area & $75\text{ dB(A)}$ & $70\text{ dB(A)}$ \\
+    (B) & Commercial Area & $65\text{ dB(A)}$ & $55\text{ dB(A)}$ \\
+    (C) & Residential Area & $55\text{ dB(A)}$ & $45\text{ dB(A)}$ \\
+    (D) & Silence Zone (within $100\text{ m}$ of hospitals, schools) & $50\text{ dB(A)}$ & $40\text{ dB(A)}$ \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+    \item \textbf{Solid Waste Hierarchy}: Refuse $\to$ Reduce $\to$ Reuse $\to$ Repurpose $\to$ Recycle $\to$ Recovery $\to$ Landfill Disposal.
+    \item \textbf{Biomedical Waste Color Coding (2016 Rules)}:
+    \begin{itemize}
+        \item \textbf{Yellow}: Human anatomical, animal waste, soiled dressings (Incineration / Plasma pyrolysis).
+        \item \textbf{Red}: Contaminated recyclable plastics, catheters, tubing, IV bottles (Autoclaving $\to$ Shredding).
+        \item \textbf{White (Translucent)}: Sharps, needles, scalpels (Autoclave/Dry heat $\to$ Sharp pit).
+        \item \textbf{Blue}: Glassware, medicine vials, metallic body implants (Disinfection with sodium hypochlorite).
+    \end{itemize}
+\end{itemize}
+\end{lawbox}

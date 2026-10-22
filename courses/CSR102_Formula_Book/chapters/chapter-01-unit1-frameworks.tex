@@ -1,0 +1,86 @@
+\chapter{Unit 1: Foundations of Problem Solving and Design Thinking}
+\label{chap:unit1-frameworks}
+
+\section{Problem Typology: Well-Structured vs. Ill-Structured vs. Wicked}
+
+\begin{frameworkbox}{The Three Classes of Engineering \& Socio-Technical Problems}
+\begin{tabularx}{\linewidth}{|l|X|X|X|} \hline
+\textbf{Dimension} & \textbf{Well-Structured (Tame)} & \textbf{Ill-Structured (Complex)} & \textbf{Wicked Problem} \\ \hline
+\textbf{Problem Definition} & Clear, complete, unambiguous. Known initial and goal states. & Vaguely defined; conflicting descriptions; missing variables. & No definitive formulation; framing the problem is the problem. \\ \hline
+\textbf{Stopping Rule} & Explicit algorithm terminates when criterion is satisfied. & Pragmatic termination governed by resources, time, budget. & No stopping rule; process ends when resources or patience run out. \\ \hline
+\textbf{Solution Testing} & True/False; Correct/Incorrect testable against proofs. & Good/Bad; Better/Worse evaluated across multiple criteria. & No immediate or ultimate test; solutions ripple uncontrollably. \\ \hline
+\textbf{Reversibility} & Trial-and-error possible in simulation or sandbox. & Costly to reverse; operational inertia. & Every intervention is a ``one-shot operation''; irreversible consequences. \\ \hline
+\textbf{Archetype Example} & Sorting algorithm, solving linear equations, bridge load stress. & Redesigning hospital queue management, reducing bug latency. & Climate change, healthcare inequality, urban homelessness. \\ \hline
+\end{tabularx}
+\end{frameworkbox}
+
+\begin{memorytip}
+\textbf{Rittel \& Webber (1973) 10 Hallmarks of Wicked Problems:}\\
+1. No definitive formulation. 2. No stopping rule. 3. Solutions are not true-or-false, but good-or-bad. 4. No immediate/ultimate test. 5. Every solution is a one-shot operation. 6. No enumerable set of solutions. 7. Every wicked problem is essentially unique. 8. Every wicked problem is a symptom of another problem. 9. Discrepancies can be explained in numerous ways. 10. The planner has no right to be wrong (high stakes).
+\end{memorytip}
+
+\section{The Stanford d.school 5-Stage Iterative Design Framework}
+
+\begin{frameworkbox}{The 5-Stage Non-Linear Process Flow}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2em]
+    \item \textbf{Empathize (Observe, Engage, Immerse):}
+    \begin{itemize}
+        \item \textit{Objective:} Understand user experiences, motivations, emotional triggers, and unarticulated unmet needs.
+        \item \textit{Key Methods:} Semi-structured interviews, shadowing/contextual inquiry, extreme user studies, fly-on-the-wall observation.
+    \end{itemize}
+    \item \textbf{Define (Unpack, Synthesize, Frame):}
+    \begin{itemize}
+        \item \textit{Objective:} Process empathy data into a human-centered, actionable Point-of-View (POV) problem statement.
+        \item \textit{Key Methods:} Affinity mapping, empathy maps, persona archetypes, user journey mapping, HMW formulation.
+    \end{itemize}
+    \item \textbf{Ideate (Diverge, Explore, Expand):}
+    \begin{itemize}
+        \item \textit{Objective:} Generate vast quantities and diverse varieties of solution possibilities before premature selection.
+        \item \textit{Key Methods:} Brainwriting 6-3-5, SCAMPER, Crazy Eights, analogical thinking, worst possible idea.
+    \end{itemize}
+    \item \textbf{Prototype (Build to Think, Make Concrete):}
+    \begin{itemize}
+        \item \textit{Objective:} Transform concepts into tangible artifacts that provoke questions, test assumptions, and expose flaws cheaply.
+        \item \textit{Key Methods:} Paper prototypes, cardboard mockups, digital wireframes, Wizard of Oz, service walkthroughs.
+    \end{itemize}
+    \item \textbf{Test (Validate, Learn, Iterate):}
+    \begin{itemize}
+        \item \textit{Objective:} Observe real users interacting with the prototype in authentic contexts to refine solutions and reframe problems.
+        \item \textit{Key Methods:} Think-aloud usability testing, task completion tracking, feedback capture grids, A/B split testing.
+    \end{itemize}
+\end{enumerate}
+\end{frameworkbox}
+
+\begin{memorytip}
+\textbf{Critical Concept:} Design Thinking is \textbf{non-linear}. Testing frequently leads back to Empathize (discovering user insights) or Define (reframing the core problem). It is an iterative learning engine, not a sequential waterfall phase-gate.
+\end{memorytip}
+
+\section{The UK Design Council Double Diamond Model}
+
+\begin{frameworkbox}{Divergent \& Convergent Thinking Cycles}
+\begin{itemize}
+    \item \textbf{Diamond 1: Finding the Right Problem (Problem Space)}
+    \begin{itemize}
+        \item \textit{Discover (Divergence):} Broaden perspective, gather broad qualitative and contextual data, question initial assumptions.
+        \item \textit{Define (Convergence):} Synthesize findings, filter noise, focus on the most impactful core root challenge.
+    \end{itemize}
+    \item \textbf{Diamond 2: Developing the Right Solution (Solution Space)}
+    \begin{itemize}
+        \item \textit{Develop (Divergence):} Brainstorm multifaceted solution concepts, cross-pollinate ideas across domains.
+        \item \textit{Deliver (Convergence):} Down-select, prototype, test, eliminate weak solutions, and implement the validated output.
+    \end{itemize}
+\end{itemize}
+\end{frameworkbox}
+
+\section{The Cynefin Framework for Decision Contexts}
+
+\begin{frameworkbox}{Dave Snowden's Sense-Making Framework}
+\begin{tabularx}{\linewidth}{|l|l|l|X|} \hline
+\textbf{Domain} & \textbf{System Characteristic} & \textbf{Response Cycle} & \textbf{Engineering Action} \\ \hline
+\textbf{Clear (Simple)} & Predictable, cause-and-effect direct. & Sense $\to$ Categorize $\to$ Respond & Apply Best Practice, checklists, standard operating procedures. \\ \hline
+\textbf{Complicated} & Multiple valid answers, cause-and-effect separated. & Sense $\to$ Analyze $\to$ Respond & Apply Good Practice, subject matter expert analysis, trade-off matrices. \\ \hline
+\textbf{Complex} & Emergent, unpredictably adaptive, no repeated patterns. & Probe $\to$ Sense $\to$ Respond & Deploy Safe-to-Fail experiments, rapid prototypes, iterative adaptation. \\ \hline
+\textbf{Chaotic} & High turbulence, immediate crisis, no cause-and-effect link. & Act $\to$ Sense $\to$ Respond & Establish immediate stabilization, decisive triage, shift to complex. \\ \hline
+\textbf{Aporetic / Confused} & Unclear which domain applies. & Deconstruct $\to$ Partition & Break system into sub-components and assign to domains. \\ \hline
+\end{tabularx}
+\end{frameworkbox}

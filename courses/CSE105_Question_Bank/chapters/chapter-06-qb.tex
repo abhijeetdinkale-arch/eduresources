@@ -1,0 +1,119 @@
+\chapter{Unit 6: Filters \& Regular Expressions Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{6.1}{What does the regular expression anchor \^{} (caret) match?}
+{The literal character \^{}}
+{The end of a line}
+{The beginning of a line}
+{Any single alphanumeric character}
+
+\mcqitem{6.2}{Which grep command switch enables Extended Regular Expressions (ERE)?}
+{\texttt{-e}}
+{\texttt{-E}}
+{\texttt{-F}}
+{\texttt{-x}}
+
+\mcqitem{6.3}{What is the prerequisite for the uniq command to successfully eliminate duplicate lines?}
+{The input must be filtered through cut}
+{The input lines must be sorted and immediately adjacent}
+{The file must be smaller than 10 Megabytes}
+{The command must be run with root privileges}
+
+\mcqitem{6.4}{Which command extracts fields 1 and 3 from a colon-delimited text file?}
+{\texttt{cut -d":" -f1,3 file.txt}}
+{\texttt{grep -f 1,3 file.txt}}
+{\texttt{tr -d ":" file.txt}}
+{\texttt{sort -f 1,3 file.txt}}
+
+\mcqitem{6.5}{What is the output of the command: echo "hello world" | tr 'a-z' 'A-Z'?}
+{\texttt{hello world}}
+{\texttt{HELLO WORLD}}
+{\texttt{hELLO wORLD}}
+{\texttt{Hello World}}
+
+\mcqitem{6.6}{Which regular expression quantifier matches zero or one occurrence of the preceding element in ERE?}
+{\texttt{*}}
+{\texttt{+}}
+{\texttt{?}}
+{\texttt{\{1\}}}
+
+\mcqitem{6.7}{Which tail command option activates live streaming follow-mode to monitor expanding log files in real-time?}
+{\texttt{-s}}
+{\texttt{-f}}
+{\texttt{-r}}
+{\texttt{-l}}
+
+\mcqitem{6.8}{Which command sorts a text file numerically on the second column in descending order using comma delimiters?}
+{\texttt{sort -n -r -k2 -t"," file.csv}}
+{\texttt{order -d 2 -n file.csv}}
+{\texttt{cut -k2 file.csv | sort -r}}
+{\texttt{sort -descending -col 2 file.csv}}
+
+\mcqitem{6.9}{What does the grep switch -v do?}
+{Prints verbose debugging output}
+{Inverts matching: outputs only lines that do NOT match the pattern}
+{Shows matching version numbers}
+{Counts total character volume}
+
+\mcqitem{6.10}{Which POSIX regular expression matches completely blank lines?}
+{\texttt{\^{}.*\$}}
+{\texttt{\^{}\$}}
+{\texttt{\textbackslash n}}
+{\texttt{[\^{}]}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 6 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+6.1 & \textbf{(c)} & Caret (\texttt{\^{}}) asserts position at the start of a line. \\
+6.2 & \textbf{(b)} & \texttt{grep -E} activates Extended Regular Expressions (equivalent to \texttt{egrep}). \\
+6.3 & \textbf{(b)} & \texttt{uniq} compares adjacent lines only; hence prior \texttt{sort} is mandatory. \\
+6.4 & \textbf{(a)} & \texttt{cut -d":" -f1,3} specifies delimiter and requested field indices. \\
+6.5 & \textbf{(b)} & \texttt{tr 'a-z' 'A-Z'} translates all lowercase ASCII characters to uppercase. \\
+6.6 & \textbf{(c)} & The question mark (\texttt{?}) matches zero or one occurrence in ERE. \\
+6.7 & \textbf{(b)} & \texttt{tail -f} follows output as the file grows. \\
+6.8 & \textbf{(a)} & \texttt{sort -n -r -k2 -t","} sorts numerically, reversed, on column 2, with comma delimiter. \\
+6.9 & \textbf{(b)} & \texttt{grep -v} inverts the match condition. \\
+6.10 & \textbf{(b)} & \texttt{\^{}\$} asserts immediate start of line followed by end of line (empty line). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the syntactic differences between BRE and ERE regarding quantifiers and grouping.}
+\begin{vivasol}
+Under **Basic Regular Expressions (BRE)**, metacharacters like \texttt{+}, \texttt{?}, \texttt{|}, \texttt{(}, and \texttt{\{} are treated as literal characters unless escaped with a backslash (\texttt{\textbackslash+}, \texttt{\textbackslash?}, \texttt{\textbackslash|}, \texttt{\textbackslash( \textbackslash)}, \texttt{\textbackslash{ \textbackslash}}).
+Under **Extended Regular Expressions (ERE)**, these characters are treated as active metacharacters natively: \texttt{+} (one or more), \texttt{?} (zero or one), \texttt{|} (alternation), \texttt{( )} (grouping), and \texttt{\{m,n\}} (repetition count).
+\end{vivasol}
+
+\subsection*{Q2. Construct a pipeline that finds the 5 most frequent HTTP response status codes in a web server log.}
+\begin{vivasol}
+Assuming standard Combined Log Format where the HTTP status code is column 9:
+\begin{clibox}
+$ awk '{print $9}' access.log | sort | uniq -c | sort -rn | head -n 5
+\end{clibox}
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{6.1 --- Industrial Log Stream Analytics}
+\textbf{Objective:} Process a simulated Apache web access log, extract client IP addresses, deduplicate, and sort by request volume.
+\begin{clibox}
+$ cat << 'EOF' > web.log
+192.168.1.10 - - [22/Oct/2026:08:00:01] "GET /index.html" 200 4500
+10.0.0.5 - - [22/Oct/2026:08:00:02] "POST /api/login" 401 512
+192.168.1.10 - - [22/Oct/2026:08:00:03] "GET /style.css" 200 1200
+192.168.1.10 - - [22/Oct/2026:08:00:04] "GET /logo.png" 200 8900
+10.0.0.5 - - [22/Oct/2026:08:00:05] "POST /api/login" 200 1024
+EOF
+
+$ cut -d' ' -f1 web.log | sort | uniq -c | sort -rn
+      3 192.168.1.10
+      2 10.0.0.5
+\end{clibox}
+\end{practicalbox}

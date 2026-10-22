@@ -1,0 +1,126 @@
+\chapter{Unit 4: File Permissions \& Ownership Administration Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{4.1}{What does execute (x) permission grant when assigned to a DIRECTORY in Linux?}
+{The ability to compile scripts located within the directory}
+{The ability to enter / traverse the directory via cd and access its file inodes}
+{The permission to delete the directory}
+{The right to modify directory names}
+
+\mcqitem{4.2}{What is the numeric octal representation of the permission string: -rwxr-xr--?}
+{\texttt{755}}
+{\texttt{754}}
+{\texttt{764}}
+{\texttt{654}}
+
+\mcqitem{4.3}{If the system umask is configured as 027, what permissions will a newly created regular file possess?}
+{\texttt{640} (\texttt{-rw-r-----})}
+{\texttt{750} (\texttt{-rwxr-x---})}
+{\texttt{644} (\texttt{-rw-r--r--})}
+{\texttt{600} (\texttt{-rw-------})}
+
+\mcqitem{4.4}{What is the effect of setting the Set User ID (SUID) bit on an executable binary?}
+{The program executes with elevated priority in the Completely Fair Scheduler}
+{Any user running the binary temporarily assumes the privileges of the file's owner}
+{The file is encrypted against unauthorized modification}
+{The program is automatically restarted upon system reboot}
+
+\mcqitem{4.5}{Which special permission bit prevents regular users from deleting each other's files within the /tmp shared directory?}
+{SUID bit (4000)}
+{SGID bit (2000)}
+{Sticky Bit (1000)}
+{Immutable bit (+i)}
+
+\mcqitem{4.6}{Which command recursively assigns user owner 'www-data' and group owner 'www-data' to /var/www/html?}
+{\texttt{chmod -R 777 /var/www/html}}
+{\texttt{chown -R www-data:www-data /var/www/html}}
+{\texttt{chgrp -R www-data /var/www/html}}
+{\texttt{usermod -aG www-data /var/www/html}}
+
+\mcqitem{4.7}{What catastrophic error occurs if an administrator executes: usermod -G devops student instead of usermod -aG devops student?}
+{The user's password is deleted}
+{The user is stripped from all their other supplementary groups (including sudo)}
+{The user's home directory is permanently deleted}
+{The command fails with a syntax error}
+
+\mcqitem{4.8}{How is the Sticky Bit visually denoted in the long listing (ls -l) permission string?}
+{A letter \texttt{s} in the owner execute position}
+{A letter \texttt{s} in the group execute position}
+{A letter \texttt{t} in the others execute position}
+{A letter \texttt{x} in all positions}
+
+\mcqitem{4.9}{Which octal value corresponds to assigning read and execute permissions only to group and others, while giving full control to the owner?}
+{\texttt{755}}
+{\texttt{744}}
+{\texttt{766}}
+{\texttt{775}}
+
+\mcqitem{4.10}{Which command audits the entire filesystem for unauthorized SUID root executable binaries?}
+{\texttt{find / -perm /4000 -user root -type f 2>/dev/null}}
+{\texttt{ls -la /sbin | grep suid}}
+{\texttt{ps aux | grep root}}
+{\texttt{check-suid --all}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 4 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+4.1 & \textbf{(b)} & Execute on a directory grants the right to traverse into it and resolve child inodes. \\
+4.2 & \textbf{(b)} & \texttt{rwx}=7, \texttt{r-x}=5, \texttt{r--}=4 $\to$ \texttt{754}. \\
+4.3 & \textbf{(a)} & Base file $666 - 027 = \mathbf{640}$ (\texttt{rw-r-----}). Files never get execute by default. \\
+4.4 & \textbf{(b)} & SUID executes the binary under the security context of the binary's owner (e.g. root). \\
+4.5 & \textbf{(c)} & The Sticky bit (\texttt{1000}) restricts deletion in shared directories to file owners and root. \\
+4.6 & \textbf{(b)} & \texttt{chown -R owner:group path} recursively alters user and group ownership. \\
+4.7 & \textbf{(b)} & Omitting \texttt{-a} (append) with \texttt{-G} overwrites existing supplementary group memberships. \\
+4.8 & \textbf{(c)} & Sticky bit appears as \texttt{t} (or \texttt{T} if execute is absent) in others triad (\texttt{drwxrwxrwt}). \\
+4.9 & \textbf{(a)} & Owner: 7 (\texttt{rwx}), Group: 5 (\texttt{r-x}), Others: 5 (\texttt{r-x}) $\to$ \texttt{755}. \\
+4.10 & \textbf{(a)} & \texttt{find / -perm /4000} locates files with SUID bit set; \texttt{2>/dev/null} silences errors. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain the Directory Deletion Paradox in Unix permissions.}
+\begin{vivasol}
+In Unix, the permission to delete or rename a file is governed exclusively by the **write and execute** permissions on the **containing parent directory**, not the permissions on the file itself. A directory is essentially an index table mapping names to inode numbers. Deleting a file modifies the parent directory's table. Consequently, an ordinary user who has write access to a folder can delete a file owned by \texttt{root} with permissions \texttt{r--r--r--}, because the operation simply alters the directory entry.
+\end{vivasol}
+
+\subsection*{Q2. Explain the difference between umask 022, 027, and 077.}
+\begin{vivasol}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{umask 022}: Files created with mode \texttt{644} (\texttt{rw-r--r--}), dirs with \texttt{755} (\texttt{rwxr-xr-x}). World-readable default.
+    \item \texttt{umask 027}: Files created with mode \texttt{640} (\texttt{rw-r-----}), dirs with \texttt{750} (\texttt{rwxr-x---}). Group can read; others have zero permissions.
+    \item \texttt{umask 077}: Files created with mode \texttt{600} (\texttt{rw-------}), dirs with \texttt{700} (\texttt{rwx------}). Strict privacy; only the owner can read or enter.
+\end{itemize}
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{4.1 --- SGID Collaboration Folder Setup}
+\textbf{Objective:} Configure a shared collaboration directory for a team where all newly created files automatically inherit the parent group ownership.
+\begin{clibox}
+# 1. Create team group and directory:
+$ sudo groupadd engineers
+$ sudo usermod -aG engineers rahul
+$ sudo mkdir /opt/collab
+$ sudo chown :engineers /opt/collab
+
+# 2. Assign read/write/execute and SGID bit (octal 2775):
+$ sudo chmod 2775 /opt/collab
+
+# 3. Verify directory permissions:
+$ ls -ld /opt/collab
+drwxrwsr-x 2 root engineers 4096 Oct 22 08:15 /opt/collab
+
+# 4. Create a test file as user rahul:
+$ touch /opt/collab/spec.pdf
+$ ls -l /opt/collab/spec.pdf
+-rw-r--r-- 1 rahul engineers 0 Oct 22 08:16 /opt/collab/spec.pdf
+\end{clibox}
+\textbf{Verification:} \texttt{spec.pdf} automatically inherits the group \texttt{engineers} rather than Rahul's primary group, enabling collaborative editing.
+\end{practicalbox}

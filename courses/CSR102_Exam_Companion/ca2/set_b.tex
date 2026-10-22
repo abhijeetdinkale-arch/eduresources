@@ -1,0 +1,121 @@
+\section{Continuous Assessment 2 (CA-2) --- Set B}
+\label{sec:ca2_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-2)}{B}{60 Minutes}{30 Marks}{CO4 (Ideation \& Selection), CO5 (Workflow Design \& Validation)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Explain the three lenses of innovation according to IDEO: Desirability, Feasibility, and Viability (DFV). Illustrate how a solution that satisfies any two lenses while ignoring the third inevitably fails.
+}{5}{CO4}{L2 Understand}
+
+\questionitem{2}{
+    Construct a Pugh Controlled Convergence Matrix evaluating two candidate smart parking mobile app concepts against the existing municipal street parking baseline.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{3}{
+    Categorize four engineering backlog features for an electric vehicle charging station network using a 2$\times$2 Impact vs. Effort Prioritization Matrix.
+}{5}{CO4}{L3 Apply}
+
+\questionitem{4}{
+    Design a Smoke Test (Fake Door experiment) to validate customer demand for an automated drone laundry pickup service in high-rise condominium complexes.
+}{5}{CO5}{L4 Analyze}
+
+\questionitem{5}{
+    Explain the architecture of the 4-Quadrant Feedback Capture Grid (Likes, Criticisms, Questions, Ideas) and demonstrate how it is used to structure post-usability sprint backlogs.
+}{5}{CO5}{L3 Apply}
+
+\questionitem{6}{
+    A usability evaluation yields the following 10 raw SUS scores: $[3, 3, 3, 3, 3, 3, 3, 3, 3, 3]$. Calculate the composite SUS score, explain its mathematical meaning, and evaluate the result.
+}{5}{CO5}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-2 Set B}
+
+\begin{solutionbox}[Solution to Question 1: IDEO DFV Triad]
+\textbf{The Three Lenses of Innovation:}\\
+1. \textbf{Desirability (Human):} Do people actually want it? Does it resolve a genuine pain point?\\
+2. \textbf{Feasibility (Technical):} Can it be built with available engineering, software, and physical constraints?\\
+3. \textbf{Viability (Business):} Can it generate sustainable operational revenue or societal return on investment?\\
+\textbf{Failure Modes of Two-Lens Traps:}\\
+$\bullet$ \textit{Desirable + Feasible, but Not Viable:} Free unlimited cloud storage. Users love it, engineers can build it, but storage costs bankrupt the enterprise.\\
+$\bullet$ \textit{Desirable + Viable, but Not Feasible:} Teleportation for commuters. Massive consumer demand and immense commercial profit, but physically impossible.\\
+$\bullet$ \textit{Feasible + Viable, but Not Desirable:} Technically robust enterprise time-tracking dongle that employees hate and actively bypass.
+\begin{markingrubric}
+$\bullet$ Accurate explanation of all 3 lenses: \textbf{2 Marks}\\
+$\bullet$ Detailed failure mode analysis with realistic illustrations: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2: Pugh Matrix for Smart Parking]
+\textbf{Pugh Decision Matrix (Baseline Datum = Physical Coin Parking Meter):}\\
+\begin{tabularx}{\linewidth}{|X|c|c|c|} \hline
+\textbf{Criteria} & \textbf{Baseline (0)} & \textbf{Concept A: Sensor App} & \textbf{Concept B: Community Valet} \\ \hline
+Driver Search Time & 0 & +1 & +1 \\ \hline
+Payment Friction & 0 & +1 & 0 \\ \hline
+Hardware Maintenance Cost & 0 & -1 & +1 \\ \hline
+Data Privacy Protection & 0 & 0 & -1 \\ \hline
+Scalability & 0 & +1 & -1 \\ \hline
+\textbf{Net Score ($\Sigma + - \Sigma -$)} & \textbf{0} & \textbf{+2 Net} & \textbf{0 Net} \\ \hline
+\end{tabularx}\\
+\textbf{Conclusion:} Concept A (IoT Sensor Parking App) achieves $+2$ net score, outperforming the baseline and valet model due to superior digital payment convenience and enterprise scalability.
+\begin{markingrubric}
+$\bullet$ Correct Pugh Matrix structure with baseline datum: \textbf{2 Marks}\\
+$\bullet$ Logical scoring across all criteria and clear net synthesis: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3: 2$\times$2 Impact vs. Effort Prioritization]
+\textbf{EV Charging Station Feature Prioritization:}\\
+1. \textbf{Quick Wins (High Impact, Low Effort):} Real-time charger availability status on Google/Apple Maps via lightweight API webhook.\\
+2. \textbf{Strategic Bets / Major Projects (High Impact, High Effort):} Automated robotic underbody plug-in charging mechanism for hands-free docking.\\
+3. \textbf{Fill-ins (Low Impact, Low Effort):} Custom ambient LED lighting color selection during charging.\\
+4. \textbf{Money Pits (Low Impact, High Effort):} Built-in touch screen video streaming games in the outdoor charger cabinet (vulnerable to rain, high vandalism, low demand).
+\begin{markingrubric}
+$\bullet$ Correct allocation across all 4 quadrants: \textbf{2 Marks}\\
+$\bullet$ Highly realistic engineering features with clear operational rationale: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4: Smoke Test Experiment Design]
+\textbf{Drone Laundry Smoke Test Architecture:}\\
+1. \textbf{Artifact:} A high-fidelity responsive landing page targeted via localized social media ads to residents of a 40-story residential tower, advertising ``Automated 1-Hour Rooftop Drone Dry-Cleaning Pickup''.\\
+2. \textbf{The Call to Action (CTA):} A prominent button stating ``Select Laundry Package \& Schedule Pickup''.\\
+3. \textbf{Friction Hurdle / Commitment Signal:} When clicked, users are prompted to enter their apartment number and credit card for a \$5 reservation deposit.\\
+4. \textbf{The Reveal / Ethical De-escalation:} Upon entering data, a dialogue appears: ``We are currently calibrating flight paths for your tower. Your card has not been charged. You are \#4 on the priority alpha list!''\\
+5. \textbf{Validation Metric:} If $>12\%$ of visitors submit the reservation form, demand is validated; otherwise, pivot concept.
+\begin{markingrubric}
+$\bullet$ End-to-end experiment design from traffic to conversion: \textbf{3 Marks}\\
+$\bullet$ Ethical disclosure and quantitative validation metric definition: \textbf{2 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5: Feedback Capture Grid]
+\textbf{Feedback Capture Grid Structure:}\\
+$\bullet$ \textbf{Top Left ($\oplus$ Likes):} What users praised unprompted (e.g., ``One-click reorder is amazing''). Action: Preserve and elevate in UI.\\
+$\bullet$ \textbf{Top Right ($\triangle$ Criticisms):} Confusion, errors, and drop-offs (e.g., ``Where do I find my invoice?''). Action: Create immediate P0 bug tickets.\\
+$\bullet$ \textbf{Bottom Left (? Questions):} Ambiguities raised during usage (e.g., ``Is my data encrypted?''). Action: Add contextual help tooltips.\\
+$\bullet$ \textbf{Bottom Right ($\star$ Ideas):} Spontaneous user suggestions (e.g., ``Can you auto-split the bill with roommates?''). Action: Add to product backlog for sprint refinement.
+\begin{markingrubric}
+$\bullet$ Complete definition of all 4 quadrants: \textbf{2 Marks}\\
+$\bullet$ Direct operational linkage to sprint backlog prioritization: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6: Neutral SUS Score Calculation]
+\textbf{Given Responses:} All 10 items scored 3 (Neutral).\\
+Odd questions (1, 3, 5, 7, 9): $(3 - 1) = 2 \times 5 = 10$\\
+Even questions (2, 4, 6, 8, 10): $(5 - 3) = 2 \times 5 = 10$\\
+\[
+\text{SUS Score} = 2.5 \times (10 + 10) = 2.5 \times 20 = \mathbf{50.0}
+\]
+\textbf{Significance and Interpretation:}\\
+$\bullet$ An exact neutral response on all 10 Likert items produces a score of exactly \textbf{50.0}.\\
+$\bullet$ A score of 50.0 falls well below the industry benchmark of 68.0, earning a grade of ``Poor / High Friction''. Neutrality in usability signifies lack of delight, moderate confusion, and high churn risk.
+\begin{markingrubric}
+$\bullet$ Flawless calculation resulting in 50.0: \textbf{2 Marks}\\
+$\bullet$ Mathematical and behavioral interpretation of the neutral baseline: \textbf{3 Marks}
+\end{markingrubric}
+\end{solutionbox}

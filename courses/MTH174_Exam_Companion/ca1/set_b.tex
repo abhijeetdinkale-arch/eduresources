@@ -1,0 +1,74 @@
+\section{Continuous Assessment 1 (CA-1) --- Set B}
+\label{sec:ca1_set_b}
+
+\LPUPaperHeader{Continuous Assessment (CA-1)}{B}{60 Minutes}{30 Marks}{CO1 (Matrix Algebra), CO2 (Homogeneous Differential Equations)}
+
+\begin{center}
+\sffamily\textbf{\color{AlertRed}Note: Attempt all six questions. Each question carries 5 marks.}
+\end{center}
+
+\questionitem{1}{
+    Find the canonical normal form and rank of the matrix:
+    \[
+    A = \begin{bmatrix} 2 & 3 & 4 & 5 \\ 3 & 4 & 5 & 6 \\ 4 & 5 & 6 & 7 \end{bmatrix}
+    \]
+}{5}{CO1}{L3 Apply}
+
+\questionitem{2}{
+    Test the linear independence of the functions $y_1 = \sin x$, $y_2 = \cos x$ using the Wronskian.
+}{5}{CO2}{L2 Understand}
+
+\questionitem{3}{
+    Find the eigenvalues of $A^3$ and $A^{-1}$ if $A = \begin{bmatrix} 1 & 4 \\ 2 & 3 \end{bmatrix}$.
+}{5}{CO1}{L3 Apply}
+
+\questionitem{4}{
+    Solve $(D^4 - 16)y = 0$.
+}{5}{CO2}{L3 Apply}
+
+\questionitem{5}{
+    Solve the initial value problem: $(D^2 + 4D + 4)y = 0$, $y(0) = 1$, $y'(0) = -1$.
+}{5}{CO2}{L3 Apply}
+
+\questionitem{6}{
+    Apply the Cayley-Hamilton theorem to find $A^{-1}$ for $A = \begin{bmatrix} 1 & 3 \\ 2 & 4 \end{bmatrix}$.
+}{5}{CO1}{L3 Apply}
+
+\newpage
+\subsection*{Solutions and Marking Rubrics --- CA-1 Set B}
+
+\begin{solutionbox}[Solution to Question 1]
+Row operations: $R_2 \to R_2 - R_1$, $R_3 \to R_3 - R_2$ gives rows of 1s. A subsequent subtraction reduces row 3 to zero. Normal form is $\begin{bmatrix} I_2 & 0 \\ 0 & 0 \end{bmatrix}$. Thus, $\mathbf{\operatorname{rank}(A) = 2}$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 2]
+The Wronskian is:
+\[
+W(\sin x, \cos x) = \begin{vmatrix} \sin x & \cos x \\ \cos x & -\sin x \end{vmatrix} = -\sin^2 x - \cos^2 x = -1 \neq 0
+\]
+Since $W \neq 0$ for all $x \in \mathbb{R}$, the functions are \textbf{Linearly Independent}.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 3]
+$\det(A - \lambda I) = \lambda^2 - 4\lambda - 5 = 0 \implies \lambda = 5, -1$.
+Eigenvalues of $A^3$ are $\lambda^3$: $5^3 = 125$ and $(-1)^3 = -1$.
+Eigenvalues of $A^{-1}$ are $\frac{1}{\lambda}$: $\frac{1}{5}$ and $-1$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 4]
+$m^4 - 16 = (m^2 - 4)(m^2 + 4) = (m - 2)(m + 2)(m^2 + 4) = 0 \implies m = \pm 2, \pm 2i$.
+Solution: $\mathbf{y(x) = c_1 e^{2x} + c_2 e^{-2x} + c_3 \cos(2x) + c_4 \sin(2x)}$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 5]
+$(m + 2)^2 = 0 \implies m = -2, -2$.
+$y(x) = (c_1 + c_2 x)e^{-2x}$. $y(0) = c_1 = 1$.
+$y'(0) = -2c_1 + c_2 = -1 \implies c_2 = 1$.
+Unique solution: $\mathbf{y(x) = (1 + x)e^{-2x}}$.
+\end{solutionbox}
+
+\begin{solutionbox}[Solution to Question 6]
+$\det(A - \lambda I) = \lambda^2 - 5\lambda - 2 = 0 \implies A^2 - 5A - 2I = 0 \implies A^{-1} = \frac{1}{2}(A - 5I) = \frac{1}{2}\begin{bmatrix} -4 & 3 \\ 2 & -1 \end{bmatrix}$.
+\end{solutionbox}
+
+\newpage

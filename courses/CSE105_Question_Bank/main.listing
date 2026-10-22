@@ -1,0 +1,28 @@
+# 1. Initialize repository and make initial commit:
+$ git init demo-repo && cd demo-repo
+$ echo "TIMEOUT = 30" > config.py
+$ git add config.py && git commit -m "Initial commit"
+
+# 2. Create feature branch and modify timeout:
+$ git switch -c feature-perf
+$ echo "TIMEOUT = 10" > config.py
+$ git commit -am "Optimize timeout for performance"
+
+# 3. Switch back to main and make conflicting change:
+$ git switch main
+$ echo "TIMEOUT = 60" > config.py
+$ git commit -am "Increase timeout for resilience"
+
+# 4. Attempt merge to trigger conflict:
+$ git merge feature-perf
+Auto-merging config.py
+CONFLICT (content): Merge conflict in config.py
+Automatic merge failed; fix conflicts and then commit the result.
+
+# 5. Resolve conflict and complete merge:
+$ cat << 'EOF' > config.py
+TIMEOUT = 45  # Compromise resolved value
+EOF
+$ git add config.py
+$ git commit -m "Merge branch feature-perf: resolved timeout setting"
+[main 7f2a10b] Merge branch feature-perf: resolved timeout setting

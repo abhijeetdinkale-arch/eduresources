@@ -1,0 +1,73 @@
+\chapter{Unit 6: Embedded Systems and IoT Applications}
+
+\section{Embedded System Architectures}
+
+\begin{formulabox}{Microprocessor vs Microcontroller Architectural Invariants}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Parameter} & \textbf{Microprocessor ($\mu$P)} & \textbf{Microcontroller ($\mu$C)} \\
+\midrule
+Primary Focus & High-throughput general computing & Dedicated low-latency control tasks \\
+Silicon Integration & CPU core + caches only & CPU + Flash + SRAM + Timers + ADC + I/O on single die \\
+Memory Bus & External data and address buses & Internal high-speed bus \\
+Architecture & Typically Von Neumann / Unified & Pure Harvard (separate code \& data buses) \\
+Operating Power & Watts to Tens of Watts & Milliwatts to Microwatts (battery-operable) \\
+Deterministic Timing & Difficult (OS multitasking, pipelines) & High (cycle-accurate execution) \\
+Representative Chips & Intel Core, AMD Ryzen, Apple M-series & ATmega328P, ARM Cortex-M, STM32, ESP32 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\section{Arduino Platform and Data Conversion}
+
+\begin{formulabox}{ATmega328P Specifications and ADC Quantization}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Core Specifications}: 8-bit AVR RISC CPU, $16\text{ MHz}$ crystal clock, $32\text{ KB}$ Flash memory, $2\text{ KB}$ SRAM, $1\text{ KB}$ EEPROM.
+    \item \textbf{GPIO Pins}: 14 digital I/O pins (6 PWM capable: pins 3, 5, 6, 9, 10, 11 at $\approx 490\text{ Hz}$ or $980\text{ Hz}$), 6 analog input channels (A0--A5).
+    \item \textbf{10-bit Successive Approximation ADC}:
+    \begin{itemize}
+        \item Total discrete quantization levels: $N = 2^{10} = 1024$ (digital codes $0$ to $1023$).
+        \item Quantization step size ($V_{LSB}$ / Resolution):
+        \[ V_{LSB} = \frac{V_{ref}}{2^n} = \frac{V_{ref}}{1024} \]
+        For $V_{ref} = 5.0\text{ V}$: $V_{LSB} = \frac{5000\text{ mV}}{1024} \approx 4.8828\text{ mV}$.
+        For internal reference $V_{ref} = 1.1\text{ V}$: $V_{LSB} = \frac{1100\text{ mV}}{1024} \approx 1.0742\text{ mV}$.
+        \item ADC Digital Output Code:
+        \[ D = \left\lfloor \frac{V_{in}}{V_{ref}} \times 1024 \right\rfloor \iff V_{in} = \frac{D \times V_{ref}}{1024} \]
+    \end{itemize}
+    \item \textbf{UART Serial Baud Rate}:
+    \[ \text{UBRR} = \frac{f_{osc}}{16 \times \text{Baud Rate}} - 1 \]
+\end{itemize}
+\end{formulabox}
+
+\section{Sensor Interfacing and Calibration}
+
+\begin{formulabox}{Sensors Transfer Functions and Signal Conditioning}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{LM35 Precision Temperature Sensor}:
+    \[ V_{out}(T) = 10\text{ mV}/^\circ\text{C} \times T(^\circ\text{C}) \implies T(^\circ\text{C}) = \frac{V_{out}\text{ [mV]}}{10} = \frac{D \times (5000 / 1024)}{10} \]
+    \item \textbf{HC-SR04 Ultrasonic Distance Sensor}:
+    Speed of sound in air: $v \approx 340\text{ m/s} = 0.034\text{ cm}/\mu\text{s}$.
+    \[ \text{Distance } d = \frac{v \times \Delta t_{\text{echo}}}{2} = \frac{0.034 \times \Delta t_{\text{echo}}\text{ [$\mu$s]}}{2} = \frac{\Delta t_{\text{echo}}}{58.2} \text{ [cm]} \]
+    \item \textbf{Light Dependent Resistor (LDR) Voltage Divider}:
+    \[ V_{out} = V_{CC} \cdot \frac{R_{fixed}}{R_{LDR} + R_{fixed}} \]
+    Resistance decreases logarithmically with increasing illuminance: $R_{LDR} \propto \text{Lux}^{-\gamma}$.
+\end{itemize}
+\end{formulabox}
+
+\section{IoT and Cloud Application Architecture}
+
+\begin{formulabox}{IoT Protocol Stack and Edge-Cloud Pipeline}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Perception Layer}: Sensors (LM35, DHT22, Accelerometers) transform physical stimuli into analog/digital signals.
+    \item \textbf{Edge Computing Layer}: Microcontroller performs signal filtering, moving-average smoothing, and local fault shutdown.
+    \item \textbf{Network Transport Layer}:
+    \begin{itemize}
+        \item \textbf{MQTT (Message Queuing Telemetry Transport)}: Lightweight publish-subscribe protocol running over TCP/IP, optimized for low-bandwidth, high-latency networks.
+        \item \textbf{CoAP (Constrained Application Protocol)}: RESTful client-server protocol over UDP.
+        \item \textbf{HTTP/HTTPS}: Request-response, high packet overhead.
+    \end{itemize}
+    \item \textbf{Cloud Layer}: Cloud brokers (AWS IoT Core, Azure IoT Hub, ThingsBoard) store time-series data, execute predictive ML models, and serve supervisory control dashboards.
+\end{itemize}
+\end{formulabox}

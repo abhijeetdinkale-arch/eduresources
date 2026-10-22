@@ -1,0 +1,172 @@
+\chapter{Workshop Instruments, Electronic Components, Trainer Module \& Display Devices}
+\label{chap:instruments-components}
+
+\section{Overview and Laboratory Learning Objectives}
+The foundational practice of electrical and computer engineering requires immediate physical fluency with hardware prototyping platforms, circuit components, precision test instrumentation, and visual indicators. This unit provides the essential laboratory foundation: identifying passive and active discrete components, decoding alphanumeric and color-coded values, operating the bench Digital Multimeter (DMM), Cathode-Ray / Digital Storage Oscilloscope (DSO), Function / Arbitrary Waveform Generator, and the Digital Logic Trainer Module.
+
+\begin{important}[Unit Learning Objectives]
+Upon completing this chapter and accompanying workshop sessions, the engineer will be able to:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Differentiate between active and passive electronic components and describe their governing physical mechanisms.
+    \item Decode 4-band, 5-band, and 6-band carbon and metal-film resistors with tolerance bounds.
+    \item Read and calculate ceramic, electrolytic, and polyester film capacitor values using EIA 3-digit codes.
+    \item Measure AC/DC voltages, branch currents, component resistances, diode thresholds, and continuity using a bench DMM.
+    \item Configure function generators to synthesize sinusoidal, square, and triangular test waveforms with specified DC offsets.
+    \item Operate a Digital Storage Oscilloscope (DSO) to capture waveforms, calculate timebase period, frequency, and phase difference using Lissajous figures.
+    \item Safely operate the DC power supplies, logic switches, clock generators, and LED indicators of the digital trainer module.
+    \item Design current-limiting drive networks for Light Emitting Diodes (LEDs) and wire Common-Cathode / Common-Anode 7-segment displays.
+\end{enumerate}
+\end{important}
+
+\section{Classification of Electronic Components}
+\begin{definition}[Passive vs. Active Electronic Components]
+\begin{itemize}
+    \item \textbf{Passive Components}: Devices that do not require an auxiliary energy source to perform their function and cannot generate power gain ($A_P \le 1$). Examples: Resistors ($R$), Capacitors ($C$), Inductors ($L$), and Transformers.
+    \item \textbf{Active Components}: Semiconductor devices capable of controlling electron flow via an external control terminal, producing power amplification, rectification, or switching ($A_P > 1$). Examples: Diodes, Bipolar Junction Transistors (BJTs), Field Effect Transistors (FETs), and Integrated Circuits (ICs).
+\end{itemize}
+\end{definition}
+
+\subsection{Resistors and Resistor Color Coding}
+A resistor dissipates electrical energy as heat according to Joule's Law: $P = I^2 R = \frac{V^2}{R}$.
+Standard through-hole cylindrical resistors indicate resistance value and tolerance via standardized color bands painted circumferentially around the ceramic body.
+
+\begin{keyequation}[Resistor Value Derivation]
+For a 4-band resistor with colors $C_1, C_2, C_3, C_4$:
+\[ R = (D_1 \times 10 + D_2) \times 10^{\text{Multiplier}} \pm \text{Tolerance}\,\% \]
+For a 5-band precision resistor with colors $C_1, C_2, C_3, C_4, C_5$:
+\[ R = (D_1 \times 100 + D_2 \times 10 + D_3) \times 10^{\text{Multiplier}} \pm \text{Tolerance}\,\% \]
+\end{keyequation}
+
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Color Band} & \textbf{Digit Value} & \textbf{Multiplier} & \textbf{Tolerance (\%)} & \textbf{EIA Band Identifier} \\
+\midrule
+Black & 0 & $10^0 = 1$ & --- & --- \\
+Brown & 1 & $10^1 = 10$ & $\pm 1\%$ & F \\
+Red & 2 & $10^2 = 100$ & $\pm 2\%$ & G \\
+Orange & 3 & $10^3 = 1\,\mathrm{k}$ & --- & --- \\
+Yellow & 4 & $10^4 = 10\,\mathrm{k}$ & --- & --- \\
+Green & 5 & $10^5 = 100\,\mathrm{k}$ & $\pm 0.5\%$ & D \\
+Blue & 6 & $10^6 = 1\,\mathrm{M}$ & $\pm 0.25\%$ & C \\
+Violet & 7 & $10^7 = 10\,\mathrm{M}$ & $\pm 0.1\%$ & B \\
+Gray & 8 & $10^8 = 100\,\mathrm{M}$ & $\pm 0.05\%$ & A \\
+White & 9 & $10^9 = 1\,\mathrm{G}$ & --- & --- \\
+Gold & --- & $10^{-1} = 0.1$ & $\pm 5\%$ & J \\
+Silver & --- & $10^{-2} = 0.01$ & $\pm 10\%$ & K \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Capacitors and Numeric Markings}
+Capacitors store electrical potential in an electrostatic field between conductors: $Q = C V$.
+Disc ceramic capacitors utilize an EIA 3-digit marking code where the first two digits represent significant figures and the third represents the multiplier in picofarads ($\mathrm{pF}$):
+\[ C = (D_1 \times 10 + D_2) \times 10^{D_3}\,\mathrm{pF} \]
+For instance, a disc capacitor stamped \textbf{104K} designates $10 \times 10^4\,\mathrm{pF} = 100{,}000\,\mathrm{pF} = 100\,\mathrm{nF} = 0.1\,\mu\mathrm{F}$ with a $\pm 10\%$ tolerance.
+Electrolytic capacitors have polarized terminals (longer lead is positive anode; negative cathode indicated by a wide stripe down the package). Reverse biasing electrolytic capacitors causes rapid dielectric breakdown, gas generation, and rupture.
+
+\section{Laboratory Test and Measurement Instrumentation}
+\subsection{The Digital Multimeter (DMM)}
+A DMM combines a high-precision dual-slope or sigma-delta Analog-to-Digital Converter (ADC) with front-end signal conditioning:
+\begin{enumerate}
+    \item \textbf{DC/AC Voltage}: High input resistance ($R_{\mathrm{in}} \approx 10\,\mathrm{M}\Omega$) placed in parallel across the device under test.
+    \item \textbf{DC/AC Current}: Low internal shunt resistance ($R_S \approx 0.1\text{--}1\,\Omega$) placed in series. Current creates a small voltage drop across the shunt ($V_S = I R_S$).
+    \item \textbf{Resistance ($\Omega$)}: The meter injects a constant reference current $I_{\mathrm{ref}}$ and measures the resulting voltage drop: $R_x = V / I_{\mathrm{ref}}$.
+    \item \textbf{Diode Test Mode}: Injects a calibrated $1\,\mathrm{mA}$ constant current and displays the forward junction potential in volts.
+\end{enumerate}
+
+\begin{examtip}[DMM Current Mode Danger]
+Never place a multimeter set to Current mode in parallel across a power source or circuit component. The ammeter shunt acts as a near-dead short ($< 0.1\,\Omega$). Connecting it across $+5\text{V}$ will pull tens of amperes, instantly vaporizing the internal fast-blow fuse!
+\end{examtip}
+
+\subsection{Digital Storage Oscilloscope (DSO)}
+A DSO captures time-varying waveforms $v(t)$, digitizing voltages through an internal flash ADC and storing them in acquisition memory:
+\begin{itemize}
+    \item \textbf{Vertical Sensitivity (Volts/Div)}: Sets the amplitude scaling per screen grid square.
+    \item \textbf{Horizontal Timebase (Time/Div)}: Sets the duration represented per horizontal grid block.
+    \item \textbf{Trigger Controls}: Synchronizes the sweep to a stable repeating edge (rising/falling) preventing display drift.
+    \item \textbf{Lissajous Patterns}: When Channel 1 ($X$) and Channel 2 ($Y$) receive sinusoidal signals of identical frequency, the resulting ellipse reveals the phase difference $\phi$:
+    \[ \sin \phi = \frac{Y_{\mathrm{intercept}}}{Y_{\max}} \implies \phi = \arcsin\left(\frac{Y_1}{Y_2}\right) \]
+\end{itemize}
+
+\section{Digital Logic Trainer Module Architecture}
+The bench Digital Logic Trainer Module provides a self-contained environment:
+\begin{itemize}
+    \item \textbf{Regulated Power Supply Rails}: Fixed $+5.0\,\mathrm{V}$ DC ($\le 1.0\,\mathrm{A}$) for standard TTL/CMOS circuits, and variable $\pm 12\,\mathrm{V}$ supplies.
+    \item \textbf{Logic Input Switches}: SPDT slide or toggle switches producing verified logic LOW ($0\,\mathrm{V}$) and HIGH ($+5\,\mathrm{V}$).
+    \item \textbf{Logic Output LED Monitors}: Buffered high-impedance LED indicators turning ON for logic HIGH ($\ge 2.4\,\mathrm{V}$) and OFF for logic LOW ($\le 0.4\,\mathrm{V}$).
+    \item \textbf{Internal Pulse Clock Generator}: Selectable clock frequencies ($1\,\mathrm{Hz}, 10\,\mathrm{Hz}, 1\,\mathrm{kHz}, 100\,\mathrm{kHz}$) and de-bounced single-pulse pushbuttons for sequential logic testing.
+    \item \textbf{Solderless Breadboard Workspace}: Interconnected metal spring clips permitting rapid patch-wire connections.
+\end{itemize}
+
+\section{Display Devices: LEDs and 7-Segment Displays}
+\subsection{Light Emitting Diode (LED) Circuit Design}
+An LED emits photons through spontaneous radiative recombination across a direct bandgap. Forward voltage drops vary by material:
+\begin{itemize}
+    \item Red / Amber LEDs (GaAsP): $V_F \approx 1.8\text{--}2.0\,\mathrm{V}$.
+    \item Green LEDs (GaP): $V_F \approx 2.1\text{--}2.4\,\mathrm{V}$.
+    \item Blue / White LEDs (InGaN): $V_F \approx 3.0\text{--}3.3\,\mathrm{V}$.
+\end{itemize}
+To sustain a safe nominal operating current ($I_F \approx 10\text{--}20\,\mathrm{mA}$) from a $+5\,\mathrm{V}$ supply:
+\[ R_{\mathrm{limit}} = \frac{V_{CC} - V_F}{I_F} = \frac{5.0\,\mathrm{V} - 2.0\,\mathrm{V}}{15\,\mathrm{mA}} = \frac{3.0}{0.015} = 200\,\Omega \quad \implies \text{Standard } 220\,\Omega \]
+
+\subsection{Seven-Segment Displays}
+Seven elongated LEDs ($a$ through $g$) plus a decimal point ($dp$) form digits $0$ through $9$:
+\begin{itemize}
+    \item \textbf{Common Anode (CA)}: All LED anodes are tied to $+5\,\mathrm{V}$. An individual segment lights when its cathode is driven to logic LOW ($0\,\mathrm{V}$).
+    \item \textbf{Common Cathode (CC)}: All LED cathodes are tied to Ground ($0\,\mathrm{V}$). An individual segment lights when its anode is driven to logic HIGH ($+5\,\mathrm{V}$).
+\end{itemize}
+
+\section{Laboratory Experiment 1: Component Identification \& Instrument Setup}
+\begin{definition}[Laboratory Experiment 1 Protocol]
+\textbf{Objective}: To identify passive and active components, decode resistor color codes, verify values with a DMM, and display waveforms on a DSO.\\
+\textbf{Apparatus Required}:
+\begin{enumerate}
+    \item Carbon-film resistors ($100\,\Omega, 1\,\mathrm{k}\Omega, 10\,\mathrm{k}\Omega, 100\,\mathrm{k}\Omega$) --- 1 each
+    \item Ceramic disc capacitors ($103, 104, 473$) --- 1 each
+    \item Digital Multimeter (DMM) with test probes --- 1 unit
+    \item Dual-Channel Digital Storage Oscilloscope (DSO) with $10\times$ probes --- 1 unit
+    \item Function Generator --- 1 unit
+    \item Solderless breadboard and patch cords
+\end{enumerate}
+\end{definition}
+
+\begin{observationtable}[Observation Table 1.1: Resistor Color Code Verification]
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+\textbf{S. No.} & \textbf{Band Colors} & \textbf{Nominal Value ($R$)} & \textbf{Tolerance} & \textbf{Allowed Range} & \textbf{DMM Measured} & \textbf{\% Error} \\
+\midrule
+1 & Brown-Black-Brown-Gold & $100\,\Omega$ & $\pm 5\%$ & $95\text{--}105\,\Omega$ & $99.2\,\Omega$ & $-0.8\%$ \\
+2 & Brown-Black-Red-Gold & $1.0\,\mathrm{k}\Omega$ & $\pm 5\%$ & $950\text{--}1050\,\Omega$ & $0.988\,\mathrm{k}\Omega$ & $-1.2\%$ \\
+3 & Brown-Black-Orange-Gold & $10.0\,\mathrm{k}\Omega$ & $\pm 5\%$ & $9.5\text{--}10.5\,\mathrm{k}\Omega$ & $10.04\,\mathrm{k}\Omega$ & $+0.4\%$ \\
+4 & Brown-Black-Yellow-Gold & $100.0\,\mathrm{k}\Omega$ & $\pm 5\%$ & $95\text{--}105\,\mathrm{k}\Omega$ & $98.6\,\mathrm{k}\Omega$ & $-1.4\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{observationtable}
+
+\section{Worked Numerical Problems}
+\begin{example}[Calculating Resistor Tolerance Bounds]
+A resistor displays the bands: \textbf{Red, Red, Orange, Silver}. Calculate: (a) Nominal value, (b) Upper tolerance limit, (c) Lower tolerance limit.
+\end{example}
+\begin{solutionbox}
+\begin{itemize}
+    \item Band 1: Red $\implies D_1 = 2$.
+    \item Band 2: Red $\implies D_2 = 2$.
+    \item Band 3: Orange $\implies$ Multiplier $= 10^3 = 1000$.
+    \item Band 4: Silver $\implies$ Tolerance $= \pm 10\%$.
+\end{itemize}
+Nominal value: $R = 22 \times 10^3\,\Omega = 22\,\mathrm{k}\Omega$.\\
+Tolerance magnitude: $\Delta R = 22\,\mathrm{k}\Omega \times 0.10 = 2.2\,\mathrm{k}\Omega$.\\
+Upper limit: $R_{\max} = 22 + 2.2 = 24.2\,\mathrm{k}\Omega$.\\
+Lower limit: $R_{\min} = 22 - 2.2 = 19.8\,\mathrm{k}\Omega$.
+\end{solutionbox}
+
+\section{Workshop Viva-Voce Questions \& Answers}
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Question}: Why does measuring a resistor while in a powered circuit yield inaccurate readings?\\
+    \textbf{Answer}: The DMM resistance circuit operates by injecting a tiny constant current. External operating voltages in an energized circuit distort this current sensing. Furthermore, parallel circuit paths offer alternate current loops, reducing measured equivalent resistance below the true value.
+    \item \textbf{Question}: What is the role of a $10\times$ attenuator probe on an oscilloscope?\\
+    \textbf{Answer}: A $10\times$ passive probe increases the input impedance from $1\,\mathrm{M}\Omega$ to $10\,\mathrm{M}\Omega$ and divides the input voltage by 10. This dramatically reduces capacitive and resistive loading on high-frequency and sensitive test points.
+\end{enumerate}

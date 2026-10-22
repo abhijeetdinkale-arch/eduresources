@@ -1,0 +1,38 @@
+\chapter{Unit 2: Linear Differential Equations --- Homogeneous Systems}
+
+\begin{formulabox}{The Wronskian Determinant \& Linear Independence}
+For functions $y_1(x), y_2(x)$:
+\begin{equation*}
+W(y_1, y_2)(x) = \begin{vmatrix} y_1 & y_2 \\ y_1' & y_2' \end{vmatrix} = y_1 y_2' - y_2 y_1'
+\end{equation*}
+\begin{itemize}
+    \item If $W(y_1, y_2) \neq 0$ on interval $I \implies y_1, y_2$ are \textbf{Linearly Independent}.
+    \item If $W(y_1, y_2) \equiv 0$ on interval $I \implies y_1, y_2$ are \textbf{Linearly Dependent}.
+    \item \textbf{Abel's Formula}: For $y'' + P(x)y' + Q(x)y = 0$, $W(x) = C e^{-\int P(x)\,dx}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Complementary Function (C.F.) Rules for $f(D)y = 0$}
+Let $m_i$ be the roots of Auxiliary Equation $f(m) = 0$:
+\begin{center}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Case} & \textbf{Root Structure} & \textbf{Complementary Function $y_c(x)$} \\
+\midrule
+1 & Real \& Distinct: $m_1 \neq m_2 \neq m_3$ & $y_c = c_1 e^{m_1 x} + c_2 e^{m_2 x} + c_3 e^{m_3 x}$ \\
+\addlinespace
+2 & Real \& Repeated: $m_1 = m_2 = m$ & $y_c = (c_1 + c_2 x)e^{mx}$ \\
+\addlinespace
+3 & Real \& Triple Root: $m_1 = m_2 = m_3 = m$ & $y_c = (c_1 + c_2 x + c_3 x^2)e^{mx}$ \\
+\addlinespace
+4 & Complex Pair: $m = \alpha \pm i\beta$ & $y_c = e^{\alpha x}(c_1 \cos \beta x + c_2 \sin \beta x)$ \\
+\addlinespace
+5 & Repeated Complex: $\alpha \pm i\beta$ (twice) & $y_c = e^{\alpha x}[(c_1 + c_2 x)\cos \beta x + (c_3 + c_4 x)\sin \beta x]$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\begin{memorytip}
+Remember that pure imaginary roots $m = \pm i\omega$ correspond to undamped harmonic oscillation with $\alpha = 0$: $y_c = c_1 \cos(\omega x) + c_2 \sin(\omega x)$.
+\end{memorytip}

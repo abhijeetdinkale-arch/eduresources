@@ -1,0 +1,49 @@
+\chapter*{Rapid Formula \& Syntax Quick-Reference Sheet}
+\addcontentsline{toc}{chapter}{Rapid Formula \& Syntax Quick-Reference Sheet}
+
+\begin{multicols}{2}
+\subsection*{Core Syntax \& Precedence}
+\textbf{Highest to Lowest:}
+\begin{enumerate}[leftmargin=1.2em, itemsep=1pt]
+    \item Parentheses, indexing \texttt{x[i]}, call \texttt{f()}
+    \item Exponentiation \texttt{**} (Right-to-left!)
+    \item Unary \texttt{+x}, \texttt{-x}, \texttt{\textasciitilde x}
+    \item \texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%}
+    \item \texttt{+}, \texttt{-}
+    \item Bitwise shifts \texttt{<<}, \texttt{>>}
+    \item Bitwise \texttt{\&}, \texttt{\textasciicircum}, \texttt{\textbar}
+    \item Comparisons \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{<=}, \texttt{is}, \texttt{in}
+    \item Boolean \texttt{not}, \texttt{and}, \texttt{or}
+\end{enumerate}
+
+\subsection*{Data Structure Complexity}
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+    \item \textbf{List:} Index $\mathcal{O}(1)$, Append $\mathcal{O}(1)^*$, Insert/Del $\mathcal{O}(n)$.
+    \item \textbf{Dict:} Key lookup, insert, delete average $\mathcal{O}(1)$.
+    \item \textbf{Set:} Add, remove, lookup average $\mathcal{O}(1)$.
+    \item \textbf{Deque:} Append/pop left and right $\mathcal{O}(1)$.
+\end{itemize}
+
+\subsection*{Dunder Methods Protocol}
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+    \item \texttt{\_\_init\_\_(self, ...)}: Initializer.
+    \item \texttt{\_\_repr\_\_(self)}: Debug string.
+    \item \texttt{\_\_len\_\_(self)}: Length (\texttt{int}).
+    \item \texttt{\_\_getitem\_\_(self, k)}: Subscript indexing.
+    \item \texttt{\_\_iter\_\_}, \texttt{\_\_next\_\_}: Iteration.
+    \item \texttt{\_\_enter\_\_}, \texttt{\_\_exit\_\_}: Context manager.
+\end{itemize}
+
+\subsection*{NumPy Broadcasting}
+Dimensions compatible if $d_A = d_B$ or one is $1$. Alignment evaluated trailing (right-to-left).
+\begin{equation}
+A(M, 1) \oplus B(1, N) \implies C(M, N)
+\end{equation}
+
+\subsection*{Pandas Indexing}
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+    \item \texttt{df.loc[lbl]}: Label-based (inclusive end).
+    \item \texttt{df.iloc[pos]}: Integer-based (exclusive end).
+\end{itemize}
+\end{multicols}
+\newpage

@@ -1,0 +1,66 @@
+\chapter{Unit 2: Control Flow, Loops, Functions \& Recursion}
+
+\begin{formulabox}{Boolean Short-Circuit Evaluation Semantics}
+In Python, \texttt{and} and \texttt{or} return the \textbf{actual operand value}, not merely \texttt{True} or \texttt{False}:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{A and B}: If $A$ is falsy, returns $A$ immediately without evaluating $B$; otherwise evaluates and returns $B$.
+    \item \texttt{A or B}: If $A$ is truthy, returns $A$ immediately without evaluating $B$; otherwise evaluates and returns $B$.
+    \item Falsy values: \texttt{False}, \texttt{None}, \texttt{0}, \texttt{0.0}, \texttt{""}, \texttt{[]}, \texttt{()}, \texttt{\{\}}, \texttt{set()}.
+    \item Truthy values: All other non-zero, non-empty objects.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Loop Control Invariants \& The \texttt{else} Clause}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{range(start, stop[, step])}: Produces half-open integer intervals $[start, stop)$ with elements $x_k = start + k \cdot step$.
+    \item Length formula: $L = \max\left(0, \left\lceil \frac{stop - start}{step} \right\rceil\right)$.
+    \item \texttt{break}: Aborts the innermost enclosing loop immediately.
+    \item \texttt{continue}: Skips remaining statements in the current iteration and advances loop index.
+    \item \textbf{Loop \texttt{else} Block}: Executes \textbf{only if the loop terminates normally} (without encountering a \texttt{break} statement).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Random Number Module Reference (\texttt{import random})}
+\begin{center}
+\begin{tabularx}{0.96\textwidth}{l p{5cm} X}
+\toprule
+\textbf{Function} & \textbf{Return Range} & \textbf{Description \& Properties} \\
+\midrule
+\texttt{random.random()} & $[0.0, 1.0)$ & Uniform float in half-open interval \\
+\texttt{random.uniform(a, b)} & $[a, b]$ & Uniform float with continuous distribution \\
+\texttt{random.randint(a, b)} & $[a, b]$ (both inclusive!) & Integer $k$ such that $a \le k \le b$ \\
+\texttt{random.randrange(start, stop[, step])} & $[start, stop)$ & Integer from specified range \\
+\texttt{random.choice(seq)} & Single element & Random sample with replacement \\
+\texttt{random.sample(pop, k)} & List of $k$ unique elements & Random sample \textbf{without replacement} \\
+\texttt{random.shuffle(list)} & \texttt{None} (in-place) & Fisher-Yates permutation of mutable list \\
+\texttt{random.seed(x)} & \texttt{None} & Sets PRNG state for reproducibility \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{formulabox}
+
+\begin{formulabox}{Variable Scoping: The LEGB Rule \& Recursion Formulas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Scope Lookup Hierarchy}:
+    \begin{equation*}
+    \textbf{Local} \xrightarrow{\text{nested in}} \textbf{Enclosing} \xrightarrow{\text{nested in}} \textbf{Global} \xrightarrow{\text{nested in}} \textbf{Built-in}
+    \end{equation*}
+    \item \texttt{global var}: Rebinds variable in module-level global namespace.
+    \item \texttt{nonlocal var}: Rebinds variable in nearest enclosing non-global scope (closures).
+    \item \textbf{Master Theorem for Recursion Recurrence Relations}:
+    \begin{equation*}
+    T(n) = a T(n/b) + \mathcal{O}(n^d) \implies
+    \begin{cases}
+    \mathcal{O}(n^d) & \text{if } d > \log_b a \\
+    \mathcal{O}(n^d \log n) & \text{if } d = \log_b a \\
+    \mathcal{O}(n^{\log_b a}) & \text{if } d < \log_b a
+    \end{cases}
+    \end{equation*}
+    \item Binary search: $a=1, b=2, d=0 \implies T(n) = \mathcal{O}(\log n)$.
+    \item Merge sort: $a=2, b=2, d=1 \implies T(n) = \mathcal{O}(n \log n)$.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+Never use a mutable object (such as a list or dictionary) as a default parameter value (\texttt{def foo(items=[])})! Default parameter expressions are evaluated \textbf{once at function definition time}, resulting in shared state across subsequent invocations! Use \texttt{items=None} and initialize inside the body.
+\end{memorytip}

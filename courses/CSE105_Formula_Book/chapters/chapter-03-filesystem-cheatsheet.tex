@@ -1,0 +1,55 @@
+\chapter{Unit 3: Filesystem Hierarchy \& File Navigation Cheat Sheet}
+
+\begin{cheatbox}{Filesystem Hierarchy Standard (FHS) Quick Directory Map}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Directory} & \textbf{FHS Purpose} & \textbf{Directory} & \textbf{FHS Purpose} \\
+\midrule
+\texttt{/} & Root directory of entire tree & \texttt{/dev} & Hardware device special files \\
+\texttt{/bin} & Essential user binaries (single-user) & \texttt{/proc} & Kernel state pseudo-filesystem (0 bytes) \\
+\texttt{/sbin} & Essential system binaries (superuser) & \texttt{/sys} & Hardware device drivers sysfs \\
+\texttt{/etc} & Host system configuration files & \texttt{/var} & Variable data (logs, spools, caches) \\
+\texttt{/home} & Regular user home directories & \texttt{/tmp} & Volatile temporary storage (cleared on reboot) \\
+\texttt{/root} & Home directory of superuser (root) & \texttt{/boot} & Kernel images (\texttt{vmlinuz}) \& GRUB \\
+\texttt{/usr} & Sharable read-only multi-user software & \texttt{/lib} & Shared system dynamic libraries (\texttt{.so}) \\
+\bottomrule
+\end{tabularx}
+\end{cheatbox}
+
+\begin{syntaxbox}{File Operations \& Navigation Quick Matrix}
+\begin{tabularx}{\linewidth}{l X l X}
+\toprule
+\textbf{Command} & \textbf{Core Functionality} & \textbf{Command} & \textbf{Core Functionality} \\
+\midrule
+\texttt{pwd} & Print current working directory & \texttt{touch f} & Create empty file or update timestamps \\
+\texttt{cd} & Return to user home directory (\texttt{\$HOME}) & \texttt{cp -rp s d} & Recursive copy preserving permissions \\
+\texttt{cd -} & Toggle to previous working directory & \texttt{mv s d} & Move / rename file or folder atomically \\
+\texttt{ls -laShrt} & List all files, human sizes, sorted by time & \texttt{rm -rf d} & Force recursive removal without prompt \\
+\texttt{mkdir -p} & Create nested directory hierarchy & \texttt{cat -n} & Stream file with numbered lines \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}
+
+\begin{cheatbox}{The find Engine Options Matrix}
+\textbf{Syntax:} \texttt{find [path] [criteria] [action]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Type:} \texttt{-type f} (regular file), \texttt{-type d} (directory), \texttt{-type l} (symbolic link).
+    \item \textbf{Name:} \texttt{-name "*.log"} (case sensitive), \texttt{-iname "*.PDF"} (case insensitive).
+    \item \textbf{Size:} \texttt{-size +50M} ($>50$ MB), \texttt{-size -10k} ($<10$ KB).
+    \item \textbf{Time:} \texttt{-mtime -7} (modified past 7 days), \texttt{-mtime +30} (older than 30 days).
+    \item \textbf{Permission:} \texttt{-perm 644} (exact mode), \texttt{-perm /4000} (has SUID bit set).
+    \item \textbf{Action:} \texttt{-exec cmd \{\} \textbackslash;} (one-by-one), \texttt{-exec cmd \{\} +} (batched high-speed), \texttt{-delete}.
+\end{itemize}
+\end{cheatbox}
+
+\begin{syntaxbox}{Hard Links versus Symbolic (Soft) Links}
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Property} & \textbf{Hard Link (\texttt{ln src dest})} & \textbf{Symbolic Link (\texttt{ln -s src dest})} \\
+\midrule
+\textbf{Inode ID} & Exactly identical to original file. & Distinct newly allocated inode. \\
+\textbf{Filesystem Boundary} & Cannot cross physical partition boundaries. & Seamlessly crosses filesystems and network mounts. \\
+\textbf{Directory Support} & Strictly disallowed for regular users. & Fully permitted on directories. \\
+\bottomrule
+\end{tabularx}
+\end{syntaxbox}

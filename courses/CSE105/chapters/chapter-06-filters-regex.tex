@@ -1,0 +1,156 @@
+\chapter{Text Filters, Stream Processing \& Regular Expressions}
+\label{chap:filters-regex}
+
+\section{The Unix Filter Architecture}
+A \textbf{filter} is a program that accepts an incoming stream of text from standard input (\texttt{stdin}), transforms or extracts content according to specific algorithmic rules, and writes the resulting stream to standard output (\texttt{stdout}). Filters perform zero interactive prompts, making them the building blocks of automated shell pipelines.
+
+\section{Pattern Matching: The grep Family}
+The \textbf{grep} (Global Regular Expression Print) utility scans files or incoming streams line-by-line, emitting only lines that match a specified pattern.
+
+\begin{commandbox}{grep --- Search Text Using Regular Expressions}
+\textbf{Syntax:} \texttt{grep [options] "pattern" [files...]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-i}: Case-insensitive search (ignores upper/lower case differences).
+    \item \texttt{-v}: Invert match (prints lines that do \textbf{not} match the pattern).
+    \item \texttt{-n}: Prefix each matching output line with its 1-based line number.
+    \item \texttt{-c}: Suppress normal output; prints only the total count of matching lines.
+    \item \texttt{-l}: Print only the names of files containing matches.
+    \item \texttt{-w}: Match whole words only (enforcing word boundary matching).
+    \item \texttt{-o}: Print only the matched substrings, not the entire containing line.
+    \item \texttt{-E}: Interpret pattern as an \textbf{Extended Regular Expression (ERE)} (equivalent to \texttt{egrep}).
+    \item \texttt{-F}: Interpret pattern as fixed literal strings, disabling regex parsing (equivalent to \texttt{fgrep}).
+    \item \texttt{-r} or \texttt{-R}: Recursively traverse subdirectories.
+    \item \texttt{-A N}, \texttt{-B N}, \texttt{-C N}: Print $N$ lines of trailing (After), leading (Before), or Context around matches.
+\end{itemize}
+\end{commandbox}
+
+\section{Regular Expression Theory: BRE vs ERE}
+Regular expressions are formal grammars defining search patterns across text. POSIX establishes two formal standards:
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l X X}
+\toprule
+\textbf{Regex Construct} & \textbf{Basic Regular Expressions (BRE)} & \textbf{Extended Regular Expressions (ERE)} \\
+\midrule
+\textbf{Grouping} & Requires backslash: \texttt{\textbackslash(pattern\textbackslash)} & Native syntax: \texttt{(pattern)} \\
+\textbf{One or more (+)} & Requires backslash: \texttt{\textbackslash+} & Native syntax: \texttt{+} \\
+\textbf{Zero or one (?)} & Requires backslash: \texttt{\textbackslash?} & Native syntax: \texttt{?} \\
+\textbf{Alternation (OR)} & Requires backslash: \texttt{\textbackslash|} & Native syntax: \texttt{|} \\
+\textbf{Bounded Range} & Requires backslash: \texttt{\textbackslash\{m,n\textbackslash\}} & Native syntax: \texttt{\{m,n\}} \\
+\bottomrule
+\end{tabularx}
+\caption{Syntactic Comparison between POSIX BRE and POSIX ERE.}
+\label{tab:bre-ere}
+\end{table}
+
+\subsection{Essential Regular Expression Metacharacters}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Anchors:}
+    \begin{itemize}
+        \item \texttt{\^{}}: Matches the beginning of a line (e.g., \texttt{\^{}root} matches lines starting with \texttt{root}).
+        \item \texttt{\$}: Matches the end of a line (e.g., \texttt{bash\$} matches lines ending with \texttt{bash}).
+        \item \texttt{\^{}\$}: Matches completely blank/empty lines.
+    \end{itemize}
+    \item \textbf{Character Classes:}
+    \begin{itemize}
+        \item \texttt{.}: Matches any single character except newline.
+        \item \texttt{[abc]}: Matches any single character in the set.
+        \item \texttt{[a-z0-9]}: Matches any lowercase letter or digit.
+        \item \texttt{[\^{}0-9]}: Negation: matches any single character that is \textbf{not} a digit.
+        \item \texttt{[[:alpha:]]}, \texttt{[[:digit:]]}, \texttt{[[:space:]]}: POSIX character classes.
+    \end{itemize}
+    \item \textbf{Quantifiers:}
+    \begin{itemize}
+        \item \texttt{*}: Matches zero or more repetitions of the preceding item.
+        \item \texttt{+}: Matches one or more repetitions of the preceding item (ERE).
+        \item \texttt{?}: Matches zero or one repetition of the preceding item (ERE).
+        \item \texttt{\{3\}}: Matches exactly 3 occurrences.
+        \item \texttt{\{2,5\}}: Matches between 2 and 5 occurrences.
+    \end{itemize}
+\end{itemize}
+
+\begin{terminalbox}[Grep Pattern Matching Demonstrations]
+# Find lines in /etc/passwd where the login shell is bash:
+$ grep "/bin/bash$" /etc/passwd
+
+# Filter out all comment lines (#) and blank lines from a configuration file:
+$ grep -vE "^(#|$)" /etc/ssh/sshd_config
+
+# Extract all valid IPv4 addresses from an access log:
+$ grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" /var/log/nginx/access.log
+\end{terminalbox}
+
+\section{Field and Line Selection: cut, head, tail}
+\begin{commandbox}{cut --- Extract Sections from Each Line of Files}
+\textbf{Syntax:} \texttt{cut [options] [file...]}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{-d "DELIM"}: Configures field delimiter character (default is tab).
+    \item \texttt{-f N}: Selects field number $N$ (or comma-separated list \texttt{1,3} or range \texttt{2-5}).
+    \item \texttt{-c N-M}: Extracts byte/character position range from $N$ to $M$.
+\end{itemize}
+\end{commandbox}
+
+\begin{commandbox}{head and tail --- View Beginning and Ending Lines}
+\begin{itemize}[leftmargin=1.5em]
+    \item \texttt{head -n N}: Emits the first $N$ lines of input (default 10).
+    \item \texttt{tail -n N}: Emits the last $N$ lines of input (default 10).
+    \item \texttt{tail -f file}: \textbf{Follow mode:} Keeps the file descriptor open and streams new data appended in real-time. Indispensable for monitoring live server logs.
+\end{itemize}
+\end{commandbox}
+
+\section{Ordering and Deduplication: sort, uniq, wc}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{sort:} Sorts input lines.
+    \begin{itemize}
+        \item \texttt{-n}: Numerical sort (interprets values as numbers rather than ASCII characters).
+        \item \texttt{-r}: Reverse sorting order (descending).
+        \item \texttt{-k N}: Sort on field/column number $N$.
+        \item \texttt{-t "DELIM"}: Defines field separator delimiter.
+        \item \texttt{-u}: Unique sort (discards duplicate keys).
+    \end{itemize}
+    \item \textbf{uniq:} Reports or omits adjacent repeated lines.
+    \begin{warningbox}[The uniq Sorting Prerequisite]
+    \texttt{uniq} detects duplicate lines \textbf{only when they are immediately adjacent}. Input must always be processed by \texttt{sort} prior to passing into \texttt{uniq}!
+    \end{warningbox}
+    \begin{itemize}
+        \item \texttt{-c}: Prefix lines by the number of occurrences.
+        \item \texttt{-d}: Only print duplicate lines.
+        \item \texttt{-u}: Only print unique (non-repeated) lines.
+    \end{itemize}
+    \item \textbf{wc:} Word, line, and byte counter.
+    \begin{itemize}
+        \item \texttt{-l}: Counts total lines.
+        \item \texttt{-w}: Counts total words.
+        \item \texttt{-c}: Counts total byte size.
+    \end{itemize}
+\end{itemize}
+
+\section{Character Translation: tr}
+\texttt{tr} translates, squeezes, or deletes characters from standard input. It operates strictly as a stream filter (does not accept file arguments).
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Case Conversion:} \texttt{cat file.txt | tr 'a-z' 'A-Z'}
+    \item \textbf{Character Deletion (\texttt{-d}):} \texttt{cat doc.txt | tr -d '\textbackslash r'} (strips Windows carriage returns).
+    \item \textbf{Squeeze Repetitions (\texttt{-s}):} \texttt{cat data.txt | tr -s ' '} (squeezes multiple consecutive spaces into a single space).
+\end{itemize}
+
+\section{Composite Stream Processing: Real-World Log Analysis}
+Combining these filters demonstrates the expressive power of the Unix pipeline:
+\begin{terminalbox}[Industrial Pipeline: Top 5 Web Client IP Addresses]
+$ cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -rn | head -n 5
+   14250 192.168.1.105
+    8920 10.0.0.14
+    5400 172.16.5.88
+    2100 192.168.1.200
+     850 10.0.0.52
+\end{terminalbox}
+
+\section{Chapter Review \& Analytical Questions}
+\begin{enumerate}[leftmargin=1.5em]
+    \item Explain why \texttt{uniq data.txt} may fail to eliminate duplicate entries across a file.
+    \item Formulate a regular expression that validates whether an input string is a valid Indian PIN code (exactly six decimal digits).
+    \item Construct a pipeline that extracts usernames and user IDs from \texttt{/etc/passwd} and displays them sorted numerically by UID.
+    \item What is the operational distinction between \texttt{grep "pattern"} and \texttt{grep -E "pattern"}?
+    \item Construct a shell command using \texttt{tr} to replace all colons (\texttt{:}) in a text file with tabs (\texttt{\textbackslash t}).
+\end{enumerate}

@@ -1,0 +1,129 @@
+\chapter{Unit 3: Filesystem Hierarchy \& File Operations Question Bank}
+
+\section{Multiple Choice Questions (MCQs)}
+
+\mcqitem{3.1}{Which directory in the Filesystem Hierarchy Standard contains device nodes (such as /dev/sda and /dev/null)?}
+{\texttt{/etc}}
+{\texttt{/dev}}
+{\texttt{/sys}}
+{\texttt{/proc}}
+
+\mcqitem{3.2}{What metadata component is NOT stored inside a file's inode in an ext4 filesystem?}
+{The file's byte size}
+{The file's name}
+{The owner User ID (UID)}
+{The access timestamps}
+
+\mcqitem{3.3}{What happens to a file's data blocks when one of its two hard links is deleted using rm?}
+{The data blocks are immediately erased and returned to the free block pool}
+{The data remains untouched; only the inode's link count is decremented from 2 to 1}
+{The remaining hard link becomes a broken link pointing to NULL}
+{The filesystem marks the inode as corrupted}
+
+\mcqitem{3.4}{Why cannot a hard link be established across two distinct physical disk partitions?}
+{Partition tables do not allow file sharing}
+{Inode numbers are unique only within a single filesystem instance}
+{Hard links require identical disk sector block sizes}
+{The root user alone holds permission to create cross-partition links}
+
+\mcqitem{3.5}{Which command switch ensures mkdir creates parent directories as needed without throwing errors?}
+{\texttt{-r}}
+{\texttt{-p}}
+{\texttt{-f}}
+{\texttt{-a}}
+
+\mcqitem{3.6}{Which command locates regular files modified within the past 48 hours and larger than 100 Megabytes?}
+{\texttt{find / -type f -mtime -2 -size +100M}}
+{\texttt{search -f -time 48h -size 100M}}
+{\texttt{ls -la --size 100M --time 48h}}
+{\texttt{locate -type f -size +100M}}
+
+\mcqitem{3.7}{What is the difference between du and df commands?}
+{\texttt{df} measures directory sizes; \texttt{du} displays disk device mount points}
+{\texttt{df} inspects filesystem-level superblock allocation; \texttt{du} traverses file directory trees}
+{\texttt{du} requires root access; \texttt{df} is restricted to guest users}
+{\texttt{du} and \texttt{df} are identical aliases}
+
+\mcqitem{3.8}{In Bash history expansion, what does the token !! execute?}
+{Repeats command number 1 in history}
+{Repeats the immediately preceding command}
+{Clears the history buffer}
+{Executes the command matching string "!"}
+
+\mcqitem{3.9}{What does the file command do when executed against an arbitrary file?}
+{Displays file permissions in octal format}
+{Examines file magic bytes to report the true MIME type and format}
+{Calculates the SHA-256 hash of the file}
+{Creates an empty file}
+
+\mcqitem{3.10}{Which tree command option restricts directory traversal to a depth of 2 levels?}
+{\texttt{tree -d 2}}
+{\texttt{tree -L 2}}
+{\texttt{tree -depth 2}}
+{\texttt{tree -m 2}}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Unit 3 MCQ Answer Key \& Verification}}
+\begin{tabularx}{0.85\linewidth}{c c X}
+\toprule
+\textbf{Question} & \textbf{Answer} & \textbf{Conceptual Core} \\
+\midrule
+3.1 & \textbf{(b)} & \texttt{/dev} houses special device nodes representing physical and pseudo hardware. \\
+3.2 & \textbf{(b)} & The file name is stored in the parent directory entry table, \textbf{not} in the inode itself. \\
+3.3 & \textbf{(b)} & Deleting a hard link decrements the link counter; data is deallocated only when links $=0$. \\
+3.4 & \textbf{(b)} & Inodes are internal table indices unique to a specific physical filesystem partition. \\
+3.5 & \textbf{(b)} & \texttt{mkdir -p} creates intermediary parent directories recursively without failure. \\
+3.6 & \textbf{(a)} & \texttt{find / -type f -mtime -2 -size +100M} matches regular files, modified past 2 days, $>100$MB. \\
+3.7 & \textbf{(b)} & \texttt{df} queries superblock allocations; \texttt{du} sums actual file tree disk usage. \\
+3.8 & \textbf{(b)} & \texttt{!!} repeats the last executed command line. \\
+3.9 & \textbf{(b)} & \texttt{file} reads magic numbers in the header to identify executable formats, encodings, etc. \\
+3.10 & \textbf{(b)} & \texttt{tree -L 2} caps recursive tree exploration at a depth limit of 2 levels. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Technical Viva-Voce Questions \& Conceptual Answers}
+
+\subsection*{Q1. Explain why files in /proc display a byte size of 0 yet yield text when read with cat.}
+\begin{vivasol}
+The \texttt{/proc} directory is a virtual pseudo-filesystem instantiated directly in RAM by the Linux kernel. It does not exist on physical disk storage. When an application reads a file in \texttt{/proc} (such as \texttt{/proc/cpuinfo} or \texttt{/proc/meminfo}), the kernel dynamically intercepts the read system call, formats internal kernel data structures into ASCII text, and streams it back to user space. Because no physical disk sectors are occupied, the filesystem reports their static size as 0 bytes.
+\end{vivasol}
+
+\subsection*{Q2. Contrast Hard Links and Symbolic (Soft) Links.}
+\begin{vivasol}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Hard Link:} A directory entry pointing to an existing inode number. It shares identical permissions, timestamps, and data blocks. Deleting the original file does not destroy data as long as at least one hard link remains. Hard links cannot span across filesystems and cannot point to directories.
+    \item \textbf{Symbolic Link:} A distinct file with its own inode and type \texttt{l}. Its data block contains the text pathname of the target. If the target file is deleted, the symlink becomes ``dangling'' or broken. Symlinks can cross partition boundaries and link directories.
+\end{itemize}
+\end{vivasol}
+
+\section{Lab Practical Exercises \& Step-by-Step CLI Execution}
+
+\begin{practicalbox}{3.1 --- Inode Inspection and Link Lifecycle Demonstration}
+\textbf{Objective:} Trace inode allocation across hard links and symbolic links, verifying link counts and file survival after target removal.
+\begin{clibox}
+# 1. Create file and inspect its inode number:
+$ echo "Mission Critical Data" > original.txt
+$ ls -li original.txt
+1048578 -rw-r--r-- 1 student student 22 Oct 22 08:00 original.txt
+
+# 2. Create hard link and symbolic link:
+$ ln original.txt hardlink.txt
+$ ln -s original.txt symlink.txt
+
+# 3. Inspect inode numbers and link counts:
+$ ls -li original.txt hardlink.txt symlink.txt
+1048578 -rw-r--r-- 2 student student 22 Oct 22 08:00 hardlink.txt
+1048578 -rw-r--r-- 2 student student 22 Oct 22 08:00 original.txt
+1048579 lrwxrwxrwx 1 student student 12 Oct 22 08:01 symlink.txt -> original.txt
+
+# 4. Remove original file and test data availability:
+$ rm original.txt
+$ cat hardlink.txt
+Mission Critical Data
+$ cat symlink.txt
+cat: symlink.txt: No such file or directory
+\end{clibox}
+\textbf{Conclusion:} \texttt{hardlink.txt} retains access to data because inode \texttt{1048578} still possesses a link count of 1. \texttt{symlink.txt} fails because its target path is absent.
+\end{practicalbox}

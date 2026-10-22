@@ -1,0 +1,112 @@
+\chapter{Unit 1: Fundamentals of D.C. Circuits}
+
+\section{Core Circuit Variables and Passive Elements}
+
+\begin{formulabox}{Fundamental Circuit Variables}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Electric Current}: $i(t) = \frac{dq}{dt} \iff q(t) = \int_{t_0}^t i(\tau) d\tau + q(t_0)$ [Amperes, A].
+    \item \textbf{Electric Potential Difference}: $v(t) = \frac{dw}{dq}$ [Volts, V].
+    \item \textbf{Instantaneous Power}: $p(t) = v(t) \cdot i(t) = \frac{dw}{dt}$ [Watts, W].
+    \item \textbf{Passive Sign Convention}:
+    \begin{itemize}
+        \item If current enters the positive terminal: $p > 0 \implies$ element absorbs/consumes electrical power.
+        \item If current leaves the positive terminal: $p < 0 \implies$ element delivers/supplies electrical power.
+    \end{itemize}
+    \item \textbf{Energy}: $w(t) = \int_{-\infty}^t p(\tau) d\tau = \int_{-\infty}^t v(\tau) i(\tau) d\tau$ [Joules, J].
+    \item \textbf{Tellegen's Theorem / Power Balance}: $\sum_{k=1}^B p_k = 0 \iff \sum P_{\text{delivered}} = \sum P_{\text{absorbed}}$.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Passive Elements: Resistance, Inductance, Capacitance}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Ohm's Law for Resistor}: $v(t) = R \cdot i(t)$, \quad $i(t) = G \cdot v(t)$ where conductance $G = \frac{1}{R}$ [Siemens, S].
+    \item \textbf{Resistance Geometry}: $R = \rho \frac{L}{A} = \frac{L}{\sigma A}$ ($\rho$: resistivity in $\Omega\cdot\text{m}$, $\sigma$: conductivity in $\text{S/m}$).
+    \item \textbf{Temperature Dependence of Resistance}:
+    \[ R(T) = R_0 \left[ 1 + \alpha_0 (T - T_0) \right] \]
+    where $\alpha_0$ is the temperature coefficient of resistance at reference temperature $T_0$ ($/\!^\circ\text{C}$).
+    \item \textbf{Inductor Constitutive Relation}:
+    \[ v(t) = L \frac{di(t)}{dt}, \quad i(t) = \frac{1}{L}\int_{t_0}^t v(\tau)d\tau + i(t_0) \]
+    \textbf{Stored Magnetic Energy}: $W_L = \frac{1}{2} L i^2$. \quad Under steady DC: $\frac{di}{dt} = 0 \implies v = 0$ (Inductor acts as a \textbf{short circuit}).
+    \item \textbf{Capacitor Constitutive Relation}:
+    \[ i(t) = C \frac{dv(t)}{dt}, \quad v(t) = \frac{1}{C}\int_{t_0}^t i(\tau)d\tau + v(t_0) \]
+    \textbf{Stored Electrostatic Energy}: $W_C = \frac{1}{2} C v^2$. \quad Under steady DC: $\frac{dv}{dt} = 0 \implies i = 0$ (Capacitor acts as an \textbf{open circuit}).
+\end{itemize}
+\end{formulabox}
+
+\section{Fundamental Circuit Laws and Simplifications}
+
+\begin{formulabox}{Kirchhoff's Laws}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Kirchhoff's Current Law (KCL)}: At any node, the algebraic sum of currents is zero:
+    \[ \sum_{k=1}^N i_k(t) = 0 \iff \sum i_{\text{entering}} = \sum i_{\text{leaving}} \quad \text{(Conservation of Charge)} \]
+    \item \textbf{Kirchhoff's Voltage Law (KVL)}: Around any closed loop/mesh, the algebraic sum of voltages is zero:
+    \[ \sum_{k=1}^M v_k(t) = 0 \iff \sum V_{\text{rises}} = \sum V_{\text{drops}} \quad \text{(Conservation of Energy)} \]
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Series and Parallel Equivalences}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Series Resistors}: $R_{eq} = \sum_{k=1}^N R_k$. \quad \textbf{Parallel Resistors}: $\frac{1}{R_{eq}} = \sum_{k=1}^N \frac{1}{R_k}$ \quad (Two resistors: $R_{eq} = \frac{R_1 R_2}{R_1 + R_2}$).
+    \item \textbf{Voltage Division Rule (Series)}:
+    \[ V_k = V_{\text{total}} \cdot \frac{R_k}{\sum R_i} \implies V_1 = V \cdot \frac{R_1}{R_1 + R_2} \]
+    \item \textbf{Current Division Rule (Two Parallel Resistors)}:
+    \[ I_1 = I_{\text{total}} \cdot \frac{R_2}{R_1 + R_2}, \qquad I_2 = I_{\text{total}} \cdot \frac{R_1}{R_1 + R_2} \]
+    \item \textbf{Series/Parallel Inductors}: Combine identically to resistors ($L_{series} = \sum L_k$, $1/L_{parallel} = \sum 1/L_k$).
+    \item \textbf{Series/Parallel Capacitors}: Combine inversely to resistors ($C_{parallel} = \sum C_k$, $1/C_{series} = \sum 1/C_k$).
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Star--Delta ($\text{Y}-\Delta$) Transformations}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Delta ($\Delta$) to Star ($\text{Y}$)}:
+    \[ R_A = \frac{R_{AB} R_{CA}}{R_{AB} + R_{BC} + R_{CA}}, \quad R_B = \frac{R_{AB} R_{BC}}{R_{AB} + R_{BC} + R_{CA}}, \quad R_C = \frac{R_{BC} R_{CA}}{R_{AB} + R_{BC} + R_{CA}} \]
+    If all delta branches are equal ($R_\Delta$): $R_Y = \frac{R_\Delta}{3}$.
+    \item \textbf{Star ($\text{Y}$) to Delta ($\Delta$)}:
+    \[ R_{AB} = R_A + R_B + \frac{R_A R_B}{R_C}, \quad R_{BC} = R_B + R_C + \frac{R_B R_C}{R_A}, \quad R_{CA} = R_C + R_A + \frac{R_C R_A}{R_B} \]
+    If all star branches are equal ($R_Y$): $R_\Delta = 3 R_Y$.
+\end{itemize}
+\end{formulabox}
+
+\section{Systematic Methods and Network Theorems}
+
+\begin{formulabox}{Mesh and Nodal Analysis}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mesh Analysis (Planar Networks)}: Based on KVL. Matrix form:
+    \[ [\mathbf{R}]\mathbf{I} = \mathbf{V} \implies \begin{bmatrix} R_{11} & -R_{12} & \cdots \\ -R_{21} & R_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \\ \vdots \end{bmatrix} = \begin{bmatrix} V_1 \\ V_2 \\ \vdots \end{bmatrix} \]
+    where $R_{ii}$ is self-resistance of mesh $i$, and $R_{ij}$ is mutual resistance shared by meshes $i$ and $j$.
+    \item \textbf{Supermesh}: Formed when a current source (dependent or independent) is shared between two meshes; bypass the branch and write one combined KVL equation with an auxiliary constraint equation.
+    \item \textbf{Nodal Analysis}: Based on KCL. Matrix form:
+    \[ [\mathbf{G}]\mathbf{V} = \mathbf{I} \implies \begin{bmatrix} G_{11} & -G_{12} & \cdots \\ -G_{21} & G_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \\ \vdots \end{bmatrix} = \begin{bmatrix} i_1 \\ i_2 \\ \vdots \end{bmatrix} \]
+    where $G_{ii}$ is sum of conductances attached to node $i$, and $G_{ij}$ is mutual conductance between nodes $i$ and $j$.
+    \item \textbf{Supernode}: Formed when a voltage source connects two non-reference nodes; enclose in a Gaussian surface and apply KCL.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Network Theorems Master Summary}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Superposition Theorem}: In any linear bilateral network containing multiple independent sources, the response (voltage or current) across any element equals the algebraic sum of the responses caused by each independent source acting alone, with all other independent sources deactivated (\textbf{voltage sources shorted}, \textbf{current sources opened}). Dependent sources remain active.
+    \item \textbf{Thevenin's Theorem}: Any two-terminal linear DC circuit can be replaced by an equivalent circuit consisting of a single voltage source $V_{th}$ in series with a resistor $R_{th}$:
+    \begin{align*}
+        V_{th} &= V_{oc} \quad \text{(Open-circuit voltage across terminals } A-B) \\
+        R_{th} &= \frac{V_{oc}}{I_{sc}} \quad \text{(or input resistance with independent sources deactivated)}
+    \end{align*}
+    \item \textbf{Norton's Theorem}: Dual of Thevenin's theorem. Any two-terminal linear circuit can be replaced by a single current source $I_N$ in parallel with a resistor $R_N$:
+    \[ I_N = I_{sc} \quad \text{(Short-circuit current from } A \text{ to } B), \qquad R_N = R_{th} \]
+    \textbf{Source Transformation}: $V_{th} = I_N R_N \iff I_N = \frac{V_{th}}{R_{th}}$.
+    \item \textbf{Maximum Power Transfer Theorem}:
+    A resistive load $R_L$ connected across a linear network receives maximum power when the load resistance equals the Thevenin resistance:
+    \[ R_L = R_{th} \]
+    \textbf{Maximum Transferred Power}:
+    \[ P_{max} = \frac{V_{th}^2}{4 R_{th}} = \frac{I_N^2 R_N}{4} \]
+    \textbf{Efficiency at Maximum Power}: $\eta = 50\%$.
+\end{itemize}
+\end{formulabox}
+
+\begin{examtip}
+When finding $R_{th}$ in circuits with \textbf{dependent sources only} (no independent sources):
+\begin{enumerate}
+    \item Connect an external test source ($V_{test} = 1\text{ V}$ or $I_{test} = 1\text{ A}$) across the open terminals.
+    \item Calculate the resulting response ($I_{test}$ or $V_{test}$).
+    \item Compute $R_{th} = \frac{V_{test}}{I_{test}}$.
+\end{enumerate}
+\end{examtip}

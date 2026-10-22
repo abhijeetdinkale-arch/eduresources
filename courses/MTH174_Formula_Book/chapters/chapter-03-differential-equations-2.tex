@@ -1,0 +1,42 @@
+\chapter{Unit 3: Non-Homogeneous Differential Equations \& Special Forms}
+
+\begin{formulabox}{Shortcut Rules for Particular Integral $y_p = \frac{1}{f(D)}X$}
+\begin{enumerate}
+    \item \textbf{Exponential $X = e^{ax}$}:
+    \begin{equation*}
+    \frac{1}{f(D)} e^{ax} = \frac{1}{f(a)} e^{ax} \quad [f(a) \neq 0]
+    \end{equation*}
+    If $f(a) = 0$: $\frac{1}{f(D)} e^{ax} = x \frac{1}{f'(D)} e^{ax}$.
+    \item \textbf{Trigonometric $X = \sin(ax)$ or $\cos(ax)$}:
+    Replace $D^2 \to -a^2$:
+    \begin{equation*}
+    \frac{1}{\phi(D^2)} \sin(ax) = \frac{1}{\phi(-a^2)} \sin(ax) \quad [\phi(-a^2) \neq 0]
+    \end{equation*}
+    If $\phi(-a^2) = 0$: $\frac{1}{\phi(D^2)} \sin(ax) = x \frac{1}{\phi'(D^2)} \sin(ax)$.
+    \item \textbf{Polynomial $X = x^m$}:
+    Take out lowest power of $D$ to express as $[1 \pm \psi(D)]^{-1}$ and expand via binomial series:
+    \begin{align*}
+    (1 - z)^{-1} &= 1 + z + z^2 + z^3 + \dots \\
+    (1 + z)^{-1} &= 1 - z + z^2 - z^3 + \dots
+    \end{align*}
+    \item \textbf{Exponential Shift}: $\frac{1}{f(D)} [e^{ax} V(x)] = e^{ax} \frac{1}{f(D+a)} V(x)$.
+    \item \textbf{Product with $x$}: $\frac{1}{f(D)} [x V(x)] = x \frac{1}{f(D)} V(x) - \frac{f'(D)}{[f(D)]^2} V(x)$.
+\end{enumerate}
+\end{formulabox}
+
+\begin{formulabox}{Variation of Parameters Formulas ($y'' + Py' + Qy = R$)}
+Given $y_c = c_1 y_1 + c_2 y_2$, $W = y_1 y_2' - y_2 y_1'$:
+\begin{equation*}
+y_p(x) = u(x) y_1(x) + v(x) y_2(x)
+\end{equation*}
+\begin{equation*}
+u(x) = -\int \frac{y_2(x) R(x)}{W(x)} \, dx, \quad v(x) = \int \frac{y_1(x) R(x)}{W(x)} \, dx
+\end{equation*}
+\end{formulabox}
+
+\begin{formulabox}{Cauchy-Euler Reduction Formulas}
+Substitute $x = e^z \iff z = \ln x$ ($x > 0$), $\theta \equiv \frac{d}{dz}$:
+\begin{equation*}
+x \frac{dy}{dx} = \theta y, \quad x^2 \frac{d^2 y}{dx^2} = \theta(\theta - 1)y, \quad x^3 \frac{d^3 y}{dx^3} = \theta(\theta - 1)(\theta - 2)y
+\end{equation*}
+\end{formulabox}

@@ -1,0 +1,88 @@
+\chapter{Control Flow, Functions, Regular Expressions, and Algorithmic Thinking}
+\label{chap:control-flow}
+
+\section{Structured Branching Logic}
+Execution branching in Python is driven by indentation and short-circuit boolean evaluation.
+\begin{lstlisting}
+# Short-circuit logic protects against NullPointerException / IndexError
+if data is not None and len(data) > 0:
+    process_element(data[0])
+\end{lstlisting}
+
+\section{Iteration Semantics: Loops and the Exhaustion Invariant}
+\begin{definition}[Iteration Protocol]
+An object is \textbf{iterable} if it defines \texttt{\_\_iter\_\_()}, which returns an \textbf{iterator}. An iterator defines \texttt{\_\_next\_\_()}, which returns consecutive elements until raising \texttt{StopIteration}.
+\end{definition}
+
+\begin{methodbox}[Prime Factorization with Loop Else]
+\begin{lstlisting}
+def is_prime(n: int) -> bool:
+    if n < 2: return False
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            break  # Exits loop early; skips else block
+    else:
+        return True  # Executed ONLY when range was fully exhausted
+    return False
+\end{lstlisting}
+\end{methodbox}
+
+\section{Function Architecture and the LEGB Scope Rule}
+Variable resolution follows the strict LEGB (Local, Enclosing, Global, Built-in) search order.
+\begin{figure}[htbp]
+\centering
+\begin{tcolorbox}[colback=boxnavybg,colframe=brandnavy,title={Scope Resolution Pipeline (LEGB)}]
+\small
+\textbf{Current Frame (Local)} $\longrightarrow$ \textbf{Outer Functions (Enclosing)} $\longrightarrow$ \textbf{Module Scope (Global)} $\longrightarrow$ \textbf{Python Built-ins}
+\end{tcolorbox}
+\caption{LEGB Search Resolution Hierarchy}
+\end{figure}
+
+\section{Advanced Function Signatures}
+\begin{lstlisting}
+def configure_pipeline(model_name: str, /, batch_size: int = 32, *args, learning_rate: float = 1e-3, **kwargs):
+    '''
+    model_name: Positional-only parameter (preceding '/')
+    batch_size: Positional or keyword parameter
+    *args: Arbitrary positional overflow packed into a tuple
+    learning_rate: Keyword-only parameter (succeeding '*')
+    **kwargs: Arbitrary keyword overflow packed into a dictionary
+    '''
+    print(f"Model: {model_name}, Batch: {batch_size}, LR: {learning_rate}")
+\end{lstlisting}
+
+\section{Recursion and Memory Stack Frames}
+\begin{example}[Recursive Greatest Common Divisor (Euclidean Algorithm)]
+\begin{lstlisting}
+def gcd(a: int, b: int) -> int:
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+\end{lstlisting}
+\end{example}
+\begin{solutionbox}
+\textbf{Trace for \texttt{gcd(48, 18)}:}\\
+1. $\operatorname{gcd}(48, 18) \implies b \ne 0 \implies \operatorname{gcd}(18, 48 \pmod{18}) = \operatorname{gcd}(18, 12)$\\
+2. $\operatorname{gcd}(18, 12) \implies b \ne 0 \implies \operatorname{gcd}(12, 18 \pmod{12}) = \operatorname{gcd}(12, 6)$\\
+3. $\operatorname{gcd}(12, 6) \implies b \ne 0 \implies \operatorname{gcd}(6, 12 \pmod 6) = \operatorname{gcd}(6, 0)$\\
+4. $\operatorname{gcd}(6, 0) \implies b = 0 \implies \text{returns } 6$.\\
+\textbf{Complexity:} $\mathcal{O}(\log(\min(a, b)))$ steps by Lam\'e's Theorem.
+\end{solutionbox}
+
+\section{Pattern Matching with Regular Expressions}
+The \texttt{re} engine uses a modified non-deterministic finite automaton (NFA):
+\begin{lstlisting}
+import re
+
+email_pattern = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+match = email_pattern.match("student@lpu.co.in")
+if match:
+    print("Valid academic email address confirmed.")
+\end{lstlisting}
+
+\section{Chapter Summary}
+\begin{summarybox}
+$\bullet$ Functions are first-class citizens: they can be passed as arguments, assigned to variables, and returned from functions.\\
+$\bullet$ Default arguments are created once when the function is defined; always use \texttt{None} sentinels for mutable collections.\\
+$\bullet$ Pre-compiling regular expressions via \texttt{re.compile()} avoids repetitive string parsing overhead in high-throughput pipelines.
+\end{summarybox}

@@ -1,0 +1,45 @@
+\chapter{Unit 6: Applied Ecosystem API Reference (OpenCV, Pygame, Scraping)}
+
+\begin{formulabox}{OpenCV Digital Image Processing Pipeline Reference}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Image Read: \texttt{img = cv2.imread(filepath, cv2.IMREAD\_COLOR)} (\textbf{Channel order is BGR}, not RGB!).
+    \item Color conversion: \texttt{gray = cv2.cvtColor(img, cv2.COLOR\_BGR2GRAY)}.
+    \item Gaussian Blur ($2D$ convolution kernel):
+    \begin{equation}
+    G(x, y) = \frac{1}{2\pi \sigma^2} \exp\left(-\frac{x^2 + y^2}{2\sigma^2}\right), \quad \texttt{cv2.GaussianBlur(img, (5, 5), sigmaX=1.4)}
+    \end{equation}
+    \item Canny Edge Detection:
+    \begin{equation*}
+    \texttt{edges = cv2.Canny(blurred, threshold1=50, threshold2=150)}
+    \end{equation*}
+    \item Contour Extraction: \texttt{contours, \_ = cv2.findContours(edges, cv2.RETR\_EXTERNAL, cv2.CHAIN\_APPROX\_SIMPLE)}.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Pygame Interactive Architecture Schema}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Initialization: \texttt{pygame.init()}, \texttt{screen = pygame.display.set\_mode((width, height))}.
+    \item Tick Regulator: \texttt{clock = pygame.time.Clock()} $\to$ \texttt{clock.tick(60)} (locks frame-rate at 60 FPS).
+    \item Canonical Event Loop:
+    \begin{itemize}
+        \item Poll events: \texttt{for event in pygame.event.get():}
+        \item Check exit: \texttt{if event.type == pygame.QUIT: running = False}
+        \item Keystrokes: \texttt{keys = pygame.key.get\_pressed()} (\texttt{if keys[pygame.K\_LEFT]: x -= speed}).
+    \end{itemize}
+    \item Rendering: \texttt{screen.fill((0, 0, 0))}, \texttt{pygame.draw.circle(screen, color, pos, radius)}, \texttt{pygame.display.flip()}.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Web Scraping \& Network Access Invariants}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item HTTP Fetch: \texttt{resp = requests.get(url, headers=\{"User-Agent": "..."\}, timeout=10)}.
+    \item Status checks: \texttt{resp.status\_code == 200} (OK), \texttt{429} (Rate limited), \texttt{403} (Forbidden).
+    \item Parsing DOM: \texttt{soup = BeautifulSoup(resp.text, 'html.parser')}.
+    \item Queries: \texttt{soup.find("tag", class\_="name")}, \texttt{soup.find\_all("tag")}, \texttt{soup.select("div.card > a")}.
+    \item Attribute extraction: \texttt{tag.get("href")}, text extraction: \texttt{tag.get\_text(strip=True)}.
+\end{itemize}
+\end{formulabox}
+
+\begin{memorytip}
+When converting images between OpenCV and Matplotlib, remember that OpenCV defaults to \textbf{BGR} while Matplotlib expects \textbf{RGB}! Displaying OpenCV images directly in Matplotlib causes inverted color channels (faces look blue)! Always use: \texttt{rgb = cv2.cvtColor(bgr\_img, cv2.COLOR\_BGR2RGB)}.
+\end{memorytip}

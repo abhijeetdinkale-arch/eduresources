@@ -1,0 +1,102 @@
+\chapter{Fourier Series and Harmonic Analysis}
+\label{chap:fourier-series}
+
+\section{Introduction to Periodic Functions}
+Periodic phenomena occur ubiquitously throughout electrical signal processing, vibration mechanics, and heat conduction. A function $f(x)$ is periodic with period $T > 0$ if:
+\begin{equation}
+f(x + T) = f(x), \quad \forall x \in \mathbb{R}
+\end{equation}
+
+\begin{theorem}[Orthogonality of Trigonometric Functions]
+On the interval $[-\pi, \pi]$:
+\begin{align}
+\int_{-\pi}^{\pi} \cos(nx) \cos(mx) \, dx &= \begin{cases} 0, & n \neq m \\ \pi, & n = m \neq 0 \\ 2\pi, & n = m = 0 \end{cases} \\
+\int_{-\pi}^{\pi} \sin(nx) \sin(mx) \, dx &= \begin{cases} 0, & n \neq m \\ \pi, & n = m \neq 0 \end{cases} \\
+\int_{-\pi}^{\pi} \cos(nx) \sin(mx) \, dx &= 0, \quad \forall n, m
+\end{align}
+\end{theorem}
+
+\section{Fourier Series and Euler's Formulae}
+\begin{definition}[{Fourier Series Expansion in $[-\pi, \pi]$}]
+Let $f(x)$ be defined on $[-\pi, \pi]$ with period $2\pi$. Its Fourier series is:
+\begin{equation}
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right]
+\end{equation}
+where the Euler-Fourier coefficients are given by:
+\begin{align}
+a_0 &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, dx \\
+a_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, dx, \quad n = 1, 2, 3, \dots \\
+b_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, dx, \quad n = 1, 2, 3, \dots
+\end{align}
+\end{definition}
+
+\begin{theorem}[Dirichlet's Conditions for Convergence]
+Any function $f(x)$ can be expanded in a convergent Fourier series if, within the interval of definition:
+\begin{enumerate}
+    \item $f(x)$ is periodic, single-valued, and bounded.
+    \item $f(x)$ has a finite number of finite discontinuities in any one period.
+    \item $f(x)$ has a finite number of local maxima and minima in any one period.
+\end{enumerate}
+At a point of finite jump discontinuity $x = x_0$, the Fourier series converges to the arithmetic mean:
+\begin{equation}
+S(x_0) = \frac{f(x_0^+) + f(x_0^-)}{2}
+\end{equation}
+\end{theorem}
+
+\section{Functions of Arbitrary Period 2L (Change of Interval)}
+For a function defined on $[-L, L]$ of period $2L$:
+\begin{equation}
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right]
+\end{equation}
+where:
+\begin{align}
+a_0 &= \frac{1}{L} \int_{-L}^{L} f(x) \, dx \\
+a_n &= \frac{1}{L} \int_{-L}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \, dx \\
+b_n &= \frac{1}{L} \int_{-L}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \, dx
+\end{align}
+
+\section{Even and Odd Functions}
+Symmetry drastically simplifies Fourier coefficient computation:
+\begin{enumerate}
+    \item \textbf{Even Functions ($f(-x) = f(x)$)}: The graph is symmetric about the $y$-axis.
+    \begin{equation}
+    b_n = 0, \quad a_0 = \frac{2}{L}\int_0^L f(x)\,dx, \quad a_n = \frac{2}{L}\int_0^L f(x)\cos\left(\frac{n\pi x}{L}\right)\,dx
+    \end{equation}
+    The series contains only cosine terms.
+    \item \textbf{Odd Functions ($f(-x) = -f(x)$)}: The graph is symmetric about the origin.
+    \begin{equation}
+    a_0 = 0, \quad a_n = 0, \quad b_n = \frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx
+    \end{equation}
+    The series contains only sine terms.
+\end{enumerate}
+
+\section{Half-Range Expansions}
+When $f(x)$ is defined only on the half-interval $[0, L]$:
+\begin{itemize}
+    \item \textbf{Half-Range Cosine Series}: By extending $f(x)$ as an even function onto $[-L, 0]$:
+    \begin{equation}
+    f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\left(\frac{n\pi x}{L}\right), \quad a_n = \frac{2}{L}\int_0^L f(x)\cos\left(\frac{n\pi x}{L}\right)\,dx
+    \end{equation}
+    \item \textbf{Half-Range Sine Series}: By extending $f(x)$ as an odd function onto $[-L, 0]$:
+    \begin{equation}
+    f(x) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right), \quad b_n = \frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx
+    \end{equation}
+\end{itemize}
+
+\begin{example}[Fourier Series of a Square Wave]
+Find the Fourier series of $f(x) = \begin{cases} -k, & -\pi < x < 0 \\ k, & 0 < x < \pi \end{cases}$, with period $2\pi$.
+
+\textbf{Solution:}
+Notice that $f(-x) = -f(x)$, so $f(x)$ is an odd function.
+Consequently, $a_0 = 0$ and $a_n = 0$ for all $n \ge 1$.
+Now calculate $b_n$:
+\begin{align*}
+b_n &= \frac{2}{\pi}\int_0^{\pi} k \sin(nx) \, dx = \frac{2k}{\pi} \left[ -\frac{\cos(nx)}{n} \right]_0^{\pi} \\
+    &= \frac{2k}{n\pi} (1 - \cos n\pi) = \frac{2k}{n\pi} (1 - (-1)^n)
+\end{align*}
+For even $n$, $b_n = 0$. For odd $n = 2m-1$, $b_n = \frac{4k}{(2m-1)\pi}$.
+Thus:
+\begin{equation*}
+f(x) = \frac{4k}{\pi}\left( \sin x + \frac{\sin 3x}{3} + \frac{\sin 5x}{5} + \dots \right)
+\end{equation*}
+\end{example}

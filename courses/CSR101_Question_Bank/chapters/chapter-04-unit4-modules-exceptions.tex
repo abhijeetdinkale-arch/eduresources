@@ -1,0 +1,535 @@
+\chapter{Unit 4: Modules and Exception Handling}
+
+\section{Section A: Multiple Choice Practice Questions (60 Curated Problems)}
+
+\noindent\textbf{Q1.} Which keyword is used to begin a block of code that may cause an exception? \hfill [Tag: Handling exceptions using try and except | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {raise}
+    \item {finally}
+    \item {try}
+    \item {except}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q2.} Which keyword is used to handle an exception in Python? \hfill [Tag: Handling exceptions using try and except | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {error}
+    \item {except}
+    \item {catch}
+    \item {handle}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q3.} Why might a program use multiple except blocks? \hfill [Tag: Multiple exception handlers | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To repeat the same loop}
+    \item {To create extra variables}
+    \item {To handle different exception types}
+    \item {To define many modules}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q4.} Which keyword is used to raise an exception manually? \hfill [Tag: Raising exceptions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {error}
+    \item {except}
+    \item {throw}
+    \item {raise}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q5.} What does the statement raise ValueError("Invalid value") do? \hfill [Tag: Raising exceptions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Ends every program}
+    \item {Repeats a function}
+    \item {Creates a module}
+    \item {Raises a ValueError}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q6.} What can happen when a function contains code that causes an exception? \hfill [Tag: Exceptions with functions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The function must always return zero}
+    \item {The exception can be handled by the function}
+    \item {The function becomes a module}
+    \item {The exception is always ignored}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q7.} If a function does not handle an exception, where can the exception be handled? \hfill [Tag: Exceptions with functions | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Only by the operating system}
+    \item {By a variable name}
+    \item {By the calling code}
+    \item {Inside a comment}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q8.} When does a finally block normally execute? \hfill [Tag: Using finally to clean up | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Whether or not an error occurs}
+    \item {Only when an error occurs}
+    \item {Only before the try block}
+    \item {Only when no error occurs}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q9.} What is a common use of a finally block? \hfill [Tag: Using finally to clean up | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Cleaning up resources}
+    \item {Starting a loop}
+    \item {Importing a package}
+    \item {Defining a class name}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q10.} How is a custom exception commonly created in Python? \hfill [Tag: Custom exception types | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {By subclassing Exception}
+    \item {By changing a comment}
+    \item {By importing finally}
+    \item {By calling print()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q11.} Which class is commonly used as the base class for a user-defined exception? \hfill [Tag: Custom exception types | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Object}
+    \item {Module}
+    \item {Exception}
+    \item {String}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q12.} What is a Python module? \hfill [Tag: Modules | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A file containing Python code}
+    \item {A database table}
+    \item {A type of loop}
+    \item {A special keyboard}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q13.} Which function can show the locations searched when Python imports modules? \hfill [Tag: Finding modules | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {module.list()}
+    \item {import.path()}
+    \item {sys.path}
+    \item {os.find()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q14.} Which statement imports only sqrt from the math module? \hfill [Tag: Importing specific names from a module | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {from math import sqrt}
+    \item {using math.sqrt}
+    \item {import sqrt from math}
+    \item {include math.sqrt}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q15.} What does if \_\_name\_\_ == "\_\_main\_\_": help identify? \hfill [Tag: Executing modules as scripts | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Code inside a loop}
+    \item {A missing variable}
+    \item {A custom data type}
+    \item {Code run as a script}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q16.} Why might a module be reloaded during an interactive Python session? \hfill [Tag: Reloading modules | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To use recent code changes}
+    \item {To delete all Python files}
+    \item {To convert code to HTML}
+    \item {To create a new interpreter}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q17.} What is a Python package? \hfill [Tag: Packages and standard library | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A type of exception}
+    \item {A single number}
+    \item {A command-line prompt}
+    \item {A collection of related modules}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q18.} Which statement best describes the Python standard library? \hfill [Tag: Packages and standard library | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A separate programming language}
+    \item {A tool for drawing only}
+    \item {A list of user passwords}
+    \item {Built-in collection of useful modules}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q19.} Which module provides classes for working with dates and times? \hfill [Tag: datetime | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {datetime}
+    \item {date\_tools}
+    \item {time\_data}
+    \item {calendar\_time}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q20.} Which practice helps make Python code modular and maintainable? \hfill [Tag: Writing modular, maintainable, error-resilient code | Easy]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Repeating all code in one block}
+    \item {Ignoring all errors}
+    \item {Using unclear variable names}
+    \item {Using small focused functions}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q21.} What is printed by this code? \hfill [Tag: Handling exceptions using try and except | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {0}
+    \item {None}
+    \item {The program terminates before printing}
+    \item {12.5}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q22.} Which handler is selected when data = [10, 20] and the statement print(data[2]) is executed? \hfill [Tag: Multiple exception handlers | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {No handler is selected}
+    \item {except TypeError}
+    \item {except IndexError}
+    \item {except ValueError}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q23.} What is the main reason specific exception handlers should usually appear before a general except Exception handler? \hfill [Tag: Multiple exception handlers | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Specific handlers prevent syntax errors}
+    \item {The general handler could intercept errors first}
+    \item {Specific handlers execute more quickly}
+    \item {General handlers cannot catch built-in errors}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q24.} What happens when this function is called with age = -2 ? \hfill [Tag: Raising exceptions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It raises an IndexError}
+    \item {It returns -2}
+    \item {It returns 0}
+    \item {It raises a ValueError}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q25.} What is printed by this code? \hfill [Tag: Exceptions with functions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {No output}
+    \item {abc}
+    \item {None}
+    \item {Invalid}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q26.} Which design best allows a function to report invalid input while letting its caller decide how to respond? \hfill [Tag: Exceptions with functions | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Raise a suitable exception}
+    \item {Print an error and return normally}
+    \item {Return a random fallback value}
+    \item {Terminate Python immediately}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q27.} When does a finally block normally execute? \hfill [Tag: Using finally to clean up | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {After the try or except processing}
+    \item {Only when no exception occurs}
+    \item {Only when an exception occurs}
+    \item {Only when the function returns}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q28.} Which action is most appropriate for a finally block after manually opening a file? \hfill [Tag: Using finally to clean up | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Raise a new exception}
+    \item {Close the file}
+    \item {Read the file again}
+    \item {Delete the file contents}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q29.} Which definition correctly creates a custom exception for an invalid account balance? \hfill [Tag: Custom exception types | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {def BalanceError(Exception): pass}
+    \item {class BalanceError(Error): pass}
+    \item {class BalanceError(Exception): pass}
+    \item {class BalanceError: raise Exception}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q30.} Why might a program use a custom InsufficientFundsError instead of raising a generic Exception ? \hfill [Tag: Custom exception types | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It automatically records transactions}
+    \item {It identifies a specific failure condition}
+    \item {It removes the need for testing}
+    \item {It prevents all other exceptions}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q31.} Suppose helpers.py contains def format\_name(name): return name.title() . Which statement calls that function after importing the module? \hfill [Tag: Modules | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {format\_name.helpers("sam")}
+    \item {helpers.format\_name("sam")}
+    \item {helpers("sam").format\_name}
+    \item {module.helpers.format\_name("sam")}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q32.} Which feature helps determine the locations Python searches when importing modules? \hfill [Tag: Finding modules | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {sys.argv}
+    \item {os.environ}
+    \item {sys.path}
+    \item {builtins.path}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q33.} What does from math import sqrt make available directly in the current namespace? \hfill [Tag: Importing specific names from a module | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The math package only}
+    \item {The sqrt function}
+    \item {Every name in math}
+    \item {A new module named sqrt}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q34.} Why is code commonly placed under if \_\_name\_\_ == "\_\_main\_\_": ? \hfill [Tag: Executing modules as scripts | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {To identify syntax errors}
+    \item {To run it only when the file is executed directly}
+    \item {To force a module to reload}
+    \item {To hide all functions from imports}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q35.} After changing a module during an interactive session, which action reloads it using importlib ? \hfill [Tag: Reloading modules | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {import module.reload}
+    \item {reload.importlib(module)}
+    \item {importlib.reload(module)}
+    \item {module.import()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q36.} Which statement best describes a Python package? \hfill [Tag: Packages and standard library | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A compiled exception handler}
+    \item {A single variable with many values}
+    \item {A temporary interpreter command}
+    \item {A folder that groups related modules}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q37.} Which module belongs to Python's standard library and can be imported without installing an external package? \hfill [Tag: Packages and standard library | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {requests}
+    \item {datetime}
+    \item {numpy}
+    \item {pandas}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q38.} Which expression creates a datetime object representing the current local date and time? \hfill [Tag: datetime | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {datetime.datetime.now()}
+    \item {datetime.date.today()}
+    \item {datetime.time.current()}
+    \item {datetime.datetime.date()}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q39.} What does this expression produce? \hfill [Tag: datetime | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {A formatted string}
+    \item {A datetime object}
+    \item {A Unix timestamp}
+    \item {A date object only}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q40.} Which approach best supports maintainable and error-resilient Python code? \hfill [Tag: Writing modular, maintainable, error-resilient code | Medium]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Use focused functions and targeted handlers}
+    \item {Put all logic in one large function}
+    \item {Repeat the same validation in every line}
+    \item {Catch every error and ignore it}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q41.} What is printed by this code? \hfill [Tag: Handling exceptions using try and except | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {None}
+    \item {The program terminates before print}
+    \item {10}
+    \item {0}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q42.} Which handler is selected when value is the string "7" ? \hfill [Tag: Multiple exception handlers | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The tuple handler, assigning -1}
+    \item {The zero-division handler, assigning 0}
+    \item {No handler executes because conversion succeeds}
+    \item {Both handlers execute in source order}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q43.} What is the effect of this function when called with -2 ? \hfill [Tag: Raising exceptions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It raises ValueError with message out of range}
+    \item {It returns -2 because validation is advisory}
+    \item {It raises TypeError because comparisons are invalid}
+    \item {It returns None after printing the message}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q44.} What does caller() return? \hfill [Tag: Exceptions with functions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {3 , because the try return occurs first}
+    \item {A RuntimeError , because two returns are illegal}
+    \item {4 , because finally overrides the earlier return}
+    \item {None , because finally cancels both returns}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q45.} Which statement best describes this code if process(stream) raises an exception? \hfill [Tag: Using finally to clean up | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The exception is suppressed after closing}
+    \item {The stream remains open because process failed}
+    \item {The finally block runs only for handled exceptions}
+    \item {The stream closes before the exception propagates}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q46.} Which definition best supports catching a domain-specific error while preserving normal exception behavior? \hfill [Tag: Custom exception types | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {object}
+    \item {BaseException only}
+    \item {ValueError and TypeError simultaneously}
+    \item {Exception}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q47.} Suppose tools.py contains count = 1 , and the following code runs: \hfill [Tag: Modules | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {2}
+    \item {An import error occurs on the second import}
+    \item {3}
+    \item {1}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q48.} Which lookup order most accurately describes how Python searches for a top-level imported module? \hfill [Tag: Finding modules | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Only the directory containing the Python executable}
+    \item {Current script directory, PYTHONPATH entries, installation-dependent paths}
+    \item {The current working directory, then only built-in modules}
+    \item {The package cache, then the operating system registry}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q49.} If config.py defines timeout = 5 , what happens here? \hfill [Tag: Importing specific names from a module | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It prints 5 because the imported name is locally bound}
+    \item {It prints both values in import history order}
+    \item {It raises NameError because the module changed}
+    \item {It prints 10 because imports are dynamically reevaluated}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q50.} What is the purpose of this guard? \hfill [Tag: Executing modules as scripts | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It runs main() only when the file is imported}
+    \item {It runs main() only when the file is executed directly}
+    \item {It changes the module's package name at runtime}
+    \item {It prevents all definitions from executing during imports}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q51.} Assume from settings import limit has already executed and settings.limit is then changed to 20 . After importlib.reload(settings) , what is true about limit ? \hfill [Tag: Reloading modules | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It remains the previously imported object}
+    \item {It automatically becomes 20}
+    \item {It is deleted from the importing namespace}
+    \item {It becomes a reference to the settings module}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q52.} A package contains app/util.py and app/main.py . Which import is generally appropriate inside app/main.py when app is imported as a package? \hfill [Tag: Packages and standard library | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {import .util}
+    \item {include app.util}
+    \item {from package app import util}
+    \item {from . import util}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q53.} What is the key issue with this comparison? \hfill [Tag: datetime | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {It compares both values as UTC automatically}
+    \item {It converts the aware value to local time implicitly}
+    \item {It returns False because their dates are different}
+    \item {It raises TypeError because naive and aware datetimes cannot be ordered}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q54.} Which design best prevents a low-level parsing detail from leaking into application code? \hfill [Tag: Writing modular, maintainable, error-resilient code | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Print every parsing error and continue with partially initialized data}
+    \item {Expose the parser's internal exceptions so callers handle implementation details}
+    \item {Catch every exception in the parser and return an empty record}
+    \item {Catch ValueError in the parser and raise RecordFormatError with the original cause}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q55.} What is printed? \hfill [Tag: Handling exceptions using try and except | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Nothing, because KeyError requires an exact handler}
+    \item {lookup}
+    \item {key}
+    \item {Both lookup and key}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q56.} Which handler structure correctly distinguishes a missing key from an invalid integer while avoiding unreachable-handler problems? \hfill [Tag: Multiple exception handlers | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {except Exception followed by except KeyError}
+    \item {except LookupError followed by except KeyError}
+    \item {except KeyError followed by except ValueError}
+    \item {except (KeyError, Exception) followed by except ValueError}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q57.} What does a bare raise do inside an active except block? \hfill [Tag: Raising exceptions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {Suppresses the exception and exits the function}
+    \item {Raises a new generic Exception without context}
+    \item {Reraises the currently handled exception with its traceback}
+    \item {Raises the last exception created anywhere in the process}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q58.} What is returned by f() ? \hfill [Tag: Exceptions with functions | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {The ZeroDivisionError propagates}
+    \item {None}
+    \item {handled}
+    \item {after}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q59.} Which outcome occurs here? \hfill [Tag: Using finally to clean up | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {ValueError propagates because it was raised first}
+    \item {RuntimeError propagates, with the ValueError as its context}
+    \item {Both exceptions are returned as a tuple}
+    \item {The finally exception is ignored after cleanup}
+\end{enumerate}
+\vspace{2mm}
+\noindent\textbf{Q60.} Which pattern correctly preserves the original failure while translating it to an application-level exception? \hfill [Tag: Custom exception types | Hard]
+\begin{enumerate}[label=(\alph*),topsep=2pt,itemsep=1pt,partopsep=0pt,parsep=0pt]
+    \item {PYTHON Copy try: parse() except ValueError as exc: return RecordError(exc)}
+    \item {PYTHON Copy try: parse() except Exception: raise ValueError('invalid record')}
+    \item {PYTHON Copy try: parse() except ValueError as exc: raise RecordError('invalid record') from exc}
+    \item {PYTHON Copy try: parse() except ValueError: raise RecordError('invalid record')}
+\end{enumerate}
+\vspace{2mm}
+
+\section{Section B: Comprehensive Subjective Problem with Detailed Analytical Rubric}
+
+\begin{subjectiveq}{4}{1}
+Architect an enterprise-grade banking transaction pipeline with custom exceptions (\texttt{BankingException}, \texttt{InsufficientFundsError}, \texttt{AccountLockedError}). Implement a context manager \texttt{atomic\_transaction(account)} that guarantees all debit/credit operations either commit or fully roll back upon any unhandled exception.
+\end{subjectiveq}
+
+\begin{solbox}
+\begin{lstlisting}
+class BankingException(Exception): pass
+class InsufficientFundsError(BankingException): pass
+class AccountLockedError(BankingException): pass
+
+class Account:
+    def __init__(self, account_id: str, balance: float):
+        self.account_id = account_id
+        self.balance = balance
+        self.is_locked = False
+
+class atomic_transaction:
+    def __init__(self, account: Account):
+        self.account = account
+        self.saved_balance = 0.0
+
+    def __enter__(self):
+        if self.account.is_locked:
+            raise AccountLockedError(f"Account {self.account.account_id} is locked.")
+        self.saved_balance = self.account.balance
+        return self.account
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            # Transaction failed: Rollback
+            self.account.balance = self.saved_balance
+            print(f"[ROLLBACK] Restored balance to {self.saved_balance} due to {exc_type.__name__}")
+            return False  # Propagate exception
+        print(f"[COMMIT] Transaction successfully settled. New balance: {self.account.balance}")
+        return True
+\end{lstlisting}
+\textbf{Design Evaluation:}\\
+$\bullet$ Demonstrates Python's \texttt{\_\_enter\_\_} and \texttt{\_\_exit\_\_} protocol.\\
+$\bullet$ Encapsulates transaction state and preserves data consistency under runtime exceptions (ACID Atomicity).
+\end{solbox}
+
+\begin{examinertip}
+$\bullet$ \textbf{Rubric Breakdown (10 Marks Total):}\\
+1. Algorithmic Formulation \& Theoretical Correctness: \textbf{3 Marks}\\
+2. Production Python Syntax \& Idiomatic Standards (PEP 8): \textbf{3 Marks}\\
+3. Boundary Case \& Exception Robustness: \textbf{2 Marks}\\
+4. Asymptotic Time \& Auxiliary Space Complexity Derivation: \textbf{2 Marks}
+\end{examinertip}

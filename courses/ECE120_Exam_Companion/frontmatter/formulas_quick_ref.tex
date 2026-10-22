@@ -1,0 +1,59 @@
+\chapter*{Quick Workshop Formula Reference Sheet}
+\addcontentsline{toc}{chapter}{Quick Workshop Formula Reference Sheet}
+
+\begin{multicols}{2}
+\subsection*{Unit 1: Components \& Instruments}
+\begin{itemize}
+    \item Resistor: $R = (D_1 \times 10 + D_2) \times 10^M \pm \text{Tol}\,\%$
+    \item Capacitor: $C = (D_1 \times 10 + D_2) \times 10^M\,\mathrm{pF}$
+    \item RMS Voltage: $V_{\mathrm{rms}} = V_m / \sqrt{2} \approx 0.707 V_m$
+    \item Frequency: $f = 1 / T$
+    \item LED Resistor: $R_S = (V_{CC} - V_F) / I_F$
+\end{itemize}
+
+\subsection*{Unit 2: Divider Laws}
+\begin{itemize}
+    \item Voltage Divider: $V_x = V_{\mathrm{in}} (R_x / R_{\mathrm{total}})$
+    \item 2-Resistor: $V_2 = V_{\mathrm{in}} \frac{R_2}{R_1 + R_2}$
+    \item Loaded Divider: $R_{2,\mathrm{eq}} = R_2 \parallel R_L$
+    \item Current Divider: $I_x = I_T (G_x / G_{\mathrm{total}})$
+    \item 2-Branch: $I_1 = I_T \frac{R_2}{R_1 + R_2}$
+\end{itemize}
+
+\subsection*{Unit 3: PN Junction Diode}
+\begin{itemize}
+    \item Shockley: $I_D = I_s (e^{V_D / \eta V_T} - 1)$
+    \item Thermal Voltage: $V_T = kT/q \approx 26\,\mathrm{mV}$ at $300\,\mathrm{K}$
+    \item Dynamic Resistance: $r_d = \eta V_T / I_D = 26\,\mathrm{mV} / I_D$
+    \item Static Resistance: $R_D = V_D / I_D$
+    \item Half-Wave Ripple: $\gamma = 1.21$, $\eta = 40.6\%$
+    \item Full-Wave Ripple: $\gamma = 0.482$, $\eta = 81.2\%$
+\end{itemize}
+
+\subsection*{Unit 4: Digital Logic \& Universality}
+\begin{itemize}
+    \item De Morgan: $\overline{AB} = \overline{A} + \overline{B}$
+    \item De Morgan: $\overline{A+B} = \overline{A} \cdot \overline{B}$
+    \item XOR: $A \oplus B = \overline{A}B + A\overline{B}$
+    \item XNOR: $\overline{A \oplus B} = AB + \overline{A}\overline{B}$
+    \item NAND gate count: NOT=1, AND=2, OR=3, XOR=4
+\end{itemize}
+
+\subsection*{Unit 5: Arithmetic Circuits}
+\begin{itemize}
+    \item Half Adder: $S = A \oplus B$, $C = AB$
+    \item Full Adder Sum: $S = A \oplus B \oplus C_{\mathrm{in}}$
+    \item Full Adder Carry: $C_{\mathrm{out}} = AB + C_{\mathrm{in}}(A \oplus B)$
+    \item Half Subtractor: $D = A \oplus B$, $B_{\mathrm{out}} = \overline{A}B$
+    \item Full Subtractor: $D = A \oplus B \oplus B_{\mathrm{in}}$
+\end{itemize}
+
+\subsection*{Unit 6: Arduino \& Sensors}
+\begin{itemize}
+    \item ADC Voltage: $V = \text{Reading} \times (5.0 / 1024)\,\mathrm{V}$
+    \item Step size: $V_{LSB} = 4.8828\,\mathrm{mV}$
+    \item Maximum Pin Current: $40\,\mathrm{mA}$ absolute limit
+    \item IR Comparator (LM393): Active LOW output ($0\,\mathrm{V}$ on obstacle)
+\end{itemize}
+\end{multicols}
+\newpage

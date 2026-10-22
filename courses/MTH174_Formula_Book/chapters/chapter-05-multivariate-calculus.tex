@@ -1,0 +1,52 @@
+\chapter{Unit 5: Multivariate Differential Calculus Formulas}
+
+\begin{formulabox}{Multivariate Chain Rules}
+\begin{itemize}
+    \item $z = f(x, y)$ where $x = x(t), y = y(t)$: $\frac{dz}{dt} = \frac{\partial z}{\partial x}\frac{dx}{dt} + \frac{\partial z}{\partial y}\frac{dy}{dt}$.
+    \item $z = f(x, y)$ where $x = x(u,v), y = y(u,v)$:
+    \begin{equation*}
+    \frac{\partial z}{\partial u} = \frac{\partial z}{\partial x}\frac{\partial x}{\partial u} + \frac{\partial z}{\partial y}\frac{\partial y}{\partial u}, \quad \frac{\partial z}{\partial v} = \frac{\partial z}{\partial x}\frac{\partial x}{\partial v} + \frac{\partial z}{\partial y}\frac{\partial y}{\partial v}
+    \end{equation*}
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Euler's Theorem on Homogeneous Functions of Degree $n$}
+\begin{equation*}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = nu
+\end{equation*}
+\begin{equation*}
+x^2 \frac{\partial^2 u}{\partial x^2} + 2xy \frac{\partial^2 u}{\partial x \partial y} + y^2 \frac{\partial^2 u}{\partial y^2} = n(n-1)u
+\end{equation*}
+If $u = f(H)$ where $H(x,y)$ is homogeneous of degree $n$:
+\begin{equation*}
+x \frac{\partial u}{\partial x} + y \frac{\partial u}{\partial y} = n \frac{F(u)}{F'(u)} = G(u)
+\end{equation*}
+\end{formulabox}
+
+\begin{formulabox}{Jacobians \& Reciprocal Identities}
+\begin{equation*}
+J = \frac{\partial(u,v)}{\partial(x,y)} = \begin{vmatrix} u_x & u_y \\ v_x & v_y \end{vmatrix}, \quad J' = \frac{\partial(x,y)}{\partial(u,v)} = \begin{vmatrix} x_u & x_v \\ y_u & y_v \end{vmatrix} \implies J \cdot J' = 1
+\end{equation*}
+For three variables:
+\begin{equation*}
+\frac{\partial(u,v,w)}{\partial(x,y,z)} = \begin{vmatrix} u_x & u_y & u_z \\ v_x & v_y & v_z \\ w_x & w_y & w_z \end{vmatrix}
+\end{equation*}
+\end{formulabox}
+
+\begin{formulabox}{Bivariate Extrema Test (Hessian Discriminant)}
+Evaluate at critical point $(a,b)$ where $f_x = 0$ and $f_y = 0$:
+$r = f_{xx}$, $s = f_{xy}$, $t = f_{yy}$, Discriminant $\Delta = rt - s^2$:
+\begin{itemize}
+    \item $\Delta > 0$ and $r < 0 \implies$ \textbf{Local Maximum}.
+    \item $\Delta > 0$ and $r > 0 \implies$ \textbf{Local Minimum}.
+    \item $\Delta < 0 \implies$ \textbf{Saddle Point}.
+    \item $\Delta = 0 \implies$ \textbf{Inconclusive}.
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}{Lagrange Multipliers System}
+To optimize $f(x,y,z)$ subject to $g(x,y,z) = 0$:
+\begin{equation*}
+\nabla f = \lambda \nabla g \iff \begin{cases} f_x + \lambda g_x = 0 \\ f_y + \lambda g_y = 0 \\ f_z + \lambda g_z = 0 \\ g(x,y,z) = 0 \end{cases}
+\end{equation*}
+\end{formulabox}

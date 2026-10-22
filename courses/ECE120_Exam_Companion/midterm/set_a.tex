@@ -1,0 +1,40 @@
+\section{Mid-Term Examination --- Set A}
+
+\LPUPaperHeader{Mid-Term Examination}{A}{90 Minutes}{30 Marks}{CO1, CO2, CO3 (Units 1, 2, 3)}
+
+\subsection*{Part I: Multiple-Choice Questions (10 Marks, 1 Mark Each)}
+\mcqitem{1}{Which component opposes changes in the flow of electric current?}{Capacitor}{Resistor}{Inductor}{Transformer}{1}
+\mcqitem{2}{A 4-band resistor with colors Yellow, Violet, Brown, Gold has nominal value:}{$470\,\Omega$}{$4.7\,\mathrm{k}\Omega$}{$47\,\mathrm{k}\Omega$}{$47\,\Omega$}{1}
+\mcqitem{3}{The input impedance of a standard modern bench Digital Multimeter in DC voltage mode is:}{$100\,\Omega$}{$10\,\mathrm{k}\Omega$}{$1\,\mathrm{M}\Omega$}{$10\,\mathrm{M}\Omega$}{1}
+\mcqitem{4}{In a two-resistor voltage divider with $R_1 = R_2$, the unloaded output voltage across $R_2$ is:}{$V_{\mathrm{in}}$}{$V_{\mathrm{in}}/2$}{$2 V_{\mathrm{in}}$}{$0\,\mathrm{V}$}{1}
+\mcqitem{5}{A current divider consists of $R_1 = 10\,\Omega$ and $R_2 = 40\,\Omega$. The fraction of total current flowing through $R_1$ is:}{$10/50$}{$40/50 = 0.8$}{$50/40$}{$1/2$}{1}
+\mcqitem{6}{The cut-in voltage of a standard Silicon PN junction diode at room temperature is approximately:}{$0.1\,\mathrm{V}$}{$0.3\,\mathrm{V}$}{$0.7\,\mathrm{V}$}{$1.5\,\mathrm{V}$}{1}
+\mcqitem{7}{The thermal voltage $V_T$ at standard room temperature ($T = 300\,\mathrm{K}$) is approximately:}{$1.0\,\mathrm{V}$}{$26\,\mathrm{mV}$}{$0.7\,\mathrm{V}$}{$50\,\mu\mathrm{V}$}{1}
+\mcqitem{8}{The ripple factor of an unfiltered full-wave center-tapped rectifier is:}{$1.21$}{$0.482$}{$0.812$}{$0.05$}{1}
+\mcqitem{9}{In a full-wave bridge rectifier, the Peak Inverse Voltage (PIV) rating required for each diode is:}{$V_m/2$}{$V_m$}{$2 V_m$}{$4 V_m$}{1}
+\mcqitem{10}{When testing a healthy Silicon diode with a DMM in diode check mode in forward bias, the display reads:}{$0.00\,\mathrm{V}$}{$0.6\text{--}0.7\,\mathrm{V}$}{OL (Overload)}{$5.00\,\mathrm{V}$}{1}
+
+\subsection*{Part II: Analytical \& Design Problems (20 Marks, 5 Marks Each)}
+\questionitem{11}{A circuit has $V_{\mathrm{in}} = 24\,\mathrm{V}$, $R_1 = 12\,\mathrm{k}\Omega$, and $R_2 = 12\,\mathrm{k}\Omega$. Calculate the loading error percentage if an analog voltmeter with internal resistance $R_m = 24\,\mathrm{k}\Omega$ is placed across $R_2$.}{5}{CO2}{L3}
+\questionitem{12}{A Silicon PN junction diode has reverse saturation current $I_s = 5\,\mathrm{nA}$ at $300\,\mathrm{K}$ ($\eta = 1$). (a) Compute forward current $I_D$ at $V_D = 0.68\,\mathrm{V}$. (b) Compute static resistance $R_D$ and dynamic resistance $r_d$ at this point.}{5}{CO3}{L3}
+\questionitem{13}{Design a full-wave bridge rectifier circuit fed from a $230\,\mathrm{V}_{\mathrm{rms}}, 50\,\mathrm{Hz}$ AC mains via a $10:1$ step-down transformer. Determine: (a) Peak secondary voltage $V_m$, (b) DC output voltage $V_{dc}$, (c) PIV rating per diode.}{5}{CO3}{L4}
+\questionitem{14}{A sinusoidal waveform displayed on a DSO has a period of $T = 2.5\,\mathrm{ms}$ and peak-to-peak voltage $V_{p\text{-}p} = 14\,\mathrm{V}$. (a) Calculate signal frequency. (b) Calculate RMS voltage. (c) If horizontal timebase is $0.5\,\mathrm{ms/div}$, how many divisions span one full cycle?}{5}{CO1}{L3}
+
+\subsection*{Model Solutions \& Marking Rubrics (Mid-Term Set A)}
+
+\begin{answerkeytable}{Part I: MCQ Answer Key}
+1: C \quad 2: A \quad 3: D \quad 4: B \quad 5: B \quad 6: C \quad 7: B \quad 8: B \quad 9: B \quad 10: B
+\end{answerkeytable}
+
+\begin{solutionbox}[Solution to Q.12]
+(a) Shockley equation ($V_D / \eta V_T = 0.68 / 0.026 = 26.15 \gg 1$):
+\[ I_D = 5 \times 10^{-9} \times e^{26.15} = 5 \times 10^{-9} \times 2.276 \times 10^{11} = 1.138\,\mathrm{A} \]
+(b) Static resistance:
+\[ R_D = \frac{V_D}{I_D} = \frac{0.68\,\mathrm{V}}{1.138\,\mathrm{A}} = 0.597\,\Omega \]
+Dynamic resistance:
+\[ r_d = \frac{\eta V_T}{I_D} = \frac{0.026\,\mathrm{V}}{1.138\,\mathrm{A}} = 0.0228\,\Omega \]
+\end{solutionbox}
+\begin{markingrubric}
+\textbf{Marking Rubric (Q.12):} Shockley calculation of $I_D$: 2.5 Marks $\bullet$ Static resistance $R_D$: 1 Mark $\bullet$ Dynamic resistance $r_d$: 1.5 Marks. Total = 5 Marks.
+\end{markingrubric}
+\newpage

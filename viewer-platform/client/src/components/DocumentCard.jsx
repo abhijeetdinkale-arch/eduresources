@@ -17,6 +17,46 @@ const COURSE_THEMES = {
     headerBg: 'from-[#2F4858] to-[#1A2C38] dark:from-[#1D2D37] dark:to-[#0F1920]',
     accent: '#2F4858',
   },
+  MTH174: {
+    bg: 'bg-[#E8EEF8] dark:bg-[#0D1527]',
+    headerBg: 'from-[#1E3A8A] to-[#0F172A] dark:from-[#172554] dark:to-[#090D16]',
+    accent: '#1E3A8A',
+  },
+  CHE110: {
+    bg: 'bg-[#E8F5E9] dark:bg-[#0B1E12]',
+    headerBg: 'from-[#14532D] to-[#052E16] dark:from-[#0F391F] dark:to-[#031A0C]',
+    accent: '#14532D',
+  },
+  ECE120: {
+    bg: 'bg-[#FCE7F3] dark:bg-[#200A15]',
+    headerBg: 'from-[#831843] to-[#500724] dark:from-[#5C0F2F] dark:to-[#2D0414]',
+    accent: '#831843',
+  },
+  CSR101: {
+    bg: 'bg-[#E0F2FE] dark:bg-[#061D2B]',
+    headerBg: 'from-[#0E7490] to-[#155E75] dark:from-[#083344] dark:to-[#041D26]',
+    accent: '#0E7490',
+  },
+  CSR102: {
+    bg: 'bg-[#FEF3C7] dark:bg-[#261B05]',
+    headerBg: 'from-[#B45309] to-[#78350F] dark:from-[#713F12] dark:to-[#381A05]',
+    accent: '#B45309',
+  },
+  ECE131: {
+    bg: 'bg-[#EDE9FE] dark:bg-[#13112E]',
+    headerBg: 'from-[#4338CA] to-[#1E1B4B] dark:from-[#312E81] dark:to-[#0F0D2E]',
+    accent: '#4338CA',
+  },
+  CSE105: {
+    bg: 'bg-[#F1F5F9] dark:bg-[#0F172A]',
+    headerBg: 'from-[#1E293B] to-[#0F172A] dark:from-[#1E293B] dark:to-[#020617]',
+    accent: '#1E293B',
+  },
+  ECE181: {
+    bg: 'bg-[#D1FAE5] dark:bg-[#042017]',
+    headerBg: 'from-[#047857] to-[#064E3B] dark:from-[#065F46] dark:to-[#022C22]',
+    accent: '#047857',
+  },
   Physics: {
     bg: 'bg-[#EBE5DB] dark:bg-[#1A1413]',
     headerBg: 'from-[#7A3E32] to-[#451E16] dark:from-[#4E2720] dark:to-[#28130E]',

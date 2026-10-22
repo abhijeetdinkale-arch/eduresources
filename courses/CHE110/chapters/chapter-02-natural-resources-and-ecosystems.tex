@@ -1,0 +1,103 @@
+\chapter{Natural Resources and Ecosystem Dynamics}
+\label{chap:resources-ecosystems}
+
+\section{Overview and Course Learning Outcomes}
+Natural resources provide the fundamental material and energetic basis for all terrestrial biological systems and industrial human civilization. Concurrently, ecosystems function as self-regulating thermodynamic entities that cycle matter and transfer energy through trophic networks. This chapter examines renewable versus non-renewable resources, soil erosion, water stress, forest depletion, energy matrices, ecosystem structure, thermodynamic energy flow, and ecological succession.
+
+\begin{important}[Course Learning Outcomes for Unit 2]
+Upon completing this chapter, the student will be capable of:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Classifying natural resources based on replenishment kinetics and evaluating depletion mechanisms.
+    \item Applying the Universal Soil Loss Equation (USLE) and assessing land degradation remediation techniques.
+    \item Analyzing groundwater hydrology, the Ghyben-Herzberg saltwater intrusion relation, and water conservation methods.
+    \item Formulating Lindeman's 10\% thermodynamic ecological efficiency and contrasting upright versus inverted ecological pyramids.
+    \item Describing the sequential seral stages and biogeochemical trends characterizing primary and secondary ecological succession.
+\end{enumerate}
+\end{important}
+
+\section{Classification of Natural Resources}
+\begin{definition}[Natural Resource]
+A natural resource is any biotic or abiotic component of the Earth's biophysical environment that has utility for living organisms or can be drawn upon to sustain human socio-economic activities.
+\end{definition}
+
+Resources are fundamentally categorized by their replenishment kinetics:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Perpetual Resources:} Inexhaustible on human time scales (solar radiation, tidal energy, wind power).
+    \item \textbf{Renewable Resources:} Naturally regenerated via biological reproduction or geochemical cycles at rates comparable to or faster than their human harvest rate ($R_{\text{regen}} \ge H_{\text{draw}}$). Examples: timber, freshwater, fisheries, fertile topsoil. If $H_{\text{draw}} > R_{\text{regen}}$, renewable resources experience overexploitation and depletion.
+    \item \textbf{Non-Renewable Resources:} Exist in finite elemental quantities within the Earth's crust with geological formation timescales exceeding millions of years ($R_{\text{regen}} \approx 0$). Examples: fossil fuels (coal, petroleum, natural gas), metallic ores (iron, copper, uranium).
+\end{itemize}
+
+\section{Land, Water, Forest, and Energy Resources}
+\subsection{Land Resources and Soil Conservation}
+Pedogenesis (soil formation) is an exceptionally slow biogeochemical process requiring $200\text{--}400\text{ years}$ to generate a single centimeter of fertile topsoil. The standard soil profile consists of:
+\begin{itemize}[leftmargin=1.2em]
+    \item \textbf{O-Horizon (Organic):} Fresh and decomposing litter, humus.
+    \item \textbf{A-Horizon (Topsoil):} Mineral matter enriched with decomposed organic humus; zone of highest biological activity.
+    \item \textbf{E-Horizon (Eluviation):} Zone of maximum leaching of clay, iron, and aluminum oxides.
+    \item \textbf{B-Horizon (Subsoil):} Accumulation zone of illuviated clays and sesquioxides.
+    \item \textbf{C-Horizon (Regolith):} Weathered parent bedrock material; \textbf{R-Horizon:} Unweathered bedrock.
+\end{itemize}
+
+\begin{keyequation}[Universal Soil Loss Equation (USLE)]
+Annual soil loss by sheet and rill erosion is predicted by Wischmeier and Smith's empirical relation:
+\begin{equation}
+A = R \cdot K \cdot LS \cdot C \cdot P
+\end{equation}
+where $A = \text{computed soil loss per unit area}$, $R = \text{rainfall-runoff erosivity index}$, $K = \text{soil erodibility factor}$, $LS = \text{topographic slope length-gradient factor}$, $C = \text{cropping management factor}$, and $P = \text{conservation support practice factor}$.
+\end{keyequation}
+
+\subsection{Water Resources and Saltwater Intrusion}
+Although $71\%$ of Earth's surface is covered by water, accessible liquid surface freshwater accounts for less than $0.01\%$ of the planetary total. Over-extraction of coastal groundwater lowers the freshwater table and induces seawater intrusion.
+
+\begin{theorem}[Ghyben-Herzberg Principle of Coastal Hydrodynamics]
+At a coastal boundary, because freshwater ($\rho_f \approx 1.000\text{ g/cm}^3$) is less dense than saline seawater ($\rho_s \approx 1.025\text{ g/cm}^3$), a freshwater lens floats atop saline groundwater. The depth to the saltwater interface ($z$) below sea level is related to the freshwater water table elevation ($h$) above sea level by:
+\begin{equation}
+z = \frac{\rho_f}{\rho_s - \rho_f} h = \frac{1.000}{1.025 - 1.000} h = 40 h
+\end{equation}
+Consequently, every $1\text{ meter}$ decline in the freshwater table above sea level induces a $40\text{ meter}$ rise of the saline water wedge into the coastal aquifer.
+\end{theorem}
+
+\section{Ecosystem Structure and Energetics}
+An ecosystem is a structurally and functionally integrated unit where biotic communities (producers, consumers, decomposers) interact with their abiotic environment (solar insolation, temperature, soil minerals, water) to establish cycling of matter and unidirectional flow of energy.
+
+\begin{theorem}[Lindeman's 10\% Trophic Efficiency Law]
+In any food chain, only approximately $10\%$ of the energy transferred to a given trophic level is converted into biomass and made available to the subsequent trophic level:
+\begin{equation}
+\text{Trophic Efficiency } (\lambda) = \frac{\text{Production at Trophic Level } n}{\text{Production at Trophic Level } (n-1)} \times 100\% \approx 10\%
+\end{equation}
+The remaining $90\%$ of energy is dissipated through cellular respiration ($R$), metabolic heat, and non-consumed necromass according to the Second Law of Thermodynamics.
+\end{theorem}
+
+\begin{example}[Trophic Energy Transfer Calculation]
+An estuarine salt marsh receives $2.0 \times 10^6\text{ kcal/m}^2/\text{yr}$ of incident sunlight. Autotrophic photosynthetic vegetation converts $1.2\%$ into Gross Primary Productivity (GPP), and plant respiration utilizes $30\%$ of GPP. Using Lindeman's $10\%$ efficiency rule, calculate: (1) NPP, (2) Energy at Herbivore level, (3) Energy at Primary Carnivore level, and (4) Energy at Apex Carnivore level.
+\end{example}
+
+\begin{solutionbox}
+1. $\text{GPP} = 2.0 \times 10^6 \times 0.012 = 24{,}000\text{ kcal/m}^2/\text{yr}$. \\
+2. $\text{NPP} = \text{GPP} \times (1 - 0.30) = 24{,}000 \times 0.70 = 16{,}800\text{ kcal/m}^2/\text{yr}$. \\
+3. Herbivores (Primary Consumers): $E_2 = \text{NPP} \times 0.10 = 1{,}680\text{ kcal/m}^2/\text{yr}$. \\
+4. Primary Carnivores (Secondary Consumers): $E_3 = E_2 \times 0.10 = 168\text{ kcal/m}^2/\text{yr}$. \\
+5. Apex Carnivores (Tertiary Consumers): $E_4 = E_3 \times 0.10 = 16.8\text{ kcal/m}^2/\text{yr}$.
+\end{solutionbox}
+
+\begin{casestudy}[Inverted Marine Pyramids vs Upright Energy Flow]
+In marine ecosystems (e.g. English Channel), the standing biomass of primary producers (phytoplankton, $\approx 4\text{ g/m}^2$) is substantially lower than that of primary consumers (zooplankton, $\approx 21\text{ g/m}^2$), producing an \textbf{inverted pyramid of biomass}. This occurs because phytoplankton have an exceptionally high metabolic turnover rate (reproducing within hours), enabling a small standing biomass to support a larger standing biomass of long-lived zooplankton. In contrast, the \textbf{pyramid of energy is ALWAYS upright} across all ecosystems without exception.
+\end{casestudy}
+
+\section{Ecological Succession}
+Ecological succession is the orderly, predictable process of directional community change over time following an environmental disturbance.
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Primary Succession:} Commences on sterile barren substrates completely devoid of biological legacy or pre-existing soil (e.g. cooled volcanic lava, sand dunes, exposed granite). Pioneer species (crustose lichens, bryophytes) secrete organic acids that initiate pedogenesis.
+    \item \textbf{Secondary Succession:} Occurs on sites where an existing community has been disrupted (wildfire, clear-cutting, agricultural abandonment) but where intact soil and subterranean seed banks remain. It proceeds at a significantly accelerated velocity.
+    \item \textbf{Clementsian Seral Sequence:} Nudation $\to$ Invasion (Migration) $\to$ Ecesis $\to$ Aggregation $\to$ Competition $\to$ Reaction $\to$ Climax Stabilization.
+\end{enumerate}
+
+\begin{quickrevision}[Chapter 2 Summary]
+\begin{itemize}[leftmargin=1.2em]
+    \item Natural resources are classified by replenishment kinetics; $H > R_{\text{regen}}$ triggers resource exhaustion.
+    \item The USLE predicts annual sheet soil erosion: $A = R \cdot K \cdot LS \cdot C \cdot P$.
+    \item The Ghyben-Herzberg relation demonstrates that a $1\text{ m}$ groundwater table drop induces a $40\text{ m}$ saltwater rise.
+    \item Lindeman's 10\% rule dictates that $90\%$ of energy is dissipated at each trophic consumer transfer.
+    \item The pyramid of biomass is inverted in marine waters, but the pyramid of energy is strictly upright in all biomes.
+\end{itemize}
+\end{quickrevision}
